@@ -519,16 +519,29 @@ function runPhase(phase, total, onDone) {
 }
 function showSamplePts() { document.getElementById('samplePts').classList.add('show'); }
 
+async function getClaudeApiKey() {
+  let key = localStorage.getItem('claude_api_key');
+  if (!key) {
+    key = prompt('🔑 Claude API 키를 입력하세요:\n(한 번만 입력하면 저장됩니다)\n\nhttps://console.anthropic.com/account/keys에서 생성하세요.');
+    if (!key) return null;
+    localStorage.setItem('claude_api_key', key);
+  }
+  return key;
+}
+
 async function requestWritingFeedback() {
   const text = document.getElementById('writingArea').value.trim();
   if (!text || text.split(/[ \t\n]+/).filter(Boolean).length < 20) {
     alert('최소 20단어 이상 작성 후 피드백을 받아주세요.'); return;
   }
+  
+  const apiKey = await getClaudeApiKey();
+  if (!apiKey) return;
+  
   const btn = document.getElementById('btnWritingFeedback');
   btn.disabled = true; btn.textContent = '분석 중...';
   try {
-    // Claude AI에 직접 요청
-    const prompt = `TOEFL Writing Task:
+    const feedbackPrompt = `TOEFL Writing Task:
 주제: ${WRITING.prompt}
 예상 구조: ${WRITING.structure}
 
@@ -545,23 +558,34 @@ ${text}
 
 간결하고 명확하게 피드백을 제공해주세요.`;
 
-    // 클립보드에 복사 후 Claude 페이지 열기
-    await navigator.clipboard.writeText(prompt);
-    const feedbackContent = document.getElementById('writingFeedbackContent');
-    feedbackContent.textContent = '📋 피드백 요청 준비 완료!\n\n아래 버튼을 클릭하여 Claude AI를 열어주세요.\n질문이 자동으로 클립보드에 복사되었습니다.';
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model: 'claude-3-5-sonnet-20241022',
+        max_tokens: 1024,
+        messages: [
+          { role: 'user', content: feedbackPrompt }
+        ]
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`API Error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const feedback = data.content[0].text;
+    document.getElementById('writingFeedbackContent').textContent = feedback;
     document.getElementById('writingFeedbackBox').classList.add('show');
     document.getElementById('writingFeedbackBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    
-    // Claude 열기 버튼 추가
-    const claudeBtn = document.createElement('button');
-    claudeBtn.textContent = '🤖 Claude에서 피드백 받기 (Ctrl+V로 붙여넣기)';
-    claudeBtn.style.cssText = 'width:100%; padding:10px; margin-top:10px; background:#6366f1; color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:600;';
-    claudeBtn.onclick = () => window.open('https://claude.ai/new', '_blank');
-    feedbackContent.parentElement.appendChild(claudeBtn);
-    
     localStorage.setItem('toefl_writing_' + TOEFL_DATE, '1');
   } catch(e) {
-    alert('요청 준비 실패. 다시 시도해주세요.');
+    alert('피드백 요청 실패: ' + e.message);
   }
   btn.disabled = false; btn.textContent = '✨ AI 피드백 다시 받기';
 }
@@ -571,11 +595,14 @@ async function requestSpeakFeedback() {
   if (!text || text.split(/[ \t\n]+/).filter(Boolean).length < 5) {
     alert('말한 내용을 5단어 이상 입력해주세요.'); return;
   }
+  
+  const apiKey = await getClaudeApiKey();
+  if (!apiKey) return;
+  
   const btn = document.getElementById('btnSpeakFeedback');
   btn.disabled = true; btn.textContent = '분석 중...';
   try {
-    // Claude AI에 직접 요청
-    const prompt = `TOEFL Speaking Task:
+    const feedbackPrompt = `TOEFL Speaking Task:
 질문: ${SPEAKING.prompt}
 
 학생 답변 (말한 내용):
@@ -592,21 +619,33 @@ ${text}
 
 구체적이고 실용적인 피드백을 제공해주세요.`;
 
-    // 클립보드에 복사
-    await navigator.clipboard.writeText(prompt);
-    const feedbackContent = document.getElementById('speakFeedbackContent');
-    feedbackContent.textContent = '📋 피드백 요청 준비 완료!\n\n아래 버튼을 클릭하여 Claude AI를 열어주세요.\n질문이 자동으로 클립보드에 복사되었습니다.';
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model: 'claude-3-5-sonnet-20241022',
+        max_tokens: 1024,
+        messages: [
+          { role: 'user', content: feedbackPrompt }
+        ]
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`API Error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const feedback = data.content[0].text;
+    document.getElementById('speakFeedbackContent').textContent = feedback;
     document.getElementById('speakFeedbackBox').classList.add('show');
     document.getElementById('speakFeedbackBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    
-    // Claude 열기 버튼 추가
-    const claudeBtn = document.createElement('button');
-    claudeBtn.textContent = '🤖 Claude에서 피드백 받기 (Ctrl+V로 붙여넣기)';
-    claudeBtn.style.cssText = 'width:100%; padding:10px; margin-top:10px; background:#6366f1; color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:600;';
-    claudeBtn.onclick = () => window.open('https://claude.ai/new', '_blank');
-    feedbackContent.parentElement.appendChild(claudeBtn);
   } catch(e) {
-    alert('요청 준비 실패. 다시 시도해주세요.');
+    alert('피드백 요청 실패: ' + e.message);
   }
   btn.disabled = false; btn.textContent = '✨ AI 피드백 다시 받기';
 }
