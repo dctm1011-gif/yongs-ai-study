@@ -454,8 +454,7 @@ body {
 .install-btn{position:fixed;top:10px;right:172px;width:32px;height:32px;border-radius:50%;background:#f1f0ef;border:1px solid #e9e9e7;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:300;transition:background .15s;display:none}
 .install-btn.show{display:flex}
 .install-btn:active{background:#e9e9e7}
-.homescreen-btn{position:fixed;top:10px;right:132px;width:32px;height:32px;border-radius:50%;background:#f1f0ef;border:1px solid #e9e9e7;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:300;transition:background .15s;display:none}
-.homescreen-btn.show{display:flex}
+.homescreen-btn{position:fixed;top:10px;right:132px;width:32px;height:32px;border-radius:50%;background:#f1f0ef;border:1px solid #e9e9e7;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:300;transition:background .15s}
 .homescreen-btn:active{background:#e9e9e7}
 .share-btn{position:fixed;top:10px;right:92px;width:32px;height:32px;border-radius:50%;background:#f1f0ef;border:1px solid #e9e9e7;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:300;transition:background .15s}
 .share-btn:active{background:#e9e9e7}
@@ -809,12 +808,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
   deferredPrompt = e;
   const installBtn = document.getElementById('install-btn');
   if (installBtn) installBtn.classList.add('show');
-  
-  // 모바일은 홈화면 추가 버튼 표시
-  if (/Android|iPhone|iPad|iPod/.test(navigator.userAgent)) {
-    const homescreenBtn = document.getElementById('homescreen-btn');
-    if (homescreenBtn) homescreenBtn.classList.add('show');
-  }
 });
 
 async function installApp() {
