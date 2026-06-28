@@ -451,12 +451,19 @@ body {
 .reload-btn:active{background:#e9e9e7;transform:rotate(360deg)}
 .notif-btn{position:fixed;top:10px;right:52px;width:32px;height:32px;border-radius:50%;background:#f1f0ef;border:1px solid #e9e9e7;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:300;transition:background .15s}
 .notif-btn:active{background:#e9e9e7}
+.share-btn{position:fixed;top:10px;right:92px;width:32px;height:32px;border-radius:50%;background:#f1f0ef;border:1px solid #e9e9e7;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:300;transition:background .15s}
+.share-btn:active{background:#e9e9e7}
+.install-btn{position:fixed;top:10px;right:132px;width:32px;height:32px;border-radius:50%;background:#f1f0ef;border:1px solid #e9e9e7;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:300;transition:background .15s;display:none}
+.install-btn.show{display:flex}
+.install-btn:active{background:#e9e9e7}
 
 </style>
 </head>
 <body>
 
 <button class="reload-btn" onclick="location.href=location.pathname+'?_='+Date.now()" title="캐시 새로고침">↻</button>
+<button id="install-btn" class="install-btn" onclick="installApp()" title="앱 설치">⬇️</button>
+<button id="share-btn" class="share-btn" onclick="shareApp()" title="공유하기">📤</button>
 <button id="notif-btn" class="notif-btn" onclick="toggleNotification()" title="알림 설정">🔔</button>
 
 <div class="train-hero">
@@ -789,6 +796,69 @@ async function toggleNotification() {
   } catch (e) {
     alert('알림 구독 실패: ' + e.message);
   }
+}
+
+// PWA 설치 관련
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const installBtn = document.getElementById('install-btn');
+  if (installBtn) installBtn.classList.add('show');
+});
+
+async function installApp() {
+  if (!deferredPrompt) {
+    alert('이 브라우저는 앱 설치를 지원하지 않거나 이미 설치되었어요.');
+    return;
+  }
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  if (outcome === 'accepted') {
+    alert('✅ 앱이 설치되었어요!');
+  }
+  deferredPrompt = null;
+  const installBtn = document.getElementById('install-btn');
+  if (installBtn) installBtn.classList.remove('show');
+}
+
+// 공유하기
+async function shareApp() {
+  const shareData = {
+    title: "Yong's AI Study",
+    text: '🧠 AI 학습 허브 - HBM 회로설계, 논문자동화, 영어공부, TOEFL 준비',
+    url: window.location.href
+  };
+
+  if (navigator.share) {
+    try {
+      await navigator.share(shareData);
+    } catch (err) {
+      if (err.name !== 'AbortError') {
+        console.error('공유 실패:', err);
+        fallbackShare();
+      }
+    }
+  } else {
+    fallbackShare();
+  }
+}
+
+function fallbackShare() {
+  const url = window.location.href;
+  const text = "🧠 Yong's AI Study - HBM 회로설계, 논문자동화, 영어공부, TOEFL 준비";
+  
+  // 클립보드에 복사
+  navigator.clipboard.writeText(`${text}\n${url}`).then(() => {
+    const toast = document.getElementById('toast');
+    if (toast) {
+      toast.textContent = '✅ 링크가 클립보드에 복사됐어요!';
+      toast.style.display = 'block';
+      setTimeout(() => toast.style.display = 'none', 3000);
+    }
+  }).catch(() => {
+    alert('복사 실패. 수동으로 링크를 공유해주세요.\n' + url);
+  });
 }
 
 if ('serviceWorker' in navigator) {
