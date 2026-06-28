@@ -838,12 +838,22 @@ async function addToHomescreen() {
     return;
   }
   
-  // 브라우저별 안내
+  // Chrome으로 현재 페이지 열기
+  const chromeUrl = 'intent:' + window.location.href + '#Intent;scheme=https;package=com.android.chrome;action=android.intent.action.VIEW;end';
+  const iosUrl = window.location.href;
+  
   const ua = navigator.userAgent;
-  if (/iPhone|iPad|iPok/.test(ua)) {
-    alert('📱 iOS에서 홈화면에 추가:\n\n1. 하단의 공유 버튼(↑) 탭\n2. "홈 화면에 추가" 선택\n3. 추가 완료!');
-  } else if (/Android/.test(ua)) {
-    alert('📱 Android에서 홈화면에 추가:\n\n1. 우상단 메뉴(⋮) 탭\n2. "홈 화면에 추가" 선택\n3. 추가 완료!');
+  if (/Android/.test(ua)) {
+    // Android의 경우 Chrome intent로 열기
+    window.location.href = chromeUrl;
+    
+    // 폴백: intent가 작동하지 않을 경우 안내
+    setTimeout(() => {
+      alert('💡 Chrome 팁:\n\n1. Chrome 우상단 메뉴(⋮) 탭\n2. "홈 화면에 추가" 선택\n3. 추가 완료!');
+    }, 1000);
+  } else if (/iPhone|iPad|iPod/.test(ua)) {
+    // iOS의 경우 Safari 안내
+    alert('📱 iOS에서 홈화면에 추가:\n\n1. Safari 하단의 공유 버튼(↑) 탭\n2. "홈 화면에 추가" 선택\n3. 추가 완료!');
   } else {
     alert('이 기능은 모바일 브라우저에서 사용 가능합니다.');
   }
