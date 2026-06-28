@@ -827,28 +827,26 @@ async function installApp() {
 
 // 홈화면 추가 (모바일용)
 async function addToHomescreen() {
-  if (!deferredPrompt) {
-    // 수동으로 브라우저 메뉴 설명 제공
-    const ua = navigator.userAgent;
-    if (/iPhone|iPad|iPod/.test(ua)) {
-      alert('📱 홈화면에 추가:\n\n1. 하단의 공유 버튼(↑) 탭\n2. "홈 화면에 추가" 선택\n3. 추가 완료!');
-    } else if (/Android/.test(ua)) {
-      alert('📱 홈화면에 추가:\n\n1. 우상단 메뉴(⋮) 탭\n2. "홈 화면에 추가" 선택\n3. 추가 완료!');
-    } else {
-      alert('이 기능은 모바일에서 사용 가능합니다.');
+  // beforeinstallprompt가 있으면 사용
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      alert('✅ 앱이 홈화면에 추가되었어요!');
     }
+    deferredPrompt = null;
     return;
   }
   
-  // beforeinstallprompt가 있으면 사용
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-  if (outcome === 'accepted') {
-    alert('✅ 앱이 홈화면에 추가되었어요!');
+  // 브라우저별 안내
+  const ua = navigator.userAgent;
+  if (/iPhone|iPad|iPok/.test(ua)) {
+    alert('📱 iOS에서 홈화면에 추가:\n\n1. 하단의 공유 버튼(↑) 탭\n2. "홈 화면에 추가" 선택\n3. 추가 완료!');
+  } else if (/Android/.test(ua)) {
+    alert('📱 Android에서 홈화면에 추가:\n\n1. 우상단 메뉴(⋮) 탭\n2. "홈 화면에 추가" 선택\n3. 추가 완료!');
+  } else {
+    alert('이 기능은 모바일 브라우저에서 사용 가능합니다.');
   }
-  deferredPrompt = null;
-  const homescreenBtn = document.getElementById('homescreen-btn');
-  if (homescreenBtn) homescreenBtn.classList.remove('show');
 }
 
 // 공유하기
