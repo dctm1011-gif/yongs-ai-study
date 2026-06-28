@@ -244,6 +244,7 @@ def main(max_new: int = 20):
     new_col_count = len(liked_pids)
     GIT = r"C:\Users\dctm1\AppData\Local\GitHubDesktop\app-3.6.1\resources\app\git\cmd\git.exe"
     print("\nGitHub 배포 중...")
+    subprocess.run([GIT, "pull", "--rebase", "origin", "main"], cwd=PROJECT_ROOT)
     subprocess.run([GIT, "add", "-A"], cwd=PROJECT_ROOT)
     msg = f"auto: update papers {new_total} / liked {new_col_count}"
     r1 = subprocess.run([GIT, "commit", "-m", msg], cwd=PROJECT_ROOT)

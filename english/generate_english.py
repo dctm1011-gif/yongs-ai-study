@@ -1602,6 +1602,7 @@ localStorage.setItem('toefl_visited_' + new Date().toISOString().slice(0,10), '1
 def deploy_to_netlify(word_count: int = 0, quiz_count: int = 0, target_date=None):
     GIT = r"C:\Users\dctm1\AppData\Local\GitHubDesktop\app-3.6.1\resources\app\git\cmd\git.exe"
     print("[*] GitHub Pages 배포 중...")
+    subprocess.run([GIT, "pull", "--rebase", "origin", "main"], cwd=str(ROOT))
     subprocess.run([GIT, "add", "-A"], cwd=str(ROOT))
     date_str = str(target_date) if target_date else str(date.today())
     msg = f"auto: update english {date_str} words={word_count} quiz={quiz_count}"
