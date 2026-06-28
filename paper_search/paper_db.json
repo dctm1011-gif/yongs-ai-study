@@ -3278,5 +3278,110 @@
     "title": "60-Gb/s 1:4 Demultiplexer in 22-nm FD-SOI Technology Using TSPC Logic: A Circuit-to-System-Level Analysis and Design",
     "file": "2026_60-Gbs 14 Demultiplexer in 22-nm FD-SOI Technology Using TSPC Logic A Circuit-to.md",
     "saved": "2026-06-27"
+  },
+  "ss:c294462b79e3415173454dd5fdccadc59040fb34": {
+    "title": "Improved Scan Chain Stitching for Reducing Test Power",
+    "file": "2024_Improved Scan Chain Stitching for Reducing Test Power.md",
+    "saved": "2026-06-29"
+  },
+  "ss:65ca8148633e62ca5ab4f4a799c4ddd40baa4ed8": {
+    "title": "Design and Analysis of a Scan Chain in Subthreshold Region",
+    "file": "2023_Design and Analysis of a Scan Chain in Subthreshold Region.md",
+    "saved": "2026-06-29"
+  },
+  "ss:a3b9b9b4488d893c37d6d3db5d82c51fb6c701e8": {
+    "title": "A Memristor-based Scan Hold Flip-Flop",
+    "file": "2019_A Memristor-based Scan Hold Flip-Flop.md",
+    "saved": "2026-06-29"
+  },
+  "ss:a4785a9e3aaffdf1980678732ea530ba6e329eef": {
+    "title": "Enhancing Stability in CRPs: A Novel Parallel Scan-Chain PUF Design Considering Aging Effects",
+    "file": "2024_Enhancing Stability in CRPs A Novel Parallel Scan-Chain PUF Design Considering A.md",
+    "saved": "2026-06-29"
+  },
+  "ss:1992eabaec5443c531d58e44b2f3c7041fba29cd": {
+    "title": "Design For Testability Method To Sequential Circuit",
+    "file": "2023_Design For Testability Method To Sequential Circuit.md",
+    "saved": "2026-06-29"
+  },
+  "ss:a38ad2a9903c44c58e10d3fd54dbe798971707f2": {
+    "title": "Protecting Dynamically Obfuscated Scan Chain Architecture from DOSCrack with Trivium Pseudo-Random Number Generation",
+    "file": "2025_Protecting Dynamically Obfuscated Scan Chain Architecture from DOSCrack with Tri.md",
+    "saved": "2026-06-29"
+  },
+  "ss:6085be4400c5ffe38c1fd55a33cfe16ee2be9778": {
+    "title": "Design for Testability for VLSI Circuits with A Large Number of Unknown Test Response Sources",
+    "file": "2025_Design for Testability for VLSI Circuits with A Large Number of Unknown Test Res.md",
+    "saved": "2026-06-29"
+  },
+  "ss:339f74eac5665986e8fd5f262725d7897eda8e34": {
+    "title": "A New Secure Scan Architecture Based on Dynamic Exchange for VLSI Test",
+    "file": "2025_A New Secure Scan Architecture Based on Dynamic Exchange for VLSI Test.md",
+    "saved": "2026-06-29"
+  },
+  "ss:3a7ab8731a1f251dcb23a665e6e27df185444357": {
+    "title": "Designof Efficient Scan Flip-Flop",
+    "file": "2021_Designof Efficient Scan Flip-Flop.md",
+    "saved": "2026-06-29"
+  },
+  "ss:5b16c23f80b7b361f82680008484249a5f2968e8": {
+    "title": "Approximate Scan Flip-flop to Reduce Functional Path Delay and Power Consumption",
+    "file": "2022_Approximate Scan Flip-flop to Reduce Functional Path Delay and Power Consumption.md",
+    "saved": "2026-06-29"
+  },
+  "ss:b4c7f52dd724467de0814446cde50dd9f010bead": {
+    "title": "LITE: ATPG-Aware Lightweight Scan Instrumentation for Enhancing Test Efficiency",
+    "file": "2025_LITE ATPG-Aware Lightweight Scan Instrumentation for Enhancing Test Efficiency.md",
+    "saved": "2026-06-29"
+  },
+  "ss:fb021157b70fdcf70cb9cbcd0b000ead9098261d": {
+    "title": "A Sense‐Amplifier Flip‐Flop With Transition Completion Detection Scheme in 16nm for Low‐Voltage and Low‐Area Applications",
+    "file": "2025_A Sense‐Amplifier Flip‐Flop With Transition Completion Detection Scheme in 16nm .md",
+    "saved": "2026-06-29"
+  },
+  "ss:88b5365898eaa10be51165ec59e4a0b17aa67aaf": {
+    "title": "A 2.5 GHz, 1-Kb SRAM with Auxiliary Circuit Assisted Sense Amplifier in 65-nm CMOS Process",
+    "file": "2023_A 2.5 GHz, 1-Kb SRAM with Auxiliary Circuit Assisted Sense Amplifier in 65-nm CM.md",
+    "saved": "2026-06-29"
+  },
+  "ss:ae07810f943d077211575741067ac83549099c83": {
+    "title": "A Separated Pre-Charge Sense Amplifier With Fast Sensing, Low Power, Small Area, and High Reliability for Hybrid MTJ/CMOS Logic Circuits",
+    "file": "2026_A Separated Pre-Charge Sense Amplifier With Fast Sensing, Low Power, Small Area,.md",
+    "saved": "2026-06-29"
+  },
+  "ss:d36e45f6855887790b6820b94489cd4425feb298": {
+    "title": "A 0.186 pJ/bit, 6-Gb/s, Energy-Efficient, Half-Rate Hybrid Circuit Topology in 1.2V, 65 nm CMOS",
+    "file": "2024_A 0.186 pJbit, 6-Gbs, Energy-Efficient, Half-Rate Hybrid Circuit Topology in 1.2.md",
+    "saved": "2026-06-29"
+  },
+  "ss:f1952b16c05d9e7a2e84f776233f7522001aa5ab": {
+    "title": "Design of Buck Converter Integrated Circuit in 180nm SCL Technology with CMOS Logic",
+    "file": "2025_Design of Buck Converter Integrated Circuit in 180nm SCL Technology with CMOS Lo.md",
+    "saved": "2026-06-29"
+  },
+  "ss:9605d77772136374269d2a95538721df4656b650": {
+    "title": "An 8b 1.0-to-1.25 GS/s Time-Based ADC With Bipolar VTC and Sense Amplifier Latch Interpolated Gated Ring Oscillator TDC",
+    "file": "2023_An 8b 1.0-to-1.25 GSs Time-Based ADC With Bipolar VTC and Sense Amplifier Latch .md",
+    "saved": "2026-06-29"
+  },
+  "ss:a5e1110e6f0f9b0bf5edf8d2edd10d2b14eacc4d": {
+    "title": "A Low-Offset Sense Amplifier with Self-Adaptive Calibration and Dynamic Body-Biased Mitigation Technology for Enhanced SRAM Read Performance",
+    "file": "2026_A Low-Offset Sense Amplifier with Self-Adaptive Calibration and Dynamic Body-Bia.md",
+    "saved": "2026-06-29"
+  },
+  "ss:600e12770eb1f4a61507b2d336e3a5cdd56b3c24": {
+    "title": "Analysis of the parasitic capacitance effects on the layout of latch-based sense amplifiers for improving SRAM performance",
+    "file": "2024_Analysis of the parasitic capacitance effects on the layout of latch-based sense.md",
+    "saved": "2026-06-29"
+  },
+  "ss:1937db17195dad67e47fcf874cba5737330c5eb1": {
+    "title": "A 0.2 pJ/bit, Energy-Efficient, Half-Rate Hybrid Circuit Topology at 6-Gb/s in 1.2V, 65 nm CMOS",
+    "file": "2024_A 0.2 pJbit, Energy-Efficient, Half-Rate Hybrid Circuit Topology at 6-Gbs in 1.2.md",
+    "saved": "2026-06-29"
+  },
+  "ss:e5aa176507a1c249e8605932d1b984e3090a0b76": {
+    "title": "An Energy-Efficient LiDAR Receiver Using Time-to-Voltage Converter and SAR ADC in 180 nm CMOS",
+    "file": "2026_An Energy-Efficient LiDAR Receiver Using Time-to-Voltage Converter and SAR ADC i.md",
+    "saved": "2026-06-29"
   }
 }
