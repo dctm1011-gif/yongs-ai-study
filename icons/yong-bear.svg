@@ -1,0 +1,62 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- 배경 -->
+  <rect width="512" height="512" fill="#ffffff" rx="100"/>
+  
+  <!-- 곰 몸통 -->
+  <circle cx="256" cy="320" r="140" fill="#c9a876"/>
+  
+  <!-- 곰 머리 -->
+  <circle cx="256" cy="160" r="120" fill="#c9a876"/>
+  
+  <!-- 왼쪽 귀 -->
+  <circle cx="160" cy="60" r="50" fill="#c9a876"/>
+  <circle cx="160" cy="60" r="30" fill="#8b7355"/>
+  
+  <!-- 오른쪽 귀 -->
+  <circle cx="352" cy="60" r="50" fill="#c9a876"/>
+  <circle cx="352" cy="60" r="30" fill="#8b7355"/>
+  
+  <!-- 왼쪽 눈 흰자위 -->
+  <circle cx="216" cy="140" r="28" fill="#ffffff"/>
+  <!-- 오른쪽 눈 흰자위 -->
+  <circle cx="296" cy="140" r="28" fill="#ffffff"/>
+  
+  <!-- 왼쪽 눈동자 -->
+  <circle cx="220" cy="145" r="18" fill="#3d2817"/>
+  <circle cx="224" cy="140" r="6" fill="#ffffff"/>
+  
+  <!-- 오른쪽 눈동자 -->
+  <circle cx="300" cy="145" r="18" fill="#3d2817"/>
+  <circle cx="304" cy="140" r="6" fill="#ffffff"/>
+  
+  <!-- 코 -->
+  <ellipse cx="256" cy="180" rx="18" ry="20" fill="#8b7355"/>
+  <!-- 콧구멍 왼쪽 -->
+  <circle cx="245" cy="178" r="4" fill="#5c4a35"/>
+  <!-- 콧구멍 오른쪽 -->
+  <circle cx="267" cy="178" r="4" fill="#5c4a35"/>
+  
+  <!-- 입 -->
+  <path d="M 256 180 Q 246 200 240 210" stroke="#8b7355" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <path d="M 256 180 Q 266 200 272 210" stroke="#8b7355" stroke-width="8" fill="none" stroke-linecap="round"/>
+  
+  <!-- 왼쪽 팔 -->
+  <ellipse cx="150" cy="300" rx="50" ry="90" fill="#c9a876" transform="rotate(-35 150 300)"/>
+  <!-- 왼쪽 손 -->
+  <circle cx="120" cy="380" r="45" fill="#c9a876"/>
+  
+  <!-- 오른쪽 팔 -->
+  <ellipse cx="362" cy="300" rx="50" ry="90" fill="#c9a876" transform="rotate(35 362 300)"/>
+  <!-- 오른쪽 손 -->
+  <circle cx="392" cy="380" r="45" fill="#c9a876"/>
+  
+  <!-- 왼쪽 발 -->
+  <ellipse cx="200" cy="450" rx="50" ry="55" fill="#c9a876"/>
+  <!-- 오른쪽 발 -->
+  <ellipse cx="312" cy="450" rx="50" ry="55" fill="#c9a876"/>
+  
+  <!-- 텍스트: Yong -->
+  <text x="256" y="380" font-family="Arial, sans-serif" font-size="80" font-weight="bold" text-anchor="middle" fill="#8b7355" letter-spacing="2">
+    Yong
+  </text>
+</svg>
