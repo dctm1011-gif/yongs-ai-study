@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RowHammer in Medical Printers · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">RowHammer in Medical Printers</span>
+</div>
+<div class="article">
+  <div class="article-venue">ICSCT 2024</div>
+  <h1 class="article-title">Integrating Information Security and Hardware Defense in Medical Printers: Addressing RowHammer Vulnerabilities</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">ECC</span></div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://www.semanticscholar.org/paper/b5c9e28de23652dd3f5938a3ccc7041fb02255fe" target="_blank">원문 보기 →</a>
+  </div>
+  <p class="opener">의료용 프린터라는 생명과 직결된 임베디드 시스템에서 RowHammer 취약점을 RockHammer로 방어하고, 정보 보안과 하드웨어 방어를 통합한 실용적 접근법이에요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">의료 프린터에서 RowHammer가 왜 위험한가요?</h2>
+    <p>현대 의료 현장에서 진단 이미지(X-ray, CT, MRI)를 인쇄하는 의료용 프린터는 단순한 출력 장치가 아니에요. 환자 데이터, 처방 정보, 진단 영상 등 민감한 의료 데이터를 처리해요. 인쇄 명령이 내려오면 데이터는 먼저 프린터의 DRAM에 저장되고, 처리된 후 인쇄돼요. 이 과정에서 DRAM에 잠시 올라와 있는 환자 데이터가 RowHammer 공격에 노출될 수 있어요.</p>
+    <p>의료 기기는 서버나 PC와 다르게, 보안 패치를 자주 받기 어렵고, 오래된 하드웨어와 소프트웨어를 사용하는 경우가 많아요. RowHammer 공격자가 프린터와 같은 네트워크에 접근할 수 있다면(병원 내부 네트워크 침투), 원격으로 RowHammer 공격을 통해 DRAM의 환자 데이터를 변조하거나, 접근 제어 데이터를 우회할 수 있어요. 의료 데이터 변조는 환자 안전에 직결되는 문제예요. 이 논문은 이 현실적 위협에 대응하는 통합 방어 방법을 제시해요.</p>
+    <div class="insight blue">
+      <div class="insight-label">논문의 출발점</div>
+      <p>RowHammer 연구는 대부분 서버·클라우드·개인 PC를 대상으로 해요. 그러나 의료 기기처럼 패치 주기가 긴 임베디드 시스템이 더 취약해요. 이 논문은 임베디드 환경에서의 RowHammer 위협을 처음으로 진지하게 다뤄요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">RockHammer 방어는 어떻게 동작하나요?</h2>
+    <p>이 논문이 제안하는 RockHammer는 임베디드 시스템의 제약(낮은 성능, 제한된 메모리, 패치 어려움)을 고려한 경량 RowHammer 방어예요. 핵심 아이디어는 두 가지예요. 첫째, 접근 빈도 모니터링(Access Frequency Monitoring): 임베디드 OS나 드라이버 레벨에서 DRAM 접근 패턴을 모니터링해요. 특정 행 주소가 짧은 시간에 비정상적으로 자주 접근되면 알림을 발생시켜요. RowHammer는 보통 수만 번의 반복 접근이 필요해서, 정상 메모리 접근 패턴과 구별할 수 있어요.</p>
+    <p>둘째, 선택적 refresh 강화(Selective Refresh Enhancement): 의심 행 근처의 인접 행에 대해 refresh 주기를 일시적으로 단축해요. LPDDR 같은 저전력 DRAM에서는 MC(Memory Controller)가 refresh 간격을 프로그래밍할 수 있어서, 의심 행 주변만 tREFI를 짧게 설정해 보호해요. 또한 의료 데이터에 대한 암호화와 무결성 검사(CRC 또는 hash)를 병행해서, 비트 플립이 발생해도 변조를 감지할 수 있어요.</p>
+    <div class="insight green">
+      <div class="insight-label">핵심 아이디어</div>
+      <p>임베디드 LPDDR DRAM의 programmable refresh + SW 레벨 접근 패턴 모니터링 + 의료 데이터 CRC 무결성 검사를 조합해서, DRAM 칩 수정 없이 의료 기기를 RowHammer로부터 보호해요. "Defense in Depth(계층적 방어)" 전략이에요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">실제로 의료 프린터를 보호할 수 있나요?</h2>
+    <p>실제 의료 프린터 환경을 모사한 테스트베드에서 RowHammer 공격 시뮬레이션을 수행하고, RockHammer 방어를 적용했어요. 방어 없이는 수만 번의 반복 접근으로 비트 플립이 발생하고 데이터 무결성이 깨지는 것을 확인했어요. RockHammer 적용 후에는 동일 공격을 감지하고 차단하는 데 성공했어요. 성능 오버헤드는 의료 기기 허용 수준이었어요. 선택적 refresh 강화로 인한 추가 전력 소비는 의심 구간에서만 발생하므로 평균 전력 영향이 제한됐어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">100%</div><div class="stat-desc">공격 감지율 (테스트 시나리오)</div></div>
+      <div class="stat-box"><div class="stat-num">낮음</div><div class="stat-desc">성능 오버헤드 (의료 기기 허용 수준)</div></div>
+      <div class="stat-box"><div class="stat-num">3중</div><div class="stat-desc">계층 방어: 모니터링+refresh+무결성</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>이 논문의 직접적인 HBM 적용은 제한적이에요. 의료 프린터처럼 LPDDR을 쓰는 임베디드 시스템 대상이니까요. 그러나 핵심 통찰은 HBM 기반 AI 가속기에도 적용할 수 있어요. AI 가속기는 medical AI(진단 보조, 방사선 영상 분석)에 점점 많이 쓰이는데, 이 시스템에서 HBM에 올라온 모델 weight가 RowHammer로 변조되면 진단 결과가 잘못될 수 있어요. "HBM RowHammer → AI 모델 오동작 → 의료 사고"의 위협 체인이 가능해요.</p>
+    <p>HBM 설계자 관점에서는, 의료·자율주행 같은 safety-critical 응용에 HBM이 쓰일 때 RowHammer 방어를 기본(mandatory) 기능으로 포함하는 것이 중요해요. 특히 HBM3에서 on-die ECC는 soft error 수정용이지만, RowHammer처럼 의도적인 비트 플립에는 충분하지 않을 수 있어요. 추가적인 in-DRAM RowHammer 방어(예: pTRR, AQUA)가 safety-critical HBM에서 요구될 수 있어요.</p>
+    <div class="insight yellow">
+      <div class="insight-label">주의할 점</div>
+      <p>SW 레벨 접근 빈도 모니터링은 임베디드 OS에 의존하기 때문에, OS 자체가 compromised된 경우(루트킷) 방어가 무력화될 수 있어요. HW 레벨 방어(in-DRAM counter)가 없으면 실제 공격에서 한계가 있어요. 또한 의료 기기 인증(FDA, CE)에서 RowHammer 방어 요구사항이 아직 명확하지 않아서, 규제 공백이 있어요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — 의료 프린터 시스템 구성도. 네트워크 → 프린터 컨트롤러 → LPDDR DRAM → 인쇄 엔진. RowHammer 공격 경로 표시.</p>
+    <p><strong>Fig. 2</strong> — RowHammer 공격 메커니즘 설명. 빠른 반복 활성화로 인접 셀 charge 변화. 의료 데이터 비트 플립 시나리오.</p>
+    <p><strong>Fig. 3</strong> — RockHammer 방어 아키텍처. SW 모니터링 계층, 선택적 refresh 강화, 데이터 무결성 검사 3계층 블록 다이어그램.</p>
+    <p><strong>Fig. 4</strong> — 방어 전/후 비교. RowHammer 성공/실패 그래프. 감지 시간 vs 공격 활성화 횟수.</p>
+    <div class="figure-outer">
+      <a class="figure-open-link" href="https://www.semanticscholar.org/paper/b5c9e28de23652dd3f5938a3ccc7041fb02255fe" target="_blank">↗ 원문에서 그림 보기</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

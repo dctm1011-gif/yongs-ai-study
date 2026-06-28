@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>16Gb DDR5 PAT+RFM+PRHT · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">16Gb DDR5 PAT+RFM+PRHT</span>
+</div>
+<div class="article">
+  <div class="article-venue">ISSCC 2023</div>
+  <h1 class="article-title">A 1.1V 16Gb DDR5 DRAM with Probabilistic-Aggressor Tracking, Refresh-Management Functionality, Per-Row Hammer Tracking, a Multi-Step Precharge, and Core-Bias Modulation for Security and Reliability Enhancement</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">ECC</span><span class="tag">SRAM</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/21c0e526155c467ea0994421d6007974aed994ab" target="_blank">원문 보기 →</a></div>
+  <p class="opener">JEDEC DDR5 표준의 보안·신뢰성 요구사항을 실리콘으로 구현한 16 Gb DRAM — PAT, RFM, PRHT, 다단계 프리차지, Core-Bias Modulation 다섯 가지 기술로 RowHammer 실패 확률을 93.1% 줄이고 리텐션 시간을 17% 늘렸어요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">DDR5는 왜 이렇게 많은 보안·신뢰성 기능이 필요해졌나요?</h2>
+    <p>클라우드, 빅데이터, IoT 수요가 폭발하면서 DRAM 용량 밀도를 계속 높여야 하는 압박이 커졌어요. 1a nm 공정 이하로 스케일링이 진행될수록 셀 간 물리적 거리가 좁아지고 전하 용량이 줄어들어 두 가지 근본 문제가 심화돼요. 첫째는 RowHammer에요. 공격 행을 반복 활성화할 때 필요한 해머링 횟수(TRH)가 점점 줄어들면서, 이론상 공격이 더 쉬워지죠. 둘째는 리프레시 리텐션 시간이에요. 셀 커패시터가 작아질수록 전하가 빨리 새어 나가서 리프레시 간격을 더 짧게 유지해야 하고 이는 곧 성능과 전력 오버헤드로 이어져요.</p>
+    <p>JEDEC DDR5 표준은 이에 대응해 두 가지 새 기능을 DRAM 사양에 명문화했어요. RFM(Refresh Management)은 컨트롤러가 DRAM에 "지금 집중 리프레시를 실행하라"는 명령을 직접 내릴 수 있게 해요. 과거에는 컨트롤러가 행 활성화 패턴을 모두 추적해야 했는데, DDR5부터는 DRAM 스스로도 활성화 이력을 관리할 수 있어요. 이 논문은 이런 표준 요구사항을 실제 실리콘에 어떻게 통합했는지를 ISSCC라는 가장 권위 있는 회로 설계 학회에서 공개한 거예요.</p>
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>1a nm 이하 DDR5 스케일링에서 RowHammer TRH 감소와 리텐션 저하가 동시에 심화되는 이중 위기 — JEDEC 표준과 실리콘 회로 설계가 함께 진화해야 하는 시점의 핵심 논문이에요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">다섯 가지 기술이 각각 무슨 역할을 하나요?</h2>
+    <p>첫 번째는 PAT(Probabilistic Aggressor Tracking)이에요. 행 활성화 횟수를 모든 행에 대해 일일이 카운트하는 대신, 확률적 샘플링으로 "공격 행(aggressor)" 후보만 선별해서 추적해요. 공격 행을 추적하면 인접한 피해 행(victim)을 예방적으로 리프레시해서 RowHammer 비트 플립을 차단해요. SRAM 면적 오버헤드를 최소화하면서도 통계적으로 공격을 빠뜨리지 않는 확률 설계예요.</p>
+    <p>두 번째는 RFM(Refresh Management Functionality)이에요. JEDEC DDR5 표준 명령인 RFM을 DRAM 내부에서 구현한 거예요. 컨트롤러로부터 RFM 명령을 받으면 DRAM은 내부적으로 가장 위험한 행들을 선별해 즉시 예방 리프레시를 수행해요. 세 번째는 PRHT(Per-Row Hammer Tracking)로 행별로 독립적인 해머링 카운터를 두어 세밀한 추적을 가능하게 해요. PAT와 함께 쓰면 확률적 추적의 빈틈을 보완해요.</p>
+    <p>네 번째는 다단계 프리차지(Multi-Step Precharge)예요. 일반적으로 프리차지는 비트라인 전압을 한 번에 VDD/2로 끌어내리는데, 이 과정에서 발생하는 급격한 전압 변동이 인접 셀에 전기적 노이즈를 줘요. 다단계로 나눠서 서서히 내리면 커플링 노이즈가 줄어 본질적인 RowHammer 허용 마진이 개선돼요. 다섯 번째는 Core-Bias Modulation이에요. 셀 트랜지스터의 바디 바이어스를 동적으로 조절해서 리텐션 특성을 개선해요. 특히 온도가 높거나 공정 편차가 큰 셀에서 효과적이에요.</p>
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>소프트웨어(확률적 추적) + 프로토콜(RFM 표준 명령) + 회로(다단계 프리차지, 바이어스 모듈레이션) 세 레이어가 동시에 작동해 RowHammer 방어와 리텐션 개선을 동시에 달성하는 통합 설계예요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">실리콘 측정에서 어떤 수치가 나왔나요?</h2>
+    <p>1a nm 공정에서 제조된 16 Gb DDR5 칩의 실측 결과예요. RowHammer 공격에 의한 실패 확률이 93.1% 감소했고, 셀 리텐션 시간은 기존 대비 17% 향상됐어요. 동작 전압 1.1 V에서 DDR5-6400 속도(3200 MT/s × 2)를 지원하면서 보안·신뢰성 기능을 모두 수용했어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">93.1%</div><div class="stat-desc">RowHammer 공격 실패 확률 감소</div></div>
+      <div class="stat-box"><div class="stat-num">+17%</div><div class="stat-desc">셀 리텐션 시간 향상 (Core-Bias Modulation 적용)</div></div>
+      <div class="stat-box"><div class="stat-num">1.1 V</div><div class="stat-desc">동작 전압 (DDR5 표준 VDD)</div></div>
+      <div class="stat-box"><div class="stat-num">16 Gb</div><div class="stat-desc">칩 용량 (1a nm 공정)</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM도 본질적으로 DRAM 코어를 수직으로 쌓은 구조라서 RowHammer 취약성은 동일하게 존재해요. 특히 HBM4부터는 DRAM 코어 공정이 더 공격적으로 스케일링되므로 PAT, PRHT 같은 DRAM 내부 추적 기능의 필요성이 높아질 거예요. DDR5가 RFM 명령을 JEDEC 표준으로 채택한 것처럼, HBM 표준에도 유사한 온-다이 RowHammer 관리 명령이 추가될 가능성이 있어요.</p>
+    <p>다단계 프리차지는 비트라인 전압 스윙 소음을 줄이는 회로 기법인데, HBM의 고밀도 셀 어레이에서 행 간 커플링이 심해지는 상황에서도 마진 확보 수단으로 유효해요. Core-Bias Modulation 역시 HBM의 TSV 주변 셀처럼 공정 편차가 큰 영역의 리텐션 특성을 보완하는 데 적용 가능한 개념이에요.</p>
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>PAT의 확률적 특성상 극히 드문 통계적 edge case에서 RowHammer 공격이 탐지를 빠져나갈 가능성이 0은 아니에요. 보안이 절대적으로 중요한 애플리케이션에서는 PAT 단독보다 PRHT와의 조합, 그리고 ECC와의 다층 방어 체계가 필요해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — 전체 칩 아키텍처 블록다이어그램: PAT, RFM, PRHT, Multi-Step Precharge, Core-Bias Modulation 다섯 기능의 배치와 연결 관계</p>
+    <p><strong>Fig. 2</strong> — PAT(확률적 공격자 추적) 동작 원리: 샘플링 확률과 공격 탐지 통계 분포</p>
+    <p><strong>Fig. 3</strong> — 다단계 프리차지 회로도: 기존 단일 스텝 대비 비트라인 전압 과도 파형 비교</p>
+    <p><strong>Fig. 4</strong> — Core-Bias Modulation 회로와 리텐션 시간 개선 측정 결과: 온도 및 공정 코너별 분포</p>
+    <p><strong>Fig. 5</strong> — RowHammer 실패 확률 분석: 다섯 기술 적용 전후 Weibull 분포 비교 (93.1% 감소 확인)</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/21c0e526155c467ea0994421d6007974aed994ab" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

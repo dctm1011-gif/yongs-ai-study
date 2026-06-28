@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A 10-bit 50-MS/s Radiation Tolerant Split Coarse/F... · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">A 10-bit 50-MS/s Radiation Tolerant Split Coarse/F...</span>
+</div>
+<div class="article">
+  <div class="article-venue">IEEE Transactions on Very Large Scale Integration (VLSI) Systems 2025</div>
+  <h1 class="article-title">A 10-bit 50-MS/s Radiation Tolerant Split Coarse/Fine SAR ADC in 65-nm CMOS</h1>
+  <div class="article-tags"><span class="tag">Interconnect</span><span class="tag">ADC-DAC</span><span class="tag">Analog</span><span class="tag">Yield</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/4e8faa3df5ce9f10dbfd1580aed014d37f473b5b" target="_blank">원문 보기 →</a>
+  </div>
+  <p class="opener">우주 방사선도 막지 못하는 10비트 50MS/s SAR ADC, 항공우주급 방사선 내성을 65nm CMOS로 구현했어요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">왜 항공우주 환경에서 ADC는 특별한 설계가 필요할까요?</h2>
+    <p>항공우주 및 위성 시스템은 지구 대기권 밖의 극한 방사선 환경에 노출되어 있어요. 이 환경에서는 고에너지 입자들이 반도체 회로에 충돌하여 단일 이벤트 효과(SEE)나 총 이온화 선량(TID)과 같은 방사선 유발 오류를 일으켜요. 특히 아날로그-디지털 변환기(ADC)는 디지털 로직과 아날로그 회로가 혼재되어 있어 방사선에 더욱 취약한 구조를 갖고 있어요. 이러한 오류는 데이터 변환의 정확도를 심각하게 저해하고 시스템 전체의 신뢰성을 떨어뜨릴 수 있어요.</p>
+    <p>SAR(Successive Approximation Register) ADC는 저전력, 소면적, 중간 속도 특성 덕분에 다양한 응용 분야에서 널리 사용되어요. 하지만 SAR ADC를 방사선 환경에서 사용하려면 비교기, 래치, 플립플롭 등 주요 회로 블록의 방사선 내성을 강화해야 해요. 기존의 방사선 경화 설계(RHBD) 기법들은 면적 및 전력 오버헤드가 크거나, SEE와 준안정성(metastability)을 동시에 해결하지 못하는 한계가 있었어요. 따라서 시스템과 회로 레벨을 동시에 고려하는 통합 방사선 경화 설계 방법론이 필요한 상황이에요.</p>
+
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>방사선 환경에서 SAR ADC의 SEE 오류와 준안정성을 동시에 감지하고 수정하기 위해, 시스템 수준의 분할 일반/미세 아키텍처와 회로 수준의 경화 기법을 함께 적용하는 통합 접근법이 필요해요. 기존 단일 레벨 대응으로는 항공우주급 신뢰성 요건을 만족하기 어렵다는 것이 이 연구의 출발점이에요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">어떻게 분할 일반/미세 아키텍처로 방사선 내성을 구현했을까요?</h2>
+    <p>이 논문은 새로운 분할 일반(Coarse)/미세(Fine) 비동기 SAR ADC 아키텍처를 제안해요. 이 구조는 변환 과정을 일반 단계와 미세 단계로 분리하여, 방사선으로 인한 비트 오류가 발생했을 때 해당 단계만 재변환할 수 있는 중복 알고리즘을 구현해요. SEE 오류 감지 체계로는 LSB 주기 기반의 마지막 비트 주기(LBC) 감지와 임계값 트리거 방식의 램프 생성기를 활용한 준안정성 감지(MD)를 공동 설계하여 적용했어요. LBC 감지는 SAR 변환의 마지막 비트 결정 시간을 모니터링하여 비정상적인 동작을 빠르게 포착해요.</p>
+    <p>회로 레벨에서는 방사선 경화 래치 비교기와 D 플립플롭(DFF)을 설계에 통합했어요. 래치 비교기는 SEE에 취약한 내부 노드를 보호하기 위해 강화된 드라이빙 능력과 균형 잡힌 레이아웃을 적용했어요. DFF는 TMR(Triple Modular Redundancy)이나 DICE 셀 기반의 경화 플립플롭 기법을 활용하여 단일 입자 충돌로 인한 비트 반전을 억제해요. 전체 설계는 TSMC 65nm CMOS 공정에서 구현되었으며, ADC 코어 면적 0.0875mm²와 2.79mW 소비전력의 컴팩트한 설계를 달성했어요.</p>
+
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>분할 일반/미세 SAR 아키텍처를 통해 방사선 오류가 발생한 변환 단계만 선택적으로 재수행함으로써, 전체 변환을 반복하는 기존 방식 대비 속도와 전력 효율을 유지하면서 오류 정정 능력을 확보했어요. LBC 감지와 준안정성 감지를 결합한 공동 설계 방식이 SEE 대응의 핵심 혁신 포인트예요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">실제 방사선 조사 테스트에서 얼마나 효과적인 성능을 보였을까요?</h2>
+    <p>프로토타입 ADC는 100krad(Si)의 TID 조사 후에도 정상적인 10비트 변환 기능을 유지함을 확인했어요. 레이저 SEE 테스트에서는 방사선 경화 설계가 적용되지 않은 기준 설계 대비 90% 이상의 SEE 억제 효과를 보여주었어요. 50MS/s의 변환 속도에서 1.2V 단일 전원으로 동작하며, 면적과 전력 측면에서도 경쟁력 있는 수치를 달성했어요. 시스템 및 회로 레벨의 이중화 기법 조합이 방사선 내성과 변환 성능 사이의 균형을 효과적으로 달성했음을 입증했어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">100krad(Si)</div><div class="stat-desc">TID 조사 후에도 정상 동작이 확인된 총 이온화 선량 한계값</div></div>
+      <div class="stat-box"><div class="stat-num">90% 이상</div><div class="stat-desc">레이저 SEE 테스트에서 방사선 경화 설계로 달성한 단일 이벤트 오류 억제율</div></div>
+      <div class="stat-box"><div class="stat-num">0.0875mm²</div><div class="stat-desc">TSMC 65nm CMOS 공정에서 구현된 ADC 코어 면적 (소비전력 2.79mW, 50MS/s)</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM 및 DRAM 설계자 관점에서 이 논문은 고속 인터페이스와 ADC가 결합되는 온칩 데이터 변환 블록의 방사선 내성 설계에 직접적인 시사점을 제공해요. HBM의 PHY 레이어나 온칩 모니터링 회로에 포함되는 ADC는 우주 응용이나 고방사선 산업 환경에서도 신뢰성이 요구되며, 이 논문의 분할 일반/미세 SAR 아키텍처는 면적 오버헤드를 최소화하면서 오류 내성을 확보하는 실용적 방법을 제시해요. 특히 LBC 감지 기반의 오류 감지 체계는 기존 ECC나 패리티 기반 오류 정정과 상호 보완적으로 활용될 수 있어요.</p>
+    <p>반도체 회로 설계에서 준안정성 문제는 방사선 환경이 아니더라도 고속 클록 도메인 교차 회로에서 항상 중요한 이슈예요. 이 논문에서 제안한 램프 생성기 기반 준안정성 감지 기법은 HBM의 크로스 도메인 인터페이스나 DLL/PLL 회로의 신뢰성 향상에도 응용 가능한 아이디어를 제공해요. 또한 방사선 경화 래치 비교기 설계 기법은 HBM의 고속 감지 증폭기(sense amplifier) 설계에서 노이즈 내성 및 프로세스 변동 내성을 높이는 데 참고할 수 있어요.</p>
+
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>이 논문의 방사선 경화 기법은 면적과 전력 오버헤드를 수반하므로, 면적 집약적인 HBM 셀 어레이 주변 회로에 직접 적용할 경우 설계 마진을 사전에 면밀히 검토해야 해요. 또한 100krad(Si)의 TID 내성은 일부 극한 우주 응용(수 Mrad 이상 요구)에는 부족할 수 있으며, 보다 공격적인 방사선 환경에서는 추가적인 경화 기법이 필요할 수 있어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/4e8faa3df5ce9f10dbfd1580aed014d37f473b5b" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Loaded Dice (PrISM) RowHammer Defense · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Loaded Dice (PrISM)</span>
+</div>
+<div class="article">
+  <div class="article-venue">2026</div>
+  <h1 class="article-title">Loaded Dice: Solving the Non-Selection Problem for Scalable Probabilistic RowHammer Defense</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">ECC</span></div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://www.semanticscholar.org/paper/21c792f13b8a8119e937fc2c49676fa81652be9c" target="_blank">원문 보기 →</a>
+  </div>
+  <p class="opener">확률적 RowHammer 방어의 치명적 약점인 "non-selection problem"을 SHQ(Sampling History Queue)로 해결한 PrISM은 PRAC 대비 70배 낮은 성능 오버헤드를 달성해요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">확률적 방어의 역설: 왜 "안 뽑히는 게" 문제가 될까요?</h2>
+    <p>RowHammer 방어는 크게 두 계열이에요. 첫 번째는 counter-based(PRAC, TRR 등): 각 행의 활성화 횟수를 세고, 임계값에 도달하면 인접 행을 refresh해요. 정확하지만 행당 카운터 셀이 필요해서 면적 오버헤드가 크고, DDR5 타이밍을 늘려 성능을 떨어뜨려요. 두 번째는 probabilistic(PARA, MINT 등): 행이 활성화될 때 일정 확률 p로 인접 행을 refresh해요. 카운터가 필요 없어서 오버헤드가 낮지만, 공격자가 악용할 수 있어요.</p>
+    <p>확률적 방어의 치명적 약점이 "non-selection problem"이에요. 공격자가 RowHammer를 시도할 때, 운 좋게 (또는 의도적으로) 항상 확률 p에서 "선택 안 됨"에 해당하면, 방어가 발동하지 않아요. 예를 들어 p=0.01이면, 1000번 활성화 중 한 번도 선택 안 될 확률이 (0.99)^1000 ≈ 4.3%예요. 임계값이 낮아질수록 이 문제가 더 심각해져요. MINT는 이를 해결하기 위해 refresh 비율을 높이는데, 그러면 공격 없을 때도 불필요한 refresh가 많이 발생해서 메모리 대역폭을 낭비해요.</p>
+    <div class="insight blue">
+      <div class="insight-label">논문의 출발점</div>
+      <p>확률적 방어의 딜레마: p를 낮추면 오버헤드는 줄지만 non-selection 위험 증가, p를 높이면 안전하지만 불필요한 refresh 폭증. "Loaded Dice"는 이 딜레마를 히스토리 기반 편향 확률로 해결해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">PrISM: Sampling History Queue가 어떻게 동작하나요?</h2>
+    <p>PrISM(Probabilistic Refresh via Interleaved Sampling and Mitigation)의 핵심은 SHQ(Sampling History Queue)예요. 이것은 작은 큐(deque)로, 최근에 샘플링됐지만 아직 mitigation(refresh)이 완료되지 않은 행 주소를 추적해요. 동작 방식은 이래요: ① 행이 활성화될 때 확률 p로 샘플링 → SHQ에 저장, ② 다음 활성화 창(window)에서 같은 행이 또 샘플링되면 SHQ에서 이미 기록을 발견 → 이 행이 반복적으로 활성화되고 있다는 신호, ③ SHQ에서 기존 기록이 발견된 행은 추가 mitigation 요청.</p>
+    <p>이것이 "Loaded Dice" 비유예요. 처음엔 공정한 주사위처럼 확률 p로 샘플링하지만, SHQ에 기록이 있는 행은 "편향된(loaded)" 주사위처럼 다음 창에서 더 높은 확률로 처리돼요. 기존 Alert Back-Off 프로토콜(DDR5 PRAC)을 활용해서 DRAM 칩 수정 없이 구현할 수 있어요. DRAM 어레이에 행당 카운터를 추가할 필요가 없고, 은행당 625B SRAM만 있으면 돼요.</p>
+    <div class="insight green">
+      <div class="insight-label">핵심 아이디어</div>
+      <p>한 창에서 샘플링됐지만 완화 못한 행을 SHQ에 저장 → 다음 창에서 그 행이 다시 보이면 "위험 신호" → 추가 mitigation 발동. 지속적으로 hammer하는 행만 추가 완화가 발동돼서, 불필요한 refresh 없이 보안을 확보해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">PRAC와 MINT 대비 얼마나 좋아요?</h2>
+    <p>임계값 500에서 PRAC는 14% 평균 속도 저하가 발생하는 반면, PrISM은 단 0.2%예요. 70배 차이예요. 임계값 250으로 낮아져도 MINT의 10.7% 대비 PrISM은 1.5%로 7.1배 낮아요. DRAM 어레이 수정이 전혀 없고, 행당 카운터가 없어요. 컨트롤러 쪽에 은행당 625B SRAM만 추가하면 되고, 이는 이전 counter-based in-DRAM 방어 대비 1~2배 적은 하드웨어예요. 코드는 오픈소스로 공개돼 있어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">0.2%</div><div class="stat-desc">성능 오버헤드 (임계값 500, PRAC 14% 대비)</div></div>
+      <div class="stat-box"><div class="stat-num">7.1×</div><div class="stat-desc">MINT 대비 성능 개선 (임계값 250)</div></div>
+      <div class="stat-box"><div class="stat-num">625B</div><div class="stat-desc">은행당 필요 SRAM</div></div>
+      <div class="stat-box"><div class="stat-num">0</div><div class="stat-desc">DRAM 어레이 수정 필요 없음</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM은 DDR5와 달리 PRAC를 표준으로 채택하지 않았지만, 향후 HBM4/5에서 RowHammer 방어 표준이 강화될 가능성이 높아요. HBM의 특수 구조(짧은 wordline, 많은 bank per die)를 고려하면, PRAC 방식은 bank당 카운터 업데이트 오버헤드가 더 크게 작용해요. PrISM처럼 경량 확률적 방어를 HBM 컨트롤러(호스트 측)에 구현하면 DRAM 다이 수정 없이 보안을 강화할 수 있어요.</p>
+    <p>특히 HBM을 AI 가속기와 결합할 때 RowHammer 보안은 중요해요. AI 가속기에서 model weight가 메모리에 오래 상주하기 때문에, 반복적 접근 패턴(특정 레이어 가중치를 반복 읽기)이 accidentally hammer 패턴과 구별하기 어려운 경우가 있어요. PrISM의 SHQ 방식은 False positive(정상 접근을 공격으로 오판)를 낮게 유지해서 이 문제에도 유리해요.</p>
+    <div class="insight yellow">
+      <div class="insight-label">주의할 점</div>
+      <p>SHQ 크기가 제한적이어서, 동시에 여러 행이 hammer되는 복수 공격자 시나리오에서 SHQ overflow가 발생할 수 있어요. 또한 공격자가 SHQ 구조를 알면, 의도적으로 SHQ를 포화시키는 adaptive 공격이 가능해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — Non-selection problem 설명 다이어그램. 여러 창에 걸쳐 hammer row가 샘플링 안 되는 시나리오. MINT가 이를 해결하기 위해 refresh rate를 높이는 overhead 그래프.</p>
+    <p><strong>Fig. 2</strong> — PrISM SHQ 동작 흐름. 샘플링 → SHQ 저장 → 다음 창 재발견 → Alert Back-Off 통한 추가 mitigation 요청 시퀀스 다이어그램.</p>
+    <p><strong>Fig. 3</strong> — 임계값별 성능 오버헤드 비교. PRAC vs MINT vs PrISM. x축: RH threshold, y축: 메모리 접근 속도 저하.</div>
+    <p><strong>Fig. 4</strong> — 하드웨어 면적 비교. 은행당 SRAM 사용량. PrISM 625B vs 기존 counter-based in-DRAM 방어 1~2배 작음.</p>
+    <div class="figure-outer">
+      <a class="figure-open-link" href="https://www.semanticscholar.org/paper/21c792f13b8a8119e937fc2c49676fa81652be9c" target="_blank">↗ 원문에서 그림 보기</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

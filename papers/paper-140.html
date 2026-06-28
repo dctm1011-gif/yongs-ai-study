@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Marvell custom HBM routing and signal integrity an... · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Marvell custom HBM routing and signal integrity an...</span>
+</div>
+<div class="article">
+  <div class="article-venue">Electronic Components and Technology Conference 2026</div>
+  <h1 class="article-title">Marvell custom HBM routing and signal integrity analysis</h1>
+  <div class="article-tags"><span class="tag">HBM</span><span class="tag">DRAM</span><span class="tag">Packaging</span><span class="tag">Interface</span><span class="tag">Interconnect</span><span class="tag">Yield</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/09d9c1aa56f71b8bf92e4703d5f1c6c3c721f90b" target="_blank">원문 보기 →</a>
+  </div>
+  <p class="opener">인공 지능(AI) 및 고성능 컴퓨팅(HPC) 워크로드가 확장됨에 따라 고대역폭 메모리(HBM) 인터페이스는 DRAM 기능보다는 패키지 상호 연결 제한으로 인해 점점 더 제약을 받고 있습니다. 기존 JEDEC HBM 아키텍처는 견고한 패드 피치, 브레이크아웃 토폴로지 및 해안가 깊이를 적용하는 넓고 표준화된 PHY 인터페이스에 의존하므로 긴 인터포저 채널, ...</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">이 논문은 무엇을 다루나요?</h2>
+    <p>인공 지능(AI) 및 고성능 컴퓨팅(HPC) 워크로드가 확장됨에 따라 고대역폭 메모리(HBM) 인터페이스는 DRAM 기능보다는 패키지 상호 연결 제한으로 인해 점점 더 제약을 받고 있습니다. 기존 JEDEC HBM 아키텍처는 견고한 패드 피치, 브레이크아웃 토폴로지 및 해안가 깊이를 적용하는 넓고 표준화된 PHY 인터페이스에 의존하므로 긴 인터포저 채널, 높은 라우팅 밀도, 메인 ASIC 다이의 대규모 PHY 영역 소비 및 금속 레이어 수가 빠르게 증가합니다. 고급 데이터 속도에서 이러한 PHY 기반 제약은 삽입 손실, 누화 및 제조 가능성 문제를 악화시켜 지속 가능한 대역폭 확장을 제한합니다. 이 문서에서는 표준 JEDEC PHY를 HBM 스택 내의 맞춤형 로직 베이스 다이에 구현된 고밀도 D2D(die-to-die) 인터페이스로 대체하는 Marvell의 맞춤형 HBM(cHBM) 아키텍처를 제시합니다. 인터포저 채널을 줄이는 것 외에도 이 접근 방식은 메인 ASIC 다이의 JEDEC PHY 및 컨트롤러 영역을 제거하여 컴퓨팅 및 가속기를 위한 더 높은 로직 밀도를 구현하는 동시에 맞춤형 메모리 측 기능을 HBM 기본 다이에 통합할 수 있도록 합니다. 메모리 장치 확장 또는 시스템 대역폭 집계에 초점을 맞춘 이전 HBM 작업과 달리, 이 연구에서는 인터포저 라우팅, 채널 길이 및 신호 무결성(SI) 동작을 정량화하고 여러 인터포저 기술에 걸쳐 cHBM을 JEDEC 기반 HBM과 직접 비교합니다. 제안된 cHBM 아키텍처는 인터페이스 해변 깊이를 3.3mm에서 1.1mm(~67%)로 줄여 동일한 선 폭/간격(2μm/2μm) 및 라우팅 레이어 수를 유지하면서 채널 길이를 단축합니다. 전파 시뮬레이션에서는 CHBM 삽입 손실이 -1.28dB 미만이고 반사 손실이 16GHz에서 -15dB보다 우수하며 근단 및 원단 누화가 -30dB 미만임을 보여줍니다. 32Gbps 양방향 작동의 시간 영역 분석은 0.278V/0.75UI(FEXT) 및 0.269V/0.72UI(NEXT)의 아이 오프닝을 제공하여 다이-다이 요구 사항을 초과합니다. 이 설계는 32Gbps에서 1024개 채널을 사용하여 32.8Tbps(4.1TB/s)를 달성합니다. 이는 16Gbps의 2048비트 JEDEC 인터페이스와 동일합니다. 인터페이스 폭이나 메인 다이 PHY 영역을 두 배로 늘리지 않고 Gbps. 이러한 결과는 맞춤형 PHY 및 패키징 공동 최적화를 통해 실제 전기 및 제조 가능 한도 내에서 확장 가능한 대역폭 증가, 향상된 영역 효율성 및 향상된 통합 유연성을 가능하게 함을 보여줍니다.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">핵심 방법론</h2>
+    <p class="auto-note">⚙ "이 논문 상세 분석해줘"라고 하면 Claude가 채워드립니다.</p>
+    <div class="article-links" style="margin-top:12px"><a class="article-link primary" href="https://www.semanticscholar.org/paper/09d9c1aa56f71b8bf92e4703d5f1c6c3c721f90b" target="_blank">원문 보기 →</a>
+  </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">주요 결과</h2>
+    <p class="auto-note">⚙ "이 논문 상세 분석해줘"라고 하면 Claude가 채워드립니다.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p class="auto-note">⚙ "이 논문 상세 분석해줘"라고 하면 Claude가 채워드립니다.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/09d9c1aa56f71b8bf92e4703d5f1c6c3c721f90b" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HiRA: Hidden Row Activation for Reducing Refresh Latency · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">HiRA: Hidden Row Activation</span>
+</div>
+<div class="article">
+  <div class="article-venue">arXiv 2022</div>
+  <h1 class="article-title">HiRA: Hidden Row Activation for Reducing Refresh Latency of Off-the-Shelf DRAM Chips</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">Low-Power</span><span class="tag">Refresh</span></div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://arxiv.org/abs/2209.10198v1" target="_blank">원문 보기 →</a>
+    <a class="article-link" href="https://arxiv.org/pdf/2209.10198v1" target="_blank">PDF →</a>
+  </div>
+  <p class="opener">기존 DRAM 칩을 전혀 수정하지 않고도 리프레시 동작 중에 숨겨진 행 활성화를 병렬로 수행해 리프레시 레이턴시를 최대 51.4%까지 줄이는 HiRA 기법이에요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">DRAM 리프레시가 왜 점점 더 큰 성능 병목이 되고 있나요?</h2>
+    <p>DRAM은 커패시터에 전하를 담아 데이터를 저장하는데, 시간이 지나면 전하가 누설되어 데이터가 사라져요. 이를 막기 위해 주기적으로 모든 행을 재충전하는 리프레시 동작이 반드시 필요하고, JEDEC 표준상 DDR4/5 기준 최대 64ms마다 전체 행을 한 번씩 리프레시해야 해요. 문제는 리프레시 동작 동안 DRAM이 다른 메모리 요청을 처리할 수 없다는 거예요. tRFC(리프레시 사이클 타임) 동안 메모리는 완전히 멈추게 돼요.</p>
+    <p>이 문제가 앞으로 더 심각해지는 이유가 두 가지예요. 첫 번째, DRAM 밀도 증가예요. 칩 안에 행이 많아질수록 64ms 안에 처리해야 할 리프레시 횟수가 늘어나고, 각 리프레시 커맨드의 tRFC도 늘어나요. 이미 고용량 DRAM에서 tRFC가 수백 나노초에 달해요. 두 번째, RowHammer 방어를 위한 타겟 리프레시(TRR, Targeted Row Refresh)예요. RowHammer 공격이 심해질수록 의심 행 인근을 자주 리프레시해야 하는데, 이 "예방 리프레시"도 정기 리프레시와 마찬가지로 메모리를 일시 정지시켜요. 따라서 미래 고밀도 DRAM에서 리프레시로 인한 성능 손실은 단순 계산으로도 두 자릿수 퍼센트에 달할 수 있어요.</p>
+    <p>이 문제를 해결하려는 시도가 여럿 있었지만 대부분 DRAM 내부 회로 수정이나 새로운 인터페이스 표준을 필요로 했어요. 기존 시장에 이미 수십억 개가 배포된 "off-the-shelf(기성품)" DRAM에는 적용할 수 없다는 뜻이에요. HiRA는 이 제약을 깬 최초의 방식이에요.</p>
+    <div class="insight blue">
+      <div class="insight-label">논문의 출발점</div>
+      <p>DRAM 리프레시는 불가피하지만, 리프레시 중에 같은 뱅크의 다른 행을 활성화하는 것이 "어떤 조건 하에서는" 안전하다는 새로운 관찰이 HiRA의 출발점이에요. 기존 DRAM 내부 회로의 물리적 특성을 외부(메모리 컨트롤러)에서 영리하게 활용하는 방식이에요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">리프레시 중에 어떻게 다른 행을 활성화할 수 있나요?</h2>
+    <p>HiRA의 핵심 관찰은 이래요. DRAM 뱅크 내부에서 두 행이 서로 다른 전하 복원 회로(sense amplifier row)에 연결돼 있다면, 한 행이 리프레시(활성화→프리차지)를 수행하는 동안 다른 행이 별도로 활성화될 수 있어요. DRAM 뱅크 내부는 여러 서브어레이 그룹으로 나뉘고, 각 그룹은 독립적인 전하 복원 경로를 가지거든요. 리프레시 대상 행과 활성화 대상 행이 서로 다른 그룹에 속한다면, 물리적으로 둘은 서로를 방해하지 않아요.</p>
+    <p>문제는 이게 실제 기성품 DRAM에서 어떻게 작동하느냐예요. HiRA는 메모리 컨트롤러에서 리프레시 커맨드(REF)를 발행한 직후, tRCD(행 활성화 지연) 타임이 지나기 전에 ACT(행 활성화) 커맨드를 발행하는 "HiRA 활성화 시퀀스"를 정의해요. 이 시퀀스를 써서 실제 56%의 기성품 DRAM에서 동일 뱅크 내 32% 행에 대해 HiRA가 안정적으로 작동함을 실험으로 확인했어요.</p>
+    <p>이를 활용하는 HiRA-MC(HiRA Memory Controller)는 메모리 요청 스케줄러에 두 가지 규칙을 추가해요. 첫째, 리프레시 시간 중에 HiRA-compatible한 행에 대한 대기 중인 메모리 요청을 우선 처리해요. 둘째, RowHammer 예방 리프레시도 가능하면 정기 리프레시와 겹쳐서 HiRA로 처리해요. 이렇게 두 리프레시를 병렬화하면 전체 레이턴시를 51.4% 줄일 수 있어요.</p>
+    <div class="insight green">
+      <div class="insight-label">핵심 아이디어</div>
+      <p>DRAM 칩 수정 없이 메모리 컨트롤러의 커맨드 시퀀싱만으로 리프레시 병렬화를 구현했어요. 이미 배포된 수십억 개 DRAM에 펌웨어 업데이트만으로 적용 가능하고, JEDEC 표준 변경도 필요 없어요. 관찰→실험 검증→컨트롤러 구현으로 이어지는 "발견 기반 설계"의 좋은 사례예요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">HiRA를 적용하면 실제로 얼마나 빨라지나요?</h2>
+    <p>HiRA-MC를 시스템 수준에서 평가한 결과, 미래 고밀도 DRAM에서 효과가 특히 두드러졌어요. 정기 리프레시에 의한 성능 저하는 12.6% 개선됐고, RowHammer 예방 리프레시에 의한 성능 저하는 최대 3.73배나 개선됐어요. RowHammer 취약성이 심한 미래 DRAM일수록 HiRA의 이점이 커지는 구조예요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">51.4%</div><div class="stat-desc">두 리프레시 병렬화 시 전체 레이턴시 감소</div></div>
+      <div class="stat-box"><div class="stat-num">56%</div><div class="stat-desc">실험한 기성품 DRAM 칩 중 HiRA 지원 비율</div></div>
+      <div class="stat-box"><div class="stat-num">32%</div><div class="stat-desc">지원 칩에서 HiRA 병렬화 가능한 행 비율</div></div>
+      <div class="stat-box"><div class="stat-num">12.6%</div><div class="stat-desc">정기 리프레시 성능 저하 개선 (시스템 수준)</div></div>
+      <div class="stat-box"><div class="stat-num">3.73×</div><div class="stat-desc">RowHammer 예방 리프레시 성능 저하 개선</div></div>
+      <div class="stat-box"><div class="stat-num">0</div><div class="stat-desc">DRAM 칩 수정 횟수 (순수 컨트롤러 기법)</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HiRA의 아이디어는 HBM에서 특히 흥미로워요. HBM은 DRAM 다이가 여러 채널로 나뉘고 각 채널이 독립적인 뱅크와 서브어레이를 가지는 복잡한 구조예요. HiRA가 요구하는 "서로 다른 전하 복원 회로에 연결된 두 행" 조건은 HBM의 세분화된 서브어레이 구조에서 더 많은 경우에 성립할 가능성이 있어요. 즉 HiRA 적용 가능한 행 비율이 일반 DRAM보다 더 높을 수 있어요.</p>
+    <p>HBM의 메모리 컨트롤러는 SoC 안에 직접 통합되기 때문에 컨트롤러 수정이 훨씬 쉬워요. 외부 DDR 컨트롤러처럼 표준 인터페이스를 지켜야 하는 제약이 없고, SoC 설계 단계에서 HiRA-MC 로직을 커스터마이징할 수 있어요. HBM 리프레시 스케줄링에 HiRA 원리를 통합하면, AI 가속기 같이 메모리 집약적인 워크로드에서 리프레시 레이턴시 히든(latency hiding) 효과를 극대화할 수 있어요.</p>
+    <p>특히 RowHammer 예방 리프레시 오버헤드가 3.73배 개선된다는 결과는 HBM에서도 중요해요. HBM 기반 AI 가속기는 대역폭 집중 워크로드를 돌리므로 행 활성화 빈도가 매우 높고, RowHammer 방어용 리프레시가 자주 발동될 수 있어요. HiRA로 이 오버헤드를 줄이면 AI 연산 처리량에 직접적인 이익이 생겨요.</p>
+    <div class="insight yellow">
+      <div class="insight-label">주의할 점</div>
+      <p>HiRA가 작동하는 "서로 다른 전하 복원 회로" 조건을 충족하는 행 쌍을 런타임에 파악하려면 DRAM 내부 행-서브어레이 매핑 정보가 필요해요. 이 정보는 DRAM 제조사가 공개하지 않는 경우가 많아서, 실제 구현에서는 실험적 프로파일링이나 제조사 협력이 필요해요. HBM에서도 동일한 제약이 있고, TSV 구조로 인해 전기적 특성이 달라질 수 있어서 추가 검증이 필요해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — DRAM 리프레시 부하 증가 예측 그래프: DRAM 밀도가 증가하고 RowHammer RHTB가 낮아질수록 리프레시 오버헤드가 기하급수적으로 증가함을 보여주는 예측 곡선이에요. 미래 DRAM에서 문제의 심각성을 시각화해요.</p>
+    <p><strong>Fig. 2</strong> — HiRA 동작 원리 모식도: 하나의 DRAM 뱅크 내에서 서로 다른 전하 복원 경로에 연결된 두 행(리프레시 대상 행 A, 활성화 대상 행 B)이 동시에 동작하는 물리 구조를 설명해요.</p>
+    <p><strong>Fig. 3</strong> — HiRA 커맨드 시퀀스 타이밍 다이어그램: REF 커맨드 이후 어느 시점에 ACT를 발행해야 HiRA가 안전하게 작동하는지, tRFC와 tRCD의 관계를 타임라인으로 보여줘요.</p>
+    <p><strong>Fig. 4</strong> — 실험 결과: 56%의 기성품 DRAM에서 HiRA 작동 확인. 행별로 HiRA 적용 가능 여부를 히트맵으로 표시해 32% 행이 병렬화 가능함을 보여줘요.</p>
+    <p><strong>Fig. 5</strong> — HiRA-MC 시스템 수준 성능 평가: 다양한 메모리 집약 워크로드에서 기준 대비 HiRA-MC의 처리량 향상을 막대 그래프로 비교해요. RowHammer 방어 리프레시가 많은 시나리오에서 최대 3.73배 이점이 극적으로 나타나요.</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://arxiv.org/abs/2209.10198v1" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

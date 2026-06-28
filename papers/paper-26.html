@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SoK: RowHammer Defenses via Streaming Algorithms · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">SoK: RowHammer Defenses via Streaming Algorithms</span>
+</div>
+<div class="article">
+  <div class="article-venue">arXiv 2025</div>
+  <h1 class="article-title">SoK: Systematizing a Decade of Architectural RowHammer Defenses Through the Lens of Streaming Algorithms</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">ECC</span><span class="tag">Security</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/7de79a0dba7a041437236563786245171131affc" target="_blank">원문 보기 →</a></div>
+  <p class="opener">10년간 발표된 48편의 RowHammer 방어 아키텍처를 스트리밍 알고리즘(Count-Min Sketch, Frequency Estimation 등)과의 수학적 동치로 체계화하고, 이론적 하한과 최적 방어 설계 가이드를 도출한 SoK(Systematization of Knowledge) 논문이에요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">10년간의 RowHammer 연구가 왜 아직도 정리가 안 됐나요?</h2>
+    <p>RowHammer는 2014년 Kim 등이 IEEE S&P에서 학술적으로 공개한 이후 10년이 지났어요. 그 사이 수십 편의 방어 논문이 나왔지만, 이 분야는 여전히 혼란스러운 상태예요. 각 논문이 자신만의 용어와 위협 모델을 정의하다 보니, A 논문이 B 논문보다 좋다는 비교 자체가 어렵고, 어떤 방어가 이론적으로 충분한지 판단하는 기준도 없어요. 더 심각한 문제는 여러 논문이 사실상 같은 아이디어를 재발명하면서도 서로 연결고리를 찾지 못하고 있다는 거예요.</p>
+    <p>이 논문은 이 혼란을 정리하는 SoK(Systematization of Knowledge) 논문이에요. SoK는 특정 새 기술을 제안하는 게 아니라, 기존 연구들을 일관된 프레임워크로 재해석하고 체계화하는 학술 장르예요. 이 논문의 핵심 프레임워크는 "스트리밍 알고리즘"이에요. 스트리밍 알고리즘은 무한히 흘러오는 데이터 스트림에서 제한된 메모리로 빈도 높은 아이템을 찾는 알고리즘 분야인데, 이게 RowHammer 방어와 수학적으로 완전히 동치라는 놀라운 관찰이에요.</p>
+    <p>생각해보면 직관적이에요. RowHammer 방어의 핵심은 "어떤 행이 최근 얼마나 자주 활성화됐는가"를 추적하는 거예요. 이건 정확히 스트리밍 알고리즘의 "빈도 추정(frequency estimation)" 문제예요. DRAM 내부 카운터들은 메모리를 최소화하면서 빈도 높은 행을 찾는 스트리밍 데이터 구조예요. Count-Min Sketch, 저장소 샘플링(Reservoir Sampling), Sticky Sampling 같은 잘 알려진 스트리밍 알고리즘들이 RowHammer 방어에 그대로 대응돼요.</p>
+    <div class="insight blue">
+      <div class="insight-label">논문의 출발점</div>
+      <p>RowHammer 방어 = 행 활성화 빈도가 높은 행을 찾는 문제 = 스트리밍 알고리즘의 빈도 추정 문제. 이 수학적 동치가 확립되면, 스트리밍 알고리즘 분야의 40년 이론 기반(이론적 최솟값, 최적 알고리즘, 오류 확률 분석)을 RowHammer 방어에 그대로 가져올 수 있어요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">스트리밍 알고리즘 렌즈로 보면 뭐가 달라지나요?</h2>
+    <p>논문은 먼저 48편의 아키텍처 RowHammer 방어를 4개 대분류와 세부 분류로 정리한 분류 체계(taxonomy)를 제시해요. 각 논문이 암묵적으로 어떤 스트리밍 알고리즘 변형을 구현하고 있는지 식별하고, 여러 논문이 사실상 같은 알고리즘을 재발명한 경우를 명시적으로 지적해요. 이 과정에서 일부 논문이 이미 알려진 스트리밍 알고리즘의 서브파티마 변형임을 밝혀요.</p>
+    <p>가장 중요한 이론적 기여는 RowHammer 방어의 이론적 하한 도출이에요. "RHTB 이하로 어떤 행도 RHTB회 이상 활성화되지 않도록 보장하는 가장 좋은 방어는 얼마나 많은 스토리지와 연산을 필요로 하는가?"라는 질문에 수학적 답을 줘요. 기존 많은 논문이 이 하한을 모르고 과도하게 많은 카운터를 사용하거나, 반대로 하한 이하의 스토리지로 정확한 보장이 불가능한 방식을 제안했어요.</p>
+    <p>실용적 기여도 있어요. 두 개의 실무자 가이드를 제공하는데, 첫 번째는 주어진 RHTB, 프로세스 기술, 스토리지 유형에 맞는 최적 알고리즘 선택 가이드예요. 두 번째는 새 방어를 설계할 때 기존 스트리밍 알고리즘을 참조하도록 권장하는 가이드예요. 마지막으로 Reservoir Sampling과 Sticky Sampling이 기존 관련 방어에서 놓쳤던 이론적 보안 보장을 제공할 수 있음을 보여주며, 특히 Sticky Sampling은 수학적 보안 보장이 가능한 최초의 샘플링 기반 방어임을 증명해요.</p>
+    <div class="insight green">
+      <div class="insight-label">핵심 아이디어</div>
+      <p>기존 DRAM 방어 논문들이 몰랐던 이론적 토대를 제공해요. "내 방어가 충분한가?"라는 질문에 직관이나 시뮬레이션이 아닌 수학적 증명으로 답할 수 있게 됐어요. Count-Min Sketch = 기존 카운터 기반 방어, Sticky Sampling = 보안 보장이 있는 샘플링 방어라는 등식이 핵심이에요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">이 SoK가 현장에 어떤 실질적 의미를 가져다주나요?</h2>
+    <p>48편 논문을 체계화한 분류 체계는 이 분야의 "지도"가 돼요. 새 방어를 제안하는 연구자는 이 분류 체계에서 자신의 위치를 찾고, 이미 유사한 접근이 있는지 쉽게 확인할 수 있어요. 또한 Sticky Sampling의 도입으로, 기존 PARA 같은 샘플링 방어에는 없었던 수학적 보안 보장이 가능해졌어요. 아래 수치들은 이 SoK가 얼마나 광범위한 범위를 커버하는지 보여줘요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">48편</div><div class="stat-desc">분석 대상 아키텍처 RowHammer 방어 논문 수</div></div>
+      <div class="stat-box"><div class="stat-num">10년</div><div class="stat-desc">2014~2024년, SoK가 커버하는 연구 기간</div></div>
+      <div class="stat-box"><div class="stat-num">4개</div><div class="stat-desc">제안된 대분류 방어 카테고리 (카운터/샘플링/혼합/기타)</div></div>
+      <div class="stat-box"><div class="stat-num">∃ 하한</div><div class="stat-desc">RowHammer 방어 최적화의 이론적 하한 최초 도출</div></div>
+      <div class="stat-box"><div class="stat-num">Sticky S.</div><div class="stat-desc">수학적 보안 보장이 있는 최초의 샘플링 기반 방어 식별</div></div>
+      <div class="stat-box"><div class="stat-num">2개</div><div class="stat-desc">실무자 가이드 (알고리즘 선택 + 신규 설계 참조)</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM 보안 아키텍처를 설계하는 엔지니어에게 이 SoK는 필독 참고문헌이에요. HBM 컨트롤러에 RowHammer 방어를 추가할 때, 어떤 방어 방식이 이론적으로 충분한지 판단하는 기준이 없으면 결국 경험칙에 의존하게 돼요. 이 논문이 제시하는 스트리밍 알고리즘 프레임워크와 이론적 하한을 알면, "이 카운터 개수로 충분한가?", "이 샘플링 확률로 보안 보장이 가능한가?"라는 질문에 수학적으로 답할 수 있어요.</p>
+    <p>HBM의 DRAM 셀은 고밀도화로 인해 RHTB가 일반 DRAM보다 낮아질 가능성이 있어요. RHTB가 낮아질수록 이론적 하한 이상의 스토리지 오버헤드가 필요해지는데, 이 트레이드오프를 정량적으로 계산하는 데 이 SoK가 직접 활용돼요. 제안된 실무자 가이드를 따르면, HBM의 주어진 서브어레이 당 카운터 메모리 예산 내에서 최적의 방어 알고리즘을 선택할 수 있어요.</p>
+    <p>또한 HBM이 탑재되는 AI 가속기 SoC에서 DRAM 내 방어(in-DRAM)와 컨트롤러 내 방어(in-controller)를 어떻게 나눌지 결정할 때도 이 분류 체계가 유용해요. Count-Min Sketch 계열은 하드웨어 구현이 간단해서 DRAM 내부 구현에 적합하고, 더 복잡한 스트리밍 알고리즘은 컨트롤러 쪽에서 구현하는 하이브리드 방식을 체계적으로 설계할 수 있어요.</p>
+    <div class="insight yellow">
+      <div class="insight-label">주의할 점</div>
+      <p>이 SoK는 "아키텍처 방어"만 다루고, DRAM 회로 레벨(셀 강화, 공정 변경)이나 소프트웨어 레벨(OS 페이지 격리) 방어는 범위 밖이에요. 또한 이론적 하한은 최악의 공격 시나리오를 가정한 수치라서, 실제 워크로드에서는 하한보다 낮은 스토리지로도 충분할 수 있어요. 이론적 보장과 실용적 성능의 갭을 이해하고 적용해야 해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — RowHammer 방어 분류 체계 트리: 48편 논문을 카운터 기반 / 샘플링 기반 / 혼합 / 기타로 나눈 계층 트리예요. 각 잎 노드에 해당 논문들이 나열되고, 같은 스트리밍 알고리즘을 구현한 논문들이 같은 클러스터로 묶여요.</p>
+    <p><strong>Fig. 2</strong> — 스트리밍 알고리즘 ↔ RowHammer 방어 매핑 테이블: Count-Min Sketch, Lossy Counting, Reservoir Sampling, Sticky Sampling 각각이 어떤 RowHammer 방어 논문에 대응되는지 교차 참조 테이블이에요.</p>
+    <p><strong>Fig. 3</strong> — 이론적 하한 곡선: RHTB 값에 따라 필요한 최소 카운터 스토리지 크기를 그래프로 보여줘요. RHTB가 낮아질수록 필요 스토리지가 비선형적으로 증가하는 경향이 시각화돼 있어요.</p>
+    <p><strong>Fig. 4</strong> — Sticky Sampling 보안 보장 증명 개요: Sticky Sampling이 어떻게 "RHTB회 이상 활성화된 모든 행을 확률 1-δ로 탐지"함을 수학적으로 보장하는지 핵심 단계를 요약한 다이어그램이에요.</p>
+    <p><strong>Fig. 5</strong> — 실무자 알고리즘 선택 가이드 플로우차트: 주어진 RHTB, 스토리지 예산, 반응 시간 요구사항을 입력받아 최적 스트리밍 알고리즘을 추천하는 의사결정 트리예요. HBM 컨트롤러 설계 시 직접 활용 가능한 실용적 도구예요.</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/7de79a0dba7a041437236563786245171131affc" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DIVIDE: In-DRAM Cache RowHammer Defense · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">DIVIDE: In-DRAM Cache RowHammer Defense</span>
+</div>
+<div class="article">
+  <div class="article-venue">IEEE Transactions on Computers 2025</div>
+  <h1 class="article-title">DIVIDE: Efficient RowHammer Defense via In-DRAM Cache-Based Hot Data Isolation</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">ECC</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/b6052cc8f06dab276b235612c361447ac07aa0e6" target="_blank">원문 보기 →</a></div>
+  <p class="opener">자주 접근되는 "hot data"를 DRAM 내부 캐시로 이동 격리해서 RowHammer의 반복 접근 패턴 자체를 차단하고, 동시에 평균 접근 지연도 줄이는 1석 2조의 방어 구조 DIVIDE를 제안해요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">기존 RowHammer 방어는 왜 비효율적인가요?</h2>
+    <p>RowHammer 방어의 근본적인 딜레마는 공격의 특성 자체에 있어요. 공격자는 특정 행(aggressor)을 반복 활성화해서 인접 victim row에 비트 플립을 유발하는데, 방어는 이 "반복"을 감지하고 victim을 리프레시해야 해요. 그런데 DRAM 공정이 미세화될수록 RowHammer 임계값(TRH)이 낮아져서 — 지난 10년간 약 30배 감소 — 방어가 더 자주, 더 빠르게 반응해야 하는 부담이 커졌어요.</p>
+    <p>기존 방어(TRR, PARA, PRISM 등)는 세 가지 한계를 공유해요. 첫째, 희생 행 리프레시(victim row refresh)는 시간이 많이 걸리고 메모리 대역폭을 잡아먹어요. 둘째, aggressor 행의 실제 활성화 횟수를 줄이지 않기 때문에 방어 이벤트가 자주 발생해요. 셋째, "왜 이 행이 자꾸 접근되나" — 즉 hot data의 의미를 전혀 고려하지 않아요.</p>
+    <p>이 논문의 핵심 관찰은 "자주 접근되는 행(hot data)"이 RowHammer 공격의 근본 원인인 동시에, 캐시로 옮기면 성능도 좋아지는 최적화 기회라는 점이에요. 공격 차단과 성능 향상을 같은 메커니즘으로 달성할 수 있어요.</p>
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>RowHammer의 aggressor row = 자주 접근되는 hot data. 이걸 DRAM 내부 캐시로 이동하면, 원래 위치의 행은 더 이상 반복 활성화되지 않아서 공격이 차단되고, 동시에 캐시 히트로 성능도 올라가요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">In-DRAM 캐시로 어떻게 RowHammer를 막나요?</h2>
+    <p>DIVIDE(Data Isolation via In-DRAM Cache)는 2단계 보호 구조예요. 1단계는 In-DRAM 캐시 어레이 내부의 RowHammer 방어예요. 캐시 어레이에 옮겨진 hot data 행들은 서로 인접해 있지만, 캐시는 훨씬 작은 공간에 선별된 행만 있기 때문에 동일한 victim에 대한 반복 접근 구조 자체가 깨져요. 캐시 내부에서도 간섭이 생길 수 있지만 빈도가 훨씬 낮아서 기존 경량 방어로 충분해요.</p>
+    <p>2단계는 일반(main) 어레이의 나머지 RowHammer 위협을 처리해요. Hot data가 캐시로 이동했기 때문에 main 어레이에서는 활성화 횟수가 줄어들어요. 이 나머지 위협에 대해서는 확률적 완화(probabilistic mitigation)를 적용해요. Hot data를 캐시로 이미 분리했으므로 main 어레이에서의 방어 이벤트 빈도 자체가 감소해요.</p>
+    <p>구현 면에서 DIVIDE는 DRAM 칩 자체를 수정하지 않아요. 메모리 컨트롤러에 채널당 1 KB의 CAM(Content-Addressable Memory)만 추가하면 돼요. CAM은 hot row를 추적하고 In-DRAM 캐시로의 이동을 조율하는 테이블 역할을 해요. 이 최소한의 하드웨어 추가가 DIVIDE의 현실적인 구현 장점이에요.</p>
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>Hot data를 In-DRAM 캐시로 격리하면 main 어레이에서 반복 활성화 자체가 사라져요 — 공격의 "연료"를 차단하는 근본적 접근이에요. DRAM 칩 수정 없이 컨트롤러 측 1 KB CAM만으로 구현 가능해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">성능 오버헤드 없이 RowHammer를 막을 수 있나요?</h2>
+    <p>4코어 워크로드 시뮬레이션에서 DIVIDE는 놀라운 결과를 보여줬어요. RowHammer 방어를 하면서도 DDR4 DRAM 대비 평균 19.6%의 성능 향상을 달성했어요. In-DRAM 캐시의 hot data 히트로 평균 접근 지연이 줄어든 덕분이에요. 에너지도 평균 20.4% 절약했어요. 이는 방어 오버헤드를 캐시 효과로 상쇄하고도 남는 수준이에요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">19.6%</div><div class="stat-desc">DDR4 대비 평균 성능 향상 (4코어 워크로드, TRH=128 기준)</div></div>
+      <div class="stat-box"><div class="stat-num">20.4%</div><div class="stat-desc">DDR4 대비 평균 에너지 절약</div></div>
+      <div class="stat-box"><div class="stat-num">2.1%</div><div class="stat-desc">보호 안 된 In-DRAM 캐시 DRAM 대비 성능 오버헤드 — 방어 비용 극히 낮음</div></div>
+      <div class="stat-box"><div class="stat-num">1 KB CAM</div><div class="stat-desc">채널당 추가 하드웨어 — 컨트롤러 측 최소 면적으로 DRAM 칩 수정 불필요</div></div>
+    </div>
+    <p>TRH=128(현재 DDR5 수준보다 낮은 타이트한 조건) 시나리오에서도 DIVIDE는 확률적 완화와 결합해 완전한 보호를 제공해요. PRISM, PARA, Graphene 같은 기존 counter 기반 방어와 비교했을 때 DIVIDE는 방어 이벤트 빈도가 현저히 낮아 메모리 대역폭 손실이 적어요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM에 In-DRAM 캐시 기반 RowHammer 방어를 적용하면 어떤 효과가 있을까요?</h2>
+    <p>DIVIDE의 아이디어는 HBM에 특히 매력적으로 적용될 수 있어요. HBM은 이미 In-DRAM 캐시를 위한 "pseudo-channel" 구조나 여분 행(spare row) 공간을 갖고 있어요. HBM3E/HBM4에서 도입된 pseudo-channel 아키텍처는 일부 채널을 캐시용으로 활용하는 구조와 자연스럽게 맞아요.</p>
+    <p>HBM의 경우 모든 DRAM이 하나의 패키지에 적층되어 있기 때문에, 컨트롤러(보통 GPU 또는 AI 가속기 내)와의 거리가 매우 짧아요. 이는 CAM 기반 hot row 추적 테이블을 컨트롤러 내에 두고 실시간으로 갱신하는 데 유리해요. DDR 환경보다 레이턴시 패널티 없이 hot data 이동을 조율할 수 있어요.</p>
+    <p>AI/ML 워크로드에서 HBM은 weight/activation 데이터를 자주 반복 접근해요. 이 접근 패턴이 RowHammer의 hot row 패턴과 거의 일치해요. DIVIDE를 HBM + AI 가속기 시스템에 적용하면 RowHammer 방어와 weight 캐싱이 동시에 최적화되는 시너지를 기대할 수 있어요.</p>
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>DIVIDE는 hot data가 반복 접근되는 패턴을 전제로 해요. 랜덤 접근이 지배적인 워크로드에서는 캐시 히트율이 낮아지고, 오히려 hot data 추적·이동 오버헤드가 순 비용이 될 수 있어요. HBM 워크로드 분석을 통해 hot row 패턴이 실제로 존재하는지 먼저 확인해야 해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — DIVIDE 시스템 아키텍처: In-DRAM 캐시 어레이와 main 어레이의 관계, 컨트롤러 내 CAM 테이블 위치, 2단계 방어 구조를 한눈에 보여줘요.</p>
+    <p><strong>Fig. 2</strong> — Hot row 이동 프로세스: hot data가 main 어레이에서 캐시 어레이로 이동하는 흐름과, 이로 인해 main 어레이에서 반복 활성화 횟수가 감소하는 효과를 시각화해요.</p>
+    <p><strong>Fig. 3</strong> — 방어 이벤트 빈도 비교: DIVIDE vs. 기존 방어(TRR, PARA, Graphene, PRISM)의 victim row refresh 발생 횟수 비교. DIVIDE에서 방어 이벤트가 현저히 줄어드는 것을 보여줘요.</p>
+    <p><strong>Fig. 4</strong> — 워크로드별 성능·에너지 결과: SPEC CPU 벤치마크 등 다양한 워크로드에서 DIVIDE의 성능 향상과 에너지 절약 분포. 대부분의 워크로드에서 양의 성능 향상을 기록해요.</p>
+    <p><strong>Fig. 5</strong> — CAM 크기 민감도 분석: 채널당 CAM 크기를 줄여도 성능·방어 효과가 크게 떨어지지 않음을 보여줘요. 1 KB가 sweet spot임을 정량적으로 확인해요.</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/b6052cc8f06dab276b235612c361447ac07aa0e6" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

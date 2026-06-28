@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A 0.385-pJ/bit 10-Gb/s TIA-Terminated Di-Code Tran... · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">A 0.385-pJ/bit 10-Gb/s TIA-Terminated Di-Code Tran...</span>
+</div>
+<div class="article">
+  <div class="article-venue">IEEE International Solid-State Circuits Conference 2022</div>
+  <h1 class="article-title">A 0.385-pJ/bit 10-Gb/s TIA-Terminated Di-Code Transceiver with Edge-Delayed Equalization, ECC, and Mismatch Calibration for HBM Interfaces</h1>
+  <div class="article-tags"><span class="tag">HBM</span><span class="tag">DRAM</span><span class="tag">PHY</span><span class="tag">Interface</span><span class="tag">Interconnect</span><span class="tag">Analog</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/66d8cf64b89541de13b7612668d89b6e8a8601f3" target="_blank">원문 보기 →</a>
+  </div>
+  <p class="opener">빅데이터 요구 사항을 충족하기 위해 병렬 DRAM I/O의 대역폭이 증가했습니다. 고대역폭 메모리(HBM) 인터페이스는 최대 1024개의 핀을 사용하며 클록 주파수가 증가함에 따라 전력 소비도 증가했습니다[1]. 그림 28.5.1은 네 가지 HBM 인터페이스 접근 방식을 보여줍니다. 기존 HBM 인터페이스는 전력 소비를 줄이기 위해 수신기에서 종단이 없는 ...</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">이 논문은 무엇을 다루나요?</h2>
+    <p>빅데이터 요구 사항을 충족하기 위해 병렬 DRAM I/O의 대역폭이 증가했습니다. 고대역폭 메모리(HBM) 인터페이스는 최대 1024개의 핀을 사용하며 클록 주파수가 증가함에 따라 전력 소비도 증가했습니다[1]. 그림 28.5.1은 네 가지 HBM 인터페이스 접근 방식을 보여줍니다. 기존 HBM 인터페이스는 전력 소비를 줄이기 위해 수신기에서 종단이 없는 구조를 사용합니다. 더 높은 데이터 속도를 위해 수신기 측 종단을 사용하여 신호 무결성을 향상시킬 수 있습니다. 그러나 이로 인해 긴 연속 동일 숫자(CID)에 큰 정전류가 발생합니다. 이 정적 전류를 줄이기 위해 HBM 인터페이스에서 디코드 신호를 사용할 수 있습니다. 그럼에도 불구하고 등화, 오프셋 전압, 직렬 커패시터 구현 제약과 같은 기존 다이코드 인터페이스에는 여전히 설계 제약이 있습니다[2]. 특히 직렬 커패시터는 주파수 의존성과 기생 용량을 유발하여 주파수 범위를 저하시킵니다. 본 논문에서는 그림 28.5.1과 같이 TIA(trans-impedance-amplifier) ​​종단을 사용하는 커패시터가 없는 고효율 다이코드 트랜시버를 구현합니다. 디코드 신호의 DC 밸런싱을 위해 조정 가능한 인버터 기반 TIA가 채택되었습니다. 중간 레벨 전송 중 정적 전류를 최소화하기 위해 공통 모드 전압 교정 기술이 제안됩니다. 수신기에서 샘플링 마진을 늘리고 다이코드 출력의 공통 모드 전압을 유지하기 위해 다이코드 신호 전달을 위한 여러 등화 기술이 제안되었습니다. 또한, 비트 오류를 ​​줄이기 위해 di-code 신호 기반 오류 정정 회로(ECC)가 구현되었습니다.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">핵심 방법론</h2>
+    <p class="auto-note">⚙ "이 논문 상세 분석해줘"라고 하면 Claude가 채워드립니다.</p>
+    <div class="article-links" style="margin-top:12px"><a class="article-link primary" href="https://www.semanticscholar.org/paper/66d8cf64b89541de13b7612668d89b6e8a8601f3" target="_blank">원문 보기 →</a>
+  </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">주요 결과</h2>
+    <p class="auto-note">⚙ "이 논문 상세 분석해줘"라고 하면 Claude가 채워드립니다.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p class="auto-note">⚙ "이 논문 상세 분석해줘"라고 하면 Claude가 채워드립니다.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/66d8cf64b89541de13b7612668d89b6e8a8601f3" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

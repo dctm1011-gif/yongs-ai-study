@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Self-Managing DRAM 논문 분석 · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Self-Managing DRAM</span>
+</div>
+<div class="article">
+  <div class="article-venue">arXiv 2022</div>
+  <h1 class="article-title">Self-Managing DRAM: A Low-Cost Framework for Enabling Autonomous and Efficient in-DRAM Operations</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">RowHammer</span><span class="tag">Refresh</span><span class="tag">Architecture</span></div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://arxiv.org/abs/2207.13358v9" target="_blank">원문 보기 →</a>
+    <a class="article-link" href="https://arxiv.org/pdf/2207.13358v9" target="_blank">PDF →</a>
+  </div>
+  <p class="opener">DRAM 칩이 스스로 리프레시, RowHammer 방어, 메모리 스크러빙을 알아서 처리하면 어떨까요? 인터페이스에 ACT_NACK 신호 하나만 추가해서, 새로운 유지보수 기능을 추가할 때마다 수년씩 걸리는 JEDEC 표준화 과정을 건너뛸 수 있어요.</p>
+
+  <div class="section">
+    <div class="section-label">I · Introduction</div>
+    <h2 class="section-title">왜 DRAM 유지보수가 점점 힘들어지고 있나요?</h2>
+    <p>DRAM은 그냥 꽂아두면 되는 부품이 아니에요. 주기적으로 리프레시해야 데이터가 사라지지 않고, RowHammer 공격을 막아야 하고, ECC 오류가 쌓이기 전에 스크러빙도 해야 해요. 칩 공정이 미세화될수록 이 세 가지 문제가 모두 심해지고 있어요.</p>
+    <p>문제는 이런 유지보수 기능을 개선하려면 DRAM 인터페이스 표준을 바꿔야 하는데, 이게 너무 오래 걸린다는 거예요. DDR3→DDR4에 5년, DDR4→DDR5에 8년이 걸렸어요. 이 속도로는 DRAM 신뢰성 문제의 빠른 진행 속도를 따라잡기 어려워요.</p>
+    <div class="insight red">
+      <div class="insight-label">근본 문제</div>
+      <p>지금까지는 새로운 유지보수 메커니즘을 도입하려면 항상 DRAM 인터페이스 자체를 수정해야 했어요. REFsb(Same Bank Refresh), RFM(Refresh Management), 스크러빙 커맨드 등이 모두 인터페이스 변경을 요구했어요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">II · Background</div>
+    <h2 class="section-title">DRAM 내부 구조를 먼저 이해해야 해요</h2>
+    <p>DRAM은 채널 → 랭크 → 뱅크 → 서브어레이 순으로 계층 구조를 가져요. 서브어레이는 수많은 커패시터 셀들이 행과 열로 배열된 2D 구조예요. 데이터를 읽으려면 ACT 커맨드로 특정 행(row)을 열어서 로우 버퍼(row buffer)에 올려야 하고, 이 과정에서 tRCD, tRAS, tRP 같은 타이밍 파라미터가 적용돼요.</p>
+    <p>리프레시는 커패시터에 저장된 전하가 서서히 누설되기 때문에 필요해요. DDR5 기준으로 tREFI(리프레시 간격)마다 전체 DRAM을 순차적으로 리프레시하는데, 이 동안에는 메모리 접근이 블락돼서 성능 손실이 생겨요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">III · Motivation</div>
+    <h2 class="section-title">세 가지 유지보수 문제와 기존 해결책의 한계</h2>
+    <div class="insight red">
+      <div class="insight-label">문제 1 · DRAM 리프레시</div>
+      <p>DDR5에서 SBR(Same Bank Refresh)을 도입해서 개선했지만, 여전히 인터페이스 변경이 필요했어요. 더 나아가 행마다 리텐션 시간이 다른 걸 활용한 가변 속도 리프레시(variable-rate refresh)는 아직 표준화가 안 됐어요.</p>
+    </div>
+    <div class="insight red">
+      <div class="insight-label">문제 2 · RowHammer</div>
+      <p>DDR4 TRR, DDR5 RFM 등 새로운 방어 메커니즘이 나올 때마다 인터페이스가 바뀌었어요. 특히 RowHammer 취약 해머 횟수(nRH)가 세대마다 줄어들면서, 더 강력한 방어가 필요하지만 표준화 속도가 따라가지 못하고 있어요.</p>
+    </div>
+    <div class="insight red">
+      <div class="insight-label">문제 3 · 메모리 스크러빙</div>
+      <p>DDR5 온다이 ECC와 인-DRAM 스크러빙은 또 새로운 커맨드와 인터페이스 변경을 요구했어요. 오류가 쌓이기 전에 주기적으로 수정해야 하는데, 이것도 표준화 지연으로 실용적 구현이 늦어지고 있어요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">IV · SMD Design</div>
+    <h2 class="section-title">ACT_NACK: 딱 하나의 인터페이스 변경</h2>
+    <p>SMD의 핵심 아이디어는 놀랍도록 단순해요. DRAM 칩이 유지보수 중인 영역에 대한 접근 요청을 거부할 수 있게, ACT_NACK 신호 하나만 추가하는 거예요. 메모리 컨트롤러가 ACT 커맨드를 보냈을 때, DRAM이 "이 영역은 지금 유지보수 중이니 나중에 다시 시도해"라고 말할 수 있어요.</p>
+    <div class="insight green">
+      <div class="insight-label">Lock Region 메커니즘</div>
+      <p>각 뱅크를 여러 개의 Lock Region으로 나눠요. 유지보수 중인 Region에만 Lock을 걸고, 나머지 Region은 정상적으로 접근 가능해요. 칩 내부 Lock Region Bitvector(LRB)가 어느 영역이 잠겨 있는지 추적해요.</p>
+    </div>
+    <p>ACT_NACK를 받은 메모리 컨트롤러는 ACT Retry Interval(ARI = 62.5ns)만큼 기다렸다가 다시 시도해요. 유지보수 완료 후엔 자연스럽게 접근이 허용돼요. 분석 결과 ARI=62.5ns가 세 가지 유지보수 메커니즘 모두에서 최적이었어요.</p>
+
+    <h2 class="section-title" style="margin-top:28px">멀티칩 랭크에서의 ACT_NACK 발산 문제</h2>
+    <p>한 랭크에 여러 칩이 있을 때, 각 칩이 독립적으로 유지보수를 하면 어떤 칩은 ACT를 허용하고 어떤 칩은 ACT_NACK를 보내는 상황이 생겨요. 이 "발산" 문제를 세 가지 정책으로 해결해요.</p>
+    <div class="insight">
+      <div class="insight-label">세 가지 해결 정책</div>
+      <p><strong>Precharge Policy</strong>: 부분적으로 열린 행을 즉시 닫고 다른 영역에 접근을 시도해요. <strong>Wait Policy</strong>: 모든 칩이 수락할 때까지 계속 재시도해요. <strong>Hybrid Policy</strong>: 큐에 다른 요청이 많으면 Precharge, 없으면 Wait 방식을 써요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">V · Maintenance Mechanisms</div>
+    <h2 class="section-title">SMD 위에서 돌아가는 세 가지 유지보수</h2>
+    <div class="insight green">
+      <div class="insight-label">SMD-FR / SMD-VR (리프레시)</div>
+      <p>SMD-FR은 고정 속도 리프레시예요. SMD-VR은 행마다 리텐션 시간이 다른 걸 이용해서, 강한 행은 4배 덜 리프레시해요. Bloom Filter로 약한 행들을 추적하고 이 행들만 매번 리프레시하면 전력이 크게 줄어요.</p>
+    </div>
+    <div class="insight green">
+      <div class="insight-label">SMD-PRP / SMD-DRP (RowHammer 방어)</div>
+      <p>PRP는 확률적 방어(PARA 방식 인-DRAM 구현), DRP는 결정론적 방어(Graphene 방식)예요. 두 방식 모두 RowHammer 공격 감지 시 인접 행을 자동으로 리프레시해요. 기존에는 컨트롤러가 해야 했던 일을 DRAM 칩이 스스로 해요.</p>
+    </div>
+    <div class="insight green">
+      <div class="insight-label">SMD-MS (메모리 스크러빙)</div>
+      <p>온다이 ECC 수정 후 칩 내부에서 바로 쓰기를 완료해요. 컨트롤러가 수정된 데이터를 다시 받아서 쓸 필요가 없어서, 스크러빙 오버헤드가 크게 줄어요. 행 하나 스크러빙에 ~350ns가 걸리는데, 이건 DDR4 리프레시 지연과 비슷해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">VIII · Results</div>
+    <h2 class="section-title">실험 결과: 오버헤드가 거의 없어요</h2>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">4.1%</div><div class="stat-desc">평균 성능 향상 (4코어 집약 워크로드)</div></div>
+      <div class="stat-box"><div class="stat-num">4.3%</div><div class="stat-desc">평균 에너지 감소</div></div>
+      <div class="stat-box"><div class="stat-num">1.1%</div><div class="stat-desc">칩 면적 오버헤드</div></div>
+    </div>
+    <p>20개 메모리 집약 4코어 워크로드에서 DDR4 대비 평균 4.1% 성능 향상을 달성했어요. 면적 오버헤드는 1.1%에 불과해요. ACT_NACK 신호 하나로 이렇게 큰 개선을 얻을 수 있다는 게 이 연구의 핵심 성과예요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 관점에서의 시사점</h2>
+    <p>HBM도 DRAM 기반이니까 리프레시, RowHammer, 스크러빙 문제에서 자유롭지 않아요. HBM은 3D 스태킹으로 TSV를 쓰기 때문에 신호 추가가 더 어렵지만, SMD의 아이디어는 적용 가능해요.</p>
+    <p>특히 AI 가속기용 HBM에서는 메모리 컨트롤러가 복잡한 유지보수 로직을 담당하는 대신, DRAM 칩 자체가 자율적으로 처리하는 방향이 시스템 단순화에 도움이 돼요. 컨트롤러 설계 복잡도를 낮추면서도 신뢰성은 유지할 수 있으니까요.</p>
+    <div class="insight">
+      <div class="insight-label">오픈 소스</div>
+      <p>모든 구현이 github.com/CMU-SAFARI/SelfManagingDRAM에 공개되어 있어요. 실제로 실험해볼 수 있어요.</p>
+    </div>
+  </div>
+
+<hr>
+<div class="section">
+  <div class="section-label">논문 그림</div>
+  <h2 class="section-title">Figure 갤러리</h2>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2207.13358v9/x1.png" alt="Figure 1" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 1 : DRAM rank, chip, bank, and subarray organization</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2207.13358v9/x2.png" alt="Figure 2" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 2 : SMD bank organization in DRAM chip</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2207.13358v9/x3.png" alt="Figure 3" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 3 : Handling ACT_NACK in MC</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2207.13358v9/x4.png" alt="Figure 4" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 4 : SMD-based Fixed-Rate Refresh (SMD-FR) Operation</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2207.13358v9/x5.png" alt="Figure 5" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 5 : Variable Refresh (SMD-VR) Operation.</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2207.13358v9/x6.png" alt="Figure 6" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 6 : Probabilistic RowHammer Protection (SMD-PRP).</div>
+    </div>
+    <div class="figure-outer"><a class="figure-open-link" href="https://arxiv.org/abs/2207.13358v9" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div></div>
+</div>
+<div id="term-tooltip-global"></div>
+<script src="tooltip.js"></script>
+</body>
+</html>

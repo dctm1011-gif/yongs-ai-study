@@ -1,0 +1,807 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Yong's AI Study</title>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2c1f14">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="StudyHub">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<style>
+/* ── 기차 히어로 ── */
+@keyframes heroZoomIn {
+  from { transform: scale(1.05); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+@keyframes heroParallax {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-3px); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.train-hero {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+  background: #1a110a;
+  animation: heroZoomIn 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.train-hero-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  opacity: 0.8;
+  display: block;
+  background: #2a2218;
+  filter: brightness(1.1) contrast(1.15) saturate(1.1);
+  animation: heroParallax 6s ease-in-out infinite;
+}
+.train-hero-img[alt=""] {
+  /* 이미지 로드 실패 시 숨기기 */
+}
+.train-hero-dim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.72) 100%);
+}
+.hero-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 20px 24px 24px;
+  animation: fadeInUp 1s ease-out 0.3s both;
+}
+.hero-overlay .page-icon { font-size: 40px; margin-bottom: 8px; display: block; }
+.hero-overlay .page-title {
+  font-size: 30px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  margin-bottom: 4px;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+}
+.hero-overlay .page-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.75);
+  text-shadow: 0 1px 6px rgba(0,0,0,0.8);
+}
+
+/* ── Hero 하단 그라데이션 & 연결 영역 ── */
+.hero-transition {
+  height: 60px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0) 100%);
+  position: relative;
+  overflow: hidden;
+}
+.hero-transition::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 100%);
+  pointer-events: none;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: 0.2s ease out fade-out; }
+::view-transition-new(root) { animation: 0.25s ease in-out slide-in; }
+@keyframes fade-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes slide-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+body {
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: linear-gradient(to bottom, #fff 0%, #faf9f7 100%);
+  color: #37352f;
+  font-size: 15px;
+  padding-bottom: env(safe-area-inset-bottom);
+  line-height: 1.5;
+}
+
+/* ── 레이아웃 ── */
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+/* ── 커버 영역 ── */
+.cover {
+  height: 8px;
+  background: linear-gradient(90deg, #2383e2 0%, #6c47ff 100%);
+}
+
+/* ── 페이지 헤더 ── */
+.page-icon { font-size: 52px; margin-bottom: 12px; display: block; }
+
+.page-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #37352f;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.page-desc {
+  font-size: 14px;
+  color: #9b9a97;
+  margin-bottom: 32px;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #e9e9e7;
+  margin: 28px 0;
+}
+
+/* ── 섹션 레이블 ── */
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #9b9a97;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+/* ── 프로젝트 그룹 ── */
+.projects-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.project-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.group-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 4px 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #37352f;
+}
+
+.group-header-icon { font-size: 18px; }
+
+.group-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-left: 14px;
+  border-left: 2px solid #e9e9e7;
+  margin-left: 10px;
+}
+
+.project-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1px solid #e9e9e7;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.15s, transform 0.12s, box-shadow 0.12s;
+  cursor: pointer;
+}
+
+.project-card:hover { background: #f7f6f3; border-color: #d3d1cb; }
+.project-card:active { transform: scale(0.97); box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+
+.project-card.add {
+  border-style: dashed;
+  color: #9b9a97;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.project-card.add:hover { background: #f7f6f3; color: #37352f; }
+
+.card-icon {
+  font-size: 28px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f0ef;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.card-content { flex: 1; min-width: 0; }
+
+.card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #37352f;
+  margin-bottom: 2px;
+}
+
+.card-sub {
+  font-size: 12px;
+  color: #9b9a97;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.badge {
+  font-size: 11px;
+  background: #eef3fd;
+  color: #2383e2;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.badge-date {
+  font-size: 11px;
+  color: #9b9a97;
+}
+
+/* ── 최근 활동 ── */
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f1f0ef;
+}
+
+.activity-item:last-child { border-bottom: none; }
+
+.activity-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2383e2;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+.activity-text { font-size: 13px; color: #37352f; line-height: 1.5; }
+.activity-date { font-size: 11px; color: #9b9a97; margin-top: 2px; }
+
+/* ── 통계 행 ── */
+.stats-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.stat-box {
+  flex: 1;
+  background: #f7f6f3;
+  border-radius: 8px;
+  padding: 14px 16px;
+  border: 1px solid #e9e9e7;
+}
+
+.stat-num {
+  font-size: 24px;
+  font-weight: 700;
+  color: #37352f;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: #9b9a97;
+  margin-top: 2px;
+}
+
+@media (max-width: 500px) {
+  .page { padding: 32px 16px 60px; }
+  .page-title { font-size: 26px; }
+  .page-icon { font-size: 40px; }
+}
+
+/* ── 채팅 버튼 ── */
+.fab {
+  position: fixed;
+  bottom: 28px;
+  right: 20px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #2383e2;
+  color: #fff;
+  font-size: 22px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(35,131,226,.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .15s, box-shadow .15s;
+  z-index: 300;
+}
+.fab:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(35,131,226,.5); }
+
+/* ── 채팅 모달 ── */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.35);
+  z-index: 400;
+  align-items: flex-end;
+  justify-content: center;
+}
+.modal-backdrop.open { display: flex; }
+
+.modal {
+  background: #fff;
+  border-radius: 16px 16px 0 0;
+  width: 100%;
+  max-width: 680px;
+  padding: 20px 20px 32px;
+  box-shadow: 0 -4px 30px rgba(0,0,0,.12);
+  animation: slideUp .2s ease;
+}
+@keyframes slideUp { from { transform: translateY(60px); opacity:0; } to { transform: none; opacity:1; } }
+
+.modal-handle {
+  width: 36px;
+  height: 4px;
+  background: #e9e9e7;
+  border-radius: 2px;
+  margin: 0 auto 16px;
+}
+.modal-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #37352f;
+  margin-bottom: 4px;
+}
+.modal-sub {
+  font-size: 12px;
+  color: #9b9a97;
+  margin-bottom: 16px;
+}
+.modal textarea {
+  width: 100%;
+  border: 1px solid #e9e9e7;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 14px;
+  font-family: inherit;
+  color: #37352f;
+  resize: none;
+  outline: none;
+  line-height: 1.5;
+  min-height: 100px;
+  transition: border-color .15s;
+}
+.modal textarea:focus { border-color: #2383e2; }
+.modal-actions { display: flex; gap: 8px; margin-top: 10px; }
+.btn-ask {
+  flex: 1;
+  background: #2383e2;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s;
+}
+.btn-ask:hover { background: #1a6bc5; }
+.btn-cancel {
+  background: #f1f0ef;
+  color: #37352f;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 18px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.toast {
+  display: none;
+  position: fixed;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #37352f;
+  color: #fff;
+  font-size: 13px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  z-index: 500;
+  white-space: nowrap;
+}
+
+.reload-btn{position:fixed;top:10px;right:12px;width:32px;height:32px;border-radius:50%;background:#f1f0ef;border:1px solid #e9e9e7;color:#9b9a97;font-size:17px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:300;transition:background .15s,transform .3s}
+.reload-btn:active{background:#e9e9e7;transform:rotate(360deg)}
+.notif-btn{position:fixed;top:10px;right:52px;width:32px;height:32px;border-radius:50%;background:#f1f0ef;border:1px solid #e9e9e7;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:300;transition:background .15s}
+.notif-btn:active{background:#e9e9e7}
+
+</style>
+</head>
+<body>
+
+<button class="reload-btn" onclick="location.href=location.pathname+'?_='+Date.now()" title="캐시 새로고침">↻</button>
+<button id="notif-btn" class="notif-btn" onclick="toggleNotification()" title="알림 설정">🔔</button>
+
+<div class="train-hero">
+  <img class="train-hero-img" src="/train-bg.jpg?v=1" alt="train background">
+  <div class="train-hero-dim"></div>
+  <div class="hero-overlay">
+    <span class="page-icon">🧠</span>
+    <h1 class="page-title">Yong's AI Study</h1>
+    <p class="page-desc">HBM Circuit Design · 개인 연구 허브</p>
+  </div>
+</div>
+
+<div class="hero-transition"></div>
+
+<div class="page">
+
+  <div class="section-label">프로젝트</div>
+  <div class="projects-grid">
+
+    <div class="project-group">
+      <div class="group-header">
+        <span class="group-header-icon">📄</span>
+        논문자동화
+      </div>
+      <div class="group-cards">
+        <a class="project-card" href="history/index.html">
+          <div class="card-icon">🗂️</div>
+          <div class="card-content">
+            <div class="card-title">논문 분류</div>
+            <div class="card-sub">HBM · 회로설계 논문 자동 검색 · 번역 · 분류</div>
+          </div>
+          <div class="card-meta">
+            <span class="badge" id="badge-paper-today">오늘 남은 20개</span>
+            <span class="badge-date" id="badge-paper-date">2026-06-20</span>
+          </div>
+        </a>
+        <a class="project-card" href="history/index.html#columns">
+          <div class="card-icon">✍️</div>
+          <div class="card-content">
+            <div class="card-title">논문 정리</div>
+            <div class="card-sub">좋아요한 논문 · Claude 원문해석 + 리뷰</div>
+          </div>
+          <div class="card-meta">
+            <span class="badge" id="badge-colread">— / — 읽음</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="project-group">
+      <div class="group-header">
+        <span class="group-header-icon">🇬🇧</span>
+        영어공부
+      </div>
+      <div class="group-cards">
+        <a class="project-card" href="english/index.html">
+          <div class="card-icon">📚</div>
+          <div class="card-content">
+            <div class="card-title">배운내용정리</div>
+            <div class="card-sub">Lily 대화 · 단어별 설명 + YouTube · 문법 교정</div>
+          </div>
+          <div class="card-meta">
+            <span class="badge" id="badge-english-words" style="background:#e0f2fe;color:#0369a1;">단어 6개</span>
+            <span class="badge-date" id="badge-english-date">2026-06-25</span>
+          </div>
+        </a>
+        <a class="project-card" href="english/index.html#tab-quiz">
+          <div class="card-icon">✏️</div>
+          <div class="card-content">
+            <div class="card-title">퀴즈</div>
+            <div class="card-sub">의미 맞추기 · 빈칸 채우기 · 상황 퀴즈</div>
+          </div>
+          <div class="card-meta">
+            <span class="badge" id="badge-english-quiz" style="background:#ede9fe;color:#7c3aed;">문제 8개</span>
+          </div>
+        </a>
+        <a class="project-card" href="english/review.html">
+          <div class="card-icon">🧠</div>
+          <div class="card-content">
+            <div class="card-title">복습</div>
+            <div class="card-sub">Spaced Repetition · Anki 방식 · 전체 단어 복습</div>
+          </div>
+          <div class="card-meta">
+            <span class="badge" id="badge-review-due" style="background:#f5f3ff;color:#7c3aed;">단어 14개</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="project-group">
+      <div class="group-header">
+        <span class="group-header-icon">📝</span>
+        TOEFL 연습
+      </div>
+      <div class="group-cards">
+        <a class="project-card" href="toefl/index.html#reading">
+          <div class="card-icon">📖</div>
+          <div class="card-content">
+            <div class="card-title">Reading</div>
+            <div class="card-sub">지문 읽고 문제 풀기</div>
+          </div>
+          <div class="card-meta">
+            <span class="badge" id="badge-toefl-reading" style="background:#fff7ed;color:#c2410c;">문제 2개</span>
+          </div>
+        </a>
+        <a class="project-card" href="toefl/index.html#writing">
+          <div class="card-icon">✍️</div>
+          <div class="card-content">
+            <div class="card-title">Writing</div>
+            <div class="card-sub">30분 에세이 + AI 피드백</div>
+          </div>
+          <div class="card-meta">
+            <span class="badge" id="badge-toefl-writing" style="background:#fff7ed;color:#c2410c;">30분</span>
+          </div>
+        </a>
+        <a class="project-card" href="toefl/index.html#speaking">
+          <div class="card-icon">🎤</div>
+          <div class="card-content">
+            <div class="card-title">Speaking</div>
+            <div class="card-sub">준비 15초 · 답변 45초</div>
+          </div>
+          <div class="card-meta">
+            <span class="badge" id="badge-toefl-speaking" style="background:#fff7ed;color:#c2410c;">60초</span>
+          </div>
+        </a>
+        <a class="project-card" href="toefl/index.html#listening">
+          <div class="card-icon">🎧</div>
+          <div class="card-content">
+            <div class="card-title">Listening</div>
+            <div class="card-sub">TTS 듣고 문제 풀기</div>
+          </div>
+          <div class="card-meta">
+            <span class="badge" id="badge-toefl-listening" style="background:#fff7ed;color:#c2410c;">문제 2개</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="project-group">
+      <div class="group-header">
+        <span class="group-header-icon">⚙️</span>
+        자동화 리스트
+      </div>
+      <div class="group-cards">
+        <a class="project-card" href="diagrams/paper-automation.html">
+          <div class="card-icon">📊</div>
+          <div class="card-content">
+            <div class="card-title">Block diagram</div>
+            <div class="card-sub">논문정리 자동화 · 알고리즘 흐름도</div>
+          </div>
+          <div class="card-meta">
+            <span class="badge">논문정리 자동화</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="project-card add">
+      + 새 프로젝트
+    </div>
+
+  </div>
+
+
+
+
+</div>
+
+<!-- 채팅 플로팅 버튼 -->
+<button class="fab" onclick="openChat()" title="Claude에게 질문하기">💬</button>
+
+<!-- 채팅 모달 -->
+<div class="modal-backdrop" id="chatModal" onclick="closeOnBackdrop(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">💬 Claude에게 질문하기</div>
+    <div class="modal-sub">질문을 입력하면 클립보드에 복사 후 claude.ai가 열립니다. 붙여넣기(Ctrl+V)만 하세요.</div>
+    <textarea id="chatInput" placeholder="예) HBM3와 HBM2의 차이점이 뭐야?&#10;예) TSV 설계에서 thermal issue를 어떻게 해결해?"></textarea>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeChat()">취소</button>
+      <button class="btn-ask" onclick="askClaude()">Claude에게 보내기 →</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">✅ 클립보드에 복사됨 — claude.ai에서 붙여넣기 하세요</div>
+
+<script>
+function openChat() {
+  document.getElementById('chatModal').classList.add('open');
+  setTimeout(() => document.getElementById('chatInput').focus(), 200);
+}
+function closeChat() {
+  document.getElementById('chatModal').classList.remove('open');
+}
+function closeOnBackdrop(e) {
+  if (e.target === document.getElementById('chatModal')) closeChat();
+}
+function askClaude() {
+  const q = document.getElementById('chatInput').value.trim();
+  if (!q) return;
+
+  const prompt = `당신은 HBM 및 반도체 회로설계 전문가입니다. 아래 질문에 대해 전문적으로 답변해주세요.\n\n[질문]\n${q}`;
+
+  navigator.clipboard.writeText(prompt).then(() => {
+    const toast = document.getElementById('toast');
+    toast.style.display = 'block';
+    setTimeout(() => toast.style.display = 'none', 3000);
+    window.open('https://claude.ai/new', '_blank');
+    closeChat();
+    document.getElementById('chatInput').value = '';
+  }).catch(() => {
+    window.open('https://claude.ai/new', '_blank');
+    closeChat();
+  });
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeChat();
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') askClaude();
+});
+
+function _refreshBadges() {
+  const _d = new Date(); const today = `${_d.getFullYear()}-${String(_d.getMonth()+1).padStart(2,'0')}-${String(_d.getDate()).padStart(2,'0')}`;
+  const g = id => document.getElementById(id);
+
+  // 논문분류 — 오늘 남은 할당량
+  try {
+    const d = JSON.parse(localStorage.getItem('daily_' + today) || 'null') || {liked:[],deleted:[]};
+    const done = (d.liked||[]).length + (d.deleted||[]).length;
+    const left = Math.max(0, 20 - done);
+    const pb = g('badge-paper-today');
+    if (pb) {
+      if (done >= 20) { pb.textContent = '완료 ✓'; pb.style.cssText = 'background:#f0fdf4;color:#0f7b55'; }
+      else { pb.textContent = '오늘 남은 ' + left + '개'; pb.style.cssText = ''; }
+    }
+  } catch {}
+
+  // 논문정리 — 읽음 진행도
+  try {
+    const colTotal = parseInt(localStorage.getItem('col_total_count') || '63');
+    const colRead  = JSON.parse(localStorage.getItem('col_read_set') || '[]');
+    const cb = g('badge-colread');
+    if (cb) {
+      if (colRead.length >= colTotal) { cb.textContent = '완료 ✓'; cb.style.cssText = 'background:#f0fdf4;color:#0f7b55'; }
+      else { cb.textContent = colRead.length + '/' + colTotal + ' 읽음'; cb.style.cssText = ''; }
+    }
+  } catch {}
+
+  // 영어 복습
+  try {
+    const states = JSON.parse(localStorage.getItem('english_review_v1') || '{}');
+    const streak = JSON.parse(localStorage.getItem('english_streak') || '{"last":"","count":0}');
+    const due    = Object.keys(states).filter(w => !states[w].due || states[w].due <= today).length;
+    const rb = g('badge-review-due');
+    if (rb) rb.textContent = streak.last === today ? '✅ 완료' : (due > 0 ? '오늘 ' + due + '개 복습' : '복습 없음');
+  } catch {}
+
+  // 영어 단어 읽었음
+  const wBadge = g('badge-english-words');
+  if (wBadge && localStorage.getItem('english_vocab_read') === today) {
+    wBadge.textContent = '✅ 완료';
+    wBadge.style.background = '#f0fdf4';
+    wBadge.style.color = '#166534';
+  }
+
+  // 영어 퀴즈 완료
+  const qBadge = g('badge-english-quiz');
+  if (qBadge && localStorage.getItem('english_quiz_done') === today) {
+    qBadge.textContent = '✅ 완료';
+    qBadge.style.background = '#f0fdf4';
+    qBadge.style.color = '#166534';
+  }
+
+  // TOEFL 파트별 완료
+  ['reading', 'writing', 'speaking', 'listening'].forEach(p => {
+    const b = g('badge-toefl-' + p);
+    if (b && localStorage.getItem('toefl_' + p + '_' + today) === '1') {
+      b.textContent = '✅ 완료';
+      b.style.background = '#f0fdf4';
+      b.style.color = '#166534';
+    }
+  });
+}
+_refreshBadges();
+window.addEventListener('pageshow', (e) => { if (e.persisted) _refreshBadges(); });
+</script>
+<script>
+const VAPID_PUBLIC_KEY = 'BKj-p_C674vyHuTN6Jl_RDqFS4A9e6jUuOqfcKtxIBx5CNVcaYANAshwGD1Ax2BojH_R-6E8SlDmXCXZh0B27ic';
+
+function _b64ToUint8(b64) {
+  const pad = '='.repeat((4 - b64.length % 4) % 4);
+  const raw = atob((b64 + pad).replace(/-/g, '+').replace(/_/g, '/'));
+  return Uint8Array.from(raw, c => c.charCodeAt(0));
+}
+
+async function toggleNotification() {
+  if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+    alert('이 브라우저는 푸시 알림을 지원하지 않아요.'); return;
+  }
+  const reg = await navigator.serviceWorker.ready;
+  const existing = await reg.pushManager.getSubscription();
+  const btn = document.getElementById('notif-btn');
+
+  if (existing) {
+    await existing.unsubscribe();
+    await fetch('/api/push/subscribe', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ endpoint: existing.endpoint })
+    }).catch(() => {});
+    if (btn) btn.textContent = '🔔';
+    return;
+  }
+
+  const permission = await Notification.requestPermission();
+  if (permission !== 'granted') { alert('알림 권한이 거부됐어요.'); return; }
+
+  try {
+    const sub = await reg.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: _b64ToUint8(VAPID_PUBLIC_KEY)
+    });
+    await fetch('/api/push/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(sub)
+    });
+    if (btn) btn.textContent = '🔕';
+    alert('알림 설정됐어요! 매일 09:00(KST)에 알림이 와요.');
+  } catch (e) {
+    alert('알림 구독 실패: ' + e.message);
+  }
+}
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').then(async () => {
+    const btn = document.getElementById('notif-btn');
+    if (!btn || !('PushManager' in window)) return;
+    try {
+      const reg = await navigator.serviceWorker.ready;
+      const sub = await reg.pushManager.getSubscription();
+      btn.textContent = sub ? '🔕' : '🔔';
+    } catch {}
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HBM SI/PI 공동설계 논문 분석 · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">HBM SI/PI 공동설계</span>
+</div>
+<div class="article">
+  <div class="article-venue">IEEE EMC+SIPI 2023</div>
+  <h1 class="article-title">SI/PI Co-Design of 12.8 Gbps HBM I/O Interface using Bayesian Optimization for PSIJ Reduction</h1>
+  <div class="article-tags"><span class="tag">HBM</span><span class="tag">Power</span><span class="tag">Packaging</span><span class="tag">Interface</span></div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://www.semanticscholar.org/paper/c34ddf206a9ece92f0b0e7d8c79ae354bc7c9983" target="_blank">원문 보기 →</a>
+  </div>
+  <p class="opener">SI와 PI를 따로따로 최적화하면 정답이 안 나와요. 이 논문은 12.8 Gbps HBM I/O에서 인터포저 설계 파라미터, 온칩 디커플링, I/O 드라이버까지 11개를 하나의 베이지안 최적화 프레임워크로 묶어서 PSIJ를 최소화하는 방법을 보여줘요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">왜 SI와 PI를 같이 최적화해야 하나요?</h2>
+    <p>HBM I/O 인터페이스에서 PSIJ(전원 노이즈 유도 지터)는 채널 손실(SI 영역)과 PDN 임피던스(PI 영역) 양쪽에 동시에 의존해요. 신호 경로가 길면 채널 손실이 커져서 이퀄라이저 부담이 늘고, 그 이퀄라이저가 더 많은 전류를 소모해서 전원 노이즈를 키워요.</p>
+    <p>이렇게 SI와 PI가 서로 맞물려 있는데, 둘을 분리해서 각각 최적화하면 서로 상충하는 해를 구하게 돼요. "SI 최적 설계"가 "PI 최악 상황"을 만들 수도 있거든요. 그래서 공동 최적화(co-design)가 필요해요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Problem Formulation</div>
+    <h2 class="section-title">어떤 파라미터를 최적화하나요?</h2>
+    <p>이 논문은 12.8 Gbps HBM I/O에서 PSIJ에 영향을 미치는 핵심 파라미터 11개를 정의해요.</p>
+    <div class="insight blue">
+      <div class="insight-label">11개 설계 파라미터</div>
+      <p>인터포저 RLC 회로 성분, 온칩 디커플링 커패시터 값, PDN 구성 파라미터, I/O 드라이버의 회로 지연, 인터포저의 물리적 치수(크기·두께)까지요. 이 11개를 하나의 연속 공간(continuous space)으로 정의하고 최적값을 탐색해요.</p>
+    </div>
+    <p>11개 파라미터를 브루트포스로 탐색하면 경우의 수가 천문학적이에요. 특히 PSIJ 추정 자체가 SPICE 시뮬레이션을 기반으로 하기 때문에, 한 번 계산할 때마다 시간이 많이 걸려요. 그래서 효율적인 최적화 알고리즘이 필요해요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Bayesian Optimization</div>
+    <h2 class="section-title">베이지안 최적화가 왜 적합한가요?</h2>
+    <p>베이지안 최적화(BO)는 "적은 시뮬레이션으로 최적값을 찾는" 알고리즘이에요. 가우시안 프로세스(Gaussian Process)라는 서로게이트 모델을 써서 지금까지 탐색한 점들을 기반으로 다음에 어디를 탐색하면 좋을지 예측해요.</p>
+    <div class="insight green">
+      <div class="insight-label">BO vs 랜덤 서치(Random Search)</div>
+      <p>랜덤 서치는 말 그대로 무작위로 파라미터를 찍어보는 방법이에요. BO는 이전 결과를 학습해서 유망한 영역을 우선 탐색하기 때문에, 같은 시뮬레이션 횟수로 훨씬 더 좋은 해를 찾아요. 이 논문에서 BO가 랜덤 서치보다 빠른 수렴과 낮은 PSIJ를 달성한다는 걸 검증했어요.</p>
+    </div>
+    <p>특히 계산 비용이 큰 PSIJ 시뮬레이션에 BO가 딱 맞아요. 가우시안 프로세스가 "이미 탐색한 곳" 주변에서 모델을 세우고, "불확실성이 높은 곳"으로 탐색을 확장하는 Exploitation-Exploration 밸런스를 자동으로 잡아줘요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">실험 결과: 공동 최적화의 효과</h2>
+    <p>BO를 적용한 결과, 랜덤 서치 대비 더 빠른 수렴과 더 낮은 PSIJ를 달성했어요. 또한 각 I/O 인터페이스 구성 요소(인터포저, 드라이버, PDN)가 PSIJ에 어떤 시스템 수준 트렌드를 갖는지도 분석할 수 있었어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">12.8 Gbps</div><div class="stat-desc">대상 HBM I/O 속도</div></div>
+      <div class="stat-box"><div class="stat-num">11개</div><div class="stat-desc">동시 최적화 설계 파라미터 수</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM4, HBM5 설계에서의 시사점</h2>
+    <p>HBM4, HBM5로 갈수록 인터페이스 속도가 올라가면서 SI와 PI의 상호작용이 더욱 복잡해져요. 이 논문이 보여주는 핵심 메시지는 "SI 팀과 PI 팀이 따로 일하는 구조가 통하지 않는다"는 거예요.</p>
+    <p>BO 기반 공동 최적화는 수동 설계 반복의 수를 크게 줄여줘서, 점점 빡빡해지는 HBM 설계 일정에서 실질적인 도구가 될 수 있어요. 특히 인터포저 레이아웃, 드라이버 강도, PDN 구성을 한 번에 결정해야 하는 초기 설계 단계에서 진가를 발휘해요.</p>
+    <div class="insight yellow">
+      <div class="insight-label">삼성 설계팀 관점</div>
+      <p>HBM 패키지 설계에서 인터포저와 칩 설계 팀이 긴밀하게 협력해야 PSIJ 최소화가 가능해요. 이 논문은 그 협력의 범위와 방법론을 수치로 보여주는 좋은 기반 연구예요.</p>
+    </div>
+  </div>
+
+<hr>
+<div class="section">
+  <div class="section-label">논문 그림</div>
+  <h2 class="section-title">Figure 갤러리</h2>
+  <p class="figure-no-embed">이 논문은 IEEE Xplore에서 제공돼요. Semantic Scholar 페이지에서 그림 일부를 미리 볼 수 있어요 (무료 접근 가능).</p>
+  <div class="figure-outer">
+    <a class="figure-open-link" href="https://www.semanticscholar.org/paper/c34ddf206a9ece92f0b0e7d8c79ae354bc7c9983" target="_blank">↗ Semantic Scholar에서 열기 (그림 포함)</a>
+  </div>
+</div>
+</div>
+<div id="term-tooltip-global"></div>
+<script src="tooltip.js"></script>
+</body>
+</html>

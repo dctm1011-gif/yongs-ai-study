@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CDR 샘플러 오프셋 논문 분석 · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">CDR 샘플러 오프셋 & 지터 전달</span>
+</div>
+<div class="article">
+  <div class="article-venue">arXiv 2020</div>
+  <h1 class="article-title">Impact of Sampler Offset on Jitter Transfer in Clock and Data Recovery Circuits</h1>
+  <div class="article-tags"><span class="tag">CDR</span><span class="tag">PHY</span><span class="tag">Jitter</span><span class="tag">Interface</span></div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://arxiv.org/abs/2001.03553v1" target="_blank">원문 보기 →</a>
+    <a class="article-link" href="https://arxiv.org/pdf/2001.03553v1" target="_blank">PDF →</a>
+  </div>
+  <p class="opener">CDR 회로의 샘플링 플립플롭 오프셋이 지터 전달에 예상치 못한 영향을 준다는 걸 밝힌 논문이에요. 오프셋이 0일 때 항상 최적이 아닐 수 있고, 데이터 패턴 의존 지터(DDJ)까지 고려하면 최적 오프셋이 0이 아닌 경우가 있어요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">CDR이 뭐고, 왜 오프셋이 문제인가요?</h2>
+    <p>고속 직렬 링크(Serdes, HBM PHY 포함)에서 수신단은 클럭을 별도로 받지 않고 데이터 신호에서 직접 클럭을 복원해야 해요. 이게 CDR(Clock and Data Recovery)이에요. 데이터에서 클럭을 뽑아내는 핵심 회로가 Alexander 위상 검출기예요.</p>
+    <p>Alexander 위상 검출기는 클럭 엣지에서 데이터를 두 번 샘플링(이전 데이터, 현재 데이터)해서 "클럭이 빠른가, 느린가"를 판단해요. 문제는 이 샘플링 플립플롭이 항상 완벽하지 않다는 거예요. 제조 변이나 회로 불균형으로 오프셋 전압이 생길 수 있고, 이 오프셋이 지터 전달 특성을 바꿔요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Theory</div>
+    <h2 class="section-title">Alexander 위상 검출기는 어떻게 동작하나요?</h2>
+    <p>Alexander PD는 세 개의 샘플을 써요. 현재 클럭 엣지에서 데이터 샘플(D), 이전 클럭 엣지 데이터(P), 그리고 두 엣지 사이의 중간에서 샘플(M)이에요. 이 세 값을 조합해서 "클럭이 데이터 전이보다 앞서는가, 뒤처지는가"를 결정해요.</p>
+    <div class="insight blue">
+      <div class="insight-label">위상 판단 로직</div>
+      <p>D ≠ P (데이터 전이 발생) 이고 M = P이면 "클럭이 늦다(Phase Late)", M = D이면 "클럭이 빠르다(Phase Early)"라고 판단해요. 이 판단을 루프 필터와 VCO를 통해 클럭 위상을 조정하는 피드백으로 써요.</p>
+    </div>
+    <p>오프셋이 있으면 데이터 전이가 없어도 샘플 값이 달라질 수 있어요. 특히 M 샘플에 오프셋이 있으면, 데이터 전이 타이밍이 아닌 곳에서 잘못된 위상 판단이 나올 수 있어요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Key Insight</div>
+    <h2 class="section-title">오프셋이 0이 아닐 때 더 좋을 수 있다?</h2>
+    <p>이 논문의 가장 흥미로운 발견은 "최적 오프셋이 항상 0이 아닐 수 있다"는 거예요.</p>
+    <div class="insight purple">
+      <div class="insight-label">데이터 패턴 의존 지터 (DDJ)</div>
+      <p>연속된 같은 비트(런런: 111...이나 000...) 다음에 전이가 발생하면, ISI(Inter-Symbol Interference) 때문에 실제 전이 시점이 이상적인 위치에서 벗어나요. 이게 DDJ(Data-Dependent Jitter)예요. Alexander PD는 이 DDJ에 따라 위상 판단이 편향될 수 있어요.</p>
+    </div>
+    <p>특정 DDJ 패턴에서는 오프셋을 일부러 0이 아닌 값으로 설정하면, DDJ로 인한 편향을 상쇄해서 오히려 지터 전달 함수가 더 좋아지는 경우가 있어요. 즉, 오프셋이 DDJ의 "보정값" 역할을 할 수 있어요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Solution</div>
+    <h2 class="section-title">최적 오프셋을 찾아주는 트래킹 회로</h2>
+    <p>논문은 최적 오프셋 값을 자동으로 찾아서 유지하는 트래킹 회로를 제안해요. 지터가 최소화되는 오프셋 포인트를 동적으로 탐색해서, 온도나 전압 변화에도 최적 동작점을 유지해요.</p>
+    <p>시뮬레이션을 통해 이 트래킹 회로가 다양한 데이터 패턴과 채널 조건에서 효과적으로 동작한다는 걸 보였어요. 10개 그림이 포함된 5페이지 논문으로 비교적 간결하지만, 핵심 인사이트가 명확해요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">5 pages</div><div class="stat-desc">논문 분량</div></div>
+      <div class="stat-box"><div class="stat-num">10 figures</div><div class="stat-desc">시뮬레이션 결과 그림</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM PHY 수신단 설계에서의 의미</h2>
+    <p>HBM PHY의 수신단에는 CDR이 필수적으로 들어가요. 세대가 올라갈수록 UI가 짧아지면서 지터 버짓이 더 빡빡해지고, CDR의 정확성이 더 중요해져요. 이 논문이 다루는 샘플러 오프셋 효과는 제조 변이로 인한 오프셋이 시스템 수준 지터 성능에 예상치 못한 방향으로 영향을 줄 수 있다는 걸 알려줘요.</p>
+    <p>특히 교정(calibration) 회로를 설계할 때, 단순히 오프셋을 0으로 만드는 것이 아니라 지터가 최소화되는 지점으로 맞추는 게 더 정확한 접근이라는 시사점이 있어요. HBM4처럼 속도가 더 빠른 인터페이스에서 이런 세밀한 최적화가 중요해질 거예요.</p>
+    <div class="insight yellow">
+      <div class="insight-label">CDR 설계 공부 포인트</div>
+      <p>Alexander PD, Bang-Bang PD, Linear PD의 차이와 각각의 지터 전달 특성을 이해하는 기반이 되는 논문이에요. DDJ가 CDR 동작에 어떻게 영향을 주는지 직관적으로 이해하기 좋아요.</p>
+    </div>
+  </div>
+
+<hr>
+<div class="section">
+  <div class="section-label">논문 그림</div>
+  <h2 class="section-title">Figure 갤러리</h2>
+  <p class="figure-no-embed">PDF를 브라우저에서 바로 열어 그림을 확인할 수 있어요. 로딩이 느리거나 표시가 안 되면 링크를 눌러 새 탭에서 여세요.</p>
+  <div class="figure-outer">
+    <a class="figure-open-link" href="https://arxiv.org/abs/2001.03553" target="_blank">↗ arXiv 원문에서 열기</a>
+    <div class="figure-frame-wrap">
+      <iframe class="figure-frame" src="https://arxiv.org/pdf/2001.03553v1" loading="lazy" title="논문 원문 PDF (그림 포함)"></iframe>
+    </div>
+  </div>
+</div>
+</div>
+<div id="term-tooltip-global"></div>
+<script src="tooltip.js"></script>
+</body>
+</html>

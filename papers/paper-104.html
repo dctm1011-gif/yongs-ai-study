@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reconfigurable Linear Feedback Shift Register · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Reconfigurable Linear Feedback Shift Register</span>
+</div>
+<div class="article">
+  <div class="article-venue">2022 4th International Conference on Smart Systems and Inventive Technology (ICSSIT) 2022</div>
+  <h1 class="article-title">Reconfigurable Linear Feedback Shift Register</h1>
+  <div class="article-tags"><span class="tag">Interface</span><span class="tag">ML-HW</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/42113bd8200dca6fbf6574d53b0de31008d4f3f1" target="_blank">원문 보기 →</a>
+  </div>
+  <p class="opener">하나의 하드웨어로 표준·갈루아·전체·재시드 모드를 모두 구현하는 재구성 가능한 LFSR 설계가 등장했어요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">왜 LFSR은 반도체 설계에서 여전히 중요한 역할을 하나요?</h2>
+    <p>선형 피드백 시프트 레지스터(LFSR)는 반도체 회로 설계에서 의사 난수 시퀀스(PRBS) 생성, BIST(Built-In Self-Test), 암호화, 데이터 스크램블링 등 다양한 용도로 오랫동안 활용되어 왔어요. LFSR은 플립플롭과 XOR 게이트만으로 구성되어 매우 간단한 구조를 가지면서도, 최대 2^n-1 길이의 긴 주기를 갖는 시퀀스를 생성할 수 있어요. 이 특성 덕분에 테스트 패턴 생성이나 채널 에러 검출 같은 작업에서 하드웨어 효율이 매우 높아요.</p>
+    <p>그러나 기존 LFSR 설계는 특정 다항식과 동작 모드(표준형 또는 갈루아형)에 고정되는 경우가 많아, 설계 변경 시 회로를 새로 구현해야 하는 비효율이 존재해요. HBM이나 고속 인터페이스 회로에서는 테스트 모드, 스크램블 모드, 재초기화(reseed) 기능 등이 복합적으로 요구되는데, 단일 목적 LFSR로는 이를 유연하게 대응하기 어려워요. 이에 따라 하나의 회로에서 여러 동작 모드를 지원하는 재구성 가능한 LFSR에 대한 필요성이 커지고 있어요.</p>
+
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>고정된 모드의 LFSR은 다양한 반도체 인터페이스 요구사항을 충족하지 못하는 한계가 있어요. 외부 시드 입력과 모드 선택 신호를 결합하면, 하나의 회로로 표준·갈루아·전체·재시드 동작을 모두 지원할 수 있다는 아이디어에서 이 연구가 출발했어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">어떻게 하나의 LFSR 회로가 네 가지 동작 모드를 모두 수행할 수 있나요?</h2>
+    <p>제안된 재구성 가능한 LFSR은 모드 선택 스위치를 통해 표준(Standard), 갈루아(Galois), 전체(Full), 재시드(Reseed) 네 가지 모드로 동작해요. 표준 모드는 최상위 플립플롭의 출력을 피드백 입력으로 사용하는 일반적인 피드백 구조이고, 갈루아 모드는 각 탭 위치마다 XOR 연산을 분산 배치하여 더 높은 동작 속도를 달성해요. 전체 모드는 모든 플립플롭을 피드백 루프에 참여시켜 가능한 모든 상태를 순회할 수 있도록 구성되어요.</p>
+    <p>재시드 모드는 외부에서 새로운 시드 값을 직접 주입할 수 있는 기능으로, 테스트 환경이나 암호화 응용에서 초기 상태를 동적으로 변경할 때 매우 유용해요. 이 설계는 2차에서 11차까지의 다항식에 대해 구현 및 분석되며, 다항식 차수에 따라 플립플롭 수와 탭 위치가 달라지더라도 동일한 재구성 구조가 적용될 수 있어요. 모드 전환은 조합 논리 회로의 멀티플렉서를 활용하여 최소한의 오버헤드로 구현되었어요.</p>
+
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>외부 시드 입력과 모드 선택 신호를 멀티플렉서 기반 제어 로직으로 통합함으로써, 단일 LFSR 회로가 네 가지 동작 모드를 유연하게 전환할 수 있어요. 이는 다중 LFSR 회로를 별도로 구현하지 않고도 다양한 시스템 요구사항을 하나의 설계로 충족시키는 면적·전력 효율적인 접근이에요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">재구성 가능한 LFSR은 기존 단일 모드 설계 대비 어떤 성능을 보여주나요?</h2>
+    <p>제안된 설계는 2차부터 11차까지의 다항식 범위에서 각 모드별 의사 난수 시퀀스가 올바르게 생성됨을 시뮬레이션을 통해 검증했어요. 갈루아 모드는 표준 모드 대비 피드백 경로가 분산되어 임계 경로 지연이 감소하는 것이 확인되었어요. 재시드 모드에서는 외부 시드 주입 후 즉각적으로 새로운 시퀀스로 전환되어 동적 초기화 기능이 정상적으로 동작함을 확인했어요. 전체 모드에서는 2^n 개의 상태(0 상태 포함)를 모두 순회할 수 있어 기존 최대 길이 LFSR보다 더 긴 시퀀스 주기를 제공해요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">4가지</div><div class="stat-desc">하나의 회로에서 지원하는 동작 모드 수 (표준, 갈루아, 전체, 재시드)</div></div>
+      <div class="stat-box"><div class="stat-num">2~11차</div><div class="stat-desc">구현 및 검증된 다항식 차수 범위</div></div>
+      <div class="stat-box"><div class="stat-num">2^n-1</div><div class="stat-desc">표준/갈루아 모드에서 달성 가능한 최대 시퀀스 주기 길이</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM 및 고속 DRAM 인터페이스 설계 관점에서 재구성 가능한 LFSR은 PHY 계층의 데이터 스크램블러, BIST 패턴 생성기, 에러 체크 회로 등에 직접 응용할 수 있어요. 특히 HBM의 채널 신호 무결성 테스트와 스크램블링 로직에서는 초기화 시드를 동적으로 변경하거나 다양한 피드백 다항식을 유연하게 적용해야 하는 경우가 많아, 재시드 및 다항식 선택 기능이 매우 실용적이에요.</p>
+    <p>갈루아 모드의 분산 피드백 구조는 표준 모드 대비 최대 동작 주파수를 높일 수 있어, 수 Gbps 이상의 고속 인터페이스에서 타이밍 마진을 확보하는 데 유리해요. 또한 재구성 기능을 통해 설계 단계에서 여러 LFSR 변형을 별도로 구현할 필요가 없으므로, SoC나 HBM 컨트롤러의 면적 효율을 높이는 데 기여할 수 있어요.</p>
+
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>다만 본 논문은 FPGA 또는 ASIC 구현 결과보다는 시뮬레이션 검증 수준에 머물러 있어, 실제 공정에서의 타이밍·면적·전력 데이터가 부족해요. 또한 11차 이상의 고차 다항식이나 초고속 동작 환경에서의 검증이 이루어지지 않아, HBM4 등 차세대 고속 인터페이스에 바로 적용하기 위해서는 추가적인 설계 최적화와 실리콘 검증이 필요해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/42113bd8200dca6fbf6574d53b0de31008d4f3f1" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

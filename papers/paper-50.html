@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Passivity 기반 PLL 설계 · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Passivity 기반 PLL 설계</span>
+</div>
+<div class="article">
+  <div class="article-venue">arXiv 2022</div>
+  <h1 class="article-title">Passivity-based design and analysis of phase-locked loops</h1>
+  <div class="article-tags"><span class="tag">PLL-DLL</span><span class="tag">Analog</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://arxiv.org/abs/2201.04862v2" target="_blank">원문 보기 →</a></div>
+  <p class="opener">기존 선형 근사 모델의 한계를 넘어, 수동성(passivity) 이론으로 PLL의 비선형 글로벌 안정성을 엄밀하게 보장하는 설계 프레임워크를 제시하며, SRF-PLL과 ATAN-PLL을 통합적으로 유도합니다.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">왜 PLL 안정성 분석에 선형 모델만으로는 부족한가요?</h2>
+    <p>PLL(Phase-Locked Loop)은 반도체 칩에서 클록 생성과 주파수 합성을 담당하는 핵심 아날로그 회로예요. HBM의 클록 트리, SerDes의 CDR, 무선 시스템의 주파수 합성기까지 모두 PLL에 의존합니다. PLL의 안정성 분석은 설계 단계에서 가장 중요한 문제 중 하나예요.</p>
+    <p>전통적인 PLL 안정성 분석은 위상 검출기(Phase Detector)를 선형화하고, 루프 필터와 VCO를 선형 시스템으로 근사한 뒤 Bode plot이나 Root Locus를 통해 위상 여유(phase margin)를 구하는 방식에 의존해요. 이 접근법은 직관적이고 설계가 편리하지만, 치명적인 한계가 있습니다. 위상 오류가 작을 때(≈ ±20° 이내)만 유효한 선형 근사에 기반하기 때문에, 대신호 시동(start-up) 과정이나 외부 충격으로 인한 위상 이탈 상황에서 실제 동작을 제대로 예측하지 못해요.</p>
+    <p>이 논문은 전력 시스템의 그리드 동기화 PLL을 주요 대상으로 하면서, 수동성(passivity) 이론이라는 비선형 안정성 분석 도구를 PLL 설계에 적용합니다. 수동성 이론은 시스템이 에너지를 '저장'하거나 '소산'할 수는 있지만, 내부에서 에너지를 '생성'하지 않는다는 물리적 성질을 수학적으로 표현해요. 이 성질을 만족하는 시스템 간의 연결은 자동으로 안정성이 보장된다는 것이 수동성 이론의 핵심입니다.</p>
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>기존 PLL 안정성 분석(Bode plot, 위상 여유)은 소신호 선형 근사 기반이어서, 대신호 시동 과정이나 주파수 급변 상황의 글로벌 안정성을 보장하지 못합니다. 수동성 이론은 이 비선형 영역에서도 엄밀한 안정성 증명을 제공해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">수동성 조건으로 어떻게 PLL 안정성을 보장하나요?</h2>
+    <p>수동성(passivity) 이론의 핵심은 Lyapunov 함수와 유사한 '저장 함수(storage function)'가 존재한다는 것이에요. 시스템의 에너지 변화가 항상 외부에서 공급되는 에너지 이하인 조건(공급률 부등식, supply rate inequality)이 만족되면 시스템은 수동적(passive)이고, 따라서 글로벌 안정성이 보장됩니다.</p>
+    <p>논문은 PLL을 두 서브시스템의 피드백 연결로 분해해요. 첫 번째 서브시스템은 그리드(또는 기준 클록)를 포함한 외부 시스템, 두 번째는 PLL 루프 자체입니다. 각각의 수동성 조건을 별도로 증명하고, 수동 서브시스템의 연결은 자동으로 수동적이라는 합성 정리(passivity theorem)를 적용해 전체 시스템의 안정성을 도출해요.</p>
+    <p>이 프레임워크에서 기존 SRF-PLL(동기 좌표계 기반 PLL)과 ATAN-PLL(아크탄젠트 기반 PLL)이 수동성 조건의 특수 케이스로 자연스럽게 도출됩니다. 즉, 기존 설계들이 암묵적으로 수동성 조건을 일부 만족하고 있었음을 수학적으로 밝혀내는 거예요. 더 나아가 약한 그리드(low-SCR) 환경에서도 안정성을 보장하는 강화된 PLL 루프 필터 설계 조건을 유도합니다.</p>
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>PLL을 두 수동(passive) 서브시스템의 피드백 연결로 모델링하면, 각 서브시스템의 수동성 조건이 전체 시스템의 글로벌 안정성을 자동으로 보장합니다. 선형 위상 여유 분석이 보장하지 못하는 대신호 영역까지 안정성이 엄밀하게 증명돼요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">수동성 기반 PLL이 기존 설계보다 실제로 더 안정적인가요?</h2>
+    <p>논문은 그리드-VSC 벤치마크 시스템에서 시뮬레이션으로 검증합니다. 강한 그리드(SCR=10) 환경에서는 기존 SRF-PLL과 수동성 기반 PLL 모두 안정적으로 동작하지만, 약한 그리드(SCR=1.5 이하) 환경에서 차이가 드러나요. 전통적 위상 여유 기준으로 설계된 SRF-PLL은 약한 그리드에서 불안정해지거나 진동이 생기는 반면, 수동성 조건을 만족하도록 설계한 PLL은 동일한 조건에서 글로벌 안정성을 유지합니다. 주파수 급변(step 변화) 과도응답에서도 수동성 기반 설계가 훨씬 빠르게 수렴하고 오버슈트가 작았어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">SCR 1.5</div><div class="stat-desc">기존 SRF-PLL이 불안정해지는 약한 그리드 조건에서 수동성 PLL은 안정</div></div>
+      <div class="stat-box"><div class="stat-num">글로벌</div><div class="stat-desc">소신호 근사 없이 임의의 초기 위상 오류에서도 안정성 수학적 보장</div></div>
+      <div class="stat-box"><div class="stat-num">SRF·ATAN</div><div class="stat-desc">기존 두 PLL 구조 모두 수동성 프레임워크의 특수 케이스로 통일적 유도</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>이 논문의 수동성 기반 PLL 이론은 전력 시스템 맥락이지만, 아날로그 PLL 설계 원리로서 HBM 클록 시스템에 직접 적용 가능해요. HBM PLL은 기준 클록에서 수 GHz 클록을 생성하는데, 시동 과정(start-up)이나 주파수 전환(frequency hopping) 시의 글로벌 안정성이 중요한 설계 문제입니다.</p>
+    <p>기존 HBM PLL 설계는 위상 여유 45°~60° 기준을 사용하는데, 이는 선형 모델 기반이에요. 전원 노이즈에 의한 VCO 주파수 급변, 파워 게이팅 후 재시동 시의 대신호 위상 오류 등 비선형 과도 상황에서는 위상 여유 기준만으로는 안정성을 보장하기 어렵습니다. 수동성 이론을 HBM PLL의 루프 필터 설계에 적용하면, 전원 전압 변동이나 온도 변화에 의한 파라미터 변화가 있어도 안정성을 유지하는 강건한 설계가 가능해요. 특히 HBM-on-silicon interposer에서 패키지 기생 성분이 루프 동특성에 영향을 미칠 때, 수동성 조건이 안정성의 충분 조건이 됩니다.</p>
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>수동성 이론은 안정성의 충분 조건이지 필요 조건이 아니에요. 수동성 조건을 만족하지 못한다고 해서 반드시 불안정한 것은 아닙니다. 하지만 수동성 조건을 만족하도록 루프 필터를 설계하면 넓은 동작 범위에서 보수적이지만 확실한 안정성을 보장할 수 있어요. 이 접근법은 루프 필터 폴/제로 위치 선택에 추가 제약이 생기므로 잡음 특성과의 트레이드오프가 필요합니다.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — PLL 시스템의 블록도. 그리드 서브시스템과 PLL 루프 서브시스템의 피드백 연결 구조. 수동성 분석의 두 분할 경계를 명시적으로 표시.</p>
+    <p><strong>Fig. 2</strong> — 수동성 조건 유도 과정. 저장 함수(storage function) 정의와 공급률 부등식(supply rate inequality)의 수학적 전개. SRF-PLL이 수동성 조건의 특수 케이스임을 보이는 증명 다이어그램.</p>
+    <p><strong>Fig. 3</strong> — 강한 그리드(SCR=10)와 약한 그리드(SCR=1.5) 환경에서 기존 SRF-PLL과 수동성 PLL의 주파수 추종 과도응답 비교 파형. 약한 그리드에서 수동성 PLL의 우수성 확인.</p>
+    <p><strong>Fig. 4</strong> — 수동성 조건을 루프 필터 파라미터 공간에 매핑한 안정 영역 도표. 기존 위상 여유 기준과 수동성 조건의 안정 영역 비교.</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://arxiv.org/abs/2201.04862v2" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ECC 없이 DNN 보호하기 · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">ECC 없이 DNN 보호하기</span>
+</div>
+<div class="article">
+  <div class="article-venue">arXiv 2026</div>
+  <h1 class="article-title">Effective and Memory-Efficient Alternatives to ECC for Reliable Large-Scale DNNs</h1>
+  <div class="article-tags"><span class="tag">ML-HW</span><span class="tag">ECC</span><span class="tag">Low-Power</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://arxiv.org/abs/2605.07417v1" target="_blank">원문 보기 →</a></div>
+  <p class="opener">ECC의 메모리 오버헤드 없이, DNN 파라미터 중 실제로 중요한 비트만 선택적으로 보호하거나 DNN의 자연적 오류 내성을 활용하면 SECDED ECC보다 더 높은 신뢰성을 훨씬 낮은 비용으로 달성할 수 있다는 것을 보여줍니다.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">왜 ECC가 DNN 가속기에서 비효율적인 선택일 수 있나요?</h2>
+    <p>자율주행 자동차, 데이터센터 AI 추론 서버 같은 안전 중심 응용에서 딥러닝 모델은 필수 인프라가 됐어요. 그런데 이런 환경에서 메모리 비트 플립이 발생하면 추론 결과가 틀려지는 SDC(Silent Data Corruption) 문제가 생깁니다. 전통적인 해결책은 ECC, 특히 SECDED(Single Error Correct, Double Error Detect)인데, 메모리마다 12.5%의 추가 저장 공간이 필요하고 읽기/쓰기 경로에 디코더 지연이 더해져요.</p>
+    <p>여기서 중요한 질문이 생깁니다. DNN은 모든 비트가 동등하게 중요한 게 아니에요. FP32 파라미터를 예로 들면, 부호 비트와 지수 상위 비트가 뒤집히면 추론이 완전히 망가지지만, 가수(mantissa) 하위 비트는 뒤집혀도 출력 정확도에 거의 영향이 없습니다. 이 비대칭성을 이용하면 훨씬 효율적인 보호가 가능해요.</p>
+    <p>논문은 두 가지 경량 대안을 제시합니다. MSET(Most Significant Exponent-bit protection with Threshold)는 CNN과 ViT 파라미터에서 오류에 가장 민감한 비트만 선별해 강화 보호합니다. CEP(Cyclic Error Protection)는 전체 파라미터에 대해 세밀한 보호를 제공하되 메모리 오버헤드를 최소화해요.</p>
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>DNN 파라미터는 비트마다 오류 민감도가 극단적으로 다릅니다. FP16/FP32의 지수 최상위 비트는 뒤집히면 추론이 파탄나지만, 가수 하위 비트는 뒤집혀도 모델이 살아남아요. 이 비대칭성을 이용하면 ECC의 12.5% 오버헤드 없이 더 효과적인 보호가 가능합니다.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">MSET와 CEP는 어떻게 작동하나요?</h2>
+    <p>MSET(Most Significant Exponent-bit protection with Threshold)는 각 파라미터의 지수 필드 상위 비트에 집중해요. FP16 기준으로 보면 비트 [14:10]이 지수 영역인데, 이 중에서도 최상위 2~3비트가 오류에 특히 취약합니다. MSET는 이 비트들만 별도 패리티나 복제(replication) 방식으로 보호하고, 나머지 비트는 보호 없이 두는 선택적 보호 전략을 씁니다. 레이어마다 오류 민감도를 분석하여 임계값(threshold) 기반으로 보호 대상 비트를 동적으로 결정해요.</p>
+    <p>CEP(Cyclic Error Protection)는 다른 접근법을 취해요. 전통적인 SECDED는 64비트 데이터에 8비트 패리티를 붙여 12.5% 오버헤드가 생기지만, CEP는 여러 데이터 워드에 걸쳐 순환(cyclic) 방식으로 패리티를 공유합니다. 이렇게 하면 단일 워드 수준에서는 오버헤드가 줄어들고, DNN의 자연적인 오류 내성이 더 강한 파라미터 영역(가수 하위 비트 등)에 대한 보호 강도를 낮추는 방식으로 균형을 맞춰요.</p>
+    <p>두 방법 모두 fault-tolerant training과 결합할 때 효과가 극대화됩니다. 훈련 단계에서 의도적으로 비트 플립을 주입하여 모델이 하위 비트 오류에 자연스럽게 강인해지도록 만들면, 런타임 하드웨어 보호는 상위 비트에만 집중할 수 있어요.</p>
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>모든 비트를 똑같이 보호하는 SECDED 대신, DNN 파라미터의 비트별 오류 민감도 맵을 만들어 '중요한 비트만 보호'하는 전략이에요. CEP의 경우 SECDED 대비 3.5배 낮은 면적 오버헤드로 10배 높은 BER까지 DNN을 보호할 수 있습니다.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">ECC 없이 정말 더 안전해지나요?</h2>
+    <p>ResNet, ViT 등 대형 CNN/ViT 모델 실험에서 MSET와 CEP 모두 기존 SECDED ECC보다 뛰어난 신뢰성 결과를 보였어요. 특히 CEP는 메모리 오버헤드가 아예 없으면서도 SECDED보다 훨씬 높은 BER 환경에서도 DNN 추론 정확도를 유지했습니다. FP16 ViT 모델에서 지수 최상위 비트만 보호해도 대부분의 비트 플립 시나리오에서 모델을 효과적으로 보호할 수 있다는 것도 확인됐어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">3.5×</div><div class="stat-desc">CEP의 SECDED 대비 면적 오버헤드 감소 (디코더 로직 기준)</div></div>
+      <div class="stat-box"><div class="stat-num">7×</div><div class="stat-desc">CEP 디코더 지연 시간 단축 (SECDED 대비)</div></div>
+      <div class="stat-box"><div class="stat-num">10×</div><div class="stat-desc">SECDED 대비 더 높은 BER에서도 DNN 정확도 유지</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM은 AI 가속기(GPU, NPU)와 가장 가까이 붙어있는 고대역폭 메모리예요. LLM 추론 서버에서 HBM에는 수백억 파라미터의 weight가 올라가는데, 이 모든 데이터를 SECDED ECC로 보호하면 HBM 용량의 12.5%가 패리티로 낭비됩니다. HBM3E의 경우 36GB 칩이라면 4.5GB가 사라지는 셈이에요.</p>
+    <p>이 논문의 접근법을 HBM 시스템에 적용하면, HBM의 on-die ECC는 물리적 신뢰성 기본 보장에 집중하고, 상위 레벨에서는 weight의 비트 중요도 맵 기반 선택적 보호를 구현할 수 있습니다. 특히 HBM 컨트롤러가 어떤 주소 영역에 중요 비트가 있는지 알고 있다면, 그 영역에만 추가 ECC를 적용하는 주소 기반 선택 보호가 가능해요. 또한 fault-tolerant 재훈련을 통해 모델 자체가 HBM 특유의 오류 패턴(RowHammer, 리텐션 오류 등)에 강인하게 만드는 방향도 유망합니다.</p>
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>선택적 비트 보호는 DNN 모델 구조(FP32 vs FP16 vs INT8)마다 비트 중요도 맵이 달라요. INT8 양자화 모델에서는 지수 개념이 없으므로 다른 접근이 필요합니다. 또한 훈련 시 fault-tolerant 처리를 안 한 사전 학습 모델(pretrained weights)에는 적용 전 추가 검증이 필요해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2605.07417v1/2605.07417v1/x1.png" alt="Figure 1" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 1: An overall system view of the system for implementing the proposed zero-space mechanisms for error detection and correction.</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2605.07417v1/2605.07417v1/figs/vulnerability.png" alt="Figure 2" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 2: Probability Distribution Function (PDF) of accuracy for ViT-base under 1000 repetitions of bit-wise fault injection into parameters.</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2605.07417v1/2605.07417v1/x2.png" alt="Figure 3" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 3: Encoding and decoding the parameters in a memory block by the MSET method.</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2605.07417v1/2605.07417v1/x3.png" alt="Figure 4" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 4: Encoding and decoding the parameters in a memory block by the CEP method.</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2605.07417v1/2605.07417v1/figs/cep-comparison.png" alt="Figure 5" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 5: Chunk size exploration in CEP method for ViT-base under fault injection with BER= 3 × 10 − 5 3\times 10^{-5} .</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2605.07417v1/2605.07417v1/figs/configs-f32-tall.png" alt="Figure 6" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 6: Reliability analysis of ViTs and CNNs using different protection mechanisms for FP32.</div>
+    </div>
+    <div class="figure-outer"><a class="figure-open-link" href="https://arxiv.org/abs/2605.07417v1" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div></div>
+
+</div>
+</body>
+</html>

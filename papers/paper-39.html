@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MT-Graphene RowHammer Mitigation · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">MT-Graphene RowHammer Mitigation</span>
+</div>
+<div class="article">
+  <div class="article-venue">MWSCAS 2023</div>
+  <h1 class="article-title">Mitigation of Rowhammer Attack on DDR4 Memory: A Novel Multi-Table Frequent Element Algorithm Based Approach</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">ECC</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/f0405a9271cc164611e69a3ff2bd8c65e8f1748f" target="_blank">원문 보기 →</a></div>
+  <p class="opener">DDR4 RowHammer 방어를 위해 Graphene의 단일 테이블 한계를 다중 테이블(MT-Graphene)로 극복해, 비트 플립 발생을 74% 줄이면서 하드웨어 오버헤드는 최소화했어요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">RowHammer는 왜 갈수록 위험해지나요?</h2>
+    <p>RowHammer는 DRAM 특정 행(row)을 짧은 시간에 반복 활성화(hammering)하면 인접 행의 셀에 전하 누설이 유발되어 비트 값이 뒤집히는 현상이에요. 처음 발견됐을 때는 공격 임계 횟수(TRH)가 수만 회였지만, DDR4로 오면서 DRAM 셀 간격이 좁아지고 공정이 미세화되면서 TRH가 수천 회 수준으로 떨어졌어요. 이를 이용한 루팅, 권한 상승, 암호화 키 탈취 공격이 실제로 시연됐고, DDR5·LPDDR5에서도 RowHammer 취약성이 계속 보고되고 있어요.</p>
+    <p>이에 따라 다양한 소프트웨어·하드웨어 방어 기법이 제안됐어요. PARA(Probabilistic Adjacent Row Activation), TRR(Targeted Row Refresh), AQUA 등 여러 기법이 있지만, 이 중 Graphene이 주목받는 이유는 Count-Min Sketch에서 착안한 데이터 스트림 빈도 추적 알고리즘을 써서 공간 효율적으로 "자주 활성화된 행"을 추적하기 때문이에요. 하지만 Graphene도 두 개 테이블로 운영되는 구조상 동시에 여러 행을 hammer할 때 정확도가 떨어지는 한계가 있어요.</p>
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>Graphene은 공간 효율이 좋지만, 두 테이블 구조는 다수의 행을 동시 hammer하는 공격에 취약해요. 테이블 수를 늘리면 보안은 강해지지만 면적·전력 오버헤드를 어떻게 통제할지가 관건이에요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">MT-Graphene은 어떻게 더 많은 테이블로 보안을 높이나요?</h2>
+    <p>MT-Graphene(Multi-Table Graphene)의 핵심 아이디어는 Graphene이 관리하는 DRAM 행 추적 범위를 더 작은 세그먼트로 분할하고, 각 세그먼트에 독립적인 Graphene 인스턴스(테이블 쌍)를 할당하는 거예요. 기존 Graphene이 DRAM 전체를 두 테이블로 커버한다면, MT-Graphene은 DRAM을 N개 구간으로 나눠 각 구간에 두 테이블씩 총 2N개 테이블을 운용해요.</p>
+    <p>세그먼트가 작을수록 각 세그먼트 내에서 추적해야 할 후보 행이 적어지기 때문에, 동일한 테이블 크기로 더 세밀하게 빈도를 추적할 수 있어요. 공격자가 여러 행을 동시에 hammer해도, 각 세그먼트 내에서 해당 행이 빠르게 빈도 임계값을 넘어 탐지돼요. 이로 인해 비트 플립이 발생하기 전에 인접 행 리프레시(Neighbor Row Refresh, NRR)를 트리거하는 성공률이 높아져요.</p>
+    <p>하드웨어 구현 측면에서는 각 세그먼트의 Graphene 테이블이 동일한 회로 구조를 공유하고 주소 디코딩만 달라지기 때문에, 기존 Graphene 대비 면적 증가가 테이블 수에 선형 비례하지 않고 일부 회로를 공유해 절감할 수 있어요.</p>
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>DRAM을 작은 구간으로 나눠 각 구간을 독립된 Graphene 테이블로 감시하면, 동일 테이블 크기로도 다중 행 동시 공격을 훨씬 효과적으로 잡아낼 수 있어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">기존 Graphene 대비 얼마나 개선됐나요?</h2>
+    <p>DDR4 환경에서 다양한 RowHammer 공격 패턴(단일 행 집중 공격, 멀티 행 분산 공격)으로 시뮬레이션한 결과, MT-Graphene은 기존 Graphene(2-table)과 비교해 비트 플립 발생을 74% 줄였어요. 테이블 수를 더 늘리면 보안이 추가로 향상되는 스케일링 특성도 확인됐어요. TRH가 낮아지는 미래 DRAM 세대에서도 세그먼트 크기를 조절해 대응할 수 있는 유연성이 있어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">74%</div><div class="stat-desc">기존 Graphene 대비 비트 플립 감소율</div></div>
+      <div class="stat-box"><div class="stat-num">2N개</div><div class="stat-desc">테이블 수 (N = DRAM 세그먼트 수)</div></div>
+      <div class="stat-box"><div class="stat-num">스케일</div><div class="stat-desc">테이블 추가 시 보안 추가 향상 확인</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM은 DDR4와 달리 내부 bank가 훨씬 많고(HBM3: 16 bank × 16 pseudo channel = 256 bank), 각 bank가 독립적으로 활성화돼요. RowHammer는 인접 row 간 셀 간격이 좁을수록 심해지는데, HBM의 고밀도 셀 배열에서도 같은 위협이 존재해요. MT-Graphene 방식을 HBM에 적용하면, 각 bank 또는 bank group을 세그먼트 단위로 취급해 독립적인 행 활성화 카운터를 운용하는 구조가 자연스럽게 대응돼요.</p>
+    <p>특히 HBM 내부 컨트롤러(Logic Die)에 MT-Graphene 로직을 넣으면, 메모리 컨트롤러와의 인터페이스 없이 다이 내부에서 RowHammer 방어가 자기 완결적으로 이루어질 수 있어요. 이는 HBM의 on-die ECC와 결합해 다층 신뢰성 방어 구조를 형성하는 데 유리해요.</p>
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>테이블 수가 늘면 on-chip SRAM 사용량이 증가해요. HBM Logic Die에서 가용 면적이 제한적이기 때문에, 세그먼트 수와 테이블 크기 사이의 최적 균형점을 찾는 공동 설계 분석이 필요해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — RowHammer 공격 메커니즘: 인접 행 전하 누설로 인한 비트 플립 발생 원리와 TRH 개념 설명</p>
+    <p><strong>Fig. 2</strong> — 기존 Graphene(2-table) 구조: Count-Min Sketch 기반 빈도 추적 테이블 구성도</p>
+    <p><strong>Fig. 3</strong> — MT-Graphene 구조: DRAM을 N개 세그먼트로 분할하고 각 세그먼트에 독립 Graphene 테이블 할당하는 블록 다이어그램</p>
+    <p><strong>Fig. 4</strong> — 비트 플립 감소율 비교: 단일·멀티 행 공격 시나리오별 Graphene vs. MT-Graphene 성능 그래프</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/f0405a9271cc164611e69a3ff2bd8c65e8f1748f" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+</div>
+</body>
+</html>

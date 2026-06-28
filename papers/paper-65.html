@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>POR in 180-nm CMOS With Brownout Detection · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Power-On Reset Circuit in 180-nm CMOS With Brownout Detection</span>
+</div>
+<div class="article">
+  <div class="article-venue">IEEE Transactions on VLSI Systems 2022</div>
+  <h1 class="article-title">Power-On Reset Circuit in 180-nm CMOS With Brownout Detection, Stable Switching Points, Long Reset Pulse Duration, and Resilience to Switching Noise</h1>
+  <div class="article-tags"><span class="tag">Analog</span><span class="tag">Power</span><span class="tag">Circuit-Design</span></div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://www.semanticscholar.org/paper/50645afc2715bfc49b5f8bda5336321e3b940db3" target="_blank">원문 보기 →</a>
+  </div>
+  <p class="opener">180nm CMOS에서 스위칭 노이즈에도 끄떡없는 안정적인 POR 회로예요 — 1.52/1.42V의 잘 잡힌 임계점, 0.3ms 이상의 긴 리셋 펄스, surge에도 오동작 없는 내성까지.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">왜 POR 회로가 이렇게 까다로운가요?</h2>
+    <p>POR 회로가 해결해야 할 과제는 단순히 "전원이 켜졌는지 감지"하는 것 이상이에요. 실제 칩에서 POR이 오동작하면 전체 시스템이 초기화를 제대로 못 하거나, 반대로 동작 중에 불필요하게 리셋이 걸리는 일이 생겨요.</p>
+    <p>이 논문은 네 가지 핵심 과제를 동시에 풀어요:</p>
+    <ul style="margin:8px 0 8px 20px;line-height:1.8">
+      <li><strong>안정적인 임계점</strong> — PVT(공정·전압·온도) 변화에도 스위칭 전압이 흔들리지 않아야 해요</li>
+      <li><strong>긴 리셋 펄스</strong> — 칩 내부 회로가 초기화를 완료할 시간이 필요해요</li>
+      <li><strong>BOR(Brownout Reset)</strong> — 동작 중 공급 전압이 떨어질 때도 감지해야 해요</li>
+      <li><strong>스위칭 노이즈 내성</strong> — 전원선의 글리치로 인한 오동작을 막아야 해요</li>
+    </ul>
+    <div class="insight blue">
+      <div class="insight-label">Surge current가 왜 문제인가요?</div>
+      <p>칩이 처음 켜질 때 내부 커패시터를 충전하는 surge current가 흐르면서 공급 전압이 순간적으로 뚝 떨어져요. 이 구간에서 POR 임계점 근처를 지나가면 POR이 여러 번 토글되는 현상(multiple triggering)이 생길 수 있어요. 이 논문은 그 구간에서도 단 한 번만 리셋이 발생하도록 설계했어요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">PVT-독립 임계점 + 히스테리시스 + 긴 지연 구조</h2>
+    <p>핵심 설계는 세 블록으로 구성돼요.</p>
+    <p><strong>1. PVT-독립 임계점 생성:</strong> PMOS 스택과 NMOS 스택의 문턱 전압이 서로 반대 방향으로 PVT 변화를 따라가는 특성을 활용해요. 둘을 직렬 연결하면 변화량이 상쇄되면서 임계 전압이 안정화돼요. 180nm 공정에서 1.52V(상승 시)와 1.42V(하강 시)의 히스테리시스를 만들어냈어요.</p>
+    <p><strong>2. 리셋 펄스 연장:</strong> 단순 RC 지연 대신 저전력 링 오실레이터 또는 전하 펌핑 방식으로 0.3ms 이상의 긴 리셋 펄스를 만들어요. 리셋 구간에서는 회로가 다른 경로로 전류를 끌어쓰지 않아야 하기 때문에 소비 전력도 최소화했어요.</p>
+    <p><strong>3. 스위칭 노이즈 필터링:</strong> 정격 전압의 70% 이하로 떨어지는 10 μs 미만의 글리치는 필터링해요. 내부 커패시터와 MOSFET 게이트 정전용량을 의도적으로 사용해서 짧은 글리치가 출력에 영향을 못 주게 했어요.</p>
+    <div class="insight green">
+      <div class="insight-label">히스테리시스 1.52V / 1.42V</div>
+      <p>전원이 올라가면서 1.52V를 넘을 때 POR이 해제되고, 이후 전압이 다시 떨어져 1.42V 아래로 가야 BOR이 걸려요. 100mV의 히스테리시스가 노이즈 마진 역할을 해줘요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">14 μA 정적 전류, 102×176 μm² 면적</h2>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">1.52 V</div><div class="stat-desc">POR 해제 임계점 (전압 상승 시)</div></div>
+      <div class="stat-box"><div class="stat-num">1.42 V</div><div class="stat-desc">BOR 감지 임계점 (전압 하강 시)</div></div>
+      <div class="stat-box"><div class="stat-num">&gt;0.3 ms</div><div class="stat-desc">리셋 펄스 최소 유지 시간</div></div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">14 μA</div><div class="stat-desc">정적 전류 소모</div></div>
+      <div class="stat-box"><div class="stat-num">~18 kμm²</div><div class="stat-desc">102×176 μm² 면적</div></div>
+      <div class="stat-box"><div class="stat-num">70%</div><div class="stat-desc">이 수준 글리치(10μs 미만)까지 내성</div></div>
+    </div>
+    <p>온도, 공정 코너, 공급 전압 슬루율 등 다양한 조건에서 임계점의 안정성을 검증했어요. 특히 슬루율 독립성은 빠르게 켜지는 전원(USB PD 등)에서도 오동작 없이 동작한다는 걸 의미해요.</p>
+    <div class="insight yellow">
+      <div class="insight-label">14 μA는 큰 편 아닌가요?</div>
+      <p>초저전력 관점에서는 큰 편이에요. 하지만 이 논문은 초저전력보다 안정성과 노이즈 내성에 우선순위를 뒀어요. 대형 SoC나 산업용 IC처럼 신뢰성이 최우선인 환경에서 적합한 트레이드오프예요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM / DRAM 전원 시퀀싱에서 POR 설계 체크포인트</h2>
+    <p>이 논문이 다루는 문제들은 HBM이나 DRAM 설계에서도 그대로 나타나요. 특히 HBM은 VDD, VDDQ, VPP, VINT 등 여러 전원이 순서대로 올라와야 하는 시퀀싱 요구사항이 있어서, 각 전원마다 POR 감지가 필요해요.</p>
+    <p><strong>Surge current 대응:</strong> 이 논문에서 강조한 "70%, 10μs 미만 글리치 내성"이 바로 HBM 초기화 surge와 직결돼요. HBM에서 VDDQ를 올릴 때 PHY 회로의 내부 커패시터 충전 전류가 짧은 순간 VDD를 끌어내리는데, 이때 POR이 재발동하면 초기화 시퀀스가 처음부터 다시 시작돼요.</p>
+    <div class="insight blue">
+      <div class="insight-label">리셋 펄스 길이와 초기화 시간</div>
+      <p>이 논문의 0.3ms 이상 리셋 펄스는 SoC 기준이에요. HBM은 초기화 시퀀스(JEDEC 규격)가 수백 μs에서 수 ms까지 걸리는 경우가 있어서, POR 펄스 길이를 시스템 레벨에서 조율해야 해요. 너무 짧으면 초기화 미완료, 너무 길면 부팅 지연이에요.</p>
+    </div>
+    <p>히스테리시스(1.52V / 1.42V 차이 = 100mV)는 PDN(Power Delivery Network) 임피던스가 높은 환경에서 특히 중요해요. 보드 레벨 PDN의 IR drop이 수십~수백 mV에 달하는 경우, 히스테리시스 없이는 전원이 완전히 안정화되기 전에 POR이 해제돼버릴 수 있어요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <div class="figure-outer">
+      <p style="color:#9b9a97;font-size:14px">회로도(PVT-독립 임계점 생성부, 리셋 펄스 연장부), 측정 파형(POR/BOR 동작, 글리치 내성 테스트) 등은 원문에서 확인하세요.</p>
+      <a class="figure-open-link" href="https://www.semanticscholar.org/paper/50645afc2715bfc49b5f8bda5336321e3b940db3" target="_blank">↗ 원문에서 그림 보기</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

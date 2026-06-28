@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.pyo
+.netlify/
+node_modules/
+
+# 민감 정보
+paper_search/discord_config.json
+
+# 로그
+*.log
+paper_search/discord_listener.log
+paper_search/discord_listener_state.json
+
+yongs-ai-study/

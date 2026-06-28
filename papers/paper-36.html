@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NN Transceiver Modeling · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">NN Transceiver Modeling</span>
+</div>
+<div class="article">
+  <div class="article-venue">EDAPS 2022</div>
+  <h1 class="article-title">Modeling Cascade-able Transceiver Blocks With Neural Network For High Speed Link Simulation</h1>
+  <div class="article-tags"><span class="tag">PHY</span><span class="tag">Interface</span><span class="tag">ML-HW</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/3efefac490498855bee1d181ccea6512eee6b0ff" target="_blank">원문 보기 →</a></div>
+  <p class="opener">TX, 채널, RX 각각의 트랜시버 블록을 피드포워드 신경망(FNN)으로 모델링하고 캐스케이드 연결함으로써, SPICE 대비 20배 빠른 Eye Diagram 분석을 달성한 고속 링크 시뮬레이션 가속 기법이에요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">왜 기존 SPICE·IBIS 시뮬레이션은 고속 링크 설계에서 한계를 갖나요?</h2>
+    <p>고속 링크(High-Speed Link, HSL) 설계에서 Eye Diagram 분석은 필수예요. 신호가 TX에서 나와 채널을 통과해 RX에 도달할 때까지의 파형 왜곡, ISI(Inter-Symbol Interference), 노이즈를 종합적으로 평가해야 하는데, 이를 정확하게 시뮬레이션하려면 수천~수백만 개의 UI(Unit Interval)를 시뮬레이션해야 해요.</p>
+    <p>SPICE는 트랜지스터 레벨의 정확한 모델을 제공하지만, 수렴 반복(convergence iteration) 때문에 시뮬레이션 시간이 매우 길어요. 특히 비선형 소자(드라이버 출력단, 종단 저항 등)가 포함되면 더 느려지고, 긴 패턴 시퀀스의 Eye Diagram을 뽑는 건 현실적으로 수 시간~수십 시간이 걸려요. IBIS(I/O Buffer Information Specification) 모델은 이를 간략화했지만, 정확도 손실이 크고 비선형 특성 표현에 한계가 있어요.</p>
+    <p>또한 SPICE와 IBIS 모두 블록 간 캐스케이드(TX → 채널 → RX) 연결 시 각 블록이 서로의 상태를 알아야 해서 독립적으로 모델링하고 조합하기가 어려워요. 이 논문은 이 문제를 신경망으로 해결해요 — 각 블록을 FNN으로 모델링하면 블록 독립성을 유지하면서 빠르게 캐스케이드할 수 있어요.</p>
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>SPICE는 정확하지만 느리고, IBIS는 빠르지만 부정확해요. FNN 기반 트랜시버 모델은 이 trade-off를 개선할 수 있는 중간 지점을 찾으려는 시도예요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">FNN으로 트랜시버 블록을 어떻게 모델링하고 캐스케이드 연결하나요?</h2>
+    <p>핵심 구조는 각 트랜시버 블록(TX 버퍼, 패키지 채널, RX 버퍼)을 개별 FNN(피드포워드 신경망)으로 대체하는 거예요. 각 FNN은 해당 노드에서의 전압 파형을 시간 샘플 시퀀스로 입력받아 다음 시간 스텝의 전압을 출력해요. 학습은 SPICE 시뮬레이션 결과를 ground truth로 삼아 supervised learning으로 수행해요.</p>
+    <p>캐스케이드 동작 방식이 이 논문의 가장 중요한 기여예요. FNN-TX의 출력 파형을 FNN-채널의 입력으로, FNN-채널의 출력을 FNN-RX의 입력으로 순서대로 넘겨요. 각 FNN이 해당 블록의 입출력 관계만 학습해서 독립적으로 동작하고, 체인처럼 연결되기 때문에 "cascade-able"이라는 이름이 붙었어요. 블록 하나만 교체(예: 다른 TX 드라이버)해도 전체를 재학습할 필요가 없어요.</p>
+    <p>특히 트랜지스터 레벨 버퍼의 비선형 특성 모델링에 중점을 뒀어요. 기존 선형 채널 모델은 합성곱(convolution)으로 처리 가능하지만, TX/RX 버퍼의 비선형성(슬루 레이트, 클리핑, Pre-emphasis 등)은 FNN이 더 잘 표현해요. SPICE나 IBIS와 달리 수렴 반복이 없어서 연산 속도가 비약적으로 향상돼요.</p>
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>각 블록을 독립 FNN으로 만들면 "블록 교체가 가능한(cascade-able)" 라이브러리가 완성돼요. 새 TX 드라이버를 테스트하고 싶으면 TX FNN만 교체하고 같은 채널·RX FNN에 연결하면 돼요 — IBIS 모델 작성 전문가 없이도요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">FNN 모델은 얼마나 빠르고, SPICE 대비 정확도는 어떤가요?</h2>
+    <p>Eye Diagram 분석 속도를 SPICE 솔버와 비교했을 때, FNN 기반 시뮬레이션이 약 20배 빠른 결과를 보였어요. 수렴 반복 없이 순방향 연산만 수행하기 때문이에요. 정확도 면에서는 FNN 모델의 출력 파형이 SPICE 결과와 높은 상관관계를 보였고, Eye Diagram 형상과 Eye Height/Width 수치도 유사하게 재현됐어요. 비선형 특성이 강한 TX 버퍼 구간에서도 FNN이 비선형 거동을 잘 학습했음이 오버레이 비교에서 확인됐어요. 다만 학습 데이터 범위를 벗어난 극단적 조건(높은 Pre-emphasis 이득, 이상 입력 패턴)에서는 외삽(extrapolation) 오류가 증가하는 한계도 언급해요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">20x</div><div class="stat-desc">SPICE 대비 Eye Diagram 분석 속도 향상</div></div>
+      <div class="stat-box"><div class="stat-num">고상관</div><div class="stat-desc">FNN 출력 파형과 SPICE 결과의 전압 파형 상관관계</div></div>
+      <div class="stat-box"><div class="stat-num">3단</div><div class="stat-desc">캐스케이드 블록 수 (TX FNN → 채널 FNN → RX FNN)</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM PHY 및 고속 링크 설계에 이 기법을 어떻게 활용할 수 있나요?</h2>
+    <p>HBM의 I/O PHY는 최대 6.4 Gbps/pin(HBM3E 기준)의 고속 신호를 TSV와 인터포저를 통해 전달해요. 이 경로는 TX 드라이버 → TSV → 마이크로범프 → ReDL(재배선층) → RX 수신단으로 구성되는데, 정확히 이 논문의 TX-채널-RX 3단 구조와 일치해요. 각 블록을 FNN으로 모델링하면, 예를 들어 TSV 파라미터를 변경했을 때 전체 Eye Diagram이 어떻게 변하는지를 수분 내에 확인할 수 있어요.</p>
+    <p>또한 HBM 설계 초기 단계(PVT corner exploration)에서 수십 가지 공정 변동과 전압/온도 조합을 스윕해야 할 때, SPICE 시뮬레이션 시간이 병목이 돼요. FNN 기반 모델로 빠른 1차 스윕을 수행하고, 취약한 corner만 SPICE로 정밀 검증하는 2단계 워크플로우를 구성하면 전체 설계 사이클이 단축될 거예요.</p>
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>FNN 모델의 정확도는 학습 데이터 품질과 범위에 크게 의존해요. SPICE ground truth 데이터를 충분히 다양하게 생성해야 하고, HBM의 미세 비선형성(Pre-emphasis nonlinearity, DFE tap interaction)까지 커버하려면 학습 데이터 설계에 상당한 도메인 지식이 필요해요. "전문가 지식 불필요"는 IBIS 대비 상대적 표현이에요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — 고속 링크의 TX-채널-RX 캐스케이드 구조와 각 블록을 FNN으로 대체하는 개념도</p>
+    <p><strong>Fig. 2</strong> — FNN 학습 파이프라인: SPICE 데이터 생성 → 파형 샘플링 → FNN 학습 → 검증 흐름</p>
+    <p><strong>Fig. 3</strong> — SPICE vs FNN 출력 파형 오버레이 비교 및 Eye Diagram 형상 비교 (20배 속도 향상 확인)</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/3efefac490498855bee1d181ccea6512eee6b0ff" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+</div>
+</body>
+</html>

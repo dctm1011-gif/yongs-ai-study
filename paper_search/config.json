@@ -1,0 +1,57 @@
+{
+  "vault_path": "C:\\Users\\dctm1\\OneDrive\\문서\\Obsidian Vault",
+  "papers_folder": "Papers",
+  "db_file": "C:\\Users\\dctm1\\OneDrive\\바탕 화면\\CLAUDE_PROJECT_1\\paper_search\\paper_db.json",
+  "interest_queries": [
+    {"query": "HBM power supply induced jitter PSIJ",                "limit": 20},
+    {"query": "HBM IO interface signal integrity PI",                 "limit": 20},
+    {"query": "HBM error correcting code ECC reliability",           "limit": 20},
+    {"query": "DRAM RowHammer attack defense circuit",               "limit": 20},
+    {"query": "DRAM retention refresh mechanism circuit",            "limit": 20},
+    {"query": "clock data recovery CDR jitter sampler",              "limit": 20},
+    {"query": "phase locked loop PLL jitter circuit design",         "limit": 20},
+    {"query": "high speed SerDes transceiver analog circuit",        "limit": 8},
+
+    {"query": "DRAM memory reliability fault tolerance architecture", "limit": 10},
+    {"query": "VLSI analog mixed signal circuit design technique",    "limit": 8},
+    {"query": "power delivery network PDN decoupling capacitor IC",  "limit": 8},
+    {"query": "hardware security memory side channel vulnerability",  "limit": 8},
+    {"query": "LDO low dropout regulator analog CMOS power supply IC", "limit": 10},
+
+    {"query": "parity check circuit digital logic VLSI implementation",       "limit": 12},
+    {"query": "CRC cyclic redundancy check hardware circuit implementation",  "limit": 12},
+    {"query": "error detection parity bit circuit CMOS digital design",       "limit": 10},
+    {"query": "linear feedback shift register LFSR CRC PRBS circuit",        "limit": 10},
+
+    {"query": "power on reset POR circuit analog CMOS design",            "limit": 12},
+    {"query": "supply voltage monitor brownout detector reset circuit",    "limit": 12},
+    {"query": "power management sequencing surge current startup circuit", "limit": 8},
+    {"query": "POR power-on reset multi-supply voltage monitor CMOS low power",   "limit": 10},
+    {"query": "power on reset circuit glitch immunity hysteresis switching noise", "limit": 8},
+
+    {"query": "DRAM cell current operation internal circuit wordline bitline sense amplifier", "limit": 12},
+    {"query": "DRAM array power consumption current spike supply noise bitline precharge",    "limit": 12},
+    {"query": "DRAM activation current wordline boost charge pump internal power",            "limit": 10},
+    {"query": "DRAM row activation current distribution subarray bank power",                 "limit": 10},
+
+    {"query": "linear feedback shift register LFSR circuit design pseudorandom sequence",    "limit": 15},
+    {"query": "LFSR polynomial feedback shift register maximal length sequence circuit",     "limit": 12},
+
+    {"query": "built-in self-test BIST digital logic VLSI circuit design",                   "limit": 15},
+    {"query": "BIST memory test DRAM SRAM built-in self-test circuit architecture",          "limit": 15},
+    {"query": "multiple input signature register MISR test compression VLSI",                "limit": 15},
+    {"query": "MISR LFSR BIST logic circuit signature analysis compaction",                  "limit": 12},
+    {"query": "scan chain DFT design for testability flip-flop test circuit",                "limit": 12},
+    {"query": "ATPG automatic test pattern generation scan test digital circuit",            "limit": 10},
+    {"query": "March test algorithm DRAM SRAM memory built-in self-test fault model",        "limit": 15},
+    {"query": "memory BIST test algorithm stuck-at transition fault detection CMOS",         "limit": 12},
+
+    {"query": "digital logic arithmetic circuit VLSI adder multiplier CMOS basic",          "limit": 10},
+    {"query": "carry-lookahead adder ripple carry prefix tree adder circuit design",         "limit": 10},
+    {"query": "comparator latch sense amplifier basic CMOS circuit voltage",                 "limit": 10},
+    {"query": "charge pump Dickson voltage multiplier CMOS circuit low power",               "limit": 10},
+    {"query": "flip-flop latch timing setup hold metastability digital circuit",             "limit": 10}
+  ],
+
+  "diversity_note": "기본 검색 유지 + BIST/MISR/LFSR/DFT/알고리즘기초 추가. 시스템 TSV/패키징 PDN 쿼리 제거 (삭제 이력 기반)."
+}

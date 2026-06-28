@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RAIDR 리프레시 논문 분석 · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">RAIDR: 스마트 DRAM 리프레시</span>
+</div>
+<div class="article">
+  <div class="article-venue">arXiv Retrospective 2023 (원 논문 ISCA 2012)</div>
+  <h1 class="article-title">Retrospective: RAIDR — Retention-Aware Intelligent DRAM Refresh</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">Refresh</span><span class="tag">Reliability</span><span class="tag">Architecture</span></div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://arxiv.org/abs/2306.16024" target="_blank">원문 보기 →</a>
+    <a class="article-link" href="https://arxiv.org/pdf/2306.16024" target="_blank">PDF →</a>
+  </div>
+  <p class="opener">DRAM 셀마다 리텐션 시간이 다르다는 사실을 활용해서, 리프레시를 꼭 필요한 셀에만, 꼭 필요한 만큼만 하자는 아이디어가 RAIDR이에요. 2012년 ISCA 논문이 10년 후 어떤 영향을 미쳤는지 돌아본 회고록인데, 지금 읽어도 핵심 아이디어가 신선해요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">DRAM 리프레시가 왜 문제인가요?</h2>
+    <p>DRAM 셀은 커패시터에 전하를 저장하는 방식이라, 전하가 자연적으로 누설되기 전에 주기적으로 다시 채워줘야 해요. 이게 리프레시예요. 보통 64ms마다 모든 셀을 리프레시하는데, 이 동안엔 메모리 접근이 차단돼서 성능이 떨어지고, 리프레시 자체에도 전력이 들어요.</p>
+    <p>문제는 DRAM 용량이 세대마다 늘어날수록 리프레시해야 할 셀 수도 늘어난다는 거예요. 같은 64ms 안에 더 많은 셀을 리프레시하려면 더 자주 리프레시 커맨드를 보내야 하고, 이게 성능과 전력 양쪽에 악영향을 줘요. 2012년 당시 이미 리프레시 오버헤드가 전체 메모리 접근의 31%를 차지했어요.</p>
+    <div class="insight red">
+      <div class="insight-label">핵심 관찰</div>
+      <p>DRAM 셀 대부분(약 99.9%)은 실제로 64ms보다 훨씬 긴 리텐션 시간을 가져요. 64ms 리프레시가 필요한 건 극히 일부 "약한 셀(weak cells)"뿐이에요. 모든 셀을 똑같이 취급하는 게 엄청난 낭비예요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">RAIDR Design</div>
+    <h2 class="section-title">블룸 필터로 약한 셀만 추적하기</h2>
+    <p>RAIDR의 핵심 아이디어는 간단해요. 리텐션 시간이 짧은 "약한 셀"들의 주소를 메모리 컨트롤러에서 추적하고, 이 셀들만 자주 리프레시하는 거예요. 나머지 "강한 셀"들은 훨씬 적게 리프레시해도 돼요.</p>
+    <div class="insight blue">
+      <div class="insight-label">블룸 필터 (Bloom Filter)</div>
+      <p>약한 셀 주소를 저장하는 자료구조로 블룸 필터를 써요. 블룸 필터는 "이 주소가 약한 셀 목록에 있는가?"를 아주 적은 메모리로 빠르게 확인해줘요. 전체 DRAM의 약한 셀 목록을 일반 배열로 저장하려면 수십 KB가 필요하지만, 블룸 필터를 쓰면 수백 바이트 수준으로 줄어요. 물론 False Positive(있다고 잘못 판단)가 생길 수 있지만, 이건 불필요한 리프레시가 조금 늘어나는 것뿐이라 안전해요.</p>
+    </div>
+    <p>리프레시를 두 단계로 나눠요. Bin 1 (약한 셀): 64ms마다 리프레시, Bin 2 (중간 셀): 128ms마다, Bin 3 (강한 셀): 256ms마다. 리프레시 간격이 다른 만큼, 같은 시간 동안 리프레시해야 하는 커맨드 수가 대폭 줄어요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">리프레시를 얼마나 줄였나요?</h2>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">~75%</div><div class="stat-desc">리프레시 커맨드 감소율</div></div>
+      <div class="stat-box"><div class="stat-num">16 KB</div><div class="stat-desc">블룸 필터 총 크기 (두 레벨)</div></div>
+      <div class="stat-box"><div class="stat-num">≤2%</div><div class="stat-desc">성능 오버헤드</div></div>
+    </div>
+    <p>16GB 시스템에서 RAIDR이 리프레시 커맨드를 약 75% 줄이면서도, 블룸 필터에 필요한 추가 저장소는 16KB에 불과해요. 리프레시로 인한 성능 손실도 2% 이하로 유지돼요. 삼성 전자 리서치와의 협업으로 실제 DRAM 칩에서 리텐션 시간 분포를 측정해서 이 수치를 검증했어요.</p>
+    <div class="insight green">
+      <div class="insight-label">삼성과의 협업</div>
+      <p>실제 DRAM 칩에서 리텐션 시간을 측정하려면 칩 제조사의 도움이 필요해요. RAIDR 연구팀이 삼성과 협력해서 실제 칩의 리텐션 분포를 확인하고, 이를 바탕으로 Bin 분류 기준을 설정했어요. 학계-산업계 협력의 좋은 예예요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Retrospective</div>
+    <h2 class="section-title">10년 후: RAIDR 아이디어가 어디까지 퍼졌나요?</h2>
+    <p>이 논문이 2023년에 쓰인 회고록인 이유는 RAIDR 아이디어가 이후 DRAM 설계에 얼마나 영향을 미쳤는지를 돌아보기 위해서예요. 핵심 통찰인 "리텐션 인식 리프레시"는 이후 수십 편의 후속 연구로 이어졌어요.</p>
+    <div class="insight purple">
+      <div class="insight-label">후속 연구들의 확장</div>
+      <p>DIVA(Variable-Rate Refresh), SELF-REFRESH 개선, PASR(Partial Array Self-Refresh) 등이 모두 RAIDR의 핵심 아이디어를 이어받았어요. DDR5 표준에 포함된 FGR(Fine Granularity Refresh)도 이 계보에 있어요. 리텐션 인식 리프레시가 주류가 됐어요.</p>
+    </div>
+    <p>한편 RowHammer가 등장하면서 상황이 복잡해졌어요. 공격자가 리프레시를 활용해 인접 행을 방어할 기회를 막는 방식으로 RAIDR 메커니즘을 악용할 수 있다는 점도 논문에서 다뤄요. 보안과 신뢰성이 연결되어 있다는 교훈이에요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 리프레시 설계와의 연결</h2>
+    <p>HBM에서도 리프레시는 성능과 전력의 주요 병목이에요. HBM은 넓은 버스와 뱅크 구조를 가지기 때문에, 같은 RAIDR 아이디어를 뱅크 단위 또는 서브어레이 단위로 적용하면 더 세밀한 최적화가 가능해요.</p>
+    <p>특히 AI 추론 워크로드에서 HBM의 데이터 접근 패턴이 예측 가능하기 때문에, 자주 접근하는 영역(모델 가중치)은 어차피 자연 리프레시가 되고, 접근이 드문 영역만 명시적 리프레시가 필요해요. RAIDR의 "선택적 리프레시" 정신이 여기서도 적용돼요.</p>
+    <div class="insight yellow">
+      <div class="insight-label">공부 포인트</div>
+      <p>블룸 필터를 시스템 아키텍처에서 어떻게 쓰는지 이해하기 좋은 사례예요. 또한 학계 연구가 JEDEC 표준으로 이어지는 과정을 추적할 수 있어요. DRAM 신뢰성 연구의 필독 논문으로 꼽혀요.</p>
+    </div>
+  </div>
+
+<hr>
+<div class="section">
+  <div class="section-label">논문 그림</div>
+  <h2 class="section-title">Figure 갤러리</h2>
+  <p class="figure-no-embed">PDF를 브라우저에서 바로 열어 그림을 확인할 수 있어요. 로딩이 느리거나 표시가 안 되면 링크를 눌러 새 탭에서 여세요.</p>
+  <div class="figure-outer">
+    <a class="figure-open-link" href="https://arxiv.org/abs/2306.16024" target="_blank">↗ arXiv 원문에서 열기</a>
+    <div class="figure-frame-wrap">
+      <iframe class="figure-frame" src="https://arxiv.org/pdf/2306.16024" loading="lazy" title="논문 원문 PDF (그림 포함)"></iframe>
+    </div>
+  </div>
+</div>
+</div>
+<div id="term-tooltip-global"></div>
+<script src="tooltip.js"></script>
+</body>
+</html>

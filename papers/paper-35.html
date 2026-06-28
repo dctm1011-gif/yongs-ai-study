@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PRAC Timing Channel · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">PRAC Timing Channel</span>
+</div>
+<div class="article">
+  <div class="article-venue">ISCA 2025</div>
+  <h1 class="article-title">When Mitigations Backfire: Timing Channel Attacks and Defense for PRAC-Based RowHammer Mitigations</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">ECC</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/79b7cb16f2785c063fb4e98fcfed73918abd6f92" target="_blank">원문 보기 →</a></div>
+  <p class="opener">RowHammer를 막기 위해 도입된 PRAC의 ABO(Alert Back-Off) 프로토콜이 역설적으로 새로운 타이밍 채널 공격 벡터를 만들어내고, 이를 근본적으로 차단하는 TPRAC를 제안하는 보안의 아이러니를 다룬 논문이에요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">RowHammer를 막으려 했더니 왜 새로운 취약점이 생겼을까요?</h2>
+    <p>DDR5에서 도입된 PRAC(Per Row Activation Counting)는 DRAM 칩이 각 행의 활성화 횟수를 직접 카운팅하는 방식이에요. 특정 행의 카운터가 임계값(ABO threshold)에 도달하면 DRAM은 호스트 메모리 컨트롤러에 Alert 신호를 보내고, 컨트롤러는 해당 행 근방의 행들을 refresh하는 Back-Off 시퀀스를 수행해요. 이 ABO(Alert Back-Off) 프로토콜은 RowHammer를 효과적으로 방어해요.</p>
+    <p>그런데 이 연구팀은 ABO가 관측 가능한 타이밍 패턴을 만들어낸다는 걸 발견했어요. 메모리 컨트롤러가 ABO Back-Off를 수행하는 동안 다른 메모리 접근은 지연되고, 이 지연 패턴은 측정 가능해요. 즉, 어떤 행이 많이 접근됐는지를 타이밍 차이로 간접적으로 알아낼 수 있어요. 이걸 이용해 민감한 정보를 유출하는 공격이 가능하다는 거예요.</p>
+    <p>방어 메커니즘 자체가 새로운 공격 표면이 된다는 이 역설은 보안 시스템 설계의 근본적인 딜레마를 보여줘요. 복잡한 상태 머신이 외부로 Observable한 신호를 만들 때마다 타이밍 사이드채널 위험이 생겨요.</p>
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>PRAC의 ABO는 행 활성화 상태를 DRAM 외부에서 타이밍으로 관측 가능하게 만들어요. 방어가 만든 이 "창문"을 공격자가 엿보기 창으로 쓸 수 있어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">PRACLeak 공격은 어떻게 동작하고, TPRAC는 이를 어떻게 막나요?</h2>
+    <p><strong>PRACLeak 공격</strong>은 피해자 프로세스가 어떤 메모리 행을 반복 접근하는지를 ABO 타이밍 패턴으로 추론해요. 공격자는 특정 행을 계속 접근하면서 ABO Back-Off가 발생하는 타이밍을 측정해요. 피해자가 특정 행을 많이 접근하면 ABO 임계값에 더 빨리 도달하고, 이 타이밍 차이가 피해자의 메모리 접근 패턴을 노출시켜요. 이를 이용해 AES 구현에서 비밀 키를 유출하는 공격을 실증해요 — 캐시 타이밍 공격과 비슷한 원리지만 DRAM 레벨에서 일어나요.</p>
+    <p>또한 DDR5의 또 다른 메커니즘인 RFM(Refresh Management) 명령도 유사한 타이밍 채널을 만들어요. RFM은 ACT 횟수가 많은 뱅크에서 컨트롤러가 주기적으로 발행하는 refresh인데, 이 발행 타이밍 역시 접근 패턴을 간접 노출해요.</p>
+    <p><strong>TPRAC (Timing-Safe PRAC)</strong>는 이 문제를 근본적으로 해결해요. 핵심 아이디어는 RFM 명령을 메모리 접근 활동과 무관하게 "주기적으로" 발행하는 거예요. 타이밍을 고정시켜버리면 ABO 이벤트와 RFM 발행 간의 타이밍 차이가 사라지고, 공격자가 관측할 수 있는 신호가 없어져요. DRAM 뱅크당 단일 항목 완화 대기열(mitigation queue)만 필요하고, 기존 DRAM 표준(DDR5)과 호환돼요.</p>
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>타이밍 채널의 근원은 "이벤트 발생 시 응답"이에요. TPRAC는 이를 "이벤트 무관하게 주기적 응답"으로 바꿔서 타이밍 관측 자체를 불가능하게 만들어요. 성능 오버헤드는 고정 주기 RFM 발행으로 인해 소폭 증가하지만 타이밍 채널은 완전히 닫혀요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">TPRAC는 타이밍 채널을 막으면서 성능 오버헤드를 얼마나 낮췄나요?</h2>
+    <p>TPRAC를 RH threshold 1024 환경에서 평가한 결과, 성능 오버헤드는 평균 3.4%에 그쳤어요. 타이밍 채널을 완전히 차단하면서도 기존 PRAC 대비 성능 손실이 매우 작아요. PRACLeak 공격에 대해서는 AES 비밀 키 유출 시도를 완전히 차단함을 실증했어요. DRAM 뱅크당 단일 항목 완화 대기열만으로 구현 가능하기 때문에 하드웨어 오버헤드도 최소화됐어요. 다양한 RH threshold(512, 1024, 2048)에서의 성능을 평가했고, threshold가 낮을수록 고정 주기 RFM 발행 빈도가 높아져 오버헤드가 소폭 증가해요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">3.4%</div><div class="stat-desc">RH threshold 1024에서 TPRAC 성능 오버헤드</div></div>
+      <div class="stat-box"><div class="stat-num">100%</div><div class="stat-desc">PRACLeak 공격 차단율 (AES 키 유출 실험)</div></div>
+      <div class="stat-box"><div class="stat-num">1개</div><div class="stat-desc">뱅크당 필요한 완화 대기열 항목 수 (최소 하드웨어)</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에서 PRAC 타이밍 채널은 어떤 위협이 될까요?</h2>
+    <p>HBM은 AI 가속기에 직접 탑재되어 모델 가중치와 활성화(activation) 값을 저장해요. 만약 HBM에도 PRAC와 유사한 행 활성화 카운팅 메커니즘이 도입된다면, 멀티테넌트 AI 추론 환경(같은 GPU를 여러 사용자가 공유)에서 PRACLeak과 동일한 타이밍 채널이 생길 수 있어요. 예를 들어 특정 사용자의 모델이 어떤 행을 집중적으로 접근하는지 패턴을 추론해 모델 아키텍처나 입력 데이터를 유추할 수 있어요.</p>
+    <p>TPRAC의 아이디어 — 이벤트 기반 대신 시간 기반 refresh — 는 HBM 컨트롤러 설계에도 직접 적용할 수 있어요. HBM의 Pseudo Channel 구조에서 각 채널별 독립 주기 refresh를 도입하면, 채널 간 타이밍 관측도 차단할 수 있을 거예요.</p>
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>TPRAC의 고정 주기 RFM은 실제 접근 패턴과 무관하게 발행되므로, 불필요한 refresh가 증가할 수 있어요. HBM의 대역폭 민감도를 고려하면 3.4%의 성능 오버헤드도 AI 추론 지연에 직접 영향을 줄 수 있어 threshold 설정에 신중한 튜닝이 필요해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — PRAC ABO 프로토콜 동작 흐름도 및 타이밍 채널 발생 메커니즘 설명</p>
+    <p><strong>Fig. 2</strong> — PRACLeak 공격 실험 설정 및 AES 키 추론 타이밍 패턴 측정 결과</p>
+    <p><strong>Fig. 3</strong> — TPRAC 아키텍처: 주기적 RFM 발행 스케줄러와 뱅크별 완화 대기열 구조</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/79b7cb16f2785c063fb4e98fcfed73918abd6f92" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+</div>
+</body>
+</html>

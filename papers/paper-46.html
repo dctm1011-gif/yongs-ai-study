@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RowHammer Under Reduced Wordline Voltage · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">RowHammer Under Reduced Wordline Voltage</span>
+</div>
+<div class="article">
+  <div class="article-venue">arXiv 2022</div>
+  <h1 class="article-title">Understanding RowHammer Under Reduced Wordline Voltage: An Experimental Study Using Real DRAM Devices</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">Interface</span></div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://arxiv.org/abs/2206.09999v1" target="_blank">원문 보기 →</a>
+    <a class="article-link" href="https://arxiv.org/pdf/2206.09999v1" target="_blank">PDF →</a>
+  </div>
+  <p class="opener">워드라인 전압(VPP)을 낮추면 DRAM을 수정하지 않고도 RowHammer 취약성을 대폭 줄일 수 있다는 것을 272개 실제 칩으로 최초 입증한 논문이에요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">전압을 낮추면 RowHammer가 줄어들까요?</h2>
+    <p>RowHammer는 DRAM의 특정 행(wordline)을 반복적으로 빠르게 활성화·프리차지하면 물리적으로 인접한 행의 셀에 비트 플립이 발생하는 취약점이에요. 셀 간격이 좁아지는 기술 노드 스케일링과 함께 이 문제는 점점 심각해지고 있어요. DDR4 칩에서는 수만 번 활성화로 충분했는데, 최신 칩에서는 수천 번만으로도 비트 플립이 일어날 수 있어요.</p>
+    <p>기존 RowHammer 연구는 "몇 번을 활성화해야 비트 플립이 일어나느냐(TRH)"에 집중했어요. 그런데 wordline을 전기적으로 올리는 전압인 VPP(Pump Voltage for wordline, 보통 2.5~2.8V)가 RowHammer에 미치는 영향을 체계적으로 분석한 연구는 없었어요. 이 논문은 바로 그 공백을 메웠어요. VPP를 낮추면 행 간 charge coupling이 줄어드니까, RowHammer도 덜 발생하지 않을까 하는 가설을 실험으로 검증했어요.</p>
+    <div class="insight blue">
+      <div class="insight-label">논문의 출발점</div>
+      <p>VPP(워드라인 전압)는 RowHammer의 물리적 메커니즘인 charge coupling의 크기를 직접 결정해요. VPP가 높을수록 워드라인과 인접 셀 간 전압 변화 폭이 커져 더 쉽게 비트 플립이 발생해요. 이 관계를 정량적으로 처음 입증한 연구예요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">어떻게 실험했나요?</h2>
+    <p>세 개 주요 DRAM 제조사(삼성, SK하이닉스, 마이크론)의 272개 실제 DRAM 모듈을 사용했어요. FPGA 기반 테스트 플랫폼으로 VPP를 공칭 전압(2.5V 내외)에서 단계적으로 낮추면서 RowHammer를 시도했어요. 측정 항목은 세 가지예요: ① RowHammer 비트 플립을 일으키는 데 필요한 최소 활성화 횟수(TRH) 변화, ② Bit Error Rate(BER) 변화, ③ DRAM 정상 동작 관련 타이밍 파라미터(tRAS, tRCD, retention time) 변화.</p>
+    <p>중요한 점은 VPP를 낮추더라도 JEDEC 타이밍 파라미터의 공칭 범위 내에서 실험했다는 거예요. 즉, 기존 타이밍 마진(guardband) 안에서 얼마나 보안이 개선되는지 확인했어요. 이 접근법은 DRAM 칩을 수정하지 않고, 메모리 컨트롤러나 전원 공급장치 설정만 바꿔서 RowHammer를 줄일 수 있음을 보여줘요.</p>
+    <div class="insight green">
+      <div class="insight-label">핵심 아이디어</div>
+      <p>칩 수정이나 소프트웨어 패치 없이, 전원 전압(VPP)만 낮춰서 RowHammer 공격의 어려움을 높이는 하드웨어 레벨 방어 방향을 제시해요. 이 방식은 레거시 DRAM에도 적용 가능하다는 점에서 실용적이에요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">VPP를 낮추면 얼마나 효과가 있나요?</h2>
+    <p>결과는 매우 인상적이에요. VPP를 낮추면 RowHammer 공격이 훨씬 어려워졌어요. TRH(비트 플립 유발 최소 활성화 횟수)는 평균 7.4% 증가했고, 일부 칩에서는 최대 85.8%까지 증가했어요. BER(비트 오류율)도 평균 15.2%, 최대 66.9%까지 감소했어요. 272개 중 208개 칩(76%)에서 JEDEC 타이밍 공칭 범위 내에서 이 효과를 달성했어요. 나머지 64개 칩도 소폭 타이밍 여유를 희생하면 같은 효과를 얻을 수 있었어요.</p>
+    <p>반면 타이밍 파라미터 영향은 상대적으로 작았어요. 셀 접근 지연(tRCD), charge restoration 시간, data retention time이 약간 악화됐지만, 모두 JEDEC 공칭 범위 내였어요. 즉 VPP를 적절히 낮추는 것은 성능 손실 없이 보안을 향상시킬 수 있는 실현 가능한 방법이에요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">최대 85.8%</div><div class="stat-desc">TRH 증가 (최악 칩 기준)</div></div>
+      <div class="stat-box"><div class="stat-num">최대 66.9%</div><div class="stat-desc">BER 감소</div></div>
+      <div class="stat-box"><div class="stat-num">272개</div><div class="stat-desc">실제 DRAM 칩 실험</div></div>
+      <div class="stat-box"><div class="stat-num">76%</div><div class="stat-desc">타이밍 마진 내 효과</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM에서 VPP는 DRAM 칩 내부에서 생성되는 내부 고전압으로, 통상 2.5~3.0V예요. HBM은 2.5D/3D 패키징으로 쌓이기 때문에 external VPP 조정이 어렵지만, DRAM 칩 내부의 voltage regulator를 통해 VPP를 조정하는 방법을 고려할 수 있어요. 특히 HBM2에서 RowHammer 취약성이 DDR4 대비 낮다는 실험적 보고가 있는데, HBM 특유의 짧은 wordline과 낮은 VPP 운용이 한 원인일 수 있어요.</p>
+    <p>설계자 입장에서 VPP 조정은 아주 매력적인 방어예요. 칩 수정 없이 전원 설계만 바꿔서 RowHammer 마진을 확보할 수 있거든요. 특히 AI 가속기용 HBM에서 RowHammer에 의한 weight corruption이 문제가 될 수 있는데, VPP를 보수적으로 설정하는 것만으로도 방어 계층(defense layer) 하나를 추가할 수 있어요.</p>
+    <div class="insight yellow">
+      <div class="insight-label">주의할 점</div>
+      <p>VPP를 너무 낮추면 셀 access fail이나 retention time 단축이 발생해요. 특히 저온 동작 시 VPP 마진이 더 크게 필요해요. 칩마다 VPP 최적값이 달라서, 양산 시 VPP calibration이 필요해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — VPP와 RowHammer의 물리적 관계 다이어그램. Wordline 전압 토글 → 인접 셀 커패시터 전하 변화 → 비트 플립 메커니즘을 시각화.</p>
+    <p><strong>Fig. 2</strong> — 실험 플랫폼 구성도. FPGA 기반 테스트 보드, VPP 가변 전원, 온도 제어 환경에서 272개 DRAM 칩 측정 셋업.</p>
+    <p><strong>Fig. 3</strong> — VPP vs TRH 그래프. 제조사별(삼성·SK하이닉스·마이크론) VPP 감소에 따른 TRH 증가 추이. 칩마다 다른 slope 확인.</p>
+    <p><strong>Fig. 4</strong> — VPP vs BER 그래프. 전압 감소에 따른 BER 지수적 감소 패턴. 일부 칩은 급격한 감소, 일부는 완만한 감소.</p>
+    <p><strong>Fig. 5</strong> — VPP 감소 vs 타이밍 파라미터 영향. tRCD, tRAS, retention time 변화율. JEDEC guardband 범위 표시.</p>
+    <div class="figure-outer">
+      <a class="figure-open-link" href="https://arxiv.org/abs/2206.09999v1" target="_blank">↗ 원문에서 그림 보기</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

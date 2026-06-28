@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AR Clock Jitter Compensation · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">AR Clock Jitter Compensation</span>
+</div>
+<div class="article">
+  <div class="article-venue">arXiv 2025</div>
+  <h1 class="article-title">Autoregressive Stochastic Clock Jitter Compensation in Analog-to-Digital Converters</h1>
+  <div class="article-tags"><span class="tag">PLL-DLL</span><span class="tag">ADC-DAC</span><span class="tag">Analog</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://arxiv.org/abs/2505.05030v4" target="_blank">원문 보기 →</a>
+  <a class="article-link" href="https://arxiv.org/pdf/2505.05030v4" target="_blank">PDF →</a></div>
+  <p class="opener">ADC 샘플링 클럭의 지터를 AR(1) 자기회귀 프로세스로 모델링하고, 칼만 필터 기반 디지털 후처리로 보상하여 SINADR을 최대 15 dB 향상시키는 방법을 제안해요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">클럭 지터가 ADC 성능을 얼마나 망가뜨리나요?</h2>
+    <p>고속 ADC에서 샘플링 클럭의 타이밍 불확실성, 즉 지터(jitter)는 SNDR(Signal-to-Noise and Distortion Ratio)을 직접 제한하는 핵심 요인이에요. 이상적으로는 완벽히 균일한 간격으로 아날로그 신호를 샘플링해야 하지만, 실제 클럭에는 위상 노이즈와 열 노이즈에서 기인한 랜덤 타이밍 오차가 항상 존재해요. 이 오차가 크면 클수록, 그리고 입력 신호 주파수가 높을수록 샘플 값이 크게 왜곡돼요.</p>
+    <p>기존 접근법은 지터를 단순한 백색(white) 가우시안 노이즈로 가정하는 경우가 많았어요. 그런데 현실에서 PLL이나 크리스털 오실레이터에서 발생하는 클럭 지터는 시간적 상관성(temporal correlation)을 가져요. 즉, 이전 샘플의 지터를 알면 다음 샘플의 지터를 어느 정도 예측할 수 있는 구조예요. 이 상관성을 무시하면 보상 효율이 크게 떨어져요.</p>
+    <p>이 논문은 상관된 지터를 AR(1) — 1차 자기회귀 — 프로세스로 모델링하고, 파일럿 심볼을 이용해 지터를 추정한 뒤 디지털 도메인에서 보상하는 체계적인 프레임워크를 제시해요. 칼만 필터가 시퀀셜 추정에 이상적으로 맞는 이유를 수학적으로 정당화하고, AR 파라미터 자체도 실시간으로 추정하는 방법까지 포함해요.</p>
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>실제 PLL 기반 클럭의 지터는 백색 노이즈가 아니라 시간적 상관성을 가진 AR(1) 프로세스예요. 이 구조를 활용하면 백색 노이즈 가정 대비 훨씬 효율적인 보상이 가능해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">칼만 필터로 지터를 어떻게 추적하나요?</h2>
+    <p>논문은 두 가지 핵심 알고리즘을 제안해요. 첫 번째는 WLS(Weighted Least Squares) 기반 방법으로, 파일럿 심볼 주변의 수신 샘플들을 가중 최소제곱 문제로 풀어서 지터를 추정해요. 파일럿 밀도가 높을수록 정확도가 올라가지만, 계산량도 비례해서 증가해요.</p>
+    <p>두 번째는 칼만 필터 기반 방법이에요. AR(1) 모델을 상태방정식으로 표현하면 — 지터가 이전 지터의 계수 배에 노이즈를 더한 형태 — 표준 칼만 필터를 그대로 적용할 수 있어요. 칼만 필터는 "예측"과 "업데이트"를 반복하면서 지터 추정치를 재귀적으로 갱신하기 때문에 계산량이 파일럿 밀도에 선형 비례해요. 더 나아가 과거와 미래 파일럿을 모두 활용하는 칼만 스무더(Smoother)도 구현했는데, 이 경우 단방향 필터보다 일관되게 더 좋은 성능을 보여요.</p>
+    <p>AR 파라미터(자기회귀 계수와 노이즈 분산)를 모르는 경우를 위해, 조건부 최대우도 추정기(CMLE)도 제안해요. 수렴하면 칼만 필터에 피드백되어 준최적(near-optimal) 성능을 달성해요. 이 구조 덕분에 AR 파라미터가 시간에 따라 천천히 변하는 환경에서도 적응형 운용이 가능해요.</p>
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>지터의 AR(1) 구조를 칼만 필터의 상태방정식으로 직결시켜, 파일럿 기반 추정을 재귀적으로 갱신해요. 계산 복잡도는 O(N)에 불과하면서 상관 구조를 완전히 활용해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">SINADR 개선이 실제로 얼마나 되나요?</h2>
+    <p>합성 시뮬레이션으로 다양한 시나리오를 평가한 결과, 지터 심각도와 파일럿 밀도에 따라 큰 폭의 성능 향상을 확인했어요. 특히 칼만 스무더는 단방향 칼만 필터보다 일관되게 우수한 성능을 보였고, WLS 방법은 파일럿이 드문 상황에서 다소 열세를 보였어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">1~15 dB</div><div class="stat-desc">SINADR 개선 범위 (지터 심각도·파일럿 밀도 조건에 따라)</div></div>
+      <div class="stat-box"><div class="stat-num">0.02~1.6 dB</div><div class="stat-desc">EVM(Error Vector Magnitude) 개선 범위</div></div>
+      <div class="stat-box"><div class="stat-num">O(N)</div><div class="stat-desc">칼만 필터 계산 복잡도 — 파일럿 수에 선형 비례</div></div>
+      <div class="stat-box"><div class="stat-num">AR(1)</div><div class="stat-desc">지터 모델 차수 — 1차 자기회귀로 실제 PLL 지터 특성 잘 표현</div></div>
+    </div>
+    <p>백색 노이즈 가정 기반 기존 보상기와 비교했을 때, AR 구조를 활용하는 칼만 방식이 저파일럿 밀도 조건에서 특히 큰 격차를 보였어요. 이는 상관 지터 환경일수록 모델 정확도가 성능을 지배한다는 것을 보여줘요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM I/O 설계에서 클럭 지터 보상을 어떻게 적용할 수 있나요?</h2>
+    <p>HBM의 고속 I/O(최대 8 GT/s 이상)에서는 DQ 데이터 캡처 타이밍이 클럭 지터에 매우 민감해요. 특히 TSV를 통해 전달되는 클럭은 실리콘 관통 경로에서 추가 위상 노이즈를 받을 수 있어요. 이 논문의 AR 모델 기반 디지털 보상 개념은 HBM I/O 링크의 디지털 후처리 단에 적용 가능해요.</p>
+    <p>HBM 컨트롤러 측에서 CDR(Clock and Data Recovery) 회로가 복원한 클럭의 잔류 지터를 AR(1) 프로세스로 모델링하고 칼만 필터로 추적하면, 마진 없이 더 타이트한 타이밍으로 동작시킬 수 있어요. 이는 채널 마진이 극도로 타이트해지는 HBM4 세대에서 특히 관련성이 높아요.</p>
+    <p>또한 ADC 기반 SerDes 구조가 HBM에 도입될 경우, 이 논문의 기법을 디지털 이퀄라이저 앞단의 지터 보상 블록으로 직접 활용할 수 있어요. 파일럿 심볼 개념은 HBM 트레이닝 패턴과 유사하므로, 기존 링크 트레이닝 인프라를 재활용할 수 있는 장점이 있어요.</p>
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>AR 파라미터 추정(CMLE)은 지터 통계가 천천히 변한다는 가정을 해요. HBM의 온도 급변이나 전원 과도 상태처럼 지터 특성이 빠르게 바뀌는 환경에서는 파라미터 추적 속도가 병목이 될 수 있어요. 적응형 망각 인자(forgetting factor) 도입이 필요할 수 있어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2505.05030v4/2505.05030v4/rat_zoomed_varphi0.95.png" alt="Figure 1" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 1 : Level curves of the term multiplying σ x ′ 2 \sigma_{x^{\prime}}^{2} in ( 11 ); φ = 0.95 \varphi=0.95 left, φ = 0.999 \varphi=0.999 right, in dB. The double integral in ( 11 ) was numerically evaluated via nested integral in MATLAB and its accuracy was double-checked via a separate Monte Carlo where instances of the processes 𝐱 \mathbf{x} , 𝝃 \boldsymbol{\xi} etc. were generated and the</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2505.05030v4/2505.05030v4/proc_exPoly.png" alt="Figure 2" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 3 : Jitter trackers comparison example, Algorithm 1 (left) vs Algorithm 2 (right).</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2505.05030v4/2505.05030v4/0.5jitt_varphi0999_mod.png" alt="Figure 3" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">(a)</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2505.05030v4/2505.05030v4/1.5jitt_varphi0999_mod.png" alt="Figure 4" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">(b)</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2505.05030v4/2505.05030v4/Pdensity_jitt05_noise10_mod.png" alt="Figure 5" loading="lazy" onerror="this.style.display='none'">
+
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2505.05030v4/2505.05030v4/Pdensity_jitt15_noise10_mod.png" alt="Figure 6" loading="lazy" onerror="this.style.display='none'">
+
+    </div>
+    <div class="figure-outer"><a class="figure-open-link" href="https://arxiv.org/abs/2505.05030v4" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div></div>
+
+</div>
+</body>
+</html>

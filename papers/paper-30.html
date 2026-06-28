@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RowHammer in HBM2 · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">RowHammer in HBM2</span>
+</div>
+<div class="article">
+  <div class="article-venue">arXiv 2023</div>
+  <h1 class="article-title">An Experimental Analysis of RowHammer in HBM2 DRAM Chips</h1>
+  <div class="article-tags"><span class="tag">HBM</span><span class="tag">DRAM</span><span class="tag">ECC</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://arxiv.org/abs/2305.17918v1" target="_blank">원문 보기 →</a>
+  <a class="article-link" href="https://arxiv.org/pdf/2305.17918v1" target="_blank">PDF →</a></div>
+  <p class="opener">실제 HBM2 칩을 열어 RowHammer 취약성을 처음으로 실험 분석한 논문 — 3D 적층 채널마다 BER이 최대 79% 다르고, 뱅크 끝 행은 훨씬 안전하며, 비공개 내부 RH 방어가 존재함을 밝혔어요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">HBM2는 DDR4보다 RowHammer에 더 안전할까요?</h2>
+    <p>RowHammer 연구의 대부분은 DDR3, DDR4, LPDDR4 같은 평면형(planar) DRAM 칩에 집중됐어요. HBM(High Bandwidth Memory)은 GPU 고성능 컴퓨팅에서 핵심 메모리로 자리 잡았지만, 그 RowHammer 취약성은 거의 연구되지 않았어요. HBM은 구조적으로 DDR과 많이 달라요. 여러 DRAM 다이를 수직으로 쌓고 TSV(Through-Silicon Via)로 연결하며, 각 다이는 독립적인 채널로 동작해요. wordline이 짧고, 동작 전압이 낮으며, 뱅크 구조도 달라요.</p>
+    <p>이런 구조적 차이가 RowHammer 특성에 어떻게 반영되는지가 이 논문의 핵심 질문이에요. DDR4에서 확립된 TRH(RowHammer Threshold) 개념이 HBM2에서도 유효한지, 그리고 3D 적층이라는 특수성이 RowHammer 취약성에 어떤 영향을 미치는지 실험으로 답하려 했어요.</p>
+    <p>실험 대상은 실제 상용 HBM2 DRAM 칩이에요. GPU에 탑재된 HBM2 패키지에서 FPGA 기반 테스트베드를 연결해 row address와 활성화 패턴을 직접 제어했어요. 이런 수준의 HBM2 직접 실험은 이 논문이 처음이에요.</p>
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>HBM의 3D 적층, 짧은 wordline, 다채널 구조가 RowHammer 취약성을 DDR과 다르게 만드는지 — 더 안전한지, 더 위험한지, 아니면 단순히 다른지 — 를 처음으로 실험으로 밝혀요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">HBM2 RowHammer를 어떻게 측정했나요?</h2>
+    <p>실험 환경 구성이 이 논문의 첫 번째 기여예요. HBM2는 일반 DDR처럼 쉽게 접근할 수 있는 표준 인터페이스가 없어요. GPU에 탑재된 HBM2 패키지에 FPGA를 직접 인터페이싱해서 HBM2 채널별로 독립적인 row 활성화 제어를 구현했어요. 이 과정에서 HBM2의 다채널 구조(보통 8채널)를 각각 독립적으로 테스트할 수 있는 환경을 갖췄어요.</p>
+    <p>실험 절차는 표준 RowHammer 테스트 방식을 따라요. 목표 행(victim)을 DATA 패턴으로 초기화하고, 인접한 행(aggressor)을 정해진 횟수만큼 반복 활성화한 후, victim 행의 데이터를 읽어 비트 플립 발생 여부를 확인해요. 활성화 횟수를 단계적으로 증가시켜 TRH(비트 플립 첫 발생 임계값)를 채널별, 뱅크별, 행 위치별로 측정했어요.</p>
+    <p>또한 새로 고침(refresh) 주기와의 관계도 분석했어요. 정기 리프레시 중에 비정상적인 동작이 감지되는 경우를 추적했더니, 비공개 내부 RH 방어 메커니즘의 존재를 간접적으로 확인할 수 있었어요.</p>
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>GPU HBM2에 FPGA를 직접 인터페이싱해서 채널·뱅크·행 위치별 TRH를 실측해요. HBM 내부의 비공개 RH 방어도 refresh 타이밍 분석으로 간접 확인했어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">HBM2 RowHammer 실험에서 무엇을 발견했나요?</h2>
+    <p>세 가지 주요 발견이 있어요. 첫째, 3D 적층된 HBM2의 채널 간 TRH 편차가 매우 커요. 동일 패키지 내에서도 채널에 따라 비트 오류율이 최대 79% 차이 나요. 이는 적층 공정의 다이별 편차 및 TSV 경유 신호의 채널 간 불균일성에서 기인한 것으로 보여요. 둘째, 물리적으로 뱅크 끝(highest address) 행은 다른 행에 비해 훨씬 적은 비트 플립을 보여요. 이는 victim row가 aggressor와 한쪽만 인접한 경우(단면 공격)와 양쪽 모두 인접한 경우(양면 공격)의 차이와 유사한 구조예요. 셋째, 정기 refresh가 일어나는 타이밍에 맞춰 특정 행이 추가로 refresh되는 패턴을 발견했어요. 이는 HBM2가 공개되지 않은 내부 RowHammer 방어를 갖고 있음을 시사해요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">최대 79%</div><div class="stat-desc">동일 HBM2 패키지 내 채널 간 BER 차이 — 3D 적층 불균일성 반영</div></div>
+      <div class="stat-box"><div class="stat-num">뱅크 끝 행</div><div class="stat-desc">highest address 행은 다른 행 대비 비트 플립 현저히 적음 — 단면 인접 효과</div></div>
+      <div class="stat-box"><div class="stat-num">비공개 RH 방어</div><div class="stat-desc">refresh 타이밍 분석으로 HBM2 내부에 undisclosed RowHammer 방어 존재 확인</div></div>
+      <div class="stat-box"><div class="stat-num">HBM2 TRH</div><div class="stat-desc">동 세대 DDR4보다 일반적으로 높은 TRH 범위 — 짧은 wordline과 낮은 밀도 효과</div></div>
+    </div>
+    <p>DDR4와 비교했을 때 HBM2의 TRH는 동 세대 기준으로 더 높은 편이에요. 짧은 wordline과 상대적으로 낮은 셀 밀도가 셀 간 전기 간섭을 줄이는 방향으로 작용한 것으로 해석돼요. 다만 HBM 세대가 발전하면서 밀도가 높아지면 이 안전 마진이 줄어들 수 있어요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 회로 설계자가 이 결과에서 무엇을 얻을 수 있나요?</h2>
+    <p>가장 직접적인 시사점은 채널 간 TRH 편차예요. 79%의 BER 차이는 HBM 패키지 수준 검증에서 "가장 취약한 채널"을 기준으로 RH 방어를 설계해야 한다는 것을 의미해요. 평균 TRH를 기준으로 방어 threshold를 설정하면, 취약한 채널에서 보호에 구멍이 생겨요. 이는 HBM 양산 공정의 다이 간 변동성 관리와 직결되는 문제예요.</p>
+    <p>뱅크 끝 행의 낮은 취약성은 주소 공간 배치 전략으로 활용할 수 있어요. 보안에 민감한 데이터나 ECC 메타데이터를 뱅크 경계 근처에 배치하면 RowHammer 노출을 줄일 수 있어요. 물론 이런 "소프트" 방어는 근본적 해결책이 아니라 보완책이에요.</p>
+    <p>비공개 내부 RH 방어의 존재는 HBM 보안 분석에서 중요한 포인트예요. 방어가 있다는 것 자체는 긍정적이지만, 비공개라는 점에서 방어의 강도와 우회 가능성을 외부에서 검증하기 어려워요. HBM을 탑재한 시스템(AI 가속기, HPC 서버)의 보안 평가에서 이 불투명성이 위험 요소로 남아요.</p>
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>HBM2가 동 세대 DDR4보다 TRH가 높다는 결과를 "HBM은 RowHammer에 안전하다"로 일반화하면 안 돼요. HBM3·HBM4로 세대가 바뀌며 밀도가 높아지면 TRH가 낮아질 수 있고, 이 논문의 결론은 HBM2 세대에만 유효한 스냅샷이에요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — HBM2 패키지 구조와 실험 테스트베드: FPGA와 HBM2 채널을 직접 인터페이싱하는 시스템 구성도. 채널별 독립 제어 경로를 보여줘요.</p>
+    <p><strong>Fig. 2</strong> — 채널별 BER 분포: 동일 HBM2 패키지 내 8개 채널의 RowHammer BER 히스토그램. 채널 간 최대 79% 편차가 시각적으로 드러나요.</p>
+    <p><strong>Fig. 3</strong> — 뱅크 내 행 위치별 비트 플립 맵: 뱅크 끝 행(highest address)과 내부 행의 TRH 차이. 뱅크 경계 효과가 명확히 보여요.</p>
+    <p><strong>Fig. 4</strong> — refresh 타이밍과 비정상적 행 리프레시 패턴: 정기 refresh 중 특정 행이 추가로 리프레시되는 타이밍 로그. 비공개 내부 RH 방어의 흔적이에요.</p>
+    <p><strong>Fig. 5</strong> — HBM2 vs. DDR4 TRH 비교: 동 세대 DDR4와 HBM2의 TRH 분포 비교. HBM2가 더 높은 TRH를 보이는 것을 통계적으로 정리했어요.</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://arxiv.org/abs/2305.17918v1" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CIM ECC with Successive Correction · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">CIM ECC with Successive Correction</span>
+</div>
+<div class="article">
+  <div class="article-venue">Design Automation Conference 2022</div>
+  <h1 class="article-title">Improving Compute In-Memory ECC Reliability with Successive Correction</h1>
+  <div class="article-tags"><span class="tag">SRAM</span><span class="tag">ECC</span><span class="tag">ML-HW</span></div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://www.semanticscholar.org/paper/98db730fe8cc27b7c6e7779c59125a202517d914" target="_blank">원문 보기 →</a>
+    <a class="article-link" href="https://dl.acm.org/doi/pdf/10.1145/3489517.3530526" target="_blank">PDF →</a>
+  </div>
+  <p class="opener">CIM(Compute-In-Memory) 아키텍처에서 소자 변동으로 인한 아날로그 연산 오류를 Successive ECC로 1만 6천배 BER 감소를 달성한 논문이에요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">CIM은 왜 기존 ECC가 통하지 않나요?</h2>
+    <p>CIM(Compute-In-Memory)은 AI 추론에서 혁신적인 아이디어예요. 메모리 배열(SRAM, RRAM 등) 내에서 직접 MAC(Multiply-Accumulate) 연산을 수행해서, 메모리와 프로세서 사이의 데이터 이동 병목(memory wall)을 해소해요. Weight 값을 메모리 셀 저항으로 표현하고, bitline 전류를 합산하면 자연스럽게 벡터-행렬 곱셈이 돼요. 에너지 효율이 획기적으로 높아지고, AI 가속기의 핵심 기술로 주목받고 있어요.</p>
+    <p>문제는 이 아날로그 연산이 소자 변동에 매우 취약하다는 거예요. RRAM 같은 메모리 소자는 제조 공정 중 소자 간 저항값이 달라지고(device variation), 시간이 지나면서도 변해요(drift). 이 변동이 MAC 연산 결과에 오류를 만들어요. 기존 DRAM ECC는 디지털 메모리의 비트 오류를 수정하는 거라서, CIM의 아날로그 연산 오류와는 성격이 달라요. CIM 특화된 오류 수정 방법이 필요해요.</p>
+    <div class="insight blue">
+      <div class="insight-label">논문의 출발점</div>
+      <p>CIM의 아날로그 연산 오류는 단일 비트 플립이 아닌 계산 결과의 수치적 편차예요. 기존 Hamming/BCH ECC로 잡을 수 없어요. 이 논문은 CIM 특화 ECC를 설계하고 하드/소프트 오류 모두를 수정하는 Successive 방식을 제안해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">Successive Correction은 어떻게 동작하나요?</h2>
+    <p>Successive Correction의 핵심은 오류를 한 번에 수정하려는 대신, 여러 단계를 거쳐 반복적으로 수정하는 거예요. 1단계(Single Error Correction)에서 한 개의 오류를 감지·수정하고, 수정된 결과를 다시 2단계(Double Error Correction)의 입력으로 써요. 각 단계에서 수정 능력이 제한되지만, 단계를 쌓으면 전체 오류 수정 능력이 크게 향상돼요. 이것이 LDPC의 iterative decoding과 유사한 개념이에요.</p>
+    <p>논문은 파운드리 RRAM 어레이에서 실측한 소자 변동 데이터로 오류 모델을 보정했어요. 하드 오류(연산 결과가 완전히 잘못된 경우)와 소프트 오류(결과가 약간 편차 있는 경우)를 분리하여 각각에 최적화된 수정 방식을 적용해요. Syndrome-based 오류 감지 + Successive 수정 단계로 구성된 회로를 RRAM CIM 어레이 옆에 배치했어요.</p>
+    <div class="insight green">
+      <div class="insight-label">핵심 아이디어</div>
+      <p>단일 ECC 코드를 여러 번 적용(Successive)하는 방식으로, 한 번에 강력한 코드를 쓰는 것보다 훨씬 적은 오버헤드로 높은 오류 수정 능력을 달성해요. 특히 CIM처럼 연산이 여러 단계로 파이프라인화된 경우 자연스럽게 적용할 수 있어요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">얼마나 개선됐나요?</h2>
+    <p>ECC 없는 CIM 대비 BER이 16,000배 이상 감소했어요. 이전 최선의 CIM ECC 연구 대비로는 427배 이상 감소했어요. 면적 오버헤드는 29.1%, 전력 오버헤드는 26.3%로, 이 정도 BER 개선 대비 매우 합리적인 수준이에요. 단일(SEC), 이중(DEC), 삼중(TEC) 오류 수정을 모두 달성했어요. 실제 AI 추론 정확도 관점에서는 오류 없는 이상적인 경우와 거의 동일한 정확도를 회복했어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">16,000×</div><div class="stat-desc">BER 감소 (ECC 없는 CIM 대비)</div></div>
+      <div class="stat-box"><div class="stat-num">427×</div><div class="stat-desc">BER 감소 (이전 연구 대비)</div></div>
+      <div class="stat-box"><div class="stat-num">29.1%</div><div class="stat-desc">면적 오버헤드</div></div>
+      <div class="stat-box"><div class="stat-num">26.3%</div><div class="stat-desc">전력 오버헤드</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM과 CIM의 연결 고리는 점점 강해지고 있어요. HBM-PIM(Processing In Memory) 솔루션들이 등장하면서, HBM 내부에서 AI 연산을 수행하는 구조가 실리콘에 구현됐어요(예: SK하이닉스 AiMM, 삼성 AXDIMM). HBM-PIM에서는 DRAM 셀 내 아날로그 연산이 아니라 디지털 ALU를 쓰는 경우가 많지만, 미래에 RRAM이나 PCM 기반 in-memory computing이 HBM와 결합된다면 이 논문의 ECC 방법이 직접 필요해요.</p>
+    <p>현재 HBM3의 on-die ECC도 비슷한 철학을 일부 공유해요. 메모리 내에서 오류를 먼저 잡고, 시스템 레벨 ECC가 남은 오류를 처리하는 계층 구조예요. Successive Correction은 이 계층을 더 촘촘하게 만드는 방법으로, 미래 HBM-PIM 설계에 영감을 줘요.</p>
+    <div class="insight yellow">
+      <div class="insight-label">주의할 점</div>
+      <p>Successive 단계가 늘어날수록 지연(latency)이 증가해요. CIM의 장점인 빠른 병렬 연산과 상충될 수 있어요. 또한 RRAM의 소자 변동 특성은 칩마다, 온도마다 달라서 ECC 파라미터를 보정(calibration)하는 메커니즘이 필요해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — RRAM CIM 어레이 구조. Weight 저장 셀, bitline 전류 합산, 오류 수정 회로 블록 다이어그램.</p>
+    <p><strong>Fig. 2</strong> — RRAM 소자 변동 분포. 파운드리 측정 데이터 기반 저항 히스토그램. Hard/soft fault 구분선 표시.</p>
+    <p><strong>Fig. 3</strong> — Successive ECC 단계별 오류 수정 흐름. SEC → DEC → TEC 단계와 각 단계의 syndrome 계산 및 correction 블록.</p>
+    <p><strong>Fig. 4</strong> — BER 비교 그래프. ECC 없음 vs 기존 CIM ECC vs 제안 Successive ECC. 소자 변동 파라미터별 결과.</p>
+    <p><strong>Fig. 5</strong> — 면적·전력 오버헤드 vs BER 성능 Trade-off. 제안 방법이 Pareto front에 위치함을 보여주는 scatter plot.</p>
+    <div class="figure-outer">
+      <a class="figure-open-link" href="https://www.semanticscholar.org/paper/98db730fe8cc27b7c6e7779c59125a202517d914" target="_blank">↗ 원문에서 그림 보기</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

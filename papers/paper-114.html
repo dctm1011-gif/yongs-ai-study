@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Design and development for power supply circuit of... · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Design and development for power supply circuit of...</span>
+</div>
+<div class="article">
+  <div class="article-venue">Advanced Fiber Laser Conference 2025</div>
+  <h1 class="article-title">Design and development for power supply circuit of a low-light detection imaging system</h1>
+  <div class="article-tags"><span class="tag">Power</span><span class="tag">Thermal</span><span class="tag">ML-HW</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/ef8a715716a22553f8e5d6f0ed7ddeefc1ae5b16" target="_blank">원문 보기 →</a>
+  </div>
+  <p class="opener">위성 탑재 저조도 이미징 시스템의 심장부, 10종 전원을 단일 입력에서 공급하는 저잡음 전원 회로 설계 이야기예요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">왜 저조도 위성 이미징 시스템에서 전원 공급 회로가 핵심 난제일까요?</h2>
+    <p>기존 위성 광학 이미징 시스템은 태양광이 충분한 낮 시간대에만 고품질 영상을 획득할 수 있어 야간 재해 모니터링이나 긴급 상황 대응에 한계가 있었어요. 저조도 원격 감지 시스템은 ICCD(Image Intensifier Coupled CCD) 센서를 활용해 야간, 새벽, 황혼 시간대에도 영상을 촬영할 수 있어 이러한 단점을 효과적으로 보완해줘요. 특히 중국의 주요 자연재해 및 비상사태에 대한 신속한 대응 역량을 높이고 지구 관측 기술의 적용 범위를 크게 확장할 수 있는 핵심 기술로 주목받고 있어요.</p>
+    <p>저조도 감지 시스템은 ICCD 모듈, FPGA 기반 주 제어 처리 모듈, 신호 처리 회로, 전원 공급 모듈의 4개 서브시스템으로 구성돼요. FPGA에서 생성된 주 제어 펄스가 ICCD를 구동하고, ICCD는 광학계를 통해 미약한 광신호를 수신해 광전 변환을 수행한 뒤 고속 디지털 이미지 데이터를 출력하는 구조예요. 이 과정에서 전원 공급 모듈은 나머지 세 모듈 모두에 저잡음 고안정 전력을 공급해야 하므로, 시스템 전체 이미징 성능을 좌우하는 핵심 부품이 돼요.</p>
+
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>위성 단일 전원(+28V 계열)으로부터 전압 레벨, 부하 전류, 기능 요구가 각기 다른 10종의 전원을 동시에 생성해야 하는데, 입력 리플, PCB 배선 유발 전자기 간섭(EMI), 열 잡음이 ICCD 이미징 품질을 직접적으로 저하시키는 문제가 있어요. 이를 해결하기 위해 DC/DC 컨버터와 LDO를 조합한 하이브리드 전원 아키텍처 설계가 필요해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">어떻게 단일 위성 전원에서 10종의 저잡음 전원을 동시에 공급할 수 있을까요?</h2>
+    <p>설계팀은 복수의 DC/DC 스위칭 컨버터 모듈과 다수의 LDO(저전압 차동 전압 조정기)를 계층적으로 결합한 하이브리드 전원 공급 시스템을 채택했어요. DC/DC 컨버터는 높은 전압 변환 효율을 제공하지만 스위칭 노이즈가 발생하므로, 후단에 LDO를 배치해 리플과 노이즈를 추가 억제하는 2단 필터링 구조를 적용했어요. 이를 통해 +18V, +13.5V, +12V, +11V, +8V, +7V, +5V, +3.3V, +1.5V, -7V의 총 10종 전원을 단일 위성 플랫폼 입력으로부터 생성해요.</p>
+    <p>부품 선정 단계에서는 각 전원 레일의 부하 전류 특성과 잡음 민감도에 맞춰 최적 소자를 선별하고, PCB 레이아웃에서는 전원 루프 면적 최소화, 분리형 그라운드 플레인, 디커플링 커패시터 근접 배치 등 EMI 저감 기법을 적용했어요. 또한 전원 시퀀스 설계를 통해 FPGA 및 ICCD 모듈의 래치업 방지와 안전한 부팅 순서를 보장했으며, 열 방출 설계를 통해 부품 온도 상승에 의한 열 잡음 증가를 억제했어요.</p>
+
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>스위칭 손실이 적은 DC/DC 컨버터로 1차 전압 변환 효율을 확보하고, LDO로 2차 정밀 노이즈 필터링을 수행하는 계층적 하이브리드 구조가 이 설계의 혁신 포인트예요. PCB 레이아웃 최적화와 전원 시퀀싱까지 통합 설계함으로써 하드웨어와 소프트 타이밍 양 측면에서 이미징 성능을 보호하는 종합적 접근이 차별점이에요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">최종 전원 회로는 실제로 얼마나 낮은 리플과 잡음을 달성했나요?</h2>
+    <p>단일 보드 디버깅 및 시스템 통합 테스트 결과, 10개 전원 레일 모두에서 출력 리플이 20mV 이하를 달성했어요. 저잡음, 높은 안정성, 높은 신뢰성 특성이 확인되어 ICCD 이미징 모듈의 요구 사양을 충족했어요. 이 성능은 위성 플랫폼의 진동, 온도 변화 환경에서도 안정적인 이미징 데이터 출력을 가능하게 해요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">20mV 이하</div><div class="stat-desc">전 전원 레일 출력 리플 최대값</div></div>
+      <div class="stat-box"><div class="stat-num">10종</div><div class="stat-desc">단일 위성 입력에서 생성되는 전원 레일 수 (+18V~-7V)</div></div>
+      <div class="stat-box"><div class="stat-num">4개</div><div class="stat-desc">시스템 구성 서브모듈 수 (ICCD, FPGA, 신호처리, 전원)</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM 및 고성능 DRAM 회로 설계자 관점에서 이 논문은 다중 전압 레일 환경에서의 전원 무결성(Power Integrity) 확보 전략으로 직접 참조할 수 있는 사례예요. HBM 인터페이스는 VDD, VDDQ, VPP 등 여러 전압 레일이 엄격한 리플 사양(수 mV 수준)을 요구하는데, DC/DC + LDO 캐스케이드 구조는 이러한 요구를 만족하는 검증된 접근법이에요. 특히 VDDQ 리플이 신호 마진에 직접 영향을 미치는 HBM PHY 설계에서 후단 LDO 필터링의 필요성을 재확인할 수 있어요.</p>
+    <p>PCB 레이아웃 측면에서 전원 루프 면적 최소화와 분리형 그라운드 플레인 적용은 HBM 패키지 기판 및 인터포저 설계에서도 동일하게 적용되는 원칙이에요. 또한 전원 시퀀싱 설계는 HBM DRAM의 초기화 시퀀스(VDD → VDDQ → VPP 순서)와 동일한 맥락으로, 잘못된 파워업 순서가 래치업이나 산화막 스트레스를 유발할 수 있다는 점에서 설계 유의 사항으로 공유돼요.</p>
+
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>이 논문은 우주/위성용 특수 이미징 시스템에 특화된 설계로, 상용 HBM 서버 환경 대비 전원 전류 용량과 과도 응답 속도 요구 사항이 상이할 수 있어요. 또한 20mV 리플 사양은 ICCD 기준이며 HBM VDDQ의 경우 더 엄격한 수 mV 수준의 리플 규격이 요구되므로 직접 수치 적용에는 주의가 필요해요. 논문에서 열 잡음 억제를 위한 구체적인 열 저항 수치나 시뮬레이션 데이터가 공개되지 않아 정량적 검증에는 한계가 있어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/ef8a715716a22553f8e5d6f0ed7ddeefc1ae5b16" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

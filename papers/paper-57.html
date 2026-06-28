@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TRAP: Time-Aware Probabilistic In-DRAM RowHammer · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">TRAP: Time-Aware RowHammer</span>
+</div>
+<div class="article">
+  <div class="article-venue">SBAC-PAD 2025</div>
+  <h1 class="article-title">TRAP: Time-Aware Probabilistic In-Dram RowHammer Solution</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">ECC</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/4bcddc9daf3cf5f628151ce83295de0e826cf95f" target="_blank">원문 보기 →</a></div>
+  <p class="opener">DRAM 새로 고침 주기 안에서 각 행 활성화가 "언제" 발생했는지를 추적해, 활성화 빈도뿐 아니라 시간 분포까지 고려한 적응형 완화 확률을 적용하는 경량 in-DRAM RowHammer 방어 기법입니다.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">왜 기존 확률적 방어만으로는 부족한가요?</h2>
+    <p>DRAM 셀 간격이 줄어들수록 인접 행(aggressor row)의 반복 활성화가 전하 결합을 통해 피해 행(victim row)의 비트를 뒤집는 RowHammer 현상이 심각해지고 있어요. 공정 미세화가 진행될수록 비트 플립에 필요한 최소 활성화 횟수(tRH threshold)가 급격히 낮아지기 때문에, DDR5와 LPDDR5 세대에서는 보안 위협이 더욱 현실적인 문제로 다가왔죠.</p>
+    <p>이에 대응해 PARA(Probabilistic Adjacent Row Activation), PROHIT 같은 확률적 in-DRAM 방어가 등장했어요. 이들은 aggressor row 활성화가 감지될 때마다 일정 확률 p로 인접 행을 새로 고침하는 방식인데요. 단순하고 면적 오버헤드가 적다는 장점이 있지만 두 가지 본질적인 약점을 갖고 있어요. 첫째는 "균일하지 않은 완화 확률" 문제예요. 새로 고침 간격(tREFW) 초반에 집중적으로 발생한 활성화와 후반에 발생한 활성화 모두 동일한 p를 적용하기 때문에, 초반 공격에는 완화 기회가 충분히 있어도 후반으로 갈수록 누적 확률이 낮아져요. 둘째는 "non-selection problem"인데, 공격자가 확률적 트리거를 지속적으로 피해가는 패턴을 반복하면 최악의 시나리오에서 완화가 전혀 발동하지 않을 수 있어요.</p>
+    <p>결국 기존 방식은 "활성화가 몇 번 있었나"에만 집중하고 "활성화가 언제 있었나"라는 시간 정보를 전혀 활용하지 않는 게 핵심 문제예요. TRAP은 바로 이 시간 축(time-slot)을 도입해서 두 가지 약점을 동시에 해결하려는 시도랍니다.</p>
+    <div class="insight blue">
+      <div class="insight-label">논문의 출발점</div>
+      <p>확률적 in-DRAM 방어가 "활성화 횟수"만 보고 "활성화 시간"을 무시하기 때문에, 새로 고침 주기 내 시간 슬롯별로 누적 위험도가 달라지는 현상을 보정할 수 없다는 것이 TRAP의 핵심 문제 인식이에요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">시간 슬롯 기반 샘플링 확률이란 무엇인가요?</h2>
+    <p>TRAP의 핵심 아이디어는 DRAM 새로 고침 간격(tREFW)을 여러 개의 시간 슬롯(time slot)으로 나누고, 각 슬롯에서의 남은 시간을 고려해 완화 확률 p를 동적으로 조정하는 거예요. 예를 들어 tREFW의 90%가 지났을 시점에서 활성화된 aggressor는 남은 시간 안에 다시 완화될 기회가 적으니, 지금 당장 완화 확률을 높여야 해요. 반대로 초반이라면 앞으로 많은 기회가 남아 있으니 낮은 확률로도 충분하죠.</p>
+    <p>구현 관점에서 TRAP은 뱅크(bank)별 소형 카운터를 두어 현재 시간 슬롯 위치를 추적해요. 완화 확률 p(t)는 미리 분석적으로 유도해 조회 테이블(LUT)에 저장하고, 활성화가 발생할 때마다 LUT에서 적절한 p를 꺼내 적용해요. 이 LUT는 슬롯 수에 따라 수십 바이트 수준으로 매우 작아서 면적 오버헤드가 거의 없어요.</p>
+    <p>DDR5 Refresh Management(RFM) 기능과의 통합도 고려됐어요. RFM은 DRAM이 특정 뱅크에서 활성화 누적량이 임계값을 초과하면 컨트롤러에 RFM 커맨드를 요청하는 메커니즘인데, TRAP의 시간 인식 확률을 RFM 트리거 판단에도 활용하면 불필요한 RFM 발동을 줄일 수 있어요. 또한 "non-selection probability"를 수학적으로 거의 0에 수렴하게 만드는 확률 설계를 제시해서, 공격자가 완화 트리거를 계속 피해가는 시나리오에도 대응할 수 있답니다.</p>
+    <div class="insight green">
+      <div class="insight-label">핵심 아이디어</div>
+      <p>tREFW를 N개 슬롯으로 분할 → 각 슬롯에서 남은 슬롯 수와 공격 횟수를 함께 고려한 완화 확률 p(t)를 LUT로 사전 계산 → 활성화 시 즉시 LUT 참조로 완화 트리거 결정. 시간 축 추가만으로 non-selection 문제와 불균일 완화 문제를 동시에 해소해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">SPEC2017·PARSEC·LIGRA 벤치마크에서 얼마나 효과적인가요?</h2>
+    <p>TRAP은 SPEC2017, PARSEC, LIGRA 등 다양한 워크로드를 Gem5 시뮬레이터로 평가했어요. 결과는 매우 인상적인데, 성능 오버헤드가 거의 0에 가까우면서 DRAM 에너지는 2.5% 증가에 그쳤어요. 이는 기존 PARA가 낮은 tRH 임계값에서 높은 완화율 때문에 상당한 대역폭 손실을 유발하는 것과 대조적이에요. DDR5 RFM과 통합했을 때는 평균 IPC 저하가 0.2%에 불과했고, 최악의 공격 시나리오에서도 tRH=1000 이하까지 강건한 보호를 유지했어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">~0%</div><div class="stat-desc">성능 오버헤드 (IPC 저하)</div></div>
+      <div class="stat-box"><div class="stat-num">+2.5%</div><div class="stat-desc">DRAM 에너지 증가량</div></div>
+      <div class="stat-box"><div class="stat-num">0.2%</div><div class="stat-desc">DDR5 RFM 통합 시 IPC 저하</div></div>
+      <div class="stat-box"><div class="stat-num">≈0</div><div class="stat-desc">Non-selection probability (수학적 수렴값)</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM은 DDR5 대비 더 많은 뱅크(기본 16~32개)가 병렬로 동작하고, 채널 수도 최대 16개에 달해요. 이 구조에서 per-bank 카운터 기반의 TRAP은 특히 잘 맞아요. 각 뱅크별로 독립적인 시간 슬롯 카운터를 두고 LUT를 참조하는 방식은 면적이 작고 병렬성을 그대로 활용할 수 있거든요. HBM 내부의 tRFC(새로 고침 사이클)가 DDR5보다 상대적으로 짧기 때문에, 슬롯 크기 조정과 LUT 재계산으로 충분히 적용 가능해요.</p>
+    <p>더 나아가 HBM3/HBM3E에서는 TRR(Target Row Refresh) 기능이 내부적으로 구현돼 있는데, TRAP의 시간 인식 확률 트리거와 TRR을 연동하면 불필요한 TRR 발동을 줄이면서 보안 마진을 높이는 시너지가 기대돼요. AI 가속기처럼 특정 attention 패턴에서 동일 행이 반복 접근되는 워크로드에서 RowHammer 위험이 증가하는 만큼, 이런 적응형 in-DRAM 방어가 HBM 설계에서도 주목받을 것 같아요.</p>
+    <div class="insight yellow">
+      <div class="insight-label">주의할 점</div>
+      <p>LUT 크기와 슬롯 수는 트레이드오프 관계예요. 슬롯이 많을수록 시간 해상도가 높아지지만 LUT가 커지고 타이밍 마진이 줄어들 수 있어요. HBM의 빠른 tRCD·tRAS 타이밍에서 LUT 참조 경로가 크리티컬 패스가 되지 않도록 파이프라이닝 설계가 필요할 수 있답니다.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — TRAP 개요: tREFW를 시간 슬롯으로 분할하고 각 슬롯별 완화 확률 p(t)가 어떻게 변하는지 보여주는 다이어그램. 슬롯 후반으로 갈수록 p가 급증하는 곡선이 핵심이에요.</p>
+    <p><strong>Fig. 2</strong> — 뱅크별 카운터 + LUT 하드웨어 구조. 카운터는 현재 슬롯 인덱스를 추적하고, 활성화 이벤트 발생 시 LUT에서 p를 읽어 난수와 비교해 완화 여부를 결정하는 흐름을 보여줘요.</p>
+    <p><strong>Fig. 3</strong> — SPEC2017 워크로드별 IPC 저하 비교. TRAP vs PARA vs 기준선에서 TRAP이 거의 0% 오버헤드임을 시각적으로 보여주는 바 차트예요.</p>
+    <p><strong>Fig. 4</strong> — Non-selection probability 분석. 공격자가 N번 활성화했을 때 TRAP과 PARA의 완화 실패 확률을 tRH 함수로 비교해요. TRAP이 훨씬 낮은 곡선을 유지하는 걸 확인할 수 있어요.</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/4bcddc9daf3cf5f628151ce83295de0e826cf95f" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+</div>
+</body>
+</html>

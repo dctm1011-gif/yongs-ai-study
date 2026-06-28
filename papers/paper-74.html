@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Design of the Charge-Sampling Multiplying PLL in C... · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Design of the Charge-Sampling Multiplying PLL in C...</span>
+</div>
+<div class="article">
+  <div class="article-venue">International Conference on Mixed Design of Integrated Circuits and Systems 2025</div>
+  <h1 class="article-title">Design of the Charge-Sampling Multiplying PLL in CMOS 40 nm</h1>
+  <div class="article-tags"><span class="tag">PLL-DLL</span><span class="tag">Interconnect</span><span class="tag">Analog</span><span class="tag">ML-HW</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/da273394602f348395a9a5765513fbf5168eca43" target="_blank">원문 보기 →</a>
+  </div>
+  <p class="opener">전하 샘플링 방식의 위상 검출기로 100fs 미만의 초저지터를 달성한 11GHz PLL 설계가 공개됐어요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">왜 고속 인터커넥트에서 PLL의 지터 성능이 이렇게 중요한가요?</h2>
+    <p>현대 고대역폭 메모리(HBM)와 고속 직렬 인터페이스에서 클럭 생성 회로의 지터 성능은 전체 시스템의 데이터 무결성을 좌우하는 핵심 요소예요. 데이터 전송 속도가 수십 Gbps에 달하는 환경에서 클럭 지터가 조금이라도 커지면 타이밍 마진이 급격히 줄어들고, 이는 비트 오류율(BER) 악화로 직결돼요. 특히 HBM3/HBM3E처럼 초고속 병렬 인터페이스를 사용하는 메모리 아키텍처에서는 각 채널의 클럭 품질이 전체 대역폭 효율에 직접적인 영향을 미쳐요. 따라서 저전력이면서도 초저지터를 달성하는 PLL 설계 기술은 반도체 설계 분야에서 매우 중요한 연구 과제로 떠오르고 있어요.</p>
+    <p>기존의 전압 도메인 기반 위상 검출기(PD)는 위상 오차를 전압 신호로 변환하는 과정에서 열잡음과 공급 전압 변동에 취약한 구조를 갖고 있어요. 특히 주기적인 위상 검출기에서 발생하는 스퍼(spur) 성분이 PLL 출력에 그대로 전달되면 클럭 스펙트럼을 오염시키는 심각한 문제가 생겨요. 공정 미세화로 전원 전압이 낮아지면서 전압 도메인에서의 신호 처리 여유(headroom)가 줄어드는 것도 큰 도전 과제예요. 이러한 배경에서 전하 도메인에서 위상 정보를 처리하는 새로운 접근 방식이 주목받고 있어요.</p>
+
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>전압 도메인 위상 검출의 한계를 극복하기 위해 전하 샘플링 방식으로 위상 오차를 처리하면 높은 이득을 유지하면서도 전력 소비를 획기적으로 줄일 수 있어요. 동시에 스퍼 억제를 위한 CMRR 기반 OTA 구조와 클래스 D/F2 VCO를 결합하여 100fs급 초저지터를 실현하는 것이 이 논문의 핵심 출발점이에요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">어떻게 전하 샘플링으로 초저지터 PLL을 구현했나요?</h2>
+    <p>이 PLL의 핵심은 위상 검출기(PD)가 전하 도메인에서 동작한다는 점이에요. 전하 샘플링 PD는 위상 오차 정보를 전하량으로 변환하여 처리하기 때문에 전압 도메인 대비 열잡음 기여도가 낮고, 낮은 공급 전압 환경에서도 높은 이득을 유지할 수 있어요. 100MHz 기준 클럭을 입력받아 110배 체배한 11GHz 출력을 생성하는 구조로, 기준 소스의 위상 잡음이 루프 내에서 효과적으로 억제되도록 설계됐어요. 전하 샘플링 방식은 스위치드-커패시터 기법과 유사하게 동작하여 연속 시간 아날로그 회로의 잡음 취약점을 피할 수 있어요.</p>
+    <p>스퍼 억제를 위해 CMRR(공통 모드 제거비) 특성을 활용하는 OTA를 루프 필터 인터페이스에 적용했어요. 이 OTA에는 공통 모드(CM) 증폭기가 함께 사용되어 OTA 출력 레벨을 조정하고 VCO의 동조 주파수 범위를 개선하는 역할을 해요. VCO는 인덕터 턴이 단 1개인 차동 입력 클래스 D/F2 구조로 설계되어 위상 잡음을 최소화하면서도 면적 효율을 높였어요. 전체 회로는 CMOS 40nm 공정에서 1.1V와 0.6V 두 가지 공급 전압으로 동작하며 약 5mW의 저전력을 소비해요.</p>
+
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>위상 오차를 전하 도메인에서 처리하는 샘플링 PD는 전압 도메인 대비 높은 이득과 낮은 잡음 기여를 동시에 달성할 수 있는 구조적 우위를 제공해요. 여기에 CMRR 기반 OTA로 주기적 스퍼를 억제하고, 클래스 D/F2 VCO로 발진기 위상 잡음을 낮추는 삼중 전략이 100fs 미만 지터 달성의 핵심 혁신이에요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">실제로 어떤 성능 수치를 달성했나요?</h2>
+    <p>제안된 전하 샘플링 곱셈형 PLL은 CMOS 40nm 공정에서 시뮬레이션을 통해 검증되었으며 11GHz 동작 주파수에서 100fs 미만의 rms 지터를 달성했어요. 100MHz 기준 클럭에서 110배 체배를 수행하면서도 이러한 초저지터 성능을 유지한다는 점이 인상적이에요. 전체 소비 전력이 약 5mW에 불과해 고성능 대비 전력 효율이 매우 우수하며, 1.1V와 0.6V 이중 공급 전압 구조로 디지털 및 아날로그 블록을 분리하여 잡음 간섭을 최소화했어요. 클래스 D/F2 VCO의 단일 턴 인덕터 구조는 고주파 동작에서의 품질 계수(Q-factor) 저하를 억제하는 데 기여했어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">100fs 미만</div><div class="stat-desc">11GHz 출력에서의 rms 지터 성능</div></div>
+      <div class="stat-box"><div class="stat-num">5mW</div><div class="stat-desc">전체 PLL 회로의 총 소비 전력</div></div>
+      <div class="stat-box"><div class="stat-num">110×</div><div class="stat-desc">100MHz 기준 클럭에서 11GHz로의 체배 비율</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM 및 고속 메모리 인터페이스 설계자 관점에서 이 PLL 구조는 여러 가지 중요한 시사점을 제공해요. HBM 인터페이스에서 PHY 레벨의 클럭 분배 회로는 수백 fs 수준의 지터 예산을 가지며, 100fs 미만의 rms 지터는 이 예산의 상당 부분을 절약할 수 있는 매력적인 성능이에요. 특히 HBM 스택에서 TSV(Through-Silicon Via)를 통한 클럭 전달 시 발생하는 추가 지터를 감안하면 클럭 소스 자체의 지터를 최소화하는 것이 전체 시스템 타이밍 마진 확보에 직결돼요.</p>
+    <p>전하 샘플링 방식의 위상 검출기는 HBM PHY의 DLL(Delay-Locked Loop) 또는 PLL 설계에도 적용 가능한 아키텍처예요. 5mW의 저전력 특성은 수십에서 수백 개의 PHY 레인이 병렬로 동작하는 HBM 환경에서 전력 밀도 제어에 유리하게 작용해요. CMRR 기반 OTA를 통한 스퍼 억제 기법은 HBM의 고밀도 배선 환경에서 발생하는 전원 잡음 및 크로스토크로 인한 클럭 스퍼 문제를 완화하는 데 참고할 수 있는 설계 기법이에요. 클래스 D/F2 VCO 구조 또한 HBM의 좁은 다이 면적 제약 하에서 단일 인덕터 턴으로 면적을 절감하는 실용적인 접근으로 평가할 수 있어요.</p>
+
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>이 논문은 CMOS 40nm 공정 기반 시뮬레이션 결과를 제시한 것으로, 실리콘 테스트칩을 통한 실측 데이터가 아직 제시되지 않아 실제 제조 환경에서의 성능 변동성에 대한 검증이 필요해요. 또한 HBM 등의 메모리 응용에서는 넓은 온도 범위와 공정 변동(PVT variation)에 걸친 지터 성능 안정성이 중요한데, 이에 대한 상세한 분석이 논문에 포함되어 있는지 확인이 필요해요. 100MHz 단일 기준 주파수에서의 성능만 제시되어 있어 기준 주파수 가변 또는 다중 기준 클럭 환경에서의 적용 가능성도 추가로 검토해야 해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/da273394602f348395a9a5765513fbf5168eca43" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

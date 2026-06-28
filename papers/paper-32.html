@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rowhammer Survey · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Rowhammer Survey</span>
+</div>
+<div class="article">
+  <div class="article-venue">Italian National Conference on Sensors 2024</div>
+  <h1 class="article-title">Rowhammer Attacks in Dynamic Random-Access Memory and Defense Methods</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">ECC</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/ba25f77e417be575b0c41a400b116b82416df73c" target="_blank">원문 보기 →</a></div>
+  <p class="opener">2014년 발견된 RowHammer는 단순히 행(Row)을 반복 접근하는 것만으로 인접 셀의 비트를 뒤집을 수 있는 DRAM의 물리적 보안 취약점으로, 이 논문은 그 공격 진화 과정과 현존하는 방어 기법들을 체계적으로 정리한 입문자용 포괄 서베이에요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">왜 DRAM의 '행 반복 접근'이 보안 위협이 될까요?</h2>
+    <p>DRAM은 커패시터 하나가 비트 하나를 저장하는 구조예요. 공정이 미세화되고 셀 밀도가 높아질수록 인접한 셀 간의 전기적 간섭이 커지는데, 특정 행(aggressor row)을 짧은 시간 안에 수천~수만 번 반복 활성화(ACT)하면 이 전기적 누화(crosstalk)가 축적되어 인접 행(victim row)의 전하가 변해버려요. 그 결과 의도하지 않은 비트 플립이 발생하고, 공격자는 이를 이용해 권한 상승, 메모리 무결성 위반, 데이터 유출 등을 노릴 수 있죠.</p>
+    <p>이 취약점이 더 심각한 이유는 소프트웨어 버그가 아닌 물리적 특성에서 비롯된다는 점이에요. 패치로 해결할 수 없고, 공정 세대가 바뀔수록 동일한 refresh 주기 내에서 허용되는 ACT 횟수(RH threshold, TRH)가 계속 낮아지고 있어요. DDR4 초기에 TRH가 ~70,000이었다면 최신 LPDDR5에서는 수백 수준까지 떨어졌다는 보고도 있어요.</p>
+    <p>이 논문은 이러한 배경 속에서 RowHammer 공격의 유형과 방어 전략을 초보자도 이해할 수 있도록 체계적으로 정리해요. 단일 측면 공격(single-sided)부터 다중 측면 공격(many-sided)까지, 그리고 ECC·TRR·PARA·AQUA 같은 방어 기법들의 원리와 한계를 함께 다루죠.</p>
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>공정 미세화로 TRH가 급격히 낮아지면서 RowHammer는 더 이상 이론적 위협이 아닌 현실 공격이 됐어요. 이 서베이는 '무엇이 왜 터지는지'를 원리부터 정리하는 것을 목표로 해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">공격은 어떻게 진화했고, 방어는 어떤 원리로 동작하나요?</h2>
+    <p>공격 유형은 세 단계로 진화했어요. <strong>Single-sided</strong>는 aggressor 행 하나만 반복 접근하는 초기 방식이에요. 효과는 있지만 대상 victim 행을 특정하기 어렵고, 인접 위치에 따라 비트 플립 확률이 달라져요. <strong>Double-sided</strong>는 victim 행의 양 옆 두 행을 동시에 hammer해서 양쪽에서 전하 누화를 유발하는 방식이에요. 단일 대비 훨씬 효율적이고 공격 성공률이 높아요. <strong>Many-sided(N-sided)</strong>는 DDR4 이후 TRR(Target Row Refresh) 방어가 등장하면서 이를 우회하기 위해 여러 aggressor 행을 동시에 사용하는 방식으로 진화한 거예요.</p>
+    <p>방어 기법도 여러 레이어에서 작동해요. DRAM 내부에서 동작하는 <strong>TRR(Target Row Refresh)</strong>은 활성화 횟수가 많은 행을 감지해 인접 행을 선제적으로 refresh해요. 하지만 특정 구현은 N-sided 공격에 우회될 수 있다는 게 TRRespass 논문에서 밝혀졌어요. <strong>PARA(Probabilistic Adjacent Row Activation)</strong>는 행 활성화마다 확률적으로 인접 행을 refresh하는 방식이에요. 하드웨어 추가 없이 구현 가능하지만, 낮은 TRH 환경에서는 refresh 오버헤드가 커져요. <strong>AQUA(Approximate Counting using Quotient filter with Aging)</strong>는 활성화 횟수를 quotient filter로 근사 카운팅하여 효율적으로 위험 행을 추적해요. <strong>ECC(Error Correcting Code)</strong>는 비트 플립이 발생해도 수정해주지만, 여러 비트가 동시에 뒤집히면 탐지·수정에 실패할 수 있어요.</p>
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>RowHammer 방어는 단일 기법으로 충분하지 않아요. DRAM 내부(TRR), 메모리 컨트롤러(PARA, AQUA), ECC 코드레벨의 다층 방어가 필요하고, 각 레이어의 한계를 서로 보완해야 해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">각 방어 기법의 효과와 한계는 어떻게 정리되나요?</h2>
+    <p>이 논문은 실험보다는 기존 연구들의 결과를 체계적으로 비교 정리해요. 주요 공격·방어 쌍의 관계를 표로 정리하고, 각 방어가 어떤 공격 시나리오에서 우회되는지 분류해요. 특히 TRR의 경우 구현 비공개로 인해 칩마다 다르게 동작하고, TRRespass 같은 역공학 공격이 이를 우회한 사례가 소개돼요. PARA는 구현이 단순하지만 TRH가 낮아질수록 성능 오버헤드가 기하급수적으로 증가한다는 점을 강조해요. 미래 방향으로는 in-DRAM 카운터 기반 방어, 규격화된 TRR 인터페이스(DDR5 RFM 명령), 그리고 PIM(Processing-in-Memory) 환경에서의 RowHammer를 언급해요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">~70,000</div><div class="stat-desc">DDR4 초기 TRH (이 이하 ACT로 비트 플립 발생)</div></div>
+      <div class="stat-box"><div class="stat-num">&lt;1,000</div><div class="stat-desc">최신 LPDDR5에서 보고된 TRH 수준</div></div>
+      <div class="stat-box"><div class="stat-num">3종</div><div class="stat-desc">분류된 주요 공격 유형 (single / double / many-sided)</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에서 RowHammer는 어떤 의미를 가질까요?</h2>
+    <p>HBM은 범용 DRAM보다 훨씬 좁은 공간에 고밀도 셀이 쌓여 있어요. 3D TSV 스택 구조에서 열(heat)과 전기적 간섭이 동시에 증가하기 때문에, 일반 DDR 대비 RowHammer 취약성이 더 심화될 가능성이 있어요. HBM의 특성상 메모리 컨트롤러가 다이 내부에 통합되어 있어 PARA·RFM 같은 컨트롤러 레벨 방어를 구현하기에는 유리하지만, 추가 refresh로 인한 대역폭 손실이 AI 가속기 성능에 직접 영향을 줘요.</p>
+    <p>또한 HBM의 ECC는 SECDED(Single Error Correct Double Error Detect) 수준이 기본인데, many-sided 공격으로 다중 비트 플립이 발생하면 탐지 자체가 실패할 수 있어요. DDR5에서 도입된 RFM(Refresh Management) 명령이 HBM 표준에도 반영되어야 하는 이유가 여기에 있어요.</p>
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>이 논문은 서베이 성격이라 수치 실험이 없어요. HBM 특정 환경에서의 TRH 값이나 방어 오버헤드는 직접 측정한 결과가 아니며, 실제 적용 시에는 HBM 사양서(JEDEC) 기반으로 별도 검증이 필요해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — DRAM 구조 개요 (Bank → Row → Cell 계층) 및 RowHammer 물리 메커니즘 설명도</p>
+    <p><strong>Fig. 2</strong> — Single-sided / Double-sided / Many-sided 공격 패턴 비교 다이어그램</p>
+    <p><strong>Fig. 3</strong> — 방어 기법 분류표: TRR / PARA / AQUA / ECC의 동작 레이어, 복잡도, 우회 가능성 비교</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/ba25f77e417be575b0c41a400b116b82416df73c" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+</div>
+</body>
+</html>

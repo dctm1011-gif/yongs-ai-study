@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>180nm PLL 설계 논문 분석 · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">180nm PLL 설계</span>
+</div>
+<div class="article">
+  <div class="article-venue">arXiv 2024</div>
+  <h1 class="article-title">Design of Phase Locked Loop in 180 nm Technology</h1>
+  <div class="article-tags"><span class="tag">PLL</span><span class="tag">CMOS</span><span class="tag">Circuit Design</span></div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://arxiv.org/abs/2406.13462v1" target="_blank">원문 보기 →</a>
+    <a class="article-link" href="https://arxiv.org/pdf/2406.13462v1" target="_blank">PDF →</a>
+  </div>
+  <p class="opener">180nm CMOS 공정에서 전류 스타빙(current-starving) 방식 VCO를 중심으로 PLL을 설계한 논문이에요. 150MHz 기준 클럭에서 2.4GHz 출력을 합성하고, 260ns만에 락(lock)을 달성해요. 회로 설계 입문자에게 PLL의 각 블록이 어떻게 맞물리는지 보여주는 좋은 참고 자료예요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">PLL이 뭐고 왜 중요한가요?</h2>
+    <p>PLL(Phase-Locked Loop)은 칩 전체의 타이밍을 맞춰주는 심장박동기 같은 회로예요. 외부에서 들어오는 기준 클럭 신호를 받아서, 원하는 주파수의 클럭을 내부에서 만들어내요. 프로세서, 메모리, 통신 칩 할 것 없이 거의 모든 디지털 시스템에 하나 이상의 PLL이 들어가요.</p>
+    <p>HBM에서도 PHY의 고속 클럭 생성과 데이터 복원(CDR)에 PLL이 핵심 역할을 해요. PLL이 얼마나 정밀하게 동작하느냐가 지터 성능과 직결되고, 이게 I/O 속도의 상한선을 결정해요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Architecture</div>
+    <h2 class="section-title">PLL은 어떤 블록들로 이루어져 있나요?</h2>
+    <p>이 논문의 PLL은 다섯 가지 블록으로 구성돼요. 이 구조는 가장 일반적인 정수 분주(integer-N) PLL 아키텍처예요.</p>
+    <div class="insight blue">
+      <div class="insight-label">① 위상 주파수 검출기 (PFD)</div>
+      <p>기준 클럭과 피드백 클럭의 위상 차이와 주파수 차이를 동시에 감지해요. 기준이 빠르면 "올려라(UP)", 느리면 "내려라(DOWN)" 신호를 출력해요. 주파수 검출도 같이 하기 때문에 PD(Phase Detector)보다 훨씬 넓은 락인(lock-in) 범위를 가져요.</p>
+    </div>
+    <div class="insight blue">
+      <div class="insight-label">② 차지 펌프 (Charge Pump)</div>
+      <p>PFD의 UP/DOWN 신호를 전류로 변환해요. UP이면 커패시터를 충전, DOWN이면 방전해서 루프 필터에 전압을 만들어요.</p>
+    </div>
+    <div class="insight blue">
+      <div class="insight-label">③ 루프 필터 (Loop Filter)</div>
+      <p>차지 펌프 출력의 고주파 노이즈를 걸러서 VCO에 안정적인 제어 전압을 공급해요. 필터의 대역폭이 PLL의 락 시간과 지터 트레이드오프를 결정해요.</p>
+    </div>
+    <div class="insight blue">
+      <div class="insight-label">④ 전류 스타빙 VCO (CSVCO)</div>
+      <p>전류를 "굶겨서(starving)" 발진 주파수를 조절하는 VCO예요. 제어 전압이 올라가면 허용 전류가 늘어나 발진이 빨라지고, 내려가면 느려져요. 3단 링 오실레이터 구조로 설계됐어요.</p>
+    </div>
+    <div class="insight blue">
+      <div class="insight-label">⑤ 주파수 분주기 (Divider)</div>
+      <p>VCO 출력(2.4GHz)을 1/16로 나눠서 150MHz로 만들어 PFD에 피드백해요. 이 분주비(divide ratio)가 출력 주파수를 결정해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Key Results</div>
+    <h2 class="section-title">설계 결과 수치</h2>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">2.4 GHz</div><div class="stat-desc">목표 출력 주파수 (150MHz × 16)</div></div>
+      <div class="stat-box"><div class="stat-num">260 ns</div><div class="stat-desc">락인(lock-in) 시간</div></div>
+      <div class="stat-box"><div class="stat-num">5.15 mW</div><div class="stat-desc">최대 전력 소모</div></div>
+      <div class="stat-box"><div class="stat-num">1.8 V</div><div class="stat-desc">공급 전압</div></div>
+    </div>
+    <p>CSVCO의 중심 주파수는 900mV 입력에서 3.208GHz이고, 튜닝 범위는 0.4~1.8V 입력에서 1.066~3.731GHz예요. PLL 출력 기준으로는 1.12~2.78GHz 범위에서 동작해요. 락인 범위는 70.4~173MHz예요.</p>
+    <p>Cadence Virtuoso 환경에서 설계하고 시뮬레이션했는데, 기준 클럭과 분주된 피드백 클럭이 위상과 주파수 모두 잘 맞춰지는 것을 확인했어요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM PHY PLL과의 연결고리</h2>
+    <p>이 논문이 180nm 공정에서 2.4GHz PLL을 다루는 반면, 최신 HBM의 PHY는 수 GHz 이상의 고속 클럭을 7nm 이하 공정에서 생성해요. 기본 원리는 같지만 요구사항이 훨씬 엄격해요.</p>
+    <p>특히 HBM PHY에서는 PLL 지터가 I/O 타이밍 버짓(timing budget)의 핵심 요소예요. 클럭 주파수가 올라갈수록 UI(Unit Interval)가 짧아지니까, 같은 절대 지터라도 비율(% of UI)이 크게 늘어나요. CSVCO 기반 PLL은 간단하고 집적도가 높지만, 최고 성능보다는 면적/전력 효율이 중요한 곳에 적합해요.</p>
+    <div class="insight yellow">
+      <div class="insight-label">공부 포인트</div>
+      <p>이 논문은 PLL의 기본 동작을 손으로 따라갈 수 있는 수준으로 잘 설명하고 있어요. 루프 필터 설계, VCO 튜닝 범위 vs 위상 노이즈 트레이드오프, 락인 시간 계산 방법 등을 익히기에 좋아요.</p>
+    </div>
+  </div>
+
+<hr>
+<div class="section">
+  <div class="section-label">논문 그림</div>
+  <h2 class="section-title">Figure 갤러리</h2>
+  <p class="figure-no-embed">PDF를 브라우저에서 바로 열어 그림을 확인할 수 있어요. 로딩이 느리거나 표시가 안 되면 링크를 눌러 새 탭에서 여세요.</p>
+  <div class="figure-outer">
+    <a class="figure-open-link" href="https://arxiv.org/abs/2406.13462" target="_blank">↗ arXiv 원문에서 열기</a>
+    <div class="figure-frame-wrap">
+      <iframe class="figure-frame" src="https://arxiv.org/pdf/2406.13462v1" loading="lazy" title="논문 원문 PDF (그림 포함)"></iframe>
+    </div>
+  </div>
+</div>
+</div>
+<div id="term-tooltip-global"></div>
+<script src="tooltip.js"></script>
+</body>
+</html>

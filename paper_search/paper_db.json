@@ -1,0 +1,3282 @@
+{
+  "arxiv:2207.13358v9": {
+    "title": "Self-Managing DRAM: A Low-Cost Framework for Enabling Autonomous and Efficient in-DRAM Operations",
+    "file": "2022_Self-Managing DRAM A Low-Cost Framework for Enabling Autonomous and Efficient in.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2306.17061v5": {
+    "title": "RowPress: Amplifying Read Disturbance in Modern DRAM Chips",
+    "file": "2023_RowPress Amplifying Read Disturbance in Modern DRAM Chips.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2509.19111v2": {
+    "title": "Robust Synchronous Reference Frame Phase-Looked Loop (PLL) with Feed-Forward Frequency Estimation",
+    "file": "2025_Robust Synchronous Reference Frame Phase-Looked Loop (PLL) with Feed-Forward Fre.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2406.13462v1": {
+    "title": "Design of Phase Locked Loop in 180 nm Technology",
+    "file": "2024_Design of Phase Locked Loop in 180 nm Technology.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2601.22707v1": {
+    "title": "Deep Learning-Based Early-Stage IR-Drop Estimation via CNN Surrogate Modeling",
+    "file": "2026_Deep Learning-Based Early-Stage IR-Drop Estimation via CNN Surrogate Modeling.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2606.02878v1": {
+    "title": "Package-Embedded Coupled Inductor Arrays for High-Performance Computing Power Delivery",
+    "file": "2026_Package-Embedded Coupled Inductor Arrays for High-Performance Computing Power De.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2604.04773v2": {
+    "title": "A comparative study on power delivery aspects of compute-in/near-memory approaches using DRAM",
+    "file": "2026_A comparative study on power delivery aspects of compute-innear-memory approache.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2509.01742v2": {
+    "title": "BOLT: Bandwidth-Optimized Lightning-Fast Oblivious Map powered by Secure HBM Accelerators",
+    "file": "2025_BOLT Bandwidth-Optimized Lightning-Fast Oblivious Map powered by Secure HBM Acce.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2205.07991v1": {
+    "title": "TopSort: A High-Performance Two-Phase Sorting Accelerator Optimized on HBM-based FPGAs",
+    "file": "2022_TopSort A High-Performance Two-Phase Sorting Accelerator Optimized on HBM-based .md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2407.07458v1": {
+    "title": "Machine Learning Assisted Design of mmWave Wireless Transceiver Circuits",
+    "file": "2024_Machine Learning Assisted Design of mmWave Wireless Transceiver Circuits.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2409.19389v1": {
+    "title": "Co-design of a novel CMOS highly parallel, low-power, multi-chip neural network accelerator",
+    "file": "2024_Co-design of a novel CMOS highly parallel, low-power, multi-chip neural network .md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2603.01629v1": {
+    "title": "TeraPool: A Physical Design Aware, 1024 RISC-V Cores Shared-L1-Memory Scaled-up Cluster Design with High Bandwidth Main Memory Link",
+    "file": "2026_TeraPool A Physical Design Aware, 1024 RISC-V Cores Shared-L1-Memory Scaled-up C.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2005.04324v1": {
+    "title": "Benchmarking High Bandwidth Memory on FPGAs",
+    "file": "2020_Benchmarking High Bandwidth Memory on FPGAs.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2508.13160v1": {
+    "title": "Through Silicon Via Aware Design Planning for Thermally Efficient 3-D Integrated Circuits",
+    "file": "2025_Through Silicon Via Aware Design Planning for Thermally Efficient 3-D Integrated.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:1901.00568v1": {
+    "title": "3DCAM: A Low Overhead Crosstalk Avoidance Mechanism for TSV-Based 3D ICs",
+    "file": "2019_3DCAM A Low Overhead Crosstalk Avoidance Mechanism for TSV-Based 3D ICs.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2009.10692v1": {
+    "title": "TSV Extrusion Morphology Classification Using Deep Convolutional Neural Networks",
+    "file": "2020_TSV Extrusion Morphology Classification Using Deep Convolutional Neural Networks.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2304.01911v1": {
+    "title": "Inverting the SerDes Link Design Flow Process",
+    "file": "2023_Inverting the SerDes Link Design Flow Process.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2301.10176v1": {
+    "title": "PWB Manufacturing Variability Effects on High Speed SerDes Links: Statistical Insights from Thousands of 4-Port SParameter Measurements",
+    "file": "2023_PWB Manufacturing Variability Effects on High Speed SerDes Links Statistical Ins.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2403.16458v3": {
+    "title": "Next Generation Advanced Transceiver Technologies for 6G and Beyond",
+    "file": "2024_Next Generation Advanced Transceiver Technologies for 6G and Beyond.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2010.14164v1": {
+    "title": "Clock-centric Serial Links for the Synchronization of Distributed Readout Systems",
+    "file": "2020_Clock-centric Serial Links for the Synchronization of Distributed Readout System.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2412.03940v1": {
+    "title": "Performance Analysis of XL-MIMO with Rotary and Movable Antennas for High-speed Railway",
+    "file": "2024_Performance Analysis of XL-MIMO with Rotary and Movable Antennas for High-speed .md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2010.16033v2": {
+    "title": "Mixed-Integer Optimization for Bio-Inspired Robust Power Network Design",
+    "file": "2020_Mixed-Integer Optimization for Bio-Inspired Robust Power Network Design.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2407.04737v3": {
+    "title": "Hierarchical Decoupling Capacitor Optimization for Power Distribution Network of 2.5D ICs with Co-Analysis of Frequency and Time Domains Based on Deep Reinforcement Learning",
+    "file": "2024_Hierarchical Decoupling Capacitor Optimization for Power Distribution Network of.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2110.14184v1": {
+    "title": "OpeNPDN: A Neural-network-based Framework for Power Delivery Network Synthesis",
+    "file": "2021_OpeNPDN A Neural-network-based Framework for Power Delivery Network Synthesis.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2505.16200v1": {
+    "title": "Advanced Integration Strategies for ESD Protection and Termination in High-Speed LVDS Systems",
+    "file": "2025_Advanced Integration Strategies for ESD Protection and Termination in High-Speed.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2511.10760v2": {
+    "title": "Tiny Chiplets Enabled by Packaging Scaling: Opportunities in ESD Protection and Signal Integrity",
+    "file": "2025_Tiny Chiplets Enabled by Packaging Scaling Opportunities in ESD Protection and S.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2511.08405v1": {
+    "title": "Active Short Circuit and Safe Discharge Mechanisms in Multi-Phase Inverters During Critical Failures",
+    "file": "2025_Active Short Circuit and Safe Discharge Mechanisms in Multi-Phase Inverters Duri.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:1911.04114v1": {
+    "title": "Electrostatic Imaging of Encapsulated Graphene",
+    "file": "2019_Electrostatic Imaging of Encapsulated Graphene.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2410.09188v4": {
+    "title": "MFIT: Multi-Fidelity Thermal Modeling for 2.5D and 3D Multi-Chiplet Architectures",
+    "file": "2024_MFIT Multi-Fidelity Thermal Modeling for 2.5D and 3D Multi-Chiplet Architectures.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2208.04231v1": {
+    "title": "ReSiPI: A Reconfigurable Silicon-Photonic 2.5D Chiplet Network with PCMs for Energy-Efficient Interposer Communication",
+    "file": "2022_ReSiPI A Reconfigurable Silicon-Photonic 2.5D Chiplet Network with PCMs for Ener.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2112.09234v1": {
+    "title": "DeFT: A Deadlock-Free and Fault-Tolerant Routing Algorithm for 2.5D Chiplet Networks",
+    "file": "2021_DeFT A Deadlock-Free and Fault-Tolerant Routing Algorithm for 2.5D Chiplet Netwo.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2504.19418v1": {
+    "title": "ChipletQuake: On-die Digital Impedance Sensing for Chiplet and Interposer Verification",
+    "file": "2025_ChipletQuake On-die Digital Impedance Sensing for Chiplet and Interposer Verific.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2507.18040v1": {
+    "title": "Designing High-Performance and Thermally Feasible Multi-Chiplet Architectures enabled by Non-bendable Glass Interposer",
+    "file": "2025_Designing High-Performance and Thermally Feasible Multi-Chiplet Architectures en.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2001.03553v1": {
+    "title": "Impact of Sampler Offset on Jitter Transfer in Clock and Data Recovery Circuits",
+    "file": "2020_Impact of Sampler Offset on Jitter Transfer in Clock and Data Recovery Circuits.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2112.01602v1": {
+    "title": "The conservative lock-in range for PLL with lead-lag filter and triangular phase detector characteristic",
+    "file": "2021_The conservative lock-in range for PLL with lead-lag filter and triangular phase.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2306.16024v1": {
+    "title": "Retrospective: RAIDR: Retention-Aware Intelligent DRAM Refresh",
+    "file": "2023_Retrospective RAIDR Retention-Aware Intelligent DRAM Refresh.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2003.09007v3": {
+    "title": "Neural Network-Optimized Channel Estimator and Training Signal Design for MIMO Systems with Few-Bit ADCs",
+    "file": "2020_Neural Network-Optimized Channel Estimator and Training Signal Design for MIMO S.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2202.05143v2": {
+    "title": "On the Acquisition of Stationary Signals Using Uniform ADCs",
+    "file": "2022_On the Acquisition of Stationary Signals Using Uniform ADCs.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2512.14213v2": {
+    "title": "Graph Signal Denoising Using Regularization by Denoising and Its Parameter Estimation",
+    "file": "2025_Graph Signal Denoising Using Regularization by Denoising and Its Parameter Estim.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2112.07825v1": {
+    "title": "TAFA: Design Automation of Analog Mixed-Signal FIR Filters Using Time Approximation Architecture",
+    "file": "2021_TAFA Design Automation of Analog Mixed-Signal FIR Filters Using Time Approximati.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2410.00737v3": {
+    "title": "Design and In-training Optimization of Binary Search ADC for Flexible Classifiers",
+    "file": "2024_Design and In-training Optimization of Binary Search ADC for Flexible Classifier.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2409.17988v1": {
+    "title": "Deblur e-NeRF: NeRF from Motion-Blurred Events under High-speed or Low-light Conditions",
+    "file": "2024_Deblur e-NeRF NeRF from Motion-Blurred Events under High-speed or Low-light Cond.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2601.11292v1": {
+    "title": "OpenACM: An Open-Source SRAM-Based Approximate CiM Compiler",
+    "file": "2026_OpenACM An Open-Source SRAM-Based Approximate CiM Compiler.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2604.20176v1": {
+    "title": "A Novel Low-Power Cache Architecture Based on 6-Transistor SRAM Cells",
+    "file": "2026_A Novel Low-Power Cache Architecture Based on 6-Transistor SRAM Cells.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2401.09474v1": {
+    "title": "Weak Memory Demands Model-based Compiler Testing",
+    "file": "2024_Weak Memory Demands Model-based Compiler Testing.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2303.01228v3": {
+    "title": "Thermal resistance in superconducting flip-chip assemblies",
+    "file": "2023_Thermal resistance in superconducting flip-chip assemblies.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2502.07070v1": {
+    "title": "Comprehensive Analysis of Thermal Dissipation in Lithium-Ion Battery Packs",
+    "file": "2025_Comprehensive Analysis of Thermal Dissipation in Lithium-Ion Battery Packs.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2008.13571v2": {
+    "title": "Machine learning thermal circuit network model for thermal design optimization of electronic circuit board layout with transient heating chips",
+    "file": "2020_Machine learning thermal circuit network model for thermal design optimization o.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2510.23356v1": {
+    "title": "IoT-Driven Smart Management in Broiler Farming: Simulation of Remote Sensing and Control Systems",
+    "file": "2025_IoT-Driven Smart Management in Broiler Farming Simulation of Remote Sensing and .md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2104.02251v1": {
+    "title": "Being-ahead: Benchmarking and Exploring Accelerators for Hardware-Efficient AI Deployment",
+    "file": "2021_Being-ahead Benchmarking and Exploring Accelerators for Hardware-Efficient AI De.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2505.17756v1": {
+    "title": "Qiskit Machine Learning: an open-source library for quantum machine learning tasks at scale on quantum hardware and classical simulators",
+    "file": "2025_Qiskit Machine Learning an open-source library for quantum machine learning task.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2210.05476v2": {
+    "title": "Medha: Microcoded Hardware Accelerator for computing on Encrypted Data",
+    "file": "2022_Medha Microcoded Hardware Accelerator for computing on Encrypted Data.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2106.05825v3": {
+    "title": "HASI: Hardware-Accelerated Stochastic Inference, A Defense Against Adversarial Machine Learning Attacks",
+    "file": "2021_HASI Hardware-Accelerated Stochastic Inference, A Defense Against Adversarial Ma.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2506.00424v2": {
+    "title": "COGNATE: Acceleration of Sparse Tensor Programs on Emerging Hardware using Transfer Learning",
+    "file": "2025_COGNATE Acceleration of Sparse Tensor Programs on Emerging Hardware using Transf.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2412.19275v1": {
+    "title": "Memory-Centric Computing: Recent Advances in Processing-in-DRAM",
+    "file": "2024_Memory-Centric Computing Recent Advances in Processing-in-DRAM.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2206.00263v1": {
+    "title": "PiDRAM: An FPGA-based Framework for End-to-end Evaluation of Processing-in-DRAM Techniques",
+    "file": "2022_PiDRAM An FPGA-based Framework for End-to-end Evaluation of Processing-in-DRAM T.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2502.10167v2": {
+    "title": "Modeling and Simulating Emerging Memory Technologies: A Tutorial",
+    "file": "2025_Modeling and Simulating Emerging Memory Technologies A Tutorial.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2409.08096v1": {
+    "title": "Ab Initio Device-Driven Screening of Sub-1-nm Thickness Oxide Semiconductors for Future CMOS Technology Nodes",
+    "file": "2024_Ab Initio Device-Driven Screening of Sub-1-nm Thickness Oxide Semiconductors for.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2509.01770v1": {
+    "title": "Impact of Passive Element Technological Limits on CMOS Low-Noise Amplifier Design",
+    "file": "2025_Impact of Passive Element Technological Limits on CMOS Low-Noise Amplifier Desig.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2506.15956v2": {
+    "title": "Scalable quantum current source on commercial CMOS process technology",
+    "file": "2025_Scalable quantum current source on commercial CMOS process technology.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2011.11753v2": {
+    "title": "Scaling silicon-based quantum computing using CMOS technology: State-of-the-art, Challenges and Perspectives",
+    "file": "2020_Scaling silicon-based quantum computing using CMOS technology State-of-the-art, .md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2503.05853v1": {
+    "title": "Enhancing Thin-Film Wafer Inspection With A Multi-Sensor Array And Robot Constraint Maintenance",
+    "file": "2025_Enhancing Thin-Film Wafer Inspection With A Multi-Sensor Array And Robot Constra.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2407.10810v2": {
+    "title": "FabGPT: An Efficient Large Multimodal Model for Complex Wafer Defect Knowledge Queries",
+    "file": "2024_FabGPT An Efficient Large Multimodal Model for Complex Wafer Defect Knowledge Qu.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2309.04590v1": {
+    "title": "Robotic Defect Inspection with Visual and Tactile Perception for Large-scale Components",
+    "file": "2023_Robotic Defect Inspection with Visual and Tactile Perception for Large-scale Com.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2409.03907v2": {
+    "title": "A Nonlinear Controller for Parallel DC-DC Converters with ZIP Load and Constrained Output Voltage",
+    "file": "2024_A Nonlinear Controller for Parallel DC-DC Converters with ZIP Load and Constrain.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2004.04259v2": {
+    "title": "A new Topology of a High-Voltage-Gain DC-DC Converter Based on Modified Greinacher Voltage Multiplier",
+    "file": "2020_A new Topology of a High-Voltage-Gain DC-DC Converter Based on Modified Greinach.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2604.26595v2": {
+    "title": "Exploring Converter Control Duality in Microgrids: AC Grid-Forming vs DC Droop Control",
+    "file": "2026_Exploring Converter Control Duality in Microgrids AC Grid-Forming vs DC Droop Co.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2312.09464v1": {
+    "title": "Enhanced Eye Diagram Estimation Method for Nonlinear Systems With Input Jitter",
+    "file": "2023_Enhanced Eye Diagram Estimation Method for Nonlinear Systems With Input Jitter.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2508.21412v1": {
+    "title": "Sampling Theory of Jointly Bandlimited Time-vertex Graph Signals",
+    "file": "2025_Sampling Theory of Jointly Bandlimited Time-vertex Graph Signals.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2109.11885v1": {
+    "title": "Towards Goal-Oriented Semantic Signal Processing: Applications and Future Challenges",
+    "file": "2021_Towards Goal-Oriented Semantic Signal Processing Applications and Future Challen.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2003.10767v2": {
+    "title": "Defining Fundamental Frequency for Almost Harmonic Signals",
+    "file": "2020_Defining Fundamental Frequency for Almost Harmonic Signals.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2102.05981v2": {
+    "title": "BlockHammer: Preventing RowHammer at Low Cost by Blacklisting Rapidly-Accessed DRAM Rows",
+    "file": "2021_BlockHammer Preventing RowHammer at Low Cost by Blacklisting Rapidly-Accessed DR.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2110.10291v1": {
+    "title": "A Deeper Look into RowHammer`s Sensitivities: Experimental Analysis of Real DRAM Chips and Implications on Future Attacks and Defenses",
+    "file": "2021_A Deeper Look into RowHammer`s Sensitivities Experimental Analysis of Real DRAM .md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2407.09995v1": {
+    "title": "MOAT: Securely Mitigating Rowhammer with Per-Row Activation Counters",
+    "file": "2024_MOAT Securely Mitigating Rowhammer with Per-Row Activation Counters.md",
+    "saved": "2026-06-19"
+  },
+  "ss:79933a6bda0e8344cf8fa3b6dddf73c18b67c948": {
+    "title": "XAI-Based Sensitivity Analysis of High-Speed Link Considering Channel Operating Margin",
+    "file": "2025_XAI-Based Sensitivity Analysis of High-Speed Link Considering Channel Operating .md",
+    "saved": "2026-06-19"
+  },
+  "ss:34ce87b5172cced440a53dd131e623655492b72e": {
+    "title": "High-Speed Link Adaptive DFE Design Based on Improved Variable Step-Size Strategy",
+    "file": "2025_High-Speed Link Adaptive DFE Design Based on Improved Variable Step-Size Strateg.md",
+    "saved": "2026-06-19"
+  },
+  "ss:e0d291054609f80f6be3bce11f537ad99204c185": {
+    "title": "Design of a high-speed 7.2 Gbps/lane receiver for MIPI D-PHY interface utilizing 18 nm FinFET technology",
+    "file": "2024_Design of a high-speed 7.2 Gbpslane receiver for MIPI D-PHY interface utilizing .md",
+    "saved": "2026-06-19"
+  },
+  "ss:cea0f5cbe60ade1a47564061a4256790d00edc68": {
+    "title": "Modular Neural Network-Based Models of High-Speed Link Transceivers",
+    "file": "2023_Modular Neural Network-Based Models of High-Speed Link Transceivers.md",
+    "saved": "2026-06-19"
+  },
+  "ss:824ab6b03cb57fdd07a5b7afabdade13fdf1f80c": {
+    "title": "Simple Recurrent Unit-Based Equalization Method for Simulation of High-Speed Links",
+    "file": "2025_Simple Recurrent Unit-Based Equalization Method for Simulation of High-Speed Lin.md",
+    "saved": "2026-06-19"
+  },
+  "ss:1959b95e485cefe71ac93c1eeb6b4f4803d751b6": {
+    "title": "Performance Analysis of a Dynamic All-Optical Equalization Scheme for Scintillation Mitigation in High-Speed FSO Systems",
+    "file": "2025_Performance Analysis of a Dynamic All-Optical Equalization Scheme for Scintillat.md",
+    "saved": "2026-06-19"
+  },
+  "ss:2ef657cddd9ee072211d70bbe49c09ecaf5a4e08": {
+    "title": "RayN: Ray Tracing Acceleration with Near-memory Computing",
+    "file": "2025_RayN Ray Tracing Acceleration with Near-memory Computing.md",
+    "saved": "2026-06-19"
+  },
+  "ss:3e0d8f8f4ac8069901d71198898443a027467f64": {
+    "title": "SSA-over-array (SSoA): A stacked DRAM architecture for near-memory computing",
+    "file": "2024_SSA-over-array (SSoA) A stacked DRAM architecture for near-memory computing.md",
+    "saved": "2026-06-19"
+  },
+  "ss:1ebbe60a312f6946ca1631fed5a22942e1e3d00f": {
+    "title": "A 46 TOPS/W In-/Near-Memory Computing Processor for Large Language Model with Extended Sparse Attention",
+    "file": "2025_A 46 TOPSW In-Near-Memory Computing Processor for Large Language Model with Exte.md",
+    "saved": "2026-06-19"
+  },
+  "ss:51c39009827f4dd1f1651bbc4013fa706973e284": {
+    "title": "A 0.22 pJ/bit Processing-in-Controller GEMV Macro with Weight Prefetch for Efficient Near-Memory Computing",
+    "file": "2025_A 0.22 pJbit Processing-in-Controller GEMV Macro with Weight Prefetch for Effici.md",
+    "saved": "2026-06-19"
+  },
+  "ss:69ae53512f1b455b008d812f079eb021e6e69671": {
+    "title": "3D-MoE: Accelerating Multi-Expert Activated LLMs on 3D In/Near-Memory Computing Architecture via Hybrid Parallelism",
+    "file": "2025_3D-MoE Accelerating Multi-Expert Activated LLMs on 3D InNear-Memory Computing Ar.md",
+    "saved": "2026-06-19"
+  },
+  "ss:d21702c3ab5febbe04662a37f11e6006e2c3dfe0": {
+    "title": "Thermal Integrity of ReRAM-based Near-Memory Computing in 3D Integrated DNN Accelerators",
+    "file": "2023_Thermal Integrity of ReRAM-based Near-Memory Computing in 3D Integrated DNN Acce.md",
+    "saved": "2026-06-19"
+  },
+  "ss:b65db63c65b3954d1b6b2c078f2396c5b8f4ffb5": {
+    "title": "Thermal and mechanical simulations of 3D packages with custom high bandwidth memory (HBM)",
+    "file": "2024_Thermal and mechanical simulations of 3D packages with custom high bandwidth mem.md",
+    "saved": "2026-06-19"
+  },
+  "ss:8866ad7497cb7c7e073df9cebc2510ecafb2183a": {
+    "title": "Thermal Performance Enhancement of Stacked Packages Using Silicon-Based Heat Spreading Die",
+    "file": "2025_Thermal Performance Enhancement of Stacked Packages Using Silicon-Based Heat Spr.md",
+    "saved": "2026-06-19"
+  },
+  "ss:c90baded6bab8d3de724608de07a539c94f7b7ce": {
+    "title": "Effect of Cu-Cu Hybrid Bonding Height in the 3D Stacked Die Configuration: Thermal-Structural Analysis",
+    "file": "2025_Effect of Cu-Cu Hybrid Bonding Height in the 3D Stacked Die Configuration Therma.md",
+    "saved": "2026-06-19"
+  },
+  "ss:4cbc3a9b5515ad2a2e05dbf75f8fb476c6651448": {
+    "title": "Thermal management of stacked die power module",
+    "file": "2025_Thermal management of stacked die power module.md",
+    "saved": "2026-06-19"
+  },
+  "ss:9ed8625762bfa89ae56810d795710a6b2addeb4e": {
+    "title": "3-D Stacked HBM and Compute Accelerators for LLM: Optimizing Thermal Management and Power Delivery Efficiency",
+    "file": "2025_3-D Stacked HBM and Compute Accelerators for LLM Optimizing Thermal Management a.md",
+    "saved": "2026-06-19"
+  },
+  "ss:2cfae1c9b7267bcc658ad1cf9ebb3d8a44bc72fb": {
+    "title": "A 1024 RV-Cores Shared-L1 Cluster with High Bandwidth Memory Link for Low-Latency 6G-SDR",
+    "file": "2024_A 1024 RV-Cores Shared-L1 Cluster with High Bandwidth Memory Link for Low-Latenc.md",
+    "saved": "2026-06-19"
+  },
+  "ss:f8f6210721749efa9cbdba1434e25eae7d8b6924": {
+    "title": "MOSAIC®: Chiplet Architecture Based on Die-to-Die Interface for CXL®Memory Applications and Limitations in Bandwidth, Latency, and Power",
+    "file": "2024_MOSAIC® Chiplet Architecture Based on Die-to-Die Interface for CXL®Memory Applic.md",
+    "saved": "2026-06-19"
+  },
+  "ss:c304d218bb8df7c5f4e2237e7a5753d2c3042c26": {
+    "title": "High-Bandwidth Memory (HBM) Network Switch Architecture Design with Low Latency and Efficient Energy Consumption for HBM Centric Computing",
+    "file": "2025_High-Bandwidth Memory (HBM) Network Switch Architecture Design with Low Latency .md",
+    "saved": "2026-06-19"
+  },
+  "ss:32dceaa16b5f350b6483a7bf5f6819ca5f6683b0": {
+    "title": "Design and Analysis of L3 Cache Embedded-GPU-High Bandwidth Memory Architecture with Reduced Energy and Latency for AI Computing",
+    "file": "2024_Design and Analysis of L3 Cache Embedded-GPU-High Bandwidth Memory Architecture .md",
+    "saved": "2026-06-19"
+  },
+  "ss:0eb51414800fc5627420c905527a188f8099995d": {
+    "title": "DNN-Based Non-Linear Precoding for Bandwidth, Latency, and Data Rate Optimization in 6G Networks",
+    "file": "2025_DNN-Based Non-Linear Precoding for Bandwidth, Latency, and Data Rate Optimizatio.md",
+    "saved": "2026-06-19"
+  },
+  "ss:c34ddf206a9ece92f0b0e7d8c79ae354bc7c9983": {
+    "title": "SI/PI Co-Design of 12.8 Gbps HBM I/O Interface using Bayesian Optimization for PSIJ Reduction",
+    "file": "2023_SIPI Co-Design of 12.8 Gbps HBM IO Interface using Bayesian Optimization for PSI.md",
+    "saved": "2026-06-19"
+  },
+  "ss:7c6d1aa6f060fc228d9debd4f01a58688748ba72": {
+    "title": "High Speed D2D Interface Applied on Advanced Package",
+    "file": "2024_High Speed D2D Interface Applied on Advanced Package.md",
+    "saved": "2026-06-19"
+  },
+  "ss:9f64d181a4a48b2ace5eb9f7b5d406d5e2146538": {
+    "title": "High Speed D2D Interface Design and Analysis on Advanced Package",
+    "file": "2024_High Speed D2D Interface Design and Analysis on Advanced Package.md",
+    "saved": "2026-06-19"
+  },
+  "ss:71ad18b70c1594b2fe537d0c14b7f4f0057ad7c4": {
+    "title": "A Power-Efficient Transmitter Design for 3D-Stacked Memories in 28-nm CMOS Technology",
+    "file": "2024_A Power-Efficient Transmitter Design for 3D-Stacked Memories in 28-nm CMOS Techn.md",
+    "saved": "2026-06-19"
+  },
+  "ss:a3ee8dd37bab5284ce837e4d9b5ae255102fde6e": {
+    "title": "Simulation Studies of Hygro-Thermal-Vapor Induced Stresses and Interface Delamination in High Bandwidth Memory (HBM) Package With Different Numbers of Stacked Chips During Reflow Process",
+    "file": "2024_Simulation Studies of Hygro-Thermal-Vapor Induced Stresses and Interface Delamin.md",
+    "saved": "2026-06-19"
+  },
+  "ss:154052a2303a288bfccdc54fa3a9431bc76b5f16": {
+    "title": "Time-Efficient Eye-Opening Estimation Method for High-Bandwidth Memory Interface Design with Equalizers",
+    "file": "2025_Time-Efficient Eye-Opening Estimation Method for High-Bandwidth Memory Interface.md",
+    "saved": "2026-06-19"
+  },
+  "ss:3fd4d5b21df2e5ac70b8e8c893123a4e9854262c": {
+    "title": "Power Supply Induced Jitter (PSIJ) Modeling, Analysis, and Optimization of High Bandwidth Memory (HBM) I/O Interface",
+    "file": "2023_Power Supply Induced Jitter (PSIJ) Modeling, Analysis, and Optimization of High .md",
+    "saved": "2026-06-19"
+  },
+  "ss:71330022a9fec751dbe96d2a0c077ecf3d31d196": {
+    "title": "Thermal Issues Related to Hybrid Bonding of 3D-Stacked High Bandwidth Memory: A Comprehensive Review",
+    "file": "2025_Thermal Issues Related to Hybrid Bonding of 3D-Stacked High Bandwidth Memory A C.md",
+    "saved": "2026-06-19"
+  },
+  "ss:679f19cb844ff15fcdbac180bc4f3fe93bdef068": {
+    "title": "Signal Integrity Analysis of Through-Silicon Via (TSV) With a Silicon Dioxide Well to Reduce Leakage Current for High-Bandwidth Memory Interface",
+    "file": "2023_Signal Integrity Analysis of Through-Silicon Via (TSV) With a Silicon Dioxide We.md",
+    "saved": "2026-06-19"
+  },
+  "ss:b37abb6bfec1e5b65708957136d901c936bcdcbc": {
+    "title": "Neural Network Surrogate Model for Junction Temperature and Hotspot Position in 3D Multi-Layer High Bandwidth Memory (HBM) Chiplets Under Varying Thermal Conditions",
+    "file": "2025_Neural Network Surrogate Model for Junction Temperature and Hotspot Position in .md",
+    "saved": "2026-06-19"
+  },
+  "ss:8e338ca1428ed6358a24122e65c78f1fbfbfc02f": {
+    "title": "Signal Integrity Design and Analysis of Inter-Stack Crosslink for 3D-Heterogeneous Integrated High Bandwidth Memory (3D-HI-HBM) Module",
+    "file": "2025_Signal Integrity Design and Analysis of Inter-Stack Crosslink for 3D-Heterogeneo.md",
+    "saved": "2026-06-19"
+  },
+  "ss:10751951b51a39300927cd5fb635b8dd307175fe": {
+    "title": "Switch Transformer-Based Reinforcement Learning Method for Power Supply Induced Jitter (PSIJ) Reduction in High Bandwidth Memory (HBM)",
+    "file": "2025_Switch Transformer-Based Reinforcement Learning Method for Power Supply Induced .md",
+    "saved": "2026-06-19"
+  },
+  "ss:558cf1c957270272766005039ed7b13918b4be0d": {
+    "title": "Accelerate Verification, Streamline Challenges: A Comprehensive High Bandwidth Memory (HBM) Solution",
+    "file": "2025_Accelerate Verification, Streamline Challenges A Comprehensive High Bandwidth Me.md",
+    "saved": "2026-06-19"
+  },
+  "ss:9563a42775fa8f6f5a8986ee82b49e7efa1f8cc1": {
+    "title": "Quad Tower High Bandwidth Memory (QT-HBM) with Glass Substrate and Local Silicon Bridge",
+    "file": "2025_Quad Tower High Bandwidth Memory (QT-HBM) with Glass Substrate and Local Silicon.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2605.09490v1": {
+    "title": "Not All Thoughts Need HBM: Semantics-Aware Memory Hierarchy for LLM Reasoning",
+    "file": "2026_Not All Thoughts Need HBM Semantics-Aware Memory Hierarchy for LLM Reasoning.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2512.18152v1": {
+    "title": "Making Strong Error-Correcting Codes Work Effectively for HBM in AI Inference",
+    "file": "2025_Making Strong Error-Correcting Codes Work Effectively for HBM in AI Inference.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2010.06075v1": {
+    "title": "When HLS Meets FPGA HBM: Benchmarking and Bandwidth Optimization",
+    "file": "2020_When HLS Meets FPGA HBM Benchmarking and Bandwidth Optimization.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2507.02654v2": {
+    "title": "Breaking the HBM Bit Cost Barrier: Domain-Specific ECC for AI Inference Infrastructure",
+    "file": "2025_Breaking the HBM Bit Cost Barrier Domain-Specific ECC for AI Inference Infrastru.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2105.11754v2": {
+    "title": "ScalaBFS: A Scalable BFS Accelerator on HBM-Enhanced FPGAs",
+    "file": "2021_ScalaBFS A Scalable BFS Accelerator on HBM-Enhanced FPGAs.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2304.01652v2": {
+    "title": "Barrier Function-based Distributed Symbolic Controller for Multi-Agent Systems",
+    "file": "2023_Barrier Function-based Distributed Symbolic Controller for Multi-Agent Systems.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2605.05639v1": {
+    "title": "TokenStack: A Heterogeneous HBM-PIM Architecture and Runtime for Efficient LLM Inference",
+    "file": "2026_TokenStack A Heterogeneous HBM-PIM Architecture and Runtime for Efficient LLM In.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2203.02676v1": {
+    "title": "ReGraph: Scaling Graph Processing on HBM-enabled FPGAs with Heterogeneous Pipelines",
+    "file": "2022_ReGraph Scaling Graph Processing on HBM-enabled FPGAs with Heterogeneous Pipelin.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2005.04750v1": {
+    "title": "Exploiting Inter- and Intra-Memory Asymmetries for Data Mapping in Hybrid Tiered-Memories",
+    "file": "2020_Exploiting Inter- and Intra-Memory Asymmetries for Data Mapping in Hybrid Tiered.md",
+    "saved": "2026-06-19"
+  },
+  "arxiv:2306.10198v1": {
+    "title": "Output Voltage Response Improvement and Ripple Reduction Control for Input-parallel Output-parallel High-Power DC Supply",
+    "file": "2023_Output Voltage Response Improvement and Ripple Reduction Control for Input-paral.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2512.18067v1": {
+    "title": "Review of Power Electronic Solutions for Dielectric Barrier Discharge Applications",
+    "file": "2025_Review of Power Electronic Solutions for Dielectric Barrier Discharge Applicatio.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2606.17565v1": {
+    "title": "Stability Analysis in Large-scale Centralized Bidirectional Inverter-based Stations Connected to Bulk Power Systems through AC and DC Connections",
+    "file": "2026_Stability Analysis in Large-scale Centralized Bidirectional Inverter-based Stati.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2401.17643v2": {
+    "title": "Laboratory Setup for Testing Low-Frequency Disturbances of Power Quality",
+    "file": "2024_Laboratory Setup for Testing Low-Frequency Disturbances of Power Quality.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2209.04508v1": {
+    "title": "Parameterized Linear Power Flow for High Fidelity Voltage Solutions in Distribution Systems",
+    "file": "2022_Parameterized Linear Power Flow for High Fidelity Voltage Solutions in Distribut.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2507.02346v1": {
+    "title": "STAR-RIS Transceivers: Integrated Sensing and Communication with Pulsed Signals",
+    "file": "2025_STAR-RIS Transceivers Integrated Sensing and Communication with Pulsed Signals.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2501.07215v1": {
+    "title": "Microphone Array Signal Processing and Deep Learning for Speech Enhancement",
+    "file": "2025_Microphone Array Signal Processing and Deep Learning for Speech Enhancement.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2209.02043v1": {
+    "title": "Large Graph Signal Denoising with Application to Differential Privacy",
+    "file": "2022_Large Graph Signal Denoising with Application to Differential Privacy.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2510.22224v1": {
+    "title": "Taming Silent Failures: A Framework for Verifiable AI Reliability",
+    "file": "2025_Taming Silent Failures A Framework for Verifiable AI Reliability.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2605.07417v1": {
+    "title": "Effective and Memory-Efficient Alternatives to ECC for Reliable Large-Scale DNNs",
+    "file": "2026_Effective and Memory-Efficient Alternatives to ECC for Reliable Large-Scale DNNs.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2206.11522v1": {
+    "title": "Modeling the System-Level Reliability towards a Convergence of Communication, Computing and Control",
+    "file": "2022_Modeling the System-Level Reliability towards a Convergence of Communication, Co.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2601.00456v1": {
+    "title": "ROBIN: Incremental Oblique Interleaved ECC for Reliability Improvement in STT-MRAM Caches",
+    "file": "2026_ROBIN Incremental Oblique Interleaved ECC for Reliability Improvement in STT-MRA.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2204.10387v1": {
+    "title": "Enabling Effective Error Mitigation in Memory Chips That Use On-Die Error-Correcting Codes",
+    "file": "2022_Enabling Effective Error Mitigation in Memory Chips That Use On-Die Error-Correc.md",
+    "saved": "2026-06-20"
+  },
+  "ss:dcaa8e9e608e921cc7d1a5d239c54b1c0efca0d9": {
+    "title": "An Efficient DRAM RowHammer Defense Circuit Based on a Novel In-Situ Monitoring Method",
+    "file": "2026_An Efficient DRAM RowHammer Defense Circuit Based on a Novel In-Situ Monitoring .md",
+    "saved": "2026-06-20"
+  },
+  "ss:3e5143cfc567cc46f0ebfd874da5ee83dad12d48": {
+    "title": "DAPPER: A Performance-Attack-Resilient Tracker for RowHammer Defense",
+    "file": "2025_DAPPER A Performance-Attack-Resilient Tracker for RowHammer Defense.md",
+    "saved": "2026-06-20"
+  },
+  "ss:b72064622e82627d2390184d787e2ed9ede9f98e": {
+    "title": "DRAM-Profiler: An Experimental DRAM RowHammer Vulnerability Profiling Mechanism",
+    "file": "2024_DRAM-Profiler An Experimental DRAM RowHammer Vulnerability Profiling Mechanism.md",
+    "saved": "2026-06-20"
+  },
+  "ss:4bcddc9daf3cf5f628151ce83295de0e826cf95f": {
+    "title": "TRAP: Time-Aware Probabilistic In-Dram RowHammer Solution",
+    "file": "2025_TRAP Time-Aware Probabilistic In-Dram RowHammer Solution.md",
+    "saved": "2026-06-20"
+  },
+  "ss:8464b46ddd927a5b581b6cbc38b0779e7f51254c": {
+    "title": "Assessing the Potential of Escalating RowHammer Attack Distance to Bypass-Counter-Based Defenses",
+    "file": "2025_Assessing the Potential of Escalating RowHammer Attack Distance to Bypass-Counte.md",
+    "saved": "2026-06-20"
+  },
+  "ss:735e7b6dc5eeccc5891f165daf845b35f550893a": {
+    "title": "Selective Subarray Isolation for Mitigating RowHammer Attack",
+    "file": "2025_Selective Subarray Isolation for Mitigating RowHammer Attack.md",
+    "saved": "2026-06-20"
+  },
+  "ss:a4f09310f15467e021ff70d26cd0aea4bfe60289": {
+    "title": "DNN-Defender: A Victim-Focused In-DRAM Defense Mechanism for Taming Adversarial Weight Attack on DNNs",
+    "file": "2023_DNN-Defender A Victim-Focused In-DRAM Defense Mechanism for Taming Adversarial W.md",
+    "saved": "2026-06-20"
+  },
+  "ss:79b7cb16f2785c063fb4e98fcfed73918abd6f92": {
+    "title": "When Mitigations Backfire: Timing Channel Attacks and Defense for PRAC-Based RowHammer Mitigations",
+    "file": "2025_When Mitigations Backfire Timing Channel Attacks and Defense for PRAC-Based RowH.md",
+    "saved": "2026-06-20"
+  },
+  "ss:b6052cc8f06dab276b235612c361447ac07aa0e6": {
+    "title": "DIVIDE: Efficient RowHammer Defense via In-DRAM Cache-Based Hot Data Isolation",
+    "file": "2025_DIVIDE Efficient RowHammer Defense via In-DRAM Cache-Based Hot Data Isolation.md",
+    "saved": "2026-06-20"
+  },
+  "ss:d386a2878a4cf90c53955c904d8137aaacee9b7f": {
+    "title": "Marionette: A RowHammer Attack via Row Coupling",
+    "file": "2025_Marionette A RowHammer Attack via Row Coupling.md",
+    "saved": "2026-06-20"
+  },
+  "ss:ba25f77e417be575b0c41a400b116b82416df73c": {
+    "title": "Rowhammer Attacks in Dynamic Random-Access Memory and Defense Methods",
+    "file": "2024_Rowhammer Attacks in Dynamic Random-Access Memory and Defense Methods.md",
+    "saved": "2026-06-20"
+  },
+  "ss:f0405a9271cc164611e69a3ff2bd8c65e8f1748f": {
+    "title": "Mitigation of Rowhammer Attack on DDR4 Memory: A Novel Multi-Table Frequent Element Algorithm Based Approach",
+    "file": "2023_Mitigation of Rowhammer Attack on DDR4 Memory A Novel Multi-Table Frequent Eleme.md",
+    "saved": "2026-06-20"
+  },
+  "ss:6224f798e75808dfeeb23fabe70b4d167a8ad87d": {
+    "title": "SALT: Track-and-Mitigate Subarrays, Not Rows, for Blast-Radius-Free Rowhammer Defense",
+    "file": "2026_SALT Track-and-Mitigate Subarrays, Not Rows, for Blast-Radius-Free Rowhammer Def.md",
+    "saved": "2026-06-20"
+  },
+  "ss:21c792f13b8a8119e937fc2c49676fa81652be9c": {
+    "title": "Loaded Dice: Solving the Non-Selection Problem for Scalable Probabilistic RowHammer Defense",
+    "file": "2026_Loaded Dice Solving the Non-Selection Problem for Scalable Probabilistic RowHamm.md",
+    "saved": "2026-06-20"
+  },
+  "ss:919fd17b7fd497bf4806c65880926b3246d3bff2": {
+    "title": "Threshold Breaker: Can Counter-Based RowHammer Prevention Mechanisms Truly Safeguard DRAM?",
+    "file": "2023_Threshold Breaker Can Counter-Based RowHammer Prevention Mechanisms Truly Safegu.md",
+    "saved": "2026-06-20"
+  },
+  "ss:e0d794223f67a8bdc18badec1686df26595852f7": {
+    "title": "Enhancing Row-Sampling-Based Rowhammer defense methods with Machine Learning approach",
+    "file": "2025_Enhancing Row-Sampling-Based Rowhammer defense methods with Machine Learning app.md",
+    "saved": "2026-06-20"
+  },
+  "ss:b5c9e28de23652dd3f5938a3ccc7041fb02255fe": {
+    "title": "Integrating Information Security and Hardware Defense in Medical Printers: Addressing RowHammer Vulnerabilities",
+    "file": "2024_Integrating Information Security and Hardware Defense in Medical Printers Addres.md",
+    "saved": "2026-06-20"
+  },
+  "ss:c5b23fed77e69ca638eaa29c8c6506251947e277": {
+    "title": "PRACtical: Subarray-Level Counter Update and Bank-Level Recovery Isolation for Efficient PRAC Rowhammer Mitigation",
+    "file": "2025_PRACtical Subarray-Level Counter Update and Bank-Level Recovery Isolation for Ef.md",
+    "saved": "2026-06-20"
+  },
+  "ss:7de79a0dba7a041437236563786245171131affc": {
+    "title": "SoK: Systematizing a Decade of Architectural RowHammer Defenses Through the Lens of Streaming Algorithms",
+    "file": "2025_SoK Systematizing a Decade of Architectural RowHammer Defenses Through the Lens .md",
+    "saved": "2026-06-20"
+  },
+  "ss:60d621720768f470b18680f1e79a27f3afeea22a": {
+    "title": "Understanding and Mitigating Covert Channel and Side Channel Vulnerabilities Introduced by RowHammer Defenses",
+    "file": "2025_Understanding and Mitigating Covert Channel and Side Channel Vulnerabilities Int.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2404.18396v1": {
+    "title": "DRAM-Profiler: An Experimental DRAM RowHammer Vulnerability Profiling Mechanism",
+    "file": "2024_DRAM-Profiler An Experimental DRAM RowHammer Vulnerability Profiling Mechanism.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2206.09999v1": {
+    "title": "Understanding RowHammer Under Reduced Wordline Voltage: An Experimental Study Using Real DRAM Devices",
+    "file": "2022_Understanding RowHammer Under Reduced Wordline Voltage An Experimental Study Usi.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2305.17918v1": {
+    "title": "An Experimental Analysis of RowHammer in HBM2 DRAM Chips",
+    "file": "2023_An Experimental Analysis of RowHammer in HBM2 DRAM Chips.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2209.10198v1": {
+    "title": "HiRA: Hidden Row Activation for Reducing Refresh Latency of Off-the-Shelf DRAM Chips",
+    "file": "2022_HiRA Hidden Row Activation for Reducing Refresh Latency of Off-the-Shelf DRAM Ch.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2502.11745v1": {
+    "title": "Understanding RowHammer Under Reduced Refresh Latency: Experimental Analysis of Real DRAM Chips and Implications on Future Solutions",
+    "file": "2025_Understanding RowHammer Under Reduced Refresh Latency Experimental Analysis of R.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2404.07021v2": {
+    "title": "A 4x32Gb/s 1.8pJ/bit Collaborative Baud-Rate CDR with Background Eye-Climbing Algorithm and Low-Power Global Clock Distribution",
+    "file": "2024_A 4x32Gbs 1.8pJbit Collaborative Baud-Rate CDR with Background Eye-Climbing Algo.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2511.23351v1": {
+    "title": "Compensation of correlated autoregressive clock jitter in arrays of Analog-to-Digital Converters",
+    "file": "2025_Compensation of correlated autoregressive clock jitter in arrays of Analog-to-Di.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2505.05030v4": {
+    "title": "Autoregressive Stochastic Clock Jitter Compensation in Analog-to-Digital Converters",
+    "file": "2025_Autoregressive Stochastic Clock Jitter Compensation in Analog-to-Digital Convert.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2411.07015v1": {
+    "title": "Leveraging LSTM for Predictive Modeling of Satellite Clock Bias",
+    "file": "2024_Leveraging LSTM for Predictive Modeling of Satellite Clock Bias.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2507.13748v1": {
+    "title": "Elastic Buffer Design for Real-Time All-Digital Clock Recovery Enabling Free-Running Receiver Clock with Negative and Positive Clock Frequency Offsets",
+    "file": "2025_Elastic Buffer Design for Real-Time All-Digital Clock Recovery Enabling Free-Run.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2201.04862v2": {
+    "title": "Passivity-based design and analysis of phase-locked loops",
+    "file": "2022_Passivity-based design and analysis of phase-locked loops.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2604.08177v1": {
+    "title": "Estimating PLL Phase Noise Parameters from Measurements for System-Level Modeling",
+    "file": "2026_Estimating PLL Phase Noise Parameters from Measurements for System-Level Modelin.md",
+    "saved": "2026-06-20"
+  },
+  "ss:fc201a0412afc4b7e1408f3802b1df0d7b56c6f0": {
+    "title": "High-Speed Photonic-Electrical Integrated Silicon Transceiver Enabled by a Novel Dual Bi-GRU Equalization Model",
+    "file": "2025_High-Speed Photonic-Electrical Integrated Silicon Transceiver Enabled by a Novel.md",
+    "saved": "2026-06-20"
+  },
+  "ss:ddfebda5b846451aacdb6252e5abd22747360b97": {
+    "title": "A 16Gb 12.7Gb/s/pin LPDDR5-Ultra-Pro DRAM with 4-Phase Self-Calibration and AC-Coupled Transceiver Equalization in a 5th-Generation 10nm DRAM Process",
+    "file": "2025_A 16Gb 12.7Gbspin LPDDR5-Ultra-Pro DRAM with 4-Phase Self-Calibration and AC-Cou.md",
+    "saved": "2026-06-20"
+  },
+  "ss:7923e382bed382ff1be48955f1372c93a247f4f8": {
+    "title": "Time-Driven Python-based Simulator for Verification of High-Speed Link Circuits and Systems",
+    "file": "2022_Time-Driven Python-based Simulator for Verification of High-Speed Link Circuits .md",
+    "saved": "2026-06-20"
+  },
+  "ss:ddbcf006b5869b31058d2ef5f5feb2b342a2f3ba": {
+    "title": "Low-Power 60-GHz OOK Demodulator With Gain Equalization and RSSI for Short-Range High-Speed IoT Devices",
+    "file": "2025_Low-Power 60-GHz OOK Demodulator With Gain Equalization and RSSI for Short-Range.md",
+    "saved": "2026-06-20"
+  },
+  "ss:c08552a16849210dd14d12e102032cd4355f7e04": {
+    "title": "Session 7 Overview: Ultra-High-Speed Wireline",
+    "file": "2025_Session 7 Overview Ultra-High-Speed Wireline.md",
+    "saved": "2026-06-20"
+  },
+  "ss:38153e6c67e7997784f86e58290d7de1d9d564cd": {
+    "title": "High-speed IM-DD optical interconnect based on low-complexity ISI-reconstructed detection for bandwidth and dispersion constraints.",
+    "file": "2025_High-speed IM-DD optical interconnect based on low-complexity ISI-reconstructed .md",
+    "saved": "2026-06-20"
+  },
+  "ss:b855f7c8fa07f83bff7ed5e351a9400439f26043": {
+    "title": "Hybrid pruning for nonlinear equalization in short-reach high-speed optical links.",
+    "file": "2025_Hybrid pruning for nonlinear equalization in short-reach high-speed optical link.md",
+    "saved": "2026-06-20"
+  },
+  "ss:3efefac490498855bee1d181ccea6512eee6b0ff": {
+    "title": "Modeling Cascade-able Transceiver Blocks With Neural Network For High Speed Link Simulation",
+    "file": "2022_Modeling Cascade-able Transceiver Blocks With Neural Network For High Speed Link.md",
+    "saved": "2026-06-20"
+  },
+  "ss:70ee65f8659e64b0f1dfab51e462b59e084fc866": {
+    "title": "FPGA Implementation of Sequence Detector for High-Speed PAM4 Wireline Transceiver",
+    "file": "2024_FPGA Implementation of Sequence Detector for High-Speed PAM4 Wireline Transceive.md",
+    "saved": "2026-06-20"
+  },
+  "ss:c7856c98a49f56a5271f6d286e25dcb8dd0679e3": {
+    "title": "A Fan-Out Wafer-Level Packaging-Based THz Communication Transceiver System for High-Speed Chip-to-Chip Wireless Interconnect Applications",
+    "file": "2025_A Fan-Out Wafer-Level Packaging-Based THz Communication Transceiver System for H.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2210.17304v1": {
+    "title": "H2020-SPACE-ORIONAS Miniaturized optical transceivers for high-speed optical inter-satellite links",
+    "file": "2022_H2020-SPACE-ORIONAS Miniaturized optical transceivers for high-speed optical int.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2412.06330v2": {
+    "title": "A reconfigurable calibration-free digital-to-time converter based on a high-speed transceiver",
+    "file": "2024_A reconfigurable calibration-free digital-to-time converter based on a high-spee.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2302.10788v1": {
+    "title": "Exact Performance Analysis of THz Link Under Transceiver Hardware Impairments",
+    "file": "2023_Exact Performance Analysis of THz Link Under Transceiver Hardware Impairments.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:1803.01211v2": {
+    "title": "Robust Power Flow and Three-Phase Power Flow Analyses",
+    "file": "2018_Robust Power Flow and Three-Phase Power Flow Analyses.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2112.06382v1": {
+    "title": "Dynamic Exploitation Gaussian Bare-Bones Bat Algorithm for Optimal Reactive Power Dispatch to Improve the Safety and Stability of Power System",
+    "file": "2021_Dynamic Exploitation Gaussian Bare-Bones Bat Algorithm for Optimal Reactive Powe.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2101.05965v2": {
+    "title": "Real-time Power System Simulation with Hardware Devices through DNP3 in Cyber-Physical Testbed",
+    "file": "2021_Real-time Power System Simulation with Hardware Devices through DNP3 in Cyber-Ph.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:1910.02400v1": {
+    "title": "A Linear LMP Model for Active and Reactive Power with Power Loss",
+    "file": "2019_A Linear LMP Model for Active and Reactive Power with Power Loss.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2102.00561v1": {
+    "title": "Teaching Digital Signal Processing by Partial Flipping, Active Learning and Visualization",
+    "file": "2021_Teaching Digital Signal Processing by Partial Flipping, Active Learning and Visu.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2109.02552v1": {
+    "title": "Joint Multi-User Communication and Sensing Exploiting Both Signal and Environment Sparsity",
+    "file": "2021_Joint Multi-User Communication and Sensing Exploiting Both Signal and Environmen.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:1905.00690v2": {
+    "title": "Toward Millimeter Wave Joint Radar-Communications: A Signal Processing Perspective",
+    "file": "2019_Toward Millimeter Wave Joint Radar-Communications A Signal Processing Perspectiv.md",
+    "saved": "2026-06-20"
+  },
+  "ss:b88abdbaaa53232d4d6bca681c76ea60f821aaac": {
+    "title": "Making Strong Error-Correcting Codes Work Effectively for HBM in AI Inference",
+    "file": "2025_Making Strong Error-Correcting Codes Work Effectively for HBM in AI Inference.md",
+    "saved": "2026-06-20"
+  },
+  "ss:e8a3d0a1caefefdd1bb508d3679c623116a0bbca": {
+    "title": "Effective Data-Width Aware ECC Scheme for HBM",
+    "file": "2024_Effective Data-Width Aware ECC Scheme for HBM.md",
+    "saved": "2026-06-20"
+  },
+  "ss:b66373e4f3d30bd8c82d60db70c2f7c2697a64a3": {
+    "title": "A New Two-Tiered ECC Configuration Method for Cluster Error Correction in HBM Architecture",
+    "file": "2025_A New Two-Tiered ECC Configuration Method for Cluster Error Correction in HBM Ar.md",
+    "saved": "2026-06-20"
+  },
+  "ss:a8c0ab81ab791e0318a1b0b0bbcff34ffc43a7c4": {
+    "title": "DBB-ECC: Random Double Bit and Burst Error Correction Code for HBM3",
+    "file": "2025_DBB-ECC Random Double Bit and Burst Error Correction Code for HBM3.md",
+    "saved": "2026-06-20"
+  },
+  "ss:b9cc97dfe39b705242788fbcaa501d9238f2b578": {
+    "title": "A Novel Prediction-Based Two-Tiered ECC for Mitigating SWD Errors in HBM",
+    "file": "2025_A Novel Prediction-Based Two-Tiered ECC for Mitigating SWD Errors in HBM.md",
+    "saved": "2026-06-20"
+  },
+  "ss:364728e473f2a8fee56424e760b4369b82a44d83": {
+    "title": "Efficient Error-Correcting-Code Mechanism for High-Throughput Memristive Processing-in-Memory",
+    "file": "2021_Efficient Error-Correcting-Code Mechanism for High-Throughput Memristive Process.md",
+    "saved": "2026-06-20"
+  },
+  "ss:e972020ff7e558d4eda555ef86796b7f2519c85b": {
+    "title": "Location-Aware Error Correction for Mitigating the Impact of Interconnects on STT-MRAM Reliability",
+    "file": "2025_Location-Aware Error Correction for Mitigating the Impact of Interconnects on ST.md",
+    "saved": "2026-06-20"
+  },
+  "ss:869c5dda5ead1228674646d0f4c3e4473040a644": {
+    "title": "CrossMPT: Cross-attention Message-Passing Transformer for Error Correcting Codes",
+    "file": "2024_CrossMPT Cross-attention Message-Passing Transformer for Error Correcting Codes.md",
+    "saved": "2026-06-20"
+  },
+  "ss:cb494d67bd77406ed1221a60d6fa08f849758c59": {
+    "title": "ROSE: Reliability-Optimized OD-ECC and S-ECC Enhancements for HBM3",
+    "file": "2025_ROSE Reliability-Optimized OD-ECC and S-ECC Enhancements for HBM3.md",
+    "saved": "2026-06-20"
+  },
+  "ss:71d138e2e88e986f9007fe1e446482bdc766d6ca": {
+    "title": "TSV Built-In Self-Repair Architecture for Lifespan Reliability Enhancement of HBM",
+    "file": "2025_TSV Built-In Self-Repair Architecture for Lifespan Reliability Enhancement of HB.md",
+    "saved": "2026-06-20"
+  },
+  "ss:68208f12691a2a98b3bbeee8346a53c52faaa956": {
+    "title": "Hardening Bus-Encoders with Power-Aware Single Error Correcting Codes",
+    "file": "2024_Hardening Bus-Encoders with Power-Aware Single Error Correcting Codes.md",
+    "saved": "2026-06-20"
+  },
+  "ss:79faa93c09c95063d3d68f84c8720b97bb74f754": {
+    "title": "Sparrow ECC: A Lightweight ECC Approach for HBM Refresh Reduction towards Energy-efficient DNN Inference",
+    "file": "2024_Sparrow ECC A Lightweight ECC Approach for HBM Refresh Reduction towards Energy-.md",
+    "saved": "2026-06-20"
+  },
+  "ss:1faa11eb81585ec21fae5298adf936576414f174": {
+    "title": "In-Memory Hamming Error-Correcting Code in Memristor Crossbar",
+    "file": "2021_In-Memory Hamming Error-Correcting Code in Memristor Crossbar.md",
+    "saved": "2026-06-20"
+  },
+  "ss:93dc95d239953430d91917d3d547c05f3e347a0d": {
+    "title": "Novel Video Steganography Algorithm Based on Secret Sharing and Error-Correcting Code for H.264/AVC",
+    "file": "2017_Novel Video Steganography Algorithm Based on Secret Sharing and Error-Correcting.md",
+    "saved": "2026-06-20"
+  },
+  "ss:ba74c7acf60f6d52ad38e60962fb186735ded876": {
+    "title": "Modeling and Classifying Error-Correcting Codes With Soft Decision-Based HMMs for Intelligent Wireless Communication",
+    "file": "2023_Modeling and Classifying Error-Correcting Codes With Soft Decision-Based HMMs fo.md",
+    "saved": "2026-06-20"
+  },
+  "ss:98db730fe8cc27b7c6e7779c59125a202517d914": {
+    "title": "Improving Compute In-Memory ECC Reliability with Successive Correction",
+    "file": "2022_Improving Compute In-Memory ECC Reliability with Successive Correction.md",
+    "saved": "2026-06-20"
+  },
+  "ss:982b10c4864777af9648b4eec98e10ccd7bbffcb": {
+    "title": "An Indel-Resistant Error-Correcting Code for DNA-Based Information Storage",
+    "file": "2018_An Indel-Resistant Error-Correcting Code for DNA-Based Information Storage.md",
+    "saved": "2026-06-20"
+  },
+  "ss:63a7f2deabb5061b273f9ef29a817e2fdbc1d5fb": {
+    "title": "Error-Correcting Codes and the Power of Machine Learning: Enhancing Data Reliability",
+    "file": "2023_Error-Correcting Codes and the Power of Machine Learning Enhancing Data Reliabil.md",
+    "saved": "2026-06-20"
+  },
+  "ss:85bdd38a6161389f33e567944b57d8cda69b38f7": {
+    "title": "On Designing Novel ISI-Reducing Single Error Correcting Codes in an MCvD System",
+    "file": "2025_On Designing Novel ISI-Reducing Single Error Correcting Codes in an MCvD System.md",
+    "saved": "2026-06-20"
+  },
+  "ss:5edbc0ed071dd741592ab1b306c97f6b2440f8a7": {
+    "title": "Development and Product Reliability Characterization of Advanced High Speed 14nm DDR5 DRAM with On-die ECC",
+    "file": "2023_Development and Product Reliability Characterization of Advanced High Speed 14nm.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2009.07985v1": {
+    "title": "Bit-Exact ECC Recovery (BEER): Determining DRAM On-Die ECC Functions by Exploiting DRAM Data Retention Characteristics",
+    "file": "2020_Bit-Exact ECC Recovery (BEER) Determining DRAM On-Die ECC Functions by Exploitin.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:1906.11137v4": {
+    "title": "Optimal Error Correcting Code For Ternary Quantum Systems",
+    "file": "2019_Optimal Error Correcting Code For Ternary Quantum Systems.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:1706.08870v2": {
+    "title": "Using ECC DRAM to Adaptively Increase Memory Capacity",
+    "file": "2017_Using ECC DRAM to Adaptively Increase Memory Capacity.md",
+    "saved": "2026-06-20"
+  },
+  "ss:62bc74c87efc71004c8b0c7e29ecc40d51c68cfd": {
+    "title": "A Deeper Look into RowHammer’s Sensitivities: Experimental Analysis of Real DRAM Chips and Implications on Future Attacks and Defenses",
+    "file": "2021_A Deeper Look into RowHammer’s Sensitivities Experimental Analysis of Real DRAM .md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:1603.08454v1": {
+    "title": "Adaptive-Latency DRAM (AL-DRAM)",
+    "file": "2016_Adaptive-Latency DRAM (AL-DRAM).md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:1601.06903v1": {
+    "title": "Tiered-Latency DRAM (TL-DRAM)",
+    "file": "2016_Tiered-Latency DRAM (TL-DRAM).md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2110.10603v2": {
+    "title": "Uncovering In-DRAM RowHammer Protection Mechanisms: A New Methodology, Custom RowHammer Patterns, and Implications",
+    "file": "2021_Uncovering In-DRAM RowHammer Protection Mechanisms A New Methodology, Custom Row.md",
+    "saved": "2026-06-20"
+  },
+  "ss:a1c03feadcba005f369508d6ff3caa35043fe152": {
+    "title": "Amp Cell: 3D-Scalable Gain Cell Memory with Decoupled Read, Write, and Store",
+    "file": "2025_Amp Cell 3D-Scalable Gain Cell Memory with Decoupled Read, Write, and Store.md",
+    "saved": "2026-06-20"
+  },
+  "ss:26b2b857f566fdea770273742a4e34c1fc49a0f2": {
+    "title": "Implementation of Boolean Logic Operations and Refresh Circuit for 2T DRAM-Based PIM Architecture",
+    "file": "2025_Implementation of Boolean Logic Operations and Refresh Circuit for 2T DRAM-Based.md",
+    "saved": "2026-06-20"
+  },
+  "ss:bd3ef4cd8962de6cbe28e911d43e64259b740ddd": {
+    "title": "Hidden Refresh: Reducing DRAM Refresh Overheads for Improved Performance",
+    "file": "2025_Hidden Refresh Reducing DRAM Refresh Overheads for Improved Performance.md",
+    "saved": "2026-06-20"
+  },
+  "ss:958052240edc6793a9deec88b38bce797e7434a4": {
+    "title": "Low Power and Enhanced Data Retention Time in DRAM in FinFET Technology",
+    "file": "2024_Low Power and Enhanced Data Retention Time in DRAM in FinFET Technology.md",
+    "saved": "2026-06-20"
+  },
+  "ss:3f6b5af948806d030b56c0594b385a5cdd1afabc": {
+    "title": "Content Aware Refresh: Exploiting the Asymmetry of DRAM Retention Errors to Reduce the Refresh Frequency of Less Vulnerable Data",
+    "file": "2019_Content Aware Refresh Exploiting the Asymmetry of DRAM Retention Errors to Reduc.md",
+    "saved": "2026-06-20"
+  },
+  "ss:21c0e526155c467ea0994421d6007974aed994ab": {
+    "title": "A 1.1V 16Gb DDR5 DRAM with Probabilistic-Aggressor Tracking, Refresh-Management Functionality, Per-Row Hammer Tracking, a Multi-Step Precharge, and Core-Bias Modulation for Security and Reliability Enhancement",
+    "file": "2023_A 1.1V 16Gb DDR5 DRAM with Probabilistic-Aggressor Tracking, Refresh-Management .md",
+    "saved": "2026-06-20"
+  },
+  "ss:f3b2c693502598bb1db3cf24a624ec172e8f578a": {
+    "title": "A novel 3T DRAM cell with depletion mode PMOS for extended retention time in processing-in-memory applications",
+    "file": "2026_A novel 3T DRAM cell with depletion mode PMOS for extended retention time in pro.md",
+    "saved": "2026-06-20"
+  },
+  "ss:f91122af239b3e138ff5af049752e486cf98a372": {
+    "title": "Retention-Aware DRAM Auto-Refresh Scheme for Energy and Performance Efficiency",
+    "file": "2019_Retention-Aware DRAM Auto-Refresh Scheme for Energy and Performance Efficiency.md",
+    "saved": "2026-06-20"
+  },
+  "ss:df290e884abe1e7a046b3032291d71f039702cc4": {
+    "title": "DRAM Refresh with Master Wordline Granularity Control of Refresh Intervals: Position Paper",
+    "file": "2021_DRAM Refresh with Master Wordline Granularity Control of Refresh Intervals Posit.md",
+    "saved": "2026-06-20"
+  },
+  "ss:43650227df7cd5c2c7ef82b7051751deb5e2295f": {
+    "title": "Pathways for Retention Boost in Atomic Layer Etched IGZO-Based Capacitorless DRAM",
+    "file": "2025_Pathways for Retention Boost in Atomic Layer Etched IGZO-Based Capacitorless DRA.md",
+    "saved": "2026-06-20"
+  },
+  "ss:3a360db9832835f01063fe046f1cc6afe6a549a5": {
+    "title": "Reduction of Leakage Current in Memristor Based Dynamic Random Access Memory (DRAM)",
+    "file": "2025_Reduction of Leakage Current in Memristor Based Dynamic Random Access Memory (DR.md",
+    "saved": "2026-06-20"
+  },
+  "ss:2850dbd9deb1c4723627d7eab712f55121e80f9c": {
+    "title": "Exploitations of Multiple Rows Hammering and Retention Time Interactions in DRAM Using X-Ray Radiation",
+    "file": "2021_Exploitations of Multiple Rows Hammering and Retention Time Interactions in DRAM.md",
+    "saved": "2026-06-20"
+  },
+  "ss:88bdbff9be1176de1a0c30a15f98cb4a49f762b9": {
+    "title": "Comprehensive Study of NBTI and Off-State Reliabilty in Sub-20 nm DRAM Technology: Trap Identification, Compact Aging Model, and Impact on Retention Degradation",
+    "file": "2023_Comprehensive Study of NBTI and Off-State Reliabilty in Sub-20 nm DRAM Technolog.md",
+    "saved": "2026-06-20"
+  },
+  "ss:2913004da8f897d20f31c047b46c8cfdcd0eb7d3": {
+    "title": "RAIDR: Retention-aware intelligent DRAM refresh",
+    "file": "2012_RAIDR Retention-aware intelligent DRAM refresh.md",
+    "saved": "2026-06-20"
+  },
+  "ss:cdd17992a5d0c7e9357bb705d79a29cb05f0159f": {
+    "title": "DRAM Operations under Cryogenic Temperatures: From Device Physics to DIMM Behavior",
+    "file": "2026_DRAM Operations under Cryogenic Temperatures From Device Physics to DIMM Behavio.md",
+    "saved": "2026-06-20"
+  },
+  "ss:d7f49a021d38c6bb6234f610e8469970c01c5580": {
+    "title": "CryoGuard: A Near Refresh-Free Robust DRAM Design for Cryogenic Computing",
+    "file": "2021_CryoGuard A Near Refresh-Free Robust DRAM Design for Cryogenic Computing.md",
+    "saved": "2026-06-20"
+  },
+  "ss:b6388aea4fff822b953a3961d2f0cdfc675a44b8": {
+    "title": "VRL-DRAM: Improving DRAM Performance via Variable Refresh Latency",
+    "file": "2018_VRL-DRAM Improving DRAM Performance via Variable Refresh Latency.md",
+    "saved": "2026-06-20"
+  },
+  "ss:d1e5ba34ab2a52eda1ef0ce16565c8ab8b0241ae": {
+    "title": "A New Surface Potential and Physics Based Compact Model for a-IGZO TFTs at Multinanoscale for High Retention and Low-Power DRAM Application",
+    "file": "2021_A New Surface Potential and Physics Based Compact Model for a-IGZO TFTs at Multi.md",
+    "saved": "2026-06-20"
+  },
+  "ss:44e2e12af61d1fa7e57974398d4de62f302545e6": {
+    "title": "DRAM Characterization under Relaxed Refresh Period Considering System Level Effects within a Commodity Server",
+    "file": "2018_DRAM Characterization under Relaxed Refresh Period Considering System Level Effe.md",
+    "saved": "2026-06-20"
+  },
+  "ss:fa9429f9576e7934185cb56af94495fdea5e8bce": {
+    "title": "A 28-nm 10.4-fJ/b Cryogenic embedded DRAM with 3T1C Gain Cell and MBIST at 4-Kelvin",
+    "file": "2024_A 28-nm 10.4-fJb Cryogenic embedded DRAM with 3T1C Gain Cell and MBIST at 4-Kelv.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:1309.7082v1": {
+    "title": "A Cache Reconfiguration Approach for Saving Leakage and Refresh Energy in Embedded DRAM Caches",
+    "file": "2013_A Cache Reconfiguration Approach for Saving Leakage and Refresh Energy in Embedd.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:1601.06352v1": {
+    "title": "Reducing Performance Impact of DRAM Refresh by Parallelizing Refreshes with Accesses",
+    "file": "2016_Reducing Performance Impact of DRAM Refresh by Parallelizing Refreshes with Acce.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:1805.01289v1": {
+    "title": "Reducing DRAM Refresh Overheads with Refresh-Access Parallelism",
+    "file": "2018_Reducing DRAM Refresh Overheads with Refresh-Access Parallelism.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:1712.07754v1": {
+    "title": "Improving DRAM Performance by Parallelizing Refreshes with Accesses",
+    "file": "2017_Improving DRAM Performance by Parallelizing Refreshes with Accesses.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:1201.1674v1": {
+    "title": "Theoretical Modeling and Simulation of Phase-Locked Loop (PLL) for Clock Data Recovery (CDR)",
+    "file": "2012_Theoretical Modeling and Simulation of Phase-Locked Loop (PLL) for Clock Data Re.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:1604.00230v3": {
+    "title": "Effect of Jitter on the Settling Time of Mesochronous Clock Retiming Circuits",
+    "file": "2016_Effect of Jitter on the Settling Time of Mesochronous Clock Retiming Circuits.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:1601.01463v1": {
+    "title": "Design of a Low-Power 1.65 Gbps Data Channel for HDMI Transmitter",
+    "file": "2016_Design of a Low-Power 1.65 Gbps Data Channel for HDMI Transmitter.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2006.14413v1": {
+    "title": "Implementation of Symbol Timing Recovery for Estimation of Clock Skew",
+    "file": "2020_Implementation of Symbol Timing Recovery for Estimation of Clock Skew.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:1408.3868v1": {
+    "title": "Phase Locked Loop of the Spin-Torque Nanooscillator",
+    "file": "2014_Phase Locked Loop of the Spin-Torque Nanooscillator.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:1609.04114v1": {
+    "title": "Design of a High-Performance High-Pass Generalized Integrator Based Single-Phase PLL",
+    "file": "2016_Design of a High-Performance High-Pass Generalized Integrator Based Single-Phase.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:1307.7775v2": {
+    "title": "A Hybrid Analog/Digital Phase-Locked Loop for Frequency Mode Non-contact Scanning Probe Microscopy",
+    "file": "2013_A Hybrid AnalogDigital Phase-Locked Loop for Frequency Mode Non-contact Scanning.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2508.04609v2": {
+    "title": "Analog Solver Circuit for Linear Symmetric Positive-Definite Systems at a Complexity Independent of Matrix Size",
+    "file": "2025_Analog Solver Circuit for Linear Symmetric Positive-Definite Systems at a Comple.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2504.10240v5": {
+    "title": "Graph Neural Networks Based Analog Circuit Link Prediction",
+    "file": "2025_Graph Neural Networks Based Analog Circuit Link Prediction.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2507.00444v2": {
+    "title": "DiffCkt: A Diffusion Model-Based Hybrid Neural Network Framework for Automatic Transistor-Level Generation of Analog Circuits",
+    "file": "2025_DiffCkt A Diffusion Model-Based Hybrid Neural Network Framework for Automatic Tr.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2412.20486v2": {
+    "title": "LSQCA: Resource-Efficient Load/Store Architecture for Limited-Scale Fault-Tolerant Quantum Computing",
+    "file": "2024_LSQCA Resource-Efficient LoadStore Architecture for Limited-Scale Fault-Tolerant.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2203.07830v1": {
+    "title": "A Survey of fault models and fault tolerance methods for 2D bus-based multi-core systems and TSV based 3D NOC many-core systems",
+    "file": "2022_A Survey of fault models and fault tolerance methods for 2D bus-based multi-core.md",
+    "saved": "2026-06-20"
+  },
+  "ss:e22255f6739409f0ab20133c2d36aa6b50175f04": {
+    "title": "Reconfigurable Flash ADC Using TIQ Technique",
+    "file": "2018_Reconfigurable Flash ADC Using TIQ Technique.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2001.01808v2": {
+    "title": "AutoCkt: Deep Reinforcement Learning of Analog Circuit Designs",
+    "file": "2020_AutoCkt Deep Reinforcement Learning of Analog Circuit Designs.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2106.05896v1": {
+    "title": "VLSI Systems for signal processing and Communications",
+    "file": "2021_VLSI Systems for signal processing and Communications.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2506.15936v1": {
+    "title": "Mixed-Signal Quantum Circuit Design for Option Pricing Using Design Compiler",
+    "file": "2025_Mixed-Signal Quantum Circuit Design for Option Pricing Using Design Compiler.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2404.05260v1": {
+    "title": "SRAM-PG: Power Delivery Network Benchmarks from SRAM Circuits",
+    "file": "2024_SRAM-PG Power Delivery Network Benchmarks from SRAM Circuits.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:1711.00425v3": {
+    "title": "Non Uniform On Chip Power Delivery Network Synthesis Methodology",
+    "file": "2017_Non Uniform On Chip Power Delivery Network Synthesis Methodology.md",
+    "saved": "2026-06-20"
+  },
+  "ss:f49f2057b73ae44fc44a116962435f8e18fcd5ba": {
+    "title": "Power Side-Channel Analysis and Mitigation for Neural Network Accelerators based on Memristive Crossbars",
+    "file": "2024_Power Side-Channel Analysis and Mitigation for Neural Network Accelerators based.md",
+    "saved": "2026-06-20"
+  },
+  "ss:69ee2b65941ae1f0a6ca9f9a26b39b32ff6ede22": {
+    "title": "On Antagonism Between Side-Channel Security and Soft-Error Reliability in BNN Inference Engines",
+    "file": "2021_On Antagonism Between Side-Channel Security and Soft-Error Reliability in BNN In.md",
+    "saved": "2026-06-20"
+  },
+  "ss:6d9f372fded518c03257b2af616a1e6b19d2bfe6": {
+    "title": "Hardware/Software Obfuscation against Timing Side-channel Attack on a GPU",
+    "file": "2020_HardwareSoftware Obfuscation against Timing Side-channel Attack on a GPU.md",
+    "saved": "2026-06-20"
+  },
+  "ss:0e7f83c3a36ee96983d6b8610b6053a90c811431": {
+    "title": "Hybrid Neural Networks Assess Cryptographic Vulnerability in Post Quantum Security Transitions",
+    "file": "2026_Hybrid Neural Networks Assess Cryptographic Vulnerability in Post Quantum Securi.md",
+    "saved": "2026-06-20"
+  },
+  "ss:65f58616ad6391920b061f285c8dc41c13273801": {
+    "title": "Cipherfix: Mitigating Ciphertext Side-Channel Attacks in Software",
+    "file": "2022_Cipherfix Mitigating Ciphertext Side-Channel Attacks in Software.md",
+    "saved": "2026-06-20"
+  },
+  "ss:15ebdaacf26bdd5699074821bb1f7307cd87a17b": {
+    "title": "On the Security Risks of Memory Adaptation and Augmentation in Data-plane DoS Mitigation",
+    "file": "2026_On the Security Risks of Memory Adaptation and Augmentation in Data-plane DoS Mi.md",
+    "saved": "2026-06-20"
+  },
+  "ss:2989f1a7b8815038318efbe4dc183f6a09775fcc": {
+    "title": "Exposing the Vulnerability of Inferring Keystroke Patterns from Mobile Phone Motion Sensor Data Using Deep Learning",
+    "file": "2026_Exposing the Vulnerability of Inferring Keystroke Patterns from Mobile Phone Mot.md",
+    "saved": "2026-06-20"
+  },
+  "ss:fe4dead082deac84b7ac0d80b38b1203df23d808": {
+    "title": "Cracking the Core: Hardware Vulnerabilities in Android Devices Unveiled",
+    "file": "2024_Cracking the Core Hardware Vulnerabilities in Android Devices Unveiled.md",
+    "saved": "2026-06-20"
+  },
+  "ss:f4dd658a9cf70e8623951aec2d5ddb19f3cece4a": {
+    "title": "Securing Hardware via Dynamic Obfuscation Utilizing Reconfigurable Interconnect and Logic Blocks",
+    "file": "2021_Securing Hardware via Dynamic Obfuscation Utilizing Reconfigurable Interconnect .md",
+    "saved": "2026-06-20"
+  },
+  "ss:85e4d0935d7d2ffe4e7fb9f7198353027e8586cf": {
+    "title": "Emerging Threats and Countermeasures in Neuromorphic Systems: A Survey",
+    "file": "2026_Emerging Threats and Countermeasures in Neuromorphic Systems A Survey.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2007.16175v1": {
+    "title": "Hardware/Software Obfuscation against Timing Side-channel Attack on a GPU",
+    "file": "2020_HardwareSoftware Obfuscation against Timing Side-channel Attack on a GPU.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2205.11895v1": {
+    "title": "Efficient and Lightweight In-memory Computing Architecture for Hardware Security",
+    "file": "2022_Efficient and Lightweight In-memory Computing Architecture for Hardware Security.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:1910.00737v1": {
+    "title": "Side-Channel Hardware Trojan for Provably-Secure SCA-Protected Implementations",
+    "file": "2019_Side-Channel Hardware Trojan for Provably-Secure SCA-Protected Implementations.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2310.03994v1": {
+    "title": "DeMiST: Detection and Mitigation of Stealthy Analog Hardware Trojans",
+    "file": "2023_DeMiST Detection and Mitigation of Stealthy Analog Hardware Trojans.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2407.17432v2": {
+    "title": "An FPGA-Based Open-Source Hardware-Software Framework for Side-Channel Security Research",
+    "file": "2024_An FPGA-Based Open-Source Hardware-Software Framework for Side-Channel Security .md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2401.13345v2": {
+    "title": "FPGA Implementation of an Intelligent Traffic Light Controller (I-TLC) in Verilog",
+    "file": "2024_FPGA Implementation of an Intelligent Traffic Light Controller (I-TLC) in Verilo.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2010.14684v1": {
+    "title": "Substream-Centric Maximum Matchings on FPGA",
+    "file": "2020_Substream-Centric Maximum Matchings on FPGA.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2508.08725v1": {
+    "title": "Architecture and FPGA Implementation of Digital Time-to-Digital Converter for Sensing Applications",
+    "file": "2025_Architecture and FPGA Implementation of Digital Time-to-Digital Converter for Se.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2304.07476v1": {
+    "title": "Implementation of Digital Circuits on Three-Dimensional FPGAs Using Simulated Annealing",
+    "file": "2023_Implementation of Digital Circuits on Three-Dimensional FPGAs Using Simulated An.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2310.15434v1": {
+    "title": "Improved Dual-Output Step-Down Soft-Switching Current-Fed Push-Pull DC-DC Converter",
+    "file": "2023_Improved Dual-Output Step-Down Soft-Switching Current-Fed Push-Pull DC-DC Conver.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2012.12724v1": {
+    "title": "Generalized Circuit Averaging Technique for Two Switch DC-DC Converters",
+    "file": "2020_Generalized Circuit Averaging Technique for Two Switch DC-DC Converters.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:2305.18241v1": {
+    "title": "A Family of Interleaved High Step-Up DC-DC Converters by Integrating a Voltage Multiplier and an Active Clamp Circuits",
+    "file": "2023_A Family of Interleaved High Step-Up DC-DC Converters by Integrating a Voltage M.md",
+    "saved": "2026-06-20"
+  },
+  "arxiv:1805.07680v2": {
+    "title": "Analog multiplier design with CMOS-memristor circuits",
+    "file": "2018_Analog multiplier design with CMOS-memristor circuits.md",
+    "saved": "2026-06-23"
+  },
+  "arxiv:1805.07735v2": {
+    "title": "CMOS-Memristive Analog Multiplier Design",
+    "file": "2018_CMOS-Memristive Analog Multiplier Design.md",
+    "saved": "2026-06-23"
+  },
+  "arxiv:1609.04921v1": {
+    "title": "CMOS-Memristor Dendrite Threshold Circuits",
+    "file": "2016_CMOS-Memristor Dendrite Threshold Circuits.md",
+    "saved": "2026-06-23"
+  },
+  "arxiv:0710.4709v1": {
+    "title": "Analog and Digital Circuit Design in 65 nm CMOS: End of the Road?",
+    "file": "2007_Analog and Digital Circuit Design in 65 nm CMOS End of the Road.md",
+    "saved": "2026-06-23"
+  },
+  "ss:2dd7b3defa64fd1334c8e77a3fcd4b9337d061e7": {
+    "title": "A 455mV-Hysteresis, 120 nA, Bandgap less Power-on-Reset Circuit for IoT in 40nm CMOS",
+    "file": "2025_A 455mV-Hysteresis, 120 nA, Bandgap less Power-on-Reset Circuit for IoT in 40nm .md",
+    "saved": "2026-06-23"
+  },
+  "ss:fe7841187123e84e55a2859979baee3114f31554": {
+    "title": "A 409mV, Sub-10nW Power-on Reset Circuit Using Adaptive Accuracy Adjustment for Low Voltage Applications",
+    "file": "2024_A 409mV, Sub-10nW Power-on Reset Circuit Using Adaptive Accuracy Adjustment for .md",
+    "saved": "2026-06-23"
+  },
+  "ss:e30d23fed2b653ef347f46e6dab167af7975e973": {
+    "title": "A Compact Power-on-Reset Circuit With Configurable Brown-Out Detection",
+    "file": "2025_A Compact Power-on-Reset Circuit With Configurable Brown-Out Detection.md",
+    "saved": "2026-06-23"
+  },
+  "ss:7605c6186c7b08ceb56b9d1e0e741b227c6e8458": {
+    "title": "A NOVEL PVT-TRACKING POWER SUPPLY DETECTION CIRCUIT FOR\nRELIABLE LEVEL SHIFTER OPERATION IN MULTI-VOLTAGE ICs",
+    "file": "2024_A NOVEL PVT-TRACKING POWER SUPPLY DETECTION CIRCUIT FOR RELIABLE LEVEL SHIFTER O.md",
+    "saved": "2026-06-23"
+  },
+  "ss:50645afc2715bfc49b5f8bda5336321e3b940db3": {
+    "title": "Power-On Reset Circuit in 180-nm CMOS With Brownout Detection, Stable Switching Points, Long Reset Pulse Duration, and Resilience to Switching Noise",
+    "file": "2022_Power-On Reset Circuit in 180-nm CMOS With Brownout Detection, Stable Switching .md",
+    "saved": "2026-06-23"
+  },
+  "ss:f09e6e6a80b4d623c4504569123ac077e25988bf": {
+    "title": "A Sub-100 nW Power-on-Reset Circuit with Integrated Brown-Out Detection and Autonomous Power Gating for Edge Devices",
+    "file": "2025_A Sub-100 nW Power-on-Reset Circuit with Integrated Brown-Out Detection and Auto.md",
+    "saved": "2026-06-23"
+  },
+  "ss:8d5d643b4484e41ec4417c3f6704e4cc02f2de0b": {
+    "title": "Development of a digital high-stability high-voltage power supply based on STM32",
+    "file": "2025_Development of a digital high-stability high-voltage power supply based on STM32.md",
+    "saved": "2026-06-23"
+  },
+  "ss:c0b57fdaafadb1556bf4e68699f0e25df6308546": {
+    "title": "The detector assembly of the cameras of the Lunar Electromagnetic Monitor in X-rays (LEM-X)",
+    "file": "2024_The detector assembly of the cameras of the Lunar Electromagnetic Monitor in X-r.md",
+    "saved": "2026-06-23"
+  },
+  "ss:f5fd433c1ff9702d87548e9623ed50d0edb5a265": {
+    "title": "Design of Electronic Protection Modules, Voltage Monitoring, and Safe Reset for Industrial Electrical Equipment and Tools",
+    "file": "2025_Design of Electronic Protection Modules, Voltage Monitoring, and Safe Reset for .md",
+    "saved": "2026-06-23"
+  },
+  "ss:6473a43e515b5328947de00853ea1688a77cb0c6": {
+    "title": "A Novel and Highly Versatile Voltage Monitoring Circuit Enabling Power Consumption and Area Minimization",
+    "file": "2025_A Novel and Highly Versatile Voltage Monitoring Circuit Enabling Power Consumpti.md",
+    "saved": "2026-06-23"
+  },
+  "ss:47c11dbc6c9b1830af0f4da9cc98ce9c02be6a64": {
+    "title": "A 0.7 μw Explicit Bandgap Less POR Circuit With Brownout Detection",
+    "file": "2020_A 0.7 μw Explicit Bandgap Less POR Circuit With Brownout Detection.md",
+    "saved": "2026-06-23"
+  },
+  "ss:ef8a715716a22553f8e5d6f0ed7ddeefc1ae5b16": {
+    "title": "Design and development for power supply circuit of a low-light detection imaging system",
+    "file": "2025_Design and development for power supply circuit of a low-light detection imaging.md",
+    "saved": "2026-06-23"
+  },
+  "ss:8eb52e6e0f9d9268b65f9730720d56fea886f99a": {
+    "title": "Design of Power Efficient Phase Frequency Detector and Voltage Controlled Oscillator for PLL Applications in 45 nm CMOS Technology",
+    "file": "2021_Design of Power Efficient Phase Frequency Detector and Voltage Controlled Oscill.md",
+    "saved": "2026-06-23"
+  },
+  "ss:7077c3817bfd23ddbdf7b76b31ff9e1a911f3102": {
+    "title": "A Low-Phase Noise, Low-Power PFD Circuit Using GDI and Pass Transistor Logic with PVT tolerance",
+    "file": "2026_A Low-Phase Noise, Low-Power PFD Circuit Using GDI and Pass Transistor Logic wit.md",
+    "saved": "2026-06-23"
+  },
+  "ss:d347dab08669ef345d604cfa4b3919bf037fd8ea": {
+    "title": "Hybrid Wind‐Solar Self‐Powered Detector System Using a Triboelectric‐Photovoltaic Generator for Smart Agriculture",
+    "file": "2024_Hybrid Wind‐Solar Self‐Powered Detector System Using a Triboelectric‐Photovoltai.md",
+    "saved": "2026-06-23"
+  },
+  "arxiv:2512.16839v1": {
+    "title": "A MAPS Detector for High Resolution Low Dose EBSD",
+    "file": "2025_A MAPS Detector for High Resolution Low Dose EBSD.md",
+    "saved": "2026-06-23"
+  },
+  "arxiv:2507.06416v1": {
+    "title": "Voltage Regulation in Distribution Systems with Data Center Loads",
+    "file": "2025_Voltage Regulation in Distribution Systems with Data Center Loads.md",
+    "saved": "2026-06-23"
+  },
+  "arxiv:2111.02808v1": {
+    "title": "A Two-Stage Stochastic Programming Model for Blood Supply Chain Management, Considering Facility Disruption and Service Level",
+    "file": "2021_A Two-Stage Stochastic Programming Model for Blood Supply Chain Management, Cons.md",
+    "saved": "2026-06-23"
+  },
+  "arxiv:2508.14637v1": {
+    "title": "Design of a Gm-C Dynamic Amplifier with High Linearity and High Temperature and Power Supply Voltage Stability",
+    "file": "2025_Design of a Gm-C Dynamic Amplifier with High Linearity and High Temperature and .md",
+    "saved": "2026-06-23"
+  },
+  "arxiv:2202.05001v2": {
+    "title": "IEC Flickermeter Measurement Results for Distorted Modulating Signal while Supplied with Distorted Voltage",
+    "file": "2022_IEC Flickermeter Measurement Results for Distorted Modulating Signal while Suppl.md",
+    "saved": "2026-06-23"
+  },
+  "arxiv:1905.01247v3": {
+    "title": "Voltage characteristics of hydrodynamic Dirac electron nozzles with supersonic flow",
+    "file": "2019_Voltage characteristics of hydrodynamic Dirac electron nozzles with supersonic f.md",
+    "saved": "2026-06-23"
+  },
+  "arxiv:1409.5370v3": {
+    "title": "On the physical and circuit-theoretic significance of the Memristor",
+    "file": "2014_On the physical and circuit-theoretic significance of the Memristor.md",
+    "saved": "2026-06-23"
+  },
+  "arxiv:2508.09425v4": {
+    "title": "Imperfect Competition in Markets for Short-Circuit Current Services",
+    "file": "2025_Imperfect Competition in Markets for Short-Circuit Current Services.md",
+    "saved": "2026-06-23"
+  },
+  "arxiv:2411.14618v2": {
+    "title": "Active Learning-Based Optimization of Hydroelectric Turbine Startup to Minimize Fatigue Damage",
+    "file": "2024_Active Learning-Based Optimization of Hydroelectric Turbine Startup to Minimize .md",
+    "saved": "2026-06-23"
+  },
+  "arxiv:2212.06047v1": {
+    "title": "Spatiotemporal Impact Analysis of Hurricanes and Storm Surges on Power Systems",
+    "file": "2022_Spatiotemporal Impact Analysis of Hurricanes and Storm Surges on Power Systems.md",
+    "saved": "2026-06-23"
+  },
+  "ss:e568032df127846d3a6ceb7077908f0a448d72e5": {
+    "title": "A New Error Correcting Coding Technique to Tolerate Soft Errors",
+    "file": "2021_A New Error Correcting Coding Technique to Tolerate Soft Errors.md",
+    "saved": "2026-06-23"
+  },
+  "ss:66d8cf64b89541de13b7612668d89b6e8a8601f3": {
+    "title": "A 0.385-pJ/bit 10-Gb/s TIA-Terminated Di-Code Transceiver with Edge-Delayed Equalization, ECC, and Mismatch Calibration for HBM Interfaces",
+    "file": "2022_A 0.385-pJbit 10-Gbs TIA-Terminated Di-Code Transceiver with Edge-Delayed Equali.md",
+    "saved": "2026-06-23"
+  },
+  "ss:f0f5febf7c4794b68da397e9a2a43259e883cb22": {
+    "title": "Improving DRAM Reliability Using a High Order Error Correction Code",
+    "file": "2024_Improving DRAM Reliability Using a High Order Error Correction Code.md",
+    "saved": "2026-06-23"
+  },
+  "ss:af89cfeee3b5f1e9b9b32fd998bf4aa904b8e34a": {
+    "title": "Positive Rate Binary Interactive Error Correcting Codes Resilient to >1/2 Adversarial Erasures",
+    "file": "2022_Positive Rate Binary Interactive Error Correcting Codes Resilient to 12 Adversar.md",
+    "saved": "2026-06-23"
+  },
+  "ss:12ed85a810ee6f5c4d9c8f74249253f7cbfdce1d": {
+    "title": "Enabling Effective Error Mitigation in Memory Chips That Use On-Die Error-Correcting Codes",
+    "file": "2022_Enabling Effective Error Mitigation in Memory Chips That Use On-Die Error-Correc.md",
+    "saved": "2026-06-23"
+  },
+  "ss:addf6a2c54b747d30423030308557c1512aaefeb": {
+    "title": "MAC-ECC: In-Situ Error Correction and Its Design Methodology for Reliable NVM-Based Compute-in-Memory Inference Engine",
+    "file": "2022_MAC-ECC In-Situ Error Correction and Its Design Methodology for Reliable NVM-Bas.md",
+    "saved": "2026-06-23"
+  },
+  "ss:c6a4361d09de8a269ea24f7b0434881b6f489e25": {
+    "title": "Exploiting Correcting Codes: On the Effectiveness of ECC Memory Against Rowhammer Attacks",
+    "file": "2019_Exploiting Correcting Codes On the Effectiveness of ECC Memory Against Rowhammer.md",
+    "saved": "2026-06-23"
+  },
+  "ss:3db1b03474a40fae486f82c4f910b4e7a3a7bf19": {
+    "title": "Stealth ECC: A Data-Width Aware Adaptive ECC Scheme for DRAM Error Resilience",
+    "file": "2022_Stealth ECC A Data-Width Aware Adaptive ECC Scheme for DRAM Error Resilience.md",
+    "saved": "2026-06-23"
+  },
+  "ss:950f3aed07aec876c13a77892d2dd3564fe2a1d3": {
+    "title": "Interactive error correcting codes over binary erasure channels resilient to > ½ adversarial corruption",
+    "file": "2021_Interactive error correcting codes over binary erasure channels resilient to ½ a.md",
+    "saved": "2026-06-23"
+  },
+  "ss:fdc73b06f557c92d90c3c49816006743e856e45c": {
+    "title": "ECC Cache: A Lightweight Error Detection for Phase-Change Memory Stuck-At Faults",
+    "file": "2020_ECC Cache A Lightweight Error Detection for Phase-Change Memory Stuck-At Faults.md",
+    "saved": "2026-06-23"
+  },
+  "ss:a87fd9a6ce305a20ee4a2e8f0796db7b265a2a03": {
+    "title": "Synchronous Electromagnetic Fault Injection Method for ECC Mechanism Safety Verification",
+    "file": "2024_Synchronous Electromagnetic Fault Injection Method for ECC Mechanism Safety Veri.md",
+    "saved": "2026-06-23"
+  },
+  "ss:8e64d19d7b59882c9f09021bd06a414c1a1851d2": {
+    "title": "Analog Error-Correcting Codes: Designs and Analysis",
+    "file": "2024_Analog Error-Correcting Codes Designs and Analysis.md",
+    "saved": "2026-06-23"
+  },
+  "ss:1832fa0c400efe5b90bf3dc98d33a0bd79876149": {
+    "title": "Fast and Reliable STT-MRAM Using Nonuniform and Adaptive Error Detecting and Correcting Scheme",
+    "file": "2019_Fast and Reliable STT-MRAM Using Nonuniform and Adaptive Error Detecting and Cor.md",
+    "saved": "2026-06-23"
+  },
+  "ss:7bbbff427709113af16d6523fe1d4d204f339f34": {
+    "title": "ARC: An Automated Approach to Resiliency for Lossy Compressed Data via Error Correcting Codes",
+    "file": "2020_ARC An Automated Approach to Resiliency for Lossy Compressed Data via Error Corr.md",
+    "saved": "2026-06-23"
+  },
+  "ss:8a60a05404e915d542263530e96cf8628cc00550": {
+    "title": "Modeling of Phase-Interpolator-Based Clock and Data Recovery for High-Speed PAM-4 Serial Interfaces",
+    "file": "2025_Modeling of Phase-Interpolator-Based Clock and Data Recovery for High-Speed PAM-.md",
+    "saved": "2026-06-23"
+  },
+  "ss:46d4dcc92c6b363dd0e2f7f482d272a1fdf326c7": {
+    "title": "A 10-Gb/s, 0.03-mm2, 1.28-pJ/bit Half-Rate All-Digital Injection-Locked Clock and Data Recovery with Maximum Timing-Margin Tracking Loop",
+    "file": "2018_A 10-Gbs, 0.03-mm2, 1.28-pJbit Half-Rate All-Digital Injection-Locked Clock and .md",
+    "saved": "2026-06-23"
+  },
+  "ss:37defb18977471ea180e697843d8241b5483a9ed": {
+    "title": "A Low-Cost 0.00063-mm2, 0.44-pJ/b, 2-Gb/s All-Digital Fully Synthesizable CDR for Serial Links Using Single-Phase Input Clock",
+    "file": "2022_A Low-Cost 0.00063-mm2, 0.44-pJb, 2-Gbs All-Digital Fully Synthesizable CDR for .md",
+    "saved": "2026-06-23"
+  },
+  "ss:39d1e6be12eb33551c53cccd69388da28af8f11e": {
+    "title": "An Inductorless 20-Gb/s CDR With High Jitter Tolerance",
+    "file": "2019_An Inductorless 20-Gbs CDR With High Jitter Tolerance.md",
+    "saved": "2026-06-23"
+  },
+  "ss:a3f0e885f2e0f84729e95248917038031743cda3": {
+    "title": "A 0.0006-mm2 0.13-pJ/bit 9–21-Gb/s Sampling CDR with Inverter-Based Frequency Multiplier and Embedded 1:3 DEMUX in 65-nm CMOS",
+    "file": "2024_A 0.0006-mm2 0.13-pJbit 9–21-Gbs Sampling CDR with Inverter-Based Frequency Mult.md",
+    "saved": "2026-06-23"
+  },
+  "ss:9fb2e17323120a2afce0ac4f049b6b491a6792a5": {
+    "title": "A 10-Gb/s, 0.03-mm2, 1.28-pJ/bit Half-Rate Injection-Locked CDR With Path Mismatch Tracking Loop in a 28-nm CMOS Technology",
+    "file": "2019_A 10-Gbs, 0.03-mm2, 1.28-pJbit Half-Rate Injection-Locked CDR With Path Mismatch.md",
+    "saved": "2026-06-23"
+  },
+  "ss:72ee74f39322f15e55201ae8266a69e0a96d0e41": {
+    "title": "Phase Interpolator-Based Clock and Data Recovery With Jitter Optimization",
+    "file": "2023_Phase Interpolator-Based Clock and Data Recovery With Jitter Optimization.md",
+    "saved": "2026-06-23"
+  },
+  "ss:0b4486c3780f4255d47328dc4756e1c891d838bf": {
+    "title": "THE IMPROVED SMITH PREDICTOR DESIGN FOR HIGH-SPEED SERDES CLOCK-DATA RECOVERY LOOP",
+    "file": "2026_THE IMPROVED SMITH PREDICTOR DESIGN FOR HIGH-SPEED SERDES CLOCK-DATA RECOVERY LO.md",
+    "saved": "2026-06-23"
+  },
+  "ss:751728fc9a81eaac1f9f2dafbcf17280f21d16f5": {
+    "title": "A 9.8-12.5 Gb/s Low-Jitter Reference-Less Clock and Data Recovery Circuit",
+    "file": "2022_A 9.8-12.5 Gbs Low-Jitter Reference-Less Clock and Data Recovery Circuit.md",
+    "saved": "2026-06-23"
+  },
+  "ss:38c78b737334d2ee3fbf64d367e13c76d3ca0d49": {
+    "title": "A 0.7-pJ/b 12.5-Gb/s Reference-Less Subsampling Clock and Data Recovery Circuit",
+    "file": "2024_A 0.7-pJb 12.5-Gbs Reference-Less Subsampling Clock and Data Recovery Circuit.md",
+    "saved": "2026-06-23"
+  },
+  "ss:651d18e99bc60cf3f9e6fda061362eec338d7f83": {
+    "title": "A 42.7Gb/s Optical Receiver With Digital Clock and Data Recovery in 28nm CMOS",
+    "file": "2024_A 42.7Gbs Optical Receiver With Digital Clock and Data Recovery in 28nm CMOS.md",
+    "saved": "2026-06-23"
+  },
+  "ss:fb03fcb7d89b4d9a96a65ad0a84faa976fcef6d8": {
+    "title": "Analysis of Stochastic Phase-Frequency Detector in 2x Oversampling Clock and Data Recovery",
+    "file": "2024_Analysis of Stochastic Phase-Frequency Detector in 2x Oversampling Clock and Dat.md",
+    "saved": "2026-06-23"
+  },
+  "ss:2239d6ed1b0529c15b31eaaf004cb37c3f6359ac": {
+    "title": "A 6.7–3.6-pJ/b 0.63–7.5-Gb/s Rapid On/Off Clock and Data Recovery With <55-ns Turn-On Time",
+    "file": "2024_A 6.7–3.6-pJb 0.63–7.5-Gbs Rapid OnOff Clock and Data Recovery With 55-ns Turn-O.md",
+    "saved": "2026-06-23"
+  },
+  "ss:5ec35dfa12060527d78dc76ef6ec648fa0558b47": {
+    "title": "A Wide-Range Reference-Less Digital Clock and Data Recovery for Harmonic-Lock-Free Frequency Acquisition",
+    "file": "2024_A Wide-Range Reference-Less Digital Clock and Data Recovery for Harmonic-Lock-Fr.md",
+    "saved": "2026-06-23"
+  },
+  "ss:0218cb038ffc8f658d408cafd769df78d00043f0": {
+    "title": "Novel Decimation Topology with Improved Jitter Performance for Clock and Data Recovery Systems",
+    "file": "2021_Novel Decimation Topology with Improved Jitter Performance for Clock and Data Re.md",
+    "saved": "2026-06-23"
+  },
+  "ss:be6919e80eb050c7f242c0331015aebb138dcadb": {
+    "title": "Theoretical Modeling and Simulation of Phase-Locked Loop (PLL) for Clock Data Recovery (CDR)",
+    "file": "2012_Theoretical Modeling and Simulation of Phase-Locked Loop (PLL) for Clock Data Re.md",
+    "saved": "2026-06-23"
+  },
+  "ss:1bcaca03919c0ba242680856f9e175a70c8facc0": {
+    "title": "An Analytical Jitter Tolerance Model for DLL-Based Clock and Data Recovery Circuits",
+    "file": "2020_An Analytical Jitter Tolerance Model for DLL-Based Clock and Data Recovery Circu.md",
+    "saved": "2026-06-23"
+  },
+  "ss:b3259b855559a1371a06b06646f91f6b1ae41a09": {
+    "title": "Analysis of Single-Event Effects in Clock and Data Recovery Circuits Based on an LC Voltage-Controlled Oscillator",
+    "file": "2025_Analysis of Single-Event Effects in Clock and Data Recovery Circuits Based on an.md",
+    "saved": "2026-06-23"
+  },
+  "ss:aa514953f2ffa8e536c642df0e1b0798879fde21": {
+    "title": "A 64-Gb/s Reference-Less PAM4 CDR with Asymmetrical Linear Phase Detector Soring 231.5-fsrms Clock Jitter and 0.21-pJ/bit Energy Efficiency in 40-nm CMOS",
+    "file": "2023_A 64-Gbs Reference-Less PAM4 CDR with Asymmetrical Linear Phase Detector Soring .md",
+    "saved": "2026-06-23"
+  },
+  "ss:45060b7bd62a9ac8c82664ae65083d62f8287b38": {
+    "title": "Hybrid Timing Error Detector for Baud Rate Multilevel Clock and Data Recovery",
+    "file": "2023_Hybrid Timing Error Detector for Baud Rate Multilevel Clock and Data Recovery.md",
+    "saved": "2026-06-23"
+  },
+  "ss:8533f297ae0006ed62e0116dc34d0683e5868ae5": {
+    "title": "Count2Multiply: Reliable In-Memory High-Radix Counting",
+    "file": "2024_Count2Multiply Reliable In-Memory High-Radix Counting.md",
+    "saved": "2026-06-23"
+  },
+  "ss:3c3786b1f9b41f62aa8c5345f8ba92686d5ef308": {
+    "title": "Counter Advance for Reliable Encryption in Phase Change Memory",
+    "file": "2018_Counter Advance for Reliable Encryption in Phase Change Memory.md",
+    "saved": "2026-06-23"
+  },
+  "ss:82a12d1f93d76a05f2b9354484b42cf494a07578": {
+    "title": "CXL-ECC: an Efficient LRC-based on-CXL-Memory-eXpander-Controller ECC to Enhance Reliability and Performance of DRAM Error Correction",
+    "file": "2025_CXL-ECC an Efficient LRC-based on-CXL-Memory-eXpander-Controller ECC to Enhance .md",
+    "saved": "2026-06-23"
+  },
+  "ss:2285f350d5a2a360d76e3e70587961124b5beef0": {
+    "title": "DPR-PIM: Diagnosis and Pipelined Repair Architecture for Processing-in-Memory",
+    "file": "2026_DPR-PIM Diagnosis and Pipelined Repair Architecture for Processing-in-Memory.md",
+    "saved": "2026-06-23"
+  },
+  "ss:53f090a81fff464094ef3f46f124f8b958f45851": {
+    "title": "A Processing-Using-Memory Architecture for Commodity DRAM Devices with Enhanced Compatibility and Reliability",
+    "file": "2024_A Processing-Using-Memory Architecture for Commodity DRAM Devices with Enhanced .md",
+    "saved": "2026-06-23"
+  },
+  "ss:ede080c48d74c3bdc400e4165fbe4216715b9300": {
+    "title": "DRAM Fault Classification through Large-Scale Field Monitoring for Robust Memory RAS Management",
+    "file": "2025_DRAM Fault Classification through Large-Scale Field Monitoring for Robust Memory.md",
+    "saved": "2026-06-23"
+  },
+  "ss:9845d597646572d6896e573b6a7867f04857546a": {
+    "title": "Reliability Assessment of AMD MicroBlaze-V TMR Architecture Using Fault Injection",
+    "file": "2025_Reliability Assessment of AMD MicroBlaze-V TMR Architecture Using Fault Injectio.md",
+    "saved": "2026-06-23"
+  },
+  "ss:a1c9a43007ef932dca3037cb1669c32b3da41868": {
+    "title": "Vehicle data management with specific wear-levelling and fault tolerance for hybrid DRAM-NVM memory",
+    "file": "2019_Vehicle data management with specific wear-levelling and fault tolerance for hyb.md",
+    "saved": "2026-06-23"
+  },
+  "ss:6b354de5114e5e8e9fbebdc1252aa689313f8bfd": {
+    "title": "FORTUNE: A Negative Memory Overhead Hardware-Agnostic Fault TOleRance TechniqUe in DNNs",
+    "file": "2024_FORTUNE A Negative Memory Overhead Hardware-Agnostic Fault TOleRance TechniqUe i.md",
+    "saved": "2026-06-23"
+  },
+  "ss:544d8ed5a31b817f5beff1f55e4700f67d770c61": {
+    "title": "Predicting Future-System Reliability with a Component-Level DRAM Fault Model",
+    "file": "2023_Predicting Future-System Reliability with a Component-Level DRAM Fault Model.md",
+    "saved": "2026-06-23"
+  },
+  "ss:5401541304e1079b2eed2e6bb47a3946ad593c08": {
+    "title": "Signal and Power Integrity Co-Simulation of HBM Interposer in High Density 2.5D Package*",
+    "file": "2022_Signal and Power Integrity Co-Simulation of HBM Interposer in High Density 2.5D .md",
+    "saved": "2026-06-25"
+  },
+  "ss:8e23ffd0079e32c2d7cb7aa71752cd28568d5c57": {
+    "title": "HBM Package Interconnection Pseudo All-Channel Signal Integrity Simulation and Implementation Method of the Synchronous Current Load Research",
+    "file": "2025_HBM Package Interconnection Pseudo All-Channel Signal Integrity Simulation and I.md",
+    "saved": "2026-06-25"
+  },
+  "ss:01dd0ee7158a1d8db7f7a860f6d7eb51772afe9e": {
+    "title": "Design and Analysis of Scalable On-Package Memory Expansion Architectures for GPU-HBM System Considering Signal Integrity",
+    "file": "2025_Design and Analysis of Scalable On-Package Memory Expansion Architectures for GP.md",
+    "saved": "2026-06-25"
+  },
+  "ss:09d9c1aa56f71b8bf92e4703d5f1c6c3c721f90b": {
+    "title": "Marvell custom HBM routing and signal integrity analysis",
+    "file": "2026_Marvell custom HBM routing and signal integrity analysis.md",
+    "saved": "2026-06-25"
+  },
+  "ss:ed896f18cf6a3e9c57aeb54a0c5f77e5484c3a16": {
+    "title": "Signal and Power Integrity Co-Analysis of Chiplet(UCIe)-based GPU-HBM Interconnect for Reduced PHY Area",
+    "file": "2026_Signal and Power Integrity Co-Analysis of Chiplet(UCIe)-based GPU-HBM Interconne.md",
+    "saved": "2026-06-25"
+  },
+  "ss:c9f7fb498870b153dbadbef9ab523ba415ade731": {
+    "title": "Signal Integrity Design and Analysis of Redistribution Layer Interposer Channel with Diagonal Meshed Ground in Memory Interface of High Bandwidth Memory",
+    "file": "2023_Signal Integrity Design and Analysis of Redistribution Layer Interposer Channel .md",
+    "saved": "2026-06-25"
+  },
+  "ss:7a5d4d0b8e94bdb94fb9686687517bf795d3f8be": {
+    "title": "Signal & Power Integrity Analysis and Solutions for HBM Gen3",
+    "file": "2023_Signal & Power Integrity Analysis and Solutions for HBM Gen3.md",
+    "saved": "2026-06-25"
+  },
+  "ss:eefcc3c2c0bff9172a8f8fe5cc5c02b0f9e82711": {
+    "title": "A Physics-Assisted Deep Reinforcement Learning Methodology for Signal and Power Integrity Optimization of Large-Scale TSV Arrays",
+    "file": "2025_A Physics-Assisted Deep Reinforcement Learning Methodology for Signal and Power .md",
+    "saved": "2026-06-25"
+  },
+  "ss:0bf5065df0e16aad282ab3f5554a342cd97673a7": {
+    "title": "Signal, Power, and Thermal Integrity Co-Design for AI Accelerator ASIC and HBM3 on Silicon Interposer 2.5D-IC Chiplet Integration",
+    "file": "2025_Signal, Power, and Thermal Integrity Co-Design for AI Accelerator ASIC and HBM3 .md",
+    "saved": "2026-06-25"
+  },
+  "ss:cfe7430332ec4b49492ba601603c2d4de8011de6": {
+    "title": "Signal and Power Integrity Optimization Using Novel Bridge Die and Copper Post Interconnect Design in 2.xD Packaging for Wide I/O Applications",
+    "file": "2025_Signal and Power Integrity Optimization Using Novel Bridge Die and Copper Post I.md",
+    "saved": "2026-06-25"
+  },
+  "ss:8552c4dfa2f661226f670f75908a76e9a668c4a6": {
+    "title": "IO Pad Integrity in Energy-Efficient Neuromorphic Chips",
+    "file": "2026_IO Pad Integrity in Energy-Efficient Neuromorphic Chips.md",
+    "saved": "2026-06-25"
+  },
+  "ss:fda97da65f6289472cae8bbe27defc536f31659e": {
+    "title": "Figures of Merit to Characterize the Signal Integrity Performance of Interposer Interconnect for High Bandwidth Memory (HBM)",
+    "file": "2026_Figures of Merit to Characterize the Signal Integrity Performance of Interposer .md",
+    "saved": "2026-06-25"
+  },
+  "ss:740c7ba9c1948e5741a6a4ca73dc9f668bc61167": {
+    "title": "Signal/Power Integrity Co-Simulation of Die-to-Die Interface Customized for Augmented Reality",
+    "file": "2023_SignalPower Integrity Co-Simulation of Die-to-Die Interface Customized for Augme.md",
+    "saved": "2026-06-25"
+  },
+  "ss:0af5516b5eb31539296451a60ef702b84b28eb5c": {
+    "title": "Ultra High Density IO Fan-Out Design Optimization with Signal Integrity and Power Integrity",
+    "file": "2019_Ultra High Density IO Fan-Out Design Optimization with Signal Integrity and Powe.md",
+    "saved": "2026-06-25"
+  },
+  "ss:d622676d138059de78fb398f38872edb97de578d": {
+    "title": "Signal Integrity Design and Analysis of Silicon Interposer for GPU-Memory Channels in High-Bandwidth Memory Interface",
+    "file": "2018_Signal Integrity Design and Analysis of Silicon Interposer for GPU-Memory Channe.md",
+    "saved": "2026-06-25"
+  },
+  "ss:3701c46d490dff6e00f4e3e584e561bb7e135c90": {
+    "title": "Signal and Power Integrity of Organic, Silicon, and Hybrid Interposer in HPC Chiplet-Based System",
+    "file": "2026_Signal and Power Integrity of Organic, Silicon, and Hybrid Interposer in HPC Chi.md",
+    "saved": "2026-06-25"
+  },
+  "ss:c6f78b637c316f74b8cd8c5461f0e8af4ad30b09": {
+    "title": "TSV with Embedded Capacitor for ASIC-HBM Power and Signal Integrity Improvement",
+    "file": "2019_TSV with Embedded Capacitor for ASIC-HBM Power and Signal Integrity Improvement.md",
+    "saved": "2026-06-25"
+  },
+  "ss:f1b8831cbe08eecee8334555a1db6996cd41fb9d": {
+    "title": "High Density IO Fan-out Design Optimization with Signal Integrity",
+    "file": "2019_High Density IO Fan-out Design Optimization with Signal Integrity.md",
+    "saved": "2026-06-25"
+  },
+  "ss:10b50715194a7e624ac50e8fd363886253637f56": {
+    "title": "Signal and Power Integrity Performance of CoWoS-R in Chiplet Integration Applications",
+    "file": "2023_Signal and Power Integrity Performance of CoWoS-R in Chiplet Integration Applica.md",
+    "saved": "2026-06-25"
+  },
+  "ss:39a346456074d425170d5ba545aec13ef2e77f13": {
+    "title": "A 12-Gb/s Baud-Rate Clock and Data Recovery With 75% Phase-Detection Probability by Precoding and Integration-Hold-Reset Frontend",
+    "file": "2023_A 12-Gbs Baud-Rate Clock and Data Recovery With 75% Phase-Detection Probability .md",
+    "saved": "2026-06-25"
+  },
+  "ss:2c4a2c24e66a0e0899ec98d97dc64aca9ad19f01": {
+    "title": "A 28-Gb/s 27.2mW NRZ Full-Rate Bang-Bang Clock and Data Recovery in 22 nm FD-SOI CMOS Technology",
+    "file": "2023_A 28-Gbs 27.2mW NRZ Full-Rate Bang-Bang Clock and Data Recovery in 22 nm FD-SOI .md",
+    "saved": "2026-06-25"
+  },
+  "ss:2098639f3fef4b5d66fa491dd6547611fefa7913": {
+    "title": "Design and Performance Analysis of a Low Jitter Charge Pump-Phase Locked Loop Architecture and Loop Filter in CMOS Process",
+    "file": "2024_Design and Performance Analysis of a Low Jitter Charge Pump-Phase Locked Loop Ar.md",
+    "saved": "2026-06-25"
+  },
+  "ss:fa120c136298f87dacd9e2bd59ca2155d3acbcb1": {
+    "title": "A 500MHz-5GHz Low Jitter Phase-Locked Loop with Adaptive-Bandwidth Technique",
+    "file": "2025_A 500MHz-5GHz Low Jitter Phase-Locked Loop with Adaptive-Bandwidth Technique.md",
+    "saved": "2026-06-25"
+  },
+  "ss:2dd07ee94857c643cd7ebdad462e2e37db0d4811": {
+    "title": "Performance Analysis of Voltage-Controlled Ring, Current-Starved, and LC-Tank Oscillators in CMOS Phase-Locked Loop Design",
+    "file": "2025_Performance Analysis of Voltage-Controlled Ring, Current-Starved, and LC-Tank Os.md",
+    "saved": "2026-06-25"
+  },
+  "ss:9bbf34b950613039493b0e3d5cfee8643a5989b6": {
+    "title": "A Jitter-Programmable Bang-Bang Phase-Locked Loop Using PVT Invariant Stochastic Jitter Monitor",
+    "file": "2023_A Jitter-Programmable Bang-Bang Phase-Locked Loop Using PVT Invariant Stochastic.md",
+    "saved": "2026-06-25"
+  },
+  "ss:ca025de171e02e5218bfca5b9734b65aab324360": {
+    "title": "A 10.2-to-14.82-GHz Low-Phase-Noise All-Digital Phase-Locked Loop",
+    "file": "2025_A 10.2-to-14.82-GHz Low-Phase-Noise All-Digital Phase-Locked Loop.md",
+    "saved": "2026-06-25"
+  },
+  "ss:6c0dedaa8ebfffe14870d791642f224a0cfc5e0f": {
+    "title": "A 3GHz Phase-Locked Loop Design for SerDes Application",
+    "file": "2022_A 3GHz Phase-Locked Loop Design for SerDes Application.md",
+    "saved": "2026-06-25"
+  },
+  "ss:0b9604138d9cd8909ca2dbfd6cf4d51b9779ecb5": {
+    "title": "All-Digital Phase-Locked Loop in Single Flux Quantum Circuit Technology",
+    "file": "2022_All-Digital Phase-Locked Loop in Single Flux Quantum Circuit Technology.md",
+    "saved": "2026-06-25"
+  },
+  "ss:bdbcb018691337b3434531712a9114331a288a0f": {
+    "title": "Design and implementation of dynamic phase adjustment technology based on delayed phase-locked loop",
+    "file": "2022_Design and implementation of dynamic phase adjustment technology based on delaye.md",
+    "saved": "2026-06-25"
+  },
+  "ss:c720fec714851b48bf9a31856d565e7294b804a5": {
+    "title": "Design of Low Supply Voltage Phase Locked Loop Based on Dynamic Double Loops Technology",
+    "file": "2021_Design of Low Supply Voltage Phase Locked Loop Based on Dynamic Double Loops Tec.md",
+    "saved": "2026-06-25"
+  },
+  "ss:f318c20b23de4410332b9064a77783a4433e5758": {
+    "title": "Comparative Analysis of Phase Locked Loop with Different Phase Frequency Detectors using 90nm Technology",
+    "file": "2023_Comparative Analysis of Phase Locked Loop with Different Phase Frequency Detecto.md",
+    "saved": "2026-06-25"
+  },
+  "ss:e23cc8326d1973a1fe698b4fc3a7c305bc796999": {
+    "title": "Design of a Low-Power Delay-Locked Loop-Based 8× Frequency Multiplier in 22 nm FDSOI",
+    "file": "2023_Design of a Low-Power Delay-Locked Loop-Based 8× Frequency Multiplier in 22 nm F.md",
+    "saved": "2026-06-25"
+  },
+  "ss:9a9d5920b57e92c02572a8f7a4a6273fe060002d": {
+    "title": "Design of a Low-Jitter 5.4 Gbps Half-Rate Clock and Data Recovery Circuit for eDP Application",
+    "file": "2024_Design of a Low-Jitter 5.4 Gbps Half-Rate Clock and Data Recovery Circuit for eD.md",
+    "saved": "2026-06-25"
+  },
+  "ss:d7af55396bd88ae602b1c8a101e22f3d7ddc931c": {
+    "title": "A 4.9-6 GHz Sub-Sampling PLL Achieving 234-fs Jitter and -59.5 dBc Reference Spur Through Behavioral Model and Spur Reduction Method",
+    "file": "2025_A 4.9-6 GHz Sub-Sampling PLL Achieving 234-fs Jitter and -59.5 dBc Reference Spu.md",
+    "saved": "2026-06-25"
+  },
+  "ss:b5ffea86c5330d89eba05d7105d1c100471412ab": {
+    "title": "Design of Low-Spur Sub-Sampling PLL Employing a Passive Gain-Boosting Isolated SSPD",
+    "file": "2025_Design of Low-Spur Sub-Sampling PLL Employing a Passive Gain-Boosting Isolated S.md",
+    "saved": "2026-06-25"
+  },
+  "ss:da273394602f348395a9a5765513fbf5168eca43": {
+    "title": "Design of the Charge-Sampling Multiplying PLL in CMOS 40 nm",
+    "file": "2025_Design of the Charge-Sampling Multiplying PLL in CMOS 40 nm.md",
+    "saved": "2026-06-25"
+  },
+  "ss:894dde7c7db20d1169bed59e20cfb0d58c35c830": {
+    "title": "Design and Analysis of Phase Locked Loop and Performance Parameters",
+    "file": "2017_Design and Analysis of Phase Locked Loop and Performance Parameters.md",
+    "saved": "2026-06-25"
+  },
+  "ss:1e6559633f3c2d750e9e92424831f01dd77ac3ff": {
+    "title": "An Automated and Process-Portable Generator for Phase-Locked Loop",
+    "file": "2021_An Automated and Process-Portable Generator for Phase-Locked Loop.md",
+    "saved": "2026-06-25"
+  },
+  "ss:6aeece3e0d995b285595c080fbcde5d38ccf0a5c": {
+    "title": "Phase Noise‐Aware Adaptive Master–Slave Charge‐Pump Fast Locking Phase‐Locked Loops",
+    "file": "2026_Phase Noise‐Aware Adaptive Master–Slave Charge‐Pump Fast Locking Phase‐Locked Lo.md",
+    "saved": "2026-06-25"
+  },
+  "ss:1f74eaa43bfded5416bb82529df50975fec03471": {
+    "title": "Dynamic Fault Tolerance Approach for Network-on-Chip Architecture",
+    "file": "2024_Dynamic Fault Tolerance Approach for Network-on-Chip Architecture.md",
+    "saved": "2026-06-25"
+  },
+  "ss:a15a034ee0e4a74b654e7ec12f6456db0f6c129e": {
+    "title": "Innovative Practices Session: Applying Analog Scan to Industrial Circuits",
+    "file": "2026_Innovative Practices Session Applying Analog Scan to Industrial Circuits.md",
+    "saved": "2026-06-25"
+  },
+  "ss:6be59e1ce14f9622e8ede98518127d6983b1baee": {
+    "title": "Frequency- and Time-Domain Yield Optimization of a Power Delivery Network Subject to Large Decoupling Capacitor Tolerances",
+    "file": "2022_Frequency- and Time-Domain Yield Optimization of a Power Delivery Network Subjec.md",
+    "saved": "2026-06-25"
+  },
+  "ss:280e79bec9797030e1a61c471e91513e6ed4bb1f": {
+    "title": "Machine learning modeling of power delivery networks with varying decoupling capacitors",
+    "file": "2022_Machine learning modeling of power delivery networks with varying decoupling cap.md",
+    "saved": "2026-06-25"
+  },
+  "ss:d72cb78e60ebad799646832d14a5bb1fdde35f32": {
+    "title": "Modeling and Analysis a of On-Die Decoupling Capacitance in the Power Delivery Network of an Integrated Chip",
+    "file": "2018_Modeling and Analysis a of On-Die Decoupling Capacitance in the Power Delivery N.md",
+    "saved": "2026-06-25"
+  },
+  "ss:f52a2d345be12aa6b959c0d3f4d9231c3702ba5e": {
+    "title": "Decoupling Capacitor Optimization for 2.5D-ICs With Deep Reinforcement Learning Technique",
+    "file": "2024_Decoupling Capacitor Optimization for 2.5D-ICs With Deep Reinforcement Learning .md",
+    "saved": "2026-06-25"
+  },
+  "ss:b7a601cda5a149668791a81b9f8f575bcfdb65b7": {
+    "title": "3D Electromagnetic Simulation and Modeling for DTCO of Decoupling High-Density Capacitor in Silicon Interposer for HPC Applications",
+    "file": "2024_3D Electromagnetic Simulation and Modeling for DTCO of Decoupling High-Density C.md",
+    "saved": "2026-06-25"
+  },
+  "ss:d83fe56e5d8efc0311aa7da5a7ec9de4b441df87": {
+    "title": "Multi-Chiplet Power Delivery Network (PDN) Co-Optimization Considering Current Spectrum by Deep Reinforcement Learning-Based Decoupling Capacitor Placement",
+    "file": "2025_Multi-Chiplet Power Delivery Network (PDN) Co-Optimization Considering Current S.md",
+    "saved": "2026-06-25"
+  },
+  "ss:9199422415cdf38299e50f0965dc73acb4cd89d9": {
+    "title": "A Comparative Study on Power Delivery Network (PDN) Using Several Capacitor-Embedded Substrates for Next Generation Power Supply Applications",
+    "file": "2025_A Comparative Study on Power Delivery Network (PDN) Using Several Capacitor-Embe.md",
+    "saved": "2026-06-25"
+  },
+  "ss:0f1242183e65bd36ced3240e9bcf16f80b16b678": {
+    "title": "Fast Decoupling Capacitor Optimization for Power Delivery Network Based on Model and Data Fusion Method",
+    "file": "2024_Fast Decoupling Capacitor Optimization for Power Delivery Network Based on Model.md",
+    "saved": "2026-06-25"
+  },
+  "ss:36ab9f8b2ed04824a9f2bd2ca85fe049cced56ae": {
+    "title": "New power delivery network(PDN) approach for extremely large FC-BGA with organic substrate based on over 1mm-thick core",
+    "file": "2024_New power delivery network(PDN) approach for extremely large FC-BGA with organic.md",
+    "saved": "2026-06-25"
+  },
+  "ss:c33d08224cb9252d30944c34f9d0d96970ee5968": {
+    "title": "Mitigation of IR Drop Through Power Delivery Network (PDN) Reinforcement in Critical Zones",
+    "file": "2024_Mitigation of IR Drop Through Power Delivery Network (PDN) Reinforcement in Crit.md",
+    "saved": "2026-06-25"
+  },
+  "ss:865d32dae32f1a0b8d1a65da767233a101c2d408": {
+    "title": "Digital CMOS VLSI Implementation and Assessment of Power Efficient Delay Flip-Flop Using Dynamic CMOS Logic for Low Power VLSI Systems",
+    "file": "2024_Digital CMOS VLSI Implementation and Assessment of Power Efficient Delay Flip-Fl.md",
+    "saved": "2026-06-25"
+  },
+  "ss:de231b705ca3bedc7bfabbd8b429f65dc91dc59d": {
+    "title": "CMOS VLSI Implementation of Implicit Pulsed Dual Edge Triggered Flip Flop using Pass Transistor Logic for Power Efficient Applications",
+    "file": "2024_CMOS VLSI Implementation of Implicit Pulsed Dual Edge Triggered Flip Flop using .md",
+    "saved": "2026-06-25"
+  },
+  "ss:d039575acfee9b334366e97dba745b695b23cbde": {
+    "title": "Implementation of Power optimized Adiabatic Logic of Full adder circuit",
+    "file": "2025_Implementation of Power optimized Adiabatic Logic of Full adder circuit.md",
+    "saved": "2026-06-25"
+  },
+  "ss:97c6163a0c0cd36f1cc78eb4ca91eea0e1ae01f5": {
+    "title": "VLSI Implementation of Area and Power Efficient Digital Control Circuit for HF RFID Tag Chip",
+    "file": "2020_VLSI Implementation of Area and Power Efficient Digital Control Circuit for HF R.md",
+    "saved": "2026-06-25"
+  },
+  "ss:14420386257cab40c9d8cfb136979f110cc594c9": {
+    "title": "The Low Power Implementation of Hamming-Code Encoder and Decoder using GDI Logic for Error Free Transmission and Reception in Digital Data Communication",
+    "file": "2024_The Low Power Implementation of Hamming-Code Encoder and Decoder using GDI Logic.md",
+    "saved": "2026-06-25"
+  },
+  "ss:ec658e6f0d24c61172c30d82714427ecfe55a809": {
+    "title": "Single-step parity check gate set for quantum error correction",
+    "file": "2023_Single-step parity check gate set for quantum error correction.md",
+    "saved": "2026-06-25"
+  },
+  "ss:8e969617b83e0dbbaa761cda3e9582a3a041abfc": {
+    "title": "VLSI Implementation of 8-PSK/8-QAM/16-QAM Transmitter Circuit in CMOS Technology",
+    "file": "2020_VLSI Implementation of 8-PSK8-QAM16-QAM Transmitter Circuit in CMOS Technology.md",
+    "saved": "2026-06-25"
+  },
+  "ss:afebe5a1f732a5ead4e6b582ce2e6914473ab192": {
+    "title": "Implementation of a Reverse Carry Propagate Adder Based On Efficient VLSI for Hardware Security and Area Consumption",
+    "file": "2024_Implementation of a Reverse Carry Propagate Adder Based On Efficient VLSI for Ha.md",
+    "saved": "2026-06-25"
+  },
+  "ss:9f98f89a2264639cf5782927efa60f6c7f648c3b": {
+    "title": "Design and Implementation of 4 Bit Carry Generator Circuit Using Pass Transistor Logic with 2 × 1 Mux Approach",
+    "file": "2024_Design and Implementation of 4 Bit Carry Generator Circuit Using Pass Transistor.md",
+    "saved": "2026-06-25"
+  },
+  "ss:1f174f2880e549f13d9acb1cc20807a9d448c142": {
+    "title": "CNTFET Based Pulse Implied Binary Edge Activated Flip-Flop Using Transmission Gate Logic for Low Power VLSI Applications",
+    "file": "2025_CNTFET Based Pulse Implied Binary Edge Activated Flip-Flop Using Transmission Ga.md",
+    "saved": "2026-06-25"
+  },
+  "ss:09a724d996cfc1a28edfdb89cc415c74d88559dc": {
+    "title": "A VLSI Digital Circuit Platform for Performing Deterministic Stochastic Computing in the Time Dimension Using Fraction Operations on Rational Numbers",
+    "file": "2023_A VLSI Digital Circuit Platform for Performing Deterministic Stochastic Computin.md",
+    "saved": "2026-06-25"
+  },
+  "ss:daf6d33cd56701182ef5fa378ac7ebfa484c4ea0": {
+    "title": "Design and Implementation of Ternary Logic Circuits for VLSI Applications",
+    "file": "2020_Design and Implementation of Ternary Logic Circuits for VLSI Applications.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:1802.00004v1": {
+    "title": "Comments on \"Dual-rail asynchronous logic multi-level implementation\"",
+    "file": "2018_Comments on Dual-rail asynchronous logic multi-level implementation.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:1308.0090v1": {
+    "title": "Resistive Threshold Logic",
+    "file": "2013_Resistive Threshold Logic.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:cs/0508065v1": {
+    "title": "Representing Digital Assets using MPEG-21 Digital Item Declaration",
+    "file": "2005_Representing Digital Assets using MPEG-21 Digital Item Declaration.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:2006.06034v1": {
+    "title": "VLSI Implementation of TDC Architectures Used in PET Imaging Systems",
+    "file": "2020_VLSI Implementation of TDC Architectures Used in PET Imaging Systems.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:1511.05865v1": {
+    "title": "Quantitative Transformation for Implementation of Adder Circuits in Physical Systems",
+    "file": "2015_Quantitative Transformation for Implementation of Adder Circuits in Physical Sys.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:1807.10309v1": {
+    "title": "VLSI Implementation of Novel Class of High Speed Pipelined Digital Signal Processing Filter for Wireless Receivers",
+    "file": "2018_VLSI Implementation of Novel Class of High Speed Pipelined Digital Signal Proces.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:2207.06310v3": {
+    "title": "SnapperGPS: Open Hardware for Energy-Efficient, Low-Cost Wildlife Location Tracking with Snapshot GNSS",
+    "file": "2022_SnapperGPS Open Hardware for Energy-Efficient, Low-Cost Wildlife Location Tracki.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:1810.12640v1": {
+    "title": "Neuromorphic hardware as a self-organizing computing system",
+    "file": "2018_Neuromorphic hardware as a self-organizing computing system.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:2205.04454v2": {
+    "title": "OpenPodcar: an Open Source Vehicle for Self-Driving Car Research",
+    "file": "2022_OpenPodcar an Open Source Vehicle for Self-Driving Car Research.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:1804.04431v2": {
+    "title": "Ordered Sequence Detection and Barrier Signal Design for Digital Pulse Interval Modulation in Optical Wireless Communications",
+    "file": "2018_Ordered Sequence Detection and Barrier Signal Design for Digital Pulse Interval .md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:1402.2415v2": {
+    "title": "Reversible Squaring Circuit For Low Power Digital Signal Processing",
+    "file": "2014_Reversible Squaring Circuit For Low Power Digital Signal Processing.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:1101.4222v1": {
+    "title": "Reversible Logic Based Concurrent Error Detection Methodology For Emerging Nanocircuits",
+    "file": "2011_Reversible Logic Based Concurrent Error Detection Methodology For Emerging Nanoc.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:1904.11794v1": {
+    "title": "Analysis of Periodic Feedback Shift Registers",
+    "file": "2019_Analysis of Periodic Feedback Shift Registers.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:1102.0884v1": {
+    "title": "A Simulation Experiment on a Built-In Self Test Equipped with Pseudorandom Test Pattern Generator and Multi-Input Shift Register (MISR)",
+    "file": "2011_A Simulation Experiment on a Built-In Self Test Equipped with Pseudorandom Test .md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:2501.06479v1": {
+    "title": "Evaluation of High-Speed Universal Shift Register with 4-bit ALU",
+    "file": "2025_Evaluation of High-Speed Universal Shift Register with 4-bit ALU.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:2310.17676v1": {
+    "title": "Reducing the impact of non-ideal PRBS on microwave photonic random demodulators by low biasing the optical modulator via PRBS amplitude compression",
+    "file": "2023_Reducing the impact of non-ideal PRBS on microwave photonic random demodulators .md",
+    "saved": "2026-06-25"
+  },
+  "ss:de39cc1a4eaebfe32b5156e4766b33f8b80f856d": {
+    "title": "A Robust Low‐Power Power‐On‐Reset Circuit With Dual Threshold Method",
+    "file": "2024_A Robust Low‐Power Power‐On‐Reset Circuit With Dual Threshold Method.md",
+    "saved": "2026-06-25"
+  },
+  "ss:606a160221e21cee9b9a5011113ddf36d1f0d9c0": {
+    "title": "A Power-On-Reset Circuit With Accurate Trigger-Point Voltage and Ultralow Typical Quiescent Current for Emerging Nonvolatile Memory",
+    "file": "2024_A Power-On-Reset Circuit With Accurate Trigger-Point Voltage and Ultralow Typica.md",
+    "saved": "2026-06-25"
+  },
+  "ss:ba3c5f8c8257fdafaff630dc15d1c4f9e8b40e61": {
+    "title": "A Robust 90-nW Power-On Reset Circuit with Brown-Out Detection for RF Energy-Harvesting",
+    "file": "2025_A Robust 90-nW Power-On Reset Circuit with Brown-Out Detection for RF Energy-Har.md",
+    "saved": "2026-06-25"
+  },
+  "ss:7e0e1d82a6b6d15f27e51330221f6c41a4bede62": {
+    "title": "An Ultra-Low Power Multi-Level Power-on Reset for Fine-Grained Power Management Strategies",
+    "file": "2019_An Ultra-Low Power Multi-Level Power-on Reset for Fine-Grained Power Management .md",
+    "saved": "2026-06-25"
+  },
+  "ss:e222720d2597f7207edd974dce9abf64f080b9a7": {
+    "title": "A 0.4 V CMOS Current-Controlled Tunable Ring Oscillator for Low-Power IoT and Biomedical Applications",
+    "file": "2025_A 0.4 V CMOS Current-Controlled Tunable Ring Oscillator for Low-Power IoT and Bi.md",
+    "saved": "2026-06-25"
+  },
+  "ss:6281cebda2773c2d4018cb08f951998b167666cf": {
+    "title": "Design and Simulation of DVFS-Based Power Management in Low Power VLSI Systems",
+    "file": "2025_Design and Simulation of DVFS-Based Power Management in Low Power VLSI Systems.md",
+    "saved": "2026-06-25"
+  },
+  "ss:2341aead5b57ed94abf1f46763022afb418855b5": {
+    "title": "A Temperature-Compensated Power-on-Reset Circuit in 40nm CMOS",
+    "file": "2019_A Temperature-Compensated Power-on-Reset Circuit in 40nm CMOS.md",
+    "saved": "2026-06-25"
+  },
+  "ss:36c7e0529d6463203208ba7ab1f1dacde7fc2ed7": {
+    "title": "Low-Power Direct Digital Conversion Circuit for Charge-Output Sensors in Wireless Sensing Nodes",
+    "file": "2026_Low-Power Direct Digital Conversion Circuit for Charge-Output Sensors in Wireles.md",
+    "saved": "2026-06-25"
+  },
+  "ss:4458d53ded50c03e8b5d6e4f8024dd937f0b3166": {
+    "title": "An Ultra Low Steady-State Current Power-on-Reset Circuit in 65nm CMOS Technology",
+    "file": "2014_An Ultra Low Steady-State Current Power-on-Reset Circuit in 65nm CMOS Technology.md",
+    "saved": "2026-06-25"
+  },
+  "ss:938a9c80027f80d104dd59fa904c87b6dd66aeb8": {
+    "title": "A 1.15-mW Low-Power Low-Complexity Reconfigurable FM-UWB Transmitter",
+    "file": "2022_A 1.15-mW Low-Power Low-Complexity Reconfigurable FM-UWB Transmitter.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:2202.05020v3": {
+    "title": "Decomposition Problem in Process of Selective Identification and Localization of Voltage Fluctuations Sources in Power Grids",
+    "file": "2022_Decomposition Problem in Process of Selective Identification and Localization of.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:2012.02286v1": {
+    "title": "Digital Twin of Distribution Power Transformer for Real-Time Monitoring of Medium Voltage from Low Voltage Measurements",
+    "file": "2020_Digital Twin of Distribution Power Transformer for Real-Time Monitoring of Mediu.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:1204.2545v4": {
+    "title": "Noise based logic: why noise? A comparative study of the necessity of randomness out of orthogonality",
+    "file": "2012_Noise based logic why noise A comparative study of the necessity of randomness o.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:2311.17794v1": {
+    "title": "Noise Dynamics in the Quantum Regime",
+    "file": "2023_Noise Dynamics in the Quantum Regime.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:2302.11206v1": {
+    "title": "Critical analysis on efficiency and noise reduction methodologies of a switch mode power supply using LISN topology",
+    "file": "2023_Critical analysis on efficiency and noise reduction methodologies of a switch mo.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:1610.09604v2": {
+    "title": "Understanding and Exploiting Design-Induced Latency Variation in Modern DRAM Chips",
+    "file": "2016_Understanding and Exploiting Design-Induced Latency Variation in Modern DRAM Chi.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:2603.12461v1": {
+    "title": "System-Technology Co-Optimization of Bitline Routing and Bonding Pathways in Monolithic 3D DRAM Architectures",
+    "file": "2026_System-Technology Co-Optimization of Bitline Routing and Bonding Pathways in Mon.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:2405.06081v1": {
+    "title": "Simultaneous Many-Row Activation in Off-the-Shelf DRAM Chips: Experimental Characterization and Analysis",
+    "file": "2024_Simultaneous Many-Row Activation in Off-the-Shelf DRAM Chips Experimental Charac.md",
+    "saved": "2026-06-25"
+  },
+  "ss:2f3a8bfedef67af5794877f83514be694b700d01": {
+    "title": "DPO-3D: Differentiable Power Delivery Network Optimization via Flexible Modeling for Routability and IR-Drop Tradeoff in Face-to-Face 3D ICs",
+    "file": "2026_DPO-3D Differentiable Power Delivery Network Optimization via Flexible Modeling .md",
+    "saved": "2026-06-25"
+  },
+  "ss:6b6507b4cf7b75bdee81dca19eb1c045135216f5": {
+    "title": "Power Integrity Design of Mobile 3D-IC Based on the Allocation of Optimal Number of TSV, BGA, and Via",
+    "file": "2023_Power Integrity Design of Mobile 3D-IC Based on the Allocation of Optimal Number.md",
+    "saved": "2026-06-25"
+  },
+  "ss:0a38d3cbf3812e14e98892ed0fd3bd72fae8cacd": {
+    "title": "Graph Attention-Based Current Crowding Analysis at TSV Interfaces in 3D Power Delivery Networks",
+    "file": "2026_Graph Attention-Based Current Crowding Analysis at TSV Interfaces in 3D Power De.md",
+    "saved": "2026-06-25"
+  },
+  "ss:74683bef7024b28fe193ae0486020b4e4c5dc332": {
+    "title": "Power Distribution Network (PDN) Design and Analysis for Multi-Stack 3D Heterogeneous Integrated High Bandwidth Memory (3D-HI-HBM) Module",
+    "file": "2026_Power Distribution Network (PDN) Design and Analysis for Multi-Stack 3D Heteroge.md",
+    "saved": "2026-06-25"
+  },
+  "ss:a9139599896a77a78c58eea3047253abe9741bb8": {
+    "title": "Testing Through Silicon Vias in Power Distribution Network of 3D-IC with Manufacturing Variability Cancellation",
+    "file": "2020_Testing Through Silicon Vias in Power Distribution Network of 3D-IC with Manufac.md",
+    "saved": "2026-06-25"
+  },
+  "ss:134b32d57b862e006e1d71c2a6b7bf9589445693": {
+    "title": "Modeling of Through-Silicon Capacitor and Its Applications for the Optimization of Power Distribution Network in 3-D Integrated Circuits",
+    "file": "2024_Modeling of Through-Silicon Capacitor and Its Applications for the Optimization .md",
+    "saved": "2026-06-25"
+  },
+  "ss:287f4a6ae2e11203991e1c155170ced1fedd01a5": {
+    "title": "Inductive Effect-Aware Power Distribution Network Modeling and Analysis for Heterogeneous 3D Integrated Circuits",
+    "file": "2025_Inductive Effect-Aware Power Distribution Network Modeling and Analysis for Hete.md",
+    "saved": "2026-06-25"
+  },
+  "ss:2f472e00751ba99bdc813e0ec8717ea2b098b8d9": {
+    "title": "Electrical-Thermal Co-analysis of TSV Embedded Microfluidic Pin-fin Heatsink for High Power Dissipation with High Bandwidth Density",
+    "file": "2024_Electrical-Thermal Co-analysis of TSV Embedded Microfluidic Pin-fin Heatsink for.md",
+    "saved": "2026-06-25"
+  },
+  "ss:3f7dbf44012ebeb873deaf143d116b824bf21fbc": {
+    "title": "Power and Thermal Constraints-Driven Modeling and Optimization for Through Silicon Via-Based Power Distribution Network",
+    "file": "2018_Power and Thermal Constraints-Driven Modeling and Optimization for Through Silic.md",
+    "saved": "2026-06-25"
+  },
+  "ss:4322d10ceca3c003962bc98e2bf7a8249690ec37": {
+    "title": "A 3-D Convolutional Network for Fast and Accurate S/Z-Parameters Prediction of Si-Interposer Power Distribution Network With Through Silicon Vias",
+    "file": "2024_A 3-D Convolutional Network for Fast and Accurate SZ-Parameters Prediction of Si.md",
+    "saved": "2026-06-25"
+  },
+  "ss:b302a9cdbd9ec95724c4ce17d2fc5e256c36ed9c": {
+    "title": "ML-Based Fine-Grained Modeling of DC Current Crowding in Power Delivery TSVs for Face-to-Face 3D ICs",
+    "file": "2025_ML-Based Fine-Grained Modeling of DC Current Crowding in Power Delivery TSVs for.md",
+    "saved": "2026-06-25"
+  },
+  "ss:78f7779dda8961c4a4a9b194f06849c8d170c27a": {
+    "title": "Variability Cancellation to Improve Diagnostic Performance of Testing through Silicon Vias in Power Distribution Network of 3D-IC",
+    "file": "2019_Variability Cancellation to Improve Diagnostic Performance of Testing through Si.md",
+    "saved": "2026-06-25"
+  },
+  "ss:aafe651dd75ffafd4a3827b97f4ccd201f9962c2": {
+    "title": "Thermal Aware Design for Through-Silicon Via (TSV) based 3D Network-on-Chip (NoC) Architectures",
+    "file": "2018_Thermal Aware Design for Through-Silicon Via (TSV) based 3D Network-on-Chip (NoC.md",
+    "saved": "2026-06-25"
+  },
+  "ss:9cc99aa6e0ca94ea4472b5261a503026ade68489": {
+    "title": "Reliability Challenges and Aging Behavior in a TSV-Based 3D-Stacked DRAM I/O Interface",
+    "file": "2025_Reliability Challenges and Aging Behavior in a TSV-Based 3D-Stacked DRAM IO Inte.md",
+    "saved": "2026-06-25"
+  },
+  "ss:fb09d36bdc87367358a7b288f6ace9e80a243cc1": {
+    "title": "Compact Scalable Dynamic TSV IR Drop Compensation for Power Delivery in 3D Packages",
+    "file": "2019_Compact Scalable Dynamic TSV IR Drop Compensation for Power Delivery in 3D Packa.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:1803.02490v1": {
+    "title": "Adaptive 3D-IC TSV Fault Tolerance Structure Generation",
+    "file": "2018_Adaptive 3D-IC TSV Fault Tolerance Structure Generation.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:0912.4524v1": {
+    "title": "Spectroscopic investigation of quantum confinement effects in ion implanted silicon-on-sapphire films",
+    "file": "2009_Spectroscopic investigation of quantum confinement effects in ion implanted sili.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:2106.09308v1": {
+    "title": "Characterization and Mitigation of Electromigration Effects in TSV-Based Power Delivery Network Enabled 3D-Stacked DRAMs",
+    "file": "2021_Characterization and Mitigation of Electromigration Effects in TSV-Based Power D.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:2009.09009v1": {
+    "title": "Thermal and IR Drop Analysis Using Convolutional Encoder-Decoder Networks",
+    "file": "2020_Thermal and IR Drop Analysis Using Convolutional Encoder-Decoder Networks.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:2305.19655v2": {
+    "title": "Equivalent modelling for the fundamental frequency dynamic variation: State-space, impedance, and power-frequency representations",
+    "file": "2023_Equivalent modelling for the fundamental frequency dynamic variation State-space.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:2001.01083v1": {
+    "title": "Res3ATN -- Deep 3D Residual Attention Network for Hand Gesture Recognition in Videos",
+    "file": "2020_Res3ATN -- Deep 3D Residual Attention Network for Hand Gesture Recognition in Vi.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:1509.00070v1": {
+    "title": "In-Line-Test of Variability and Bit-Error-Rate of HfOx-Based Resistive Memory",
+    "file": "2015_In-Line-Test of Variability and Bit-Error-Rate of HfOx-Based Resistive Memory.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:2310.18998v1": {
+    "title": "A 0.21-ps FOM Capacitor-Less Analog LDO with Dual-Range Load Current for Biomedical Applications",
+    "file": "2023_A 0.21-ps FOM Capacitor-Less Analog LDO with Dual-Range Load Current for Biomedi.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:2209.12726v5": {
+    "title": "An Improved PMOS-Based Low Dropout Regulator Design for Large Loads",
+    "file": "2022_An Improved PMOS-Based Low Dropout Regulator Design for Large Loads.md",
+    "saved": "2026-06-25"
+  },
+  "arxiv:2508.02687v1": {
+    "title": "An AI-driven EDA Algorithm-Empowered VCO and LDO Co-Design Method",
+    "file": "2025_An AI-driven EDA Algorithm-Empowered VCO and LDO Co-Design Method.md",
+    "saved": "2026-06-25"
+  },
+  "ss:abe04a559c01dc1eb1ed901f352b3f1546ebe18c": {
+    "title": "Implementation of Pass Transistor Logic and C2MOS Linear Feedback Shift Register (LFSR) Circuit using FPGA and PSpice",
+    "file": "2025_Implementation of Pass Transistor Logic and C2MOS Linear Feedback Shift Register.md",
+    "saved": "2026-06-25"
+  },
+  "ss:6c4817e91d491ea1952c715859287bead1419991": {
+    "title": "Implementation of Linear Feedback Shift Register circuit (LFSR) Using Transmission Gate Diffusion Input(TGDI) Technique",
+    "file": "2025_Implementation of Linear Feedback Shift Register circuit (LFSR) Using Transmissi.md",
+    "saved": "2026-06-25"
+  },
+  "ss:d140d6576c5c176a5c15bf56c4b3b4c230382a39": {
+    "title": "Design Low Power Linear Feedback Shift Register for Built-In Self-Test (BIST) Applications",
+    "file": "2025_Design Low Power Linear Feedback Shift Register for Built-In Self-Test (BIST) Ap.md",
+    "saved": "2026-06-25"
+  },
+  "ss:1799b46c7e3aefe4cdc8a9312816828baa156b18": {
+    "title": "Design of linear feedback shift register with single event upset resistance",
+    "file": "2025_Design of linear feedback shift register with single event upset resistance.md",
+    "saved": "2026-06-25"
+  },
+  "ss:ce86b957679f53418f468a30b8c36a89e0c64e18": {
+    "title": "VLSI Implementation of Linear Feedback Shift Register (LFSR) based Test Pattern Generator for Pseudo Exhaustive Testing",
+    "file": "2020_VLSI Implementation of Linear Feedback Shift Register (LFSR) based Test Pattern .md",
+    "saved": "2026-06-25"
+  },
+  "ss:06104e476450b53f2be818215ad437e46a670ab2": {
+    "title": "Performance Analysis of Quantum Dot Cellular Automata (QCA) based Linear Feedback Shift Register (LFSR)",
+    "file": "2020_Performance Analysis of Quantum Dot Cellular Automata (QCA) based Linear Feedbac.md",
+    "saved": "2026-06-25"
+  },
+  "ss:2a36a165a0859ca873aed661c4d7382e66714795": {
+    "title": "Linear Feedback Shift Register Reseeding for Stochastic Circuit Repairing and Minimization",
+    "file": "2022_Linear Feedback Shift Register Reseeding for Stochastic Circuit Repairing and Mi.md",
+    "saved": "2026-06-25"
+  },
+  "ss:28f4d3a033553484cd5edf7547c66220bee55256": {
+    "title": "Design and Analysis of High Performance FinFET-Based Linear Feedback Shift Register for Cryptography Applications",
+    "file": "2024_Design and Analysis of High Performance FinFET-Based Linear Feedback Shift Regis.md",
+    "saved": "2026-06-25"
+  },
+  "ss:17aa6fe9fd2039ee2d6259832b45d17f68dce268": {
+    "title": "DEVELOPMENT OF A SOFTWARE PACKAGE FOR THE IMPLEMENTATION OF THE ALGORITHM BERLECAMP - MESSY ON SIMPLE SHIFT REGISTERS WITH LINEAR FEEDBACK FOR STUDENTS OF THE DISCIPLINE “CRYPTOGRAPHY”",
+    "file": "2025_DEVELOPMENT OF A SOFTWARE PACKAGE FOR THE IMPLEMENTATION OF THE ALGORITHM BERLEC.md",
+    "saved": "2026-06-25"
+  },
+  "ss:42113bd8200dca6fbf6574d53b0de31008d4f3f1": {
+    "title": "Reconfigurable Linear Feedback Shift Register",
+    "file": "2022_Reconfigurable Linear Feedback Shift Register.md",
+    "saved": "2026-06-25"
+  },
+  "ss:74560bcc9152067b7de56fd00f537e9b326a033f": {
+    "title": "Modeling and Analysis of System-Level Power Supply Noise Induced Jitter (PSIJ) for 4 Gbps High Bandwidth Memory (HBM) I/O Interface",
+    "file": "2021_Modeling and Analysis of System-Level Power Supply Noise Induced Jitter (PSIJ) f.md",
+    "saved": "2026-06-26"
+  },
+  "ss:8c2b4bfc3f38644b5d21d7c59f3f9fa771e4f1d5": {
+    "title": "A Command-Aware Hybrid LDO With Ultra-Small Voltage Droop and Fast Settling Time for Power-Supply-Induced Jitter Mitigation in HBM Interfaces",
+    "file": "2026_A Command-Aware Hybrid LDO With Ultra-Small Voltage Droop and Fast Settling Time.md",
+    "saved": "2026-06-26"
+  },
+  "ss:5fa05c986037692db9d4e7d9b76b1b3c52e5b913": {
+    "title": "A Comprehensive Power-Supply-Induced Jitter Mitigation Scheme for HBM Interfaces Using a Strobe-Triggered Digital LDO and Local Replica Regulators Achieving 10.7mV Voltage Droop and 1.4ns Settling Time",
+    "file": "2026_A Comprehensive Power-Supply-Induced Jitter Mitigation Scheme for HBM Interfaces.md",
+    "saved": "2026-06-26"
+  },
+  "ss:de46fcdc8c8aea77c75bb62ecaf373cc2e8b994c": {
+    "title": "Scalable Transformer Network-based Reinforcement Learning Method for PSIJ Optimization in HBM",
+    "file": "2022_Scalable Transformer Network-based Reinforcement Learning Method for PSIJ Optimi.md",
+    "saved": "2026-06-26"
+  },
+  "ss:187f5420dd0a15c284a2921de4900b1b420b15b3": {
+    "title": "8.5 A Command-Aware Hybrid LDO for Advanced HBM Interfaces with 150μA Quiescent Current and 20pF On-Chip Capacitor Achieving Sub-10mV Voltage Droop in 400ps Settling Time",
+    "file": "2025_8.5 A Command-Aware Hybrid LDO for Advanced HBM Interfaces with 150μA Quiescent .md",
+    "saved": "2026-06-26"
+  },
+  "ss:8bbace584d73d47bedc4413e6b4bd7357b28c3da": {
+    "title": "IBIS Model Simulation Accuracy Improvement by Including Nonlinear Power Supply Induced Jitter Effect",
+    "file": "2025_IBIS Model Simulation Accuracy Improvement by Including Nonlinear Power Supply I.md",
+    "saved": "2026-06-26"
+  },
+  "ss:202122402290be956249303d6c422efcf41ab250": {
+    "title": "Advanced Techniques for Mitigating Power Supply Induced Jitter in Low-Cost, Multi-Lane, Multi-PHY Timing Controller Solutions in 8 nm FinFET",
+    "file": "2025_Advanced Techniques for Mitigating Power Supply Induced Jitter in Low-Cost, Mult.md",
+    "saved": "2026-06-26"
+  },
+  "ss:4657e0782e49baad3deacc0153e2e0b65696727e": {
+    "title": "IBIS Model Simulation Accuracy Improvement by Including Power-Supply-Induced Jitter Effect",
+    "file": "2024_IBIS Model Simulation Accuracy Improvement by Including Power-Supply-Induced Jit.md",
+    "saved": "2026-06-26"
+  },
+  "ss:db82fefeda4bc6e7b581fe10df1c0a24c35d6213": {
+    "title": "Modeling of a Voltage Regulator Module for Power Integrity: Power Supply Induced Jitter",
+    "file": "2024_Modeling of a Voltage Regulator Module for Power Integrity Power Supply Induced .md",
+    "saved": "2026-06-26"
+  },
+  "ss:26498a08108c0a5777dd9f7d34d6310af73bb334": {
+    "title": "Prediction of Power Supply Induced Jitter via Deep Belief and Knowledge-Based Neural Networks",
+    "file": "2024_Prediction of Power Supply Induced Jitter via Deep Belief and Knowledge-Based Ne.md",
+    "saved": "2026-06-26"
+  },
+  "ss:80880e9fa9e2037ddcd4646962229bcbfd1f0098": {
+    "title": "Variability-Aware Modeling of Power Supply Induced Jitter",
+    "file": "2024_Variability-Aware Modeling of Power Supply Induced Jitter.md",
+    "saved": "2026-06-26"
+  },
+  "ss:f095bdd223ba6ade0e6b08b239a9fcd64f0992ef": {
+    "title": "Analytical Approach to Statistical Modeling of Power Supply Induced Jitter",
+    "file": "2026_Analytical Approach to Statistical Modeling of Power Supply Induced Jitter.md",
+    "saved": "2026-06-26"
+  },
+  "ss:c3fee0b20398e436b21c47c16a6af97a011112aa": {
+    "title": "Power Supply Induced Jitter: Introduction and Recent Advances",
+    "file": "2026_Power Supply Induced Jitter Introduction and Recent Advances.md",
+    "saved": "2026-06-26"
+  },
+  "ss:cd5fb24cdec236bfed1d843bca3d53461c37f2bb": {
+    "title": "Estimation of Power Supply Induced Jitter in Push-Pull Drivers in MIPI C-PHY",
+    "file": "2024_Estimation of Power Supply Induced Jitter in Push-Pull Drivers in MIPI C-PHY.md",
+    "saved": "2026-06-26"
+  },
+  "ss:b03d97d21c97d778429919ba1a717bdafb42db83": {
+    "title": "Efficient Estimation of Power Supply Induced Jitter via Machine Learning",
+    "file": "2023_Efficient Estimation of Power Supply Induced Jitter via Machine Learning.md",
+    "saved": "2026-06-26"
+  },
+  "ss:2941774a83e06940b8eeb16acd6a61cad26a40ce": {
+    "title": "A practical load-optimized VCO design for low-jitter 5 V 500 MHz digital phase-locked loop",
+    "file": "1999_A practical load-optimized VCO design for low-jitter 5 V 500 MHz digital phase-l.md",
+    "saved": "2026-06-26"
+  },
+  "ss:cf4b4df44b99f4e13759866e4a0afe4ce9e1431f": {
+    "title": "Design and Evaluation of an Energy Efficient Parity Generator Checker and Binary to Gray Converter for Smart Devices",
+    "file": "2025_Design and Evaluation of an Energy Efficient Parity Generator Checker and Binary.md",
+    "saved": "2026-06-26"
+  },
+  "ss:9465f95e6649866b83d540bd11473ad1571ed4c0": {
+    "title": "Design and Implementation of Error Detection and Correction in Bit-Swapping LFSR",
+    "file": "2025_Design and Implementation of Error Detection and Correction in Bit-Swapping LFSR.md",
+    "saved": "2026-06-26"
+  },
+  "ss:979f4b10dd763836fefd04105c9ee8658b9df686": {
+    "title": "Digital photonics parity bit error detection system",
+    "file": "2020_Digital photonics parity bit error detection system.md",
+    "saved": "2026-06-26"
+  },
+  "ss:b82ed64c67f032be278cd09d456ab69ae609b060": {
+    "title": "Transient Delay Characterization of Parity Logic for Delay-Sensitive Error Detection Applications",
+    "file": "2025_Transient Delay Characterization of Parity Logic for Delay-Sensitive Error Detec.md",
+    "saved": "2026-06-26"
+  },
+  "ss:4e8faa3df5ce9f10dbfd1580aed014d37f473b5b": {
+    "title": "A 10-bit 50-MS/s Radiation Tolerant Split Coarse/Fine SAR ADC in 65-nm CMOS",
+    "file": "2025_A 10-bit 50-MSs Radiation Tolerant Split CoarseFine SAR ADC in 65-nm CMOS.md",
+    "saved": "2026-06-26"
+  },
+  "ss:80366ce438aab6a55848509077511e1ca6227af5": {
+    "title": "An Eye-Opening Arbiter PUF for Fingerprint Generation Using Auto-Error Detection for PVT-Robust Masking and Bit Stabilization Achieving a BER of 2e-8 in 28nm CMOS",
+    "file": "2025_An Eye-Opening Arbiter PUF for Fingerprint Generation Using Auto-Error Detection.md",
+    "saved": "2026-06-26"
+  },
+  "ss:53705e47297891b601972bfd9459605a06638a98": {
+    "title": "High‐speed serializer timing‐error detection circuit with enhanced verification reliability through floating state prevention",
+    "file": "2024_High‐speed serializer timing‐error detection circuit with enhanced verification .md",
+    "saved": "2026-06-26"
+  },
+  "ss:d0cf16e29e1affee8ac49924c40b446aae695635": {
+    "title": "In-Situ Error Detection Flip Flops for SEU and SET in 180 nm Bulk CMOS",
+    "file": "2024_In-Situ Error Detection Flip Flops for SEU and SET in 180 nm Bulk CMOS.md",
+    "saved": "2026-06-26"
+  },
+  "ss:01909659482623b04d34aef87a7b0c454289221c": {
+    "title": "Circuit-Aware Analysis of Arithmetic Error Detection Codes",
+    "file": "2026_Circuit-Aware Analysis of Arithmetic Error Detection Codes.md",
+    "saved": "2026-06-26"
+  },
+  "ss:17c244fb40c70b5da4f9035d5b2743a3f7fb984d": {
+    "title": "A Novel Gate-Level Parity Checker Design for Sequential Data Streams",
+    "file": "2025_A Novel Gate-Level Parity Checker Design for Sequential Data Streams.md",
+    "saved": "2026-06-26"
+  },
+  "ss:cd37372c4a4366f0943b396bf825d3f482f05ff8": {
+    "title": "ReDRAM: A Reconfigurable Processing-in-DRAM Platform for Accelerating Bulk Bit-Wise Operations",
+    "file": "2019_ReDRAM A Reconfigurable Processing-in-DRAM Platform for Accelerating Bulk Bit-Wi.md",
+    "saved": "2026-06-26"
+  },
+  "ss:57aed0ad11fbbc7339375d50f776f7299493f4e4": {
+    "title": "Hybrid molecular solid state memories and electronic nanodevices based on polyoxometalates and other molecules of reversible redox activity",
+    "file": "2017_Hybrid molecular solid state memories and electronic nanodevices based on polyox.md",
+    "saved": "2026-06-26"
+  },
+  "ss:1dbe78f0292e7ceed1898b43abba8f763498ee4d": {
+    "title": "Future Memory Technology and Ferroelectric Memory as an Ultimate Memory Solution",
+    "file": "2011_Future Memory Technology and Ferroelectric Memory as an Ultimate Memory Solution.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:2501.06178v2": {
+    "title": "Precoding Design for Limited-Feedback MIMO Systems via Character-Polynomial Codes",
+    "file": "2025_Precoding Design for Limited-Feedback MIMO Systems via Character-Polynomial Code.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:1910.01903v2": {
+    "title": "Robust Output Feedback Stabilization of Multivariable Invertible Nonlinear Systems: A Feedback Linearization-Based Method",
+    "file": "2019_Robust Output Feedback Stabilization of Multivariable Invertible Nonlinear Syste.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:2501.03343v1": {
+    "title": "Characterization of Flux Trapping in and Fabrication of Large-Scale Superconductor Circuits Using AC-Biased Shift Registers With 108500 Josephson Junctions",
+    "file": "2025_Characterization of Flux Trapping in and Fabrication of Large-Scale Superconduct.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:2411.02749v2": {
+    "title": "Extraction and Simulation of the Impact of Flux Trapping in Moats of AC-Biased Shift Registers",
+    "file": "2024_Extraction and Simulation of the Impact of Flux Trapping in Moats of AC-Biased S.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:2503.14784v1": {
+    "title": "Defect Analysis and Built-In-Self-Test for Chiplet Interconnects in Fan-out Wafer-Level Packaging",
+    "file": "2025_Defect Analysis and Built-In-Self-Test for Chiplet Interconnects in Fan-out Wafe.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:0710.4645v1": {
+    "title": "At-Speed Logic BIST for IP Cores",
+    "file": "2007_At-Speed Logic BIST for IP Cores.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:1709.03067v1": {
+    "title": "Design Methods for Polymorphic Combinational Logic Circuits based on the Bi_Decomposition Approach",
+    "file": "2017_Design Methods for Polymorphic Combinational Logic Circuits based on the Bi_Deco.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:2412.07180v1": {
+    "title": "Digital Twin Assisted Beamforming Design for Integrated Sensing and Communication Systems",
+    "file": "2024_Digital Twin Assisted Beamforming Design for Integrated Sensing and Communicatio.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:0710.4840v1": {
+    "title": "Testing Logic Cores using a BIST P1500 Compliant Approach: A Case of Study",
+    "file": "2007_Testing Logic Cores using a BIST P1500 Compliant Approach A Case of Study.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:2102.11991v2": {
+    "title": "Being correct is not enough: efficient verification using robust linear temporal logic",
+    "file": "2021_Being correct is not enough efficient verification using robust linear temporal .md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:1306.4493v1": {
+    "title": "A temporal logic approach to modular design of synthetic biological circuits",
+    "file": "2013_A temporal logic approach to modular design of synthetic biological circuits.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:2212.12360v1": {
+    "title": "Approximate Scan Flip-flop to Reduce Functional Path Delay and Power Consumption",
+    "file": "2022_Approximate Scan Flip-flop to Reduce Functional Path Delay and Power Consumption.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:2606.08885v1": {
+    "title": "Silicon Photonics Testing: Design for Testability, Fault Detection, and Manufacturing Variation Analysis in Photonic Integrated Circuits",
+    "file": "2026_Silicon Photonics Testing Design for Testability, Fault Detection, and Manufactu.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:1511.06726v1": {
+    "title": "Testable Design of Repeaterless Low Swing On-Chip Interconnect",
+    "file": "2015_Testable Design of Repeaterless Low Swing On-Chip Interconnect.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:2602.13825v2": {
+    "title": "Implementation and Performance Evaluation of CMOS-integrated Memristor-driven Flip-flop Circuits",
+    "file": "2026_Implementation and Performance Evaluation of CMOS-integrated Memristor-driven Fl.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:2505.19418v1": {
+    "title": "Enhancing Test Efficiency through Automated ATPG-Aware Lightweight Scan Instrumentation",
+    "file": "2025_Enhancing Test Efficiency through Automated ATPG-Aware Lightweight Scan Instrume.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:1405.3046v2": {
+    "title": "Circuit QED flip-flop memory with all-microwave switching",
+    "file": "2014_Circuit QED flip-flop memory with all-microwave switching.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:2202.10697v4": {
+    "title": "Automatic Test Pattern Generation for Robust Quantum Circuit Testing",
+    "file": "2022_Automatic Test Pattern Generation for Robust Quantum Circuit Testing.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:2512.00079v1": {
+    "title": "InF-ATPG: Intelligent FFR-Driven ATPG with Advanced Circuit Representation Guided Reinforcement Learning",
+    "file": "2025_InF-ATPG Intelligent FFR-Driven ATPG with Advanced Circuit Representation Guided.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:0710.4715v1": {
+    "title": "Circuit-Level Modeling for Concurrent Testing of Operational Defects due to Gate Oxide Breakdown",
+    "file": "2007_Circuit-Level Modeling for Concurrent Testing of Operational Defects due to Gate.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:0710.4763v1": {
+    "title": "Logic Design for On-Chip Test Clock Generation - Implementation Details and Impact on Delay Test Quality",
+    "file": "2007_Logic Design for On-Chip Test Clock Generation - Implementation Details and Impa.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:2208.05325v2": {
+    "title": "Universal Address Sequence Generator for Memory Built-in Self-test",
+    "file": "2022_Universal Address Sequence Generator for Memory Built-in Self-test.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:2504.17709v2": {
+    "title": "Fault Detection in New Wind Turbines with Limited Data by Generative Transfer Learning",
+    "file": "2025_Fault Detection in New Wind Turbines with Limited Data by Generative Transfer Le.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:0710.4747v1": {
+    "title": "An Efficient Transparent Test Scheme for Embedded Word-Oriented Memories",
+    "file": "2007_An Efficient Transparent Test Scheme for Embedded Word-Oriented Memories.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:2204.08035v1": {
+    "title": "Beta Residuals: Improving Fault-Tolerant Control for Sensory Faults via Bayesian Inference and Precision Learning",
+    "file": "2022_Beta Residuals Improving Fault-Tolerant Control for Sensory Faults via Bayesian .md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:1506.06735v1": {
+    "title": "Hybrid Memristor-CMOS (MeMOS) based Logic Gates and Adder Circuits",
+    "file": "2015_Hybrid Memristor-CMOS (MeMOS) based Logic Gates and Adder Circuits.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:1110.1549v1": {
+    "title": "Power comparison of CMOS and adiabatic full adder circuit",
+    "file": "2011_Power comparison of CMOS and adiabatic full adder circuit.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:2110.02223v1": {
+    "title": "CNFET-based design of efficient ternary half adder and 1-trit multiplier circuits using dynamic logic",
+    "file": "2021_CNFET-based design of efficient ternary half adder and 1-trit multiplier circuit.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:1710.05470v1": {
+    "title": "Asynchronous Early Output Section-Carry Based Carry Lookahead Adder with Alias Carry Logic",
+    "file": "2017_Asynchronous Early Output Section-Carry Based Carry Lookahead Adder with Alias C.md",
+    "saved": "2026-06-26"
+  },
+  "ss:c89ea59be678d394797935cf0e4c62565eeecb2c": {
+    "title": "Computing in Memory Optimized Based on Multi-Level Carry Lookahead Adder",
+    "file": "2025_Computing in Memory Optimized Based on Multi-Level Carry Lookahead Adder.md",
+    "saved": "2026-06-26"
+  },
+  "ss:8e5b978646a18652142b4805f75b330d48105f4e": {
+    "title": "Design of a Low-Power 4x4 Wallace Tree Multiplier Using Ripple Carry Adder at 10 MHz in 180nm CMOS Techology",
+    "file": "2024_Design of a Low-Power 4x4 Wallace Tree Multiplier Using Ripple Carry Adder at 10.md",
+    "saved": "2026-06-26"
+  },
+  "ss:3dff56f037b9af2395b70ba72e748c43802066ac": {
+    "title": "A 32-Bit Ripple-Ling Hybrid Carry Adder",
+    "file": "2024_A 32-Bit Ripple-Ling Hybrid Carry Adder.md",
+    "saved": "2026-06-26"
+  },
+  "ss:376e0b7188c901b092d54a2ea995c9c910e3b1d1": {
+    "title": "Design of a low-delay 4-bit parallel prefix adder using QCA technology",
+    "file": "2025_Design of a low-delay 4-bit parallel prefix adder using QCA technology.md",
+    "saved": "2026-06-26"
+  },
+  "ss:c07d3ed1e9d288ede0b77b700d5cc76b1e731d56": {
+    "title": "Design of Brent Kung Prefix Form Carry Look Ahead Adder",
+    "file": "2022_Design of Brent Kung Prefix Form Carry Look Ahead Adder.md",
+    "saved": "2026-06-26"
+  },
+  "ss:505549dce847027f5e2fa58a95a6da71a791af1e": {
+    "title": "Fast Bipartitioned Hybrid Adder Utilizing Carry Select and Carry Lookahead Logic",
+    "file": "2024_Fast Bipartitioned Hybrid Adder Utilizing Carry Select and Carry Lookahead Logic.md",
+    "saved": "2026-06-26"
+  },
+  "ss:a2feea590659393388f09bffa960d6d05ef93661": {
+    "title": "Carry Tree Adders on FPGA's Design and its Implementation",
+    "file": "2024_Carry Tree Adders on FPGA's Design and its Implementation.md",
+    "saved": "2026-06-26"
+  },
+  "ss:82b733018c17bde01b17b0348a85e93e383043fe": {
+    "title": "Design and Analysis of High-Speed Parallel Prefix Adder for Digital Circuit Design Applications",
+    "file": "2020_Design and Analysis of High-Speed Parallel Prefix Adder for Digital Circuit Desi.md",
+    "saved": "2026-06-26"
+  },
+  "ss:ccb41522e057686dbdfb9d9262c8b8536a7541bc": {
+    "title": "Design of Approximate 4-Bit Kogge-Stone Parallel Prefix Adder for High-Speed, Energy-Efficient Arithmetic Logic Unit in 180 nm CMOS Technology",
+    "file": "2026_Design of Approximate 4-Bit Kogge-Stone Parallel Prefix Adder for High-Speed, En.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:1710.05474v1": {
+    "title": "Approximate Ripple Carry and Carry Lookahead Adders - A Comparative Analysis",
+    "file": "2017_Approximate Ripple Carry and Carry Lookahead Adders - A Comparative Analysis.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:0903.0748v2": {
+    "title": "Circuit Design for A Measurement-Based Quantum Carry-Lookahead Adder",
+    "file": "2009_Circuit Design for A Measurement-Based Quantum Carry-Lookahead Adder.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:2412.01764v1": {
+    "title": "Fast Bipartitioned Hybrid Adder Utilizing Carry Select and Carry Lookahead Logic",
+    "file": "2024_Fast Bipartitioned Hybrid Adder Utilizing Carry Select and Carry Lookahead Logic.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:2304.02921v2": {
+    "title": "A Higher Radix Architecture for Quantum Carry-lookahead Adder",
+    "file": "2023_A Higher Radix Architecture for Quantum Carry-lookahead Adder.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:1805.07676v2": {
+    "title": "Sense amplifier design using CMOS-memristor circuits",
+    "file": "2018_Sense amplifier design using CMOS-memristor circuits.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:2509.02224v1": {
+    "title": "2.4-GHz Integrated CMOS Low-Noise Amplifier (English Version)",
+    "file": "2025_2.4-GHz Integrated CMOS Low-Noise Amplifier (English Version).md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:1910.00098v1": {
+    "title": "Analysis and Design of a 32nm FinFET Dynamic Latch Comparator",
+    "file": "2019_Analysis and Design of a 32nm FinFET Dynamic Latch Comparator.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:2402.14519v1": {
+    "title": "Strong-ARM Dynamic Latch Comparators: Design and Analyses on CAD Platform",
+    "file": "2024_Strong-ARM Dynamic Latch Comparators Design and Analyses on CAD Platform.md",
+    "saved": "2026-06-26"
+  },
+  "ss:45b1b4737f7cd46d0b8d180b0662ce824aefed93": {
+    "title": "A low-power, high-efficiency charge pump circuit for the coexistence of multiple charge pumps in 55 nm CMOS",
+    "file": "2024_A low-power, high-efficiency charge pump circuit for the coexistence of multiple.md",
+    "saved": "2026-06-26"
+  },
+  "ss:d73cd9f0c6f583b7270a91a94bc5a46f65ba50b3": {
+    "title": "A Low-Power Charge-Pump PLL for Sub-6 GHz 5G and IoT Wireless Communication Systems",
+    "file": "2025_A Low-Power Charge-Pump PLL for Sub-6 GHz 5G and IoT Wireless Communication Syst.md",
+    "saved": "2026-06-26"
+  },
+  "ss:db06c79a0fbeded59d136840611e0b6abac3255b": {
+    "title": "An Ultra-low Power 2× / 4× Reconfigurable Charge Pump for RF Energy Harvesting System",
+    "file": "2025_An Ultra-low Power 2× 4× Reconfigurable Charge Pump for RF Energy Harvesting Sys.md",
+    "saved": "2026-06-26"
+  },
+  "ss:11e7052f4482331d124e4207c2c7825d1763c39c": {
+    "title": "A low-ripple fast boosting CMOS charge pump design",
+    "file": "2024_A low-ripple fast boosting CMOS charge pump design.md",
+    "saved": "2026-06-26"
+  },
+  "ss:3ecb8d8b99d50958345a147a72593e426a2b51b6": {
+    "title": "Design of Charge Pump for Low Power, Wide Range PLL in 65nm CMOS Technology",
+    "file": "2023_Design of Charge Pump for Low Power, Wide Range PLL in 65nm CMOS Technology.md",
+    "saved": "2026-06-26"
+  },
+  "ss:11b41897275c50027d7cf71da14eb2f8f7cc6888": {
+    "title": "Low Power and High Speed Charge Pump based Dual Stage Dynamic Comparator using 45nm CMOS Technology",
+    "file": "2023_Low Power and High Speed Charge Pump based Dual Stage Dynamic Comparator using 4.md",
+    "saved": "2026-06-26"
+  },
+  "ss:ab5fdf999af975d7c1ce790a56b119bccba13b59": {
+    "title": "A 100μA and 688.62μW High-Performance Charge Pump with Gain-Boosted Low-Voltage Cascode Architecture for PLL Application",
+    "file": "2025_A 100μA and 688.62μW High-Performance Charge Pump with Gain-Boosted Low-Voltage .md",
+    "saved": "2026-06-26"
+  },
+  "ss:8e5f2f3b2c945949211b7217ba78f5dbb9d05d77": {
+    "title": "Design and Analysis of Charge Pumping Circuit for Low Power Charge Pump Based Phase Locked Loop Organization",
+    "file": "2023_Design and Analysis of Charge Pumping Circuit for Low Power Charge Pump Based Ph.md",
+    "saved": "2026-06-26"
+  },
+  "ss:edd98d3330f814c25d764a5eaa1b2dd1ef1644b3": {
+    "title": "A high‐PCE amalgamate charge pump topology with extended input voltage dynamic range for energy harvesting systems",
+    "file": "2024_A high‐PCE amalgamate charge pump topology with extended input voltage dynamic r.md",
+    "saved": "2026-06-26"
+  },
+  "ss:6f9249de8feb5d97a3310c78c32e98eba26604d7": {
+    "title": "Design Topologies of a CMOS Charge Pump Circuit for Low Power Applications",
+    "file": "2021_Design Topologies of a CMOS Charge Pump Circuit for Low Power Applications.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:1901.00092v1": {
+    "title": "High Performance GNR Power Gating for Low-Voltage CMOS Circuits",
+    "file": "2019_High Performance GNR Power Gating for Low-Voltage CMOS Circuits.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:1906.10666v1": {
+    "title": "Automatic Conversion from Flip-flop to 3-phase Latch-based Designs",
+    "file": "2019_Automatic Conversion from Flip-flop to 3-phase Latch-based Designs.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:1705.04993v1": {
+    "title": "PieceTimer: A Holistic Timing Analysis Framework Considering Setup/Hold Time Interdependency Using A Piecewise Model",
+    "file": "2017_PieceTimer A Holistic Timing Analysis Framework Considering SetupHold Time Inter.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:2105.14233v1": {
+    "title": "Realization of all logic gates and memory latch in the SC-CNN cell of the simple nonlinear MLC circuit",
+    "file": "2021_Realization of all logic gates and memory latch in the SC-CNN cell of the simple.md",
+    "saved": "2026-06-26"
+  },
+  "ss:9c0378277d0143195e9aad59609699193635a426": {
+    "title": "A 5-Gb/s 156-mW Transceiver with FFE/Analog Equalizer in 90-nm CMOS Technology",
+    "file": "2015_A 5-Gbs 156-mW Transceiver with FFEAnalog Equalizer in 90-nm CMOS Technology.md",
+    "saved": "2026-06-26"
+  },
+  "ss:988e336bc75223e3176c9ef513e3b4a4f5d19b27": {
+    "title": "Parallel Extension of High-Speed Analog-Circuit FIR Equalizer for Low-Latency Optical Transceiver/Receiver",
+    "file": "2023_Parallel Extension of High-Speed Analog-Circuit FIR Equalizer for Low-Latency Op.md",
+    "saved": "2026-06-26"
+  },
+  "ss:c3532d07a9f6cb5c4225d896be1595a6c37a40e8": {
+    "title": "lpGBT: Low-Power Radiation-Hard Multipurpose High-Speed Transceiver ASIC for High-Energy Physics Experiments",
+    "file": "2025_lpGBT Low-Power Radiation-Hard Multipurpose High-Speed Transceiver ASIC for High.md",
+    "saved": "2026-06-26"
+  },
+  "ss:009e5367881792c1a65b5652edcb181dbb09ea97": {
+    "title": "A low-noise and fast transient response LDO design for high-speed SerDes",
+    "file": "2022_A low-noise and fast transient response LDO design for high-speed SerDes.md",
+    "saved": "2026-06-26"
+  },
+  "ss:a97efaf1f5734546c12b52b1a8b395041542e3aa": {
+    "title": "A Novel 10‐GHz CMOS Carry Generator Circuit for High‐Speed Adders",
+    "file": "2025_A Novel 10‐GHz CMOS Carry Generator Circuit for High‐Speed Adders.md",
+    "saved": "2026-06-26"
+  },
+  "ss:b2880b5dd7bc8969e9c08cdbc72d71b73d8e3ec2": {
+    "title": "Challenges and Solutions in High-Speed SerDes Data Path Design",
+    "file": "2024_Challenges and Solutions in High-Speed SerDes Data Path Design.md",
+    "saved": "2026-06-26"
+  },
+  "ss:5d5b1d9640eeb906dcd6f0d00b79633163923806": {
+    "title": "A Fast SerDes Equalizer Effect-Included Worst Eye Diagram Estimation Method for High-Speed Serial Links",
+    "file": "2025_A Fast SerDes Equalizer Effect-Included Worst Eye Diagram Estimation Method for .md",
+    "saved": "2026-06-26"
+  },
+  "ss:ce8d232d99d13fff33e7c096971de2678d1bc15c": {
+    "title": "An Efficient Parallel CRC Computing Method for High Bandwidth Networks and FPGA Implementation",
+    "file": "2024_An Efficient Parallel CRC Computing Method for High Bandwidth Networks and FPGA .md",
+    "saved": "2026-06-26"
+  },
+  "ss:5e6f70933fdb2b0bab153faf86ae8a8c8afa186f": {
+    "title": "Optimized FPGA Implementation of the CRC Using Parallel Pipelining Architecture",
+    "file": "2019_Optimized FPGA Implementation of the CRC Using Parallel Pipelining Architecture.md",
+    "saved": "2026-06-26"
+  },
+  "ss:fe998cf1b9b4fc0560d7386e1988f5abb54ee9d7": {
+    "title": "Low-Latency Serial-to-Parallel Conversion for Feedback Shift Registers via Semi-Tensor Product",
+    "file": "2025_Low-Latency Serial-to-Parallel Conversion for Feedback Shift Registers via Semi-.md",
+    "saved": "2026-06-26"
+  },
+  "ss:dbe8cbd84ff0f74dbe6bbe61755b4e6a94240140": {
+    "title": "VLSI Implementation of Parallel CRC Using Pipelining, Unfolding and Retiming",
+    "file": "2013_VLSI Implementation of Parallel CRC Using Pipelining, Unfolding and Retiming.md",
+    "saved": "2026-06-26"
+  },
+  "ss:eb5d5755b815f40ba6c2b42985d5ed5078bf3672": {
+    "title": "High Logic Density Cyclic Redundancy Check and Forward Error Correction Logic Sharing Encoding Circuit for JESD204C Controller",
+    "file": "2024_High Logic Density Cyclic Redundancy Check and Forward Error Correction Logic Sh.md",
+    "saved": "2026-06-26"
+  },
+  "ss:44f89b609f60db36d9440c205a32503617ca2b53": {
+    "title": "Error Detection Analysis in LoRa Communication in Wireless Sensor Network Implementation with Microcontroller-Based Cyclic Redundancy Check Method",
+    "file": "2025_Error Detection Analysis in LoRa Communication in Wireless Sensor Network Implem.md",
+    "saved": "2026-06-26"
+  },
+  "ss:37ae13a3f26ea6a7f94ac4e28ae72cd5e751b532": {
+    "title": "Design of Cyclic Redundancy Check (CRC) Code Generator Circuit in Quantum Dot Cellular Automata (QCA) for Communication",
+    "file": "2023_Design of Cyclic Redundancy Check (CRC) Code Generator Circuit in Quantum Dot Ce.md",
+    "saved": "2026-06-26"
+  },
+  "ss:8bfbbe2246de0f2604e77ba2a46cccecefd7e225": {
+    "title": "Implementation of Table-Based Cyclic Redundancy Check (CRC-32) for Gigabit Ethernet Applications",
+    "file": "2023_Implementation of Table-Based Cyclic Redundancy Check (CRC-32) for Gigabit Ether.md",
+    "saved": "2026-06-26"
+  },
+  "ss:54a112e3f0e33dd32c443508b9cad6d9bf6f33d9": {
+    "title": "Reliability of Arduino Serial Communication Systems: A Case Study on the Application of Cyclic Redundancy Check (CRC)",
+    "file": "2024_Reliability of Arduino Serial Communication Systems A Case Study on the Applicat.md",
+    "saved": "2026-06-26"
+  },
+  "ss:c561b9c13ae1df969c4a237864175f037987f9ba": {
+    "title": "Pipelined and Partitionable Forward Error Correction and Cyclic Redundancy Check Circuitry Implementation for PCI Express 6.0 and Compute Express Link 3.0",
+    "file": "2024_Pipelined and Partitionable Forward Error Correction and Cyclic Redundancy Check.md",
+    "saved": "2026-06-26"
+  },
+  "ss:10ad63ac90b9c4a4ec5447aaf2a834c86072af90": {
+    "title": "Implementasi Rangkaian CRC (Cyclic Redundancy Check) Generator pada FPGA (Field Programmable Gate Array)",
+    "file": "2019_Implementasi Rangkaian CRC (Cyclic Redundancy Check) Generator pada FPGA (Field .md",
+    "saved": "2026-06-26"
+  },
+  "ss:d33e42534b285432242deb572374837cf82732fe": {
+    "title": "CRC4EVER: Cyclic Redundancy Check for Enhanced Verification and Efficient Routing",
+    "file": "2025_CRC4EVER Cyclic Redundancy Check for Enhanced Verification and Efficient Routing.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:1711.08458v1": {
+    "title": "BILBO-friendly Hybrid BIST Architecture with Asymmetric Polynomial Reseeding",
+    "file": "2017_BILBO-friendly Hybrid BIST Architecture with Asymmetric Polynomial Reseeding.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:2207.13219v4": {
+    "title": "Dalorex: A Data-Local Program Execution and Architecture for Memory-bound Applications",
+    "file": "2022_Dalorex A Data-Local Program Execution and Architecture for Memory-bound Applica.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:0710.4669v1": {
+    "title": "SOC Testing Methodology and Practice",
+    "file": "2007_SOC Testing Methodology and Practice.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:0910.3427v4": {
+    "title": "A Scalable VLSI Architecture for Soft-Input Soft-Output Depth-First Sphere Decoding",
+    "file": "2009_A Scalable VLSI Architecture for Soft-Input Soft-Output Depth-First Sphere Decod.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:1909.00553v1": {
+    "title": "Touché: Towards Ideal and Efficient Cache Compression By Mitigating Tag Area Overheads",
+    "file": "2019_Touché Towards Ideal and Efficient Cache Compression By Mitigating Tag Area Over.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:0710.4670v1": {
+    "title": "Evolutionary Optimization in Code-Based Test Compression",
+    "file": "2007_Evolutionary Optimization in Code-Based Test Compression.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:2412.09405v1": {
+    "title": "Learned Compression for Compressed Learning",
+    "file": "2024_Learned Compression for Compressed Learning.md",
+    "saved": "2026-06-26"
+  },
+  "arxiv:2104.07930v3": {
+    "title": "Conditional Coding for Flexible Learned Video Compression",
+    "file": "2021_Conditional Coding for Flexible Learned Video Compression.md",
+    "saved": "2026-06-26"
+  },
+  "ss:f3413e68a958192ede6442caeb6277c24dfd0f42": {
+    "title": "Implementation of Memory Built-In Self-Test",
+    "file": "2025_Implementation of Memory Built-In Self-Test.md",
+    "saved": "2026-06-26"
+  },
+  "ss:42d319a4c5d08282a725e811b41a4250f52b32d0": {
+    "title": "SRAM Memory Built in Self-Test using MARCH Algorithm",
+    "file": "2022_SRAM Memory Built in Self-Test using MARCH Algorithm.md",
+    "saved": "2026-06-26"
+  },
+  "ss:9ed66eb63f2b8ce387720f2ac3e18799e1a6d8b0": {
+    "title": "SMS Memory Built in Self Test Verification",
+    "file": "2025_SMS Memory Built in Self Test Verification.md",
+    "saved": "2026-06-26"
+  },
+  "ss:bd06daf62f4906e7589e18d7de463f47d2beacaa": {
+    "title": "Enhanced Fault Detection in SRAM-Based FIFO Buffer using MARCH Test Algorithms for MBIST Architectures",
+    "file": "2025_Enhanced Fault Detection in SRAM-Based FIFO Buffer using MARCH Test Algorithms f.md",
+    "saved": "2026-06-26"
+  },
+  "ss:c1e05b051e37e47d4395195f754837730f58a497": {
+    "title": "Design and Implementation of Verilog-Based SRAM Built-In Self-Test and Repair System with Fault Injection",
+    "file": "2026_Design and Implementation of Verilog-Based SRAM Built-In Self-Test and Repair Sy.md",
+    "saved": "2026-06-26"
+  },
+  "ss:97eb9461ac63d3bbafef9f9ae81e9c762a1ebc61": {
+    "title": "Adaptation of of March-SS algorithm to word-oriented memory built-in self-test and repair",
+    "file": "2022_Adaptation of of March-SS algorithm to word-oriented memory built-in self-test a.md",
+    "saved": "2026-06-26"
+  },
+  "ss:74a186aec22fb85d6ed53df05d6769a27a2e1409": {
+    "title": "Performance Analysis of March M & B Algorithms for Memory Built-In Self-Test (BIST)",
+    "file": "2022_Performance Analysis of March M & B Algorithms for Memory Built-In Self-Test (BI.md",
+    "saved": "2026-06-26"
+  },
+  "ss:9a9b00daa96b30950c081b6a171d31952e212a5b": {
+    "title": "A CONCURRENT BUILT-IN SELF-TEST ARCHITECTURE BASED ON A SELF-TESTING RAM",
+    "file": "2026_A CONCURRENT BUILT-IN SELF-TEST ARCHITECTURE BASED ON A SELF-TESTING RAM.md",
+    "saved": "2026-06-26"
+  },
+  "ss:7be0507acfb9a4829a88f92f680e5f6bdc973c80": {
+    "title": "Highly Efficient Built-In Self-Repair Techniques for NAND Flash Memory With Fine-Grained Redundancies",
+    "file": "2025_Highly Efficient Built-In Self-Repair Techniques for NAND Flash Memory With Fine.md",
+    "saved": "2026-06-26"
+  },
+  "ss:7557a83aaeb843d33e90999566e75753cb8f36fb": {
+    "title": "Design of Modified March-C Algorithm and Built-in self-test architecture for Memories",
+    "file": "2020_Design of Modified March-C Algorithm and Built-in self-test architecture for Mem.md",
+    "saved": "2026-06-26"
+  },
+  "ss:71f982cc9b531ba0ed1af70d9908870d1d8697d7": {
+    "title": "Enhancing Memory BIST With an Optimized RTL-BIST IP Core: A Low-Power, High-Fault-Coverage Approach",
+    "file": "2025_Enhancing Memory BIST With an Optimized RTL-BIST IP Core A Low-Power, High-Fault.md",
+    "saved": "2026-06-26"
+  },
+  "ss:c7d244ed77baca449ecfe1bf836e59a978c08578": {
+    "title": "Integrated Progressive Built-In Self-Repair (IPBISR) Techniques for NAND Flash Memory",
+    "file": "2023_Integrated Progressive Built-In Self-Repair (IPBISR) Techniques for NAND Flash M.md",
+    "saved": "2026-06-26"
+  },
+  "ss:2221f88d081dfd2fc4cf73ebe0686657116089ea": {
+    "title": "MBIST++: An Adaptive March Algorithm Generator for Memory Test Coverage Enhancement in Post-Silicon Validation",
+    "file": "2026_MBIST++ An Adaptive March Algorithm Generator for Memory Test Coverage Enhanceme.md",
+    "saved": "2026-06-26"
+  },
+  "ss:86a2bd195ca0f36a83fca8b2df756f200683e49b": {
+    "title": "A Built-in Self-Test Scheme for Detecting Defects in FinFET-Based SRAM Circuit",
+    "file": "2018_A Built-in Self-Test Scheme for Detecting Defects in FinFET-Based SRAM Circuit.md",
+    "saved": "2026-06-26"
+  },
+  "ss:60256a7fb8d077a9b217586db9d349843c10f02c": {
+    "title": "Reduced March SR Algorithm for Deep-Submicron SRAM Testing",
+    "file": "2022_Reduced March SR Algorithm for Deep-Submicron SRAM Testing.md",
+    "saved": "2026-06-26"
+  },
+  "ss:bdabc3c07d07e48465b6be2365474e3fa37cdfe9": {
+    "title": "Low-Voltage LDO Regulator Based on Native MOS Transistor with Improved PSR and Fast Response",
+    "file": "2023_Low-Voltage LDO Regulator Based on Native MOS Transistor with Improved PSR and F.md",
+    "saved": "2026-06-27"
+  },
+  "ss:b865104298d3d36b7e58db2dfab9f1744b55f543": {
+    "title": "A Dual-Rail Hybrid Analog/Digital Low-Dropout Regulator With Dynamic Current Steering for a Tunable High PSRR and High Efficiency",
+    "file": "2020_A Dual-Rail Hybrid AnalogDigital Low-Dropout Regulator With Dynamic Current Stee.md",
+    "saved": "2026-06-27"
+  },
+  "ss:00a00899201ea0654d6da3f00e75401de6d308e9": {
+    "title": "Proposal and design methodology of switching mode low dropout regulator for Bio-medical applications",
+    "file": "2019_Proposal and design methodology of switching mode low dropout regulator for Bio-.md",
+    "saved": "2026-06-27"
+  },
+  "ss:249e6c0228c7537058fdae0fb98ea048361b3e9e": {
+    "title": "A Sub-μA LDO With Analog Adaptive Enhancements for Scalable PSRR, Load Range, and Bandwidth Extension",
+    "file": "2026_A Sub-μA LDO With Analog Adaptive Enhancements for Scalable PSRR, Load Range, an.md",
+    "saved": "2026-06-27"
+  },
+  "ss:33a240a5fa88f2bf31535575151b8c013d90e0f9": {
+    "title": "A precision low-power analog front end in 180 nm CMOS for wireless implantable capacitive pressure sensors",
+    "file": "2020_A precision low-power analog front end in 180 nm CMOS for wireless implantable c.md",
+    "saved": "2026-06-27"
+  },
+  "ss:abf97b129185435835fd7441c20616e46d3467d0": {
+    "title": "A Universal Modular Hybrid LDO With Fast Load Transient Response and Programmable PSRR in 14-nm CMOS Featuring Dynamic Clamp Strength Tuning",
+    "file": "2021_A Universal Modular Hybrid LDO With Fast Load Transient Response and Programmabl.md",
+    "saved": "2026-06-27"
+  },
+  "ss:6b67a49184b579e9caf1a22446ebdf2863575674": {
+    "title": "An Analog Integrated Multiloop LDO: From Analysis to Design",
+    "file": "2024_An Analog Integrated Multiloop LDO From Analysis to Design.md",
+    "saved": "2026-06-27"
+  },
+  "ss:96568366adecd03cd7c337da6e7f066f0d5cdc07": {
+    "title": "A Radio-Frequency CMOS Low-Power LC-VCO Integrated with On-Chip Low Dropout Regulator and Bandgap Reference Without Utilizing External Capacitor",
+    "file": "2025_A Radio-Frequency CMOS Low-Power LC-VCO Integrated with On-Chip Low Dropout Regu.md",
+    "saved": "2026-06-27"
+  },
+  "ss:7f229aab6b1a842365e2f48d067ef4f36a69de8e": {
+    "title": "A Microwave Low-Power and Low-Phase-Noise CMOS VCO with Integrated Low Dropout Regulator and Bandgap Reference",
+    "file": "2025_A Microwave Low-Power and Low-Phase-Noise CMOS VCO with Integrated Low Dropout R.md",
+    "saved": "2026-06-27"
+  },
+  "ss:10827dc232e18d4cd0f12d2032e04d342a7c0006": {
+    "title": "A CMOS Low Dropout Voltage Regulator Suitable for Low-Power SoC Applications",
+    "file": "2025_A CMOS Low Dropout Voltage Regulator Suitable for Low-Power SoC Applications.md",
+    "saved": "2026-06-27"
+  },
+  "ss:217e44f8c26db750e20ba38d2e4aab702118014a": {
+    "title": "Study on the Reduction of Re-ignition Surge of High Voltage Vacuum Circuit Breakers",
+    "file": "2025_Study on the Reduction of Re-ignition Surge of High Voltage Vacuum Circuit Break.md",
+    "saved": "2026-06-27"
+  },
+  "ss:abb895237b6064d0804cb2f2582ffb127447f35e": {
+    "title": "A novel current‐source management integrated circuit applied to high‐voltage integrated gate commutated thyristor gate driver",
+    "file": "2025_A novel current‐source management integrated circuit applied to high‐voltage int.md",
+    "saved": "2026-06-27"
+  },
+  "ss:44ee208dbe6d7eb7746b03a57a0e2ff124036560": {
+    "title": "Tutorial: Fundamentals of Power Management Systems: Constraints and Solutions",
+    "file": "2024_Tutorial Fundamentals of Power Management Systems Constraints and Solutions.md",
+    "saved": "2026-06-27"
+  },
+  "ss:aa7125cb1b93844601c56e357708a55c42da984e": {
+    "title": "A Fast-Transient Capacitorless LDO with Slew Rate Enhancement and Fast Power-on Startup Path",
+    "file": "2024_A Fast-Transient Capacitorless LDO with Slew Rate Enhancement and Fast Power-on .md",
+    "saved": "2026-06-27"
+  },
+  "ss:9f06036e87dfd8fe40b8242b1057b21b45625ab1": {
+    "title": "8.5 A 6nA Fully-Autonomous Triple-Input Hybrid-Inductor-Capacitor Multi-Output Power Management System with Multi-Rail Energy Sharing, All-Rail Cold Startup, and Adaptive Conversion Control for mm-scale Distributed Systems",
+    "file": "2024_8.5 A 6nA Fully-Autonomous Triple-Input Hybrid-Inductor-Capacitor Multi-Output P.md",
+    "saved": "2026-06-27"
+  },
+  "ss:da8472413d15996410fd174bc70ddf1c3d48dce1": {
+    "title": "A Power Management Unit for Battery-Less TEG Energy Harvesting With Low Voltage Self-Startup",
+    "file": "2021_A Power Management Unit for Battery-Less TEG Energy Harvesting With Low Voltage .md",
+    "saved": "2026-06-27"
+  },
+  "ss:63c5622ca285b2ce8c499163714314214506493c": {
+    "title": "High-Performance Flexible Graphene Oxide-Based Moisture-Enabled Nanogenerator via Multilayer Heterojunction Engineering and Power Management System.",
+    "file": "2023_High-Performance Flexible Graphene Oxide-Based Moisture-Enabled Nanogenerator vi.md",
+    "saved": "2026-06-27"
+  },
+  "ss:f7a6592fdcc5438128dbb681b11aa03c489aaa78": {
+    "title": "A simple and efficient soft-start circuit applied to BUCK switching power supplies",
+    "file": "2026_A simple and efficient soft-start circuit applied to BUCK switching power suppli.md",
+    "saved": "2026-06-27"
+  },
+  "ss:84055a49dba3f2dad4445504b2af5e19a58d9c77": {
+    "title": "Design and Implementation of 32 Bit Linear Feedback Shift Register using FPGA",
+    "file": "2024_Design and Implementation of 32 Bit Linear Feedback Shift Register using FPGA.md",
+    "saved": "2026-06-27"
+  },
+  "ss:543ee8cad2f7e8d64eb2eee5976f1808b15293d2": {
+    "title": "Evaluation of a Random Number Generator based on an Internal Linear Feedback Shift Register",
+    "file": "2023_Evaluation of a Random Number Generator based on an Internal Linear Feedback Shi.md",
+    "saved": "2026-06-27"
+  },
+  "ss:070b36807677362c9ecfc6029a23c7094015afb3": {
+    "title": "A Programmable and Parameterisable Reseeding Linear Feedback Shift Register",
+    "file": "2022_A Programmable and Parameterisable Reseeding Linear Feedback Shift Register.md",
+    "saved": "2026-06-27"
+  },
+  "ss:9b09780b68e6e7afaf47e7e011d6a8a36a9cb19c": {
+    "title": "Coverage driven verification of linear feedback shift register hardware",
+    "file": "2022_Coverage driven verification of linear feedback shift register hardware.md",
+    "saved": "2026-06-27"
+  },
+  "ss:fb70997573fe99df2afb54fd434d46f5ad4c3a5f": {
+    "title": "Enhanced LFSR-Based Frequency Divider with Multi-Stage Feedback Selection and State Extension",
+    "file": "2026_Enhanced LFSR-Based Frequency Divider with Multi-Stage Feedback Selection and St.md",
+    "saved": "2026-06-27"
+  },
+  "ss:92623b54feb642ab6409bd2e6da1de242126409f": {
+    "title": "Scrambling and De-Scrambling Implementation Using Linear Feedback Shift Register Method on FPGA",
+    "file": "2017_Scrambling and De-Scrambling Implementation Using Linear Feedback Shift Register.md",
+    "saved": "2026-06-27"
+  },
+  "ss:fd1cc50e8bf905d72272e2457cc25ff188d1db7d": {
+    "title": "New Programmable LFSR Counters with Automatic Encoding and State Extension",
+    "file": "2024_New Programmable LFSR Counters with Automatic Encoding and State Extension.md",
+    "saved": "2026-06-27"
+  },
+  "ss:ecff493093a022f09663d823cb3e289debf7daa1": {
+    "title": "Maximal length test pattern generation for the cryptography application",
+    "file": "2020_Maximal length test pattern generation for the cryptography application.md",
+    "saved": "2026-06-27"
+  },
+  "ss:14dbdfd883c7d7da4620f44119f3bd2738db66f1": {
+    "title": "Field programmable gate array implementation frameworks of a variable-length pseudorandom pattern generator",
+    "file": "2025_Field programmable gate array implementation frameworks of a variable-length pse.md",
+    "saved": "2026-06-27"
+  },
+  "ss:31f8515f7c44df4f30702e55feb4b036274d8149": {
+    "title": "Design of a 1.9 GHz low-power LFSR Circuit using the Reed-Solomon Algorithm for Pseudo-Random Test Pattern Generation",
+    "file": "2021_Design of a 1.9 GHz low-power LFSR Circuit using the Reed-Solomon Algorithm for .md",
+    "saved": "2026-06-27"
+  },
+  "ss:7a6a095873840ae97a57d13ea2621f540fdf1921": {
+    "title": "A Reconfigurable Built-In Self-Test Scheme for the Evaluation Circuits of Digital SRAM-IMC Architectures",
+    "file": "2026_A Reconfigurable Built-In Self-Test Scheme for the Evaluation Circuits of Digita.md",
+    "saved": "2026-06-27"
+  },
+  "ss:cbabb9e191e843595f4516a634e96e6e4acb91d1": {
+    "title": "BIST (Built-In Self Test) Memory by Using VERILOG",
+    "file": "2023_BIST (Built-In Self Test) Memory by Using VERILOG.md",
+    "saved": "2026-06-27"
+  },
+  "ss:15bd940be50fd7624f896bc23497fdcb1fb7806f": {
+    "title": "ARCTIC: Agile and Robust Compute-In-Memory Compiler with Parameterized INT/FP Precision and Built-In Self Test",
+    "file": "2024_ARCTIC Agile and Robust Compute-In-Memory Compiler with Parameterized INTFP Prec.md",
+    "saved": "2026-06-27"
+  },
+  "ss:a2c67b860edbb378a8acc4ec0691cd96a7972bf7": {
+    "title": "Realization of Built-In Self Test(BIST) Enabled Memory(RAM) Using VHDL and Implementation in Spartan6 FPGA board",
+    "file": "2020_Realization of Built-In Self Test(BIST) Enabled Memory(RAM) Using VHDL and Imple.md",
+    "saved": "2026-06-27"
+  },
+  "ss:e423643d6b0e84d2067b68c87a73d2939bffeaa7": {
+    "title": "A Built-in Self-Test Scheme for TSVs of Logic-DRAM Stacked 3D ICs",
+    "file": "2019_A Built-in Self-Test Scheme for TSVs of Logic-DRAM Stacked 3D ICs.md",
+    "saved": "2026-06-27"
+  },
+  "ss:9957575d7966c4926a25e319ad65c669438bc6bf": {
+    "title": "A Built-in Self-Test System for External DRAM",
+    "file": "2020_A Built-in Self-Test System for External DRAM.md",
+    "saved": "2026-06-27"
+  },
+  "ss:78a57b127cd0cc82bb634e8cbd44b317a87f758a": {
+    "title": "Software-hardware-cooperated built-in self-test scheme for channel-based DRAMs",
+    "file": "2017_Software-hardware-cooperated built-in self-test scheme for channel-based DRAMs.md",
+    "saved": "2026-06-27"
+  },
+  "ss:a2766df559c3ab16753770beeb35c1c08da75dfb": {
+    "title": "Machine Learning-Driven Flip-Flop Timing Model and its Application in Resolving Marginal Timing Violations",
+    "file": "2025_Machine Learning-Driven Flip-Flop Timing Model and its Application in Resolving .md",
+    "saved": "2026-06-27"
+  },
+  "ss:59b035dcba69dfc3de8448aa7c32ffd162af952e": {
+    "title": "Razor flip-flop based Detector/Corrector System for Correcting Timing violations in Digital Circuits",
+    "file": "2021_Razor flip-flop based DetectorCorrector System for Correcting Timing violations .md",
+    "saved": "2026-06-27"
+  },
+  "ss:41bc9f60bd88f0e99808721aed1606c8ac5bbefb": {
+    "title": "Mix & Latch: An Optimization Flow for High-Performance Designs With Single-Clock Mixed-Polarity Latches and Flip-Flops",
+    "file": "2023_Mix & Latch An Optimization Flow for High-Performance Designs With Single-Clock .md",
+    "saved": "2026-06-27"
+  },
+  "ss:8aff9cdfb85255e70656431d038d03669dee2173": {
+    "title": "IMPACT ANALYSIS OF DUAL EDGE TRIGGERING FLIP-FLOP USING SINGLE PHASE SINGLE-TRANSISTOR-CLOCKED BUFFER WITH LOW POWER REDUNDANT TRANSMISSION",
+    "file": "2025_IMPACT ANALYSIS OF DUAL EDGE TRIGGERING FLIP-FLOP USING SINGLE PHASE SINGLE-TRAN.md",
+    "saved": "2026-06-27"
+  },
+  "ss:e2213adc617e20f3fabe0a95e238c158f5c10672": {
+    "title": "A Soft Error Detection and Recovery Flip-Flop for Aggressive Designs With High-Performance",
+    "file": "2022_A Soft Error Detection and Recovery Flip-Flop for Aggressive Designs With High-P.md",
+    "saved": "2026-06-27"
+  },
+  "ss:18f2d2aae1a2ec2a3e2f140afe0e29f5731229e8": {
+    "title": "Comprehensive Design and Timing Analysis for High speed Master Slave D Flip-Flops using 18 nm FinFET Technology",
+    "file": "2021_Comprehensive Design and Timing Analysis for High speed Master Slave D Flip-Flop.md",
+    "saved": "2026-06-27"
+  },
+  "ss:7a5f8d0711366f4526255179e3ac7538d079a587": {
+    "title": "Efficient Low-Power Timing-Error Control in Digital Integrated Circuits Using Timing Error-Tolerant Circuits and Time-Borrowing Techniques",
+    "file": "2023_Efficient Low-Power Timing-Error Control in Digital Integrated Circuits Using Ti.md",
+    "saved": "2026-06-27"
+  },
+  "ss:0d1af003ea850b0651990982f074c4644b201c86": {
+    "title": "Design for testability using mixed-polarity flip-flops and latches",
+    "file": "2026_Design for testability using mixed-polarity flip-flops and latches.md",
+    "saved": "2026-06-27"
+  },
+  "ss:d03e24f8c64b4f0f3f8a60eac9ee910d7bd8c108": {
+    "title": "CharML: A Machine Learning-Driven Instantaneous Sequential Circuit Characterization Framework",
+    "file": "2026_CharML A Machine Learning-Driven Instantaneous Sequential Circuit Characterizati.md",
+    "saved": "2026-06-27"
+  },
+  "ss:5796e4f7a2933b52e2b7463d64524cca9c6561bd": {
+    "title": "60-Gb/s 1:4 Demultiplexer in 22-nm FD-SOI Technology Using TSPC Logic: A Circuit-to-System-Level Analysis and Design",
+    "file": "2026_60-Gbs 14 Demultiplexer in 22-nm FD-SOI Technology Using TSPC Logic A Circuit-to.md",
+    "saved": "2026-06-27"
+  }
+}

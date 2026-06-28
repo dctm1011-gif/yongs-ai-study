@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ML-Enhanced Row-Sampling RowHammer Defense · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">ML-Enhanced Row-Sampling RowHammer Defense</span>
+</div>
+<div class="article">
+  <div class="article-venue">Theoretical and Applied Cybersecurity 2025</div>
+  <h1 class="article-title">Enhancing Row-Sampling-Based Rowhammer defense methods with Machine Learning approach</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">ECC</span><span class="tag">ML-HW</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/e0d794223f67a8bdc18badec1686df26595802f7" target="_blank">원문 보기 →</a></div>
+  <p class="opener">행 샘플링 기반 RowHammer 방어(PARA 등)의 핵심 약점인 확률 임계값 고정 문제를 다차원 ML 모델로 실시간 동적 조정해 보안성과 에너지 효율을 동시에 높인 접근이에요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">행 샘플링 방어는 왜 ML의 도움이 필요한가요?</h2>
+    <p>RowHammer 방어 방식 중 "행 샘플링(row sampling)" 계열은 직관적이고 구현이 간단해서 실제 DRAM에 많이 적용됐어요. 대표적인 예가 PARA(Probabilistic Adjacent Row Activation)인데, 특정 행이 활성화될 때 p의 확률로 그 인접 행도 예방적으로 활성화하는 방식이에요. 카운터를 유지하지 않아서 오버헤드가 매우 낮고, 구현이 간단해요.</p>
+    <p>하지만 PARA의 치명적 약점은 확률 p가 고정값이라는 거예요. 공격이 없는 평상시에도 p 확률로 불필요한 예방 리프레시가 발동되고(false positive), 반대로 정교한 공격 패턴에서는 p가 고정돼 있어서 공격자가 RHTB 이하로 교묘하게 활성화 횟수를 맞추는 회피가 가능해요. 결국 PARA는 "충분히 높은 p는 성능을 죽이고, 충분히 낮은 p는 보안에 구멍이 생기는" 딜레마를 가지고 있어요.</p>
+    <p>이 딜레마를 풀려면 p가 상황에 따라 동적으로 바뀌어야 해요. 공격 패턴이 감지되면 p를 올리고, 평상시에는 p를 내리는 거죠. 이 "상황 인식과 동적 조정"이 바로 ML이 잘하는 일이에요. 이 논문은 실시간 메모리 액세스 패턴을 피처로 삼아 p를 동적으로 예측하는 다차원 다중 레이블 ML 모델을 제안해요.</p>
+    <div class="insight blue">
+      <div class="insight-label">논문의 출발점</div>
+      <p>RowHammer 공격은 특정 행을 집중적으로 반복 접근하는 패턴을 가져요. 이 패턴은 정상 메모리 접근과 통계적으로 구별 가능하고, ML이 이 구별을 실시간으로 학습하면 고정 확률의 한계를 극복할 수 있어요. 보안과 효율의 트레이드오프를 동적으로 최적화하는 게 핵심이에요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">ML 모델이 확률 임계값을 어떻게 동적으로 조정하나요?</h2>
+    <p>제안 시스템은 크게 세 부분으로 구성돼요. 첫째, 실시간 피처 추출기예요. 메모리 컨트롤러 수준에서 행 활성화 이벤트를 모니터링하고, 각 행의 최근 활성화 빈도, 활성화 간격의 분산, 연속 활성화 여부, 공간적 집중도(특정 행 주변에 집중되는지) 등 다차원 피처를 시간 윈도우 단위로 계산해요.</p>
+    <p>둘째, 다차원 다중 레이블 ML 분류기예요. 추출된 피처를 입력받아 현재 메모리 접근 패턴이 "공격 없음 / 저강도 공격 / 고강도 공격"의 레이블로 분류해요. 다중 레이블이기 때문에 여러 공격이 동시에 다른 행에서 일어나는 복합 시나리오도 처리할 수 있어요. 모델 자체는 하드웨어 구현을 고려해 경량화된 구조(간단한 결정 트리 앙상블 또는 소형 신경망)를 사용해요.</p>
+    <p>셋째, 동적 임계값 조정기예요. ML 분류 결과에 따라 샘플링 확률 p와 예방 리프레시 임계값을 실시간으로 업데이트해요. 공격 가능성이 높다고 판단되면 p를 높여 보호를 강화하고, 정상 접근이 감지되면 p를 낮춰 불필요한 리프레시를 줄여요. 이 세 요소가 피드백 루프를 형성해 지속적으로 최적화돼요.</p>
+    <div class="insight green">
+      <div class="insight-label">핵심 아이디어</div>
+      <p>ML이 "공격 감지기" 역할을 하고, 기존 행 샘플링 방어가 "실행기" 역할을 하는 2단 구조예요. ML 없이는 고정 p의 PARA처럼 보수적으로 설정해야 했지만, ML 감지기가 앞단에 있으면 평상시 p를 과감히 낮추고 공격 시에만 p를 올릴 수 있어요. 정밀도와 재현율을 모두 높이는 구조예요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">ML을 추가하면 얼마나 좋아지나요?</h2>
+    <p>ML 기반 동적 임계값 조정은 기존 고정 확률 PARA 대비 비트 플립 발생을 크게 줄이면서도 불필요한 예방 리프레시(false positive)를 줄여 에너지 효율도 함께 향상시켰어요. 특히 정교한 패턴 공격(패턴이 일정한 단순 해머가 아닌 무작위 혼합 해머)에 대한 탐지율이 크게 올라갔어요. 성능 오버헤드는 ML 연산 자체의 경량화로 최소화했어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">↑ 탐지율</div><div class="stat-desc">복잡한 공격 패턴에 대한 ML 탐지 정확도 향상 (기존 고정 p 대비)</div></div>
+      <div class="stat-box"><div class="stat-num">↓ False+</div><div class="stat-desc">정상 접근 시 불필요한 예방 리프레시 횟수 감소</div></div>
+      <div class="stat-box"><div class="stat-num">↓ 에너지</div><div class="stat-desc">False positive 감소로 인한 리프레시 전력 절감</div></div>
+      <div class="stat-box"><div class="stat-num">↓ 오버헤드</div><div class="stat-desc">경량 ML 모델로 연산 오버헤드 최소화, 실시간 적용 가능</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM은 SoC 안에 완전히 통합된 메모리 컨트롤러와 함께 사용되기 때문에, 메모리 컨트롤러 안에 경량 ML 추론 블록을 추가하는 것이 외부 DDR 시스템보다 훨씬 실현 가능해요. AI 가속기 SoC에는 이미 NPU나 벡터 처리 유닛이 있어서, 이들을 활용해 RowHammer 탐지 ML 추론을 오프로드할 수도 있어요. 별도 하드웨어 없이 기존 AI 연산 유닛을 재활용하는 시너지 효과예요.</p>
+    <p>HBM 환경에서 메모리 접근 패턴 피처 추출도 용이해요. HBM 컨트롤러는 이미 행 활성화 이력을 트래킹하는 내부 로직을 가지고 있어서, 이 정보를 ML 피처로 재활용하면 추가 모니터링 오버헤드가 최소화돼요. 특히 AI 워크로드는 매트릭스 연산 특성상 메모리 접근 패턴이 어느 정도 예측 가능하므로, 정상 패턴 학습이 DDR 범용 서버 메모리보다 쉬울 수 있어요.</p>
+    <p>다만 HBM에서 RowHammer 공격 가능성 자체에 대한 논쟁이 있어요. HBM은 물리적으로 SoC 패키지 안에 봉인된 신뢰된 환경에서 사용되기 때문에, 외부 공격자가 직접 행 활성화 패턴을 조작하기 어렵다는 주장도 있어요. 그러나 클라우드 환경에서 멀티테넌트 GPU를 공유하는 경우 공격 면적이 생길 수 있어서, 대비가 필요하다는 시각도 있어요.</p>
+    <div class="insight yellow">
+      <div class="insight-label">주의할 점</div>
+      <p>ML 모델의 일반화 능력이 관건이에요. 학습에 사용되지 않은 새로운 공격 패턴에 ML이 얼마나 잘 대응하는지(out-of-distribution robustness)가 보안 시스템에서 핵심이에요. 공격자가 ML 탐지 회피를 위해 의도적으로 공격 패턴을 바꾸는 "적대적 공격(adversarial attack)"에 대한 내성 평가가 추가로 필요해요. 또한 ML 추론 지연이 리프레시 스케줄링에 미치는 영향도 검토해야 해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — 시스템 아키텍처 개요: 메모리 컨트롤러 내 피처 추출기, ML 분류기, 동적 임계값 조정기가 어떻게 연결되는지 블록 다이어그램으로 표현해요. 기존 PARA 경로와 새로 추가된 ML 경로의 병렬 구조가 핵심이에요.</p>
+    <p><strong>Fig. 2</strong> — 공격 패턴 피처 분포: 정상 메모리 접근과 RowHammer 공격 접근의 피처 값(활성화 빈도, 연속성, 공간 집중도) 분포를 산점도로 보여줘요. 두 분포가 통계적으로 구별 가능함을 시각화해요.</p>
+    <p><strong>Fig. 3</strong> — ML 모델 정확도 vs 공격 강도: 다양한 강도의 RowHammer 공격(저강도~고강도)에 대한 ML 탐지 정확도 곡선이에요. 고정 확률 PARA의 비트 플립 발생률과 비교해 ML 방식의 우월성을 보여줘요.</p>
+    <p><strong>Fig. 4</strong> — 동적 임계값 조정 타임라인: 실제 실험에서 공격이 시작되고 종료되는 시점에 ML 모델이 p를 어떻게 조정하는지 시간축으로 보여줘요. 공격 시작 후 몇 번의 윈도우 내에 p가 올라가는 반응 속도가 핵심 지표예요.</p>
+    <p><strong>Fig. 5</strong> — 에너지 소비 비교: 고정 p PARA와 ML-enhanced 방식의 예방 리프레시 횟수 및 총 에너지 소비를 다양한 워크로드에서 비교한 막대 그래프예요.</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/e0d794223f67a8bdc18badec1686df26595802f7" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

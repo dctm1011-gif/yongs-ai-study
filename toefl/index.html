@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TOEFL 연습 — 2026-06-27</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #fff; color: #37352f; font-size: 15px; line-height: 1.6;
+}
+.cover { height: 8px; background: linear-gradient(90deg, #f59e0b 0%, #ef4444 100%); }
+.page { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
+.back-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; color: #9b9a97; text-decoration: none; margin-bottom: 24px;
+}
+.back-link:hover { color: #37352f; }
+.page-icon { font-size: 48px; margin-bottom: 10px; display: block; }
+.page-title { font-size: 30px; font-weight: 700; letter-spacing: -0.4px; margin-bottom: 4px; }
+.page-desc { font-size: 13px; color: #9b9a97; margin-bottom: 28px; }
+.date-badge {
+  display: inline-block; font-size: 11px; background: #fff7ed; color: #c2410c;
+  padding: 3px 10px; border-radius: 20px; font-weight: 600; margin-bottom: 28px;
+}
+.tab-bar {
+  display: flex; gap: 4px; border-bottom: 2px solid #e9e9e7; margin-bottom: 28px; overflow-x: auto;
+}
+.tab-btn {
+  padding: 10px 18px; font-size: 14px; font-weight: 600; color: #9b9a97;
+  border: none; background: none; cursor: pointer; border-bottom: 2px solid transparent;
+  margin-bottom: -2px; transition: color .15s; white-space: nowrap;
+}
+.tab-btn.active { color: #37352f; border-bottom-color: #f59e0b; }
+.tab-btn:hover:not(.active) { color: #37352f; }
+.tab-btn { transition: color .15s; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; animation: tabIn .2s ease; }
+@keyframes tabIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.section-title {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .8px; color: #9b9a97; margin-bottom: 14px;
+}
+/* Reading */
+.reading-title { font-size: 18px; font-weight: 700; margin-bottom: 14px; }
+.reading-passage {
+  font-size: 15px; line-height: 1.85; color: #37352f;
+  background: #fafaf9; border: 1px solid #e9e9e7; border-radius: 10px;
+  padding: 20px 22px; margin-bottom: 24px; white-space: pre-wrap;
+}
+.questions-list { display: flex; flex-direction: column; gap: 20px; }
+.q-card { border: 1px solid #e9e9e7; border-radius: 10px; padding: 18px; }
+.q-card.answered { background: #fafaf9; }
+.q-num { font-size: 10px; font-weight: 700; color: #f59e0b; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; }
+.q-text { font-size: 15px; font-weight: 600; margin-bottom: 14px; line-height: 1.5; }
+.q-options { display: flex; flex-direction: column; gap: 8px; }
+.opt-btn {
+  text-align: left; background: #f7f6f3; border: 1px solid #e9e9e7;
+  border-radius: 8px; padding: 10px 14px; font-size: 14px; cursor: pointer;
+  transition: background .1s; color: #37352f;
+}
+.opt-btn:hover:not(:disabled) { background: #fff7ed; border-color: #fcd34d; }
+.opt-btn.correct { background: #f0fdf4; border-color: #86efac; color: #166534; }
+.opt-btn.wrong { background: #fef2f2; border-color: #fca5a5; color: #991b1b; }
+.q-explanation {
+  display: none; margin-top: 12px; padding: 10px 14px;
+  background: #f7f6f3; border-radius: 6px; font-size: 13px; line-height: 1.6;
+}
+.q-explanation.show { display: block; }
+.expl-label { font-weight: 700; color: #f59e0b; }
+/* Writing */
+.prompt-box {
+  background: #fff7ed; border: 1px solid #fed7aa; border-radius: 10px;
+  padding: 18px 20px; font-size: 15px; line-height: 1.7; margin-bottom: 20px;
+}
+.structure-box { border: 1px solid #e9e9e7; border-radius: 10px; overflow: hidden; margin-bottom: 16px; }
+.structure-toggle {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; font-size: 13px; font-weight: 600; cursor: pointer;
+  background: #f7f6f3; border: none; width: 100%; text-align: left; color: #37352f;
+}
+.structure-body { display: none; padding: 14px 16px; font-size: 13px; line-height: 1.7; }
+.structure-body.open { display: block; }
+.structure-row { margin-bottom: 10px; }
+.structure-label { font-weight: 700; color: #f59e0b; margin-right: 6px; }
+.phrase-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.phrase-chip {
+  font-size: 13px; padding: 5px 12px; background: #fff7ed; border: 1px solid #fed7aa;
+  border-radius: 20px; color: #c2410c; cursor: pointer; font-weight: 500; transition: background .1s;
+}
+.phrase-chip:hover { background: #fed7aa; }
+.phrase-chip.copied { background: #f0fdf4; border-color: #86efac; color: #166534; }
+.writing-area {
+  width: 100%; border: 1px solid #e9e9e7; border-radius: 10px; padding: 14px 16px;
+  font-size: 14px; font-family: inherit; color: #37352f; resize: vertical;
+  min-height: 200px; outline: none; line-height: 1.7; transition: border-color .15s; margin-bottom: 10px;
+}
+.writing-area:focus { border-color: #f59e0b; }
+.writing-meta {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 13px; color: #9b9a97; margin-bottom: 12px;
+}
+.word-count { font-weight: 700; color: #37352f; }
+.timer-row { display: flex; align-items: center; gap: 10px; }
+.timer-display { font-size: 20px; font-weight: 700; color: #37352f; font-variant-numeric: tabular-nums; min-width: 60px; }
+.timer-display.warning { color: #ef4444; }
+.btn-timer {
+  padding: 8px 18px; font-size: 13px; font-weight: 600; border: none;
+  border-radius: 8px; cursor: pointer; background: #f59e0b; color: #fff; transition: background .15s;
+}
+.btn-timer:hover { background: #d97706; }
+.btn-timer.running { background: #ef4444; }
+/* Speaking */
+.speaking-prompt {
+  background: #f0fdf4; border: 1px solid #86efac; border-radius: 10px;
+  padding: 18px 20px; font-size: 15px; line-height: 1.7; margin-bottom: 20px;
+}
+.speak-timer-box {
+  border: 1px solid #e9e9e7; border-radius: 12px; padding: 20px;
+  text-align: center; margin-bottom: 20px;
+}
+.speak-phase-label {
+  font-size: 12px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .8px; color: #9b9a97; margin-bottom: 8px;
+}
+.speak-phase-label.prep { color: #0ea5e9; }
+.speak-phase-label.speak { color: #10b981; }
+.speak-phase-label.done { color: #8b5cf6; }
+.speak-countdown {
+  font-size: 52px; font-weight: 700; color: #37352f;
+  font-variant-numeric: tabular-nums; margin-bottom: 10px; line-height: 1;
+}
+.speak-countdown.warning { color: #ef4444; }
+.speak-bar-wrap { background: #f1f0ef; border-radius: 4px; height: 6px; margin-bottom: 16px; overflow: hidden; }
+.speak-bar { height: 100%; border-radius: 4px; transition: width .9s linear; }
+.speak-bar.prep { background: #0ea5e9; }
+.speak-bar.speak { background: #10b981; }
+.btn-speak {
+  width: 100%; padding: 14px; font-size: 16px; font-weight: 700;
+  background: linear-gradient(135deg, #10b981, #0ea5e9);
+  color: #fff; border: none; border-radius: 10px; cursor: pointer; transition: opacity .15s;
+}
+.btn-speak:hover { opacity: .9; }
+.btn-speak:disabled { background: #e9e9e7; color: #9b9a97; cursor: default; }
+.expr-list { border: 1px solid #e9e9e7; border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; }
+.expr-item { font-size: 14px; padding: 6px 0; border-bottom: 1px solid #f1f0ef; }
+.expr-item:last-child { border-bottom: none; }
+.sample-points {
+  display: none; background: #f0fdf4; border: 1px solid #86efac;
+  border-radius: 10px; padding: 14px 16px; margin-bottom: 12px;
+}
+.sample-points.show { display: block; }
+.sample-point { font-size: 14px; padding: 6px 0; border-bottom: 1px solid #dcfce7; color: #166534; }
+.sample-point:last-child { border-bottom: none; }
+.btn-secondary {
+  width: 100%; padding: 12px; font-size: 14px; font-weight: 600;
+  background: #f7f6f3; border: 1px solid #e9e9e7; color: #37352f;
+  border-radius: 10px; cursor: pointer; transition: background .15s;
+}
+.btn-secondary:hover { background: #e9e9e7; }
+/* Feedback */
+.btn-feedback {
+  width: 100%; padding: 12px; font-size: 14px; font-weight: 700; margin-top: 12px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff;
+  border: none; border-radius: 10px; cursor: pointer; transition: opacity .15s;
+}
+.btn-feedback:hover { opacity: .9; }
+.btn-feedback:disabled { background: #e9e9e7; color: #9b9a97; cursor: not-allowed; }
+.feedback-box {
+  display: none; margin-top: 14px; background: #fafaf9;
+  border: 1px solid #e9e9e7; border-radius: 12px; padding: 16px;
+}
+.feedback-box.show { display: block; }
+.feedback-box h3 { font-size: 13px; font-weight: 700; color: #6366f1; margin: 0 0 10px; }
+.feedback-content { font-size: 13px; line-height: 1.75; color: #37352f; white-space: pre-wrap; }
+.transcript-area {
+  width: 100%; box-sizing: border-box; margin-top: 10px; padding: 10px 12px;
+  border: 1px solid #d1d5db; border-radius: 8px; font-size: 13px;
+  min-height: 80px; resize: vertical; font-family: inherit; line-height: 1.6;
+}
+.rec-status { font-size: 12px; color: #9b9a97; margin-top: 5px; min-height: 18px; }
+/* Listening */
+.listen-badge {
+  display: inline-block; font-size: 11px; background: #eff6ff; color: #3b82f6;
+  padding: 3px 10px; border-radius: 20px; font-weight: 600; margin-bottom: 14px;
+}
+.listen-player { border: 1px solid #e9e9e7; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+.listen-controls { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.btn-play {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+  color: #fff; border: none; font-size: 22px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: opacity .15s; flex-shrink: 0;
+}
+.btn-play:hover { opacity: .9; }
+.listen-status { font-size: 14px; color: #9b9a97; }
+.listen-status.playing { color: #8b5cf6; font-weight: 600; }
+.listen-status.done { color: #166534; font-weight: 600; }
+.speed-select {
+  font-size: 13px; padding: 6px 10px; border: 1px solid #e9e9e7;
+  border-radius: 6px; color: #37352f; background: #fff; cursor: pointer; margin-left: auto;
+}
+.listen-tip { font-size: 12px; color: #9b9a97; margin-bottom: 10px; }
+.btn-show-script {
+  font-size: 13px; color: #9b9a97; background: #f7f6f3;
+  border: 1px solid #e9e9e7; border-radius: 6px; padding: 6px 14px; cursor: pointer;
+}
+.listen-script {
+  display: none; background: #f7f6f3; border-radius: 8px; padding: 14px 16px;
+  font-size: 14px; line-height: 1.8; color: #37352f; white-space: pre-wrap; margin-top: 12px;
+}
+.listen-script.show { display: block; }
+.listen-questions { display: none; }
+.listen-questions.show { display: flex; flex-direction: column; gap: 20px; }
+.btn-done-listen {
+  width: 100%; padding: 12px; font-size: 14px; font-weight: 700;
+  background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+  color: #fff; border: none; border-radius: 10px; cursor: pointer;
+  margin-bottom: 20px; display: none;
+}
+.btn-done-listen.show { display: block; }
+@media (max-width: 500px) {
+  .page { padding: 32px 16px 60px; }
+  .page-title { font-size: 24px; }
+  .tab-btn { padding: 8px 12px; font-size: 13px; }
+}
+</style>
+</head>
+<body>
+<div class="cover"></div>
+<div class="page">
+  <a class="back-link" href="../index.html">← Yong's AI Study</a>
+  <span class="page-icon">📝</span>
+  <h1 class="page-title">TOEFL 오늘의 연습</h1>
+  <p class="page-desc">Reading · Writing · Speaking · Listening — 하루 1세트</p>
+  <span class="date-badge">📅 2026-06-27</span>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('reading',this)">📖 Reading</button>
+    <button class="tab-btn" onclick="switchTab('writing',this)">✍️ Writing</button>
+    <button class="tab-btn" onclick="switchTab('speaking',this)">🎤 Speaking</button>
+    <button class="tab-btn" onclick="switchTab('listening',this)">🎧 Listening</button>
+  </div>
+
+  <!-- Reading -->
+  <div class="tab-panel active" id="tab-reading">
+    <div class="section-title">Reading Comprehension</div>
+    <div class="reading-title" id="readingTitle"></div>
+    <div class="reading-passage" id="readingPassage"></div>
+    <div class="section-title">Questions</div>
+    <div class="questions-list" id="readingQs"></div>
+  </div>
+
+  <!-- Writing -->
+  <div class="tab-panel" id="tab-writing">
+    <div class="section-title">Writing — Independent Task (30분)</div>
+    <div class="prompt-box" id="writingPrompt"></div>
+    <div class="structure-box">
+      <button class="structure-toggle" onclick="toggleStructure()">
+        📋 구조 가이드 <span id="structArrow">▼</span>
+      </button>
+      <div class="structure-body" id="structBody"></div>
+    </div>
+    <div class="section-title">핵심 표현 (클릭 → 텍스트에 삽입)</div>
+    <div class="phrase-list" id="phraseList"></div>
+    <textarea class="writing-area" id="writingArea" placeholder="여기에 답안을 작성하세요..."></textarea>
+    <button class="btn-feedback" id="btnWritingFeedback" onclick="requestWritingFeedback()">✨ AI 피드백 받기</button>
+    <div class="feedback-box" id="writingFeedbackBox">
+      <h3>📝 Writing 피드백</h3>
+      <div class="feedback-content" id="writingFeedbackContent"></div>
+    </div>
+    <div class="writing-meta">
+      <span>단어 수: <span class="word-count" id="wordCount">0</span></span>
+      <div class="timer-row">
+        <span class="timer-display" id="wTimerDisp">30:00</span>
+        <button class="btn-timer" id="wTimerBtn" onclick="toggleWTimer()">타이머 시작</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Speaking -->
+  <div class="tab-panel" id="tab-speaking">
+    <div class="section-title">Speaking — Independent Task 1 (준비 15초 · 답변 45초)</div>
+    <div class="speaking-prompt" id="speakingPrompt"></div>
+    <div class="speak-timer-box">
+      <div class="speak-phase-label" id="speakLabel">시작 준비</div>
+      <div class="speak-countdown" id="speakCount">15</div>
+      <div class="speak-bar-wrap"><div class="speak-bar prep" id="speakBar" style="width:100%"></div></div>
+      <button class="btn-speak" id="speakBtn" onclick="startSpeaking()">▶ 시작 (준비 15초 → 답변 45초)</button>
+    </div>
+    <div class="section-title">유용한 표현</div>
+    <div class="expr-list" id="exprList"></div>
+    <div class="sample-points" id="samplePts"></div>
+    <button class="btn-secondary" onclick="showSamplePts()">샘플 포인트 보기</button>
+    <div id="speakFeedbackWrap" style="display:none;margin-top:20px">
+      <div class="section-title">AI 피드백 받기</div>
+      <p style="font-size:13px;color:#9b9a97;margin-bottom:8px">Chrome/Edge에서는 음성 인식이 자동으로 채워집니다. 직접 수정하거나 입력도 가능해요.</p>
+      <textarea class="transcript-area" id="speakTranscript" placeholder="말한 내용이 여기에 채워집니다. 직접 입력도 가능해요..."></textarea>
+      <p class="rec-status" id="recStatus"></p>
+      <button class="btn-feedback" id="btnSpeakFeedback" onclick="requestSpeakFeedback()">✨ AI 피드백 받기</button>
+      <div class="feedback-box" id="speakFeedbackBox">
+        <h3>🎤 Speaking 피드백</h3>
+        <div class="feedback-content" id="speakFeedbackContent"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Listening -->
+  <div class="tab-panel" id="tab-listening">
+    <div class="section-title">Listening Comprehension</div>
+    <div class="listen-badge" id="listenBadge">대화</div>
+    <p style="font-size:14px;color:#9b9a97;margin-bottom:16px">스크립트를 숨기고 TTS로 들은 후 문제를 풀어보세요.</p>
+    <div class="listen-player">
+      <div class="listen-controls">
+        <button class="btn-play" id="playBtn" onclick="playListen()">▶</button>
+        <span class="listen-status" id="listenSt">재생 준비됨</span>
+        <select class="speed-select" id="speedSel">
+          <option value="0.75">0.75x</option>
+          <option value="0.9">0.9x</option>
+          <option value="1.0" selected>1.0x</option>
+          <option value="1.1">1.1x</option>
+        </select>
+      </div>
+      <div class="listen-tip">💡 스크립트 없이 듣는 게 효과적이에요. 어려우면 스크립트를 참고하세요.</div>
+      <button class="btn-show-script" onclick="toggleScript(this)">스크립트 보기</button>
+      <div class="listen-script" id="listenScript"></div>
+    </div>
+    <button class="btn-done-listen" id="doneListen" onclick="showListenQs()">✅ 다 들었어요 — 문제 풀기</button>
+    <div class="listen-questions" id="listenQs"></div>
+  </div>
+</div>
+
+<script>
+const READING  = {"title": "Bioluminescence in Deep-Sea Organisms", "passage": "Bioluminescence is the production of light by living organisms through chemical reactions. In deep-sea environments where sunlight cannot penetrate, many creatures have evolved bioluminescent organs to communicate, attract prey, and evade predators. Organisms like anglerfish use a modified dorsal fin ray as a lure, while jellyfish and certain bacteria emit light through enzymatic processes. This adaptation demonstrates how life adapts to extreme conditions.", "questions": [{"q": "According to the passage, why do deep-sea organisms develop bioluminescence?", "options": ["To replace photosynthesis", "To communicate, hunt, and defend themselves", "To regulate body temperature", "To navigate ocean currents"], "answer": 1, "explanation": "지문에서 '생물들이 빛을 내어 의사소통, 먹이 사냥, 포식자 회피'를 위해 사용한다고 명시했습니다."}, {"q": "What can be inferred about the anglerfish's lure?", "options": ["It produces heat", "It attracts prey through light emission", "It is used for mating displays only", "It serves as a defense mechanism"], "answer": 1, "explanation": "앵글러피시가 등지느러미의 변형된 광선을 '미끼'로 사용한다는 것으로부터, 빛을 내어 먹이를 끌어들인다고 추론할 수 있습니다."}]};
+const WRITING  = {"prompt": "Do you agree or disagree with the following statement? Technology has made human relationships weaker rather than stronger. Use specific reasons and examples to support your answer.", "structure": {"intro": "서론: '기술이 인간관계를 약화시켰다'는 주장에 대해 자신의 입장을 명확히 하세요. 예시: 'While technology offers convenience, I believe it has actually strengthened human connections by enabling long-distance communication.' 또는 반대 입장 제시", "body1": "본론 1: 구체적 근거 제시 - 예를 들어, 소셜미디어의 장점(가족과의 거리 유지) 또는 단점(면대면 상호작용 감소)을 구체적 사례로 설명하세요.", "body2": "본론 2: 추가 관점 - 온라인 커뮤니티, 업무 협업, 또는 심화된 스크린 타임의 부정적 효과 등을 다루세요.", "conclusion": "결론: 본론의 주요 주장을 재정리하고 전체 논의를 종합하세요. 예: 'In summary, while technology presents challenges, its benefits in maintaining relationships outweigh its drawbacks.'"}, "key_phrases": ["In my opinion,", "First of all,", "For instance,", "However,", "Furthermore,", "On the other hand,", "As a result,", "In conclusion,", "It is undeniable that", "This demonstrates that"]};
+const SPEAKING = {"prompt": "Some people prefer studying alone in a quiet environment. Others prefer studying in groups with classmates. Which do you prefer and why? Include specific reasons and details in your response.", "useful_expressions": ["In my opinion, I prefer studying...", "One reason is that...", "For example,", "Additionally,", "However,", "On the other hand,", "To summarize,", "This is why I believe..."], "sample_points": ["개인 학습의 이점: 집중력 향상, 자신의 속도로 학습 가능 / 또는 그룹 학습: 다양한 관점 습득, 복잡한 개념에 대한 상호 설명", "구체적 예시: 시험 준비 시 조용한 환경에서 주요 개념 숙달 / 또는 프로젝트 협업 시 그룹 토론으로 창의적 아이디어 도출", "결론: 학습 목표와 과목 성격에 따라 유연하게 선택하는 것이 최선"]};
+const LISTENING = {"title": "Choosing a Research Topic for Final Project", "type": "conversation", "script": "Student A: Hey, have you decided on a topic for your environmental science project yet? There are so many options available.\n\nStudent B: Not really. I was thinking about studying plastic pollution in oceans, but I'm not sure if it's too broad. My professor mentioned that the topic needs to be specific and researchable.\n\nStudent A: That does sound interesting though. Maybe you could narrow it down? Like, focus on how microplastics affect marine organisms, or even a specific region.\n\nStudent B: Oh, that's a great idea! I hadn't thought about narrowing it down that way. What about you? What's your topic?\n\nStudent A: I'm looking at renewable energy adoption in rural communities. I found several case studies that could work as examples.\n\nStudent B: That sounds manageable. When's the proposal due?\n\nStudent A: Next Friday. We should probably meet up to discuss our progress soon. The library's a good place to work on research.", "questions": [{"q": "What is the main topic of the conversation?", "options": ["Choosing and narrowing down research topics for a final project", "Comparing different environmental science courses", "Discussing the best places to study on campus", "Planning a meeting schedule for the entire semester"], "answer": 0, "explanation": "두 학생이 최종 프로젝트의 연구 주제를 선택하고 구체화하는 과정을 논의하고 있습니다."}, {"q": "What does Student A suggest to Student B?", "options": ["Change the topic to renewable energy instead", "Study plastic pollution in all oceans worldwide", "Narrow down the plastic pollution topic to a more specific focus", "Postpone the project until after the proposal deadline"], "answer": 2, "explanation": "학생 A는 학생 B의 주제가 너무 광범위하다고 인식하고, 마이크로플라스틱이 해양 생물에 미치는 영향이나 특정 지역에 초점을 맞추도록 제안합니다."}, {"q": "Why does Student B mention that the topic needs to be 'specific and researchable'?", "options": ["The professor requires narrower topics to make research more manageable", "Student B wants to impress the professor with advanced knowledge", "Most environmental topics are too difficult to research", "Specific topics are always more interesting to study"], "answer": 0, "explanation": "학생 B가 교수의 말을 인용한 것으로, 명확하고 연구 가능한 주제로 제한해야 프로젝트 진행이 실질적이고 효과적임을 의미합니다."}]};
+const TOEFL_DATE = (()=>{ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; })();
+
+/* ── 탭 ── */
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+function goTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  const btn = document.querySelector(`.tab-btn[onclick*="'${name}'"]`);
+  if (btn) btn.classList.add('active');
+}
+
+/* ══ READING ══ */
+function initReading() {
+  document.getElementById('readingTitle').textContent = READING.title || '';
+  document.getElementById('readingPassage').textContent = READING.passage || '';
+  document.getElementById('readingQs').innerHTML = (READING.questions || []).map((q, i) => `
+    <div class="q-card" id="rq-${i}">
+      <div class="q-num">Q${i+1}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">
+        ${(q.options||[]).map((o,j)=>`<button class="opt-btn" id="ro-${i}-${j}" onclick="ansR(${i},${j},${q.answer})">${String.fromCharCode(65+j)}. ${o}</button>`).join('')}
+      </div>
+      <div class="q-explanation" id="re-${i}"><span class="expl-label">💬 </span>${q.explanation||''}</div>
+    </div>`).join('');
+}
+function ansR(qi, chosen, correct) {
+  const card = document.getElementById('rq-'+qi);
+  if (card.classList.contains('answered')) return;
+  card.classList.add('answered');
+  card.querySelectorAll('.opt-btn').forEach(b => b.disabled=true);
+  document.getElementById('ro-'+qi+'-'+correct).classList.add('correct');
+  if (chosen!==correct) document.getElementById('ro-'+qi+'-'+chosen).classList.add('wrong');
+  document.getElementById('re-'+qi).classList.add('show');
+  if (document.querySelectorAll('#readingQs .q-card.answered').length >= (READING.questions||[]).length) {
+    localStorage.setItem('toefl_reading_' + TOEFL_DATE, '1');
+  }
+}
+
+/* ══ WRITING ══ */
+let wSecs = 30*60, wRunning = false, wInterval = null;
+
+function initWriting() {
+  document.getElementById('writingPrompt').textContent = WRITING.prompt || '';
+  const s = WRITING.structure || {};
+  document.getElementById('structBody').innerHTML = [
+    s.intro      ? `<div class="structure-row"><span class="structure-label">Intro:</span>${s.intro}</div>` : '',
+    s.body1      ? `<div class="structure-row"><span class="structure-label">Body 1:</span>${s.body1}</div>` : '',
+    s.body2      ? `<div class="structure-row"><span class="structure-label">Body 2:</span>${s.body2}</div>` : '',
+    s.conclusion ? `<div class="structure-row"><span class="structure-label">Conclusion:</span>${s.conclusion}</div>` : '',
+  ].join('');
+  document.getElementById('phraseList').innerHTML = (WRITING.key_phrases||[]).map(p=>
+    `<span class="phrase-chip" onclick="insertPhrase(this,'${p}')">${p}</span>`).join('');
+  document.getElementById('writingArea').addEventListener('input', () => {
+    const w = document.getElementById('writingArea').value.trim().split(/[ \t\n]+/).filter(Boolean).length;
+    document.getElementById('wordCount').textContent = w;
+  });
+}
+function toggleStructure() {
+  document.getElementById('structBody').classList.toggle('open');
+  document.getElementById('structArrow').textContent = document.getElementById('structBody').classList.contains('open') ? '▲' : '▼';
+}
+function insertPhrase(el, phrase) {
+  const ta = document.getElementById('writingArea');
+  const pos = ta.selectionStart;
+  ta.value = ta.value.slice(0,pos) + phrase + ' ' + ta.value.slice(pos);
+  ta.focus(); ta.selectionStart = ta.selectionEnd = pos + phrase.length + 1;
+  el.classList.add('copied'); setTimeout(()=>el.classList.remove('copied'), 600);
+}
+function toggleWTimer() {
+  const btn = document.getElementById('wTimerBtn');
+  if (!wRunning) {
+    wRunning = true; btn.textContent = '정지'; btn.classList.add('running');
+    wInterval = setInterval(() => {
+      wSecs--;
+      if (wSecs <= 0) { clearInterval(wInterval); wRunning = false;
+        document.getElementById('wTimerDisp').textContent = '00:00';
+        document.getElementById('wTimerDisp').classList.add('warning');
+        btn.textContent = '종료'; btn.disabled = true; return; }
+      const m = Math.floor(wSecs/60).toString().padStart(2,'0');
+      const s = (wSecs%60).toString().padStart(2,'0');
+      document.getElementById('wTimerDisp').textContent = `${m}:${s}`;
+      if (wSecs <= 120) document.getElementById('wTimerDisp').classList.add('warning');
+    }, 1000);
+  } else {
+    clearInterval(wInterval); wRunning = false;
+    btn.textContent = '재개'; btn.classList.remove('running');
+  }
+}
+
+/* ══ SPEAKING ══ */
+let spPhase = 'idle', spTimer = null;
+const PREP = 15, SPEAK = 45;
+
+let mediaRecorder = null;
+let audioChunks = [];
+
+function initSpeaking() {
+  document.getElementById('speakingPrompt').textContent = SPEAKING.prompt || '';
+  document.getElementById('exprList').innerHTML = (SPEAKING.useful_expressions||[]).map(e=>
+    `<div class="expr-item">💬 ${e}</div>`).join('');
+  document.getElementById('samplePts').innerHTML = (SPEAKING.sample_points||[]).map((p,i)=>
+    `<div class="sample-point">${i+1}. ${p}</div>`).join('');
+}
+
+async function startSpeaking() {
+  if (spPhase!=='idle') return;
+  document.getElementById('speakBtn').disabled = true;
+  spPhase = 'prep';
+
+  let stream = null;
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  } catch(e) {
+    document.getElementById('recStatus').textContent = '⚠️ 마이크 권한이 필요합니다. 직접 입력해주세요.';
+  }
+
+  runPhase('prep', PREP, ()=>{
+    audioChunks = [];
+    if (stream) {
+      mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
+      mediaRecorder.start();
+      document.getElementById('recStatus').textContent = '🎙 녹음 중...';
+    }
+    runPhase('speak', SPEAK, async ()=>{
+      spPhase = 'done';
+      document.getElementById('speakLabel').className = 'speak-phase-label done';
+      document.getElementById('speakLabel').textContent = '완료!';
+      document.getElementById('speakCount').textContent = '✓';
+      document.getElementById('speakBar').style.width = '0%';
+      document.getElementById('samplePts').classList.add('show');
+      document.getElementById('speakFeedbackWrap').style.display = 'block';
+      localStorage.setItem('toefl_speaking_' + TOEFL_DATE, '1');
+
+      if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+        mediaRecorder.stop();
+        stream.getTracks().forEach(t => t.stop());
+        document.getElementById('recStatus').textContent = '변환 중...';
+        await new Promise(r => setTimeout(r, 300));
+        try {
+          const blob = new Blob(audioChunks, { type: 'audio/webm' });
+          const fd = new FormData();
+          fd.append('audio', blob, 'speech.webm');
+          const res = await fetch('/api/transcribe', { method: 'POST', body: fd });
+          const data = await res.json();
+          if (data.text) {
+            document.getElementById('speakTranscript').value = data.text;
+            document.getElementById('recStatus').textContent = '✅ 변환 완료 — 확인 후 피드백 받기';
+          } else {
+            document.getElementById('recStatus').textContent = '⚠️ 변환 실패 — 직접 입력해주세요';
+          }
+        } catch(e) {
+          document.getElementById('recStatus').textContent = '⚠️ 변환 실패 — 직접 입력해주세요';
+        }
+      }
+    });
+  });
+}
+function runPhase(phase, total, onDone) {
+  let rem = total;
+  const lbl = document.getElementById('speakLabel');
+  const cnt = document.getElementById('speakCount');
+  const bar = document.getElementById('speakBar');
+  lbl.className = 'speak-phase-label ' + phase;
+  lbl.textContent = phase==='prep' ? '준비 중 (메모하세요)' : '답변 중 (말하세요!)';
+  bar.className = 'speak-bar ' + phase;
+  bar.style.width = '100%'; cnt.classList.remove('warning'); cnt.textContent = rem;
+  spTimer = setInterval(()=>{
+    rem--;
+    cnt.textContent = rem;
+    bar.style.width = (rem/total*100)+'%';
+    if (rem<=5) cnt.classList.add('warning');
+    if (rem<=0) { clearInterval(spTimer); onDone(); }
+  }, 1000);
+}
+function showSamplePts() { document.getElementById('samplePts').classList.add('show'); }
+
+async function requestWritingFeedback() {
+  const text = document.getElementById('writingArea').value.trim();
+  if (!text || text.split(/[ \t\n]+/).filter(Boolean).length < 20) {
+    alert('최소 20단어 이상 작성 후 피드백을 받아주세요.'); return;
+  }
+  const btn = document.getElementById('btnWritingFeedback');
+  btn.disabled = true; btn.textContent = '분석 중...';
+  try {
+    const res = await fetch('/api/feedback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ text, type: 'writing', prompt: WRITING.prompt, structure: WRITING.structure })
+    });
+    const data = await res.json();
+    document.getElementById('writingFeedbackContent').textContent = data.feedback || data.error || '오류가 발생했습니다.';
+    document.getElementById('writingFeedbackBox').classList.add('show');
+    document.getElementById('writingFeedbackBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    if (data.feedback) localStorage.setItem('toefl_writing_' + TOEFL_DATE, '1');
+  } catch(e) {
+    alert('피드백 요청 실패. 네트워크를 확인해주세요.');
+  }
+  btn.disabled = false; btn.textContent = '✨ AI 피드백 다시 받기';
+}
+
+async function requestSpeakFeedback() {
+  const text = document.getElementById('speakTranscript').value.trim();
+  if (!text || text.split(/[ \t\n]+/).filter(Boolean).length < 5) {
+    alert('말한 내용을 5단어 이상 입력해주세요.'); return;
+  }
+  const btn = document.getElementById('btnSpeakFeedback');
+  btn.disabled = true; btn.textContent = '분석 중...';
+  try {
+    const res = await fetch('/api/feedback', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ text, type: 'speaking', prompt: SPEAKING.prompt })
+    });
+    const data = await res.json();
+    document.getElementById('speakFeedbackContent').textContent = data.feedback || data.error || '오류가 발생했습니다.';
+    document.getElementById('speakFeedbackBox').classList.add('show');
+    document.getElementById('speakFeedbackBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  } catch(e) {
+    alert('피드백 요청 실패. 네트워크를 확인해주세요.');
+  }
+  btn.disabled = false; btn.textContent = '✨ AI 피드백 다시 받기';
+}
+
+/* ══ LISTENING ══ */
+let isPlaying = false;
+let cancelListen = false;
+let currentAudio = null;
+const VOICES = ['alloy', 'onyx', 'nova', 'echo', 'fable', 'shimmer'];
+
+function parseScript(script) {
+  const segs = [];
+  const lines = (script || '').split('\n');
+  for (const line of lines) {
+    const m = line.match(/^([A-Za-z][^:]{0,25}):\s*(.+)/);
+    if (m) {
+      segs.push({ speaker: m[1].trim(), text: m[2].trim() });
+    } else if (line.trim()) {
+      if (segs.length) segs[segs.length-1].text += ' ' + line.trim();
+      else segs.push({ speaker: 'narrator', text: line.trim() });
+    }
+  }
+  return segs;
+}
+
+function initListening() {
+  const typeMap = { conversation:'대화', lecture:'강의', discussion:'토론' };
+  document.getElementById('listenBadge').textContent = typeMap[LISTENING.type] || '대화';
+  document.getElementById('listenScript').textContent = LISTENING.script || '';
+}
+
+async function playListen() {
+  if (isPlaying) {
+    cancelListen = true;
+    if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+    isPlaying = false;
+    document.getElementById('playBtn').textContent = '▶';
+    document.getElementById('listenSt').className = 'listen-status';
+    document.getElementById('listenSt').textContent = '정지됨';
+    return;
+  }
+  cancelListen = false;
+  const segs = parseScript(LISTENING.script);
+  if (!segs.length) return;
+
+  const speed = parseFloat(document.getElementById('speedSel').value);
+  const speakers = [...new Set(segs.map(s => s.speaker))];
+  const voiceMap = {};
+  speakers.forEach((sp, i) => { voiceMap[sp] = VOICES[i % VOICES.length]; });
+
+  isPlaying = true;
+  document.getElementById('playBtn').textContent = '⏸';
+  document.getElementById('listenSt').className = 'listen-status playing';
+  document.getElementById('listenSt').textContent = `오디오 로딩 중 (0/${segs.length})...`;
+  document.getElementById('doneListen').classList.add('show');
+
+  // 모든 세그먼트 병렬로 미리 fetch
+  async function fetchSeg(seg) {
+    const res = await fetch('/api/tts', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ text: seg.text, voice: voiceMap[seg.speaker] })
+    });
+    if (!res.ok) return null;
+    const blob = await res.blob();
+    return URL.createObjectURL(blob);
+  }
+
+  let loaded = 0;
+  const urls = await Promise.all(segs.map(async seg => {
+    const url = await fetchSeg(seg).catch(() => null);
+    loaded++;
+    if (!cancelListen) document.getElementById('listenSt').textContent = `오디오 로딩 중 (${loaded}/${segs.length})...`;
+    return url;
+  }));
+
+  if (cancelListen) { urls.forEach(u => u && URL.revokeObjectURL(u)); return; }
+
+  document.getElementById('listenSt').textContent = '재생 중...';
+  let idx = 0;
+  function playNext() {
+    if (cancelListen || idx >= urls.length) {
+      urls.forEach(u => u && URL.revokeObjectURL(u));
+      if (!cancelListen) {
+        isPlaying = false;
+        document.getElementById('playBtn').textContent = '▶';
+        document.getElementById('listenSt').className = 'listen-status done';
+        document.getElementById('listenSt').textContent = '재생 완료 ✓';
+        showListenQs();
+      }
+      return;
+    }
+    const url = urls[idx++];
+    if (!url) { playNext(); return; }
+    currentAudio = new Audio(url);
+    currentAudio.playbackRate = speed;
+    currentAudio.onended = () => setTimeout(playNext, 200);
+    currentAudio.onerror = () => setTimeout(playNext, 100);
+    currentAudio.play();
+  }
+  playNext();
+}
+function toggleScript(btn) {
+  const el = document.getElementById('listenScript');
+  el.classList.toggle('show');
+  btn.textContent = el.classList.contains('show') ? '스크립트 숨기기' : '스크립트 보기';
+}
+function showListenQs() {
+  document.getElementById('doneListen').classList.remove('show');
+  const el = document.getElementById('listenQs');
+  if (el.classList.contains('show')) return;
+  el.innerHTML = (LISTENING.questions||[]).map((q,i)=>`
+    <div class="q-card" id="lq-${i}">
+      <div class="q-num">Q${i+1}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">
+        ${(q.options||[]).map((o,j)=>`<button class="opt-btn" id="lo-${i}-${j}" onclick="ansL(${i},${j},${q.answer})">${String.fromCharCode(65+j)}. ${o}</button>`).join('')}
+      </div>
+      <div class="q-explanation" id="le-${i}"><span class="expl-label">💬 </span>${q.explanation||''}</div>
+    </div>`).join('');
+  el.classList.add('show');
+}
+function ansL(qi, chosen, correct) {
+  const card = document.getElementById('lq-'+qi);
+  if (card.classList.contains('answered')) return;
+  card.classList.add('answered');
+  card.querySelectorAll('.opt-btn').forEach(b=>b.disabled=true);
+  document.getElementById('lo-'+qi+'-'+correct).classList.add('correct');
+  if (chosen!==correct) document.getElementById('lo-'+qi+'-'+chosen).classList.add('wrong');
+  document.getElementById('le-'+qi).classList.add('show');
+  if (document.querySelectorAll('#listenQs .q-card.answered').length >= (LISTENING.questions||[]).length) {
+    localStorage.setItem('toefl_listening_' + TOEFL_DATE, '1');
+  }
+}
+
+initReading(); initWriting(); initSpeaking(); initListening();
+if (typeof speechSynthesis!=='undefined' && speechSynthesis.onvoiceschanged!==undefined) {
+  speechSynthesis.onvoiceschanged = () => {};
+}
+(function() {
+  const hash = location.hash.replace('#','');
+  if (['reading','writing','speaking','listening'].includes(hash)) goTab(hash);
+})();
+localStorage.setItem('toefl_visited_' + new Date().toISOString().slice(0,10), '1');
+</script>
+</body>
+</html>

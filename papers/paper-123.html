@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A Power-On-Reset Circuit With Accurate Trigger-Poi... · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">A Power-On-Reset Circuit With Accurate Trigger-Poi...</span>
+</div>
+<div class="article">
+  <div class="article-venue">IEEE Transactions on Very Large Scale Integration (VLSI) Systems 2024</div>
+  <h1 class="article-title">A Power-On-Reset Circuit With Accurate Trigger-Point Voltage and Ultralow Typical Quiescent Current for Emerging Nonvolatile Memory</h1>
+  <div class="article-tags"><span class="tag">Thermal</span><span class="tag">Interconnect</span><span class="tag">Analog</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/606a160221e21cee9b9a5011113ddf36d1f0d9c0" target="_blank">원문 보기 →</a>
+  </div>
+  <p class="opener">비휘발성 메모리 시대를 위한 초저전력 POR 회로가 드디어 등장했어요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">왜 신흥 비휘발성 메모리에는 새로운 POR 회로가 필요한가요?</h2>
+    <p>Power-On-Reset(POR) 회로는 시스템 전원이 켜질 때 모든 디지털 로직을 안정적인 초기 상태로 리셋하는 필수 아날로그 블록이에요. 특히 MRAM, ReRAM, PCM과 같은 신흥 비휘발성 메모리(NVM) 시스템에서는 전원 투입 시 데이터 손상이나 오동작을 막기 위해 정확한 트리거 포인트 전압과 안정적인 리셋 펄스가 매우 중요해요. 기존 DRAM이나 플래시와 달리 신흥 NVM은 훨씬 낮은 동작 전압과 복잡한 전원 시퀀스를 요구하기 때문에 POR의 정확도 요건이 더욱 엄격해졌어요. 또한 항상 전원에 연결된 상태에서 동작하는 NVM 특성상 POR 회로의 대기 전류가 전체 시스템 소비전력에 직접적인 영향을 미쳐요.</p>
+    <p>기존 POR 회로들은 PVT(공정, 전압, 온도) 변화와 전원 램프 속도 변화에 따라 트리거 포인트 전압이 크게 흔들리는 문제를 가지고 있어요. 트리거 포인트 전압이 부정확하면 메모리 셀이 완전히 준비되기 전에 리셋이 해제되거나, 반대로 너무 늦게 해제되어 초기화 시간이 낭비되는 문제가 생겨요. 또한 대부분의 기존 POR 회로는 수백 nA에서 수 μA 수준의 대기 전류를 소모하여 IoT 및 웨어러블 기기에 탑재되는 NVM 시스템에서 배터리 수명을 단축시키는 원인이 되었어요. 이러한 배경에서 트리거 포인트 정확도와 초저전력을 동시에 달성하는 새로운 POR 설계 방법론이 절실히 요구되어 왔어요.</p>
+
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>신흥 NVM 시스템에서 POR 회로는 PVT 및 전원 램프 속도 변화에 관계없이 정확한 트리거 포인트 전압을 유지하면서도 대기 전류를 나노암페어 수준으로 낮춰야 하는 두 가지 상충 요건을 동시에 만족해야 해요. 기존 설계로는 이 두 요건을 함께 충족하기 어려웠으며, 본 논문은 이 문제를 브라운아웃 감지 기반의 전류 비교 방식으로 해결하고 있어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">어떻게 트리거 정확도와 초저전력을 동시에 달성했나요?</h2>
+    <p>제안된 POR 회로의 핵심은 BOD(Brownout Detection) 기능을 내장한 저전력 전류 생성기와 전류 비교기의 조합이에요. 전류 생성기는 공급 전압에 비례하는 전류와 기준 전류를 생성하고, 전류 비교기는 두 전류의 대소 관계를 비교하여 공급 전압이 트리거 포인트에 도달했는지 판단해요. 이 방식은 전압 분배기 기반의 기존 방식 대비 PVT 변화에 훨씬 강인하며, 저전압 동작에서도 안정적인 비교 동작을 보장해요. 또한 다양한 BOD 이벤트 상황에서 오동작을 방지하기 위한 전용 보호 회로가 추가되어 시스템 신뢰성을 높였어요.</p>
+    <p>리셋 펄스의 지속 시간 안정성을 위해 별도의 지연 블록이 설계되었는데, 이 블록은 온도 변화와 전원 램프 속도에 대한 의존성을 최소화하도록 최적화되었어요. 지연 블록은 리셋 신호가 해제된 이후 충분한 안정화 시간을 보장하는 펄스를 생성하여 메모리 컨트롤러가 안전하게 초기화를 완료할 수 있게 해요. 전체 회로는 55nm CMOS 공정 기반으로 설계되었으며, 모든 블록에서 서브스레숄드 동작 및 초저전류 바이어싱 기법을 적극 활용하여 대기 전류를 0.65nA 수준으로 극적으로 낮추었어요. 회로 면적도 59×146 μm²로 매우 컴팩트하게 구현되었어요.</p>
+
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>전압 비교 대신 전류 비교 방식을 채택함으로써 PVT 및 램프 속도 변화에 강인한 트리거 포인트를 구현하면서, 모든 회로 블록을 서브스레숄드 영역에서 동작시켜 0.65nA라는 극도로 낮은 대기 전류를 동시에 달성한 점이 이 논문의 핵심 혁신이에요. BOD 보호 회로와 온도 독립적 지연 블록의 결합으로 다양한 실사용 조건에서도 안정적인 동작을 보장해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">시뮬레이션 결과는 얼마나 우수한 성능을 보여주나요?</h2>
+    <p>55nm CMOS 공정 기반 시뮬레이션 결과, 제안된 POR 회로는 트리거 포인트 전압 2.08V를 중심으로 온도 계수 81.8ppm/°C와 전원 램프 시간 변화에 따른 편차 9.91%를 달성하며 우수한 트리거 정확도를 입증했어요. 지원하는 램프 시간 범위는 10μs에서 DC까지로 매우 광범위하여 다양한 시스템 환경에 대응 가능해요. 대기 전류는 단 0.65nA로 기존 유사 기능 POR 회로 대비 수백 배 수준의 전력 절감을 실현했으며, 리셋 펄스 지속 시간 또한 온도 및 램프 속도 변화에 걸쳐 안정적으로 유지됨을 확인했어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">2.08V</div><div class="stat-desc">트리거 포인트 전압 (81.8ppm/°C의 낮은 온도 계수 달성)</div></div>
+      <div class="stat-box"><div class="stat-num">0.65nA</div><div class="stat-desc">일반 대기 전류 (초저전력 NVM 시스템에 최적화)</div></div>
+      <div class="stat-box"><div class="stat-num">9.91%</div><div class="stat-desc">10μs~DC 범위 램프 시간 변화에 따른 트리거 포인트 전압 편차</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM 및 고성능 메모리 시스템 설계자 관점에서, 이 POR 회로의 초저전력 특성은 HBM 스택 내 다수의 다이에 POR 회로가 중복 탑재되는 구조에서 전력 예산 절감에 직접 기여할 수 있어요. HBM은 적층 구조 특성상 발열 관리가 매우 중요한데, 0.65nA 수준의 대기 전류는 POR 관련 정적 전력 소모를 사실상 무시할 수 있는 수준으로 낮춰 열 설계 여유도를 높여줄 수 있어요. 또한 81.8ppm/°C의 낮은 온도 계수는 HBM 동작 온도 범위(-40°C~125°C)에서도 트리거 포인트 전압 변동을 최소화하여 안정적인 전원 투입 초기화를 보장해요.</p>
+    <p>트리거 포인트 전압의 정확성은 HBM 인터페이스 PHY 및 컨트롤러의 전원 시퀀싱 타이밍 설계와 직결되어 있어요. 특히 HBM3/HBM3E와 같은 최신 규격에서는 복잡한 전원 도메인 간 시퀀싱이 요구되는데, POR 트리거 포인트의 정확도가 높을수록 마진을 줄이고 초기화 시간을 단축할 수 있어요. 본 논문의 BOD 보호 회로 개념은 HBM의 전원 노이즈나 글리치 상황에서 오동작을 방지하는 데도 응용 가능하며, 59×146 μm²의 작은 면적은 HBM 다이 내 제한된 레이아웃 공간에서도 쉽게 통합할 수 있는 장점이 있어요.</p>
+
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>본 논문의 결과는 시뮬레이션 기반으로, 실제 55nm 공정 칩 제작 및 측정을 통한 검증이 아직 이루어지지 않아 실리콘 상에서의 실제 성능 편차를 확인할 필요가 있어요. 또한 55nm CMOS 공정을 기반으로 설계된 만큼 HBM에서 주로 사용되는 선단 공정(10nm 이하)으로의 포팅 시 서브스레숄드 특성 변화로 인해 대기 전류 및 트리거 전압 특성이 달라질 수 있어 재최적화가 필요할 수 있어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/606a160221e21cee9b9a5011113ddf36d1f0d9c0" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

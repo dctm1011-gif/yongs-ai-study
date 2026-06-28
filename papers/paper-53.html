@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>In-Situ RowHammer Defense · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">In-Situ RowHammer Defense</span>
+</div>
+<div class="article">
+  <div class="article-venue">IEEE EDTM 2026</div>
+  <h1 class="article-title">An Efficient DRAM RowHammer Defense Circuit Based on a Novel In-Situ Monitoring Method</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">ECC</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/dcaa8e9e608e921cc7d1a5d239c54b1c0efca0d9" target="_blank">원문 보기 →</a></div>
+  <p class="opener">DRAM 칩 내부에 더미 셀 기반 in-situ 모니터 회로를 심어서 RowHammer 공격을 실시간으로 감지하고 방어하는 방법이에요. 외부 카운터나 소프트웨어 개입 없이 회로 자체가 스스로 판단해요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">RowHammer는 왜 아직도 해결이 안 됐을까요?</h2>
+    <p>RowHammer는 특정 DRAM 행(aggressor row)을 반복적으로 활성화(activate)하면 인접한 행(victim row)의 전하가 교란되어 비트 오류가 발생하는 현상이에요. 이건 회로 설계 결함이 아니라 DRAM 셀이 물리적으로 가까워질수록 강해지는 기생 커플링 효과 때문이에요. 공정이 미세해질수록 더 심해지고, 최신 DDR5 DRAM에서는 hammer count threshold(HCfirst)가 수천 회까지 낮아졌어요.</p>
+    <p>기존 방어 방법들은 크게 두 가지였어요. 하나는 메모리 컨트롤러가 행 활성화 횟수를 카운팅해서 임계치를 넘으면 인접 행을 refresh해주는 방식(TRR, pTRR, PARA 등)이에요. 다른 하나는 ECC로 비트 오류를 사후에 수정하는 방식이에요. 하지만 카운터 기반은 카운터 수가 제한되어 있어서 공격자가 여러 행을 순환하며 공격하는 "many-to-one" 패턴으로 우회할 수 있고, ECC는 오류가 이미 발생한 뒤에 대응하는 방식이라 근본적인 해결책이 아니에요.</p>
+    <p>이 논문은 전혀 다른 방향을 제안해요. 컨트롤러가 카운팅하는 게 아니라, DRAM 칩 내부에 "감지 전용 더미 셀"을 심어서 물리적 전하 변화 자체를 실시간으로 모니터링하는 거예요.</p>
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>RowHammer를 카운터나 소프트웨어로 막으려는 기존 접근은 우회 공격에 취약해요. 대신 DRAM 내부에서 전하 변화를 직접 감지하는 회로를 두면, 공격 패턴에 상관없이 물리적 위협에 즉각 반응할 수 있어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">더미 셀 기반 in-situ 모니터는 어떻게 동작하나요?</h2>
+    <p>핵심 아이디어는 "일부러 더 약하게 만든 더미 셀"을 victim row 옆에 배치하는 거예요. 더미 셀은 일반 DRAM 셀보다 전압 감소 속도가 더 빠르도록 설계돼요. 따라서 aggressor row가 반복 활성화로 인접 셀에 전하 교란을 일으키기 시작하면, 실제 victim row보다 더미 셀이 먼저 변화를 감지해요. 더미 셀이 먼저 경고를 내는 일종의 "조기 경보 시스템"이에요.</p>
+    <p>모니터 회로는 이중 임계값(dual threshold) 구조를 써요. 낮은 임계값을 넘으면 "경계 상태", 높은 임계값을 넘으면 "즉시 refresh 트리거"예요. 이중 임계값 덕분에 필요 이상으로 refresh를 남발하지 않으면서도 안전을 보장해요. refresh를 불필요하게 많이 발행하면 대역폭 오버헤드가 늘어나므로, 이걸 줄이는 게 실용화의 관건이에요.</p>
+    <p>또한 임계값 조정 회로(threshold calibration circuit)가 PVT(공정·전압·온도) 변화에 따라 인버터의 등가 스위칭 전압을 동적으로 조정해서, 제조 편차나 동작 환경 변화에도 일관된 감지 성능을 유지해요. 이 회로 전체를 28nm CMOS @ 0.9V, 200MHz에서 8×8 DRAM 매크로와 함께 구현했어요.</p>
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>일반 셀보다 빨리 방전되는 더미 셀을 aggressor/victim 사이에 배치해서, 공격이 실제 데이터를 손상시키기 전에 회로 레벨에서 먼저 감지하고 refresh를 트리거해요. 카운터 없이도 어떤 패턴의 공격이든 물리적으로 방어할 수 있어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">기존 방어 회로와 비교해서 얼마나 효율적인가요?</h2>
+    <p>28nm CMOS 공정에서 8×8 DRAM 매크로를 구현해 측정한 결과, 대역폭 오버헤드가 최첨단 설계 대비 83% 감소했어요. refresh를 잘못 발행하는 오탐(false positive)이 줄어서 유효 메모리 대역폭 손실이 크게 줄어든 거예요. 면적 오버헤드도 정규화 기준으로 41% 감소했어요. 더미 셀과 모니터 회로가 DRAM 어레이 면적 대비 상당히 컴팩트하게 구현된 결과예요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">83%</div><div class="stat-desc">대역폭 오버헤드 감소 (최첨단 대비)</div></div>
+      <div class="stat-box"><div class="stat-num">41%</div><div class="stat-desc">정규화 면적 오버헤드 감소</div></div>
+      <div class="stat-box"><div class="stat-num">28 nm</div><div class="stat-desc">구현 공정 (CMOS 0.9V, 200MHz)</div></div>
+      <div class="stat-box"><div class="stat-num">8×8</div><div class="stat-desc">검증에 사용된 DRAM 매크로 크기</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM은 TSV로 GPU 다이와 적층되기 때문에 일반적인 DIMM에 비해 외부에서 접근하기 어렵고, 기존의 컨트롤러 기반 카운터 방어도 적용이 복잡해요. 반면 이 논문처럼 DRAM 어레이 내부에 in-situ 감지 회로를 내장하면, 호스트 컨트롤러의 개입 없이 DRAM 다이 자체가 스스로 방어할 수 있어요. HBM3/HBM3E 이후 스택 다이 수가 늘어나고 단위 셀 크기가 더 줄어들수록 RowHammer 위협은 더 심각해질 텐데, 이런 in-situ 접근이 실용적인 해법이 될 수 있어요.</p>
+    <p>실제 HBM 칩 설계에서 고려할 점은 더미 셀의 배치 밀도예요. 모든 victim row 옆에 더미 셀을 두면 면적 오버헤드가 크고, 취약도가 높은 행(process variation에 의해 threshold가 낮은 행) 주변에만 선택적으로 배치하는 전략이 더 현실적이에요. PVT 보정 회로는 HBM처럼 적층 구조에서 열 환경이 급격히 바뀌는 경우에 특히 중요해요.</p>
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>더미 셀 기반 감지는 "공격이 이미 시작된 후" 전하 변화가 더미 셀에 도달해야 감지가 돼요. 즉 감지 latency가 존재하고, 이 시간 동안 victim row에는 이미 일부 전하 교란이 쌓였을 수 있어요. 매우 빠른 burst hammer 공격에 대한 내성은 더미 셀의 방전 속도와 임계값 설정에 크게 의존하므로, 최악 케이스 패턴에 대한 검증이 필수예요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — RowHammer 동작 원리 개요. Aggressor row의 반복 활성화가 인접 victim row 셀의 전하를 교란하는 메커니즘을 물리적 레이아웃과 함께 설명해요.</p>
+    <p><strong>Fig. 2</strong> — 더미 셀 기반 in-situ 모니터 회로 구조. 일반 셀보다 빠른 방전 커브를 갖는 더미 셀과 이중 임계값 비교기 회로 구성을 보여줘요.</p>
+    <p><strong>Fig. 3</strong> — PVT 보정 회로 동작. 온도·공정 변화에 따라 인버터 스위칭 전압이 조정되는 특성 그래프예요.</p>
+    <p><strong>Fig. 4</strong> — 28nm DRAM 매크로 측정 결과. 기존 최첨단 방어 회로와의 대역폭 오버헤드 및 면적 오버헤드 비교 차트예요.</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/dcaa8e9e608e921cc7d1a5d239c54b1c0efca0d9" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

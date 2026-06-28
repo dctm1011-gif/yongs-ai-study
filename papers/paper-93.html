@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Count2Multiply: Reliable In-Memory High-Radix Coun... · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Count2Multiply: Reliable In-Memory High-Radix Coun...</span>
+</div>
+<div class="article">
+  <div class="article-venue">International Symposium on High-Performance Computer Architecture 2024</div>
+  <h1 class="article-title">Count2Multiply: Reliable In-Memory High-Radix Counting</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">Interface</span><span class="tag">Yield</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/8533f297ae0006ed62e0116dc34d0683e5868ae5" target="_blank">원문 보기 →</a>
+  </div>
+  <p class="opener">Count2Multiply는 상용 DRAM에서 고기수 계산을 통해 곱셈과 덧셈을 GPU 대비 최대 4.6배 에너지 효율로 수행하는 디지털 CIM 프레임워크예요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">왜 기존 CIM 방식은 실제 연산 가속기로 자리잡지 못했을까요?</h2>
+    <p>CIM(Computing-In-Memory)은 메모리와 연산을 통합하여 데이터 이동 병목을 줄이는 유망한 기술이에요. 멤리스티브 크로스바 기반 아날로그 내적 연산부터 상용 DRAM의 대규모 디지털 비트 연산까지 다양한 형태로 연구되어 왔어요. 특히 DRAM 기반 CIM은 별도의 공정 변경 없이 기존 메모리 인프라를 활용할 수 있다는 점에서 현실적인 배포 가능성이 높아요. 그러나 CIM이 실제 데이터센터나 AI 가속 환경에 적용되려면 해결해야 할 근본적인 장벽이 남아 있어요.</p>
+    <p>현재 CIM 솔루션의 가장 큰 문제는 신뢰성과 대기 시간이에요. CIM 연산의 오류율은 표준 메모리 읽기/쓰기보다 훨씬 높아서, 연산 결과의 정확성을 보장하기 어려워요. 또한 대량 비트 단위 CIM은 높은 병렬성을 가지지만 비트 직렬 방식으로 곱셈과 덧셈을 수행하기 때문에 누적되는 대기 시간이 상당히 길어요. 이런 문제들로 인해 기존 CIM 설계는 GPU나 전용 가속기와의 경쟁에서 실질적인 우위를 확보하지 못했어요.</p>
+
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>기존 CIM은 높은 오류율과 비트 직렬 실행으로 인한 긴 대기 시간이라는 두 가지 핵심 문제를 동시에 안고 있어요. Count2Multiply는 고기수(high-radix) 계산 방식과 ECC 통합을 통해 이 두 문제를 함께 해결하는 새로운 접근을 제시해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">Count2Multiply는 어떻게 고기수 계산으로 곱셈을 빠르고 안정적으로 수행하나요?</h2>
+    <p>Count2Multiply는 대량 비트 단위 메모리 연산을 기반으로 고기수 대규모 병렬 계산을 수행하는 디지털 CIM 프레임워크예요. 핵심 아이디어는 DRAM 행 단위 병렬 비트 연산을 이용해 카운팅 기반의 고기수 산술을 구현하는 것이에요. 기존 비트 직렬 방식이 각 비트 자릿수마다 순차적으로 연산을 반복하는 것과 달리, Count2Multiply는 여러 비트를 동시에 처리하는 고기수 표현을 활용해 연산 단계 수를 크게 줄여요. 이를 통해 곱셈뿐만 아니라 덧셈과 기타 산술 연산도 효율적으로 지원해요.</p>
+    <p>신뢰성 측면에서 Count2Multiply는 Hamming 코드와 BCH(Bose-Chaudhuri-Hocquenghem) 코드와 같은 기존 행별 오류 정정 코드(ECC)를 CIM 연산 파이프라인에 통합해요. CIM 연산 중 발생하는 높은 오류율을 ECC로 보정함으로써 연산 충실도를 표준 메모리 접근 수준에 가깝게 끌어올려요. 이 설계는 상용 DRAM의 물리적 구조를 변경하지 않고도 동작할 수 있도록 인터페이스 호환성을 유지하며, 실제 배포 가능한 내결함성 CIM 시스템을 지향해요.</p>
+
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>고기수 카운팅 기반 연산으로 비트 직렬 실행의 대기 시간 문제를 해결하고, 행별 ECC를 연산 흐름에 직접 통합하여 CIM 고유의 높은 오류율을 동시에 극복한 것이 Count2Multiply의 핵심 혁신이에요. 두 문제를 별개로 다루지 않고 하나의 통합 프레임워크로 묶어 실용적인 CIM을 실현했어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">Count2Multiply는 GPU와 기존 CIM 대비 얼마나 우수한 성능을 보였나요?</h2>
+    <p>Count2Multiply를 상용 DRAM에서 평가한 결과, NVIDIA A100 GPU 대비 평균 1.5배의 속도 향상, 4.6배의 에너지 효율(GOPS/Watt), 4.4배의 면적 효율(GOPS/mm²)을 달성했어요. 기존 DRAM 기반 CIM 연구인 SIMDRAM과 비교하면 속도 9.7배, 에너지 효율 8.1배, 면적 효율 12.9배로 압도적인 개선을 보였어요. 이 결과는 고기수 계산과 ECC 통합이 CIM의 실용성을 크게 높일 수 있음을 실증적으로 보여줘요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">1.5×</div><div class="stat-desc">NVIDIA A100 GPU 대비 평균 속도 향상</div></div>
+      <div class="stat-box"><div class="stat-num">4.6×</div><div class="stat-desc">A100 대비 에너지 효율(GOPS/Watt) 향상</div></div>
+      <div class="stat-box"><div class="stat-num">12.9×</div><div class="stat-desc">SIMDRAM 대비 면적 효율(GOPS/mm²) 향상</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM 설계자 관점에서 Count2Multiply의 접근 방식은 매우 시사적이에요. HBM은 높은 대역폭과 밀도를 제공하는 구조 특성상 CIM 구현에 적합한 기반을 갖추고 있어요. Count2Multiply가 상용 DRAM의 행 단위 병렬 비트 연산을 활용하듯, HBM의 다중 뱅크와 높은 행 병렬성을 Count2Multiply 프레임워크에 적용하면 더 높은 연산 처리량을 기대할 수 있어요. 특히 AI 가속기와의 근접 통합이 필수적인 HBM 환경에서는 에너지 효율 개선 효과가 더욱 두드러질 수 있어요.</p>
+    <p>HBM 설계 시 Count2Multiply의 ECC 통합 방식은 중요한 설계 참고점을 제공해요. HBM은 이미 온다이 ECC를 지원하지만, CIM 연산 시의 오류 패턴은 일반 읽기/쓰기와 다를 수 있어 CIM 전용 오류 모델링이 필요해요. 또한 고기수 카운팅 연산을 HBM의 TSV 인터페이스와 연동할 때 타이밍 마진과 신호 무결성 요구사항을 재검토해야 해요. 행 활성화 에너지와 사이클 타임이 Count2Multiply 성능에 직접 영향을 미치므로, HBM의 서브어레이 구조 최적화가 병행되어야 해요.</p>
+
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>Count2Multiply는 상용 DRAM을 대상으로 검증되었지만, HBM의 3D 적층 구조와 TSV 기반 인터페이스에서의 CIM 동작 신뢰성은 별도로 검증이 필요해요. 또한 고기수 연산을 위한 다중 행 활성화가 DRAM 셀의 디스터브 특성에 미치는 영향과 장기 신뢰성 문제도 면밀히 분석해야 해요. ECC 오버헤드가 실질적인 유효 대역폭과 용량에 미치는 트레이드오프도 시스템 수준에서 신중하게 평가되어야 해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/8533f297ae0006ed62e0116dc34d0683e5868ae5" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

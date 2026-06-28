@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Modeling and Analysis of System-Level Power Supply... · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Modeling and Analysis of System-Level Power Supply...</span>
+</div>
+<div class="article">
+  <div class="article-venue">Electrical Design of Advanced Packaging and Systems Symposium 2021</div>
+  <h1 class="article-title">Modeling and Analysis of System-Level Power Supply Noise Induced Jitter (PSIJ) for 4 Gbps High Bandwidth Memory (HBM) I/O Interface</h1>
+  <div class="article-tags"><span class="tag">HBM</span><span class="tag">Power</span><span class="tag">Packaging</span><span class="tag">Interface</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/74560bcc9152067b7de56fd00f537e9b326a033f" target="_blank">원문 보기 →</a>
+  </div>
+  <p class="opener">4Gbps HBM의 전원 잡음이 지터에 미치는 영향을 시스템 전체 관점에서 처음으로 모델링하고 분석한 연구예요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">왜 HBM에서 전원 공급 잡음 유발 지터(PSIJ)가 설계의 핵심 문제가 되었을까요?</h2>
+    <p>고대역폭 메모리(HBM)는 AI, HPC, 그래픽 등 고성능 컴퓨팅 분야에서 빠르게 채택되고 있어요. 데이터 전송 속도가 4Gbps에 달하는 병렬 I/O 인터페이스 환경에서는 신호 무결성뿐 아니라 전원 무결성도 동시에 확보해야 해요. 특히 수천 개의 I/O 핀이 동시에 동작하는 HBM 특성상 전원 공급 노이즈가 집중적으로 발생하고, 이것이 타이밍 지터로 변환되는 PSIJ 문제가 설계 마진을 심각하게 침식해요.</p>
+    <p>PSIJ는 칩 내부 회로, 패키지 배선, PCB 전원 분배 네트워크(PDN) 등 여러 도메인에 걸쳐 복합적으로 발생하기 때문에 단일 도메인 분석만으로는 정확한 예측이 불가능해요. 기존 연구들은 주로 개별 도메인에 국한된 분석을 수행했기 때문에 시스템 전체의 PSIJ를 과소평가하거나 설계 최적화 방향을 잘못 설정하는 위험이 있었어요. 빠른 속도로 진화하는 HBM 규격에 맞추어 설계 전 단계에서 PSIJ를 정확히 예측하고 최적화할 수 있는 통합 모델의 필요성이 절실한 상황이에요.</p>
+
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>PSIJ는 전원/접지, 채널, Tx 클로킹, Rx 클로킹이라는 네 가지 인터페이스 요소가 복합적으로 상호작용하여 결정되기 때문에, 시스템 수준의 통합 모델 없이는 정확한 예측이 불가능해요. 이 논문은 바로 그 통합 모델을 주파수 영역 지터 스펙트럼 방식으로 처음 구축한 연구예요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">어떻게 네 가지 인터페이스 요소를 하나의 시스템 수준 PSIJ 모델로 통합했을까요?</h2>
+    <p>연구팀은 전체 HBM I/O 인터페이스를 전원/접지(Power/Ground) PDN, 채널(Channel), Tx 클로킹 회로, Rx 클로킹 회로의 네 가지 구성 요소로 분해하여 각각 독립적으로 모델링했어요. 각 요소는 주파수 영역에서 지터 전달 함수(jitter transfer function) 또는 지터 스펙트럼으로 표현되었고, 이를 통합하여 전체 시스템의 PSIJ를 예측하는 구조를 갖추었어요. 주파수 영역 접근법을 사용함으로써 각 요소가 특정 주파수 대역에서 PSIJ에 얼마나 기여하는지 명확히 분리하고 분석할 수 있어요.</p>
+    <p>모델의 정확도는 SPICE 시뮬레이션과의 비교 검증을 통해 확인했어요. 특히 설계 파라미터별로 각 인터페이스 요소가 PSIJ에 미치는 민감도를 분석하여, 어떤 설계 변수를 조정했을 때 PSIJ 감소 효과가 가장 큰지를 체계적으로 도출했어요. 이 과정에서 인터페이스 요소들 간의 상호작용이 집중되는 임계 주파수 범위(critical frequency range)를 식별하였고, 이 대역을 기준으로 설계 최적화 우선순위를 결정하는 방법론을 제시했어요.</p>
+
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>전원 노이즈를 단순히 전압 변동으로 보는 것이 아니라, 주파수 영역에서 각 인터페이스 요소별 지터 스펙트럼으로 변환하여 통합하는 방식이 이 논문의 핵심 혁신이에요. 이를 통해 설계 전 단계에서 어떤 요소가 어떤 주파수 대역에서 PSIJ를 지배하는지 정량적으로 파악하고, 최소한의 설계 변경으로 최대의 PSIJ 감소 효과를 이끌어낼 수 있어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">어떤 설계 파라미터가 PSIJ 감소에 가장 결정적인 영향을 미쳤을까요?</h2>
+    <p>분석 결과, PDN의 온칩 디커플링 커패시터(on-chip decap)와 Rx 버퍼의 지연(delay) 두 가지가 임계 주파수 범위에서 PSIJ에 가장 큰 영향을 미치는 설계 파라미터로 확인되었어요. 온칩 디캡을 적절히 설계하면 PDN 임피던스의 공진 피크를 억제하여 전원 노이즈 자체를 줄일 수 있고, Rx 버퍼 지연을 최적화하면 클로킹 경로에서 전원 노이즈가 타이밍 지터로 변환되는 효율을 낮출 수 있어요. 이 두 파라미터는 서로 독립적으로 작용하는 것이 아니라 임계 주파수 범위에서 상호작용하며 PSIJ를 결정짓기 때문에, 통합 모델을 통한 동시 최적화가 필수적이에요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">4Gbps</div><div class="stat-desc">본 논문이 분석 대상으로 설정한 HBM I/O 인터페이스의 데이터 전송 속도</div></div>
+      <div class="stat-box"><div class="stat-num">4개</div><div class="stat-desc">시스템 수준 PSIJ 모델을 구성하는 인터페이스 요소 수 (PDN, 채널, Tx 클로킹, Rx 클로킹)</div></div>
+      <div class="stat-box"><div class="stat-num">2개</div><div class="stat-desc">PSIJ 감소에 가장 결정적 영향을 미치는 설계 파라미터 수 (온칩 디캡, Rx 버퍼 지연)</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM I/O 설계자 입장에서 이 논문이 제공하는 가장 실질적인 가치는 설계 초기 단계에서 PSIJ를 예측하고 최적화할 수 있는 빠르고 정확한 시스템 수준 모델이에요. 기존에는 레이아웃이 확정된 후 SPICE 전체 시뮬레이션을 통해 PSIJ를 확인하는 방식이 일반적이었는데, 이는 설계 수정이 어렵고 비용이 큰 후반 단계에서야 문제를 발견하게 되는 구조였어요. 이 모델을 활용하면 칩 설계, 패키지 설계, 인터페이스 회로 설계 팀이 공통된 PSIJ 예측 프레임워크를 공유하며 협업할 수 있어요.</p>
+    <p>특히 PDN 온칩 디캡 설계는 칩 면적과 직결되는 비용 요소이기 때문에, 무조건 큰 디캡을 넣는 것이 아니라 임계 주파수 범위를 기준으로 최소 필요 용량을 정밀하게 결정하는 것이 중요해요. 마찬가지로 Rx 버퍼의 지연 설계는 타이밍 마진과 PSIJ 감수성 사이의 트레이드오프를 고려해야 하며, 이 논문의 주파수 영역 분석 결과가 그 균형점을 찾는 데 직접적인 가이드를 제공해요. HBM2E 이상의 고속 규격으로 확장할 때도 동일한 모델링 방법론을 적용할 수 있어 기술 확장성도 높아요.</p>
+
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>이 논문은 4Gbps HBM을 대상으로 하기 때문에, HBM3 이상의 더 높은 속도에서는 추가적인 비선형 효과나 더 복잡한 PDN 공진 모드가 나타날 수 있어 모델의 직접 적용에 주의가 필요해요. 또한 주파수 영역 선형 모델 기반이므로 대신호 동작이나 공정 변동(PVT variation)에 따른 PSIJ 변화를 충분히 반영하지 못할 수 있으며, 실리콘 측정 데이터를 통한 추가 검증이 권장돼요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/74560bcc9152067b7de56fd00f537e9b326a033f" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

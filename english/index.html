@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>영어공부 — 2026-06-27</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #fff;
+  color: #37352f;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.cover {
+  height: 8px;
+  background: linear-gradient(90deg, #0ea5e9 0%, #6366f1 100%);
+}
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #9b9a97;
+  text-decoration: none;
+  margin-bottom: 24px;
+}
+.back-link:hover { color: #37352f; }
+.page-icon { font-size: 48px; margin-bottom: 10px; display: block; }
+.page-title { font-size: 30px; font-weight: 700; letter-spacing: -0.4px; margin-bottom: 4px; }
+.page-desc { font-size: 13px; color: #9b9a97; margin-bottom: 28px; }
+.date-badge {
+  display: inline-block;
+  font-size: 11px;
+  background: #eff6ff;
+  color: #3b82f6;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+  margin-bottom: 28px;
+}
+/* 탭 */
+.tab-bar {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid #e9e9e7;
+  margin-bottom: 28px;
+}
+.tab-btn {
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #9b9a97;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color .15s;
+}
+.tab-btn.active { color: #37352f; border-bottom-color: #37352f; }
+.tab-btn:hover:not(.active) { color: #37352f; }
+.tab-btn { transition: color .15s; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; animation: tabIn .2s ease; }
+@keyframes tabIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+/* 단어 카드 */
+.word-list { display: flex; flex-direction: column; gap: 16px; }
+.word-card {
+  border: 1px solid #e9e9e7;
+  border-radius: 10px;
+  padding: 20px;
+  transition: box-shadow .15s;
+}
+.word-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+.word-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+.word-text {
+  font-size: 22px;
+  font-weight: 700;
+  color: #37352f;
+}
+.word-pos {
+  font-size: 11px;
+  background: #f1f0ef;
+  color: #9b9a97;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+.word-meaning {
+  font-size: 17px;
+  font-weight: 600;
+  color: #0ea5e9;
+  margin-bottom: 8px;
+}
+.word-explanation { font-size: 14px; color: #37352f; margin-bottom: 12px; line-height: 1.6; }
+.example-box {
+  background: #f7f6f3;
+  border-left: 3px solid #0ea5e9;
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+}
+.example-en { font-size: 14px; font-style: italic; color: #37352f; margin-bottom: 3px; }
+.example-ko { font-size: 12px; color: #9b9a97; }
+.tip-box {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: #92400e;
+  margin-bottom: 12px;
+}
+.tip-label { font-weight: 700; margin-right: 4px; }
+.word-illus {
+  border-radius: 14px;
+  padding: 24px 20px;
+  text-align: center;
+  margin-top: 14px;
+}
+.word-illus-emoji {
+  font-size: 54px;
+  display: block;
+  margin-bottom: 8px;
+}
+.word-illus-en {
+  font-size: 20px;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 4px;
+  text-shadow: 0 1px 4px rgba(0,0,0,.25);
+}
+.word-illus-ko {
+  font-size: 13px;
+  color: rgba(255,255,255,.88);
+  font-weight: 500;
+}
+.quiz-illus {
+  border-radius: 10px;
+  padding: 14px 16px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.finish-stats {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin: 14px 0;
+}
+.finish-stat { text-align: center; }
+.finish-stat-num { font-size: 26px; font-weight: 700; color: #166534; }
+.finish-stat-label { font-size: 11px; color: #9b9a97; }
+.finish-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.finish-btn-review {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+.finish-btn-retry {
+  padding: 10px 20px;
+  font-size: 14px;
+  color: #9b9a97;
+  background: #f7f6f3;
+  border: 1px solid #e9e9e7;
+  border-radius: 8px;
+  cursor: pointer;
+}
+/* 퀴즈 */
+.quiz-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.quiz-score {
+  font-size: 13px;
+  color: #9b9a97;
+}
+.score-num { font-weight: 700; color: #37352f; font-size: 16px; }
+.btn-reset {
+  font-size: 13px;
+  color: #9b9a97;
+  background: #f7f6f3;
+  border: 1px solid #e9e9e7;
+  border-radius: 6px;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+.btn-reset:hover { background: #e9e9e7; }
+.quiz-list { display: flex; flex-direction: column; gap: 20px; }
+.quiz-card {
+  border: 1px solid #e9e9e7;
+  border-radius: 10px;
+  padding: 20px;
+}
+.quiz-card.answered { background: #fafaf9; }
+.quiz-type-badge {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: #9b9a97;
+  margin-bottom: 8px;
+}
+.quiz-word-badge {
+  display: inline-block;
+  font-size: 11px;
+  background: #eff6ff;
+  color: #3b82f6;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.quiz-question { font-size: 15px; font-weight: 600; color: #37352f; margin-bottom: 14px; }
+.quiz-options { display: flex; flex-direction: column; gap: 8px; }
+.opt-btn {
+  text-align: left;
+  background: #f7f6f3;
+  border: 1px solid #e9e9e7;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background .1s, border-color .1s;
+  color: #37352f;
+}
+.opt-btn:hover:not(:disabled) { background: #eff6ff; border-color: #93c5fd; }
+.opt-btn.correct { background: #f0fdf4; border-color: #86efac; color: #166534; }
+.opt-btn.wrong { background: #fef2f2; border-color: #fca5a5; color: #991b1b; }
+.fill-input {
+  width: 100%;
+  border: 1px solid #e9e9e7;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: inherit;
+  color: #37352f;
+  outline: none;
+  transition: border-color .15s;
+  margin-bottom: 8px;
+}
+.fill-input:focus { border-color: #0ea5e9; }
+.fill-input.correct { border-color: #86efac; background: #f0fdf4; }
+.fill-input.wrong { border-color: #fca5a5; background: #fef2f2; }
+.btn-submit {
+  background: #0ea5e9;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s;
+}
+.btn-submit:hover { background: #0284c7; }
+.btn-submit:disabled { background: #e9e9e7; color: #9b9a97; cursor: default; }
+.quiz-explanation {
+  display: none;
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: #f7f6f3;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #37352f;
+  line-height: 1.6;
+}
+.quiz-explanation.show { display: block; }
+.expl-label { font-weight: 700; color: #0ea5e9; }
+.hint-text { font-size: 12px; color: #9b9a97; margin-bottom: 6px; }
+.progress-bar-wrap {
+  background: #f1f0ef;
+  border-radius: 4px;
+  height: 6px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #0ea5e9, #6366f1);
+  border-radius: 4px;
+  transition: width .4s ease;
+}
+.finish-banner {
+  display: none;
+  text-align: center;
+  padding: 28px;
+  border: 2px solid #86efac;
+  border-radius: 12px;
+  background: #f0fdf4;
+  margin-bottom: 24px;
+}
+.finish-banner.show { display: block; }
+.finish-emoji { font-size: 40px; margin-bottom: 8px; }
+.finish-title { font-size: 18px; font-weight: 700; color: #166534; margin-bottom: 4px; }
+.finish-sub { font-size: 14px; color: #4ade80; }
+.vocab-done-wrap {
+  text-align: center;
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid #e9e9e7;
+}
+.btn-vocab-done {
+  padding: 12px 36px;
+  font-size: 15px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #0ea5e9, #6366f1);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: opacity .15s;
+}
+.btn-vocab-done:hover { opacity: .9; }
+.btn-vocab-done.done {
+  background: #f0fdf4;
+  color: #166534;
+  border: 2px solid #86efac;
+  cursor: default;
+}
+@media (max-width: 500px) {
+  .page { padding: 32px 16px 60px; }
+  .page-title { font-size: 24px; }
+}
+</style>
+</head>
+<body>
+<div class="cover"></div>
+<div class="page">
+
+  <a class="back-link" href="../index.html">← Yong's AI Study</a>
+  <span class="page-icon">📖</span>
+  <h1 class="page-title">오늘의 영어공부</h1>
+  <p class="page-desc">Lily와의 대화에서 배운 표현 정리 · 퀴즈</p>
+  <span class="date-badge">📅 2026-06-27</span>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('vocab', this)">📚 배운 표현</button>
+    <button class="tab-btn" onclick="switchTab('quiz', this)">✏️ 퀴즈</button>
+  </div>
+
+  <!-- 단어 탭 -->
+  <div class="tab-panel active" id="tab-vocab">
+    <div class="word-list" id="wordList"></div>
+    <div class="vocab-done-wrap">
+      <button class="btn-vocab-done" id="btnVocabDone" onclick="markVocabDone()">✅ 읽었음</button>
+    </div>
+  </div>
+
+  <!-- 퀴즈 탭 -->
+  <div class="tab-panel" id="tab-quiz">
+    <div class="finish-banner" id="finishBanner">
+      <div class="finish-emoji" id="finishEmoji">🎉</div>
+      <div class="finish-title" id="finishTitle"></div>
+      <div class="finish-sub" id="finishSub"></div>
+      <div class="finish-stats">
+        <div class="finish-stat"><div class="finish-stat-num" id="finishCorrect">0</div><div class="finish-stat-label">정답</div></div>
+        <div class="finish-stat"><div class="finish-stat-num" id="finishWrong">0</div><div class="finish-stat-label">오답</div></div>
+        <div class="finish-stat"><div class="finish-stat-num" id="finishAccuracy">0%</div><div class="finish-stat-label">정확도</div></div>
+      </div>
+      <div class="finish-actions">
+        <a class="finish-btn-review" href="review.html">🧠 복습하러 가기</a>
+        <button class="finish-btn-retry" onclick="resetQuiz()">다시 풀기</button>
+      </div>
+    </div>
+    <div class="quiz-meta">
+      <div class="quiz-score">점수: <span class="score-num" id="scoreDisplay">0</span> / <span id="totalDisplay">0</span></div>
+      <button class="btn-reset" onclick="resetQuiz()">다시하기</button>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+    <div class="quiz-list" id="quizList"></div>
+  </div>
+
+</div>
+
+<script>
+const WORDS = [{"word": "fungal", "part_of_speech": "형용사", "meaning_ko": "곰팡이균과 관련된, 진균성의", "explanation": "fungi(곰팡이, 버섯, 효모 등)에 의해 야기되거나 관련된 것을 설명할 때 사용합니다. 의학이나 생물학에서 자주 등장하는 용어입니다.", "example_from_convo": "a fungal infection like athlete's foot or a yeast infection", "example_ko": "발 무좀이나 질염 같은 진균 감염", "tip": "antifungal(항진균제), fungal growth(곰팡이 번식) 등으로 조합되어 사용돼요.", "emoji": "🍄"}, {"word": "logging", "part_of_speech": "명사", "meaning_ko": "벌목, 데이터 기록", "explanation": "주로 두 가지 의미가 있습니다: (1) 나무를 베어내는 벌목 사업, (2) 컴퓨터 시스템이 활동을 기록하는 것.", "example_from_convo": "logging companies clear forests for timber / the system is logging all user activity", "example_ko": "벌목 회사들이 재목을 위해 숲을 정리한다 / 시스템이 모든 사용자 활동을 기록 중이다", "tip": "tech 분야에서는 '로깅' = 데이터 기록이 매우 중요한 개념입니다.", "emoji": "🌲"}, {"word": "synergy", "part_of_speech": "명사", "meaning_ko": "시너지, 상승작용", "explanation": "두 개 이상의 것이 함께 작용할 때 개별적인 합보다 더 큰 효과를 내는 것을 의미합니다.", "example_from_convo": "it creates synergy for harder studying", "example_ko": "더 열심히 공부하기 위한 시너지를 만든다", "tip": "비가산 명사이므로 'a synergy'라고 하지 않습니다. 'synergies(복수)'로 쓸 수도 있어요.", "emoji": "⚡"}, {"word": "counterargument", "part_of_speech": "명사", "meaning_ko": "반론, 반박", "explanation": "주장에 대해 이를 반박하거나 반대하는 논거를 말합니다. 논문이나 에세이에서 상대방 의견을 인정한 후 재반박할 때 중요합니다.", "example_from_convo": "Although some argue that studying alone allows better concentration, group study's benefits clearly outweigh this drawback", "example_ko": "일부는 혼자 공부하는 것이 집중력을 높인다고 주장하지만, 단체 학습의 장점이 이를 상쇄한다", "tip": "좋은 에세이는 반론을 인정하고 다시 반박하는 구조를 가져요.", "emoji": "🤔"}, {"word": "accountability", "part_of_speech": "명사", "meaning_ko": "책임감, 책임질 것", "explanation": "자신의 행동이나 성과에 대해 책임을 지는 태도나 성질입니다. 단체 활동에서 서로를 감시하고 책임지게 되는 것을 의미합니다.", "example_from_convo": "group study's benefits in accountability and diverse perspectives", "example_ko": "책임감과 다양한 관점의 이점", "tip": "'hold someone accountable' = 누군가에게 책임을 물다", "emoji": "✋"}, {"word": "brainstorming", "part_of_speech": "명사", "meaning_ko": "브레인스토밍, 집단 창의력", "explanation": "여러 사람이 함께 모여 자유롭게 아이디어를 내고 논의하는 창의적인 활동입니다.", "example_from_convo": "through brainstorming, explanation, and synergy", "example_ko": "브레인스토밍, 설명, 시너지를 통해", "tip": "'brainstorm' 동사로도 쓸 수 있어요: 'Let's brainstorm some ideas'", "emoji": "💡"}, {"word": "diverse", "part_of_speech": "형용사", "meaning_ko": "다양한, 여러 가지의", "explanation": "여러 종류, 다양한 형태나 특성을 가진 것을 표현합니다.", "example_from_convo": "they can learn diverse information from each other", "example_ko": "그들은 서로로부터 다양한 정보를 배울 수 있다", "tip": "'diversity(다양성)', 'diversify(다양화하다)' 같은 관련 단어도 있어요.", "emoji": "🌈"}, {"word": "acknowledge", "part_of_speech": "동사", "meaning_ko": "인정하다, 인식하다", "explanation": "사실이나 상황의 존재를 인정하고 받아들이는 것입니다. 에세이에서 반대 의견을 인정할 때 자주 쓰입니다.", "example_from_convo": "acknowledge counterarguments", "example_ko": "반론을 인정하다", "tip": "'acknowledge receipt' = 수령을 확인하다", "emoji": "👍"}];
+const QUIZ  = [{"type": "meaning", "word": "fungal", "question": "fungal infection의 원인은 무엇인가요?", "options": ["박테리아", "곰팡이균", "바이러스", "화학물질"], "answer": 1, "explanation": "fungal은 곰팡이균(fungi)과 관련된 형용사입니다."}, {"type": "fill_blank", "word": "fungal", "sentence": "The doctor prescribed _____ cream to treat the infection.", "sentence_ko": "의사는 감염을 치료하기 위해 항진균 크림을 처방했다.", "answer": "antifungal", "hint": "항곰팡이"}, {"type": "meaning", "word": "logging", "question": "tech 분야에서 'system logging'은 무엇을 의미하나요?", "options": ["나무를 베기", "시스템 활동을 기록하기", "데이터를 삭제하기", "프로그램을 실행하기"], "answer": 1, "explanation": "컴퓨터 시스템에서 logging은 모든 활동과 이벤트를 기록하는 것입니다."}, {"type": "fill_blank", "word": "logging", "sentence": "The _____ industry provides jobs for thousands of workers.", "sentence_ko": "벌목 산업은 수천 명의 노동자에게 일자리를 제공한다.", "answer": "logging", "hint": "나무를 베어내는 산업"}, {"type": "meaning", "word": "synergy", "question": "synergy의 핵심 개념은 무엇인가요?", "options": ["개별 효과의 합", "개별 합보다 큰 효과", "서로의 반대", "단순한 더하기"], "answer": 1, "explanation": "synergy는 두 개 이상이 함께 작용할 때 예상보다 큰 효과를 만드는 것입니다."}, {"type": "fill_blank", "word": "synergy", "sentence": "When team members work together, they create _____ that leads to better results.", "sentence_ko": "팀원들이 함께 일할 때, 더 나은 결과로 이어지는 시너지를 만든다.", "answer": "synergy", "hint": "상승작용"}, {"type": "meaning", "word": "counterargument", "question": "좋은 에세이에서 counterargument를 사용하는 이유는?", "options": ["글을 길게 하려고", "상대방 의견을 인정 후 재반박하려고", "시간을 낭비하려고", "주장을 약하게 하려고"], "answer": 1, "explanation": "counterargument는 에세이의 설득력을 높이고 균형잡힌 논의를 보여줍니다."}, {"type": "fill_blank", "word": "counterargument", "sentence": "Although some argue that individual study is better, this _____ ignores the benefits of group work.", "sentence_ko": "개인 학습이 더 낫다는 주장이 있지만, 이 반론은 단체 작업의 이점을 무시한다.", "answer": "counterargument", "hint": "반박, 반론"}, {"type": "meaning", "word": "accountability", "question": "group study에서 accountability의 역할은?", "options": ["혼자만 일함", "서로에게 책임을 지는 것", "일을 피함", "결과를 숨김"], "answer": 1, "explanation": "accountability는 팀원들이 서로 책임을 지고 노력을 관찰하게 되는 것입니다."}, {"type": "fill_blank", "word": "accountability", "sentence": "In group projects, there is greater _____ because team members must report their progress.", "sentence_ko": "단체 프로젝트에서는 팀원들이 진행 상황을 보고해야 하므로 더 큰 책임감이 있다.", "answer": "accountability", "hint": "책임감"}, {"type": "meaning", "word": "brainstorming", "question": "brainstorming의 목적은?", "options": ["하나의 올바른 답 찾기", "여러 아이디어를 자유롭게 내기", "남의 아이디어 비판하기", "조용하게 생각하기"], "answer": 1, "explanation": "brainstorming은 창의적이고 자유로운 아이디어 교환 과정입니다."}, {"type": "fill_blank", "word": "brainstorming", "sentence": "Let's _____ new marketing strategies for the product launch.", "sentence_ko": "제품 출시를 위한 새로운 마케팅 전략에 대해 브레인스토밍해보자.", "answer": "brainstorm", "hint": "아이디어를 내다"}, {"type": "meaning", "word": "diverse", "question": "diverse perspectives의 장점은?", "options": ["모두 같은 생각", "여러 관점에서 보기", "하나의 관점만 유지", "차이를 무시하기"], "answer": 1, "explanation": "diverse는 다양성을 의미하며, 여러 관점이 더 나은 결정을 만듭니다."}, {"type": "fill_blank", "word": "diverse", "sentence": "The team has _____ backgrounds and experiences, which strengthens their problem-solving abilities.", "sentence_ko": "팀은 다양한 배경과 경험을 가지고 있으며, 이는 문제 해결 능력을 강화한다.", "answer": "diverse", "hint": "다양한"}, {"type": "meaning", "word": "acknowledge", "question": "에세이에서 acknowledge를 사용하는 상황은?", "options": ["자신의 주장만 강조", "반대 의견의 타당성을 인정", "상대방을 무시", "증거 없이 주장"], "answer": 1, "explanation": "acknowledge는 상대방의 의견을 인정하고 존중하는 학술적 표현입니다."}, {"type": "fill_blank", "word": "acknowledge", "sentence": "While I _____ that individual study has merit, group study offers more advantages.", "sentence_ko": "개인 학습이 장점이 있다는 것을 인정하면서도, 단체 학습이 더 많은 이점을 제공한다.", "answer": "acknowledge", "hint": "인정하다"}];
+
+/* ── 탭 전환 ── */
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ── 단어 카드 그라디언트 ── */
+function wordGradient(pos) {
+  const p = (pos || '').toLowerCase();
+  if (p.includes('슬랭') || p.includes('slang') || p.includes('구동사'))
+    return 'linear-gradient(135deg,#7c3aed,#4f46e5)';
+  if (p.includes('동사') || p.includes('verb'))
+    return 'linear-gradient(135deg,#0ea5e9,#2563eb)';
+  if (p.includes('형용사') || p.includes('adj'))
+    return 'linear-gradient(135deg,#10b981,#059669)';
+  if (p.includes('명사') || p.includes('noun'))
+    return 'linear-gradient(135deg,#f59e0b,#dc2626)';
+  if (p.includes('관용') || p.includes('idiom') || p.includes('표현'))
+    return 'linear-gradient(135deg,#ec4899,#8b5cf6)';
+  if (p.includes('부사'))
+    return 'linear-gradient(135deg,#06b6d4,#0284c7)';
+  return 'linear-gradient(135deg,#6366f1,#8b5cf6)';
+}
+
+/* ── 단어 탭 렌더 ── */
+function renderWords() {
+  const list = document.getElementById('wordList');
+  list.innerHTML = WORDS.map((w, i) => `
+    <div class="word-card">
+      <div class="word-header">
+        <span class="word-text">${w.word}</span>
+        <span class="word-pos">${w.part_of_speech}</span>
+      </div>
+      <div class="word-meaning">${w.meaning_ko}</div>
+      <div class="word-explanation">${w.explanation}</div>
+      ${w.example_from_convo ? `
+      <div class="example-box">
+        <div class="example-en">"${w.example_from_convo}"</div>
+        <div class="example-ko">${w.example_ko}</div>
+      </div>` : ''}
+      ${w.tip ? `
+      <div class="tip-box">
+        <span class="tip-label">💡 Tip</span>${w.tip}
+      </div>` : ''}
+      ${w.emoji ? `
+      <div class="word-illus" style="background:${wordGradient(w.part_of_speech)}">
+        <span class="word-illus-emoji">${w.emoji}</span>
+        <div class="word-illus-en">${w.word}</div>
+        <div class="word-illus-ko">${w.meaning_ko}</div>
+      </div>` : ''}
+    </div>
+  `).join('');
+}
+
+/* ── 퀴즈 탭 렌더 ── */
+let score = 0;
+let answered = 0;
+
+function renderQuiz() {
+  document.getElementById('totalDisplay').textContent = QUIZ.length;
+  const list = document.getElementById('quizList');
+  list.innerHTML = QUIZ.map((q, i) => buildQuizCard(q, i)).join('');
+}
+
+function buildQuizCard(q, i) {
+  const typeLabel = { meaning: '의미 퀴즈', fill_blank: '빈칸 채우기', situation: '상황 퀴즈' }[q.type] || q.type;
+  const wordBadge = q.word ? `<span class="quiz-word-badge">${q.word}</span><br>` : '';
+  const wd = WORDS.find(w => w.word === q.word);
+  const illustHtml = (wd && wd.emoji) ? `
+    <div class="quiz-illus" style="background:${wordGradient(wd.part_of_speech)};margin-bottom:10px">
+      <span style="font-size:36px">${wd.emoji}</span>
+      <div style="font-size:15px;font-weight:800;color:white;margin-top:5px;text-shadow:0 1px 3px rgba(0,0,0,.2)">${wd.word}</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.85)">${wd.meaning_ko}</div>
+    </div>` : '';
+
+  if (q.type === 'fill_blank') {
+    return `
+    <div class="quiz-card" id="qcard-${i}">
+      <div class="quiz-type-badge">${typeLabel}</div>
+      ${wordBadge}
+      <div class="quiz-question">${q.sentence}</div>
+      ${q.sentence_ko ? `<div class="hint-text">${q.sentence_ko}</div>` : ''}
+      <div class="hint-text">힌트: ${q.hint}</div>
+      <input class="fill-input" id="fill-${i}" placeholder="답을 입력하세요" onkeydown="if(event.key==='Enter') submitFill(${i})">
+      <button class="btn-submit" id="fill-btn-${i}" onclick="submitFill(${i})">제출</button>
+      <div class="quiz-explanation" id="expl-${i}">
+        ${illustHtml}
+        <span class="expl-label">정답: </span>${q.answer}
+      </div>
+    </div>`;
+  }
+
+  const opts = (q.options || []).map((opt, j) =>
+    `<button class="opt-btn" id="opt-${i}-${j}" onclick="selectOpt(${i}, ${j}, ${q.answer})">${String.fromCharCode(65+j)}. ${opt}</button>`
+  ).join('');
+
+  return `
+  <div class="quiz-card" id="qcard-${i}">
+    <div class="quiz-type-badge">${typeLabel}</div>
+    ${wordBadge}
+    <div class="quiz-question">${q.question}</div>
+    <div class="quiz-options">${opts}</div>
+    <div class="quiz-explanation" id="expl-${i}">
+      ${illustHtml}
+      <span class="expl-label">💬 </span>${q.explanation || ''}
+    </div>
+  </div>`;
+}
+
+function selectOpt(qi, chosen, correct) {
+  const card = document.getElementById('qcard-' + qi);
+  if (card.classList.contains('answered')) return;
+  card.classList.add('answered');
+  answered++;
+
+  const opts = card.querySelectorAll('.opt-btn');
+  opts.forEach(b => b.disabled = true);
+  opts[correct].classList.add('correct');
+  if (chosen !== correct) opts[chosen].classList.add('wrong');
+  else { score++; document.getElementById('scoreDisplay').textContent = score; }
+
+  document.getElementById('expl-' + qi).classList.add('show');
+  updateProgress();
+}
+
+function submitFill(qi) {
+  const inp = document.getElementById('fill-' + qi);
+  const btn = document.getElementById('fill-btn-' + qi);
+  const card = document.getElementById('qcard-' + qi);
+  if (card.classList.contains('answered')) return;
+
+  const userAns = inp.value.trim().toLowerCase();
+  const correct = QUIZ[qi].answer.toLowerCase();
+  card.classList.add('answered');
+  answered++;
+  inp.disabled = true;
+  btn.disabled = true;
+
+  if (userAns === correct) { inp.classList.add('correct'); score++; document.getElementById('scoreDisplay').textContent = score; }
+  else { inp.classList.add('wrong'); }
+
+  document.getElementById('expl-' + qi).classList.add('show');
+  updateProgress();
+}
+
+function updateProgress() {
+  const pct = QUIZ.length ? (answered / QUIZ.length * 100) : 0;
+  document.getElementById('progressBar').style.width = pct + '%';
+  if (answered === QUIZ.length) showFinish();
+}
+
+function showFinish() {
+  const banner = document.getElementById('finishBanner');
+  const wrong = answered - score;
+  const pct = Math.round(score / QUIZ.length * 100);
+  document.getElementById('finishEmoji').textContent = pct >= 80 ? '🎉' : pct >= 50 ? '💪' : '📖';
+  document.getElementById('finishTitle').textContent = pct >= 80 ? '완벽해요!' : pct >= 50 ? '잘하고 있어요!' : '계속 연습하면 돼요!';
+  document.getElementById('finishSub').textContent = '오늘 배운 표현들 퀴즈 완료!';
+  document.getElementById('finishCorrect').textContent = score;
+  document.getElementById('finishWrong').textContent = wrong;
+  document.getElementById('finishAccuracy').textContent = pct + '%';
+  banner.classList.add('show');
+  banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  localStorage.setItem('english_quiz_done', TODAY_DATE);
+}
+
+function resetQuiz() {
+  score = 0;
+  answered = 0;
+  document.getElementById('scoreDisplay').textContent = 0;
+  document.getElementById('progressBar').style.width = '0%';
+  document.getElementById('finishBanner').classList.remove('show');
+  renderQuiz();
+}
+
+renderWords();
+renderQuiz();
+
+const TODAY_DATE = (()=>{ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; })();
+function markVocabDone() {
+  localStorage.setItem('english_vocab_read', TODAY_DATE);
+  const btn = document.getElementById('btnVocabDone');
+  btn.textContent = '✅ 오늘 완료!';
+  btn.className = 'btn-vocab-done done';
+  btn.disabled = true;
+}
+(function() {
+  if (localStorage.getItem('english_vocab_read') === TODAY_DATE) {
+    const btn = document.getElementById('btnVocabDone');
+    btn.textContent = '✅ 오늘 완료!';
+    btn.className = 'btn-vocab-done done';
+    btn.disabled = true;
+  }
+})();
+</script>
+</body>
+</html>

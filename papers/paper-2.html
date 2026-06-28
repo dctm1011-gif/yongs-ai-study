@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HBM PSIJ 모델링 논문 분석 · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">HBM PSIJ 모델링</span>
+</div>
+<div class="article">
+  <div class="article-venue">IEEE EMC+SIPI 2023</div>
+  <h1 class="article-title">Power Supply Induced Jitter (PSIJ) Modeling, Analysis, and Optimization of High Bandwidth Memory (HBM) I/O Interface</h1>
+  <div class="article-tags"><span class="tag">HBM</span><span class="tag">Power</span><span class="tag">Packaging</span><span class="tag">Interface</span></div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://www.semanticscholar.org/paper/3fd4d5b21df2e5ac70b8e8c893123a4e9854262c" target="_blank">원문 보기 →</a>
+  </div>
+  <p class="opener">HBM I/O 인터페이스에서 전원 노이즈가 지터로 변환되는 메커니즘을 세 가지 독립 모델로 분리해 정량화한 논문이에요. SPICE 대비 4.26% 오차로 PSIJ를 추정하고, ML 기반 디커플링 커패시터 배치까지 제안해요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">PSIJ가 왜 HBM의 핵심 문제인가요?</h2>
+    <p>HBM의 데이터 속도가 세대마다 올라갈수록 I/O 인터페이스에서 눈 다이어그램(eye diagram)의 열리는 폭이 점점 줄어들어요. 이 중 상당 부분이 PSIJ, 즉 전원 공급 장치 유도 지터 때문이에요. 전원이 조금만 흔들려도 데이터 신호의 타이밍이 같이 흔들리거든요.</p>
+    <p>문제는 PSIJ가 어느 주파수 대역에서, 어떤 회로 블록에서 주로 발생하는지를 정량적으로 분석한 연구가 거의 없었다는 거예요. 이 논문은 그 공백을 채우려는 시도예요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Modeling</div>
+    <h2 class="section-title">세 가지 독립 모델로 PSIJ를 분해하다</h2>
+    <p>이 논문은 PSIJ를 세 가지 독립적인 기여 요소로 나눠서 모델링해요.</p>
+    <div class="insight blue">
+      <div class="insight-label">모델 1 · VDDQ PDN</div>
+      <p>I/O 드라이버 전용 전원(VDDQ)을 공급하는 전력 분배 네트워크의 임피던스 특성이에요. PDN 임피던스가 높은 주파수 대역에서 노이즈가 크게 증폭돼요.</p>
+    </div>
+    <div class="insight blue">
+      <div class="insight-label">모델 2 · SSC (동시 스위칭 전류)</div>
+      <p>수천 개의 I/O가 동시에 전환될 때 순간적으로 흐르는 큰 전류예요. 이게 PDN에 충격을 주면서 전압 노이즈를 만들어요. I/O 수가 많은 HBM에서 특히 심해요.</p>
+    </div>
+    <div class="insight blue">
+      <div class="insight-label">모델 3 · 지터 감도 (Jitter Sensitivity)</div>
+      <p>클럭과 I/O 버퍼가 전원 노이즈를 지터로 변환하는 비율이에요. 회로 설계에 따라 같은 전원 노이즈라도 지터로 얼마나 나타나는지가 달라요.</p>
+    </div>
+    <p>이 세 모델을 조합하면 PSIJ를 수식으로 추정할 수 있고, SPICE와 비교했을 때 평균 오차가 4.26%에 불과해요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Analysis</div>
+    <h2 class="section-title">임계 주파수 대역이란?</h2>
+    <p>모든 주파수가 똑같이 위험한 건 아니에요. PDN 임피던스 피크가 있는 특정 주파수 대역에서 PSIJ가 집중적으로 발생해요. 이 논문은 주파수 도메인 분석으로 각 회로 블록의 상대적 기여를 비교하고, 문제가 되는 임계 주파수 대역을 찾아내요.</p>
+    <p>이게 중요한 이유는, 어디서 문제가 생기는지 알아야 디커플링 커패시터(decap)를 어디에 달아야 효과적인지 알 수 있기 때문이에요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Optimization</div>
+    <h2 class="section-title">ML로 디커플링 커패시터 배치를 최적화하다</h2>
+    <p>어디에 decap을 얼마나 달아야 PSIJ를 최소화할 수 있는지는 설계자들의 오랜 과제예요. 이 논문은 머신러닝(ML)을 이용해 온칩(on-chip)과 온인터포저(on-interposer) decap의 최적 배치 전략을 자동으로 찾아내요.</p>
+    <div class="insight red">
+      <div class="insight-label">핵심 발견: 고주파 PSIJ의 한계</div>
+      <p>임계 주파수 대역이 높을수록 decap으로는 해결이 어려워요. Decap은 저주파 노이즈 억제에는 효과적이지만, 고주파에서는 decap 자체의 기생 성분(ESL)이 오히려 문제가 돼요. 결국 고주파 PSIJ를 줄이려면 버퍼 회로 자체의 전원 노이즈 제거 능력(PSRR)을 높여야 해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에서 이 논문이 갖는 의미</h2>
+    <p>HBM PHY 설계에서 PSIJ를 줄이는 건 단순히 decap을 더 많이 다는 문제가 아니에요. 어느 주파수 대역에서 문제가 생기는지, PDN 설계와 버퍼 회로 설계 중 어디에서 개선을 해야 할지를 알아야 해요.</p>
+    <p>이 논문의 분석 프레임워크를 쓰면, HBM3에서 HBM4로 넘어가면서 I/O 속도가 올라갈 때 PSIJ가 어떻게 변화할지 예측하고 미리 대응할 수 있어요. "전원 흔들림 → 지터"의 연결고리를 정량적으로 이해하는 게 결국 더 빠른 HBM을 만드는 기반이 되는 거예요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">4.26%</div><div class="stat-desc">SPICE 대비 평균 추정 오차</div></div>
+      <div class="stat-box"><div class="stat-num">3개</div><div class="stat-desc">독립 모델 (PDN / SSC / 지터 감도)</div></div>
+    </div>
+  </div>
+
+<hr>
+<div class="section">
+  <div class="section-label">논문 그림</div>
+  <h2 class="section-title">Figure 갤러리</h2>
+  <p class="figure-no-embed">이 논문은 IEEE Xplore에서 제공돼요. Semantic Scholar 페이지에서 그림 일부를 미리 볼 수 있어요 (무료 접근 가능).</p>
+  <div class="figure-outer">
+    <a class="figure-open-link" href="https://www.semanticscholar.org/paper/3fd4d5b21df2e5ac70b8e8c893123a4e9854262c" target="_blank">↗ Semantic Scholar에서 열기 (그림 포함)</a>
+  </div>
+</div>
+</div>
+<div id="term-tooltip-global"></div>
+<script src="tooltip.js"></script>
+</body>
+</html>

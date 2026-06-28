@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Elastic Buffer All-Digital CDR · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Elastic Buffer All-Digital CDR</span>
+</div>
+<div class="article">
+  <div class="article-venue">arXiv 2025</div>
+  <h1 class="article-title">Elastic Buffer Design for Real-Time All-Digital Clock Recovery Enabling Free-Running Receiver Clock with Negative and Positive Clock Frequency Offsets</h1>
+  <div class="article-tags"><span class="tag">PHY</span><span class="tag">Interface</span><span class="tag">CDR</span></div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://arxiv.org/abs/2507.13748v1" target="_blank">원문 보기 →</a>
+    <a class="article-link" href="https://arxiv.org/pdf/2507.13748v1" target="_blank">PDF →</a>
+  </div>
+  <p class="opener">PLL 없이 free-running 클럭만으로 ±400ppm 주파수 오프셋을 허용하면서 오류 없는 실시간 데이터 전송을 달성하는 all-digital CDR용 elastic buffer 설계예요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">All-digital CDR에서 주파수 오프셋이 왜 그렇게 골치 아플까요?</h2>
+    <p>CDR(Clock and Data Recovery)은 수신단에서 송신단이 보낸 데이터 스트림으로부터 클럭 정보를 복원하는 회로예요. 고속 직렬 인터페이스(SerDes, USB, PCIe, HBM PHY)에서 필수적이에요. 전통적인 CDR은 PLL(Phase-Locked Loop)을 기반으로 해서, 수신 클럭을 송신 클럭에 위상·주파수 동기시켜요. 이 방식은 잘 작동하지만 아날로그 PLL 특유의 문제들이 있어요. 공정 미세화에 따른 아날로그 설계 어려움, 넓은 전원 공급 범위에서의 지터 증가, 그리고 무엇보다 온도·전압·공정(PVT) 변화에 민감한 루프 특성이 골칫거리예요.</p>
+    <p>All-digital CDR(ADCDR)은 이 문제를 디지털 로직만으로 해결하려는 접근법이에요. 위상 검출기(PD), 루프 필터(LF), 디지털 제어 발진기(DCO)를 모두 디지털 블록으로 구현하면 공정 스케일링이 자동으로 따라오고, PVT 교정도 디지털 알고리즘으로 처리할 수 있어요. 그런데 ADCDR에는 아날로그 PLL에 없는 새로운 도전 과제가 생겨요. 바로 주파수 오프셋(frequency offset) 처리예요.</p>
+    <p>송신단과 수신단의 클럭이 완벽히 같은 주파수를 가지는 경우는 거의 없어요. 각각의 크리스털 오실레이터, 온도, 전압 차이 때문에 수백 ppm 수준의 주파수 차이가 생겨요. PLL 기반 CDR은 이 차이를 루프로 흡수하지만, free-running 수신 클럭(receiver가 자체 발진기로만 동작하는 경우)을 쓰는 ADCDR은 이 오프셋을 명시적으로 처리해야 해요. 특히 negative offset(수신 클럭이 송신보다 느릴 때)과 positive offset(수신 클럭이 빠를 때) 모두를 끊김 없이 처리하는 게 기술적으로 어려워요. 이게 elastic buffer가 필요한 이유예요.</p>
+    <div class="insight blue">
+      <div class="insight-label">논문의 출발점</div>
+      <p>All-digital CDR에서 free-running 수신 클럭을 쓰려면 주파수 오프셋으로 인한 데이터 손실이나 중복을 실시간으로 흡수해야 해요. 기존 FIFO 기반 elastic buffer는 negative/positive 오프셋 모두를 안정적으로 처리하는 데 한계가 있었어요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">Elastic Buffer가 ±주파수 오프셋을 어떻게 흡수하나요?</h2>
+    <p>이 논문의 elastic buffer는 ADCDR 수신단에서 데이터 스트림과 free-running 수신 클럭 사이의 위상/주파수 차이를 실시간으로 흡수하는 동적 FIFO 구조예요. 핵심 혁신은 "중간 포인터(mid-pointer)" 제어 방식이에요. 기존 FIFO elastic buffer는 읽기 포인터와 쓰기 포인터 사이의 거리를 일정하게 유지하려 하는데, 주파수 오프셋이 지속되면 포인터가 한쪽 끝으로 계속 밀려서 overflow나 underflow가 발생해요.</p>
+    <p>이 논문이 제안하는 방식은 주파수 오프셋 방향에 따라 elastic buffer가 능동적으로 더미(dummy) 심볼을 삽입(positive offset)하거나 삭제(negative offset)하는 거예요. 데이터 스트림에 허용된 삽입/삭제 슬롯을 미리 정의하고, CDR 알고리즘이 이 슬롯을 활용해서 포인터 거리를 중간값으로 유지해요. 이 동작은 완전히 디지털 로직으로 구현되고, 실시간으로(한 심볼 지연 이내에) 결정이 이루어져요.</p>
+    <p>특히 주목할 부분은 negative frequency offset 처리예요. 수신 클럭이 송신보다 느리면 데이터가 FIFO에 쌓여가다 overflow가 나는 게 일반적이에요. 이 논문은 데이터 스트림에서 프리앰블이나 idle 패턴처럼 정보가 없는 심볼을 식별하고, 그 위치에서 수신 샘플을 건너뛰어(skip) FIFO 포인터 누적을 막아요. 덕분에 -400ppm에서 +400ppm까지 데이터 오류 없이 동작이 검증됐어요. 전체 구조가 디지털이라 FPGA로 프로토타이핑하거나 ASIC으로 구현할 때 설계 자동화 도구를 그대로 사용할 수 있어요.</p>
+    <div class="insight green">
+      <div class="insight-label">핵심 아이디어</div>
+      <p>주파수 오프셋 방향에 따라 idle/dummy 심볼을 능동적으로 삽입·삭제해서 FIFO 포인터를 중간값에 유지해요. 아날로그 PLL 없이 순수 디지털 로직만으로 ±400ppm 오프셋을 실시간 흡수해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">±400ppm 오프셋에서 정말 오류가 없었나요?</h2>
+    <p>검증은 실시간 시뮬레이션과 FPGA 프로토타입 보드를 통해 진행됐어요. 테스트 조건은 -400ppm에서 +400ppm까지 연속적으로 주파수 오프셋을 변화시키면서 장시간 데이터 전송(수백만 비트 이상)을 모니터링하는 방식이었어요. 기존 FIFO 기반 elastic buffer를 동일 조건에서 테스트했을 때는 주파수 오프셋이 ±100ppm을 넘어가면 간헐적인 데이터 손실이 발생했는데, 제안된 설계에서는 ±400ppm 전 범위에서 단일 비트 오류가 검출되지 않았어요.</p>
+    <p>타이밍 관점에서 elastic buffer 자체가 도입하는 지연(latency)은 최대 몇 클럭 사이클 수준으로, 고속 인터페이스의 전체 링크 지연에서 무시할 수 있는 수준이에요. 포인터 제어 로직의 디지털 회로 면적은 수신단 전체에서 작은 비율을 차지하고, 추가 전력 소모도 미미해요. 전체 ADCDR 시스템의 클럭 복원 정확도(위상 오류)는 ±0.5 UI(Unit Interval) 이내로 유지됐어요.</p>
+    <p>설계 파라미터 유연성도 검증됐는데, 오프셋 허용 범위(tolerance window)와 FIFO 깊이(buffer depth)를 조정하면 ±800ppm까지 확장 가능하다고 논문은 언급해요. 물론 이때는 idle 슬롯 빈도나 데이터 프로토콜 제약을 더 면밀히 고려해야 해요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">±400ppm</div><div class="stat-desc">오류 없는 동작<br>주파수 오프셋 범위</div></div>
+      <div class="stat-box"><div class="stat-num">0 bit</div><div class="stat-desc">전 범위 테스트에서<br>비트 오류 수</div></div>
+      <div class="stat-box"><div class="stat-num">±0.5 UI</div><div class="stat-desc">클럭 복원<br>위상 오류</div></div>
+      <div class="stat-box"><div class="stat-num">100%</div><div class="stat-desc">디지털 구현<br>(아날로그 PLL 불필요)</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM PHY 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM PHY는 HBM 메모리 다이와 호스트 다이(SoC/GPU) 사이의 고속 데이터 인터페이스를 담당해요. HBM3E 기준으로 채널당 8Gb/s, 전체 1TB/s급 대역폭을 지원하려면 PHY 내부의 CDR이 매우 정확하게 동작해야 해요. HBM은 TSV와 미세 범프(micro-bump)로 연결되기 때문에 기본적으로 송수신 클럭이 매우 가깝게 동기화되어 있지만, 온도 구배(die마다 온도가 다른 3D 스택 환경)로 인한 국소적 주파수 편차는 무시할 수 없어요.</p>
+    <p>All-digital CDR 방식이 HBM PHY에 적용되면, 공정 미세화(2nm, 3nm 노드)에서 아날로그 PLL 설계 부담을 크게 줄일 수 있어요. 특히 HBM은 베이스 다이 위에 코어 다이가 수직으로 쌓이는 구조라, 서로 다른 공정으로 만들어진 다이들이 결합될 수 있어요(HBM4의 2.5D/3D 하이브리드 통합). 이때 다이별 클럭 오프셋을 elastic buffer가 흡수하는 구조는 매력적이에요.</p>
+    <p>실용적인 도전 과제도 있어요. HBM PHY의 데이터 레이트(최대 12.8Gb/s per pin, HBM4 기준)에서 idle 슬롯 삽입·삭제가 프로토콜 레이어의 타이밍 예산에 맞는지 검증이 필요해요. 또한 HBM의 Read/Write Command 타이밍(tRCD, tCL, tRTP 등)과 elastic buffer 지연이 겹쳐서 전체 레이턴시 예산을 넘어가지 않도록 설계해야 해요. 그래도 "PLL 없이 free-running 클럭으로 PHY 동작"이라는 개념은 향후 메모리 표준에서 진지하게 고려될 가능성이 있어요.</p>
+    <div class="insight yellow">
+      <div class="insight-label">주의할 점</div>
+      <p>Idle/dummy 심볼 삽입·삭제가 가능하려면 데이터 프로토콜이 이를 허용해야 해요. HBM의 경우 JEDEC 표준에서 정의한 idle 시퀀스와 충돌하지 않는지 검증이 필요해요. 또한 ±400ppm이 HBM PHY의 클럭 스펙(JEDEC HBM3E: ±100ppm 내외)과 다를 수 있으므로, 적용 전 스펙 매핑이 필요해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — All-digital CDR 전체 블록 다이어그램. 디지털 위상 검출기(DPD), 디지털 루프 필터(DLF), DCO, 그리고 제안된 elastic buffer의 위치를 보여줘요. free-running 수신 클럭이 어떻게 시스템에 연결되는지도 명확히 표시돼요.</p>
+    <p><strong>Fig. 2</strong> — Elastic buffer 내부 구조 상세도. 쓰기 포인터(WP)와 읽기 포인터(RP), 중간 포인터 목표값(mid-point target), 그리고 idle 슬롯 삽입·삭제 결정 로직의 인터페이스를 보여줘요.</p>
+    <p><strong>Fig. 3</strong> — Positive/Negative frequency offset 동작 파형. 두 시나리오에서 FIFO 포인터 차이(fill level)가 어떻게 변하는지, 삽입·삭제가 발생하는 시점이 어디인지 타임 도메인 파형으로 보여줘요.</p>
+    <p><strong>Fig. 4</strong> — 주파수 오프셋 범위별 BER(Bit Error Rate) 측정 결과. -400ppm에서 +400ppm까지 BER=0이 유지되는 범위를 waterfall 플롯으로 보여줘요. 기존 FIFO 방식과 비교해서 허용 범위가 4배 이상 확장된 것이 명확히 보여요.</p>
+    <p><strong>Fig. 5</strong> — FPGA 프로토타입 구현 사진 및 측정 셋업. 실제 하드웨어 검증에 사용된 보드 구성과 계측기 연결을 보여줘요. 실시간 동작 검증의 신뢰성을 높여주는 부분이에요.</p>
+    <div class="figure-outer">
+      <a class="figure-open-link" href="https://arxiv.org/abs/2507.13748v1" target="_blank">↗ 원문에서 그림 보기</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

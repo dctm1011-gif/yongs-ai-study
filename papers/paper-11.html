@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlockHammer 논문 분석 · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">BlockHammer: RowHammer 저비용 방어</span>
+</div>
+<div class="article">
+  <div class="article-venue">HPCA-27 2021 / arXiv 2021</div>
+  <h1 class="article-title">BlockHammer: Preventing RowHammer at Low Cost by Blacklisting Rapidly-Accessed DRAM Rows</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">RowHammer</span><span class="tag">Security</span><span class="tag">Architecture</span></div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://arxiv.org/abs/2102.05981" target="_blank">원문 보기 →</a>
+    <a class="article-link" href="https://arxiv.org/pdf/2102.05981" target="_blank">PDF →</a>
+  </div>
+  <p class="opener">RowHammer를 막는 기존 방법들은 "공격을 감지하면 인접 행을 리프레시한다"는 방식이에요. BlockHammer는 방향을 바꿔요. 너무 자주 접근되는 행은 아예 접근 자체를 늦춰버려요. 블룸 필터로 빠른 접근 행을 감지하고, 스로틀링으로 RowHammer 공격 자체가 불가능하게 만드는 거예요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">기존 RowHammer 방어의 문제</h2>
+    <p>RowHammer 방어의 주류 방식은 Targeted Row Refresh(TRR)예요. 특정 행이 n회 이상 해머되면, 그 인접 행을 예방적으로 리프레시해요. DDR4의 온다이 TRR, DDR5의 RFM(Refresh Management)이 이 계열이에요.</p>
+    <p>문제는 공격자가 "패턴"을 바꾸면 회피할 수 있다는 거예요. TRR은 특정 패턴(단순 한 행 반복)에는 효과적이지만, 여러 행을 번갈아 해머하는 "many-sided" 또는 "scatter" 공격에는 취약해요. 해머 횟수(nRH)가 계속 낮아지면서 이 문제가 더 심각해졌어요.</p>
+    <div class="insight red">
+      <div class="insight-label">TRR의 근본적 한계</div>
+      <p>TRR 계열 방어는 결국 "공격 패턴을 감지"하는 접근이에요. 공격자가 감지 임계값 이하로 분산해서 접근하면 뚫릴 수 있어요. 특히 1000개 이상의 행을 동시에 사용하는 SMASH 공격은 기존 TRR을 완전히 우회했어요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">BlockHammer Design</div>
+    <h2 class="section-title">블랙리스트 + 스로틀링: 두 단계 방어</h2>
+    <p>BlockHammer는 근본적으로 다른 접근을 해요. "공격 후 대응"이 아닌 "공격 자체를 불가능하게"예요.</p>
+    <div class="insight blue">
+      <div class="insight-label">1단계: Counting Bloom Filter로 빠른 행 감지</div>
+      <p>tREFW(리프레시 윈도우) 동안 각 행의 활성화 횟수를 추적해요. 블룸 필터를 쓰기 때문에 하드웨어 비용이 매우 낮아요. 활성화 횟수가 BlockingThreshold(BT)를 넘으면 그 행을 "블랙리스트"에 올려요.</p>
+    </div>
+    <div class="insight blue">
+      <div class="insight-label">2단계: 스로틀링으로 최대 해머 횟수 제한</div>
+      <p>블랙리스트에 오른 행에 대한 추가 접근 요청을 지연(throttle)시켜요. 구체적으로, 해당 행에 대한 ACT가 들어오면 tCBR(per-bank back-off delay)만큼 대기시켜요. 이 지연 때문에 tREFW 안에 해당 행을 충분히 자주 해머하는 게 물리적으로 불가능해져요.</p>
+    </div>
+    <p>스로틀링 임계값은 수학적으로 설정해요. 어떤 해머 공격도 nRH(비트 플립 발생 최소 해머 횟수) 이상 해머를 달성할 수 없도록 BT와 tCBR 값을 조합해요. 이 때문에 BlockHammer는 "공격을 감지"하는 대신 "공격이 성공할 수 없는 환경"을 만들어요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Security Analysis</div>
+    <h2 class="section-title">어떤 RowHammer 공격도 막을 수 있나요?</h2>
+    <p>BlockHammer가 매력적인 이유 중 하나는 공격 패턴에 구애받지 않는다는 거예요.</p>
+    <div class="insight green">
+      <div class="insight-label">공격 패턴 독립성</div>
+      <p>단순 한 행 반복이든, N-sided 공격이든, 수천 개 행을 순환하는 scatter 공격이든, 결국 어떤 행이라도 tREFW 안에 BT 이상 해머되면 스로틀링이 걸려요. 공격자가 패턴을 어떻게 바꿔도 수학적 상한선을 초과할 수 없어요.</p>
+    </div>
+    <p>False Positive(정상 접근인데 블랙리스트에 오르는 경우)에 대한 분석도 포함돼요. BT를 적절히 높게 설정하면 정상 워크로드에서 블랙리스트에 오르는 행 비율이 매우 낮아서 성능 영향이 미미해요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Evaluation</div>
+    <h2 class="section-title">실험 결과</h2>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">~0%</div><div class="stat-desc">정상 워크로드 성능 손실 (low BER)</div></div>
+      <div class="stat-box"><div class="stat-num">&lt;1%</div><div class="stat-desc">하드웨어 면적 오버헤드</div></div>
+      <div class="stat-box"><div class="stat-num">완전</div><div class="stat-desc">보안 보장 (수학적 증명)</div></div>
+    </div>
+    <p>SPEC2006, 메모리 집약 벤치마크 등에서 평가했을 때, 정상 워크로드에서의 성능 손실은 거의 0%예요. 블랙리스트에 오르는 행이 매우 드물기 때문이에요. 하드웨어 오버헤드도 Counting Bloom Filter가 워낙 작아서 1% 미만이에요.</p>
+    <div class="insight purple">
+      <div class="insight-label">기존 방법들과 비교</div>
+      <p>PARA(확률적 방어)는 nRH가 낮아질수록 매우 잦은 리프레시가 필요해요. TRR 계열은 특정 공격 패턴에 취약해요. BlockHammer는 이 두 단점을 동시에 해결해요: 성능 손실이 낮고, 모든 패턴의 공격에 보안이 보장돼요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM과 DRAM 설계에서의 시사점</h2>
+    <p>BlockHammer의 스로틀링 아이디어는 메모리 컨트롤러 레벨에서 구현하기 때문에, HBM에도 직접 적용할 수 있어요. HBM 컨트롤러가 행 접근을 모니터링해서 빠른 행을 감지하고 지연시키는 방식이에요.</p>
+    <p>현실적으로 HBM에서는 컨트롤러(GPU 다이 위)와 DRAM 다이 사이의 타이밍 조율이 필요해서, tCBR 구현이 약간 더 복잡해요. 하지만 인터페이스를 바꾸지 않고도 구현 가능하다는 점에서 빠른 채택이 가능해요.</p>
+    <div class="insight yellow">
+      <div class="insight-label">DDR5 RFM과의 관계</div>
+      <p>JEDEC DDR5가 채택한 RFM은 BlockHammer보다 단순해요. RFM은 "임계값 넘으면 메모리 컨트롤러에게 리프레시 요청권을 준다"는 방식이지만, BlockHammer의 스로틀링처럼 공격 자체를 차단하지는 못해요. BlockHammer 아이디어가 미래 JEDEC 표준에 영향을 줄 가능성이 있어요.</p>
+    </div>
+  </div>
+
+<hr>
+<div class="section">
+  <div class="section-label">논문 그림</div>
+  <h2 class="section-title">Figure 갤러리</h2>
+  <p class="figure-no-embed">PDF를 브라우저에서 바로 열어 그림을 확인할 수 있어요. 로딩이 느리거나 표시가 안 되면 링크를 눌러 새 탭에서 여세요.</p>
+  <div class="figure-outer">
+    <a class="figure-open-link" href="https://arxiv.org/abs/2102.05981" target="_blank">↗ arXiv 원문에서 열기</a>
+    <div class="figure-frame-wrap">
+      <iframe class="figure-frame" src="https://arxiv.org/pdf/2102.05981v2" loading="lazy" title="논문 원문 PDF (그림 포함)"></iframe>
+    </div>
+  </div>
+</div>
+</div>
+<div id="term-tooltip-global"></div>
+<script src="tooltip.js"></script>
+</body>
+</html>

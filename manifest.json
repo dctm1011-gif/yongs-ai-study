@@ -1,0 +1,15 @@
+{
+  "name": "Yong Study",
+  "short_name": "StudyHub",
+  "description": "영어 · TOEFL · 논문 — 매일 공부 포털",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f0f0f",
+  "theme_color": "#2d1b69",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "categories": ["education", "productivity"]
+}

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>REACH: HBM ECC 논문 분석 · Yong's AI Study</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff;color:#37352f;font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:15px;line-height:1.6;padding-bottom:80px}
+
+/* 상단 바 */
+.top-bar{background:#fff;border-bottom:1px solid #e9e9e7;padding:10px 20px;position:sticky;top:0;z-index:200;display:flex;align-items:center;gap:10px}
+.back-link{font-size:13px;color:#9b9a97;text-decoration:none;display:flex;align-items:center;gap:4px}
+.back-link:hover{color:#37352f}
+.breadcrumb-sep{color:#d3d1cb;font-size:13px}
+.breadcrumb-cur{font-size:13px;color:#37352f;font-weight:500}
+
+/* 본문 레이아웃 */
+.article{max-width:700px;margin:0 auto;padding:48px 24px 80px}
+
+/* 헤더 */
+.article-venue{font-size:11px;font-weight:600;color:#2383e2;background:#eef3fd;padding:2px 10px;border-radius:4px;display:inline-block;margin-bottom:14px}
+.article-title{font-size:28px;font-weight:700;color:#37352f;line-height:1.3;letter-spacing:-0.5px;margin-bottom:16px}
+.article-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.tag{font-size:11px;padding:2px 9px;border-radius:4px;background:#eef3fd;color:#2383e2;border:1px solid #c5d8f8}
+.article-links{display:flex;gap:8px;margin-bottom:32px}
+.article-link{font-size:12px;padding:5px 14px;border-radius:6px;background:#f1f0ef;color:#37352f;text-decoration:none;border:1px solid #e9e9e7;font-weight:500}
+.article-link:hover{background:#e9e9e7}
+.article-link.primary{background:#2383e2;color:#fff;border-color:#2383e2}
+.article-link.primary:hover{background:#1a6bc5}
+
+/* 한 줄 요약 */
+.opener{font-size:17px;font-style:italic;color:#6b6b6b;line-height:1.8;margin-bottom:36px;padding-bottom:28px;border-bottom:2px solid #e9e9e7}
+
+/* 섹션 */
+.section{margin-bottom:40px}
+.section-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#9b9a97;margin-bottom:12px}
+.section-title{font-size:19px;font-weight:700;color:#37352f;margin-bottom:14px;line-height:1.4}
+.section p{font-size:15px;color:#37352f;line-height:2;margin-bottom:16px}
+.section p:last-child{margin-bottom:0}
+
+/* 인사이트 박스 */
+.insight{background:#f7f6f3;border-radius:8px;padding:16px 20px;margin:20px 0;border-left:3px solid #9b9a97}
+.insight.green{background:#f0fdf4;border-left-color:#0f7b55}
+.insight.blue{background:#eef3fd;border-left-color:#2383e2}
+.insight.purple{background:#f5f3ff;border-left-color:#6940a5}
+.insight.red{background:#fff5f5;border-left-color:#e03e3e}
+.insight-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#9b9a97;margin-bottom:6px}
+.insight.green .insight-label{color:#0f7b55}
+.insight.blue .insight-label{color:#2383e2}
+.insight.purple .insight-label{color:#6940a5}
+.insight.red .insight-label{color:#e03e3e}
+.insight p{font-size:14px;line-height:1.8;margin-bottom:0 !important;color:#37352f}
+
+/* 수치 하이라이트 */
+.stat-row{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0}
+.stat-box{flex:1;min-width:130px;background:#f7f6f3;border-radius:8px;padding:14px 16px;border:1px solid #e9e9e7}
+.stat-num{font-size:22px;font-weight:700;color:#37352f}
+.stat-desc{font-size:11px;color:#9b9a97;margin-top:3px}
+
+/* 구분선 */
+hr{border:none;border-top:1px solid #e9e9e7;margin:40px 0}
+
+/* 용어 툴팁 */
+.term-hl{border-bottom:1px dashed #9b9a97;cursor:help}
+#term-tooltip-global{display:none;position:fixed;background:#37352f;color:#fff;font-size:13px;line-height:1.65;padding:10px 14px;border-radius:10px;max-width:260px;z-index:9999;pointer-events:none;box-shadow:0 4px 20px rgba(0,0,0,.25)}
+.figure-outer{margin-top:4px}
+.figure-open-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#2383e2;text-decoration:none;background:#eef3fd;border:1px solid #c5d8f8;border-radius:6px;padding:6px 14px;margin-bottom:12px;transition:background .15s}
+.figure-open-link:hover{background:#dde9f8}
+.figure-frame-wrap{width:100%;border:1px solid #e9e9e7;border-radius:10px;overflow:hidden;background:#f7f6f3}
+.figure-frame{width:100%;height:680px;border:none;display:block}
+.figure-no-embed{font-size:13px;color:#9b9a97;line-height:1.7;margin-bottom:10px}
+
+@media(max-width:500px){
+  .article{padding:28px 16px 60px}
+  .article-title{font-size:22px}
+  .stat-box{min-width:100px}
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">REACH 논문 분석</span>
+</div>
+
+<div class="article">
+
+  <div class="article-venue">arXiv 2025</div>
+  <h1 class="article-title">Making Strong Error-Correcting Codes Work Effectively for HBM in AI Inference</h1>
+  <div class="article-tags">
+    <span class="tag">HBM</span><span class="tag">ECC</span><span class="tag">ML-HW</span><span class="tag">Yield</span>
+  </div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://arxiv.org/abs/2512.18152v1" target="_blank">원문 보기 →</a>
+    <a class="article-link" href="https://arxiv.org/pdf/2512.18152v1" target="_blank">PDF →</a>
+  </div>
+
+  <p class="opener">HBM PHY나 인터페이스는 손 대지 않고, 컨트롤러 쪽 ECC만 바꿔서 원시 비트 오류율 허용치를 1000배 늘린다는 이야기예요. "신뢰성은 하드웨어 스펙이 아니라 소프트웨어로 조정 가능한 파라미터가 될 수 있다"는 게 이 논문의 핵심 주장이에요.</p>
+
+  <!-- 1. 왜 이 연구가 필요했나 -->
+  <div class="section">
+    <div class="section-label">1 · Introduction</div>
+    <h2 class="section-title">HBM이 왜 이렇게 비싼 걸까요?</h2>
+    <p>HBM은 일반 DRAM보다 GB당 5~10배 비싸요. 성능이 좋아서이기도 하지만, 제조 수율(yield) 문제도 크게 작용해요. 지금 HBM은 칩 안에 온다이 ECC를 내장하고 있는데, 이 ECC가 요구하는 비트 오류율 기준이 매우 엄격해요. 기준을 조금만 넘겨도 칩 전체가 불합격 처리되니까, 아무리 아깝더라도 버려야 해요.</p>
+    <p>그러다 보니 자연스럽게 이런 의문이 생겨요. "칩 내부에서 완벽하게 잡으려고 할 게 아니라, 컨트롤러 쪽에서 더 강력한 코드로 잡으면 안 될까? 그러면 허용 오류율을 높일 수 있고, 수율이 올라가서 가격도 낮출 수 있지 않을까?" 이 논문의 출발점이 바로 거기예요.</p>
+
+    <div class="insight blue">
+      <div class="insight-label">핵심 전제</div>
+      <p>HBM의 표준 PHY 인터페이스(32B 트랜잭션)는 건드리지 않아요. JEDEC 표준 그대로 유지하면서, 컨트롤러만 바꿔서 신뢰성을 높이는 거예요. 기존 HBM 스택과 완전히 호환되는 게 포인트예요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- 2. 배경 지식 -->
+  <div class="section">
+    <div class="section-label">2 · Background & Motivation</div>
+    <h2 class="section-title">기존 방식의 한계: 왜 32B 코드로는 부족할까요?</h2>
+    <p>HBM3는 1024비트짜리 데이터 경로를 갖고 있고, 16개 채널로 구성돼 있어요. 데이터는 고정된 32B 패킷 단위로 오가는데, 현재 온다이 ECC도 이 32B 단위를 기준으로 오류를 잡아요. 문제는 32B짜리 짧은 코드는 수정 능력이 낮아서, BER(비트 에러율)이 조금만 높아져도 오류를 감당 못 한다는 거예요.</p>
+    <p>이론적으로는 코드워드가 길수록 훨씬 높은 BER를 허용해요. 수 킬로바이트짜리 Reed-Solomon 코드를 쓰면 BER 허용치가 몇 자릿수씩 올라가요. 그런데 문제가 두 가지 생겨요.</p>
+
+    <div class="insight red">
+      <div class="insight-label">문제 1 · 쓰기 증폭</div>
+      <p>32B 하나만 바꿔도 전체 2KB 코드워드를 다시 읽고 계산해야 해요. 이렇게 되면 실제 쓰는 양의 68배나 되는 데이터를 건드려야 하는 "쓰기 증폭"이 생겨서, 실질 성능이 크게 떨어져요.</p>
+    </div>
+    <div class="insight red">
+      <div class="insight-label">문제 2 · 디코더 복잡도</div>
+      <p>2KB짜리 RS 디코더는 32B 기준보다 38.6배 복잡해요. 특히 오류 위치를 찾는 "locator" 단계가 전체 면적과 전력의 상당 부분을 차지해서, 현실적으로 구현하기 어려워요.</p>
+    </div>
+
+    <p>이 두 가지 벽을 어떻게 허물었느냐가 이 논문의 기술적 핵심이에요.</p>
+  </div>
+
+  <hr>
+
+  <!-- 3. REACH 설계 -->
+  <div class="section">
+    <div class="section-label">3 · Proposed Design</div>
+    <h2 class="section-title">REACH의 작동 방식: 두 겹의 방어선</h2>
+    <p>REACH는 "Inner + Outer" 두 단계로 ECC를 나눠요. 비유하자면 첫 번째 관문에서 웬만한 오류를 잡고, 첫 번째 관문을 통과 못 한 것들만 두 번째 관문으로 보내는 구조예요.</p>
+
+    <div class="insight green">
+      <div class="insight-label">Inner RS(36,32) — 첫 번째 관문</div>
+      <p>32B 데이터마다 4B 패리티를 붙여요. 오류가 있으면 자체적으로 고치고, 못 고치면 "이 청크는 erasure(삭제됨)입니다"라고 표시해서 두 번째 관문에 넘겨요. 위치를 모르는 오류를 잡는 게 아니라, "고칠 수 없는 것"을 표시하는 역할이에요.</p>
+    </div>
+    <div class="insight green">
+      <div class="insight-label">Outer RS (킬로바이트 스팬) — 두 번째 관문</div>
+      <p>erasure 표시가 붙은 청크들만 복구해요. 위치를 이미 알고 있으니까, 비싼 "위치 탐색(locator)" 단계가 필요 없어요. erasure-only 모드로만 동작해서 디코더가 훨씬 단순해져요. 2KB 코드워드 기준으로, 최대 4개 청크가 erasure여도 복구할 수 있어요.</p>
+    </div>
+
+    <p>쓰기 증폭 문제는 "Differential Parity"로 해결해요. 32B 하나를 업데이트할 때 전체 코드워드를 다시 계산하는 대신, 변경된 부분만 XOR 연산으로 패리티를 업데이트해요. 이렇게 하면 쓰기 증폭이 68배에서 6.25배로 뚝 떨어져요.</p>
+
+    <div class="insight purple">
+      <div class="insight-label">Importance-Adaptive ECC — 중요한 비트만 이중 보호</div>
+      <p>BF16 포맷에서 지수(exponent) 비트에 오류가 생기면 AI 추론 정확도가 급격히 떨어지지만, 가수(mantissa) 비트 오류는 영향이 훨씬 작아요. 그래서 중요한 비트 플레인만 두 단계 ECC를 적용하고, 덜 중요한 부분은 간단하게 처리해서 오버헤드를 줄여요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- 4. 신뢰성 검증 -->
+  <div class="section">
+    <div class="section-label">4 · Reliability Analysis</div>
+    <h2 class="section-title">수학적으로 얼마나 안전한가요?</h2>
+    <p>BER이 10⁻⁴일 때, Inner RS가 청크 하나를 erasure로 올려보낼 확률은 약 3.6 × 10⁻⁶이에요. 2KB 코드워드에서 64개 청크 중 5개 이상이 동시에 erasure가 될 확률은 10⁻¹⁸ 이하예요. 우주선(cosmic ray) 오류보다도 훨씬 낮은 수준이에요.</p>
+    <p>실제로 Outer RS가 동작해야 하는 경우(outer decoder invocation)는 전체 요청 중 약 5000번에 1번 꼴이에요. 대부분의 경우엔 Inner RS만으로 조용히 처리되고, Outer RS는 거의 잠자고 있는 상태예요. 그래서 "Outer는 비상구"라고 볼 수 있어요.</p>
+  </div>
+
+  <hr>
+
+  <!-- 5. 실험 결과 -->
+  <div class="section">
+    <div class="section-label">5 · Evaluation</div>
+    <h2 class="section-title">실제로 얼마나 잘 되나요?</h2>
+    <p>실험은 SCALE-Sim(AI 가속기 시뮬레이터)과 DRAMSim3(DRAM 시뮬레이터)을 붙여서 진행했어요. LLaMA-3.1-8B를 비롯한 3개 LLM 모델로 테스트했고, BER을 0부터 10⁻³까지 바꿔가며 성능을 측정했어요.</p>
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-num">79%</div>
+        <div class="stat-desc">BER=0일 때 온다이 ECC 대비 처리량</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">10⁻³</div>
+        <div class="stat-desc">REACH가 정상 동작하는 최대 BER</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">11.6×</div>
+        <div class="stat-desc">단순 RS 대비 면적 절감</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">60%</div>
+        <div class="stat-desc">단순 RS 대비 전력 절감</div>
+      </div>
+    </div>
+
+    <p>온다이 ECC는 BER이 10⁻⁶을 넘어가는 순간 처리량이 0으로 떨어지는 반면, REACH는 BER 10⁻³까지 처리량이 거의 평탄하게 유지돼요. BER 10⁻³에서 단순 long RS 방식보다는 처리량이 11배 높아요.</p>
+
+    <div class="insight blue">
+      <div class="insight-label">랜덤 접근에서도 견고한가요?</div>
+      <p>쓰기 비율이 높아지거나 랜덤 접근이 늘어도 성능 저하가 크지 않아요. BER이 높은 상황(10⁻³)에서 완전 랜덤 접근이라도 원시 대역폭의 절반 이상을 유효 데이터로 쓸 수 있어요. Inner RS가 대부분의 오류를 자체 처리해서 Outer RS 호출을 억제하기 때문이에요.</p>
+    </div>
+
+    <p>하드웨어 구현 수치도 인상적이에요. ASAP7 7nm 공정에서 면적 15.2mm², 전력 17.5W로 3.56TB/s를 처리해요. 단순하게 long RS를 구현한 베이스라인은 176.7mm², 44.5W가 필요했으니까, REACH가 얼마나 영리한지 알 수 있어요.</p>
+  </div>
+
+  <hr>
+
+  <!-- 6. 의미 -->
+  <div class="section">
+    <div class="section-label">6 · 설계 관점에서 보면요</div>
+    <h2 class="section-title">삼성 HBM 설계자 입장에서 이 논문이 중요한 이유</h2>
+    <p>이 논문이 던지는 가장 큰 메시지는 "신뢰성을 하드웨어에 고정하지 말자"예요. 지금까지는 온다이 ECC가 보장하는 신뢰성 수준이 곧 HBM 제품의 스펙이었는데, REACH는 그 경계를 컨트롤러 쪽으로 이동시켜요.</p>
+    <p>이게 왜 중요하냐면, 칩 제조 관점에서 허용 BER 기준이 완화되면 수율이 올라가고 가격이 낮아지거든요. 지금까지 버렸던 칩들 중 상당수가 사용 가능해질 수 있어요. 또한 "신뢰성-비용 트레이드오프"를 제품 라인업에 적용할 수도 있어요. 일반 서버용은 엄격한 스펙, AI 추론 전용은 느슨한 온다이 ECC + REACH 방식으로 구분하는 거예요.</p>
+    <p>HBM4, HBM5로 갈수록 I/O 속도가 올라가면서 BER 관리가 더 어려워질 텐데, 이런 계층적 ECC 아키텍처가 한 가지 해법이 될 수 있어요. PHY를 바꾸지 않아도 되니까 표준 호환성도 유지되고요.</p>
+
+    <div class="insight">
+      <div class="insight-label">같이 읽으면 좋은 논문</div>
+      <p>"Breaking the HBM Bit Cost Barrier" 논문과 함께 읽으면 이 접근법의 두 변형을 비교해볼 수 있어요. 둘 다 ECC를 컨트롤러로 이동한다는 방향은 같은데, 세부 설계 방식에서 차이가 있어요.</p>
+    </div>
+  </div>
+
+<hr>
+<div class="section">
+  <div class="section-label">논문 그림</div>
+  <h2 class="section-title">Figure 갤러리</h2>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2512.18152v1/x1.png" alt="Figure 1" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 1. Why controller-defined long ECC. Left: Relaxing the acceptable raw BER expands the feasible design space and, under a monotone yield curve, should not increase HBM $/GB ( C relaxed ≤ C strict C_{\text{relaxed}}\leq C_{\text{strict}} ). Middle: At high raw BER (e.g., 10 − 3 10^{-3} ), short 32 B ECC cannot meet reliability targets, while long-span ECC (e.g., 2 KB) is theoretically suffici</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2512.18152v1/x2.png" alt="Figure 2" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 2. Decoding failure rate vs. codeword size at a fixed code rate (16/17). Larger codewords tolerate higher raw BER.</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2512.18152v1/x3.png" alt="Figure 3" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 3. Normalized decoder complexity vs. codeword size at 1TB/s throughput (1GHz). For each size we select the minimum feasible GF ​ ( 2 m ) \mathrm{GF}(2^{m}) to minimize total silicon. Global PHY/SerDes is excluded.</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2512.18152v1/x4.png" alt="Figure 4" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 4. REACH high-level architectural overview. The design bifurcates memory access to address high device BER: (1) A fast path (green) filters common-case traffic locally at 32 B granularity. (2) A reliability path (red) invokes the long-span RS engine in erasure-only mode solely when the inner code flags an erasure, eliminating locator logic overhead.</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2512.18152v1/x5.png" alt="Figure 5" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 5. Illustration of REACH’s two-level ECC. Each chunk carries inner RS(36,32) for local accept/correct or erasure flag. The outer RS spans W W bytes and maintains parity P P . It repairs only flagged chunks as known erasures.</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2512.18152v1/x6.png" alt="Figure 6" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 6. Random write flow under REACH.</div>
+    </div>
+    <div class="figure-outer"><a class="figure-open-link" href="https://arxiv.org/abs/2512.18152v1" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div></div>
+</div>
+
+<div id="term-tooltip-global"></div>
+
+<script>
+const TERM_DICT = {
+  'ECC': '에러 정정 코드예요. 데이터 전송/저장 중 발생한 비트 오류를 자동으로 찾아서 고쳐주는 기술이에요.',
+  'BER': '비트 에러율이에요. 수십억 개 비트 중 몇 개가 잘못 전달되는지 나타내는 수치예요. 낮을수록 신뢰성이 높아요.',
+  'HBM': '고대역폭 메모리예요. GPU 옆에 3D로 쌓아올려 초고속으로 데이터를 주고받는 차세대 메모리예요.',
+  'RS': '리드-솔로몬 코드예요. CD, QR코드에도 쓰이는 강력한 에러 정정 방식으로, 데이터 일부가 망가져도 복원할 수 있어요.',
+  'PHY': '물리 계층이에요. 디지털 0과 1을 실제 전기 신호로 바꿔서 보내고 받는 최하위 하드웨어 블록이에요.',
+  'BF16': 'AI 연산에 최적화된 16비트 실수 포맷이에요. 메모리를 아끼는 대신 정밀도를 약간 낮춰요.',
+  'LLM': '대형 언어 모델이에요. ChatGPT 같은 AI의 핵심 기술인데, 엄청난 메모리 대역폭이 필요해서 HBM과 뗄 수 없는 관계예요.',
+  'DRAM': '일반 컴퓨터 RAM이에요. 전원이 꺼지면 데이터가 사라지는 휘발성 메모리인데, HBM도 DRAM을 3D로 쌓은 거예요.',
+  'JEDEC': '메모리·반도체 인터페이스 국제 표준을 만드는 단체예요. HBM 스펙도 여기서 정해요.',
+  'yield': '반도체 수율이에요. 웨이퍼 하나에서 불량 없이 나오는 정상 칩의 비율인데, 높을수록 생산 비용이 낮아져요.',
+  'erasure': '위치를 알고 있는 오류예요. 위치를 모르는 일반 오류보다 복구가 훨씬 쉬워서 디코더를 단순하게 만들 수 있어요.',
+  'locator': '오류 위치를 찾는 디코더 단계예요. 계산량이 가장 많아서 RS 디코더 복잡도의 상당 부분을 차지해요.',
+  'ASAP7': '공개된 7nm급 셀 라이브러리예요. 실제 7nm와 완전히 같진 않지만 연구용 PPA 추정에 널리 쓰여요.',
+  'SCALE-Sim': 'AI 가속기 동작을 시뮬레이션하는 툴이에요. 행렬 연산 기반 추론 성능을 모델링해요.',
+  'DRAMSim3': 'DRAM 동작을 정밀하게 시뮬레이션하는 툴이에요. 메모리 지연·대역폭을 정확하게 모델링해요.',
+};
+
+let _tip = null;
+function getTip() {
+  if (!_tip) { _tip = document.getElementById('term-tooltip-global'); }
+  return _tip;
+}
+function posTip(el) {
+  const tip = getTip();
+  const r = el.getBoundingClientRect();
+  const w = Math.min(260, window.innerWidth - 16);
+  tip.style.maxWidth = w + 'px';
+  tip.style.display = 'block';
+  let left = r.left + r.width / 2 - w / 2;
+  left = Math.max(8, Math.min(left, window.innerWidth - w - 8));
+  const top = r.top > 100 ? r.top - (tip.offsetHeight || 70) - 8 : r.bottom + 8;
+  tip.style.left = left + 'px';
+  tip.style.top = top + 'px';
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  const terms = Object.keys(TERM_DICT);
+  const regex = new RegExp(`(${terms.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`, 'g');
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+    acceptNode(n) {
+      const t = n.parentElement && n.parentElement.tagName;
+      if (['SCRIPT','STYLE','A'].includes(t)) return NodeFilter.FILTER_REJECT;
+      if (n.parentElement && n.parentElement.classList.contains('term-hl')) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  const nodes = [];
+  let n;
+  while ((n = walker.nextNode())) nodes.push(n);
+  nodes.forEach(node => {
+    const text = node.textContent;
+    if (!regex.test(text)) { regex.lastIndex = 0; return; }
+    regex.lastIndex = 0;
+    const frag = document.createDocumentFragment();
+    let last = 0;
+    text.replace(regex, (m, _, off) => {
+      if (off > last) frag.appendChild(document.createTextNode(text.slice(last, off)));
+      const sp = document.createElement('span');
+      sp.className = 'term-hl';
+      sp.textContent = m;
+      sp.dataset.def = TERM_DICT[m];
+      frag.appendChild(sp);
+      last = off + m.length;
+    });
+    if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+    node.parentNode.replaceChild(frag, node);
+  });
+
+  const tip = getTip();
+  document.body.addEventListener('mouseover', e => {
+    const el = e.target.closest('.term-hl');
+    if (el) { tip.textContent = el.dataset.def; posTip(el); }
+  });
+  document.body.addEventListener('mouseout', e => {
+    if (!e.target.closest('.term-hl')) tip.style.display = 'none';
+  });
+  document.body.addEventListener('click', e => {
+    const el = e.target.closest('.term-hl');
+    if (el) { tip.textContent = el.dataset.def; posTip(el); e.stopPropagation(); }
+    else tip.style.display = 'none';
+  });
+});
+</script>
+</body>
+</html>

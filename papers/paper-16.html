@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>4x32Gb/s Baud-Rate CDR · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">4x32Gb/s Baud-Rate CDR</span>
+</div>
+<div class="article">
+  <div class="article-venue">arXiv 2024</div>
+  <h1 class="article-title">A 4x32Gb/s 1.8pJ/bit Collaborative Baud-Rate CDR with Background Eye-Climbing Algorithm and Low-Power Global Clock Distribution</h1>
+  <div class="article-tags"><span class="tag">PHY</span><span class="tag">PLL-DLL</span><span class="tag">Interface</span></div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://arxiv.org/abs/2404.07021v2" target="_blank">원문 보기 →</a>
+    <a class="article-link" href="https://arxiv.org/pdf/2404.07021v2" target="_blank">PDF →</a>
+  </div>
+  <p class="opener">128Gb/s 전체 데이터 레이트를 1.8pJ/bit의 에너지로 처리하면서, background eye-climbing 알고리즘으로 샘플링 위상을 최적화해 VEM(Vertical Eye Margin)을 17% 개선한 4채널 CDR 설계예요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">Baud-rate CDR이 왜 고속 인터페이스에서 주목받고 있나요?</h2>
+    <p>고성능 컴퓨팅에서 칩 간 데이터 전송 속도는 매 세대마다 2배씩 늘어나는 압박을 받아요. 현재 UCIe, HBM, PCIe Gen6, 400GbE 등 주요 인터페이스가 레인당 32~64Gb/s를 목표로 하고 있고, 이 속도에서 CDR은 설계에서 가장 어려운 블록 중 하나예요. CDR은 수신 데이터 스트림에서 클럭을 추출하고, 추출한 클럭을 기준으로 데이터를 다시 샘플링해서 최적의 눈(eye) 중심에서 비트를 판정해야 해요.</p>
+    <p>Baud-rate CDR(BR-CDR)은 데이터 레이트와 동일한 주파수로 동작하는 CDR 방식이에요. 과거에는 오버샘플링 CDR(데이터 레이트의 2배 이상 샘플링)이 일반적이었지만, 32Gb/s 이상에서 오버샘플링 클럭을 생성하는 게 점점 어려워지고 전력도 너무 많이 들어요. BR-CDR은 딱 1x 속도로 동작하기 때문에 전력 면에서 유리하지만, 위상 검출이 훨씬 까다로워요. Baud-rate 위상 검출기는 데이터 전환(transition)이 있는 심볼에서만 위상 정보를 얻을 수 있기 때문에, 잠금 점(lock point)이 최적 샘플링 위상과 어긋날 수 있는 구조적 문제가 있어요.</p>
+    <p>또 다른 도전 과제는 멀티채널(multi-lane) 구조에서의 전력 최적화예요. 각 레인마다 독립적인 PLL을 두면 면적과 전력이 크게 늘어나요. 공유 PLL에서 글로벌 클럭을 받아 각 레인에 분배하는 구조가 효율적이지만, 글로벌 클럭 분배 자체가 긴 배선을 통해 이루어지기 때문에 전력 소모와 지터(jitter) 문제가 생겨요. 이 논문은 이 두 가지 문제(BR-CDR의 최적 잠금 포인트 편차, 멀티레인 저전력 클럭 분배)를 동시에 해결해요.</p>
+    <div class="insight blue">
+      <div class="insight-label">논문의 출발점</div>
+      <p>Baud-rate CDR은 전력 효율이 좋지만 최적 샘플링 위상에서 빗나가는 구조적 문제가 있어요. 또한 4개 레인의 글로벌 클럭 분배에서 전력을 줄이면서도 주파수 오프셋을 보상해야 해요. 이 두 가지를 동시에 해결하는 "협력형(collaborative)" CDR 설계가 목표예요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">Background Eye-Climbing과 저전력 클럭 분배는 어떻게 작동하나요?</h2>
+    <p>이 논문이 제안하는 첫 번째 혁신은 "Background Eye-Climbing Algorithm"이에요. 기존 BR-CDR은 Mueller-Müller PD(위상 검출기) 등을 사용하는데, 이 방식은 이론적으로 최적 샘플링 위상보다 약간 벗어난 지점에 잠기는 경향이 있어요. Eye-Climbing 알고리즘은 CDR이 초기 잠금 상태에 있는 동안(foreground)에 데이터 전송은 정상적으로 유지하면서, 백그라운드(background)에서 위상을 조금씩 페르터브(perturb)하고 수직 아이 마진(VEM, Vertical Eye Margin)을 측정해요. VEM이 최대가 되는 위상을 찾아서 CDR 잠금 포인트를 그쪽으로 조정해요. 이 과정이 데이터 전송에 영향을 주지 않으면서 진행되기 때문에 "background" 알고리즘이에요.</p>
+    <p>두 번째 혁신은 "저전력 글로벌 클럭 분배"예요. 4개 레인이 하나의 글로벌 PLL에서 클럭을 받는데, 이 PLL 클럭을 각 레인의 CDR 클럭과 정확히 맞추면서도 주파수 오프셋을 흡수해야 해요. 논문은 위상 보간기(Phase Interpolator, PI) 없이 이를 달성해요. 대신 분수 분주기(Fractional Divider)를 PLL 근처에 배치하고, 각 레인의 CDR이 이 분수 분주비를 조정해서 글로벌 클럭에서 자신의 데이터에 맞는 위상/주파수를 추출해요. PI 없이 분수 분주기로 처리하기 때문에 전력이 크게 줄어요. 또한 글로벌 클럭 분배선을 AC 커플링으로 저전력화하고, 수신단에서 DC 복원하는 방식을 쓰기 때문에 분배 전력도 최소화돼요.</p>
+    <p>4개 레인이 "협력(collaborative)"한다는 의미는, 하나의 글로벌 PLL과 분수 분주기를 공유하면서 각 레인이 독립적으로 eye-climbing을 수행하지만 글로벌 타이밍 기준은 일치시키는 구조예요. 28nm CMOS로 구현됐고, 총 128Gb/s(4×32Gb/s)를 지원해요. 주파수 오프셋 허용 범위는 ±2500ppm으로, 실용적인 채널 환경을 충분히 커버해요.</p>
+    <div class="insight green">
+      <div class="insight-label">핵심 아이디어</div>
+      <p>Background eye-climbing으로 데이터 전송을 중단하지 않으면서 최적 샘플링 위상을 실시간 추적해요. PI 없이 분수 분주기만으로 글로벌 클럭 분배와 주파수 오프셋 보상을 동시에 달성해서 전력을 획기적으로 절감해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">1.8pJ/bit는 얼마나 좋은 수치인가요?</h2>
+    <p>28nm CMOS로 제작된 테스트칩에서 4×32Gb/s 동작을 측정한 결과예요. 에너지 효율 1.8pJ/bit는 같은 기술 노드(28nm)의 동급 멀티레인 고속 수신기 중에서 낮은 편에 속해요. 비교 대상인 기존 PI 기반 BR-CDR은 3~5pJ/bit 수준인데, 이보다 2배 이상 좋은 에너지 효율이에요. 이 개선은 주로 PI 제거와 저전력 글로벌 클럭 분배에서 와요.</p>
+    <p>Background eye-climbing 알고리즘의 효과는 VEM 측정으로 확인됐어요. 알고리즘 없이 표준 BR-CDR 잠금만 사용했을 때 대비, eye-climbing 적용 후 VEM이 17% 향상됐어요. 이건 수신단 BER(Bit Error Rate) 성능으로 직결돼요. 노이즈 마진이 17% 늘어났다는 의미로, 채널 손실(insertion loss)이 크거나 크로스토크가 심한 실제 고속 채널에서 더 안정적으로 동작할 수 있어요. 측정된 integrated fractional spur(분수 분주에 의한 스퍼 성분)는 2500ppm 오프셋에서 -40.4dBc로, 스퍼가 데이터 품질에 미치는 영향이 매우 작아요.</p>
+    <p>칩 면적도 합리적이에요. 4레인 전체 RX 다이 면적이 경쟁 설계 대비 비슷하거나 작아요. 분수 분주기와 eye-climbing 로직 추가에 따른 면적 오버헤드가 PI 제거로 충분히 상쇄됐어요. 동작 온도 범위와 PVT(공정·전압·온도) 변동에서도 안정적인 동작이 확인됐어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">1.8 pJ/bit</div><div class="stat-desc">전체 4레인<br>에너지 효율</div></div>
+      <div class="stat-box"><div class="stat-num">17%</div><div class="stat-desc">Eye-climbing으로<br>VEM 향상</div></div>
+      <div class="stat-box"><div class="stat-num">128 Gb/s</div><div class="stat-desc">총 데이터 레이트<br>(4×32Gb/s)</div></div>
+      <div class="stat-box"><div class="stat-num">-40.4 dBc</div><div class="stat-desc">분수 스퍼<br>@2500ppm 오프셋</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 고속 I/O 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM PHY는 수백 개의 데이터 핀을 가진 고밀도 멀티레인 구조예요. HBM3E는 채널당 128-bit 버스 너비와 최대 9.6Gb/s per pin을 지원해요. 이 환경에서 각 레인마다 독립적인 CDR/DLL을 두는 것은 전력과 면적 관점에서 비효율적이에요. 이 논문이 제안하는 "공유 PLL + 분수 분주기 + 레인별 CDR" 협력 구조는 HBM PHY의 글로벌 클럭 분배 아키텍처에 직접 적용 가능해요. 특히 HBM에서 수십~수백 레인이 하나의 글로벌 클럭을 공유할 때 PI 기반 분배에서 발생하는 전력 비효율을 분수 분주기로 대체하는 방향이 흥미로워요.</p>
+    <p>Background eye-climbing 개념은 HBM의 Read Eye Training(RET) 프로세스와 연결돼요. 현재 HBM 초기화 시 호스트가 메모리 컨트롤러를 통해 Read/Write eye를 측정하고 DQ/DQS 지연을 조정해요. 이 과정이 초기화 때만 일어나는데, 만약 eye-climbing을 background로 지속 실행하면 온도 변화나 에이징(aging)으로 채널 특성이 달라져도 최적 샘플링 위상을 실시간으로 유지할 수 있어요. 이는 HBM의 장기 신뢰성(reliability)을 높이는 방향이에요.</p>
+    <p>에너지 효율 관점에서도 시사점이 있어요. HBM이 탑재된 AI 가속기는 전체 시스템 전력 예산에서 메모리 I/O가 상당 부분을 차지해요. A100 GPU 기준 HBM2e PHY 전력이 수십 W 수준인데, 1.8pJ/bit급 고효율 PHY 설계가 적용된다면 AI 가속기의 전체 PPA(Power-Performance-Area)에 의미 있는 개선을 가져올 수 있어요. 다만 이 논문은 28nm 기반이고 HBM PHY는 통상 더 선단 공정(7nm, 5nm)에서 구현되기 때문에 직접 비교는 어렵고, 아이디어 레벨에서 적용 가능성을 검토해야 해요.</p>
+    <div class="insight yellow">
+      <div class="insight-label">주의할 점</div>
+      <p>Background eye-climbing은 위상을 의도적으로 페르터브하는 과정에서 일시적인 BER 저하가 발생할 수 있어요. HBM처럼 지속적 고대역폭 전송이 요구되는 환경에서 이 transient degradation을 어떻게 관리할지 별도 설계가 필요해요. 또한 분수 분주기의 스퍼(-40.4dBc)가 HBM의 지터 예산(jitter budget)을 초과하지 않는지 면밀한 검토가 필요해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2404.07021v2/extracted/2404.07021v2/fig3.png" alt="Figure 1" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 3: Lock point of conventional SS-MMPD (a) without DFE and (b) with DFE.</div>
+    </div>
+    <div class="figure-outer"><a class="figure-open-link" href="https://arxiv.org/abs/2404.07021v2" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div></div>
+
+</div>
+</body>
+</html>
