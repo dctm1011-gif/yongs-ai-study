@@ -527,18 +527,41 @@ async function requestWritingFeedback() {
   const btn = document.getElementById('btnWritingFeedback');
   btn.disabled = true; btn.textContent = '분석 중...';
   try {
-    const res = await fetch('/api/feedback', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ text, type: 'writing', prompt: WRITING.prompt, structure: WRITING.structure })
-    });
-    const data = await res.json();
-    document.getElementById('writingFeedbackContent').textContent = data.feedback || data.error || '오류가 발생했습니다.';
+    // Claude AI에 직접 요청
+    const prompt = `TOEFL Writing Task:
+주제: ${WRITING.prompt}
+예상 구조: ${WRITING.structure}
+
+학생 작문:
+${text}
+
+위 작문에 대해 다음 항목을 평가해주세요:
+1. 주제 이해도 및 답변 적절성
+2. 에세이 구조 (서론, 본론, 결론)
+3. 문법 및 문장 구조
+4. 어휘 사용
+5. 논리적 흐름과 연결성
+6. 개선점 3가지
+
+간결하고 명확하게 피드백을 제공해주세요.`;
+
+    // 클립보드에 복사 후 Claude 페이지 열기
+    await navigator.clipboard.writeText(prompt);
+    const feedbackContent = document.getElementById('writingFeedbackContent');
+    feedbackContent.textContent = '📋 피드백 요청 준비 완료!\n\n아래 버튼을 클릭하여 Claude AI를 열어주세요.\n질문이 자동으로 클립보드에 복사되었습니다.';
     document.getElementById('writingFeedbackBox').classList.add('show');
     document.getElementById('writingFeedbackBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    if (data.feedback) localStorage.setItem('toefl_writing_' + TOEFL_DATE, '1');
+    
+    // Claude 열기 버튼 추가
+    const claudeBtn = document.createElement('button');
+    claudeBtn.textContent = '🤖 Claude에서 피드백 받기 (Ctrl+V로 붙여넣기)';
+    claudeBtn.style.cssText = 'width:100%; padding:10px; margin-top:10px; background:#6366f1; color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:600;';
+    claudeBtn.onclick = () => window.open('https://claude.ai/new', '_blank');
+    feedbackContent.parentElement.appendChild(claudeBtn);
+    
+    localStorage.setItem('toefl_writing_' + TOEFL_DATE, '1');
   } catch(e) {
-    alert('피드백 요청 실패. 네트워크를 확인해주세요.');
+    alert('요청 준비 실패. 다시 시도해주세요.');
   }
   btn.disabled = false; btn.textContent = '✨ AI 피드백 다시 받기';
 }
@@ -551,17 +574,39 @@ async function requestSpeakFeedback() {
   const btn = document.getElementById('btnSpeakFeedback');
   btn.disabled = true; btn.textContent = '분석 중...';
   try {
-    const res = await fetch('/api/feedback', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ text, type: 'speaking', prompt: SPEAKING.prompt })
-    });
-    const data = await res.json();
-    document.getElementById('speakFeedbackContent').textContent = data.feedback || data.error || '오류가 발생했습니다.';
+    // Claude AI에 직접 요청
+    const prompt = `TOEFL Speaking Task:
+질문: ${SPEAKING.prompt}
+
+학생 답변 (말한 내용):
+${text}
+
+위 답변에 대해 다음 항목을 평가해주세요:
+1. 질문 이해 및 답변 적절성
+2. 발음 및 발음 명확성 (작성된 텍스트 기준)
+3. 유창성 및 속도 (적절한 속도인지)
+4. 문법 및 문장 구조
+5. 어휘 다양성
+6. 조직성 및 논리성
+7. 개선점 3가지
+
+구체적이고 실용적인 피드백을 제공해주세요.`;
+
+    // 클립보드에 복사
+    await navigator.clipboard.writeText(prompt);
+    const feedbackContent = document.getElementById('speakFeedbackContent');
+    feedbackContent.textContent = '📋 피드백 요청 준비 완료!\n\n아래 버튼을 클릭하여 Claude AI를 열어주세요.\n질문이 자동으로 클립보드에 복사되었습니다.';
     document.getElementById('speakFeedbackBox').classList.add('show');
     document.getElementById('speakFeedbackBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    
+    // Claude 열기 버튼 추가
+    const claudeBtn = document.createElement('button');
+    claudeBtn.textContent = '🤖 Claude에서 피드백 받기 (Ctrl+V로 붙여넣기)';
+    claudeBtn.style.cssText = 'width:100%; padding:10px; margin-top:10px; background:#6366f1; color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:600;';
+    claudeBtn.onclick = () => window.open('https://claude.ai/new', '_blank');
+    feedbackContent.parentElement.appendChild(claudeBtn);
   } catch(e) {
-    alert('피드백 요청 실패. 네트워크를 확인해주세요.');
+    alert('요청 준비 실패. 다시 시도해주세요.');
   }
   btn.disabled = false; btn.textContent = '✨ AI 피드백 다시 받기';
 }
