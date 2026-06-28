@@ -242,19 +242,26 @@ def main(max_new: int = 20):
         return
 
     new_col_count = len(liked_pids)
-    print("\nNetlify 배포 중...")
-    result = subprocess.run("netlify deploy --prod", cwd=PROJECT_ROOT, shell=True)
+    GIT = r"C:\Users\dctm1\AppData\Local\GitHubDesktop\app-3.6.1\resources\app\git\cmd\git.exe"
+    print("\nGitHub 배포 중...")
+    subprocess.run([GIT, "add", "-A"], cwd=PROJECT_ROOT)
+    msg = f"auto: update papers {new_total} / liked {new_col_count}"
+    r1 = subprocess.run([GIT, "commit", "-m", msg], cwd=PROJECT_ROOT)
+    if r1.returncode != 0:
+        print("커밋할 변경 없음 - 배포 생략")
+        return
+    result = subprocess.run([GIT, "push"], cwd=PROJECT_ROOT)
     if result.returncode == 0:
         print("배포 완료!")
         notify(
             f"✅ **논문 포털 배포 완료!**\n"
             f"> 논문 분류: {new_total}개\n"
             f"> 논문 정리: liked {new_col_count}개\n"
-            f"> https://illustrious-cuchufli-7c4e58.netlify.app/history/"
+            f"> https://dctm1011-gif.github.io/yongs-ai-study/history/"
         )
     else:
-        print("배포 실패 - 수동으로 'netlify deploy --prod' 실행하세요")
-        notify("❌ **Netlify 배포 실패.** 수동으로 `netlify deploy --prod` 실행 필요.")
+        print("배포 실패 - git push 오류 확인 필요")
+        notify("❌ **GitHub 배포 실패.** git push 오류 확인 필요.")
 
 
 if __name__ == "__main__":

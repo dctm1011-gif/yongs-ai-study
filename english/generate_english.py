@@ -1600,23 +1600,26 @@ localStorage.setItem('toefl_visited_' + new Date().toISOString().slice(0,10), '1
 
 
 def deploy_to_netlify(word_count: int = 0, quiz_count: int = 0, target_date=None):
-    print("[*] Netlify 배포 중...")
-    result = subprocess.run(
-        "netlify deploy --prod",
-        cwd=str(ROOT),
-        shell=True,
-    )
+    GIT = r"C:\Users\dctm1\AppData\Local\GitHubDesktop\app-3.6.1\resources\app\git\cmd\git.exe"
+    print("[*] GitHub Pages 배포 중...")
+    subprocess.run([GIT, "add", "-A"], cwd=str(ROOT))
+    date_str = str(target_date) if target_date else str(date.today())
+    msg = f"auto: update english {date_str} words={word_count} quiz={quiz_count}"
+    r1 = subprocess.run([GIT, "commit", "-m", msg], cwd=str(ROOT))
+    if r1.returncode != 0:
+        print("[*] 커밋할 변경 없음 - 배포 생략")
+        return
+    result = subprocess.run([GIT, "push"], cwd=str(ROOT))
     if result.returncode == 0:
-        print("[+] Netlify 배포 완료")
-        date_str = str(target_date) if target_date else str(date.today())
+        print("[+] GitHub Pages 배포 완료")
         notify(
             f"📚 **영어공부 + TOEFL 업데이트 완료** ({date_str})\n"
             f"> 단어 {word_count}개 · 퀴즈 {quiz_count}개\n"
-            f"> https://illustrious-cuchufli-7c4e58.netlify.app/english/"
+            f"> https://dctm1011-gif.github.io/yongs-ai-study/english/"
         )
     else:
-        print("[!] Netlify 배포 실패 (returncode:", result.returncode, ")")
-        notify("❌ **영어공부 배포 실패.** 수동으로 `netlify deploy --prod` 실행 필요.")
+        print("[!] GitHub 배포 실패 (returncode:", result.returncode, ")")
+        notify("❌ **영어공부 배포 실패.** git push 오류 확인 필요.")
 
 
 def get_api_key() -> str:
