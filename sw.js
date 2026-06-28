@@ -1,4 +1,4 @@
-const CACHE = 'yong-study-v4';
+const CACHE = 'yong-study-v5';
 const BASE = self.location.pathname.replace(/\/sw\.js$/, '');
 const PRECACHE = [
   BASE + '/',
@@ -26,7 +26,7 @@ self.addEventListener('activate', e => {
 
 self.addEventListener('push', e => {
   e.waitUntil(
-    self.registration.showNotification('StudyHub', {
+    self.registration.showNotification('Yong', {
       body: '오늘의 영어/TOEFL 학습 준비됐어요!',
       icon: BASE + '/icons/icon-192.png',
       badge: BASE + '/icons/icon-192.png',
