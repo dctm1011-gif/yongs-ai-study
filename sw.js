@@ -1,12 +1,13 @@
-const CACHE = 'yong-study-v3';
+const CACHE = 'yong-study-v4';
+const BASE = self.location.pathname.replace(/\/sw\.js$/, '');
 const PRECACHE = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png',
-  '/english/index.html',
-  '/toefl/index.html',
+  BASE + '/',
+  BASE + '/index.html',
+  BASE + '/manifest.json',
+  BASE + '/icons/icon-192.png',
+  BASE + '/icons/icon-512.png',
+  BASE + '/english/index.html',
+  BASE + '/toefl/index.html',
 ];
 
 self.addEventListener('install', e => {
@@ -27,8 +28,8 @@ self.addEventListener('push', e => {
   e.waitUntil(
     self.registration.showNotification('StudyHub', {
       body: '오늘의 영어/TOEFL 학습 준비됐어요!',
-      icon: '/icons/icon-192.png',
-      badge: '/icons/icon-192.png',
+      icon: BASE + '/icons/icon-192.png',
+      badge: BASE + '/icons/icon-192.png',
       tag: 'daily-study',
     })
   );
@@ -36,7 +37,7 @@ self.addEventListener('push', e => {
 
 self.addEventListener('notificationclick', e => {
   e.notification.close();
-  e.waitUntil(clients.openWindow('/'));
+  e.waitUntil(clients.openWindow(BASE + '/'));
 });
 
 self.addEventListener('fetch', e => {

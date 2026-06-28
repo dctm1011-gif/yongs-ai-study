@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Yong's AI Study</title>
-<link rel="manifest" href="/manifest.json">
+<link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#2c1f14">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="StudyHub">
-<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <style>
 /* ── 기차 히어로 ── */
 @keyframes heroZoomIn {
@@ -460,7 +460,7 @@ body {
 <button id="notif-btn" class="notif-btn" onclick="toggleNotification()" title="알림 설정">🔔</button>
 
 <div class="train-hero">
-  <img class="train-hero-img" src="/train-bg.jpg?v=1" alt="train background">
+  <img class="train-hero-img" src="train-bg.jpg?v=1" alt="train background">
   <div class="train-hero-dim"></div>
   <div class="hero-overlay">
     <span class="page-icon">🧠</span>
@@ -792,7 +792,7 @@ async function toggleNotification() {
 }
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').then(async () => {
+  navigator.serviceWorker.register('sw.js').then(async () => {
     const btn = document.getElementById('notif-btn');
     if (!btn || !('PushManager' in window)) return;
     try {
