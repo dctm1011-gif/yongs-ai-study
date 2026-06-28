@@ -410,5 +410,101 @@
     "explanation": "사실이나 상황의 존재를 인정하고 받아들이는 것입니다. 에세이에서 반대 의견을 인정할 때 자주 쓰입니다.",
     "tip": "'acknowledge receipt' = 수령을 확인하다",
     "emoji": "👍"
+  },
+  {
+    "id": "yesss",
+    "word": "yesss",
+    "pos": "감탄사",
+    "date": "2026-06-28",
+    "meaning": "좋아, 그래 (enthusiastic agreement)",
+    "example_ko": "좋아! 어휘를 쌓아보자!",
+    "example_en": "yesss let's build that vocab!",
+    "explanation": "캐주얼한 대화에서 상대방의 제안에 열정적으로 동의할 때 사용합니다. 'yes'를 길게 늘여서 표현하면 더 친근하고 신나는 느낌을 전달해요.",
+    "tip": "SNS나 친구와의 캐주얼한 대화에서 사용해요. 'yesss queen!', 'yesss let's do it!' 같이 쓸 수 있어요.",
+    "emoji": "🎉"
+  },
+  {
+    "id": "solid",
+    "word": "solid",
+    "pos": "형용사",
+    "date": "2026-06-28",
+    "meaning": "좋은, 확실한, 탄탄한",
+    "example_ko": "여기 좋은 TOEFL 단어들이 있어",
+    "example_en": "here are some solid TOEFL words",
+    "explanation": "'좋다'를 의미하지만 단순한 'good'보다 더 강한 긍정적 느낌을 줍니다. '확실하고 믿을 수 있는' 의미도 포함해요.",
+    "tip": "형용사로 많이 쓰이며, '탄탄한', '확실한' 등 다양하게 해석될 수 있어요. 'That's a solid plan' (그거 좋은 계획이야)",
+    "emoji": "💪"
+  },
+  {
+    "id": "build",
+    "word": "build",
+    "pos": "동사",
+    "date": "2026-06-28",
+    "meaning": "쌓다, 구축하다, 강화하다",
+    "example_ko": "어휘를 쌓아보자!",
+    "example_en": "let's build that vocab!",
+    "explanation": "기본 뜻은 '건설하다'이지만 여기서는 '(어휘를) 쌓다', '(능력을) 키우다'의 의미로 사용되었어요. 추상적인 것을 구축하는 데 자주 쓰입니다.",
+    "tip": "'build confidence' (자신감을 키우다), 'build skills' (실력을 쌓다) 같은 표현이 흔해요.",
+    "emoji": "🏗️"
+  },
+  {
+    "id": "comprehensive",
+    "word": "comprehensive",
+    "pos": "형용사",
+    "date": "2026-06-28",
+    "meaning": "포괄적인, 완전한, 상세한",
+    "example_ko": "교재에 대한 완전한 이해",
+    "example_en": "a comprehensive understanding of the material",
+    "explanation": "무언가가 모든 중요한 부분을 포함하고 있을 때 사용합니다. '빠짐없이', '꼼꼼하게' 다룬 느낌을 전달해요.",
+    "tip": "TOEFL, SAT 등 학술적 영어에서 자주 나오는 단어예요. 'comprehensive guide' (상세한 가이드), 'comprehensive test' (종합 시험)",
+    "emoji": "📖"
+  },
+  {
+    "id": "facilitate",
+    "word": "facilitate",
+    "pos": "동사",
+    "date": "2026-06-28",
+    "meaning": "촉진하다, 수월하게 하다, 용이하게 만들다",
+    "example_ko": "그룹 토론이 학습을 촉진한다",
+    "example_en": "group discussion facilitates learning",
+    "explanation": "'어떤 일이 일어나도록 돕다', '더 쉽게 하다'의 의미입니다. 직접 하지 않지만 가능하게 하거나 쉽게 해주는 역할을 할 때 사용해요.",
+    "tip": "비즈니스나 학술 문맥에서 자주 사용돼요. 'facilitate a meeting' (회의를 진행하다), 'facilitate change' (변화를 촉진하다)",
+    "emoji": "🚀"
+  },
+  {
+    "id": "leverage",
+    "word": "leverage",
+    "pos": "동사",
+    "date": "2026-06-28",
+    "meaning": "활용하다, 최대한 이용하다",
+    "example_ko": "팀의 강점을 활용해서 목표를 달성하다",
+    "example_en": "leverage your team's strengths to achieve goals",
+    "explanation": "원래는 '지렛대를 쓰다'는 뜻이지만, 현대 영어에서는 '(자원이나 능력을) 최대한 활용하다'의 의미로 많이 쓰입니다.",
+    "tip": "비즈니스 문맥에서 매우 자주 나오는 단어예요. 'leverage technology' (기술을 활용하다), 'leverage resources' (자원을 활용하다)",
+    "emoji": "⚙️"
+  },
+  {
+    "id": "resilient",
+    "word": "resilient",
+    "pos": "형용사",
+    "date": "2026-06-28",
+    "meaning": "회복력 있는, 탄력 있는, 강인한",
+    "example_ko": "회복력 있는 팀은 실패로부터 빠르게 회복한다",
+    "example_en": "resilient teams bounce back from setbacks",
+    "explanation": "어려움이나 실패로부터 빠르게 회복하는 능력이 있는 것을 의미합니다. 개인이나 조직의 강한 적응력을 표현해요.",
+    "tip": "최근 현대 사회에서 중요하게 여겨지는 특성을 설명할 때 자주 사용돼요. 'be resilient' (회복력이 있다), 'build resilience' (회복력을 키우다)",
+    "emoji": "💚"
+  },
+  {
+    "id": "obscure",
+    "word": "obscure",
+    "pos": "형용사/동사",
+    "date": "2026-06-28",
+    "meaning": "불명확한, 이해하기 어려운 / 모호하게 하다, 숨기다",
+    "example_ko": "전문 용어가 주요 아이디어를 불명확하게 만든다",
+    "example_en": "the technical jargon obscures the main idea",
+    "explanation": "형용사로는 '불명확한', '이해하기 어려운' 의미이고, 동사로는 '(의미를) 불명확하게 하다', '(진실을) 숨기다'의 의미입니다.",
+    "tip": "학술이나 기술 문맥에서 자주 나와요. 'obscure meaning' (불명확한 의미), 'obscure the facts' (사실을 숨기다)",
+    "emoji": "🌫️"
   }
 ]
