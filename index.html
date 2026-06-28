@@ -451,11 +451,14 @@ body {
 .reload-btn:active{background:#e9e9e7;transform:rotate(360deg)}
 .notif-btn{position:fixed;top:10px;right:52px;width:32px;height:32px;border-radius:50%;background:#f1f0ef;border:1px solid #e9e9e7;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:300;transition:background .15s}
 .notif-btn:active{background:#e9e9e7}
-.share-btn{position:fixed;top:10px;right:92px;width:32px;height:32px;border-radius:50%;background:#f1f0ef;border:1px solid #e9e9e7;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:300;transition:background .15s}
-.share-btn:active{background:#e9e9e7}
-.install-btn{position:fixed;top:10px;right:132px;width:32px;height:32px;border-radius:50%;background:#f1f0ef;border:1px solid #e9e9e7;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:300;transition:background .15s;display:none}
+.install-btn{position:fixed;top:10px;right:172px;width:32px;height:32px;border-radius:50%;background:#f1f0ef;border:1px solid #e9e9e7;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:300;transition:background .15s;display:none}
 .install-btn.show{display:flex}
 .install-btn:active{background:#e9e9e7}
+.homescreen-btn{position:fixed;top:10px;right:132px;width:32px;height:32px;border-radius:50%;background:#f1f0ef;border:1px solid #e9e9e7;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:300;transition:background .15s;display:none}
+.homescreen-btn.show{display:flex}
+.homescreen-btn:active{background:#e9e9e7}
+.share-btn{position:fixed;top:10px;right:92px;width:32px;height:32px;border-radius:50%;background:#f1f0ef;border:1px solid #e9e9e7;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:300;transition:background .15s}
+.share-btn:active{background:#e9e9e7}
 
 </style>
 </head>
@@ -463,6 +466,7 @@ body {
 
 <button class="reload-btn" onclick="location.href=location.pathname+'?_='+Date.now()" title="캐시 새로고침">↻</button>
 <button id="install-btn" class="install-btn" onclick="installApp()" title="앱 설치">⬇️</button>
+<button id="homescreen-btn" class="homescreen-btn" onclick="addToHomescreen()" title="홈화면에 추가">🏠</button>
 <button id="share-btn" class="share-btn" onclick="shareApp()" title="공유하기">📤</button>
 <button id="notif-btn" class="notif-btn" onclick="toggleNotification()" title="알림 설정">🔔</button>
 
@@ -805,6 +809,12 @@ window.addEventListener('beforeinstallprompt', (e) => {
   deferredPrompt = e;
   const installBtn = document.getElementById('install-btn');
   if (installBtn) installBtn.classList.add('show');
+  
+  // 모바일은 홈화면 추가 버튼 표시
+  if (/Android|iPhone|iPad|iPod/.test(navigator.userAgent)) {
+    const homescreenBtn = document.getElementById('homescreen-btn');
+    if (homescreenBtn) homescreenBtn.classList.add('show');
+  }
 });
 
 async function installApp() {
@@ -820,6 +830,32 @@ async function installApp() {
   deferredPrompt = null;
   const installBtn = document.getElementById('install-btn');
   if (installBtn) installBtn.classList.remove('show');
+}
+
+// 홈화면 추가 (모바일용)
+async function addToHomescreen() {
+  if (!deferredPrompt) {
+    // 수동으로 브라우저 메뉴 설명 제공
+    const ua = navigator.userAgent;
+    if (/iPhone|iPad|iPod/.test(ua)) {
+      alert('📱 홈화면에 추가:\n\n1. 하단의 공유 버튼(↑) 탭\n2. "홈 화면에 추가" 선택\n3. 추가 완료!');
+    } else if (/Android/.test(ua)) {
+      alert('📱 홈화면에 추가:\n\n1. 우상단 메뉴(⋮) 탭\n2. "홈 화면에 추가" 선택\n3. 추가 완료!');
+    } else {
+      alert('이 기능은 모바일에서 사용 가능합니다.');
+    }
+    return;
+  }
+  
+  // beforeinstallprompt가 있으면 사용
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  if (outcome === 'accepted') {
+    alert('✅ 앱이 홈화면에 추가되었어요!');
+  }
+  deferredPrompt = null;
+  const homescreenBtn = document.getElementById('homescreen-btn');
+  if (homescreenBtn) homescreenBtn.classList.remove('show');
 }
 
 // 공유하기
