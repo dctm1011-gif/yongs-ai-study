@@ -9,14 +9,10 @@ TOEFL Writing 피드백은 Claude API로 자동 생성하며, 답변은 toefl/re
 import json
 import webbrowser
 import os
+import urllib.request
 from http.server import BaseHTTPRequestHandler, HTTPServer, ThreadingHTTPServer
 from pathlib import Path
 from threading import Timer
-
-try:
-    import anthropic
-except ImportError:
-    anthropic = None
 
 ROOT       = Path(__file__).parent
 PREFS_FILE = ROOT / "paper_search" / "user_prefs.json"
@@ -107,22 +103,16 @@ class Handler(BaseHTTPRequestHandler):
                 self._send_json({"error": "텍스트가 비어있습니다."})
                 return
 
-            if not anthropic:
-                self._send_json({"error": "Anthropic 라이브러리가 설치되지 않았습니다."})
-                return
-
             api_key = os.environ.get("ANTHROPIC_API_KEY")
             if not api_key:
                 self._send_json({"error": "ANTHROPIC_API_KEY 환경변수가 설정되지 않았습니다."})
                 return
 
             try:
-                client = anthropic.Anthropic(api_key=api_key)
-
                 if feedback_type == "writing":
                     structure_text = ""
                     if structure:
-                        structure_text = "\n 구조 가이드:\n"
+                        structure_text = "\n구조 가이드:\n"
                         for key, val in structure.items():
                             if val:
                                 structure_text += f"  - {key}: {val}\n"
@@ -163,16 +153,28 @@ class Handler(BaseHTTPRequestHandler):
 
 친절하고 건설적인 톤으로 작성해주세요."""
 
-                response = client.messages.create(
-                    model="claude-haiku-4-5-20251001",
-                    max_tokens=1024,
-                    messages=[{"role": "user", "content": prompt_text}]
+                request_body = json.dumps({
+                    "model": "claude-haiku-4-5-20251001",
+                    "max_tokens": 1024,
+                    "messages": [{"role": "user", "content": prompt_text}]
+                }).encode('utf-8')
+
+                req = urllib.request.Request(
+                    "https://api.anthropic.com/v1/messages",
+                    data=request_body,
+                    headers={
+                        "Content-Type": "application/json",
+                        "x-api-key": api_key,
+                        "anthropic-version": "2023-06-01"
+                    }
                 )
 
-                feedback = response.content[0].text
-                print(f"  [feedback] {feedback_type} 피드백 생성 완료 ({len(feedback)}자)")
-                self._send_json({"feedback": feedback})
-                return
+                with urllib.request.urlopen(req, timeout=30) as response:
+                    response_data = json.loads(response.read().decode('utf-8'))
+                    feedback = response_data["content"][0]["text"]
+                    print(f"  [feedback] {feedback_type} 피드백 생성 완료 ({len(feedback)}자)")
+                    self._send_json({"feedback": feedback})
+                    return
             except Exception as e:
                 error_msg = str(e)
                 print(f"  [feedback] 오류: {error_msg}")
