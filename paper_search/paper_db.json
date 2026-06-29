@@ -3383,5 +3383,125 @@
     "title": "An Energy-Efficient LiDAR Receiver Using Time-to-Voltage Converter and SAR ADC in 180 nm CMOS",
     "file": "2026_An Energy-Efficient LiDAR Receiver Using Time-to-Voltage Converter and SAR ADC i.md",
     "saved": "2026-06-29"
+  },
+  "ss:3ff7313a00fb3df8900fb6fdec09d9c8d8616470": {
+    "title": "IC Implementation of Subthreshold Current Temperature Independent Power-on-Reset Circuit",
+    "file": "2022_IC Implementation of Subthreshold Current Temperature Independent Power-on-Reset.md",
+    "saved": "2026-06-30"
+  },
+  "ss:feca7b5b4a78e4bd35b53eb4012e741402fc4eb9": {
+    "title": "A Mixed-Signal Programmable Time-Division Power-On-Reset and Volume Control Circuit for High-Resolution Hearing-Aid SoC Application",
+    "file": "2018_A Mixed-Signal Programmable Time-Division Power-On-Reset and Volume Control Circ.md",
+    "saved": "2026-06-30"
+  },
+  "ss:9b690f43c01a2cda02af6e4c7e38d75a1ced6801": {
+    "title": "A Pixel-Level, High Dynamic, Low-Power, Digital-Readout-Integrated Circuit With Hybrid Analog-to-Digital Converter for Infrared Focal-Plane Arrays",
+    "file": "2023_A Pixel-Level, High Dynamic, Low-Power, Digital-Readout-Integrated Circuit With .md",
+    "saved": "2026-06-30"
+  },
+  "ss:0ddc3274914a0aabeade70ffb116b2987e9ed20c": {
+    "title": "A Design of Low-Voltage and Low-Power Analog Front-End for Passive UHF RFID Tag",
+    "file": "2023_A Design of Low-Voltage and Low-Power Analog Front-End for Passive UHF RFID Tag.md",
+    "saved": "2026-06-30"
+  },
+  "ss:539960aa4249c26bac601a1c7ebc2f511d56edbb": {
+    "title": "A novel power-on-reset circuit for passive UHF RFID tag chip",
+    "file": "2018_A novel power-on-reset circuit for passive UHF RFID tag chip.md",
+    "saved": "2026-06-30"
+  },
+  "ss:23bc10c1ae06de36ea07fd4acd5c660a2c019db7": {
+    "title": "Design of a CMOS Image Sensor with Bi-Directional Gamma-Corrected Digital-Correlated Double Sampling",
+    "file": "2023_Design of a CMOS Image Sensor with Bi-Directional Gamma-Corrected Digital-Correl.md",
+    "saved": "2026-06-30"
+  },
+  "ss:553cda152fb4dfa6883fa4e3dd05ac16328b18a4": {
+    "title": "Design of High-Speed Front-End Readout Circuit for Photon Counting CT System",
+    "file": "2025_Design of High-Speed Front-End Readout Circuit for Photon Counting CT System.md",
+    "saved": "2026-06-30"
+  },
+  "ss:7300f102e65b04e197511c55691f79bde87c62a9": {
+    "title": "A comparative study on power delivery aspects of compute-in/near-memory approaches using DRAM",
+    "file": "2026_A comparative study on power delivery aspects of compute-innear-memory approache.md",
+    "saved": "2026-06-30"
+  },
+  "ss:6eff535aaa0b344bbabd9f8b9928b3c14802e875": {
+    "title": "High-Performance and Power-Saving Mechanism for Page Activations Based on Full Independent DRAM Sub-Arrays in Multi-Core Systems",
+    "file": "2023_High-Performance and Power-Saving Mechanism for Page Activations Based on Full I.md",
+    "saved": "2026-06-30"
+  },
+  "ss:d0d4924b827f428f4f12e1bd5ec504bbfe0c6c6e": {
+    "title": "Folded Banks: 3D-Stacked HBM Design for Fine-Grained Random-Access Bandwidth",
+    "file": "2025_Folded Banks 3D-Stacked HBM Design for Fine-Grained Random-Access Bandwidth.md",
+    "saved": "2026-06-30"
+  },
+  "ss:cf2b2a51824ca719d8a1808b20d5184f655c53ec": {
+    "title": "SMART: STT-MRAM architecture for smart activation and sensing",
+    "file": "2019_SMART STT-MRAM architecture for smart activation and sensing.md",
+    "saved": "2026-06-30"
+  },
+  "ss:55a12ea79a0e9fdd5aef92b4abf434c4ebe0e076": {
+    "title": "Design and Implementation of Programmable Multiple Input Signature Register",
+    "file": "2022_Design and Implementation of Programmable Multiple Input Signature Register.md",
+    "saved": "2026-06-30"
+  },
+  "ss:8c4b9ed69f9e89162baf28a04851da770eab2cc6": {
+    "title": "Tester Time Savings for LBIST Diagnostics Using Enhanced Version of On-Chip MISR Signature Comparison with Self-Test and Bypass",
+    "file": "2025_Tester Time Savings for LBIST Diagnostics Using Enhanced Version of On-Chip MISR.md",
+    "saved": "2026-06-30"
+  },
+  "ss:2183c6d8933c76829dea6d366acf937309112c70": {
+    "title": "Fault-Resilient Brent-Kung Adder Design Using Advanced Built-in Self-Test (BIST) Architecture",
+    "file": "2025_Fault-Resilient Brent-Kung Adder Design Using Advanced Built-in Self-Test (BIST).md",
+    "saved": "2026-06-30"
+  },
+  "ss:afd9ed991c4d5fa499057af2bfca615d0bea16c6": {
+    "title": "Design and Implementation of a Area Efficient Logic BIST Architecture for 4-bit ALU using Verilog and Cadence Genus",
+    "file": "2026_Design and Implementation of a Area Efficient Logic BIST Architecture for 4-bit .md",
+    "saved": "2026-06-30"
+  },
+  "ss:6a01ac697e4dfd08e5f54f06f725aebd8b09ff30": {
+    "title": "Switching-Activity Reduction in BIST Through a Hybrid Test Pattern Generator by Using Gray-Code",
+    "file": "2026_Switching-Activity Reduction in BIST Through a Hybrid Test Pattern Generator by .md",
+    "saved": "2026-06-30"
+  },
+  "ss:f42de012e920172efd3b0e2a1fb40a425d0d5c57": {
+    "title": "FPGA Implementation of Optimized BIST Architecture for Testing of Multiplier Operator",
+    "file": "2025_FPGA Implementation of Optimized BIST Architecture for Testing of Multiplier Ope.md",
+    "saved": "2026-06-30"
+  },
+  "ss:6e4a1d91f01d100f6be725e4fe7f23e923416aa9": {
+    "title": "A Low-Overhead Functional-Path BIST Architecture for Systolic AI Accelerator Cores",
+    "file": "2026_A Low-Overhead Functional-Path BIST Architecture for Systolic AI Accelerator Cor.md",
+    "saved": "2026-06-30"
+  },
+  "ss:f801745dae979d740c7060d2d2f0c438c543e572": {
+    "title": "An in-Array Build-In Self-Test Scheme for Embedded SRAM Array",
+    "file": "2024_An in-Array Build-In Self-Test Scheme for Embedded SRAM Array.md",
+    "saved": "2026-06-30"
+  },
+  "ss:8785b367eaccc1833ff995718df2bb1450a304b1": {
+    "title": "Design and Verification of Power Efficient Built-In Self-Test",
+    "file": "2024_Design and Verification of Power Efficient Built-In Self-Test.md",
+    "saved": "2026-06-30"
+  },
+  "ss:d362a805f6a1609781ad251d7dc0329efdb17346": {
+    "title": "Test Data Compaction Techniques with Improved Diagnostic Capabilities and Reduced Tester Time",
+    "file": "2025_Test Data Compaction Techniques with Improved Diagnostic Capabilities and Reduce.md",
+    "saved": "2026-06-30"
+  },
+  "ss:f49b17a7db680045f7ef9b58e0ab62ec2c148a04": {
+    "title": "FPGA implementation of Parameterizable Pattern-generator Modules for LBIST applications",
+    "file": "2023_FPGA implementation of Parameterizable Pattern-generator Modules for LBIST appli.md",
+    "saved": "2026-06-30"
+  },
+  "ss:b89bbd53bc0f6cec398d0deb74c68d64d46de2ef": {
+    "title": "An Improved switching activity optimised LFSR for energy efficient BIST applications",
+    "file": "2023_An Improved switching activity optimised LFSR for energy efficient BIST applicat.md",
+    "saved": "2026-06-30"
+  },
+  "ss:a7ee911b6919c48497644f2636a3ce9378b33b48": {
+    "title": "Increased Detection of Hard-to-Detect Stuck-at Faults during Scan Shift",
+    "file": "2023_Increased Detection of Hard-to-Detect Stuck-at Faults during Scan Shift.md",
+    "saved": "2026-06-30"
   }
 }
