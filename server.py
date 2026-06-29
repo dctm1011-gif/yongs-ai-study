@@ -4,15 +4,23 @@
   python server.py
 
 브라우저가 자동으로 열리며, 좋아요/삭제 클릭 시 user_prefs.json에 즉시 저장됩니다.
+TOEFL Writing 피드백은 Claude API로 자동 생성하며, 답변은 toefl/responses.json에 저장됩니다.
 """
 import json
 import webbrowser
+import os
 from http.server import BaseHTTPRequestHandler, HTTPServer, ThreadingHTTPServer
 from pathlib import Path
 from threading import Timer
 
+try:
+    import anthropic
+except ImportError:
+    anthropic = None
+
 ROOT       = Path(__file__).parent
 PREFS_FILE = ROOT / "paper_search" / "user_prefs.json"
+RESPONSES_FILE = ROOT / "toefl" / "responses.json"
 PORT       = 5000
 
 _MIME = {".html": "text/html", ".json": "application/json",
@@ -84,6 +92,118 @@ class Handler(BaseHTTPRequestHandler):
             print(f"  [prefs] 좋아요 {liked}개 / 숨김 {deleted}개 저장됨")
             self._send_json({"ok": True})
             return
+
+        if self.path == "/api/feedback":
+            length = int(self.headers.get("Content-Length", 0))
+            body = self.rfile.read(length)
+            data = json.loads(body)
+
+            text = data.get("text", "").strip()
+            feedback_type = data.get("type", "writing")
+            prompt = data.get("prompt", "")
+            structure = data.get("structure", {})
+
+            if not text:
+                self._send_json({"error": "텍스트가 비어있습니다."})
+                return
+
+            if not anthropic:
+                self._send_json({"error": "Anthropic 라이브러리가 설치되지 않았습니다."})
+                return
+
+            api_key = os.environ.get("ANTHROPIC_API_KEY")
+            if not api_key:
+                self._send_json({"error": "ANTHROPIC_API_KEY 환경변수가 설정되지 않았습니다."})
+                return
+
+            try:
+                client = anthropic.Anthropic(api_key=api_key)
+
+                if feedback_type == "writing":
+                    structure_text = ""
+                    if structure:
+                        structure_text = "\n 구조 가이드:\n"
+                        for key, val in structure.items():
+                            if val:
+                                structure_text += f"  - {key}: {val}\n"
+
+                    prompt_text = f"""당신은 TOEFL Writing 채점자입니다. 다음 에세이를 평가하고 상세한 피드백을 제공해주세요.
+
+문제: {prompt}
+{structure_text}
+
+작성된 에세이:
+{text}
+
+다음 항목들을 포함한 상세 피드백을 작성해주세요:
+1. 전체 점수 평가 (0-30점)
+2. 각 섹션의 강점 (Intro, Body1, Body2, Conclusion)
+3. 문법/표현 개선 사항 (상위 3개)
+4. 구조 개선 제안
+5. 단어 선택 개선 제안
+6. 다음 작성을 위한 조언
+
+친절하고 건설적인 톤으로 작성해주세요."""
+                else:
+                    prompt_text = f"""당신은 TOEFL Speaking 채점자입니다. 다음 스피킹 답변을 평가하고 피드백을 제공해주세요.
+
+질문: {prompt}
+
+답변:
+{text}
+
+다음 항목들을 포함한 상세 피드백을 작성해주세요:
+1. 전체 점수 평가 (0-30점)
+2. 발음/유창성 평가
+3. 어휘 사용 평가
+4. 문법 평가
+5. 답변 완성도
+6. 개선 사항 (상위 3개)
+7. 다음을 위한 조언
+
+친절하고 건설적인 톤으로 작성해주세요."""
+
+                response = client.messages.create(
+                    model="claude-haiku-4-5-20251001",
+                    max_tokens=1024,
+                    messages=[{"role": "user", "content": prompt_text}]
+                )
+
+                feedback = response.content[0].text
+                print(f"  [feedback] {feedback_type} 피드백 생성 완료 ({len(feedback)}자)")
+                self._send_json({"feedback": feedback})
+                return
+            except Exception as e:
+                error_msg = str(e)
+                print(f"  [feedback] 오류: {error_msg}")
+                self._send_json({"error": f"피드백 생성 실패: {error_msg}"})
+                return
+
+        if self.path == "/api/save-response":
+            length = int(self.headers.get("Content-Length", 0))
+            body = self.rfile.read(length)
+            data = json.loads(body)
+
+            try:
+                if RESPONSES_FILE.exists():
+                    responses = json.loads(RESPONSES_FILE.read_text(encoding="utf-8"))
+                else:
+                    responses = {"responses": []}
+
+                responses["responses"].append(data)
+                RESPONSES_FILE.write_text(
+                    json.dumps(responses, ensure_ascii=False, indent=2), encoding="utf-8"
+                )
+
+                total = len(responses.get("responses", []))
+                print(f"  [responses] 답변 저장 완료 (총 {total}개)")
+                self._send_json({"ok": True, "total": total})
+                return
+            except Exception as e:
+                error_msg = str(e)
+                print(f"  [responses] 저장 실패: {error_msg}")
+                self._send_json({"error": f"답변 저장 실패: {error_msg}"})
+                return
 
         self.send_response(404)
         self.end_headers()
