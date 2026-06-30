@@ -1,11 +1,16 @@
 """
 TOEFL 매일 자동 업데이트 (Reading/Writing/Speaking/Listening)
 Claude API로 생성 → toefl/index.html 데이터 업데이트 → Netlify 배포
-매일 Task Scheduler로 자동 실행
+매일 Task Scheduler로 자동 실행 (generate_english.py 내부에서도 호출됨)
 """
 import json
 import sys
 import os
+
+# UTF-8 인코딩 설정
+sys.stdout.reconfigure(encoding='utf-8')
+if sys.stderr:
+    sys.stderr.reconfigure(encoding='utf-8')
 import subprocess
 import re
 from pathlib import Path
@@ -24,88 +29,40 @@ except Exception:
     def notify(text): pass
 
 
-def generate_with_claude(client: anthropic.Anthropic) -> dict:
+def generate_toefl_with_claude(client: anthropic.Anthropic) -> dict:
     """Claude API로 하루치 TOEFL 문제 생성"""
-    print("[*] Claude API 호출 중...")
+    print("[*] Claude API로 TOEFL 생성 중...")
 
-    prompt = f"""당신은 TOEFL 출제자입니다. 오늘({TOEFL_DATE})의 TOEFL 연습 문제를 생성해주세요.
-
-다음 JSON 포맷으로 정확히 반환해주세요:
+    prompt = f"""JSON 형식으로만 응답. 설명 없음.
 {{
-  "reading": {{
-    "title": "제목",
-    "passage": "영어 지문 (200-300단어)",
-    "questions": [
-      {{
-        "q": "질문1",
-        "options": ["A", "B", "C", "D"],
-        "answer": 0,
-        "explanation": "설명"
-      }},
-      {{
-        "q": "질문2",
-        "options": ["A", "B", "C", "D"],
-        "answer": 1,
-        "explanation": "설명"
-      }},
-      {{
-        "q": "질문3",
-        "options": ["A", "B", "C", "D"],
-        "answer": 2,
-        "explanation": "설명"
-      }}
-    ]
-  }},
-  "writing": {{
-    "prompt": "에세이 주제 (1-2문장)",
-    "structure": {{
-      "Introduction": "소개 문장 팁",
-      "Body 1": "첫번째 주장 팁",
-      "Body 2": "두번째 주장 팁",
-      "Conclusion": "결론 문장 팁"
-    }},
-    "useful_phrases": ["phrase1", "phrase2", "phrase3"]
-  }},
-  "speaking": {{
-    "prompt": "스피킹 질문 (1-2문장)",
-    "useful_expressions": ["expression1", "expression2", "expression3"],
-    "sample_points": ["point1", "point2", "point3"]
-  }},
-  "listening": {{
-    "script": "영어 대화 스크립트 (150-200단어)",
-    "questions": [
-      {{
-        "q": "질문1",
-        "options": ["A", "B", "C", "D"],
-        "answer": 0,
-        "explanation": "설명"
-      }},
-      {{
-        "q": "질문2",
-        "options": ["A", "B", "C", "D"],
-        "answer": 1,
-        "explanation": "설명"
-      }}
-    ]
-  }}
-}}
-
-JSON만 반환해주세요. 다른 설명은 없이."""
+  "reading": {{"title": "title", "passage": "100단어 정도의 짧은 영어 지문. 개행 없이 한 줄로.", "questions": [{{"q": "Q1", "options": ["A", "B", "C", "D"], "answer": 0, "explanation": "exp"}}]}},
+  "writing": {{"prompt": "Write about X", "structure": {{"I": "tip", "B1": "tip", "B2": "tip", "C": "tip"}}, "useful_phrases": ["p1", "p2"]}},
+  "speaking": {{"prompt": "Describe X", "useful_expressions": ["e1", "e2"], "sample_points": ["s1", "s2"]}},
+  "listening": {{"script": "30단어 영어 대화", "questions": [{{"q": "Q1", "options": ["A", "B", "C", "D"], "answer": 0, "explanation": "exp"}}]}}
+}}"""
 
     response = client.messages.create(
-        model="claude-opus-4-8",
-        max_tokens=2048,
+        model="claude-haiku-4-5-20251001",
+        max_tokens=1024,
         messages=[{"role": "user", "content": prompt}]
     )
 
-    text = response.content[0].text
+    text = response.content[0].text.strip()
     # JSON 추출
-    match = re.search(r'\{[\s\S]*\}', text)
-    if not match:
+    start = text.find("{")
+    end = text.rfind("}") + 1
+    if start == -1 or end == 0:
         raise ValueError("Claude 응답에서 JSON을 찾을 수 없음")
 
-    data = json.loads(match.group())
-    print(f"[✓] 생성 완료: Reading, Writing, Speaking, Listening")
+    json_str = text[start:end]
+    # 특수 문자 제거 (체크마크, 불릿 등)
+    json_str = json_str.encode('utf-8', 'ignore').decode('utf-8')
+    try:
+        data = json.loads(json_str)
+    except json.JSONDecodeError as e:
+        print(f"[!] Claude 응답 (처음 500자):\n{text[:500]}")
+        raise ValueError(f"JSON 파싱 실패: {e}")
+    print(f"[✓] TOEFL 생성 완료")
     return data
 
 
@@ -115,16 +72,8 @@ def inject_data_to_html(data: dict) -> bool:
 
     html = TOEFL_HTML.read_text(encoding="utf-8")
 
-    # TOEFL_DATE 업데이트
-    html = re.sub(
-        r'const TOEFL_DATE = "[^"]*";',
-        f'const TOEFL_DATE = "{TOEFL_DATE}";',
-        html
-    )
-
     # 데이터 변수 주입 (</script> 직전에)
-    data_js = f"""
-const TOEFL_DATE = "{TOEFL_DATE}";
+    data_js = f"""const TOEFL_DATE = "{TOEFL_DATE}";
 const READING = {json.dumps(data['reading'], ensure_ascii=False)};
 const WRITING = {json.dumps(data['writing'], ensure_ascii=False)};
 const SPEAKING = {json.dumps(data['speaking'], ensure_ascii=False)};
@@ -152,7 +101,7 @@ def deploy_to_netlify() -> bool:
     print("[*] Netlify 배포 중...")
     try:
         result = subprocess.run(
-            "netlify deploy --prod",
+            '"C:\\Program Files\\Git\\cmd\\git.exe" add toefl/index.html && netlify deploy --prod',
             cwd=str(ROOT),
             shell=True,
             capture_output=True,
@@ -162,7 +111,7 @@ def deploy_to_netlify() -> bool:
             print(f"[✓] Netlify 배포 완료")
             return True
         else:
-            print(f"[!] Netlify 배포 실패: {result.stderr}")
+            print(f"[!] 배포 실패: {result.stderr}")
             return False
     except Exception as e:
         print(f"[!] 배포 오류: {e}")
@@ -172,18 +121,14 @@ def deploy_to_netlify() -> bool:
 def main():
     api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
-        print("[!] ANTHROPIC_API_KEY 환경변수가 설정되지 않았습니다.")
-        try:
-            notify("❌ TOEFL 업데이트 실패: API 키 없음")
-        except:
-            pass
+        print("[!] ANTHROPIC_API_KEY 환경변수 필요")
         return False
 
     try:
-        client = anthropic.Anthropic()
+        client = anthropic.Anthropic(api_key=api_key)
 
         # 1. 데이터 생성
-        data = generate_with_claude(client)
+        data = generate_toefl_with_claude(client)
 
         # 2. HTML 업데이트
         inject_data_to_html(data)
@@ -191,21 +136,17 @@ def main():
         # 3. Netlify 배포
         deploy_to_netlify()
 
-        # 4. Discord 알림
+        # 4. 알림
         try:
-            notify(f"✅ TOEFL 매일 연습 업데이트 완료! ({TOEFL_DATE})\n📖 Reading · ✍️ Writing · 🎙️ Speaking · 👂 Listening")
+            notify(f"✅ TOEFL 업데이트 완료! ({TOEFL_DATE})")
         except:
             pass
-        print("[✓] 모든 작업 완료")
+
+        print("[✓] 완료")
         return True
 
     except Exception as e:
-        error = str(e)
-        print(f"[!] 오류: {error}")
-        try:
-            notify(f"❌ TOEFL 업데이트 실패: {error}")
-        except:
-            pass
+        print(f"[!] 오류: {e}")
         return False
 
 
