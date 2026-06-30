@@ -3503,5 +3503,65 @@
     "title": "Increased Detection of Hard-to-Detect Stuck-at Faults during Scan Shift",
     "file": "2023_Increased Detection of Hard-to-Detect Stuck-at Faults during Scan Shift.md",
     "saved": "2026-06-30"
+  },
+  "ss:ef511556c572abfc770e1b9d4ba40790cf73803e": {
+    "title": "An Open-Source LFSR-Based Stochastic Leaky Integrate-and-Fire Neuron in SkyWater 130 nm: Design, Stochastic Characterisation, and Rate Coding",
+    "file": "2026_An Open-Source LFSR-Based Stochastic Leaky Integrate-and-Fire Neuron in SkyWater.md",
+    "saved": "2026-07-01"
+  },
+  "ss:9bbbdc518dd2ec3c71ae98a344d799b195fe3cac": {
+    "title": "FPGA Implementation of Programmable LFSR",
+    "file": "2025_FPGA Implementation of Programmable LFSR.md",
+    "saved": "2026-07-01"
+  },
+  "ss:c04e3471cd0419381bd12163af6ef3109ff95727": {
+    "title": "Security and Efficiency of Linear Feedback Shift Registers in GF(2n) Using n-Bit Grouped Operations",
+    "file": "2022_Security and Efficiency of Linear Feedback Shift Registers in GF(2n) Using n-Bit.md",
+    "saved": "2026-07-01"
+  },
+  "ss:f50a964d9ba3eecbbf69967ba3f9cf9b96d3ebf8": {
+    "title": "Scan Test for 99% Defect Coverage of R-2R DACs",
+    "file": "2025_Scan Test for 99% Defect Coverage of R-2R DACs.md",
+    "saved": "2026-07-01"
+  },
+  "ss:2bd28c702c1e637ac7cdf1aa26107a0efb0f20e5": {
+    "title": "Optimized Test Pattern Generation for Digital Circuits using SAT-Based ATPG and Scan Insertion Method",
+    "file": "2024_Optimized Test Pattern Generation for Digital Circuits using SAT-Based ATPG and .md",
+    "saved": "2026-07-01"
+  },
+  "ss:5b9a4740ef554a4b2a9933cd2fea2622f8d8d2c7": {
+    "title": "Transfer learning approach for Automatic Test Pattern Generation.",
+    "file": "2025_Transfer learning approach for Automatic Test Pattern Generation..md",
+    "saved": "2026-07-01"
+  },
+  "ss:e3dc7778c96d647b9c57265637a27cff66976771": {
+    "title": "Deep Reinforcement Learning-Based Automatic Test Pattern Generation",
+    "file": "2024_Deep Reinforcement Learning-Based Automatic Test Pattern Generation.md",
+    "saved": "2026-07-01"
+  },
+  "ss:ab7f0457c7c4d7147cd6e7a9b7ee35253b9be682": {
+    "title": "DEFT: Differentiable Automatic Test Pattern Generation",
+    "file": "2025_DEFT Differentiable Automatic Test Pattern Generation.md",
+    "saved": "2026-07-01"
+  },
+  "ss:31b69272e3c4f3798433a3a1e165af86b4e62279": {
+    "title": "Greedy Test Pattern Generation for Detecting Faults Using SAT in Locked circuits",
+    "file": "2025_Greedy Test Pattern Generation for Detecting Faults Using SAT in Locked circuits.md",
+    "saved": "2026-07-01"
+  },
+  "ss:2318dee6f74db35e307d05739cdff4839e68bd83": {
+    "title": "SmartATPG: Learning-based Automatic Test Pattern Generation with Graph Convolutional Network and Reinforcement Learning",
+    "file": "2024_SmartATPG Learning-based Automatic Test Pattern Generation with Graph Convolutio.md",
+    "saved": "2026-07-01"
+  },
+  "ss:083c6ee3651f3d23bfa8765b7f6b6c624eaf711f": {
+    "title": "Efficient and Effective Neural Networks for Automatic Test Pattern Generation",
+    "file": "2024_Efficient and Effective Neural Networks for Automatic Test Pattern Generation.md",
+    "saved": "2026-07-01"
+  },
+  "ss:efa5c95e57b2a0e8c3a5d7cd2c39706d35b8a42d": {
+    "title": "Intelligent Automatic Test Pattern Generation for Digital Circuits Based on Reinforcement Learning",
+    "file": "2023_Intelligent Automatic Test Pattern Generation for Digital Circuits Based on Rein.md",
+    "saved": "2026-07-01"
   }
 }

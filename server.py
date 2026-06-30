@@ -17,6 +17,8 @@ from threading import Timer
 ROOT       = Path(__file__).parent
 PREFS_FILE = ROOT / "paper_search" / "user_prefs.json"
 RESPONSES_FILE = ROOT / "toefl" / "responses.json"
+ENGLISH_FILE = ROOT / "english" / "responses.json"
+TOEFL_FILE = ROOT / "toefl" / "responses.json"
 PORT       = 5000
 
 _MIME = {".html": "text/html", ".json": "application/json",
@@ -50,6 +52,20 @@ class Handler(BaseHTTPRequestHandler):
             if PREFS_FILE.exists():
                 prefs = json.loads(PREFS_FILE.read_text(encoding="utf-8"))
             self._send_json(prefs)
+            return
+
+        if path == "/api/english_prefs":
+            data = {"wordbook": [], "quiz": [], "test": [], "completed": []}
+            if ENGLISH_FILE.exists():
+                data = json.loads(ENGLISH_FILE.read_text(encoding="utf-8"))
+            self._send_json(data)
+            return
+
+        if path == "/api/toefl_prefs":
+            data = {"writing": [], "reading": [], "speaking": [], "listening": []}
+            if TOEFL_FILE.exists():
+                data = json.loads(TOEFL_FILE.read_text(encoding="utf-8"))
+            self._send_json(data)
             return
 
         # 정적 파일 서빙: ROOT 기준으로 경로 매핑
@@ -86,6 +102,30 @@ class Handler(BaseHTTPRequestHandler):
             liked   = len(data.get("liked", []))
             deleted = len(data.get("deleted", []))
             print(f"  [prefs] 좋아요 {liked}개 / 숨김 {deleted}개 저장됨")
+            self._send_json({"ok": True})
+            return
+
+        if self.path == "/api/english_prefs":
+            length = int(self.headers.get("Content-Length", 0))
+            body = self.rfile.read(length)
+            data = json.loads(body)
+            ENGLISH_FILE.write_text(
+                json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8"
+            )
+            total = sum(len(data.get(k, [])) for k in ["wordbook", "quiz", "test", "completed"])
+            print(f"  [english] 총 {total}개 항목 저장됨")
+            self._send_json({"ok": True})
+            return
+
+        if self.path == "/api/toefl_prefs":
+            length = int(self.headers.get("Content-Length", 0))
+            body = self.rfile.read(length)
+            data = json.loads(body)
+            TOEFL_FILE.write_text(
+                json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8"
+            )
+            total = sum(len(data.get(k, [])) for k in ["writing", "reading", "speaking", "listening"])
+            print(f"  [toefl] 총 {total}개 항목 저장됨")
             self._send_json({"ok": True})
             return
 
