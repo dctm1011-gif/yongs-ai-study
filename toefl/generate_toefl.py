@@ -72,24 +72,22 @@ def inject_data_to_html(data: dict) -> bool:
 
     html = TOEFL_HTML.read_text(encoding="utf-8")
 
-    # 데이터 변수 주입 (</script> 직전에)
-    data_js = f"""const TOEFL_DATE = "{TOEFL_DATE}";
-const READING = {json.dumps(data['reading'], ensure_ascii=False)};
-const WRITING = {json.dumps(data['writing'], ensure_ascii=False)};
-const SPEAKING = {json.dumps(data['speaking'], ensure_ascii=False)};
-const LISTENING = {json.dumps(data['listening'], ensure_ascii=False)};
-"""
+    # 기존 데이터 블록 찾기 (처음과 끝 위치)
+    data_start = html.find('const TOEFL_DATE = "')
+    data_end = html.find(';\n', html.find('const LISTENING')) if html.find('const LISTENING') != -1 else -1
 
-    # 기존 데이터 제거 및 새로 삽입
-    html = re.sub(
-        r'const TOEFL_DATE = "[^"]*";\nconst READING = \{[\s\S]*?\};\nconst WRITING = \{[\s\S]*?\};\nconst SPEAKING = \{[\s\S]*?\};\nconst LISTENING = \{[\s\S]*?\};',
-        data_js.strip(),
-        html
-    )
+    # 데이터 변수 생성
+    data_js = f'const TOEFL_DATE = "{TOEFL_DATE}";\nconst READING = {json.dumps(data["reading"], ensure_ascii=False)};\nconst WRITING = {json.dumps(data["writing"], ensure_ascii=False)};\nconst SPEAKING = {json.dumps(data["speaking"], ensure_ascii=False)};\nconst LISTENING = {json.dumps(data["listening"], ensure_ascii=False)};'
 
-    # 만약 기존 데이터가 없으면 </script> 직전에 추가
-    if 'const READING' not in html:
-        html = html.replace('</script>', data_js + '</script>', 1)
+    # 기존 데이터 대체 또는 새로 추가
+    if data_start != -1 and data_end != -1:
+        # 기존 데이터 블록 교체
+        html = html[:data_start] + data_js + html[data_end+1:]
+    else:
+        # 새로 추가 (</script> 직전)
+        script_end = html.rfind('</script>')
+        if script_end != -1:
+            html = html[:script_end] + data_js + '\n' + html[script_end:]
 
     TOEFL_HTML.write_text(html, encoding="utf-8")
     print(f"[✓] HTML 업데이트 완료")
