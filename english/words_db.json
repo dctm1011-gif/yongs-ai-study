@@ -506,5 +506,65 @@
     "explanation": "형용사로는 '불명확한', '이해하기 어려운' 의미이고, 동사로는 '(의미를) 불명확하게 하다', '(진실을) 숨기다'의 의미입니다.",
     "tip": "학술이나 기술 문맥에서 자주 나와요. 'obscure meaning' (불명확한 의미), 'obscure the facts' (사실을 숨기다)",
     "emoji": "🌫️"
+  },
+  {
+    "id": "vibe",
+    "word": "vibe",
+    "pos": "명사",
+    "date": "2026-07-01",
+    "meaning": "분위기, 느낌",
+    "example_ko": "이거 좋은 느낌이 드는데",
+    "example_en": "I'm getting a good vibe from this",
+    "explanation": "누군가나 무언가가 주는 느낌이나 분위기를 나타내요.",
+    "tip": "SNS와 일상 대화에서 매우 자주 쓰이는 표현이에요.",
+    "emoji": "✨"
+  },
+  {
+    "id": "chill",
+    "word": "chill",
+    "pos": "동사/형용사",
+    "date": "2026-07-01",
+    "meaning": "편하게 쉬다, 차분한",
+    "example_ko": "그냥 집에서 편하게 있자",
+    "example_en": "Let's just chill at home",
+    "explanation": "긴장을 풀고 편하게 시간을 보낼 때 쓰여요.",
+    "tip": "'chill out'으로도 많이 쓰여요.",
+    "emoji": "😎"
+  },
+  {
+    "id": "vibe-check",
+    "word": "vibe check",
+    "pos": "명사",
+    "date": "2026-07-01",
+    "meaning": "분위기 확인",
+    "example_ko": "기분은 어때? 기분 체크 해볼게.",
+    "example_en": "Vibe check: how are you feeling?",
+    "explanation": "누군가의 기분이나 상태를 확인하는 것을 말해요.",
+    "tip": "현대 영어에서 젊은 세대가 즐겨 쓰는 표현이에요.",
+    "emoji": "📊"
+  },
+  {
+    "id": "nail-it",
+    "word": "nail it",
+    "pos": "동사",
+    "date": "2026-07-01",
+    "meaning": "완벽하게 해내다",
+    "example_ko": "그 발표 완벽하게 해냈어",
+    "example_en": "You really nailed that presentation",
+    "explanation": "어려운 일을 완벽하게 성공하는 것을 표현해요.",
+    "tip": "칭찬할 때 자주 쓰이는 긍정적인 표현이에요.",
+    "emoji": "🎯"
+  },
+  {
+    "id": "hang-out",
+    "word": "hang out",
+    "pos": "동사",
+    "date": "2026-07-01",
+    "meaning": "시간을 보내다, 어울리다",
+    "example_ko": "이번 주말에 같이 시간 보낼래?",
+    "example_en": "Wanna hang out this weekend?",
+    "explanation": "친구들과 함께 시간을 보내거나 누군가와 어울리는 것을 의미해요.",
+    "tip": "일상 영어에서 매우 자연스럽고 자주 쓰이는 표현입니다.",
+    "emoji": "👋"
   }
 ]
