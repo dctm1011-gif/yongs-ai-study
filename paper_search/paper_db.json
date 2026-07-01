@@ -3563,5 +3563,25 @@
     "title": "Intelligent Automatic Test Pattern Generation for Digital Circuits Based on Reinforcement Learning",
     "file": "2023_Intelligent Automatic Test Pattern Generation for Digital Circuits Based on Rein.md",
     "saved": "2026-07-01"
+  },
+  "ss:fca5c0b7b957a491a9e97dc08a6373bb73ec9db8": {
+    "title": "Design of Low Dropout Regulator using SCL 180nm Technology for Power Management Integrated Circuit",
+    "file": "2025_Design of Low Dropout Regulator using SCL 180nm Technology for Power Management .md",
+    "saved": "2026-07-01"
+  },
+  "arxiv:2605.30505v1": {
+    "title": "Conservation-Based Feedback-Circuit Decomposition for Linear Forced Systems",
+    "file": "2026_Conservation-Based Feedback-Circuit Decomposition for Linear Forced Systems.md",
+    "saved": "2026-07-01"
+  },
+  "ss:434f3c02d14bd46ff7e57ef2583c166f87b4cb21": {
+    "title": "Controller Architecture for Memory BIST Algorithms",
+    "file": "2020_Controller Architecture for Memory BIST Algorithms.md",
+    "saved": "2026-07-01"
+  },
+  "ss:24f2dfba00ba828fd6ccedd3efa19138a77dd5c9": {
+    "title": "A 40-nm CMOS Multifunctional Computing-in-Memory (CIM) Using Single-Ended Disturb-Free 7T 1-Kb SRAM",
+    "file": "2021_A 40-nm CMOS Multifunctional Computing-in-Memory (CIM) Using Single-Ended Distur.md",
+    "saved": "2026-07-01"
   }
 }

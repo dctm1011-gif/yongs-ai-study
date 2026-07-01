@@ -1,4 +1,4 @@
-"""
+﻿"""
 영어공부 Netlify 자동 업데이트
 lily 대화 JSON → Claude API 분석 → english/index.html 생성 → Netlify 배포
 매일 Task Scheduler로 자동 실행
@@ -40,6 +40,34 @@ def format_conversations(conversations: list) -> str:
         lines.append(f"Lily: {c.get('lily', '')}")
         lines.append("")
     return "\n".join(lines)
+
+def generate_default_words(client: anthropic.Anthropic, target_date: date) -> dict:
+    """대화 없을 때 기본 영어 단어/표현 생성"""
+    prompt = f"""오늘({target_date})의 일일 영어 학습 콘텐츠를 생성해주세요.
+5-8개의 일상 영어 단어/표현과 각각 2개의 퀴즈를 JSON으로 만들어주세요.
+JSON 외 다른 텍스트는 절대 포함하지 마세요.
+
+{{
+  "date": "{target_date}",
+  "words": [{{"word": "example", "part_of_speech": "명사", "meaning_ko": "예시", "explanation": "설명", "example_from_convo": "예문", "example_ko": "한글예문", "tip": "팁", "emoji": "😊"}}],
+  "quiz": [{{"type": "meaning", "word": "example", "question": "질문", "options": ["A", "B", "C", "D"], "answer": 0, "explanation": "설명"}}]
+}}"""
+
+    response = client.messages.create(
+        model="claude-haiku-4-5-20251001",
+        max_tokens=2048,
+        messages=[{"role": "user", "content": prompt}]
+    )
+
+    text = response.content[0].text.strip()
+    start = text.find("{")
+    end = text.rfind("}") + 1
+    json_str = text[start:end].encode('utf-8', 'ignore').decode('utf-8')
+    try:
+        return json.loads(json_str)
+    except json.JSONDecodeError:
+        print("[!] JSON 파싱 실패. 기본값 반환.")
+        return {"date": str(target_date), "words": [], "quiz": []}
 
 def analyze_with_claude(convo_text: str, target_date: date, client: anthropic.Anthropic) -> dict:
     print("[*] Claude API 호출 중...")
@@ -1646,21 +1674,16 @@ def main(target_date: date = None):
         print("[!] ANTHROPIC_API_KEY를 찾을 수 없습니다.")
         sys.exit(1)
 
-    conversations = load_conversations(target_date)
-    if not conversations:
-        print(f"[!] {target_date} 대화 데이터 없음. 어제 날짜로 재시도...")
-        from datetime import timedelta
-        target_date = target_date - timedelta(days=1)
-        conversations = load_conversations(target_date)
-        if not conversations:
-            print("[!] 대화 데이터를 찾을 수 없습니다. 종료.")
-            sys.exit(1)
-
-    print(f"[+] 대화 {len(conversations)}개 로드 완료 ({target_date})")
-
     client = anthropic.Anthropic(api_key=api_key)
-    convo_text = format_conversations(conversations)
-    data = analyze_with_claude(convo_text, target_date, client)
+    conversations = load_conversations(target_date)
+
+    if not conversations:
+        print(f"[*] {target_date} 대화 없음. 기본 콘텐츠 생성...")
+        data = generate_default_words(client, target_date)
+    else:
+        print(f"[+] 대화 {len(conversations)}개 로드 ({target_date})")
+        convo_text = format_conversations(conversations)
+        data = analyze_with_claude(convo_text, target_date, client)
 
     word_count = len(data.get('words', []))
     quiz_count = len(data.get('quiz', []))

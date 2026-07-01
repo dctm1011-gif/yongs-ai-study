@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TOEFL 연습 — 2026-06-28</title>
+<title>TOEFL 연습 — 2026-07-01</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -234,7 +234,7 @@ body {
   <span class="page-icon">📝</span>
   <h1 class="page-title">TOEFL 오늘의 연습</h1>
   <p class="page-desc">Reading · Writing · Speaking · Listening — 하루 1세트</p>
-  <span class="date-badge">📅 2026-06-28</span>
+  <span class="date-badge">📅 2026-07-01</span>
 
   <div class="tab-bar">
     <button class="tab-btn active" onclick="switchTab('reading',this)">📖 Reading</button>
@@ -269,7 +269,6 @@ body {
     <div class="feedback-box" id="writingFeedbackBox">
       <h3>📝 Writing 피드백</h3>
       <div class="feedback-content" id="writingFeedbackContent"></div>
-      <button class="btn-secondary" id="btnSaveWriting" onclick="saveWritingResponse()" style="margin-top: 12px; background: #e8f5e9; border-color: #81c784; color: #2e7d32;">💾 답변 저장</button>
     </div>
     <div class="writing-meta">
       <span>단어 수: <span class="word-count" id="wordCount">0</span></span>
@@ -333,10 +332,10 @@ body {
 </div>
 
 <script>
-const READING  = {"title": "The Migration Patterns of Arctic Terns", "passage": "The Arctic tern undertakes the longest migration of any animal, traveling approximately 44,000 miles annually between Arctic and Antarctic regions. This remarkable journey, driven by seasonal changes in food availability and daylight hours, allows the species to experience two summers per year. Scientists have discovered that Arctic terns navigate using a combination of celestial cues, magnetic fields, and visual landmarks. Recent satellite tracking studies reveal that individual birds follow consistent routes across decades, suggesting an innate genetic navigation system. This extraordinary feat of endurance demonstrates the remarkable adaptability of migratory species to environmental pressures.", "questions": [{"q": "According to the passage, what is the primary reason Arctic terns migrate?", "options": ["To escape predators in the Arctic region", "To seek seasonal changes in food availability and daylight", "To establish new breeding territories", "To avoid extreme weather conditions"], "answer": 1, "explanation": "본문에서 '이 여행은 먹이 가용성과 일조 시간의 계절적 변화에 의해 주도된다'고 명시되어 있습니다."}, {"q": "What can be inferred from the passage about Arctic tern navigation?", "options": ["Arctic terns rely exclusively on visual landmarks", "Navigation abilities are learned from older birds during migration", "Navigation is likely determined by genetic factors rather than learned behavior", "Magnetic fields alone guide their entire migration route"], "answer": 2, "explanation": "본문에서 '개별 새들이 수십 년에 걸쳐 일관된 경로를 따르며, 이는 선천적 유전자 항법 시스템을 시사한다'고 했으므로, 유전적 요소가 중요함을 추론할 수 있습니다."}]};
-const WRITING  = {"prompt": "Do you agree or disagree with the following statement? Technology has made human relationships weaker because people rely more on digital communication than face-to-face interaction. Use specific reasons and examples to support your answer.", "structure": {"intro": "기술이 인간관계를 약화시키는지에 대한 입장 명확히 제시. 예: 'While technology offers convenient communication tools, I disagree that it weakens relationships because...'", "body1": "첫 번째 근거: 기술이 오히려 먼 거리의 사람들 간 관계를 유지하게 해줌. 예시: 유학생이 부모와 화상통화로 연락 유지, 국제 장거리 친구 관계 지속", "body2": "두 번째 근거: 사람들이 기술을 도구일 뿐이며, 의도적으로 대면 상호작용을 증진할 수 있음. 예시: 소셜 미디어로 모임 계획, 온라인 커뮤니티가 오프라인 활동 조장", "conclusion": "기술은 중립적 도구이며, 사람들의 선택에 따라 관계의 질이 결정됨을 강조. 재표현과 함께 마무리."}, "key_phrases": ["In my opinion,", "Furthermore,", "For instance,", "On the other hand,", "In conclusion,", "It is undeniable that", "This suggests that", "To illustrate,", "However,", "The evidence demonstrates that"]};
-const SPEAKING = {"prompt": "Some people prefer to study alone in a quiet library. Others prefer to study in groups with classmates. Which do you prefer and why? Include specific reasons and details in your response.", "useful_expressions": ["In my opinion, I prefer...", "One reason is that...", "For example,", "Additionally,", "To sum up,", "The main advantage is...", "I believe that...", "This helps me because..."], "sample_points": ["그룹 스터디의 이점: 다른 관점 이해, 설명하며 배우기, 어려운 개념 함께 풀이", "조용한 환경의 이점: 집중력 향상, 방해 없이 심화 학습, 개인 속도 조절", "선택 이유와 결론: 특정 과목이나 상황에 따라 조합 방식 선호"]};
-const LISTENING = {"title": "Discussing a Research Project", "type": "conversation", "script": "Student A: Hey, I heard you're working on that environmental science project. How's it going?\n\nStudent B: Oh, it's challenging, honestly. We're researching how plastic pollution affects marine ecosystems. We've collected water samples from three different coastal areas.\n\nStudent A: That sounds complicated. Have you found any significant differences yet?\n\nStudent B: Yes, actually. The areas closer to urban centers had much higher plastic microparticle concentrations. What's surprising is that even remote beaches showed considerable pollution.\n\nStudent A: That's interesting. What are you planning to do next?\n\nStudent B: We need to analyze the chemical composition of these particles and then present our findings at the end of semester. Our professor suggested we interview local environmental organizations too.\n\nStudent A: Have you thought about what solutions you might propose?\n\nStudent B: Not yet, but we're considering discussing current policies and suggesting improvements based on our data. It's a lot of work, but I think it'll be really meaningful.", "questions": [{"q": "What is the main topic of the conversation?", "options": ["The benefits of coastal tourism", "An environmental science research project on plastic pollution", "How to collect water samples safely", "The history of marine conservation"], "answer": 1, "explanation": "Student B가 해양 생태계에 영향을 미치는 플라스틱 오염에 대한 연구 프로젝트를 진행 중이라고 설명합니다."}, {"q": "What did Student B's research reveal about pollution?", "options": ["Urban areas have no plastic pollution", "Remote beaches are completely clean", "Urban areas had higher pollution, but remote beaches also showed significant pollution", "Plastic pollution only affects coastal cities"], "answer": 2, "explanation": "Student B는 도시 근처 지역이 더 높은 미세플라스틱 농도를 보였지만, 심지어 외진 해변도 상당한 오염을 나타냈다고 언급했습니다."}, {"q": "Why does Student B mention interviewing local environmental organizations?", "options": ["To recruit new team members", "To learn about current environmental policies and get expert perspectives", "To find funding for the research", "To publish their findings immediately"], "answer": 1, "explanation": "교수가 학생들에게 이 인터뷰를 제안했으며, 이는 현재 정책을 논의하고 그들의 데이터를 바탕으로 개선 사항을 제안하기 위한 것으로 보입니다."}]};
+const READING  = {"title": "Bioluminescence in Deep-Sea Organisms", "passage": "Bioluminescence, the production of light by living organisms, is a fascinating adaptation found predominantly in deep-sea creatures. In the ocean's twilight zone where sunlight cannot penetrate, many fish and jellyfish have evolved specialized organs called photophores to generate light through chemical reactions. This biological light serves multiple purposes: attracting prey, confusing predators, and communicating with potential mates. Scientists estimate that approximately 90% of deep-sea organisms possess some form of bioluminescence, making it one of nature's most remarkable survival strategies in extreme environments.", "questions": [{"q": "According to the passage, what is the primary function of photophores in deep-sea organisms?", "options": ["To regulate body temperature in cold water", "To produce light through chemical reactions for various purposes", "To filter nutrients from the water", "To navigate using Earth's magnetic field"], "answer": 1, "explanation": "지문에서 photophores가 '화학 반응을 통해 빛을 생성하는 특화된 기관'이라고 명시되어 있습니다. 빛은 먹이를 유인하고, 포식자를 혼동시키고, 짝짓기를 위해 의사소통하는 여러 목적으로 사용됩니다."}, {"q": "What can be inferred from the passage about the importance of bioluminescence in the deep sea?", "options": ["It is a recently evolved trait that only few species possess", "It is essential for survival in an environment where sunlight is absent", "It is primarily used for decorative purposes", "It requires external energy sources to function"], "answer": 1, "explanation": "지문에서 '약 90%의 심해 생물이 생물 발광의 어떤 형태를 소유하고 있다'고 언급한 점과 '극한 환경에서 가장 놀라운 생존 전략 중 하나'라는 표현으로부터 생물 발광이 햇빛이 없는 환경에서 생존에 필수적임을 추론할 수 있습니다."}]};
+const WRITING  = {"prompt": "Do you agree or disagree with the following statement? Technology has made human relationships stronger and more meaningful. Use specific reasons and examples to support your answer.", "structure": {"intro": "도입부: 'The statement suggests that technology strengthens human relationships. While technology offers certain conveniences, I disagree with this perspective because face-to-face interaction and genuine emotional connection cannot be fully replicated by digital communication.'", "body1": "본론 1: 기술의 부정적 측면 - 스마트폰/SNS로 인한 표면적 관계 증가, 깊이 있는 대화 감소. 예시: 가족 저녁 식사 시간에 모두가 휴대폰을 들고 있는 상황", "body2": "본론 2: 긍정적 측면 인정하되 한계 지적 - 장거리 연락 유지는 가능하지만 비언어적 신호(눈 맞춤, 목소리 톤) 손실. 예시: 친구와의 온라인 게임 vs 함께 보낸 시간의 질적 차이", "conclusion": "결론: 'In conclusion, while technology facilitates communication, it does not necessarily deepen relationships. True meaningful connections require direct human interaction and undivided attention.'"}, "key_phrases": ["In my opinion,", "Furthermore,", "For instance,", "On the other hand,", "In conclusion,", "It is undeniable that", "This suggests that", "However, I argue that", "This is because"]};
+const SPEAKING = {"prompt": "Some people prefer studying alone in a quiet environment. Others prefer studying in groups with classmates. Which do you prefer and why? Include specific reasons and details in your response.", "useful_expressions": ["In my opinion, I prefer...", "One reason is that...", "For example,", "Additionally,", "To sum up,", "I believe that...", "This is beneficial because...", "On the other hand..."], "sample_points": ["첫 번째 포인트: 그룹 학습의 장점 - 다양한 관점 공유, 모르는 부분 설명받을 수 있음. 예: 수학 문제를 함께 풀 때 다른 풀이 방법을 배울 수 있음", "두 번째 포인트: 집중력 향상 - 함께 공부할 때 책임감, 동기 부여 증가. 예: 친구들과 함께 준비하면 시험 준비를 더 열심히 함", "결론 포인트: 그룹 학습이 학업 성취와 대인관계 모두에 긍정적 영향을 미침"]};
+const LISTENING = {"title": "Library Study Space Reservation", "type": "conversation", "script": "Student A: Hey, have you heard? The library is changing their study room reservation system. Student B: Really? What's different? Student A: Well, instead of going in person, you'll have to book online through the library website up to two weeks in advance. Student B: Oh no, that doesn't sound convenient. What if I need a study room urgently? Student A: Good question. They're keeping a few rooms open for same-day reservations, but you have to arrive by 9 AM to claim them. Student B: That's pretty early. When does this new system start? Student A: Next Monday. I already made a reservation for my group project on Friday afternoon. Student B: Smart thinking. I should probably do the same for my exam prep sessions.", "questions": [{"q": "What is the main topic of this conversation?", "options": ["The library is closing some of its study rooms", "The library is implementing a new study room reservation system", "Student A is helping Student B with a group project", "Students are complaining about the library's hours"], "answer": 1, "explanation": "두 학생은 도서관의 새로운 스터디룸 예약 시스템에 대해 논의하고 있습니다. 온라인 예약 방식, 2주 전 예약 마감, 같은 날 예약 옵션 등에 대해 설명합니다."}, {"q": "What does Student A suggest about the new system?", "options": ["It is completely inconvenient and should be changed", "It requires advance planning but has options for urgent needs", "It only allows group project reservations", "It eliminates the possibility of last-minute study sessions"], "answer": 1, "explanation": "Student A는 온라인 예약이 필요하지만, 긴급한 필요를 위해 같은 날 예약 옵션이 있다고 설명합니다. 이는 미리 계획하되 긴급 상황에 대한 대비책이 있다는 의미입니다."}, {"q": "Why does Student A mention arriving at 9 AM?", "options": ["Because the library opens at 9 AM", "Because that is when same-day room reservations become available", "Because that is when Student B's exam prep starts", "Because the library requires students to arrive early for all reservations"], "answer": 1, "explanation": "Student A는 긴급 같은 날 예약을 원하면 9시까지 도서관에 도착해야 그 방을 신청할 수 있다고 설명합니다. 이것이 같은 날 예약 시스템의 조건입니다."}]};
 const TOEFL_DATE = (()=>{ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; })();
 
 /* ── 탭 ── */
@@ -567,44 +566,6 @@ async function requestSpeakFeedback() {
   btn.disabled = false; btn.textContent = '✨ AI 피드백 다시 받기';
 }
 
-async function saveWritingResponse() {
-  const answerText = document.getElementById('writingArea').value.trim();
-  const feedbackText = document.getElementById('writingFeedbackContent').textContent.trim();
-  const wordCount = parseInt(document.getElementById('wordCount').textContent) || 0;
-  const currentDate = new Date();
-  const dateStr = `${currentDate.getFullYear()}-${String(currentDate.getMonth()+1).padStart(2,'0')}-${String(currentDate.getDate()).padStart(2,'0')}`;
-  const timestamp = currentDate.toISOString();
-
-  const responseObj = {
-    date: dateStr,
-    prompt: WRITING.prompt,
-    answer: answerText,
-    feedback: feedbackText,
-    wordCount: wordCount,
-    timestamp: timestamp
-  };
-
-  try {
-    let responses = JSON.parse(localStorage.getItem('toefl_writing_responses') || '{"responses":[]}');
-    responses.responses.push(responseObj);
-    localStorage.setItem('toefl_writing_responses', JSON.stringify(responses));
-
-    const res = await fetch('/api/save-response', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(responseObj)
-    });
-
-    if (res.ok) {
-      alert(`✅ 답변이 저장되었습니다!\n날짜: ${dateStr}\n단어 수: ${wordCount}`);
-    } else {
-      alert(`✅ 로컬에 저장되었습니다 (서버 저장 실패)\n날짜: ${dateStr}\n단어 수: ${wordCount}`);
-    }
-  } catch(e) {
-    alert(`✅ 로컬에 저장되었습니다 (서버 연결 실패)\n날짜: ${dateStr}\n단어 수: ${wordCount}`);
-  }
-}
-
 /* ══ LISTENING ══ */
 let isPlaying = false;
 let cancelListen = false;
@@ -745,11 +706,6 @@ if (typeof speechSynthesis!=='undefined' && speechSynthesis.onvoiceschanged!==un
   if (['reading','writing','speaking','listening'].includes(hash)) goTab(hash);
 })();
 localStorage.setItem('toefl_visited_' + new Date().toISOString().slice(0,10), '1');
-const TOEFL_DATE = "2026-07-01";
-const READING = {"title": "The Benefits of Reading", "passage": "Reading is one of the most valuable habits you can develop. It expands your vocabulary, improves your concentration, and reduces stress. Books transport you to different worlds and help you understand diverse perspectives. Whether you prefer fiction or non-fiction, reading enhances your knowledge and creativity. Studies show that people who read regularly have better cognitive abilities and live more fulfilling lives.", "questions": [{"q": "According to the passage, what is NOT mentioned as a benefit of reading?", "options": ["Expanding vocabulary", "Improving physical fitness", "Reducing stress", "Enhancing creativity"], "answer": 1, "explanation": "The passage mentions vocabulary expansion, stress reduction, and creativity enhancement, but does not mention physical fitness as a benefit of reading."}]};
-const WRITING = {"prompt": "Write about your favorite hobby and why it's important to you", "structure": {"I": "Introduce your hobby and state why it matters to you in 2-3 sentences", "B1": "Describe what the hobby involves and how you started doing it", "B2": "Explain the benefits and positive impacts it has on your life", "C": "Conclude by summarizing its importance and your commitment to continuing it"}, "useful_phrases": ["My favorite hobby is...", "It allows me to...", "Since I started...", "This hobby has helped me...", "I believe it's important because..."]};
-const SPEAKING = {"prompt": "Describe a memorable trip you took", "useful_expressions": ["I'll never forget when...", "What made it special was...", "I was impressed by...", "Looking back on it...", "It was definitely worth the effort"], "sample_points": ["Destination and how long you stayed there", "Who you traveled with and what activities you did", "A surprising or challenging moment during the trip", "What you learned or how it changed your perspective"]};
-const LISTENING = {"script": "A: Hi, did you finish the project? B: Almost! I've completed the research and written most of the report. A: Great! When do you think you'll be done? B: Probably by tomorrow afternoon. A: Perfect, that gives us time to review it before the deadline.", "questions": [{"q": "What stage is the project at?", "options": ["Not started yet", "Research completed, report in progress", "Completely finished", "Just beginning the research phase"], "answer": 1, "explanation": "Speaker B says 'I've completed the research and written most of the report,' indicating that the research is done and the report is mostly written but not finished."}]};
 </script>
 </body>
 </html>
