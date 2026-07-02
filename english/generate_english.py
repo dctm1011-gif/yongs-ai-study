@@ -110,8 +110,49 @@ def get_default_words(target_date: date) -> dict:
     }
 
 def generate_default_words(client: anthropic.Anthropic, target_date: date) -> dict:
-    """기본 영어 단어/표현 반환"""
-    return get_default_words(target_date)
+    """Claude API로 새로운 일상 영어 단어 생성"""
+    print("[*] Claude API로 일상 영어 단어 생성 중...")
+
+    prompt = f"""일상 영어에서 자주 쓰이는 5개 단어/표현을 JSON 형식으로만 생성해주세요. ({target_date})
+
+JSON 구조:
+{{
+  "date": "{target_date}",
+  "words": [
+    {{"word": "...", "part_of_speech": "...", "meaning_ko": "...", "explanation": "...", "example_from_convo": "...", "example_ko": "...", "tip": "...", "emoji": "..."}}
+  ],
+  "quiz": [
+    {{"type": "meaning", "word": "...", "question": "...", "options": [...], "answer": 0, "explanation": "..."}}
+  ]
+}}
+
+요구사항:
+- words: 정확히 5개 (각각 word, part_of_speech, meaning_ko, explanation, example_from_convo, example_ko, tip, emoji 포함)
+- quiz: 정확히 8개 (meaning, fill_blank, situation 타입 혼합)
+- 모두 일상 영어
+- 매일 다른 단어를 선택하세요"""
+
+    response = client.messages.create(
+        model="claude-haiku-4-5-20251001",
+        max_tokens=2000,
+        messages=[{"role": "user", "content": prompt}]
+    )
+
+    text = response.content[0].text.strip()
+    start = text.find("{")
+    end = text.rfind("}") + 1
+    if start == -1 or end == 0:
+        print("[!] Claude 응답에서 JSON을 찾을 수 없음, 기본값 사용")
+        return get_default_words(target_date)
+
+    json_str = text[start:end]
+    try:
+        data = json.loads(json_str)
+        print(f"[✓] 새로운 단어 {len(data.get('words', []))}개 생성 완료")
+        return data
+    except json.JSONDecodeError as e:
+        print(f"[!] Claude 응답 JSON 파싱 실패: {e}, 기본값 사용")
+        return get_default_words(target_date)
 
 def analyze_with_claude(convo_text: str, target_date: date, client: anthropic.Anthropic) -> dict:
     print("[*] Claude API 호출 중...")
