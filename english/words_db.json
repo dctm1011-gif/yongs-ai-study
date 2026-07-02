@@ -566,5 +566,41 @@
     "explanation": "친구들과 함께 시간을 보내거나 누군가와 어울리는 것을 의미해요.",
     "tip": "일상 영어에서 매우 자연스럽고 자주 쓰이는 표현입니다.",
     "emoji": "👋"
+  },
+  {
+    "id": "serendipity",
+    "word": "serendipity",
+    "pos": "n",
+    "date": "2026-07-02",
+    "meaning": "행운, 우연한 발견",
+    "example_ko": "내 친구를 만난 것은 순수한 행운이었다.",
+    "example_en": "Meeting my best friend was pure serendipity.",
+    "explanation": "The occurrence of events by chance in a happy or beneficial way",
+    "tip": "Often used to describe lucky coincidences",
+    "emoji": "✨"
+  },
+  {
+    "id": "ephemeral",
+    "word": "ephemeral",
+    "pos": "adj",
+    "date": "2026-07-02",
+    "meaning": "순간적인, 일시적인",
+    "example_ko": "벚꽃의 아름다움은 일시적이다.",
+    "example_en": "The beauty of cherry blossoms is ephemeral.",
+    "explanation": "Lasting for a very short time; transient",
+    "tip": "Think 'epi' = upon, 'hemera' = day in Greek",
+    "emoji": "🌸"
+  },
+  {
+    "id": "candid",
+    "word": "candid",
+    "pos": "adj",
+    "date": "2026-07-02",
+    "meaning": "솔직한, 터놓은",
+    "example_ko": "그녀는 자신의 실수에 대해 매우 솔직했다.",
+    "example_en": "She was very candid about her mistakes.",
+    "explanation": "Frank, honest, and straightforward; not hiding anything",
+    "tip": "Related to 'candor' - the quality of being candid",
+    "emoji": "🗣️"
   }
 ]

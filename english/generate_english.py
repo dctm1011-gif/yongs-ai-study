@@ -113,14 +113,14 @@ def generate_default_words(client: anthropic.Anthropic, target_date: date) -> di
     """Claude API로 새로운 일상 영어 단어 생성"""
     print("[*] Claude API로 일상 영어 단어 생성 중...")
 
-    prompt = f"""일상 영어 5개 단어를 JSON으로만 생성하세요.
+    prompt = f"""5 daily English words. Generate JSON only.
 
-{{"date": "{target_date}", "words": [{{"word": "word1", "part_of_speech": "noun", "meaning_ko": "뜻1", "explanation": "설명1", "example_from_convo": "example1", "example_ko": "예시1", "tip": "팁1", "emoji": "✨"}}, ...], "quiz": [{{"type": "meaning", "word": "word1", "question": "Q?", "options": ["A", "B", "C", "D"], "answer": 0, "explanation": "설명"}}]}}
+{{"date": "{target_date}", "words": [{{"word": "example", "part_of_speech": "n", "meaning_ko": "예", "explanation": "ex", "example_from_convo": "ex", "example_ko": "예", "tip": "팁", "emoji": "X"}}, ...], "quiz": [{{"type": "meaning", "word": "w", "question": "q", "options": ["a"], "answer": 0, "explanation": "e"}}]}}
 
-요구사항:
-- words 5개 필수
-- quiz 8개 필수 (type은 meaning, fill_blank, situation 중 하나)
-- 유효한 JSON만"""
+Requirements:
+- Exactly 5 words
+- Exactly 8 quiz (type: meaning/fill_blank/situation)
+- Valid JSON only"""
 
     response = client.messages.create(
         model="claude-haiku-4-5-20251001",
@@ -132,23 +132,18 @@ def generate_default_words(client: anthropic.Anthropic, target_date: date) -> di
     start = text.find("{")
     end = text.rfind("}") + 1
     if start == -1 or end == 0:
-        print("[!] Claude 응답에서 JSON을 찾을 수 없음, 기본값 사용")
+        print("[!] No JSON found, using default")
         return get_default_words(target_date)
 
-    json_str = text[start:end]
-    json_str = json_str.encode('utf-8', 'ignore').decode('utf-8')
-    for _ in range(2):
-        try:
-            data = json.loads(json_str)
-            if len(data.get("words", [])) >= 5 and len(data.get("quiz", [])) >= 8:
-                print(f"[+] 새로운 단어 {len(data['words'])}개 생성 완료")
-                return data
-            else:
-                raise ValueError("데이터 불충분")
-        except json.JSONDecodeError:
-            json_str = json_str.replace('\\', '\\\\')
+    try:
+        data = json.loads(text[start:end])
+        if len(data.get("words", [])) >= 5 and len(data.get("quiz", [])) >= 8:
+            print(f"[+] 새로운 단어 {len(data['words'])}개 생성 완료")
+            return data
+    except json.JSONDecodeError:
+        pass
 
-    print("[!] JSON 파싱 실패, 기본값 사용")
+    print("[!] JSON parse failed, using default")
     return get_default_words(target_date)
 
 def analyze_with_claude(convo_text: str, target_date: date, client: anthropic.Anthropic) -> dict:
