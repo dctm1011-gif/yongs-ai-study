@@ -707,5 +707,16 @@ if (typeof speechSynthesis!=='undefined' && speechSynthesis.onvoiceschanged!==un
 })();
 localStorage.setItem('toefl_visited_' + new Date().toISOString().slice(0,10), '1');
 </script>
+
+<script src="../progress.js"></script>
+<script>
+const TOEFL_EXP_KEY = 'toefl_exp_' + TOEFL_DATE;
+function recordToeflSection(section) {
+  if (window.userProgress && !localStorage.getItem(TOEFL_EXP_KEY + '_' + section)) {
+    window.userProgress.addExp('toefl_section', 1);
+    localStorage.setItem(TOEFL_EXP_KEY + '_' + section, '1');
+  }
+}
+</script>
 </body>
 </html>

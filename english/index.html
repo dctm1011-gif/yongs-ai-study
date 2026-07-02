@@ -564,6 +564,10 @@ function showFinish() {
   banner.classList.add('show');
   banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
   localStorage.setItem('english_quiz_done', TODAY_DATE);
+  if (window.userProgress && !localStorage.getItem('english_quiz_exp_' + TODAY_DATE)) {
+    window.userProgress.addExp('english_word', 3);
+    localStorage.setItem('english_quiz_exp_' + TODAY_DATE, '1');
+  }
 }
 
 function resetQuiz() {
@@ -585,6 +589,9 @@ function markVocabDone() {
   btn.textContent = '✅ 오늘 완료!';
   btn.className = 'btn-vocab-done done';
   btn.disabled = true;
+  if (window.userProgress) {
+    window.userProgress.addExp('english_word', WORDS.length);
+  }
 }
 (function() {
   if (localStorage.getItem('english_vocab_read') === TODAY_DATE) {
@@ -595,5 +602,7 @@ function markVocabDone() {
   }
 })();
 </script>
+
+<script src="../progress.js"></script>
 </body>
 </html>
