@@ -113,24 +113,10 @@ def generate_default_words(client: anthropic.Anthropic, target_date: date) -> di
     """Claude API로 새로운 일상 영어 단어 생성"""
     print("[*] Claude API로 일상 영어 단어 생성 중...")
 
-    prompt = f"""일상 영어에서 자주 쓰이는 5개 단어/표현을 JSON 형식으로만 생성해주세요. ({target_date})
-
-JSON 구조:
-{{
-  "date": "{target_date}",
-  "words": [
-    {{"word": "...", "part_of_speech": "...", "meaning_ko": "...", "explanation": "...", "example_from_convo": "...", "example_ko": "...", "tip": "...", "emoji": "..."}}
-  ],
-  "quiz": [
-    {{"type": "meaning", "word": "...", "question": "...", "options": [...], "answer": 0, "explanation": "..."}}
-  ]
-}}
-
-요구사항:
-- words: 정확히 5개 (각각 word, part_of_speech, meaning_ko, explanation, example_from_convo, example_ko, tip, emoji 포함)
-- quiz: 정확히 8개 (meaning, fill_blank, situation 타입 혼합)
-- 모두 일상 영어
-- 매일 다른 단어를 선택하세요"""
+    prompt = f"""JSON만 응답. 설명 없음.
+일상 영어 5개 단어. 각 단어: word, part_of_speech, meaning_ko, explanation, example_from_convo, example_ko, tip, emoji.
+8개 퀴즈. 각 퀴즈: type(meaning/fill_blank/situation), word, question, options(배열), answer(숫자), explanation.
+{{"date": "{target_date}", "words": [...], "quiz": [...]}}"""
 
     response = client.messages.create(
         model="claude-haiku-4-5-20251001",
@@ -148,10 +134,13 @@ JSON 구조:
     json_str = text[start:end]
     try:
         data = json.loads(json_str)
-        print(f"[✓] 새로운 단어 {len(data.get('words', []))}개 생성 완료")
-        return data
-    except json.JSONDecodeError as e:
-        print(f"[!] Claude 응답 JSON 파싱 실패: {e}, 기본값 사용")
+        if len(data.get("words", [])) >= 5 and len(data.get("quiz", [])) >= 8:
+            print(f"[✓] 새로운 단어 {len(data['words'])}개 생성 완료")
+            return data
+        else:
+            raise ValueError(f"데이터 불충분: words={len(data.get('words', []))}, quiz={len(data.get('quiz', []))}")
+    except (json.JSONDecodeError, ValueError) as e:
+        print(f"[!] JSON 파싱 실패: {e}, 기본값 사용")
         return get_default_words(target_date)
 
 def analyze_with_claude(convo_text: str, target_date: date, client: anthropic.Anthropic) -> dict:
