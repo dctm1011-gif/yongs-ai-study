@@ -1,0 +1,15 @@
+{
+  "total_exp": 0,
+  "level": 1,
+  "exp_to_next_level": 200,
+  "current_exp": 0,
+  "badges": [],
+  "streak": 0,
+  "last_active_date": "2026-07-02",
+  "weekly_exp": 0,
+  "completed": {
+    "english_words": [],
+    "toefl_sections": [],
+    "papers_read": []
+  }
+}
