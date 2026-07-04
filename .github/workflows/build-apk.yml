@@ -1,0 +1,75 @@
+name: Build APK
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: 💾 Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: 🔧 Setup EAS CLI
+        run: npm install -g eas-cli@latest
+
+      - name: ✅ Verify EAS token
+        run: |
+          if [ -z "$EAS_TOKEN" ]; then
+            echo "❌ EAS_TOKEN is not set!"
+            echo "Please add EAS_TOKEN to GitHub Secrets"
+            exit 1
+          fi
+          echo "✅ EAS_TOKEN is set (length: ${#EAS_TOKEN})"
+        env:
+          EAS_TOKEN: ${{ secrets.EAS_TOKEN }}
+
+      - name: 🏗️ Build APK with EAS
+        run: |
+          echo "Starting EAS build..."
+          eas build \
+            --platform android \
+            --profile preview \
+            --wait \
+            --non-interactive \
+            --output ./app.apk || true
+
+          echo "Checking for APK..."
+          if [ -f ./app.apk ]; then
+            echo "✅ APK found!"
+            ls -lh ./app.apk
+          else
+            echo "⚠️ APK not found, checking build artifacts..."
+            ls -la
+          fi
+        env:
+          EAS_TOKEN: ${{ secrets.EAS_TOKEN }}
+
+      - name: 📤 Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: YongStudyApp-APK
+          path: ./app.apk
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: 📊 Build Summary
+        if: always()
+        run: |
+          echo "=== Build Workflow Complete ==="
+          echo "Status: Check artifacts above"
+          echo "Next: Download APK from artifacts"
