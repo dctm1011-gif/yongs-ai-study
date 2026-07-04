@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reconfigurable Flash ADC Using TIQ Technique · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Reconfigurable Flash ADC Using TIQ Technique</span>
+</div>
+<div class="article">
+  <div class="article-venue">International Conference on Conceptual Structures 2018</div>
+  <h1 class="article-title">Reconfigurable Flash ADC Using TIQ Technique</h1>
+  <div class="article-tags"><span class="tag">ADC-DAC</span><span class="tag">Analog</span><span class="tag">ML-HW</span><span class="tag">Low-Power</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/e22255f6739409f0ab20133c2d36aa6b50175f04" target="_blank">원문 보기 →</a>
+  </div>
+  <p class="opener">TIQ 기술과 재구성 가능한 구조를 결합해 플래시 ADC의 전력 소비를 극적으로 줄인 혁신적인 설계 논문이에요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">왜 플래시 ADC 설계에서 재구성 가능성이 중요해졌을까요?</h2>
+    <p>반도체 공정이 100nm 이하로 미세화되면서 아날로그-디지털 혼합 신호 회로 설계는 새로운 도전에 직면하고 있어요. 저전력, 저지연, 고속이라는 세 가지 요구사항을 동시에 만족시켜야 하는 현대 통신 및 디지털 신호 처리 시스템에서 ADC는 핵심 부품으로 자리잡고 있어요. 특히 플래시 ADC는 병렬 비교기 구조 덕분에 매우 높은 변환 속도를 제공하지만, 비트 수가 늘어날수록 비교기 수가 기하급수적으로 증가해 전력 소비가 급격히 늘어나는 문제가 있어요.</p>
+    <p>기존 플래시 ADC는 n비트 변환을 위해 2^n-1개의 비교기가 필요하고, 각 비교기는 정밀한 기준 전압을 제공하는 저항 래더 네트워크와 연결되어야 해요. 이 구조는 고속 변환에는 유리하지만, 입력 신호 크기에 관계없이 항상 모든 비교기가 동작하므로 낮은 아날로그 입력 전압 상황에서도 불필요한 전력이 소모돼요. 따라서 입력 신호의 크기에 따라 ADC의 동작 모드를 동적으로 전환할 수 있는 재구성 가능한 구조가 전력 효율 향상의 핵심 해법으로 주목받고 있어요.</p>
+
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>고정된 비트 수로만 동작하는 기존 플래시 ADC는 다양한 입력 전압 범위에서 항상 최대 전력을 소모한다는 비효율성이 있어요. 입력 신호 크기에 따라 2비트와 4비트 모드를 동적으로 전환함으로써 필요한 비교기 수를 줄이고 전력 소비를 최소화하는 것이 이 연구의 출발점이에요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">TIQ 기술과 재구성 가능한 구조는 어떻게 결합되었을까요?</h2>
+    <p>이 논문의 핵심 방법론은 TIQ(Threshold Inverter Quantization) 비교기 기술을 재구성 가능한 플래시 ADC 구조에 적용한 것이에요. TIQ 기술은 CMOS 인버터의 스위칭 임계 전압을 트랜지스터의 W/L 비율 조정만으로 설정할 수 있어, 별도의 저항 래더 네트워크 없이도 각 비교기가 고유한 기준 전압을 가질 수 있어요. 이를 통해 회로 면적과 정적 전력 소비를 동시에 줄일 수 있어요.</p>
+    <p>재구성 가능한 구조는 15개의 TIQ 비교기를 공유하면서 높은 아날로그 입력 전압에서는 4비트 ADC(15개 비교기 전체 사용)로, 낮은 아날로그 입력 전압에서는 2비트 ADC(3개 비교기만 사용)로 자동 전환되도록 설계되었어요. 인코딩 단계에서는 MUX 기반의 고속 인코더 회로를 사용해 서모미터 코드를 이진 코드로 변환하며, 이 구조는 Cadence 설계 환경에서 CMOS 90nm 공정으로 구현되었어요.</p>
+
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>저항 래더 없이 트랜지스터 크기 조정만으로 비교기 임계값을 설정하는 TIQ 기술과, 입력 신호 레벨에 따라 활성 비교기 수를 동적으로 줄이는 재구성 구조의 결합이 이 논문의 핵심 혁신이에요. 이 두 가지 기술의 시너지로 면적, 전력, 속도 모두에서 이점을 동시에 달성할 수 있어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">재구성 가능한 TIQ 플래시 ADC는 실제로 얼마나 효율적일까요?</h2>
+    <p>Cadence 환경에서 CMOS 90nm 공정으로 시뮬레이션한 결과, 재구성 가능한 TIQ 플래시 ADC는 전력 소비 3.80μW, 변환 지연 826.5μs를 달성했어요. 입력 신호 크기에 따라 2비트와 4비트 모드를 자동 전환함으로써 기존 고정 비트 플래시 ADC 대비 전력 소비가 크게 감소했어요. 특히 낮은 아날로그 입력 전압 구간에서 대부분의 비교기를 비활성화함으로써 동적 전력 절감 효과가 뚜렷하게 나타났어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">3.80μW</div><div class="stat-desc">재구성 가능한 플래시 ADC의 총 전력 소비</div></div>
+      <div class="stat-box"><div class="stat-num">826.5μs</div><div class="stat-desc">아날로그-디지털 변환 지연 시간</div></div>
+      <div class="stat-box"><div class="stat-num">15개</div><div class="stat-desc">2비트 및 4비트 모드를 공유하는 TIQ 비교기 총 수</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM 및 DRAM 인터페이스 설계 관점에서 이 논문은 고속 직렬 링크나 PHY 수신단의 ADC 설계에 직접적인 시사점을 제공해요. HBM의 광대역 데이터 전송 환경에서는 수신 신호의 크기가 채널 손실과 노이즈에 따라 크게 변동하는데, 이때 입력 레벨에 적응적으로 비트 수를 조정하는 재구성 가능한 ADC는 불필요한 전력 소모를 줄이는 데 매우 유용한 접근법이에요.</p>
+    <p>TIQ 기술의 저항 래더 제거 특성은 HBM 스택 내 좁은 면적에 ADC를 집적해야 하는 상황에서 레이아웃 효율성을 높이는 데 기여할 수 있어요. 또한 90nm 공정 기반 설계이므로 최신 HBM 제조에 사용되는 더 미세한 공정(28nm 이하)으로 스케일 다운 시 전력과 면적 이점이 더욱 극대화될 가능성이 있어요. 재구성 가능한 비트 수 구조는 머신러닝 가속기의 가변 정밀도 연산 요구사항과도 잘 부합해요.</p>
+
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>826.5μs의 변환 지연은 GHz급 동작이 요구되는 현대 HBM 인터페이스에는 직접 적용하기 어려운 수준으로, 실용화를 위해서는 속도 개선이 필수적이에요. 또한 TIQ 비교기의 임계 전압은 트랜지스터 W/L 비율에 의존하므로 공정 변동(Process Variation)에 민감할 수 있어 양산 환경에서의 수율과 정확도 검증이 추가로 필요해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/e22255f6739409f0ab20133c2d36aa6b50175f04" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

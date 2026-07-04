@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bidirectional Inverter Stability · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Bidirectional Inverter Stability</span>
+</div>
+<div class="article">
+  <div class="article-venue">arXiv 2026</div>
+  <h1 class="article-title">Stability Analysis in Large-scale Centralized Bidirectional Inverter-based Stations Connected to Bulk Power Systems through AC and DC Connections</h1>
+  <div class="article-tags"><span class="tag">Power</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://arxiv.org/abs/2606.17565v1" target="_blank">원문 보기 →</a><a class="article-link" href="https://arxiv.org/pdf/2606.17565v1" target="_blank">PDF →</a></div>
+  <p class="opener">배터리 에너지 저장 시스템(BESS) 같은 대규모 양방향 인버터 기반 스테이션(IBS)이 AC 전력망에 연결될 때 발생하는 컨버터 구동 불안정성(CDS) 문제를 분석하고, DC 연결로의 전환이 이 불안정을 완화할 수 있음을 보여요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">대규모 전력 인버터가 왜 전력망을 불안정하게 만들까요?</h2>
+    <p>재생에너지 확대와 AI 데이터센터 급증으로 전력망에 연결되는 인버터 기반 자원(IBR, Inverter-Based Resource)의 규모가 폭발적으로 커지고 있어요. 특히 배터리 에너지 저장 시스템(BESS)은 양방향으로 전력을 충방전할 수 있는 양방향 인버터를 사용하는데, 이런 장치가 수백~수천 MW 규모로 한 곳에 집중되면(Centralized IBS) 전력망의 동적 특성이 근본적으로 변해요.</p>
+    <p>전통 발전기는 동기 발전기의 관성(inertia)이 전력망 주파수를 안정적으로 유지하는 데 기여해요. 하지만 인버터 기반 자원은 관성이 없어요. 대신 제어기 알고리즘으로 응답하는데, 이 제어기가 전력망의 기존 임피던스와 상호작용하면서 서브동기 주파수(sub-synchronous, 수 Hz~수십 Hz) 범위에서 예상치 못한 진동이 발생할 수 있어요. 이를 컨버터 구동 안정성(CDS, Converter-Driven Stability) 문제라고 해요.</p>
+    <p>이 논문은 대규모 IBS가 AC 또는 DC 방식으로 전력망에 연결될 때 각각 어떤 CDS 특성을 보이는지 분석하고, CDCR(Controlled DC Resource) 수, 전력 흐름 방향, 인버터 제어 파라미터라는 세 가지 요소가 안정성에 미치는 영향을 체계적으로 비교해요.</p>
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>인버터 기반 대용량 자원이 전력망에 대규모 집중될 때, AC 연결은 서브동기 불안정을 유발할 수 있어요. 이 논문은 DC 연결로의 전환이 대안이 될 수 있는지를 정량적으로 분석해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">AC vs DC 연결에서 불안정성 분석을 어떻게 수행했나요?</h2>
+    <p>분석 방법론은 임피던스 기반 안정성 분석(impedance-based stability analysis)을 핵심으로 써요. IBS 전체를 Thevenin 등가 모델로 표현한 뒤, 전력망(bulk power system)의 임피던스와의 상호작용을 Nyquist 기준으로 판정해요. 서브동기 주파수 범위에서 위상 여유(phase margin)와 이득 여유(gain margin)가 임계값을 넘으면 불안정 진동이 발생해요.</p>
+    <p>AC 연결 케이스에서는 CDCR 수가 증가하면 병렬 연결된 인버터들의 합성 임피던스가 낮아지고, 전력망 임피던스와의 비율이 불안정 조건에 진입해요. 전력 흐름 방향(충전 vs 방전)에 관계없이 이 불안정성이 나타난다는 점이 중요해요 — 양방향 특성이 문제를 악화시켜요. DC 연결 케이스에서는 DC 라인 저항이 AC 라인 리액턴스보다 훨씬 작을 때(저손실 DC 케이블), 인버터-전력망 상호작용이 분리되어 불안정 위험이 줄어요. 또한 DC 연결에서는 제어 파라미터(PLL 대역폭, 전류 제어 이득)를 조정해 안정성을 회복하는 방법이 더 효과적이에요.</p>
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>AC 연결 IBS는 CDCR 수가 늘수록 반드시 불안정해지는 임계 전력이 낮아지지만, DC 연결 IBS는 저항성 DC 라인이 완충 역할을 해서 더 높은 전력까지 안정적으로 운전할 수 있어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">AC vs DC 연결에서 안정성은 얼마나 차이났나요?</h2>
+    <p>다양한 네트워크 토폴로지(IEEE 9-bus, 39-bus 등)에서 검증한 결과, AC 연결 IBS는 CDCR 수가 일정 수준을 넘으면 서브동기 진동이 발생하는 임계 전력이 선형적으로 감소했어요. DC 연결은 같은 조건에서 더 높은 전력까지 안정적인 운전을 유지했어요. 제어 파라미터 최적화(PLL 이득 조정)도 DC 연결에서 더 효과적이었고, AC 연결에서는 파라미터 조정만으로는 안정성을 회복하기 어려운 구간이 존재했어요. 결론적으로 고전압 대용량 전송에서는 DC-IBS가 선호되며, 저압 단거리 연결에서는 AC-IBS도 적절한 제어 설계로 운용 가능해요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">DC 우위</div><div class="stat-desc">같은 CDCR 수에서 DC 연결이 더 높은 임계 전력 유지</div></div>
+      <div class="stat-box"><div class="stat-num">PLL 튜닝</div><div class="stat-desc">DC 연결에서 제어 파라미터 조정이 안정성 회복에 더 효과적</div></div>
+      <div class="stat-box"><div class="stat-num">다중 토폴로지</div><div class="stat-desc">IEEE 9-bus, 39-bus 등에서 결론 동일하게 검증됨</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 탑재 AI 가속기의 전력 시스템 설계와 어떻게 연결되나요?</h2>
+    <p>HBM을 탑재한 AI 가속기(GPU, TPU, NPU)는 수십 kW 단위의 고속 동적 부하를 만들어요. 추론 작업 중 부하가 수 ms 내에 급변하고, 다수의 가속기가 동일 랙이나 전력 버스에 연결되면 이 논문이 다루는 문제와 구조적으로 유사한 상황이 생겨요 — 많은 수의 인버터(BESS의 CDCR = 가속기의 DC-DC 컨버터)가 공통 AC 전력망에 병렬 연결되는 구조예요.</p>
+    <p>특히 데이터센터 전력망에서 UPS나 BESS가 서버 랙에 AC 또는 DC 버스로 연결될 때, 이 논문의 분석은 직접적으로 적용돼요. DC 전력 분배 아키텍처(HVDC 데이터센터)가 AC 대비 안정성 우위를 가진다는 본 논문의 결론은, AI 인프라 설계에서 DC 배전 방식을 선택하는 근거가 될 수 있어요.</p>
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>이 논문의 IBS는 MW~GW급 유틸리티 스케일을 다뤄요. 데이터센터 전력 시스템(kW~MW급)에 직접 수치를 대입하기엔 스케일 차이가 있고, 제어기 파라미터도 다르게 설계돼요. 방향성과 정성적 인사이트는 유용하지만 정량적 적용은 별도 검토가 필요해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — 대규모 IBS의 AC 연결 및 DC 연결 토폴로지 구성도 (CDCR 병렬 연결 구조)</p>
+    <p><strong>Fig. 2</strong> — CDCR 수 증가에 따른 AC 연결 IBS의 서브동기 불안정 임계 전력 변화 그래프</p>
+    <p><strong>Fig. 3</strong> — DC 연결 IBS에서 PLL 제어 파라미터 조정에 따른 안정성 회복 나이퀴스트 선도</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://arxiv.org/abs/2606.17565v1" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+</div>
+</body>
+</html>

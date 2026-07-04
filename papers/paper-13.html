@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Taming Silent Failures · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Taming Silent Failures</span>
+</div>
+<div class="article">
+  <div class="article-venue">arXiv 2025</div>
+  <h1 class="article-title">Taming Silent Failures: A Framework for Verifiable AI Reliability</h1>
+  <div class="article-tags"><span class="tag">ML-HW</span></div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://arxiv.org/abs/2510.22224v1" target="_blank">원문 보기 →</a>
+    <a class="article-link" href="https://arxiv.org/pdf/2510.22224v1" target="_blank">PDF →</a>
+  </div>
+  <p class="opener">AI 시스템이 오류 메시지 하나 없이 틀린 답을 자신 있게 내놓는 "조용한 실패"를 수학적으로 증명 가능한 방법으로 잡아내는 FAME 프레임워크를 소개해요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">AI가 "조용히 틀릴 때"가 왜 그렇게 위험한가요?</h2>
+    <p>소프트웨어 버그는 보통 예외(exception)를 던지거나, 시스템이 죽거나, 체크섬이 맞지 않아서 문제를 알아챌 수 있어요. 하지만 딥러닝 기반 AI 시스템은 달라요. 신경망은 어떤 입력에도 항상 뭔가를 출력해요. 그리고 그 출력이 틀려도 confidence score는 여전히 90% 이상일 수 있거든요. 이게 바로 "Silent Failure(조용한 실패)"예요. 특히 자율주행, 의료 영상 진단, 산업 공정 제어처럼 실패의 결과가 인명 피해로 이어질 수 있는 안전 필수(safety-critical) 시스템에서 이 문제는 치명적이에요.</p>
+    <p>기존 AI 신뢰성 연구는 주로 "평균 정확도"를 높이는 방향이었어요. 훈련 데이터를 늘리거나, 모델을 더 크게 만들거나, 정규화를 잘 하면 전반적인 성능이 올라가죠. 하지만 이 접근법은 "이 특정 시나리오에서 AI가 절대 틀리지 않는다"는 보장, 즉 formal guarantee를 줄 수 없어요. 확률적 성능 지표(예: 99.9% 정확도)는 나머지 0.1%가 언제, 어떤 상황에서 발생하는지를 말해주지 않아요. 그 0.1%가 새벽 3시 눈 오는 고속도로에서의 물체 인식 실패라면, 통계적 신뢰도는 의미가 없어요.</p>
+    <p>또한 AI 배포 환경에서는 하드웨어 신뢰성 문제도 얽혀요. DRAM 비트 플립, 캐시 오류, 연산 유닛 타이밍 위반 같은 하드웨어 레벨 결함이 AI 출력을 조용히 오염시킬 수 있어요. 소프트웨어는 아무 이상 없이 돌아가는데, 메모리에 저장된 가중치 한 비트가 뒤집혀서 분류 결과가 바뀌는 시나리오예요. 이런 "하드웨어 유발 silent failure"까지 잡아내려면, 순수 소프트웨어 모니터링으로는 한계가 있어요.</p>
+    <div class="insight blue">
+      <div class="insight-label">논문의 출발점</div>
+      <p>AI의 확률적 성능 보장은 안전 필수 시스템에 불충분해요. 오프라인 형식 합성(formal synthesis)과 온라인 런타임 모니터링을 결합해서, AI 시스템이 언제 신뢰 불가 상태에 들어가는지를 수학적으로 검출하는 방법이 필요해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">FAME 프레임워크는 어떻게 조용한 실패를 잡아내나요?</h2>
+    <p>FAME(Formal Assurance and Monitoring Environment)은 두 단계로 작동해요. 첫 번째는 오프라인(배포 전) 단계로, AI 모델의 동작을 형식 명세(formal specification)로 추상화하고, 이를 바탕으로 런타임 감시자(monitor)를 자동 합성해요. 형식 명세는 "이 입력 범위에서 출력은 반드시 이 클래스여야 한다"거나 "연속된 두 프레임에서 신뢰도 변화가 X%를 넘으면 이상"처럼 AI의 올바른 동작 조건을 논리식으로 표현해요. 이 명세를 위반하는 상황이 런타임에 감지되면 "신뢰할 수 없음(unverifiable)" 알림을 내보내요.</p>
+    <p>두 번째는 온라인(런타임) 단계예요. 합성된 감시자가 AI 시스템 옆에서 동작하면서, 매 추론 사이클마다 입력-출력 쌍을 관찰해요. 감시자는 오프라인에서 합성됐기 때문에 자체적으로는 연산 부담이 거의 없어요(하드웨어로 구현 가능한 수준). 이상 징후가 감지되면 AI의 출력을 차단하거나 안전 모드로 전환하는 신호를 보내요. 이 구조는 AI 블랙박스를 직접 수정하지 않아도 되기 때문에, 이미 배포된 모델에도 추가(retrofit) 적용이 가능해요.</p>
+    <p>FAME의 핵심 기술적 기여는 "불투명한(opaque) AI 컴포넌트에 대한 합성 가능한 안전망"이에요. AI 모델의 내부 가중치나 구조를 몰라도, 입출력 스펙만 정의하면 감시자를 만들 수 있어요. ISO 26262(자동차 기능안전), ISO/PAS 8800(자동차 AI 안전) 표준과 연계해서, 인증(certification) 가능한 형태로 문서화하는 방법론도 제시해요. 이건 AI가 규제 산업에 진입하기 위한 실질적인 경로를 여는 거예요.</p>
+    <div class="insight green">
+      <div class="insight-label">핵심 아이디어</div>
+      <p>오프라인 형식 합성으로 경량 감시자를 만들고, 이를 AI 시스템과 병렬로 실행해요. AI 블랙박스 수정 없이 런타임 출력의 신뢰성을 실시간 검증할 수 있어요. 이미 배포된 모델에도 적용 가능한 비침습적(non-intrusive) 방식이에요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">실제 자율주행 시스템에서 얼마나 효과적이었나요?</h2>
+    <p>검증 실험은 자율주행차 인식 시스템(perception system)을 대상으로 진행됐어요. 카메라 기반 객체 탐지 모델(YOLO 계열)이 다양한 엣지 케이스(역광, 악천후, 폐색(occlusion), 드문 물체 클래스)와 하드웨어 유발 오류(비트 플립, 타이밍 오류 시뮬레이션)를 포함한 시나리오에서 어떻게 silent failure를 일으키는지 체계적으로 수집했어요.</p>
+    <p>FAME 적용 결과, 기존 방법으로 감지하지 못했던 심각한 안전 위반의 93.5%를 성공적으로 탐지했어요. 특히 모델이 높은 confidence로 잘못된 탐지를 하는 false positive silent failure 케이스에서 강력한 성능을 보여요. 감시자의 연산 오버헤드는 전체 추론 시간의 2% 미만으로, 실시간 자율주행 파이프라인에서도 적용 가능한 수준이에요.</p>
+    <p>ISO 표준 호환성 측면에서는, FAME가 생성하는 감시자가 ISO 26262의 ASIL-D(가장 엄격한 안전 등급) 요구사항과 일치하는 방식으로 설계됐어요. 이는 학술적 성과를 넘어서, 실제 자동차 제조사가 AI 인식 시스템을 규제 인증 받을 때 활용할 수 있는 실용적인 도구를 의미해요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">93.5%</div><div class="stat-desc">기존 미탐지 안전 위반<br>탐지 성공률</div></div>
+      <div class="stat-box"><div class="stat-num">&lt;2%</div><div class="stat-desc">런타임 감시자<br>연산 오버헤드</div></div>
+      <div class="stat-box"><div class="stat-num">ASIL-D</div><div class="stat-desc">ISO 26262 최고<br>안전 등급 호환</div></div>
+      <div class="stat-box"><div class="stat-num">Retrofit</div><div class="stat-desc">기존 모델 수정 없이<br>추가 적용 가능</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM 설계자 관점에서 이 논문은 두 가지 연결 고리로 흥미로워요. 첫째, HBM이 탑재된 AI 가속기 시스템에서 발생할 수 있는 하드웨어 유발 silent failure 문제예요. HBM의 ECC(Error Correcting Code)는 단일 비트 오류를 교정하지만, 두 비트 이상의 오류나 ECC로 잡히지 않는 특정 오류 패턴은 AI 추론 출력을 조용히 오염시킬 수 있어요. FAME 같은 런타임 감시자가 HBM 시스템에 통합된다면, ECC가 놓친 오류를 AI 출력 레벨에서 2차로 검출할 수 있어요.</p>
+    <p>둘째, Near-Memory Computing을 향한 HBM의 진화 방향과 연결돼요. HBM 내부에서 AI 추론의 일부가 수행되는 미래 구조에서는, 메모리 내 연산 오류가 바로 AI 출력 오류로 이어져요. 이때 FAME 스타일의 형식 감시자를 HBM 컨트롤러 로직에 하드와이어드(hardwired)로 구현하면, 메모리 내 silent failure를 실시간으로 잡아낼 수 있어요.</p>
+    <p>실무적으로는, AI 가속기용 HBM을 설계할 때 "메모리 신뢰성이 AI 정확도에 어떤 영향을 주는가"를 정량화하는 분석 도구로 FAME의 형식 모델링 방법론을 활용할 수 있어요. 특히 HBM의 retention 오류, 읽기 디스터브, 셀 간 간섭 등이 DNN 가중치에 누적될 때 실제 추론 정확도가 어떻게 저하되는지를 formal하게 모델링하고 worst-case를 증명하는 데 응용 가능해요.</p>
+    <div class="insight yellow">
+      <div class="insight-label">주의할 점</div>
+      <p>형식 명세 작성 자체가 고도로 전문적인 작업이에요. AI 모델의 동작을 논리식으로 추상화하는 데 도메인 전문 지식이 필요하고, 명세가 불완전하면 감시자도 허점이 생겨요. 또한 고해상도 카메라나 LiDAR처럼 입력 공간이 매우 큰 시스템에서 형식 합성이 계산적으로 어려울 수 있어요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2510.22224v1/fig1.png" alt="Figure 1" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 1: The FAME framework integrates offline synthesis of monitors from formal specifications with online enforcement and a feedback loop for continuous assurance.</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2510.22224v1/macro_explainability.png" alt="Figure 2" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 2: FAME’s macro-explainability versus low-level XAI. While low-level XAI seeks to explain why an AI made a specific decision (e.g., pixel importance), FAME’s macro-explainability definitively answers which system-level safety rule was violated , providing actionable intelligence for reliability engineers.</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2510.22224v1/fame_results_chart.png" alt="Figure 3" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 3: Comparison of DNN silent failures versus violations detected by the FAME monitor in 100 challenging scenarios. FAME provided a crucial safety warning in over 93% of the failure cases.</div>
+    </div>
+    <div class="figure-outer"><a class="figure-open-link" href="https://arxiv.org/abs/2510.22224v1" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div></div>
+
+</div>
+</body>
+</html>

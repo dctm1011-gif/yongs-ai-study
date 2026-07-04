@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A Processing-Using-Memory Architecture for Commodi... · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">A Processing-Using-Memory Architecture for Commodi...</span>
+</div>
+<div class="article">
+  <div class="article-venue">International Conference on Computer Aided Design 2024</div>
+  <h1 class="article-title">A Processing-Using-Memory Architecture for Commodity DRAM Devices with Enhanced Compatibility and Reliability</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">Sense-Amp</span><span class="tag">Analog</span><span class="tag">Yield</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/53f090a81fff464094ef3f46f124f8b958f45851" target="_blank">원문 보기 →</a>
+  </div>
+  <p class="opener">DRAM 셀 어레이 자체를 연산 장치로 활용하면서도 기존 상용 DRAM과의 완전한 호환성과 신뢰성을 동시에 달성한 PUM 아키텍처 PRADA를 소개해요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">왜 기존 DRAM 기반 PUM 아키텍처는 상용화에 실패했을까요?</h2>
+    <p>폰 노이만 아키텍처에서 CPU와 메모리 사이의 데이터 이동은 현대 컴퓨팅 시스템의 가장 큰 병목 중 하나예요. 이를 해결하기 위해 PIM(Processing-in-Memory) 패러다임이 주목받고 있으며, 특히 메인 메모리로 널리 사용되는 DRAM을 기반으로 한 연구가 활발하게 진행되고 있어요. DRAM 기반 PIM은 크게 두 가지 방향으로 나뉘는데, 하나는 주변 회로에 디지털 연산 장치를 추가하는 방식이고, 다른 하나는 메모리 셀 자체에서 연산을 수행하는 PUM(Processing-Using-Memory) 방식이에요.</p>
+    <p>PUM 방식은 별도의 디지털 연산 유닛 없이 메모리 셀과 비트라인의 아날로그 특성을 이용해 연산을 수행하기 때문에 면적과 전력 측면에서 매우 매력적인 접근법이에요. 그러나 기존 PUM 제안들은 계산 전용 행(designated rows)이나 이중 접촉 셀(DCC, Double Contact Cell)과 같은 비표준 구조를 요구하는 경우가 많아 고도로 최적화된 셀 어레이 레이아웃을 변경해야 하는 문제가 있어요. 이런 변경은 제조 수율 저하와 기존 DRAM 마이크로아키텍처와의 비호환성을 초래하여 실제 상용화를 어렵게 만들고 있어요.</p>
+
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>기존 PUM 아키텍처의 상용화를 가로막는 핵심 장벽은 세 가지, 즉 상용 DRAM 마이크로아키텍처와의 호환성 부재, 신뢰성 문제, 그리고 제한적인 연산 범위예요. PRADA는 셀 어레이에 어떠한 물리적 변경도 가하지 않으면서 이 세 가지 문제를 동시에 해결하는 것을 목표로 해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">PRADA는 어떻게 셀 어레이를 건드리지 않고 인메모리 연산을 구현했을까요?</h2>
+    <p>PRADA의 핵심 아이디어는 기존 비트라인 감지 증폭기(BLSA)에 두 가지 새로운 상태를 도입하는 것이에요. 기존 BLSA는 High와 Low 두 가지 안정 상태만을 가지는데, PRADA는 이를 확장하여 NOT 연산을 DCC나 전용 행 없이 구현할 수 있도록 해요. 이를 통해 셀 어레이의 레이아웃은 완전히 보존되면서도 논리 반전 연산이 가능해지며, 상용 DRAM의 물리적 구조와 완전한 호환성을 유지할 수 있어요.</p>
+    <p>PRADA는 비트 단위 논리 연산(AND, OR, NOT, XOR 등)뿐만 아니라 정수(INT) 및 부동소수점(FP) 산술 연산까지 지원하는 폭넓은 연산 범위를 제공해요. 또한 비트라인 감지 과정에서 발생할 수 있는 노이즈와 오류를 최소화하기 위해 안정적인 BL 감지를 보장하는 새로운 동작 시퀀스를 제안해요. 이 설계는 추가적인 아날로그 회로나 새로운 셀 구조 없이 기존 BLSA 제어 신호의 타이밍 조정만으로 구현되기 때문에 현재의 DRAM 제조 공정에 그대로 적용할 수 있어요.</p>
+
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>BLSA에 새로운 중간 상태를 정의함으로써 NOT 연산을 셀 어레이 수정 없이 구현한 것이 PRADA의 가장 독창적인 기여예요. 이 접근법은 셀 영역의 수율 저하를 유발하지 않으면서도 PUM의 핵심 연산 능력을 온전히 보존해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">PRADA는 기존 PUM 대비 얼마나 뛰어난 성능을 보여줬을까요?</h2>
+    <p>PRADA는 최신 PUM 아키텍처들과의 비교 평가에서 성능, 호환성, 신뢰성 모든 측면에서 우수한 결과를 보여줬어요. 8비트 정수 곱셈 연산에서는 기존 PUM 대비 2.67배에서 4.79배 높은 처리량을 달성했어요. 벡터 ADD 연산에서는 기준 대비 3.09~3.13배의 속도 향상을 기록하여, 같은 연산에서 1.04~2.07배의 속도 향상에 그친 다른 PUM 아키텍처들을 크게 앞질렀어요. 이러한 성능 우위는 셀 어레이 변경 없이 BLSA 수준의 혁신만으로 달성되었다는 점에서 의미가 더욱 크다고 할 수 있어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">2.67~4.79배</div><div class="stat-desc">8비트 정수 곱셈 처리량 향상 (기존 PUM 대비)</div></div>
+      <div class="stat-box"><div class="stat-num">3.09~3.13배</div><div class="stat-desc">벡터 ADD 연산 속도 향상 (기준 대비)</div></div>
+      <div class="stat-box"><div class="stat-num">0회</div><div class="stat-desc">셀 어레이 구조 변경 횟수 (완전 호환성 유지)</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM 및 DRAM 회로 설계자 관점에서 PRADA는 매우 중요한 시사점을 제공해요. HBM은 고밀도 적층 구조 특성상 셀 어레이의 레이아웃 변경이 수율과 패키지 신뢰성에 직접적인 영향을 미치는데, PRADA처럼 셀 영역을 건드리지 않는 방식은 HBM 기반 PIM 구현에 있어 매우 현실적인 접근법이에요. BLSA의 타이밍 제어와 상태 확장을 통한 연산 구현은 HBM의 고대역폭 특성과 결합될 때 대규모 병렬 연산 처리에서 엄청난 시너지를 낼 수 있어요.</p>
+    <p>또한 PRADA가 제안하는 BLSA 신규 상태는 기존 센스 앰프 설계의 아날로그 마진 분석과 깊이 연관되어 있어요. HBM 설계에서 BL 커패시턴스와 셀 커패시턴스 비율, 그리고 공정 변동에 따른 감지 마진 확보가 핵심 과제인데, PRADA의 신뢰성 보장 메커니즘은 이러한 HBM 설계 과제 해결에 직접 적용 가능한 인사이트를 제공해요. INT 및 FP 연산까지 지원하는 넓은 연산 범위는 HBM PIM이 AI/ML 가속기로 활용되는 실제 응용 시나리오에 부합해요.</p>
+
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>PRADA는 BLSA 제어 신호의 타이밍 마진에 민감할 수 있으며, 공정 변동(PVT variation)에 따른 새로운 BLSA 중간 상태의 안정성 검증이 실제 양산 수준에서 추가로 요구될 수 있어요. 또한 다중 뱅크 동시 연산 시 전원 노이즈(power noise)와 기판 결합(substrate coupling) 문제가 아날로그 감지 마진에 미치는 영향에 대한 면밀한 검토가 필요해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/53f090a81fff464094ef3f46f124f8b958f45851" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

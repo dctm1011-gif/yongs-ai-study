@@ -1,0 +1,39 @@
+{
+  "date": "2026-06-19",
+  "title": "논문 검색 및 Obsidian 연동 시스템 구축",
+  "summary": "HBM/회로설계 논문을 자동으로 검색·번역·분류해 Obsidian에 저장하는 시스템을 처음부터 구축. arXiv HTML에서 논문 그림을 자동 다운로드하는 기능까지 구현.",
+  "tags": ["Python", "Obsidian", "arXiv", "Semantic Scholar", "논문관리"],
+  "achievements": [
+    "Semantic Scholar + arXiv 무료 API 기반 논문 검색 모듈 구현",
+    "회로설계 키워드 기반 자동 태깅 시스템 구현 (HBM, TSV, Sense-Amp, PLL 등 20개 카테고리)",
+    "구글 번역 API로 초록 한국어 자동 번역",
+    "arXiv HTML 버전에서 논문 그림 자동 추출 및 저장 (캡션 포함)",
+    "Obsidian Dataview 플러그인 자동 설치 및 대시보드 2개 생성",
+    "CLI 한 줄로 검색~저장 전체 파이프라인 완성"
+  ],
+  "files_created": [
+    "paper_search/main.py",
+    "paper_search/config.py",
+    "paper_search/tagger.py",
+    "paper_search/formatter.py",
+    "paper_search/summarizer.py",
+    "paper_search/figure_extractor.py",
+    "paper_search/update_papers.py",
+    "paper_search/sources/semantic_scholar.py",
+    "paper_search/sources/arxiv_search.py",
+    "Obsidian: 📊 논문 대시보드.md",
+    "Obsidian: 📐 회로설계 기술 대시보드.md"
+  ],
+  "how_to_use": [
+    "cd C:\\Users\\dctm1\\OneDrive\\바탕 화면\\CLAUDE_PROJECT_1\\paper_search",
+    "python main.py \"HBM bandwidth\" --year 2022 --limit 20",
+    "python main.py \"sense amplifier DRAM\" --venue ISSCC",
+    "python main.py \"PLL clock\" --source arxiv --limit 10"
+  ],
+  "next_ideas": [
+    "Claude API 연동 시 한국어 요약 품질 개선",
+    "Semantic Scholar 인용수 기반 자동 필터링",
+    "ISSCC/JSSC 특정 학회 논문만 골라서 검색",
+    "논문 간 인용 관계 시각화"
+  ]
+}

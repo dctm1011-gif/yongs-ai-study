@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Time-Driven Python Simulator · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Time-Driven Python Simulator</span>
+</div>
+<div class="article">
+  <div class="article-venue">ITC-CSCC 2022</div>
+  <h1 class="article-title">Time-Driven Python-based Simulator for Verification of High-Speed Link Circuits and Systems</h1>
+  <div class="article-tags"><span class="tag">PHY</span><span class="tag">Interface</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/7923e382bed382ff1be48955f1372c93a247f4f8" target="_blank">원문 보기 →</a></div>
+  <p class="opener">Python 기반 time-driven 시뮬레이터로 CDR·이퀄라이저·채널을 포함한 고속 직렬 링크 전체를 SPICE 대비 수십 배 빠르게 검증할 수 있어요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">고속 직렬 링크 검증, 왜 이렇게 오래 걸릴까요?</h2>
+    <p>현대 고속 인터페이스(SerDes, HBM I/O 등)는 수십 Gb/s급 신호를 다루기 때문에 채널 손실 보상을 위한 이퀄라이저(CTLE, FFE, DFE)와 클럭 복원 회로(CDR)가 필수예요. 이 회로들을 검증하려면 나노초~마이크로초 단위의 타임스텝으로 수백만 비트를 시뮬레이션해야 하는데, 전통적인 SPICE 시뮬레이터는 트랜지스터 수준까지 계산하기 때문에 연산 시간이 엄청나게 길어요.</p>
+    <p>한편 HDL(Verilog/VHDL) 기반 행동 모델도 있지만, 아날로그 특성(지터, ISI, 채널 임펄스 응답)을 정확히 표현하려면 별도의 모델링 작업이 필요하고 혼합 신호 시뮬레이션 라이선스 비용도 높아요. 결국 알고리즘 수준에서 빠르게 "이 파라미터 조합이 동작하는가?"를 확인할 수 있는 경량 시뮬레이터가 개발 초기 단계에서 절실해요.</p>
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>SPICE는 정확하지만 너무 느리고, HDL은 아날로그 특성 모델링이 번거로워요. Python으로 time-driven 시뮬레이터를 만들면 속도와 유연성을 동시에 잡을 수 있어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">어떻게 전체 직렬 링크를 Python으로 흉내 냈을까요?</h2>
+    <p>핵심 아이디어는 '시간 축(time-driven)' 시뮬레이션이에요. 매 UI(Unit Interval, 한 비트 주기) 또는 더 짧은 서브-UI 단계마다 신호 상태를 갱신하는 방식으로, 채널 임펄스 응답(IR)을 컨볼루션해 ISI를 계산하고, CTLE·FFE·DFE 필터를 디지털 필터 형태로 구현해 타임스텝마다 적용해요. 클럭 복원에는 위상-주파수 검출기(PFD)와 루프 필터, VCO 모델을 소프트웨어 블록으로 연결해 PI(Phase Interpolator) 기반 CDR을 구현해요.</p>
+    <p>채널 모델은 S-파라미터 또는 임펄스 응답 테이블을 입력받아 파이썬 numpy 컨볼루션으로 처리해요. 송신단의 FFE 탭, 수신단의 DFE 탭 수도 파라미터화되어 있어서 한 줄 설정 변경으로 다양한 이퀄라이저 조합을 빠르게 스위프할 수 있어요. ADC-DSP 구조도 지원하는데, ADC 비트폭·ENOB 등을 파라미터로 넣으면 양자화 노이즈까지 반영돼요.</p>
+    <p>지터 모델링도 포함돼 있어요. 랜덤 지터(RJ)는 가우시안 분포로, 결정론적 지터(DJ)는 사인파 또는 테이블 기반으로 각각 클럭 경로와 데이터 경로에 삽입해요. 시뮬레이션 결과로 눈 다이어그램(eye diagram), BER 추정, 잔류 ISI 스펙트럼을 자동으로 그려줘요.</p>
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>채널·CDR·이퀄라이저를 모두 Python numpy 블록으로 연결해 time-domain 시뮬레이션을 구현하면, SPICE 없이도 눈 다이어그램과 BER을 빠르게 확인할 수 있어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">얼마나 빠르고 정확하게 동작했나요?</h2>
+    <p>논문은 동일한 직렬 링크 시나리오를 SPICE와 Python 시뮬레이터로 각각 돌려 결과를 비교했어요. 눈 높이(eye height)와 눈 폭(eye width) 등 핵심 마진 지표에서 SPICE 대비 5% 이내 오차를 보이면서, 시뮬레이션 시간은 수십 배 단축됐어요. 특히 CDR 잠금(lock) 과정처럼 수백만 UI가 필요한 시나리오에서 속도 이점이 두드러졌어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">~수십×</div><div class="stat-desc">SPICE 대비 시뮬레이션 속도 향상</div></div>
+      <div class="stat-box"><div class="stat-num">&lt;5%</div><div class="stat-desc">SPICE 대비 눈 마진 측정 오차</div></div>
+      <div class="stat-box"><div class="stat-num">전체</div><div class="stat-desc">채널·CDR·이퀄라이저 통합 검증 지원</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM I/O 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM의 PHY는 수백 개 I/O 레인을 동시에 운용하는데, 각 레인에 대해 SPICE 레벨 시뮬레이션을 돌리면 타당한 시간 안에 결과를 보기 어려워요. 이런 Python 시뮬레이터를 활용하면 채널 S-파라미터를 넣고 이퀄라이저 탭·CDR 파라미터를 자동 스위프해서 HBM I/O 타이밍 마진을 빠르게 맵핑할 수 있어요. 특히 TSV 기반 채널의 임펄스 응답을 직접 가져와서 최적 FFE/DFE 설정을 탐색하는 자동화 스크립트로 확장하기가 쉬워요.</p>
+    <p>또한 신호 무결성(SI) 팀과 회로 설계 팀이 공통 Python 환경에서 협업하기 좋아요. MATLAB이나 SPICE 라이선스 없이 오픈 소스 도구만으로 초기 PPA(성능·전력·면적) 탐색을 진행할 수 있다는 것도 큰 장점이에요.</p>
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>트랜지스터 수준 비선형 특성(전원 공급 변동, 공정 코너)은 소프트웨어 블록 모델로 정확히 반영하기 어려워요. 최종 테이프아웃 전 SPICE 검증은 반드시 별도로 수행해야 해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — 전체 직렬 링크 시스템 블록 다이어그램: 송신단(FFE) → 채널(S-파라미터) → 수신단(CTLE+DFE) → CDR 루프 연결 구조</p>
+    <p><strong>Fig. 2</strong> — Python 시뮬레이터의 time-driven 처리 흐름: UI 단위 타임스텝별 신호 갱신 및 지터 삽입 과정</p>
+    <p><strong>Fig. 3</strong> — SPICE vs. Python 시뮬레이터 눈 다이어그램 비교: 눈 높이·폭 수치와 오차율</p>
+    <p><strong>Fig. 4</strong> — CDR 잠금 수렴 과정 파형: 위상 오차가 수렴하는 과정 및 잠금 시간 비교</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/7923e382bed382ff1be48955f1372c93a247f4f8" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+</div>
+</body>
+</html>

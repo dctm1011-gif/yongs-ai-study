@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Marionette: RowHammer via Row Coupling · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Marionette: RowHammer via Row Coupling</span>
+</div>
+<div class="article">
+  <div class="article-venue">ASPLOS 2025</div>
+  <h1 class="article-title">Marionette: A RowHammer Attack via Row Coupling</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">ECC</span></div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://www.semanticscholar.org/paper/d386a2878a4cf90c53955c904d8137aaacee9b7f" target="_blank">원문 보기 →</a>
+  </div>
+  <p class="opener">DRAM 내부의 행 결합(row coupling) 현상을 이용해 공격자 행에 직접 접근하지 않고도 RowHammer 비트플립을 유발할 수 있다는 새로운 공격 기법 Marionette를 제시한 논문이에요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">RowHammer 방어는 완벽한가요? 결합 행이라는 새로운 위협</h2>
+    <p>RowHammer는 DRAM의 특정 행을 반복적으로 활성화(hammer)해서 인접한 피해 행(victim row)에 비트플립을 유발하는 공격이에요. 수년간 이 공격에 맞서 다양한 방어 체계가 개발됐는데, 크게 두 가지 방향이 있어요. 하나는 추적 기반 방어(tracking-based defense)로, 행 활성화 횟수를 카운터로 추적해서 임계값을 넘으면 인접 행을 선제 갱신하는 방식이에요. 다른 하나는 격리 기반 방어(isolation-based defense)로, 서로 다른 VM이나 프로세스 사이에 물리 메모리를 격리해서 교차 공격을 막는 방식이에요. 이 두 방어 체계는 오랫동안 업계 표준으로 여겨져 왔어요.</p>
+    <p>그런데 이 논문은 아주 흥미로운 물리적 현상 하나에 주목해요. DRAM 뱅크를 들여다보면, 시스템 소프트웨어 관점에서 서로 다른 주소를 가진 두 행이 사실 DRAM 칩 내부에서는 동일한 워드라인(wordline)에 연결되어 있는 경우가 있어요. 이를 결합 행 쌍(coupled row pair)이라고 불러요. 이런 구조가 존재하는 이유는 DRAM 제조사가 수율 향상을 위해 특정 행을 스페어(spare) 행으로 대체하는 과정에서 생겨나는데, 두 물리적 서브어레이에 있는 행이 하나의 워드라인을 공유하게 되는 거예요.</p>
+    <p>이 결합 관계는 소프트웨어나 메모리 컨트롤러에게는 전혀 보이지 않아요. 시스템 입장에서는 두 행이 완전히 별개의 주소처럼 보이지만, 물리적으로는 같은 워드라인을 통해 연결되어 있어서 한 행을 활성화하면 자동으로 결합된 행도 같이 활성화돼요. Marionette 공격은 바로 이 맹점을 파고들어요.</p>
+    <div class="insight blue">
+      <div class="insight-label">논문의 출발점</div>
+      <p>결합 행(coupled row)은 소프트웨어 레벨 방어에서 완전히 보이지 않는 존재예요. 공격자가 A 행을 해머링하면, 시스템이 모르는 사이에 결합된 B 행도 함께 활성화되고, B 행 인근의 피해 행에 비트플립이 발생할 수 있어요. 기존 카운터 기반 방어는 A 행의 활성화만 세기 때문에 B 행의 효과는 계산 외예요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">Marionette는 어떻게 기존 방어를 우회하나요?</h2>
+    <p>Marionette 공격의 핵심은 결합 행 관계를 역으로 활용하는 거예요. 공격자가 직접 피해 행 인근의 공격자 행(aggressor row)을 반복 접근하면 카운터 기반 방어가 탐지하죠. 하지만 피해 행 인근의 공격자 행과 결합된 원격 행(remote coupled row)을 대신 해머링하면 어떻게 될까요? 시스템의 카운터는 원격 행의 활성화 횟수를 세지만, 피해 행 인근 실제 공격자 행에 대한 카운터는 늘어나지 않아요. 그 결과 방어 임계값에 도달하지 않은 채로 피해 행에 비트플립을 유발할 수 있어요.</p>
+    <p>두 번째 우회 기법은 격리 기반 방어를 무력화하는 거예요. 격리 기반 방어는 VM1이 해머링할 수 있는 영역과 VM2의 메모리를 물리적으로 분리하는 방식이에요. 하지만 결합 행이 서로 다른 서브어레이에 걸쳐 있을 경우, VM1이 자신에게 할당된 서브어레이의 행을 해머링하면, 그 결합 행이 VM2의 서브어레이에 위치해서 VM2의 피해 행에 비트플립을 유발할 수 있어요. 서브어레이 레벨 격리가 결합 행 관계를 끊지 못한다는 점을 정확히 공략하는 거예요.</p>
+    <p>연구팀은 FPGA 기반 인프라와 실제 서버 시스템 양쪽에서 결합 행의 존재를 확인하고, 이를 자동으로 탐지해서 Marionette 공격에 활용하는 방법론을 제시해요. 기존 RowHammer 익스플로잇 코드도 결합 행 정보를 이용하면 성공률을 높일 수 있다는 것도 함께 보였어요.</p>
+    <div class="insight green">
+      <div class="insight-label">핵심 아이디어</div>
+      <p>공격자 행을 직접 해머링하는 대신, 결합 관계를 통해 간접적으로 활성화하는 것이 Marionette의 혁신 포인트예요. 마치 마리오네트 인형을 실로 조종하듯, 직접 손대지 않고 원격에서 DRAM 행을 움직여요. 카운터 기반 방어는 실로 조종되는 인형(결합 행)을 보지만, 진짜 공격자 행은 탐지 범위 밖에 있어요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">실제로 얼마나 효과적인 공격인가요?</h2>
+    <p>연구팀은 시중에 유통되는 DDR4 DRAM 모듈을 대상으로 실험을 진행했어요. 결합 행이 존재하는 모듈에서 Marionette는 기존 추적 기반 방어가 활성화된 상태에서도 성공적으로 비트플립을 유발할 수 있다는 걸 보였어요. 특히 기존 서버 시스템에서 익스플로잇 성공률이 최대 1.66배까지 향상됐다는 결과가 인상적이에요.</p>
+    <p>격리 기반 방어에 대해서도 VM 간 경계를 넘는 비트플립의 타당성을 검증했어요. 서브어레이 경계가 다른 두 VM 사이에 있어도 결합 행이 그 경계를 가로질러 존재할 경우 격리가 무력화됐어요. 또한 결합 행 해머 카운트가 일반 직접 해머링의 임계값보다 낮아서 방어 체계가 더욱 취약해진다는 점도 확인됐어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">1.66×</div><div class="stat-desc">서버 시스템에서의 RowHammer 익스플로잇 성공률 향상 배수</div></div>
+      <div class="stat-box"><div class="stat-num">2가지</div><div class="stat-desc">우회 가능한 방어 유형: 추적 기반 방어 + 격리 기반 방어</div></div>
+      <div class="stat-box"><div class="stat-num">FPGA+서버</div><div class="stat-desc">실제 하드웨어 두 종류에서 결합 행 존재 및 공격 타당성 검증</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM 설계자 입장에서 이 논문은 꽤 불편한 진실을 담고 있어요. HBM은 DRAM 다이를 여러 겹 스택으로 쌓는 구조라서, 수율 개선을 위해 스페어 행 대체가 DDR4/5 못지않게 일어나요. 결합 행 현상이 HBM에서도 동일하게 존재할 가능성이 높고, 오히려 TSV(Through-Silicon Via) 기반 연결 구조 때문에 결합 관계가 더 복잡해질 수도 있어요.</p>
+    <p>HBM의 ECC는 인라인 ECC 방식으로 구현되는데, 결합 행 공격이 ECC 코드의 정정 능력을 초과하는 다중 비트플립을 유발하면 ECC도 무력화될 수 있어요. 특히 HBM을 AI 가속기에 탑재할 때, 모델 가중치가 저장된 행에 비트플립이 일어나면 추론 결과에 직접적인 영향을 줄 수 있어요. 공격자가 특정 뉴럴 네트워크 레이어의 가중치를 타깃으로 삼을 수 있다는 점은 AI 시스템 보안에서 새로운 위협이에요.</p>
+    <p>완화 방향으로는, 결합 행 관계를 시스템 레벨에 노출(expose)하는 것이 가장 현실적인 접근이에요. 논문도 이 방향을 제안해요. 메모리 컨트롤러가 결합 행 정보를 알고 있으면, 결합된 행 쌍을 하나의 논리적 행처럼 취급해서 카운터를 공유하도록 구현할 수 있어요. DRAM 제조사가 JEDEC 표준에 결합 행 정보를 SPD(Serial Presence Detect)에 기록하도록 요구하는 방향도 생각해볼 수 있어요.</p>
+    <div class="insight yellow">
+      <div class="insight-label">주의할 점</div>
+      <p>결합 행 관계는 DRAM 제조사마다 다르고, 심지어 같은 제조사 내에서도 로트(lot)마다 달라요. HBM 설계 시 이 관계를 사전에 특정하기 어렵고, 양산 후에도 변동이 생길 수 있어요. 따라서 하드웨어 수준의 고정적 방어보다는 런타임에 결합 관계를 파악하고 적응하는 동적 방어 체계가 필요해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — 결합 행 쌍(coupled row pair)의 물리적 구조. 서로 다른 주소 공간에 속하는 두 행이 동일한 워드라인을 공유하는 DRAM 내부 구조를 보여줘요. 스페어 행 대체 과정에서 이런 구조가 만들어지는 메커니즘도 함께 설명해요.</p>
+    <p><strong>Fig. 2</strong> — Marionette 공격 흐름도. 공격자가 원격 결합 행을 해머링했을 때 피해 행에 비트플립이 발생하는 경로를 화살표로 나타냈어요. 기존 추적 기반 방어의 카운터가 어떤 행의 횟수를 세고, 어떤 행은 놓치는지 한눈에 보여줘요.</p>
+    <p><strong>Fig. 3</strong> — FPGA 기반 테스트 인프라 구성. 결합 행을 자동 탐지하는 스캔 방법론과 실험 장치를 도식화했어요. 어떤 DRAM 행 주소 쌍이 결합 관계에 있는지 확인하는 절차도 포함해요.</p>
+    <p><strong>Fig. 4</strong> — 추적 기반 방어 우회 결과. 카운터 임계값 이하에서도 비트플립이 발생하는 실험 데이터를 그래프로 보여줘요. 결합 행을 통해 실효 해머 횟수가 합산되는 효과를 수치로 확인할 수 있어요.</p>
+    <p><strong>Fig. 5</strong> — 격리 기반 VM 방어 우회 시나리오. 서브어레이 경계를 기준으로 VM1과 VM2의 메모리가 분리된 상황에서, 결합 행이 경계를 가로질러 비트플립을 유발하는 경로를 시각화했어요.</p>
+    <div class="figure-outer">
+      <a class="figure-open-link" href="https://www.semanticscholar.org/paper/d386a2878a4cf90c53955c904d8137aaacee9b7f" target="_blank">↗ 원문에서 그림 보기</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

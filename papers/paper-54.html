@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Calibration-Free DTC · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Calibration-Free DTC</span>
+</div>
+<div class="article">
+  <div class="article-venue">arXiv 2024</div>
+  <h1 class="article-title">A Reconfigurable Calibration-Free Digital-to-Time Converter Based on a High-Speed Transceiver</h1>
+  <div class="article-tags"><span class="tag">PHY</span><span class="tag">PLL-DLL</span><span class="tag">ADC-DAC</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://arxiv.org/abs/2412.06330v2" target="_blank">원문 보기 →</a><a class="article-link" href="https://arxiv.org/pdf/2412.06330v2" target="_blank">PDF →</a></div>
+  <p class="opener">고속 트랜시버 회로를 DTC(Digital-to-Time Converter)로 재활용해서 캘리브레이션 없이도 100ps 해상도의 정밀한 타이밍 신호를 만들어내는 방법이에요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">DTC가 뭐길래 PLL이나 CDR에서 이렇게 중요한가요?</h2>
+    <p>DTC(Digital-to-Time Converter)는 디지털 코드를 시간 지연량으로 변환하는 회로예요. PLL(Phase-Locked Loop)이나 CDR(Clock and Data Recovery) 같은 클록 시스템에서 위상을 정밀하게 제어하거나 지터를 보정할 때 꼭 필요해요. 예를 들어 DPLL(Digital PLL) 구조에서 DTC는 고해상도 타임 디지타이저(TDC)와 쌍으로 동작하면서 루프 오류를 피드백 보정해요.</p>
+    <p>문제는 고해상도 DTC를 구현하기가 생각보다 까다롭다는 거예요. 아날로그 딜레이 라인이나 인버터 체인으로 구현하면 공정·전압·온도(PVT) 변화에 따라 딜레이 값이 흔들리기 때문에, 주기적인 캘리브레이션이 필수예요. 이 캘리브레이션 오버헤드가 시스템 복잡도를 높이고, 캘리브레이션 수렴 시간 동안 정확한 타이밍 제어를 못 하는 맹점이 생겨요.</p>
+    <p>이 논문은 이미 칩이나 FPGA에 내장된 고속 트랜시버(Serdes) 회로를 DTC로 전용(repurpose)해서 이 문제를 피해가는 접근을 제안해요. 트랜시버는 원래 고속 직렬 데이터 전송 목적으로 설계됐지만, 그 내부의 고속 클록과 직렬화 로직을 DTC 용도로 재활용하면 캘리브레이션 없이도 안정적인 타이밍 정밀도를 얻을 수 있다는 거예요.</p>
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>기존 DTC는 PVT 변화에 취약해서 캘리브레이션이 필수인데, 이게 시스템 복잡도와 latency를 높여요. 이미 존재하는 고속 트랜시버의 안정적인 클록을 타이밍 기준으로 쓰면 캘리브레이션 없이도 정밀한 DTC를 구현할 수 있어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">고속 트랜시버를 어떻게 DTC로 바꾸나요?</h2>
+    <p>핵심 원리는 이래요. 고속 트랜시버는 직렬 데이터를 보낼 때 내부적으로 매우 안정적인 고속 클록(예: 수 GHz)을 써요. 이 클록의 주기가 DTC의 최소 분해능(resolution)이 돼요. 예를 들어 10GHz 클록이면 100ps 분해능이에요. 트랜시버에 실어 보내는 데이터 패턴을 조작하면, 원하는 시점에 신호 전이(transition)가 일어나도록 제어할 수 있어요. 이게 곧 "디지털 코드 → 시간 지연" 변환, 즉 DTC 동작이에요.</p>
+    <p>실시간 디코딩(real-time decoding) 기술을 도입해서 고속 패턴 데이터에 타이밍 정보를 주입해요. 트랜시버 내부의 직렬화 로직이 이 패턴을 해석해서 정확한 타이밍에 출력 전이를 만들어요. 트랜시버의 클록은 PLL 기반으로 매우 안정적이기 때문에, 추가적인 아날로그 캘리브레이션 없이도 출력 타이밍의 정밀도가 보장돼요.</p>
+    <p>또한 "재구성 가능성(reconfigurability)"이 이 설계의 장점이에요. 클록 분주비나 패턴 길이를 바꾸면 DTC의 분해능과 동적 범위를 소프트웨어적으로 조정할 수 있어요. 타이밍 시퀀스 기능(연속적으로 변하는 타이밍 스트림)과 랜덤 타이밍 신호 기능(균일 분포 랜덤 신호) 두 가지 모드를 지원해요. Xilinx Kintex-7 FPGA의 내장 트랜시버로 구현해서 검증했어요.</p>
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>고속 트랜시버가 이미 갖고 있는 안정적인 GHz 클록을 DTC 타이밍 기준으로 재활용해요. 직렬화 패턴 제어만으로 나노초~마이크로초 범위의 정밀 타이밍 출력을 캘리브레이션 없이 만들어낼 수 있어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">실제 측정 결과는 어떻게 나왔나요?</h2>
+    <p>Xilinx Kintex-7 FPGA 내장 트랜시버로 구현해 측정한 결과, 전체 동적 범위에서 100ps 균일 분해능을 달성했어요. 동적 범위는 1ns~40μs로 매우 넓어요. 선형성 지표인 DNL(Differential Non-Linearity)은 -0.02/+0.02 LSB, INL(Integral Non-Linearity)은 -0.04/+0.03 LSB로 아날로그 DTC에 필적하는 수준이에요. 캘리브레이션 없이 이 수준의 선형성을 달성했다는 게 핵심 포인트예요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">100 ps</div><div class="stat-desc">DTC 분해능 (전체 범위 균일)</div></div>
+      <div class="stat-box"><div class="stat-num">1 ns ~ 40 μs</div><div class="stat-desc">동적 범위</div></div>
+      <div class="stat-box"><div class="stat-num">±0.02 LSB</div><div class="stat-desc">DNL (캘리브레이션 없이 달성)</div></div>
+      <div class="stat-box"><div class="stat-num">±0.04 LSB</div><div class="stat-desc">INL</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM PHY에서 DTC가 필요한 대표적인 곳은 write-leveling 캘리브레이션과 DFE(Decision Feedback Equalizer) 타이밍 조정이에요. HBM3 이후 데이터 레이트가 8Gbps를 넘어서면서 PHY 내부의 타이밍 마진이 줄어들고, 고해상도 타이밍 제어의 중요성이 더 커지고 있어요. 이 논문처럼 이미 내장된 고속 SerDes를 DTC로 전용하는 아이디어는 HBM PHY의 타이밍 보정 회로를 설계할 때 추가 아날로그 IP 없이 해결할 수 있는 방향을 제시해요.</p>
+    <p>특히 HBM은 TSV 기반 적층 구조라 칩 내부의 공간이 귀하고, 별도의 아날로그 DTC IP를 집어넣기 부담스러운 경우가 있어요. FPGA 기반 프로토타이핑이나 HBM 컨트롤러 ASIC 개발 초기 단계에서 이 방식을 써서 타이밍 시스템을 빠르게 검증하는 용도로도 유용할 수 있어요.</p>
+    <p>다만 FPGA 트랜시버 기반이라 ASIC 적용 시에는 내부 트랜시버 회로의 세부 타이밍 특성을 파악해야 해요. 트랜시버 내부 지터가 DTC 출력 정밀도의 바닥(floor)이 되기 때문에, 사용하는 트랜시버의 고유 지터 스펙을 반드시 확인해야 해요.</p>
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>이 방법의 분해능 바닥은 트랜시버 클록 주기예요. 10GHz 트랜시버면 100ps가 최소 분해능이에요. HBM3E의 UI가 ~125ps(8Gbps 기준)인 걸 감안하면 100ps 분해능은 서브-UI 타이밍 조정에 충분하지만, 더 정밀한 분해능이 필요한 경우엔 더 빠른 트랜시버 클록이 있어야 해요. FPGA→ASIC 포팅 시 트랜시버 회로 특성 차이도 반드시 검토해야 해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2412.06330v2/x1.png" alt="Figure 1" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 1: Overall structure of the proposed DTC.</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2412.06330v2/x2.png" alt="Figure 2" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 2: Structure of Sequences Generator</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2412.06330v2/x3.png" alt="Figure 3" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 3: Structure of an n-level LFSR.</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2412.06330v2/x4.png" alt="Figure 4" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 4: Data frame structure</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2412.06330v2/x5.png" alt="Figure 5" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 5: Flowchart of data frame compositing.</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2412.06330v2/x6.png" alt="Figure 6" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 6: Pseudocode of timing parameter decoding.</div>
+    </div>
+    <div class="figure-outer"><a class="figure-open-link" href="https://arxiv.org/abs/2412.06330v2" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div></div>
+
+</div>
+</body>
+</html>

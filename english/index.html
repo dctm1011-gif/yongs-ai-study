@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>영어공부 — 2026-07-02</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #fff;
+  color: #37352f;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.cover {
+  height: 8px;
+  background: linear-gradient(90deg, #0ea5e9 0%, #6366f1 100%);
+}
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #9b9a97;
+  text-decoration: none;
+  margin-bottom: 24px;
+}
+.back-link:hover { color: #37352f; }
+.page-icon { font-size: 48px; margin-bottom: 10px; display: block; }
+.page-title { font-size: 30px; font-weight: 700; letter-spacing: -0.4px; margin-bottom: 4px; }
+.page-desc { font-size: 13px; color: #9b9a97; margin-bottom: 28px; }
+.date-badge {
+  display: inline-block;
+  font-size: 11px;
+  background: #eff6ff;
+  color: #3b82f6;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+  margin-bottom: 28px;
+}
+/* 탭 */
+.tab-bar {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid #e9e9e7;
+  margin-bottom: 28px;
+}
+.tab-btn {
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #9b9a97;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color .15s;
+}
+.tab-btn.active { color: #37352f; border-bottom-color: #37352f; }
+.tab-btn:hover:not(.active) { color: #37352f; }
+.tab-btn { transition: color .15s; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; animation: tabIn .2s ease; }
+@keyframes tabIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+/* 단어 카드 */
+.word-list { display: flex; flex-direction: column; gap: 16px; }
+.word-card {
+  border: 1px solid #e9e9e7;
+  border-radius: 10px;
+  padding: 20px;
+  transition: box-shadow .15s;
+}
+.word-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+.word-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+.word-text {
+  font-size: 22px;
+  font-weight: 700;
+  color: #37352f;
+}
+.word-pos {
+  font-size: 11px;
+  background: #f1f0ef;
+  color: #9b9a97;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+.word-meaning {
+  font-size: 17px;
+  font-weight: 600;
+  color: #0ea5e9;
+  margin-bottom: 8px;
+}
+.word-explanation { font-size: 14px; color: #37352f; margin-bottom: 12px; line-height: 1.6; }
+.example-box {
+  background: #f7f6f3;
+  border-left: 3px solid #0ea5e9;
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+}
+.example-en { font-size: 14px; font-style: italic; color: #37352f; margin-bottom: 3px; }
+.example-ko { font-size: 12px; color: #9b9a97; }
+.tip-box {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: #92400e;
+  margin-bottom: 12px;
+}
+.tip-label { font-weight: 700; margin-right: 4px; }
+.word-illus {
+  border-radius: 14px;
+  padding: 24px 20px;
+  text-align: center;
+  margin-top: 14px;
+}
+.word-illus-emoji {
+  font-size: 54px;
+  display: block;
+  margin-bottom: 8px;
+}
+.word-illus-en {
+  font-size: 20px;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 4px;
+  text-shadow: 0 1px 4px rgba(0,0,0,.25);
+}
+.word-illus-ko {
+  font-size: 13px;
+  color: rgba(255,255,255,.88);
+  font-weight: 500;
+}
+.quiz-illus {
+  border-radius: 10px;
+  padding: 14px 16px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.finish-stats {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin: 14px 0;
+}
+.finish-stat { text-align: center; }
+.finish-stat-num { font-size: 26px; font-weight: 700; color: #166534; }
+.finish-stat-label { font-size: 11px; color: #9b9a97; }
+.finish-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.finish-btn-review {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+.finish-btn-retry {
+  padding: 10px 20px;
+  font-size: 14px;
+  color: #9b9a97;
+  background: #f7f6f3;
+  border: 1px solid #e9e9e7;
+  border-radius: 8px;
+  cursor: pointer;
+}
+/* 퀴즈 */
+.quiz-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.quiz-score {
+  font-size: 13px;
+  color: #9b9a97;
+}
+.score-num { font-weight: 700; color: #37352f; font-size: 16px; }
+.btn-reset {
+  font-size: 13px;
+  color: #9b9a97;
+  background: #f7f6f3;
+  border: 1px solid #e9e9e7;
+  border-radius: 6px;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+.btn-reset:hover { background: #e9e9e7; }
+.quiz-list { display: flex; flex-direction: column; gap: 20px; }
+.quiz-card {
+  border: 1px solid #e9e9e7;
+  border-radius: 10px;
+  padding: 20px;
+}
+.quiz-card.answered { background: #fafaf9; }
+.quiz-type-badge {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: #9b9a97;
+  margin-bottom: 8px;
+}
+.quiz-word-badge {
+  display: inline-block;
+  font-size: 11px;
+  background: #eff6ff;
+  color: #3b82f6;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.quiz-question { font-size: 15px; font-weight: 600; color: #37352f; margin-bottom: 14px; }
+.quiz-options { display: flex; flex-direction: column; gap: 8px; }
+.opt-btn {
+  text-align: left;
+  background: #f7f6f3;
+  border: 1px solid #e9e9e7;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background .1s, border-color .1s;
+  color: #37352f;
+}
+.opt-btn:hover:not(:disabled) { background: #eff6ff; border-color: #93c5fd; }
+.opt-btn.correct { background: #f0fdf4; border-color: #86efac; color: #166534; }
+.opt-btn.wrong { background: #fef2f2; border-color: #fca5a5; color: #991b1b; }
+.fill-input {
+  width: 100%;
+  border: 1px solid #e9e9e7;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: inherit;
+  color: #37352f;
+  outline: none;
+  transition: border-color .15s;
+  margin-bottom: 8px;
+}
+.fill-input:focus { border-color: #0ea5e9; }
+.fill-input.correct { border-color: #86efac; background: #f0fdf4; }
+.fill-input.wrong { border-color: #fca5a5; background: #fef2f2; }
+.btn-submit {
+  background: #0ea5e9;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s;
+}
+.btn-submit:hover { background: #0284c7; }
+.btn-submit:disabled { background: #e9e9e7; color: #9b9a97; cursor: default; }
+.quiz-explanation {
+  display: none;
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: #f7f6f3;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #37352f;
+  line-height: 1.6;
+}
+.quiz-explanation.show { display: block; }
+.expl-label { font-weight: 700; color: #0ea5e9; }
+.hint-text { font-size: 12px; color: #9b9a97; margin-bottom: 6px; }
+.progress-bar-wrap {
+  background: #f1f0ef;
+  border-radius: 4px;
+  height: 6px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #0ea5e9, #6366f1);
+  border-radius: 4px;
+  transition: width .4s ease;
+}
+.finish-banner {
+  display: none;
+  text-align: center;
+  padding: 28px;
+  border: 2px solid #86efac;
+  border-radius: 12px;
+  background: #f0fdf4;
+  margin-bottom: 24px;
+}
+.finish-banner.show { display: block; }
+.finish-emoji { font-size: 40px; margin-bottom: 8px; }
+.finish-title { font-size: 18px; font-weight: 700; color: #166534; margin-bottom: 4px; }
+.finish-sub { font-size: 14px; color: #4ade80; }
+.vocab-done-wrap {
+  text-align: center;
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid #e9e9e7;
+}
+.btn-vocab-done {
+  padding: 12px 36px;
+  font-size: 15px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #0ea5e9, #6366f1);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: opacity .15s;
+}
+.btn-vocab-done:hover { opacity: .9; }
+.btn-vocab-done.done {
+  background: #f0fdf4;
+  color: #166534;
+  border: 2px solid #86efac;
+  cursor: default;
+}
+@media (max-width: 500px) {
+  .page { padding: 32px 16px 60px; }
+  .page-title { font-size: 24px; }
+}
+</style>
+</head>
+<body>
+<div class="cover"></div>
+<div class="page">
+
+  <a class="back-link" href="../index.html">← Yong's AI Study</a>
+  <span class="page-icon">📖</span>
+  <h1 class="page-title">오늘의 영어공부</h1>
+  <p class="page-desc">Lily와의 대화에서 배운 표현 정리 · 퀴즈</p>
+  <span class="date-badge">📅 2026-07-02</span>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('vocab', this)">📚 배운 표현</button>
+    <button class="tab-btn" onclick="switchTab('quiz', this)">✏️ 퀴즈</button>
+  </div>
+
+  <!-- 단어 탭 -->
+  <div class="tab-panel active" id="tab-vocab">
+    <div class="word-list" id="wordList"></div>
+    <div class="vocab-done-wrap">
+      <button class="btn-vocab-done" id="btnVocabDone" onclick="markVocabDone()">✅ 읽었음</button>
+    </div>
+  </div>
+
+  <!-- 퀴즈 탭 -->
+  <div class="tab-panel" id="tab-quiz">
+    <div class="finish-banner" id="finishBanner">
+      <div class="finish-emoji" id="finishEmoji">🎉</div>
+      <div class="finish-title" id="finishTitle"></div>
+      <div class="finish-sub" id="finishSub"></div>
+      <div class="finish-stats">
+        <div class="finish-stat"><div class="finish-stat-num" id="finishCorrect">0</div><div class="finish-stat-label">정답</div></div>
+        <div class="finish-stat"><div class="finish-stat-num" id="finishWrong">0</div><div class="finish-stat-label">오답</div></div>
+        <div class="finish-stat"><div class="finish-stat-num" id="finishAccuracy">0%</div><div class="finish-stat-label">정확도</div></div>
+      </div>
+      <div class="finish-actions">
+        <a class="finish-btn-review" href="review.html">🧠 복습하러 가기</a>
+        <button class="finish-btn-retry" onclick="resetQuiz()">다시 풀기</button>
+      </div>
+    </div>
+    <div class="quiz-meta">
+      <div class="quiz-score">점수: <span class="score-num" id="scoreDisplay">0</span> / <span id="totalDisplay">0</span></div>
+      <button class="btn-reset" onclick="resetQuiz()">다시하기</button>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+    <div class="quiz-list" id="quizList"></div>
+  </div>
+
+</div>
+
+<script>
+const WORDS = [{"word": "serendipity", "part_of_speech": "n", "meaning_ko": "행운, 우연한 행복", "explanation": "The occurrence of events by chance in a happy or beneficial way", "example_from_convo": "It was pure serendipity that we met at the coffee shop.", "example_ko": "우리가 커피숍에서 만난 것은 순전한 행운이었다.", "tip": "Remember: SEREN + DIPITY - a happy accident or lucky discovery", "emoji": "🍀"}, {"word": "eloquent", "part_of_speech": "adj", "meaning_ko": "웅변적인, 설득력 있는", "explanation": "Fluent or persuasive in speaking or writing", "example_from_convo": "The speaker gave an eloquent speech about climate change.", "example_ko": "연사는 기후변화에 대해 설득력 있는 연설을 했다.", "tip": "ELO-QUENT: sounds like 'well spoken' - eloquent people speak well", "emoji": "🎤"}, {"word": "ephemeral", "part_of_speech": "adj", "meaning_ko": "일시적인, 덧없는", "explanation": "Lasting for a very short time; transitory", "example_from_convo": "Cherry blossoms are ephemeral - they only bloom for two weeks.", "example_ko": "벚꽃은 덧없다 - 단 2주만 핀다.", "tip": "EPH-E-MERAL: think 'ephemera' (temporary things), E-PHEME means 'short-lived'", "emoji": "🌸"}, {"word": "meticulous", "part_of_speech": "adj", "meaning_ko": "꼼꼼한, 세심한", "explanation": "Showing great attention to detail; very careful and precise", "example_from_convo": "She is meticulous about her work and never makes mistakes.", "example_ko": "그녀는 일에 매우 꼼꼼해서 절대 실수를 하지 않는다.", "tip": "META + CULOUS: sounds like 'met-ICK-you-lus' - think of someone being 'picky'", "emoji": "✓"}, {"word": "sanguine", "part_of_speech": "adj", "meaning_ko": "낙관적인, 희망적인", "explanation": "Optimistic or positive, especially in an unfortunate situation", "example_from_convo": "Despite the challenges, he remained sanguine about the project's success.", "example_ko": "도전에도 불구하고 그는 프로젝트 성공에 낙관적이었다.", "tip": "SANG = blood (Latin); historically people with 'sanguine' temperament were positive", "emoji": "😊"}];
+const QUIZ  = [{"type": "meaning", "word": "serendipity", "question": "What does 'serendipity' mean?", "options": ["A planned event", "A lucky and beneficial coincidence", "A sad moment", "A scientific discovery"], "answer": 1, "explanation": "Serendipity refers to finding something valuable by chance or luck."}, {"type": "meaning", "word": "eloquent", "question": "Which word is a synonym for 'eloquent'?", "options": ["Silent", "Persuasive", "Boring", "Loud"], "answer": 1, "explanation": "Eloquent means persuasive and fluent in speech or writing."}, {"type": "fill_blank", "word": "ephemeral", "question": "The beauty of fireworks is _______ - they last only a few seconds.", "options": ["permanent", "ephemeral", "eternal", "lasting"], "answer": 1, "explanation": "Ephemeral means short-lived or temporary, perfect for describing fireworks."}, {"type": "fill_blank", "word": "meticulous", "question": "The architect was _______ in planning every detail of the building.", "options": ["careless", "meticulous", "hasty", "lazy"], "answer": 1, "explanation": "Meticulous means very careful and attentive to detail."}, {"type": "situation", "word": "sanguine", "question": "Your business just lost a major client, but you think new opportunities will come. What's your attitude?", "options": ["Pessimistic", "Sanguine", "Anxious", "Depressed"], "answer": 1, "explanation": "Sanguine describes an optimistic outlook even in difficult situations."}, {"type": "meaning", "word": "ephemeral", "question": "Which of these is most ephemeral?", "options": ["A mountain", "Morning mist", "A diamond", "A bridge"], "answer": 1, "explanation": "Morning mist is temporary and disappears quickly, making it ephemeral."}, {"type": "situation", "word": "eloquent", "question": "A politician gives a moving speech that changes people's minds. How would you describe the speech?", "options": ["Boring", "Eloquent", "Confusing", "Short"], "answer": 1, "explanation": "Eloquent describes persuasive and fluent speaking that moves audiences."}, {"type": "fill_blank", "word": "serendipity", "question": "Meeting my best friend was pure _______ - I sat next to them on a random bus ride.", "options": ["planning", "serendipity", "coincidence", "luck"], "answer": 1, "explanation": "Serendipity specifically refers to a lucky and beneficial discovery by chance."}];
+
+/* ── 탭 전환 ── */
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ── 단어 카드 그라디언트 ── */
+function wordGradient(pos) {
+  const p = (pos || '').toLowerCase();
+  if (p.includes('슬랭') || p.includes('slang') || p.includes('구동사'))
+    return 'linear-gradient(135deg,#7c3aed,#4f46e5)';
+  if (p.includes('동사') || p.includes('verb'))
+    return 'linear-gradient(135deg,#0ea5e9,#2563eb)';
+  if (p.includes('형용사') || p.includes('adj'))
+    return 'linear-gradient(135deg,#10b981,#059669)';
+  if (p.includes('명사') || p.includes('noun'))
+    return 'linear-gradient(135deg,#f59e0b,#dc2626)';
+  if (p.includes('관용') || p.includes('idiom') || p.includes('표현'))
+    return 'linear-gradient(135deg,#ec4899,#8b5cf6)';
+  if (p.includes('부사'))
+    return 'linear-gradient(135deg,#06b6d4,#0284c7)';
+  return 'linear-gradient(135deg,#6366f1,#8b5cf6)';
+}
+
+/* ── 단어 탭 렌더 ── */
+function renderWords() {
+  const list = document.getElementById('wordList');
+  list.innerHTML = WORDS.map((w, i) => `
+    <div class="word-card">
+      <div class="word-header">
+        <span class="word-text">${w.word}</span>
+        <span class="word-pos">${w.part_of_speech}</span>
+      </div>
+      <div class="word-meaning">${w.meaning_ko}</div>
+      <div class="word-explanation">${w.explanation}</div>
+      ${w.example_from_convo ? `
+      <div class="example-box">
+        <div class="example-en">"${w.example_from_convo}"</div>
+        <div class="example-ko">${w.example_ko}</div>
+      </div>` : ''}
+      ${w.tip ? `
+      <div class="tip-box">
+        <span class="tip-label">💡 Tip</span>${w.tip}
+      </div>` : ''}
+      ${w.emoji ? `
+      <div class="word-illus" style="background:${wordGradient(w.part_of_speech)}">
+        <span class="word-illus-emoji">${w.emoji}</span>
+        <div class="word-illus-en">${w.word}</div>
+        <div class="word-illus-ko">${w.meaning_ko}</div>
+      </div>` : ''}
+    </div>
+  `).join('');
+}
+
+/* ── 퀴즈 탭 렌더 ── */
+let score = 0;
+let answered = 0;
+
+function renderQuiz() {
+  document.getElementById('totalDisplay').textContent = QUIZ.length;
+  const list = document.getElementById('quizList');
+  list.innerHTML = QUIZ.map((q, i) => buildQuizCard(q, i)).join('');
+}
+
+function buildQuizCard(q, i) {
+  const typeLabel = { meaning: '의미 퀴즈', fill_blank: '빈칸 채우기', situation: '상황 퀴즈' }[q.type] || q.type;
+  const wordBadge = q.word ? `<span class="quiz-word-badge">${q.word}</span><br>` : '';
+  const wd = WORDS.find(w => w.word === q.word);
+  const illustHtml = (wd && wd.emoji) ? `
+    <div class="quiz-illus" style="background:${wordGradient(wd.part_of_speech)};margin-bottom:10px">
+      <span style="font-size:36px">${wd.emoji}</span>
+      <div style="font-size:15px;font-weight:800;color:white;margin-top:5px;text-shadow:0 1px 3px rgba(0,0,0,.2)">${wd.word}</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.85)">${wd.meaning_ko}</div>
+    </div>` : '';
+
+  if (q.type === 'fill_blank') {
+    return `
+    <div class="quiz-card" id="qcard-${i}">
+      <div class="quiz-type-badge">${typeLabel}</div>
+      ${wordBadge}
+      <div class="quiz-question">${q.sentence}</div>
+      ${q.sentence_ko ? `<div class="hint-text">${q.sentence_ko}</div>` : ''}
+      <div class="hint-text">힌트: ${q.hint}</div>
+      <input class="fill-input" id="fill-${i}" placeholder="답을 입력하세요" onkeydown="if(event.key==='Enter') submitFill(${i})">
+      <button class="btn-submit" id="fill-btn-${i}" onclick="submitFill(${i})">제출</button>
+      <div class="quiz-explanation" id="expl-${i}">
+        ${illustHtml}
+        <span class="expl-label">정답: </span>${q.answer}
+      </div>
+    </div>`;
+  }
+
+  const opts = (q.options || []).map((opt, j) =>
+    `<button class="opt-btn" id="opt-${i}-${j}" onclick="selectOpt(${i}, ${j}, ${q.answer})">${String.fromCharCode(65+j)}. ${opt}</button>`
+  ).join('');
+
+  return `
+  <div class="quiz-card" id="qcard-${i}">
+    <div class="quiz-type-badge">${typeLabel}</div>
+    ${wordBadge}
+    <div class="quiz-question">${q.question}</div>
+    <div class="quiz-options">${opts}</div>
+    <div class="quiz-explanation" id="expl-${i}">
+      ${illustHtml}
+      <span class="expl-label">💬 </span>${q.explanation || ''}
+    </div>
+  </div>`;
+}
+
+function selectOpt(qi, chosen, correct) {
+  const card = document.getElementById('qcard-' + qi);
+  if (card.classList.contains('answered')) return;
+  card.classList.add('answered');
+  answered++;
+
+  const opts = card.querySelectorAll('.opt-btn');
+  opts.forEach(b => b.disabled = true);
+  opts[correct].classList.add('correct');
+  if (chosen !== correct) opts[chosen].classList.add('wrong');
+  else { score++; document.getElementById('scoreDisplay').textContent = score; }
+
+  document.getElementById('expl-' + qi).classList.add('show');
+  updateProgress();
+}
+
+function submitFill(qi) {
+  const inp = document.getElementById('fill-' + qi);
+  const btn = document.getElementById('fill-btn-' + qi);
+  const card = document.getElementById('qcard-' + qi);
+  if (card.classList.contains('answered')) return;
+
+  const userAns = inp.value.trim().toLowerCase();
+  const correct = QUIZ[qi].answer.toLowerCase();
+  card.classList.add('answered');
+  answered++;
+  inp.disabled = true;
+  btn.disabled = true;
+
+  if (userAns === correct) { inp.classList.add('correct'); score++; document.getElementById('scoreDisplay').textContent = score; }
+  else { inp.classList.add('wrong'); }
+
+  document.getElementById('expl-' + qi).classList.add('show');
+  updateProgress();
+}
+
+function updateProgress() {
+  const pct = QUIZ.length ? (answered / QUIZ.length * 100) : 0;
+  document.getElementById('progressBar').style.width = pct + '%';
+  if (answered === QUIZ.length) showFinish();
+}
+
+function showFinish() {
+  const banner = document.getElementById('finishBanner');
+  const wrong = answered - score;
+  const pct = Math.round(score / QUIZ.length * 100);
+  document.getElementById('finishEmoji').textContent = pct >= 80 ? '🎉' : pct >= 50 ? '💪' : '📖';
+  document.getElementById('finishTitle').textContent = pct >= 80 ? '완벽해요!' : pct >= 50 ? '잘하고 있어요!' : '계속 연습하면 돼요!';
+  document.getElementById('finishSub').textContent = '오늘 배운 표현들 퀴즈 완료!';
+  document.getElementById('finishCorrect').textContent = score;
+  document.getElementById('finishWrong').textContent = wrong;
+  document.getElementById('finishAccuracy').textContent = pct + '%';
+  banner.classList.add('show');
+  banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  localStorage.setItem('english_quiz_done', TODAY_DATE);
+  if (window.userProgress && !localStorage.getItem('english_quiz_exp_' + TODAY_DATE)) {
+    window.userProgress.addExp('english_word', 3);
+    localStorage.setItem('english_quiz_exp_' + TODAY_DATE, '1');
+  }
+}
+
+function resetQuiz() {
+  score = 0;
+  answered = 0;
+  document.getElementById('scoreDisplay').textContent = 0;
+  document.getElementById('progressBar').style.width = '0%';
+  document.getElementById('finishBanner').classList.remove('show');
+  renderQuiz();
+}
+
+renderWords();
+renderQuiz();
+
+const TODAY_DATE = (()=>{ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; })();
+function markVocabDone() {
+  localStorage.setItem('english_vocab_read', TODAY_DATE);
+  const btn = document.getElementById('btnVocabDone');
+  btn.textContent = '✅ 오늘 완료!';
+  btn.className = 'btn-vocab-done done';
+  btn.disabled = true;
+  if (window.userProgress) {
+    window.userProgress.addExp('english_word', WORDS.length);
+  }
+}
+(function() {
+  if (localStorage.getItem('english_vocab_read') === TODAY_DATE) {
+    const btn = document.getElementById('btnVocabDone');
+    btn.textContent = '✅ 오늘 완료!';
+    btn.className = 'btn-vocab-done done';
+    btn.disabled = true;
+  }
+})();
+</script>
+
+<script src="../progress.js"></script>
+</body>
+</html>

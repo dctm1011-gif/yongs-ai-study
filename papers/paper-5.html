@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HBM 비트 비용 장벽 논문 분석 · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">HBM 비트 비용 장벽 극복</span>
+</div>
+<div class="article">
+  <div class="article-venue">arXiv 2025</div>
+  <h1 class="article-title">Breaking the HBM Bit Cost Barrier: Domain-Specific ECC for AI Inference Infrastructure</h1>
+  <div class="article-tags"><span class="tag">HBM</span><span class="tag">ECC</span><span class="tag">ML-HW</span><span class="tag">Yield</span></div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://arxiv.org/abs/2507.02654v2" target="_blank">원문 보기 →</a>
+    <a class="article-link" href="https://arxiv.org/pdf/2507.02654v2" target="_blank">PDF →</a>
+  </div>
+  <p class="opener">온다이 ECC를 아예 없애버리고, 모든 오류 관리를 메모리 컨트롤러로 옮기면 어떻게 될까요? AI 추론 워크로드의 특성과 데이터의 불균일한 중요도를 활용해 BER 10⁻³ 환경에서도 LLM 추론 처리량 78%, 정확도 97%를 유지하는 방법을 보여줘요. REACH 논문(paper-4)의 자매 연구예요.</p>
+
+  <div class="section">
+    <div class="section-label">I · Introduction</div>
+    <h2 class="section-title">HBM이 AI 인프라 비용을 지배하는 이유</h2>
+    <p>LLM 추론 서버에서 HBM 비용이 전체 시스템 비용의 큰 부분을 차지해요. HBM이 비싼 이유 중 하나가 엄격한 온다이 ECC 요구사항이에요. 칩 내부 ECC는 짧은 코드워드(16~32B) 기반이라 BER 기준이 매우 엄격하고, 이 기준을 조금만 넘겨도 칩이 불합격 처리돼요.</p>
+    <p>이 논문의 핵심 아이디어는 "온다이 ECC를 제거하고 메모리 컨트롤러가 훨씬 강력한 코드로 오류를 잡는다"예요. AI 추론 워크로드는 주로 순차 접근 패턴을 갖고 있어서, 긴 코드워드 ECC를 적용하기에 유리해요. 그리고 모든 비트가 똑같이 중요하지 않다는 점도 활용해요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">II · Background</div>
+    <h2 class="section-title">코드워드 크기가 왜 그렇게 중요한가요?</h2>
+    <p>수학적으로, 코드워드 크기를 32B에서 2KB로 늘리면 같은 코드 레이트에서 허용 가능한 BER이 다섯 자릿수나 올라가요. 이론적으로 엄청난 이득인데, 실제 구현엔 쓰기 증폭과 디코더 복잡도라는 두 가지 벽이 있어요.</p>
+    <p>HBM3는 현재 16~32B 단위 온다이 ECC와 선택적 2B 호스트 CRC를 제공해요. 이 한계를 벗어나서 킬로바이트 스팬 코드를 쓰려면 컨트롤러 쪽에서 구현해야 해요. AI 추론 워크로드의 순차 접근 패턴은 이를 현실적으로 만들어주는 열쇠예요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">III · Proposed Solution</div>
+    <h2 class="section-title">하이브리드 ECC 설계: CRC + Reed-Solomon의 조합</h2>
+    <p>이 논문의 핵심 설계는 대형 RS 코드와 세밀한 CRC 검출을 결합하는 하이브리드 구조예요.</p>
+    <div class="insight green">
+      <div class="insight-label">랜덤 읽기 (Random Read)</div>
+      <p>요청된 32B 청크를 가져와서 CRC를 먼저 확인해요. CRC가 통과하면 바로 데이터를 반환해요. CRC 실패 시에만 나머지 코드워드를 가져와서 전체 RS 디코딩을 수행해요. BER 10⁻⁴ 기준으로 escalation(전체 디코딩) 확률은 2.7%에 불과해요.</p>
+    </div>
+    <div class="insight green">
+      <div class="insight-label">랜덤 쓰기 (Random Write)</div>
+      <p>CRC 기반 미분 패리티 업데이트를 써요. RS 코드의 선형성을 활용해 P_new = P_old ⊕ RS(D_new) ⊕ RS(D_old) 공식으로 변경된 청크만 업데이트해요. 전체 코드워드를 다시 읽지 않아도 돼요.</p>
+    </div>
+    <div class="insight green">
+      <div class="insight-label">순차 접근 (Sequential)</div>
+      <p>어차피 많은 청크를 읽으니까 CRC 체크 없이 바로 RS 디코딩을 해요. 오류가 없으면 조기 종료해서 오버헤드를 줄여요.</p>
+    </div>
+    <p>중요도 적응형 ECC(Importance-Adaptive ECC)도 적용해요. BF16 포맷에서 지수 비트만 집중 보호하고 가수 비트는 가볍게 처리해요. 지수 비트에 오류가 생기면 AI 모델 정확도가 급락하지만, 가수 비트 오류는 영향이 작거든요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">IV · Evaluation</div>
+    <h2 class="section-title">DeepSeek R1 670B로 측정한 결과</h2>
+    <p>DeepSeek R1 670B를 포함한 대형 LLM들로 실험했어요. 코드워드 크기를 64B~2048B까지 바꾸면서 BER 10⁻⁹부터 10⁻³까지 처리량을 측정했어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">78%</div><div class="stat-desc">BER 10⁻³에서 처리량 유지율</div></div>
+      <div class="stat-box"><div class="stat-num">97%</div><div class="stat-desc">PIQA 정확도 유지율</div></div>
+      <div class="stat-box"><div class="stat-num">12.6%</div><div class="stat-desc">중요도 적응형 ECC로 대역폭 절감</div></div>
+    </div>
+    <p>2048B 코드워드가 BER 10⁻³에서도 14.51 tokens/s로 기준선(18.51 tokens/s)의 78%를 유지했어요. 코드워드가 길수록 패리티 오버헤드가 아모티제이션(amortization)되어 효율적이에요. 다만 랜덤 접근 비율이 2%만 넘어가도 성능이 꽤 떨어지는 점은 주의가 필요해요.</p>
+    <div class="insight red">
+      <div class="insight-label">랜덤 접근의 취약점</div>
+      <p>이 논문의 접근법은 AI 추론의 순차 접근 패턴에 최적화되어 있어요. 랜덤 접근이 많은 워크로드에는 256~512B 같은 중간 크기 코드워드가 더 적합해요. 적용 대상을 잘 선택해야 해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">REACH 논문과 비교: 두 가지 미래 방향</h2>
+    <p>REACH(paper-4)와 이 논문을 함께 읽으면 컨트롤러 ECC의 두 가지 설계 방향이 보여요. 둘 다 "강력한 ECC를 컨트롤러로 이동"한다는 방향은 같아요.</p>
+    <div class="insight">
+      <div class="insight-label">REACH vs 이 논문</div>
+      <p>REACH는 PHY 인터페이스를 완전히 유지한 채 Inner+Outer 계층 구조로 erasure-only 디코딩을 써요. 이 논문은 온다이 ECC를 아예 제거하고 CRC+RS 하이브리드로 더 공격적으로 접근해요. 삼성 입장에서는 온다이 ECC를 얼마나 단순화해도 시스템이 보상할 수 있는지가 핵심 질문이 되는 거예요.</p>
+    </div>
+    <p>AI 인프라에서 HBM GB당 비용을 낮추는 게 점점 중요해지면서, 이런 "신뢰성을 소프트웨어로 조정" 접근법은 앞으로 표준적인 설계 방법이 될 수 있어요.</p>
+  </div>
+
+<hr>
+<div class="section">
+  <div class="section-label">논문 그림</div>
+  <h2 class="section-title">Figure 갤러리</h2>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2507.02654v2/x1.png" alt="Figure 1" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 1: Comparison of decoding failure rate under different codeword sizes with the same code rate of 16/17.</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2507.02654v2/x2.png" alt="Figure 2" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 2: Comparison of HBM ECC Architectures. (a) The state-of-the-art system uses small, independent on-die ECC codewords within each HBM channel. (b) Our proposed system shifts all fault management to the host controller’s ECC logic, and use large, cross-channel RS codewords on low-cost HBM stacks.</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2507.02654v2/x3.png" alt="Figure 3" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 3: Operational flow of serving a random read request.</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2507.02654v2/x4.png" alt="Figure 4" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 4: Operational flow of serving a random write request.</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2507.02654v2/x5.png" alt="Figure 5" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 5: Inference throughput vs. RS codeword length under various BERs.</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2507.02654v2/x6.png" alt="Figure 6" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 6: Inference throughput vs. random access ratio at BER of 10 − 3 10^{-3} under codeword length from 64B to 2048B.</div>
+    </div>
+    <div class="figure-outer"><a class="figure-open-link" href="https://arxiv.org/abs/2507.02654v2" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div></div>
+</div>
+<div id="term-tooltip-global"></div>
+<script src="tooltip.js"></script>
+</body>
+</html>

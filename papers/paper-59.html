@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>16Gb LPDDR5-Ultra-Pro 12.7Gb/s/pin · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">LPDDR5-Ultra-Pro 12.7Gb/s/pin</span>
+</div>
+<div class="article">
+  <div class="article-venue">IEEE ISSCC 2025</div>
+  <h1 class="article-title">A 16Gb 12.7Gb/s/pin LPDDR5-Ultra-Pro DRAM with 4-Phase Self-Calibration and AC-Coupled Transceiver Equalization in a 5th-Generation 10nm DRAM Process</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">PHY</span><span class="tag">Interface</span></div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://www.semanticscholar.org/paper/ddfebda5b846451aacdb6252e5abd22747360b97" target="_blank">원문 보기 →</a>
+  </div>
+  <p class="opener">5세대 10nm DRAM 공정에서 12.7Gb/s/pin이라는 LPDDR5 최고 속도를 달성한 ISSCC 2025 발표로, 4단계 자체 교정과 AC-coupled equalization이 핵심이에요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">LPDDR5X를 넘어 12.7Gb/s/pin까지, 어떻게 가능했나요?</h2>
+    <p>AI·AR·VR 애플리케이션 확산으로 모바일과 엣지 디바이스에서도 초고속 메모리 수요가 폭발하고 있어요. LPDDR5X가 10.7Gb/s/pin을 표준으로 자리잡은 가운데, 더 높은 속도를 원하는 시장 요구가 생겼어요. 이에 대응하여 LPDDR5-Ultra-Pro(LPDDR5X-UP)는 12.7Gb/s/pin이라는 새로운 속도 목표를 제시했어요. 이 속도에서는 기존 LPDDR5X의 트랜시버 기술만으로는 충분한 타이밍 마진을 확보하기 어려워요.</p>
+    <p>핵심 도전은 두 가지예요. 첫째, 클럭 위상 스큐(clock phase skew)가 고속에서 더 심각한 문제가 돼요. 10.7Gb/s에서 괜찮았던 스큐가 12.7Gb/s에서는 눈 마진을 크게 잠식해요. 둘째, 손실이 있는 PCB 채널에서 12.7Gb/s 신호를 충분한 eye opening으로 전달해야 해요. LPCAMM2(Low Power Compression Attached Memory Module 2) 서버 폼팩터에서 채널 손실이 특히 커서, 적극적인 등화(equalization)가 필수예요.</p>
+    <div class="insight blue">
+      <div class="insight-label">논문의 출발점</div>
+      <p>LPDDR5X(10.7Gbps)에서 LPDDR5-UP(12.7Gbps)로 넘어가는 19% 속도 향상을 위해 ① 클럭 스큐 최소화(4-Phase Self-Cal) + ② 채널 등화(AC-coupled EQ) 두 축으로 해결. ISSCC 2025에서 5세대 10nm 공정 실리콘 검증 결과 발표.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">4단계 자체 교정과 AC-coupled 등화가 뭔가요?</h2>
+    <p><strong>4-Phase Self-Calibration</strong>: 기존 2단계 교정(코스/파인)에서 4단계로 세분화하여 클럭 위상 스큐를 더 정밀하게 제거해요. 각 단계가 이전 단계 교정 잔차를 처리하는 계층 구조예요. 공정·전압·온도(PVT) 변화에도 자동으로 재교정하여 스큐 변화를 추적해요. 이 방법으로 클럭 위상 스큐를 충분히 줄여서 타이밍 아이 마진을 확보해요.</p>
+    <p><strong>AC-Coupled Transceiver Equalization</strong>: 세 가지 AC 결합 등화 방식을 도입했어요. ① AC-coupled DFE(Decision Feedback Equalizer): 고주파 손실을 결정 피드백으로 보상, ② AC-coupled TX Pre-emphasis: 송신 측에서 고주파 성분 강조, ③ AC-coupled offset calibration: 수신기 offset을 AC 경로로 보정. 기존 DC-coupled 방식 대비 AC 결합은 저주파 노이즈와 DC 오프셋에 덜 민감해서 고속에서 유리해요.</p>
+    <div class="insight green">
+      <div class="insight-label">핵심 아이디어</div>
+      <p>4단계 교정으로 클럭 스큐를 계층적으로 제거하고, AC-coupled 등화로 채널 손실을 보상해요. 두 기법의 시너지로 5세대 10nm 공정에서 12.7Gb/s/pin을 1.05V라는 낮은 전압에서 달성했어요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">어떤 성능을 달성했나요?</h2>
+    <p>5세대 10nm DRAM 공정에서 1.05V 전원으로 12.7Gb/s/pin 동작을 실리콘에서 검증했어요. LPCAMM2 서버 폼팩터의 손실 있는 채널에서도 충분한 타이밍 마진을 확보했어요. LPDDR5X(10.7Gbps) 대비 약 19% 속도 향상을 같은 전압 조건에서 달성했어요. 16Gb 용량으로 고밀도도 유지했어요. AI 서버에서 LPCAMM2 모듈 형태로 메모리 대역폭을 크게 높일 수 있는 결과예요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">12.7Gb/s</div><div class="stat-desc">핀당 데이터 속도 (LPDDR5 최고)</div></div>
+      <div class="stat-box"><div class="stat-num">1.05V</div><div class="stat-desc">동작 전압</div></div>
+      <div class="stat-box"><div class="stat-num">16Gb</div><div class="stat-desc">용량</div></div>
+      <div class="stat-box"><div class="stat-num">10nm 5세대</div><div class="stat-desc">DRAM 공정</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>LPDDR5-UP의 12.7Gb/s/pin은 HBM3의 6.4Gbps/pin에 비해 훨씬 높아요. 그런데 HBM은 채널 수(HBM3: 128-bit × 8스택 = 1024-bit)를 매우 넓게 가져가서 총 대역폭을 높이는 반면, LPDDR5는 핀당 속도를 높이는 방향이에요. 트랜시버 기술은 공유하는 부분이 많아요. 특히 4-Phase Self-Calibration은 HBM의 on-die DQ-DQS 스큐 교정에 바로 적용할 수 있는 아이디어예요.</p>
+    <p>AC-coupled equalization도 HBM에서 흥미로운 적용처가 있어요. HBM은 인터포저를 통한 짧은 채널이라 현재는 등화가 거의 필요 없지만, HBM4에서 속도가 8~12Gbps로 올라가면 인터포저 채널 손실도 무시할 수 없어지고, TX pre-emphasis나 RX EQ가 필요해질 수 있어요. 이 논문이 그 방향의 선행 연구예요.</p>
+    <div class="insight yellow">
+      <div class="insight-label">주의할 점</div>
+      <p>LPDDR5-UP의 12.7Gbps는 DRAM 셀의 속도 한계와 싸우는 영역이에요. 이 속도에서 읽기 지연(tRCD, tRAS)도 짧아져야 하는데, 이는 셀 margin과 충돌해요. 또한 AC-coupled 등화 회로는 DRAM 칩 내에서 상당한 면적을 차지해서, 비트 밀도와 trade-off가 있어요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — LPDDR5-UP 시스템 구성도. LPCAMM2 채널, 16Gb DRAM 다이, PHY 블록 개요. 채널 손실 프로파일.</p>
+    <p><strong>Fig. 2</strong> — 4-Phase Self-Calibration 회로 블록. 4단계 스큐 교정 루프, 각 단계의 resolution과 capture range.</p>
+    <p><strong>Fig. 3</strong> — AC-coupled DFE, TX Pre-emphasis, Offset Cal 세 등화 회로 블록. 각 회로의 신호 경로와 보상 대역.</p>
+    <p><strong>Fig. 4</strong> — 12.7Gb/s 조건에서 측정된 데이터 eye diagram. 등화 전/후 eye opening 비교.</p>
+    <p><strong>Fig. 5</strong> — 5세대 10nm 다이 사진. PHY, 코어, ECC 블록 위치. 다이 크기와 면적 breakdown.</p>
+    <div class="figure-outer">
+      <a class="figure-open-link" href="https://www.semanticscholar.org/paper/ddfebda5b846451aacdb6252e5abd22747360b97" target="_blank">↗ 원문에서 그림 보기</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

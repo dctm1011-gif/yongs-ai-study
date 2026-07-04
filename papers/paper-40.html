@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prediction-Based Two-Tiered ECC for HBM SWD · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Prediction-Based Two-Tiered ECC for HBM SWD</span>
+</div>
+<div class="article">
+  <div class="article-venue">IEEE TVLSI 2025</div>
+  <h1 class="article-title">A Novel Prediction-Based Two-Tiered ECC for Mitigating SWD Errors in HBM</h1>
+  <div class="article-tags"><span class="tag">HBM</span><span class="tag">ECC</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/b9cc97dfe39b705242788fbcaa501d9238f2b578" target="_blank">원문 보기 →</a></div>
+  <p class="opener">HBM의 서브워드라인 드라이버(SWD) 오류라는 독특한 오류 패턴을 예측 기반 OD-ECC와 디인터리빙 S-ECC의 2단계로 잡아내는, 검사 비트 증가 없이 교정 능력을 크게 높인 구조예요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">HBM에서만 나타나는 SWD 오류, 왜 기존 ECC로는 부족할까요?</h2>
+    <p>HBM은 다수의 다이가 TSV로 수직 연결된 구조이기 때문에, 내부 행 구동 회로인 서브워드라인 드라이버(Sub-Word-line Driver, SWD)의 결함이 오류를 일으키면 해당 SWD가 담당하는 여러 셀에 걸쳐 동시에 비트 오류가 발생해요. 이런 오류 패턴은 단일 비트 랜덤 오류와 달리, 특정 열 또는 특정 주소 범위를 따라 군집화(clustered)되는 경향이 있어요.</p>
+    <p>기존 HBM 표준에서 채택된 2계층 ECC 구조는 온다이 ECC(OD-ECC)와 시스템 ECC(S-ECC)로 이루어져 있어요. OD-ECC는 DRAM 다이 내부에서 단일 비트 오류를 교정하고, S-ECC는 시스템 레벨에서 추가 보호를 제공해요. 그런데 SWD 오류는 OD-ECC 한 코드워드 안에서 여러 비트가 동시에 틀려버리는 다중 비트 오류로 나타나기 때문에 단일 비트 교정 OD-ECC로는 잡을 수 없어요. 그렇다고 무조건 검사 비트를 늘리면 저장 면적 효율이 떨어지는 딜레마가 생겨요.</p>
+    <p>더구나 OD-ECC와 S-ECC의 공동 설계(co-design)는 잘 연구되지 않아서, 한 계층에서 잘못 교정된 데이터가 다른 계층에서 추가 오류로 보이는 '오류 전파' 문제도 있어요.</p>
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>HBM의 SWD 오류는 특정 열 방향으로 군집화되는 특수 패턴이에요. 이 패턴을 '예측'해서 교정에 활용하면, 검사 비트를 늘리지 않고도 교정 능력을 높일 수 있어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">예측 기반 OD-ECC와 디인터리빙 S-ECC는 어떻게 협력하나요?</h2>
+    <p>논문의 OD-ECC는 두 개의 Reed-Solomon(RS) 엔진을 인터리브 방식으로 운용해요. 각 RS 엔진이 독립적으로 신드롬을 계산하고, 두 엔진의 신드롬 패턴을 비교하면 SWD 오류가 발생했는지를 '예측'할 수 있어요. SWD 오류는 특정 서브워드라인이 가리키는 주소 범위의 비트들이 함께 틀리기 때문에, 두 RS 엔진 사이에서 오류 위치와 패턴이 일관되게 나타나요. 이 일관성을 SWD 오류의 '지문'으로 활용해 예측하는 거예요.</p>
+    <p>예측이 맞으면 OD-ECC가 SWD 오류 패턴에 특화된 교정 절차를 수행해요. 예측이 틀렸을 때는 잘못된 교정이 오히려 추가 오류를 만들 수 있는데, 이걸 막기 위해 S-ECC에 데이터 디인터리빙(de-interleaving)을 적용해요. OD-ECC의 오예측으로 생기는 추가 오류 비트들이 디인터리빙 이후 S-ECC의 CRC 검출 범위 안에 국한되도록 설계해서, 오류가 S-ECC로 전파되더라도 탐지 가능한 상태를 유지해요.</p>
+    <p>두 계층의 공동 설계 포인트는 OD-ECC의 코드워드 구조와 S-ECC의 심볼 경계를 맞춰서, OD-ECC 오예측 오류가 S-ECC 코드워드 1개 안에 모이도록 하는 것이에요. 이 덕분에 S-ECC가 최악 케이스에서도 오류를 탐지하고 처리할 수 있어요.</p>
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>두 RS 엔진 신드롬 비교로 SWD 오류를 예측하고, 디인터리빙으로 오예측 오류를 S-ECC 탐지 범위 안에 가두면 — 검사 비트 증가 없이 교정 능력이 크게 향상돼요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">SWD 오류 교정 능력이 얼마나 향상됐나요?</h2>
+    <p>시뮬레이션 결과, 제안된 2계층 ECC는 SWD 오류에 대한 교정 성공률을 기존 구조 대비 크게 개선했어요. 동시에 랜덤 단일 비트 오류와 같은 다른 유형의 오류에 대한 교정 능력은 기존 수준을 유지했어요. 검사 비트 수를 늘리지 않았기 때문에 유효 스토리지 밀도 페널티도 없어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">크게 향상</div><div class="stat-desc">SWD 오류 교정 성공률 (기존 대비)</div></div>
+      <div class="stat-box"><div class="stat-num">유지</div><div class="stat-desc">랜덤 단일 비트 오류 교정 능력</div></div>
+      <div class="stat-box"><div class="stat-num">0 추가</div><div class="stat-desc">검사 비트 증가 없음</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM3 이상에서는 셀 밀도가 더 높아지고 SWD 하나가 담당하는 셀 수가 늘어나서 SWD 결함 시 파급 범위가 커져요. 이 논문의 2계층 ECC 구조는 HBM 표준의 OD-ECC + S-ECC 프레임워크와 자연스럽게 맞아요. 특히 RS 기반 OD-ECC는 HBM DRAM 다이 내부 로직에 이미 내장되는 방향으로 연구가 진행 중이라, 이 예측 메커니즘을 온다이 ECC 회로에 추가하는 현실적 경로가 보여요.</p>
+    <p>설계 자동화 관점에서도 흥미로운 점이 있어요. OD-ECC 코드워드와 S-ECC 심볼 경계를 공동 설계로 결정하는 과정이 이 논문의 핵심인데, 이 프레임워크는 새 HBM 세대의 ECC 아키텍처를 결정할 때 참고할 수 있는 설계 지침이 될 수 있어요.</p>
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>두 RS 엔진을 동시에 운용하면 면적·지연 오버헤드가 생겨요. HBM의 극히 타이트한 레이아웃 제약 안에서 이 추가 로직을 수용하려면 면적 최적화가 병행돼야 해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — HBM SWD 오류 패턴: 서브워드라인 드라이버 결함이 어느 셀 범위에 영향을 주는지 시각화한 메모리 어레이 다이어그램</p>
+    <p><strong>Fig. 2</strong> — 제안된 2계층 ECC 전체 구조: 인터리브 RS 기반 예측 OD-ECC → 디인터리빙 S-ECC 연결 블록 다이어그램</p>
+    <p><strong>Fig. 3</strong> — SWD 오류 예측 로직 상세: 두 RS 엔진의 신드롬 비교로 예측 신호를 생성하는 회로 흐름도</p>
+    <p><strong>Fig. 4</strong> — ECC 성능 비교: SWD 오류·랜덤 오류 각각에 대한 기존 2계층 ECC vs. 제안 구조의 교정 성공률 그래프</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/b9cc97dfe39b705242788fbcaa501d9238f2b578" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+</div>
+</body>
+</html>

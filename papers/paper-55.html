@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Estimating PLL Phase Noise Parameters · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Estimating PLL Phase Noise Parameters</span>
+</div>
+<div class="article">
+  <div class="article-venue">arXiv 2026</div>
+  <h1 class="article-title">Estimating PLL Phase Noise Parameters from Measurements for System-Level Modeling</h1>
+  <div class="article-tags"><span class="tag">PLL-DLL</span><span class="tag">Analog</span></div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://arxiv.org/abs/2604.08177v1" target="_blank">원문 보기 →</a>
+    <a class="article-link" href="https://arxiv.org/pdf/2604.08177v1" target="_blank">PDF →</a>
+  </div>
+  <p class="opener">측정된 PLL 위상 잡음 스펙트럼에서 최소제곱법으로 시스템 레벨 시뮬레이션 모델 파라미터를 자동 추정하는 실용적인 방법론이에요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">PLL 위상 잡음 모델, 왜 측정에서 뽑아야 하나요?</h2>
+    <p>PLL(Phase-Locked Loop)은 모든 고속 직렬 통신 시스템의 핵심이에요. 그런데 PLL이 출력하는 클럭에는 항상 위상 잡음(phase noise)이 붙어요. 이 위상 잡음이 시스템 성능(BER, EVM, SNDR 등)을 제한해요. 시스템 설계 단계에서 PLL 위상 잡음의 영향을 정확히 시뮬레이션하려면, 수치 모델이 필요해요. 가장 널리 쓰이는 모델은 Ornstein-Uhlenbeck(OU) 프로세스예요. 이것은 PLL loop transfer function에 의해 저주파 VCO 노이즈가 고역통과 필터링되고, 고주파 reference 노이즈가 저역통과 필터링되는 특성을 포착해요.</p>
+    <p>문제는 OU 파라미터를 어떻게 구하느냐예요. PLL 회로 설계자라면 loop bandwidth, VCO gain 등에서 직접 계산할 수 있지만, 완성된 PLL 칩을 사용하는 시스템 엔지니어는 내부 정보에 접근하기 어려워요. 칩 데이터시트에는 보통 특정 주파수 오프셋에서의 위상 잡음 값(예: "100kHz 오프셋에서 -100dBc/Hz")만 있고, 완전한 스펙트럼 모델은 없어요. 이 논문은 측정된 phase noise 스펙트럼 데이터만으로 OU 파라미터를 자동으로 추정하는 최소제곱법을 제시해요.</p>
+    <div class="insight blue">
+      <div class="insight-label">논문의 출발점</div>
+      <p>PLL 시스템 레벨 시뮬레이션에 필요한 파라미터를 블랙박스 칩 측정만으로 추출하는 방법이 없었어요. 이 논문은 측정 → LS 피팅 → 시뮬레이션 모델 자동 생성 파이프라인을 제공해요. MAX2870/MAX2871 같은 상용 PLL 칩에 바로 적용 가능해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">최소제곱법으로 어떻게 파라미터를 추출하나요?</h2>
+    <p>PLL 위상 잡음 스펙트럼은 Ornstein-Uhlenbeck 프로세스의 파워 스펙트럼 밀도(PSD) 함수로 모델링해요. 이 함수는 PLL loop bandwidth(fL)와 VCO free-running phase noise 기울기(발진기 상수 c)로 표현돼요. 일반적으로 위상 잡음 스펙트럼은 로그-로그 스케일에서 특징적인 형태를 가져요: 저주파에서 평탄(-20dB/decade 기울기의 VCO noise가 loop에 억제됨), 루프 대역폭 근처에서 피크(peaking), 고주파에서 -20dB/decade 감쇠.</p>
+    <p>LS(Least Squares) 피팅은 측정된 위상 잡음 스펙트럼 데이터와 OU 모델 예측값 사이의 오차 제곱합을 최소화하는 파라미터 {fL, c}를 찾아요. 선형화 트릭(로그 변환)을 사용하면 비선형 최적화 없이 닫힌 형식(closed-form) 해를 구할 수 있어요. 추출된 파라미터로 시간 도메인 위상 잡음 시퀀스를 생성하면 실제 시스템 BER 시뮬레이션에 바로 활용할 수 있어요.</p>
+    <div class="insight green">
+      <div class="insight-label">핵심 아이디어</div>
+      <p>측정된 SSB(Single-Sideband) 위상 잡음 스펙트럼 데이터를 OU PSD 함수에 LS 피팅 → loop bandwidth와 oscillator constant 자동 추출. 이 파라미터로 시간 도메인 시뮬레이션 입력(stochastic realization) 생성이 가능해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">실제 PLL 칩에 적용한 결과는요?</h2>
+    <p>MAX2870(3GHz~6GHz integer/fractional-N PLL)과 MAX2871(23.5MHz~6GHz) 두 상용 PLL 칩에 적용했어요. 스펙트럼 분석기로 측정한 위상 잡음 스펙트럼에 LS 피팅을 적용하여 PLL loop bandwidth와 VCO 발진기 상수를 추출했어요. 추출된 파라미터로 생성한 시뮬레이션 위상 잡음이 측정값과 잘 일치했어요. 시간 도메인과 주파수 도메인 수치 시뮬레이션이 모두 가능했어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">MAX2870</div><div class="stat-desc">3~6GHz 상용 PLL 검증</div></div>
+      <div class="stat-box"><div class="stat-num">MAX2871</div><div class="stat-desc">23.5MHz~6GHz PLL 검증</div></div>
+      <div class="stat-box"><div class="stat-num">LS 피팅</div><div class="stat-desc">Closed-form 파라미터 추출</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM PHY의 PLL은 수 GHz 클럭을 생성해요. HBM3의 경우 데이터 속도가 8Gbps 이상이니까 PLL이 4GHz 이상 클럭을 제공해야 해요. PLL 위상 잡음은 직접 HBM I/O 타이밍 지터로 이어져요. 칩 테스트 단계에서 이 논문의 방법으로 PLL 위상 잡음 스펙트럼을 측정하고, OU 파라미터를 추출하면, 전체 HBM 시스템의 지터 budget 분석에 그 파라미터를 바로 활용할 수 있어요.</p>
+    <p>특히 HBM 스택의 여러 DRAM 다이가 공통 PLL에서 클럭을 분배받는 경우, PLL 위상 잡음의 공통 모드 성분이 모든 다이에 걸려요. 이 공통 모드 지터를 정확히 모델링해야 die-to-die skew와 데이터 eye margin을 정확히 시뮬레이션할 수 있어요. 이 논문의 LS 방법은 그 모델링의 첫 번째 단계예요.</p>
+    <div class="insight yellow">
+      <div class="insight-label">주의할 점</div>
+      <p>OU 모델은 PLL의 기본 특성은 잘 잡지만, fractional-N PLL의 스퍼리어스(spurious) 성분이나 온도·전압 변화에 따른 위상 잡음 변동은 모델링하지 못해요. 고정밀 지터 분석에서는 OU 모델 + spurious 성분을 별도로 처리해야 해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2604.08177v1/2604.08177v1/x1.png" alt="Figure 1" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 1: Setup for PSD measurement of MAX2870/71 PLL synthesizers integrated on UBX/CBX daughterboards of USRP X310 [ 4 ]</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2604.08177v1/2604.08177v1/x2.png" alt="Figure 2" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 2: Measured phase noise spectrum for USRP 2944R with UBX daughterboard at f c = 2 GHz f_{\text{c}}=$2\text{\,}\mathrm{G}\mathrm{H}\mathrm{z}$ and piece-wise linear regression with slope r ^ ​ [ 1 ] \hat{r}[1] ( 3 ) at the bottom of the plot</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2604.08177v1/2604.08177v1/x3.png" alt="Figure 3" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 3: Measured phase noise spectrum of USRP 2944R with parameter estimates and fitted models for reference oscillator and VCO ( 2 )</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2604.08177v1/2604.08177v1/x4.png" alt="Figure 4" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 4: Measured phase noise spectra and fitted full model ( 1 ) using the estimated parameters from Table I for both daughterboard types.</div>
+    </div>
+    <div class="figure-outer"><a class="figure-open-link" href="https://arxiv.org/abs/2604.08177v1" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div></div>
+
+</div>
+</body>
+</html>

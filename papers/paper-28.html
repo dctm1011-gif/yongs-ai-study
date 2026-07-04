@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Threshold Breaker · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Threshold Breaker</span>
+</div>
+<div class="article">
+  <div class="article-venue">arXiv 2023</div>
+  <h1 class="article-title">Threshold Breaker: Can Counter-Based RowHammer Prevention Mechanisms Truly Safeguard DRAM?</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">ECC</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/919fd17b7fd497bf4806c65880926b3246d3bff2" target="_blank">원문 보기 →</a></div>
+  <p class="opener">counter 기반 RowHammer 방어(TRR, PARA 등)는 인접 행 활성화 횟수만 추적하기 때문에, threshold보다 낮은 활성화로 여러 행에 분산 공격하는 "Threshold Breaker" 기법에 속수무책임을 128개 실제 DDR4 칩 실험으로 입증해요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">카운터가 RowHammer를 막을 수 있을까요?</h2>
+    <p>RowHammer는 DRAM의 특정 행(aggressor row)을 반복적으로 활성화하면, 물리적으로 인접한 행(victim row)의 셀에 전기적 간섭이 일어나 비트 플립이 발생하는 현상이에요. 이를 막기 위해 메모리 제조사들은 counter 기반 방어를 개발했어요. 대표적으로 TRR(Target Row Refresh)은 특정 임계값(RH threshold, TRH) 이상 활성화된 행의 인접 행을 자동 리프레시하고, PARA(Probabilistic Adjacent Row Activation)는 행 활성화 시 일정 확률로 인접 행을 리프레시하는 방식이에요.</p>
+    <p>이 접근법의 근본적인 가정은 "공격자가 TRH 이상 단일 행을 반복 활성화해야 비트 플립이 생긴다"는 거예요. 그런데 이 가정이 흔들리기 시작했어요. DRAM 공정이 미세화될수록 TRH가 낮아지는 추세인데, 반대로 낮은 활성화 횟수로도 비트 플립을 유발할 수 있다면 카운터 방어의 전제 자체가 무너져요.</p>
+    <p>이 논문은 바로 이 허점을 파고들어요. TRH보다 낮은 횟수로 여러 행을 "소프트 활성화"하면 — 각 행은 카운터 임계값 이하라 탐지 안 되지만 — 누적 전기 간섭으로 victim row에 비트 플립을 유발할 수 있는지 체계적으로 실험해요. 이 공격을 "Threshold Breaker"라 부르고, 실제 상용 DDR4 칩에서 그 효과를 검증해요.</p>
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>counter 기반 방어의 핵심 가정은 "단일 aggressor"인데, 여러 행이 각각 TRH 이하로 동시에 victim을 압박하면 방어는 아무것도 세지 못해요. 이 "distributed soft attack" 시나리오가 현실적으로 가능한지 확인하는 게 이 논문의 핵심이에요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">어떻게 TRH 탐지를 피하면서 공격하나요?</h2>
+    <p>Threshold Breaker의 공격 구조는 이래요. victim row의 위아래에 위치한 여러 aggressor row를 선정하고, 각 aggressor는 TRH보다 낮은 횟수만큼 활성화해요. counter 기반 방어는 각 행의 카운트가 TRH 미만이라 아무 경보도 울리지 않아요. 하지만 victim은 여러 방향에서 동시에 전기 간섭을 받게 돼요.</p>
+    <p>실험 환경으로는 128개의 상용 DDR4 DRAM 칩(3개 주요 제조사 포함)을 대상으로 했어요. DRAM 컨트롤러를 직접 제어할 수 있는 FPGA 기반 테스트베드를 사용해 row address와 활성화 패턴을 정밀하게 제어했어요. 공격 결과는 DNN(deep neural network) 가중치에 적대적 비트 플립을 주입하는 사례 연구로 이어져요 — 기존의 양면 공격(double-sided RowHammer)과 성능을 비교해요.</p>
+    <p>핵심 실험 변수는 aggressor 행의 수, 각 행의 활성화 횟수, victim까지의 물리적 거리예요. 이 파라미터를 체계적으로 스윕해서 비트 플립 발생 조건의 경계를 매핑했어요.</p>
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>TRH보다 낮은 횟수의 분산 활성화로 counter를 속이면서 victim row에 누적 전기 간섭을 가하는 "multi-sided soft hammering" 전략이에요. DRAM이 "보호됐다"고 인식하는 상태에서도 비트 플립이 가능해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">실제 DDR4 칩에서 counter 방어가 뚫렸나요?</h2>
+    <p>128개 DDR4 칩 실험에서 Threshold Breaker가 주요 제조사의 다양한 칩에 걸쳐 실제로 비트 플립을 유발함을 확인했어요. 특히 TRR이 활성화된 상태에서도 공격이 성공하는 케이스가 관찰됐어요. DNN 가중치 공격 사례 연구에서는 타깃 DNN 모델의 정확도를 의도적으로 저하시키는 데 성공했어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">128개</div><div class="stat-desc">테스트한 상용 DDR4 DRAM 칩 수 (3개 주요 제조사)</div></div>
+      <div class="stat-box"><div class="stat-num">TRH 이하</div><div class="stat-desc">각 aggressor 행의 활성화 횟수 — 카운터 탐지 임계값 미달로 방어 우회</div></div>
+      <div class="stat-box"><div class="stat-num">다수 제조사</div><div class="stat-desc">Threshold Breaker가 영향을 미친 칩 제조사 범위</div></div>
+      <div class="stat-box"><div class="stat-num">DNN 정확도 저하</div><div class="stat-desc">사례 연구: 적대적 가중치 공격으로 타깃 모델 지능 고갈 성공</div></div>
+    </div>
+    <p>또한 기존 양면 RowHammer 공격과의 성능 효율성 비교에서, Threshold Breaker는 탐지 우회 면에서 우월하지만 비트 플립 유발 효율은 상황에 따라 다름을 보여줬어요. 이는 공격자가 목표(탐지 회피 vs. 빠른 비트 플립)에 따라 전략을 선택할 수 있음을 시사해요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에서 counter 기반 방어의 한계를 어떻게 봐야 하나요?</h2>
+    <p>HBM은 DDR4보다 훨씬 짧은 wordline(행당 셀 수가 적음)과 고밀도 적층 구조를 가져요. 이 구조적 특성은 RowHammer 취약성에 복합적으로 영향을 미쳐요. wordline이 짧으면 상대적으로 셀 간 간섭이 줄지만, 적층으로 인한 열 집중과 TSV 인근 전기 스트레스가 새로운 취약 지점을 만들 수 있어요.</p>
+    <p>이 논문이 HBM 설계자에게 주는 메시지는 명확해요. counter 기반 방어(예: HBM3에서 도입된 PRAC-like 메커니즘)의 TRH 설정을 보수적으로 잡더라도, Threshold Breaker 류의 분산 공격에는 근본적으로 취약할 수 있어요. TRH 하나를 지키는 것만으로는 충분하지 않아요.</p>
+    <p>HBM 컨트롤러 설계 시 "총 victim 압박량"을 추적하는 누적 방식이나, aggressor 패턴의 공간적 분포를 감지하는 알고리즘이 보완책으로 필요해요. 이는 DRAM 내부 로직 추가 없이 메모리 컨트롤러 수준에서 구현 가능하다는 점에서 현실적인 방향이에요.</p>
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>counter 기반 방어는 "공격 횟수를 세는" 방식이기 때문에 TRH 이하 분산 공격에 구조적으로 취약해요. HBM처럼 공정 미세화가 계속될수록 TRH가 낮아지고, 낮은 TRH에서는 더 적은 분산 공격으로도 비트 플립이 가능해져서 문제가 심화될 수 있어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — Threshold Breaker 공격 개념도: victim row 위아래에 배치된 다수의 aggressor row가 각각 TRH 이하 횟수로 활성화되는 구조. counter는 아무것도 감지하지 못해요.</p>
+    <p><strong>Fig. 2</strong> — 128개 DDR4 칩에서의 비트 플립 발생 분포: 제조사별, 칩 유형별로 Threshold Breaker 취약성이 어떻게 다른지 보여줘요.</p>
+    <p><strong>Fig. 3</strong> — aggressor 행 수와 활성화 횟수에 따른 비트 플립 발생 맵: 공격 파라미터 스윕 결과, 어느 조합에서 counter 방어를 우회하는 비트 플립이 일어나는지 경계를 시각화해요.</p>
+    <p><strong>Fig. 4</strong> — DNN 가중치 적대적 공격 사례: Threshold Breaker로 주입한 비트 플립이 모델 정확도를 어떻게 저하시키는지, 기존 양면 공격과의 비교예요.</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/919fd17b7fd497bf4806c65880926b3246d3bff2" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

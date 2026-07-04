@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DAPPER RowHammer Tracker · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">DAPPER RowHammer Tracker</span>
+</div>
+<div class="article">
+  <div class="article-venue">HPCA 2025</div>
+  <h1 class="article-title">DAPPER: A Performance-Attack-Resilient Tracker for RowHammer Defense</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">ECC</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/3e5143cfc567cc46f0ebfd874da5ee83dad12d48" target="_blank">원문 보기 →</a></div>
+  <p class="opener">RowHammer 방어 추적기 자체를 성능 공격(Perf-Attack)에 악용하는 새로운 위협을 분석하고, 보안 해싱과 이중 해싱으로 이를 막으면서 SRAM 96 KB만으로 0.9% 성능 저하를 달성한 DAPPER를 제안해요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">RowHammer 방어 자체가 공격 무기가 된다고요?</h2>
+    <p>RowHammer는 DRAM 행을 짧은 시간에 반복 활성화하면 물리적으로 인접한 행의 전하가 누설되어 비트가 뒤집히는 현상이에요. 공격자가 이를 악용하면 메모리 보호 경계를 넘어 임의 데이터를 변조할 수 있죠. 이를 막기 위해 호스트 측 메모리 컨트롤러는 각 행의 활성화 횟수를 추적하는 카운터 또는 추적 구조(tracker)를 운용해요. 일정 임계치를 넘으면 인접 행을 예방적으로 리프레시해서 비트 플립 전에 전하를 복원하는 거예요.</p>
+    <p>문제는 이 추적 구조 자체가 공유 자원이라는 점이에요. 추적기가 용량 한계에 달하면 오래된 항목을 밀어내거나(eviction) 전체 카운터를 리셋하는데, 공격자는 이 동작을 역으로 이용할 수 있어요. 의도적으로 대량의 서로 다른 행 주소를 짧은 시간에 접근해서 추적기를 끊임없이 퇴출·리셋 상태로 만들면, 함께 실행 중인 정상 프로세스의 DRAM 대역폭이 대폭 감소해요. 이른바 성능 공격(Perf-Attack)이에요. RowHammer 비트 플립 자체는 발생시키지 않으면서도 시스템을 사실상 서비스 거부 상태로 만들 수 있어서 더 교묘하죠.</p>
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>RowHammer 방어를 위한 추적기가 역으로 성능 저하 공격 벡터가 되는 딜레마 — 방어 메커니즘 자체의 취약성을 정면으로 다룬 논문이에요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">DAPPER는 어떻게 Perf-Attack을 원천 차단하나요?</h2>
+    <p>DAPPER(Defence Against Performance and RowHammer attacks with Efficient Randomization)는 두 가지 핵심 설계로 구성돼요. 첫 번째는 보안 해싱(Secure Hashing)이에요. 추적기 내 슬롯에 행 주소를 매핑할 때 외부에서 예측할 수 없는 암호학적 해시 함수를 사용해요. 공격자가 특정 슬롯을 반복 점유해서 정상 행 정보를 퇴출시키려 해도, 해시 값이 세션마다 달라지므로 어떤 주소가 어느 슬롯에 들어갈지 알 수 없어요.</p>
+    <p>두 번째는 이중 해싱(Dual Hashing)과 새로운 리셋 전략이에요. DAPPER-H는 DAPPER-S(기본 보안 해싱 버전)를 발전시켜 두 개의 독립 해시 테이블을 운용해요. 어느 한 테이블에서 공격이 발생해도 다른 테이블이 정상 행 추적을 유지하는 이중화 구조예요. 리셋은 전체 카운터를 한꺼번에 내리지 않고 개별 행 단위 선택적 리셋을 써서 정상 행 추적 손실을 최소화해요. 여기에 완화 리프레시(Mitigation Refresh) 기술을 추가해서 실제 RowHammer 위험이 높은 행만 선별적으로 예방 리프레시해요.</p>
+    <p>전체 오버헤드는 DRAM 32 GB당 SRAM 96 KB로 매우 낮아요. 이는 기존 추적기 대비 유사하거나 낮은 수준이에요. RowHammer 임계값(TRH)이 500이라는 극단적으로 낮은 조건에서도 설계 요구사항을 만족하도록 검증됐어요.</p>
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>해시 함수로 슬롯 매핑을 불투명하게 만들고 이중 해싱으로 공격 내성을 높인다 — Perf-Attack의 전제 조건인 "추적기 구조 예측 가능성"을 제거하는 우아한 해법이에요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">실전 공격 시나리오에서 어떤 결과가 나왔나요?</h2>
+    <p>SPEC2006, SPEC2017, TPC, Hadoop, MediaBench, YCSB에서 총 57개 워크로드로 평가했어요. Perf-Attack이 있는 상황에서 기존 최첨단 추적기는 성능이 크게 저하됐지만, DAPPER-H는 평균 0.9%의 성능 저하만 발생했어요. TRH=500처럼 매우 공격적인 조건에서도 이 수치가 유지됐어요. 보안 측면에서는 RowHammer 비트 플립 방어도 완전히 유지됐고, 추가 SRAM 면적은 96 KB/32 GB로 실용적인 수준이에요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">0.9%</div><div class="stat-desc">Perf-Attack 환경에서 평균 성능 저하 (TRH=500 조건)</div></div>
+      <div class="stat-box"><div class="stat-num">96 KB</div><div class="stat-desc">DRAM 32 GB당 SRAM 추적기 오버헤드</div></div>
+      <div class="stat-box"><div class="stat-num">57개</div><div class="stat-desc">평가 워크로드 수 (6개 벤치마크 스위트)</div></div>
+      <div class="stat-box"><div class="stat-num">TRH 500</div><div class="stat-desc">검증된 최저 RowHammer 임계값</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM은 다이 스택 구조 특성상 서로 다른 다이의 DRAM 행들이 물리적으로 인접하고, 공정 스케일링이 더 빠르게 진행될수록 RowHammer TRH도 빠르게 낮아져요. 특히 HBM4 이후 세대에서는 TRH가 수백 수준으로 떨어질 가능성이 높아서 DAPPER 수준의 추적기가 필수적이 될 거예요.</p>
+    <p>HBM 컨트롤러는 여러 채널(최대 16채널)의 행 활성화를 동시에 추적해야 해서 추적기 면적 오버헤드가 직접 다이 면적에 영향을 줘요. DAPPER의 96 KB/32 GB라는 낮은 오버헤드는 HBM 컨트롤러 다이 면적 최적화에 유리한 설계 방향이에요. 보안 해싱 구조를 HBM 내부 PHY 레벨에 직접 통합하는 것도 고려할 수 있어요.</p>
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>보안 해싱의 무작위성은 새로운 암호화 공격에 대한 내성도 보장해야 해요. 해시 함수 선택과 시드 관리가 잘못되면 결국 추적기 구조가 노출될 수 있으니, 실제 제품 적용 시에는 하드웨어 보안 전문가와 함께 해시 설계를 검토해야 해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — Perf-Attack 공격 모델: 공격자가 추적기 슬롯을 반복 퇴출시켜 정상 프로세스 DRAM 대역폭을 감소시키는 시나리오 도식</p>
+    <p><strong>Fig. 2</strong> — DAPPER-S 보안 해싱 템플릿: 행 주소 → 해시 → 슬롯 매핑 구조, 세션별 시드 갱신 로직</p>
+    <p><strong>Fig. 3</strong> — DAPPER-H 이중 해싱 아키텍처: 두 개의 독립 해시 테이블 구성과 선택적 리셋 전략</p>
+    <p><strong>Fig. 4</strong> — 57개 워크로드 성능 비교: 기존 추적기 vs DAPPER-H, Perf-Attack 유무에 따른 성능 저하율</p>
+    <p><strong>Fig. 5</strong> — SRAM 오버헤드 vs TRH 트레이드오프 곡선: 다양한 TRH 조건에서 DAPPER-H와 기존 방식의 면적 비교</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/3e5143cfc567cc46f0ebfd874da5ee83dad12d48" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

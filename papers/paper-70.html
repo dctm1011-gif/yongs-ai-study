@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DPR-PIM: Diagnosis and Pipelined Repair Architectu... · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">DPR-PIM: Diagnosis and Pipelined Repair Architectu...</span>
+</div>
+<div class="article">
+  <div class="article-venue">IEEE Transactions on Very Large Scale Integration (VLSI) Systems 2026</div>
+  <h1 class="article-title">DPR-PIM: Diagnosis and Pipelined Repair Architecture for Processing-in-Memory</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">ML-HW</span><span class="tag">Yield</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/2285f350d5a2a360d76e3e70587961124b5beef0" target="_blank">원문 보기 →</a>
+  </div>
+  <p class="opener">PIM 칩 내 산술 연산 유닛의 결함을 정밀 진단하고 파이프라인 수리까지 자동화한 DPR-PIM 아키텍처가 차세대 AI 가속기의 신뢰성 문제를 정면 돌파해요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">왜 DRAM 기반 디지털 PIM에서 결함 진단이 이렇게 어려운 걸까요?</h2>
+    <p>PIM(Processing-in-Memory) 아키텍처는 메모리와 연산 유닛을 하나의 칩에 통합함으로써 AI 추론에서 발생하는 메모리 대역폭 병목을 획기적으로 줄이는 기술이에요. 기존 DRAM은 데이터를 저장하는 역할만 했지만, 디지털 PIM은 곱셈기(Multiplier)와 가산기(Adder) 같은 산술 연산 유닛(AU)을 메모리 어레이와 함께 집적해요. 이 구조 덕분에 데이터 이동 비용이 줄어들고 에너지 효율이 높아지지만, 동시에 테스트와 수율 관리 측면에서 전혀 새로운 도전이 생겨나요.</p>
+    <p>전통적인 논리 칩이라면 결함이 발생해도 해당 연산 결과만 틀리지만, PIM에서는 논리 결함이 메모리에 저장된 데이터에 직접 오염을 일으켜 시스템 전반에 오류가 전파돼요. 자율주행, 의료 영상, 금융 리스크 분석처럼 안전 민감(Mission-Critical) 응용 분야에서 이런 오류는 치명적이에요. 게다가 메모리 셀과 로직 게이트가 물리적으로 혼재하기 때문에 기존 메모리 테스트 장비(ATE)로는 어느 AU에서 결함이 발생했는지 정확히 찾아내기가 매우 어렵고, 결함 위치 파악 자체가 새로운 기술적 과제로 떠올랐어요.</p>
+
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>DRAM 기반 디지털 PIM에서 제조 공정 결함은 반복 연산을 통해 누적·전파되므로, 곱셈기와 가산기 각각에 대한 독립적이고 정밀한 결함 진단 없이는 신뢰성 있는 AI 가속이 불가능해요. 기존 ATE 인터페이스를 활용하면서도 PIM 특유의 복합 구조를 진단할 수 있는 새로운 아키텍처가 반드시 필요해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">DPR-PIM은 어떻게 결함을 진단하고 파이프라인 수리까지 수행하나요?</h2>
+    <p>DPR-PIM은 크게 두 가지 기능 블록으로 구성돼요. 첫 번째는 진단(Diagnosis) 모듈로, 표준 ATE 인터페이스를 그대로 활용해 PIM 내 곱셈기와 가산기 각각을 독립적으로 자극(Stimulate)하고 응답을 포착하는 테스트 패턴을 적용해요. 이를 통해 어느 AU의 어느 단계에 결함이 존재하는지 장치 단위로 정확하게 특정할 수 있어요. 기존 메모리 BIST와 달리 연산 유닛의 내부 파이프라인 스테이지까지 세분화해 결함 위치를 기록하는 점이 핵심이에요.</p>
+    <p>두 번째는 수리(Repair) 모듈이에요. 진단 결과를 바탕으로, 가산기 파이프라인 스테이지에서 단일 결함이 발생한 경우에는 파이프라인 재구성을 통해 해당 스테이지를 우회하거나 대체 경로로 연산을 이어가는 파이프라인 수리(Pipelined Repair)를 적용해요. 반면 동일 가산기 스테이지 내에 다중 결함이 존재하거나, 곱셈기 자체에 결함이 있어 수리가 불가능한 경우에는 결함 차단(Fault Blocking) 메커니즘을 적용해 오류가 하위 연산 체인으로 전파되는 것을 막아요. 이 두 전략의 조합으로 수율과 신뢰성을 동시에 높이는 구조예요.</p>
+
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>표준 ATE 인터페이스를 변경 없이 재활용하면서 PIM 내부 산술 유닛의 파이프라인 스테이지 단위 진단을 가능하게 한 것이 DPR-PIM의 가장 독창적인 포인트예요. 단순히 결함을 찾는 데 그치지 않고, 결함의 위치와 수에 따라 파이프라인 수리 또는 차단을 자동 선택하는 계층적 복구 전략이 최소 면적 오버헤드로 높은 수율 향상을 실현해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">DPR-PIM의 성능과 오버헤드는 실제로 얼마나 효과적인가요?</h2>
+    <p>DPR-PIM은 높은 테스트 커버리지를 달성하면서도 면적 오버헤드를 최소화하는 결과를 보여줬어요. 파이프라인 수리 메커니즘은 가산기 단계의 단일 결함에 대해 연산 정확도를 완전히 복원하며, 결함 차단은 다중 결함 또는 곱셈기 결함 상황에서 오류 전파를 효과적으로 억제해요. 미션 크리티컬 AI 애플리케이션에서 요구하는 수준의 신뢰성을 달성하면서도 기존 생산 테스트 흐름과 완전히 호환되는 실용적 솔루션임을 확인했어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">100%</div><div class="stat-desc">표준 ATE 인터페이스 호환성 - 별도 테스트 장비 추가 없이 기존 생산 라인에 바로 적용 가능</div></div>
+      <div class="stat-box"><div class="stat-num">Single Fault</div><div class="stat-desc">파이프라인 수리 적용 범위 - 가산기 스테이지 내 단일 결함에 대해 완전한 연산 복원 보장</div></div>
+      <div class="stat-box"><div class="stat-num">최소</div><div class="stat-desc">면적 오버헤드 - 진단·수리 회로 추가에 따른 칩 면적 증가를 최소 수준으로 유지하여 PIM 집적도 보존</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM 및 DRAM 기반 PIM 설계자 입장에서 DPR-PIM이 주는 가장 큰 시사점은 '테스트 인프라 재활용성'이에요. HBM PIM처럼 고적층 구조에서 추가 테스트 핀이나 전용 장비를 도입하는 것은 패키지 설계와 비용 측면에서 큰 부담인데, DPR-PIM은 기존 ATE 인터페이스를 그대로 쓰면서 로직 결함까지 진단할 수 있는 경로를 제시해요. 이는 HBM4처럼 PIM 기능이 강화된 차세대 표준에서 수율 관리 체계를 설계할 때 직접 참고할 수 있는 실용적 방법론이에요.</p>
+    <p>파이프라인 수리와 결함 차단의 이중 전략은 HBM PIM의 Bank-level 또는 Vault-level 리던던시 설계와 연계할 수 있는 아이디어를 제공해요. 예를 들어 특정 Bank의 MAC(Multiply-Accumulate) 유닛에 결함이 있을 때, 해당 Bank를 완전히 비활성화하는 대신 결함 스테이지만 우회하는 세분화된 수리로 유효 수율을 높이는 방향으로 응용 가능해요. 또한 영구 결함(Permanent Fault)이 반복 AI 추론 연산에서 오류를 누적시키는 문제를 사전에 차단한다는 점에서, 온디바이스 AI가 탑재된 HBM-PIM 모듈의 기능 안전성(Functional Safety) 인증에도 기여할 수 있어요.</p>
+
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>논문이 단일 결함(Single Fault) 수리에 초점을 맞추고 있어, 곱셈기 내부의 복합 결함이나 메모리 셀과 로직이 동시에 손상된 시나리오에 대한 커버리지는 제한적일 수 있어요. 또한 HBM처럼 TSV(Through-Silicon Via) 기반 적층 구조에서 각 다이 간 타이밍 차이와 열 분포를 고려한 진단 정확도 검증이 추가로 필요하며, 실제 양산 환경에서의 면적 오버헤드 수치가 더 구체적으로 공개되어야 설계 적용 타당성을 완전히 평가할 수 있어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/2285f350d5a2a360d76e3e70587961124b5beef0" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

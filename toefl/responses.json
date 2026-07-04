@@ -1,0 +1,15 @@
+{
+  "writing": [
+    {
+      "date": "2026-06-30",
+      "prompt": "Test prompt",
+      "answer": "Test answer text",
+      "feedback": "Test feedback",
+      "wordCount": 42,
+      "timestamp": "2026-06-30T12:00:00Z"
+    }
+  ],
+  "reading": [],
+  "speaking": [],
+  "listening": []
+}

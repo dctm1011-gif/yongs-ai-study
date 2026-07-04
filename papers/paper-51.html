@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Correlated AR Clock Jitter in ADC Arrays · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Correlated AR Clock Jitter in ADC Arrays</span>
+</div>
+<div class="article">
+  <div class="article-venue">arXiv 2025</div>
+  <h1 class="article-title">Compensation of correlated autoregressive clock jitter in arrays of Analog-to-Digital Converters</h1>
+  <div class="article-tags"><span class="tag">ADC-DAC</span><span class="tag">PLL-DLL</span><span class="tag">Analog</span></div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://arxiv.org/abs/2511.23351v1" target="_blank">원문 보기 →</a>
+    <a class="article-link" href="https://arxiv.org/pdf/2511.23351v1" target="_blank">PDF →</a>
+  </div>
+  <p class="opener">ADC 어레이에서 채널 간 공간적으로 상관된 클럭 지터를 VAR(1) 모델과 Kalman Smoother로 추적·보상해 SNDR을 크게 개선하는 방법을 제시해요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">ADC 어레이의 클럭 지터는 왜 다루기 어려울까요?</h2>
+    <p>고속 ADC의 성능 상한은 결국 샘플링 클럭의 지터가 결정해요. SNDR(Signal-to-Noise-and-Distortion Ratio) 기준으로, 지터 σ를 절반으로 줄이면 SNDR이 약 6dB 향상돼요. 이론적으로 완벽한 ADC도 클럭 지터가 있으면 성능이 제한돼요. 그런데 실제 ADC 시스템에서 클럭 지터는 단순한 white Gaussian noise가 아니에요. 시간적으로 상관된(colored/correlated) 특성이 있어요. 예를 들어 PLL 기반 클럭은 루프 필터를 통과하면서 저주파에서 1/f² 특성을 보이고, 이 패턴은 AR(자기회귀) 프로세스로 모델링할 수 있어요.</p>
+    <p>더 복잡한 문제는 MIMO(Multiple-Input Multiple-Output) 시스템이나 다채널 ADC 어레이에 있어요. 여러 채널이 공통 클럭 소스나 클럭 분배 네트워크를 공유하면, 채널 간에도 지터가 공간적으로 상관돼요. 예를 들어 PLL 하나에서 여러 채널 클럭을 생성하면, 모든 채널이 동일한 저주파 PLL phase noise를 공통으로 가져요. 기존 연구는 이 공간 상관(spatial correlation)을 무시하고 채널별로 독립적으로 지터를 처리했는데, 이것은 비효율적이에요. 채널 간 상관 정보를 활용하면 훨씬 효과적으로 지터를 추정·보상할 수 있어요.</p>
+    <div class="insight blue">
+      <div class="insight-label">논문의 출발점</div>
+      <p>실제 ADC 어레이의 클럭 지터는 ① 시간적으로 상관(AR 구조) + ② 채널 간 공간적으로 상관(VAR 구조)이에요. 이 두 가지 상관 구조를 동시에 활용하는 Joint Tracking이 없었어요. 이 논문이 처음으로 VAR(1) 모델과 Kalman Smoother를 결합해서 해결해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">VAR(1) 모델과 Kalman Smoother가 뭔가요?</h2>
+    <p>VAR(Vector Autoregressive) 모델은 여러 시계열 변수가 서로 영향을 미치는 상황을 모델링해요. VAR(1)은 현재 지터가 이전 시간의 지터 벡터의 선형 함수로 표현돼요: ε[n] = A·ε[n-1] + w[n]. 여기서 ε[n]은 N채널 지터 벡터, A는 채널 간·채널 내 상관 관계를 담은 행렬, w[n]은 white noise예요. 이 A 행렬을 데이터로부터 학습하면 지터의 시공간 상관 구조를 완전히 포착할 수 있어요.</p>
+    <p>Kalman Smoother는 선형 상태공간 모델에서 최적 상태 추정을 하는 알고리즘이에요. VAR(1) 모델을 상태공간 형식으로 표현하면 Kalman Filter를 적용할 수 있어요. 여기서 관측(measurement)은 pilot tone을 사용해요. 알려진 주파수의 pilot tone을 신호에 삽입하면, ADC 출력에서 pilot tone의 위상 변화를 보고 클럭 지터를 역으로 추정할 수 있어요. Kalman Smoother는 전방(forward) + 후방(backward) 패스를 결합하여 전체 관측 시퀀스를 활용한 최적 추정을 해요. 이렇게 추정된 지터를 디지털 도메인에서 ADC 출력에서 빼면 지터 왜곡이 제거돼요.</p>
+    <div class="insight green">
+      <div class="insight-label">핵심 아이디어</div>
+      <p>Pilot tone → Kalman Smoother → VAR(1) 지터 추정 → 디지털 보상의 파이프라인. 핵심은 채널 간 공간 상관을 활용해서 한 채널의 지터 측정이 다른 채널의 지터 추정 정확도를 높이는 것이에요. 공통 클럭 노이즈를 채널 공통 모드로 분리해서 제거하는 효과예요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">얼마나 개선됐나요?</h2>
+    <p>시뮬레이션으로 다양한 지터 상관 시나리오에서 검증했어요. 채널 간 지터 상관이 높을수록 (즉, 공통 클럭 소스를 공유할수록) VAR(1) 방법의 이점이 커요. 독립 채널 각각 보상하는 방법 대비 SNDR이 수 dB 향상됐어요. 특히 저주파 PLL phase noise가 지배적인 경우 (AR 구조가 강한 경우) 효과가 극적이에요. 보상 전 지터로 인한 SNDR 손실이 거의 완전히 회복됐어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">수 dB</div><div class="stat-desc">SNDR 개선 (채널 상관 높은 경우)</div></div>
+      <div class="stat-box"><div class="stat-num">VAR(1)</div><div class="stat-desc">시공간 상관 모델</div></div>
+      <div class="stat-box"><div class="stat-num">Kalman</div><div class="stat-desc">최적 Smoother 추정</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM PHY는 여러 채널(HBM2: 8채널, HBM3: 16채널)이 공통 PLL에서 클럭을 분배 받는 구조예요. 채널 간 클럭 스큐와 지터는 공통 PLL noise 성분(공간 상관)과 각 채널별 분배 경로 noise(독립)로 나뉘어요. HBM PHY에서 on-die training이나 DQ write leveling 시 이 공통 클럭 지터를 효율적으로 보정하려면, 채널 간 상관 정보를 활용하면 training 수렴 속도와 정확도를 높일 수 있어요.</p>
+    <p>특히 HBM3/4에서 목표 데이터 속도가 빨라질수록 클럭 지터 허용 범위가 좁아져요. 이 논문의 접근법처럼 공통 클럭 노이즈를 채널 공통 모드로 분리해서 캔슬하면, 각 채널 CDR의 부담을 줄일 수 있어요. ADC 기반 SerDes(예: PAM4 HBM I/O)에서는 디지털 DSP 단에서 이 방법을 직접 적용할 수 있어요.</p>
+    <div class="insight yellow">
+      <div class="insight-label">주의할 점</div>
+      <p>VAR(1) 모델의 행렬 A를 실시간으로 추정하는 것은 계산 복잡도가 높아요. 채널 수가 늘어날수록 A 행렬 크기가 N²으로 증가해요. HBM의 16채널 환경에서 실시간 적용을 위해서는 저복잡도 근사 알고리즘이 필요해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2511.23351v1/8subADC1perc.png" alt="Figure 1" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 3 : Low jitter, high noise. The leftmost power percentage is 0.999 0.999 .</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2511.23351v1/8subADC3perc.png" alt="Figure 2" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 4 : High jitter, low noise. The leftmost power percentage is 0.999 0.999 .</div>
+    </div>
+    <div class="fig-item">
+      <img src="https://arxiv.org/html/2511.23351v1/MIMOvsSISO2.5perc16subADCs.png" alt="Figure 3" loading="lazy" onerror="this.style.display='none'">
+      <div class="fig-cap">Figure 5 : MIMO vs SISO tracking.</div>
+    </div>
+    <div class="figure-outer"><a class="figure-open-link" href="https://arxiv.org/abs/2511.23351v1" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div></div>
+
+</div>
+</body>
+</html>

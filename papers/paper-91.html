@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>THE IMPROVED SMITH PREDICTOR DESIGN FOR HIGH-SPEED... · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">THE IMPROVED SMITH PREDICTOR DESIGN FOR HIGH-SPEED...</span>
+</div>
+<div class="article">
+  <div class="article-venue">PROCEEDINGS OF THE REPUBLIC OF ARMENIA NATIONAL ACADEMY OF SCIENCES AND NATIONAL POLYTECHNIC UNIVERSITY OF ARMENIA SERIES OF TECHNICAL SCIENCES 2026</div>
+  <h1 class="article-title">THE IMPROVED SMITH PREDICTOR DESIGN FOR HIGH-SPEED SERDES CLOCK-DATA RECOVERY LOOP</h1>
+  <div class="article-tags"><span class="tag">PHY</span><span class="tag">PLL-DLL</span><span class="tag">Interface</span><span class="tag">Interconnect</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/0b4486c3780f4255d47328dc4756e1c891d838bf" target="_blank">원문 보기 →</a>
+  </div>
+  <p class="opener">Smith Predictor를 CDR 루프에 적용해 멀티 기가비트 SerDes의 지연 문제를 근본적으로 해결하는 혁신적 접근이에요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">왜 고속 SerDes의 CDR 루프에서 시간 지연이 치명적인 문제가 되는가?</h2>
+    <p>현대의 멀티 기가비트 SerDes 링크는 데이터 전송 속도가 수십 Gbps에 달하면서, 피드백 루프 내의 아주 작은 시간 지연도 위상 정렬 오류와 지터 누적으로 이어질 수 있어요. CDR(Clock and Data Recovery) 회로는 수신된 데이터 스트림에서 클록 신호를 추출하고 데이터를 복원하는 핵심 블록인데, 이 과정에서 발생하는 대기 시간(latency)은 제어 루프의 안정성을 심각하게 위협해요. 특히 DSP 기반의 디지털 CDR 구조에서는 아날로그 대비 훨씬 큰 처리 지연이 필연적으로 존재해요.</p>
+    <p>고속 통신 시스템이 DSP 솔루션에 의존하는 추세가 강해지면서, 디지털 도메인에서의 제어 루프 지연 보상 기술의 중요성이 급격히 높아지고 있어요. 기존의 PI(Proportional-Integral) 제어 기반 CDR은 루프 지연에 취약하며, 지연이 커질수록 루프 대역폭을 줄여야 하는 트레이드오프가 발생해요. 이는 결국 CDR의 지터 추적 성능 저하로 이어지고, 신호 무결성 마진이 줄어드는 심각한 문제를 야기해요.</p>
+
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>피드백 루프 내 시간 지연은 고속 SerDes CDR의 안정성과 지터 성능을 동시에 저하시키는 핵심 병목이에요. 기존 제어 이론으로는 이 지연을 효과적으로 보상하기 어렵기 때문에, 프로세스 제어 분야에서 검증된 Smith Predictor를 CDR에 적용하는 발상의 전환이 필요했어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">Smith Predictor를 어떻게 CDR 피드백 루프에 접목시켰는가?</h2>
+    <p>Smith Predictor는 원래 화학 공정 등 긴 사간 지연을 가진 프로세스 제어 시스템에서 지연 성분을 피드백 루프 밖으로 이동시켜 제어기 설계를 단순화하는 기법이에요. 이 논문에서는 해당 원리를 디지털 CDR 루프에 맞게 변형하여, DSP 처리 지연으로 인한 위상 오차를 예측하고 선제적으로 보정하는 구조를 제안했어요. 기존 CDR 루프의 위상 검출기(PD), 루프 필터(LF), 수치 제어 발진기(NCO) 구조 위에 Smith Predictor 블록을 오버레이 형태로 추가하는 방식이에요.</p>
+    <p>개선된 Smith Predictor는 루프 모델 내의 지연 추정값을 활용하여 미래의 출력 위상을 예측하고, 이 예측값을 피드백 경로에 반영함으로써 실제 지연의 영향을 상쇄해요. 특히 모델 불일치(model mismatch)에 대한 강인성을 높이기 위해 적응형 지연 추정 메커니즘을 함께 도입한 것이 이 논문의 개선 포인트예요. 이를 통해 루프 대역폭을 희생하지 않고도 지연 보상이 가능해지며, 높은 지터 추적 성능과 루프 안정성을 동시에 확보할 수 있어요.</p>
+
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>Smith Predictor의 예측 피드백 구조를 CDR 루프에 도입함으로써, 디지털 처리 지연을 루프 외부로 분리하고 제어기가 마치 지연이 없는 시스템을 다루는 것처럼 동작하게 만들어요. 적응형 지연 추정을 결합하여 공정 변화나 온도 변화에도 강인한 보상 성능을 유지하는 것이 핵심 혁신이에요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">개선된 Smith Predictor 적용 후 CDR 성능은 얼마나 향상되었는가?</h2>
+    <p>시뮬레이션 결과에 따르면, 개선된 Smith Predictor를 적용한 CDR 루프는 기존 PI 제어 기반 CDR 대비 지터 성능과 루프 안정성 모두에서 유의미한 개선을 보였어요. 특히 대기 시간이 큰 환경에서 기존 방식이 불안정해지는 조건에서도 제안 구조는 안정된 위상 추적을 유지했어요. 루프 대역폭을 줄이지 않고도 지연 보상이 가능해졌기 때문에, 고주파 지터 추적 성능도 함께 향상되는 결과를 나타냈어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">멀티 Gbps</div><div class="stat-desc">목표 SerDes 링크 동작 속도 범위로, 수십 Gbps급 고속 인터페이스에서의 적용 가능성을 검증</div></div>
+      <div class="stat-box"><div class="stat-num">지연 보상</div><div class="stat-desc">루프 대역폭 축소 없이 디지털 처리 지연을 효과적으로 상쇄하여 위상 추적 안정성 확보</div></div>
+      <div class="stat-box"><div class="stat-num">지터 감소</div><div class="stat-desc">기존 PI 기반 CDR 대비 잔류 지터 및 위상 오차가 시뮬레이션에서 개선됨을 확인</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM 및 고속 DRAM 인터페이스 설계자 입장에서, 이 논문의 Smith Predictor 기반 CDR 기법은 매우 시사하는 바가 커요. HBM3/HBM3E와 같은 최신 HBM 규격에서는 PHY 레이어의 클록-데이터 정렬 정밀도가 수십 ps 수준으로 요구되며, 디지털 PHY 구조에서 발생하는 파이프라인 지연이 CDR 루프 안정성에 직접적 영향을 미쳐요. Smith Predictor 원리를 HBM PHY의 DLL 또는 CDR 루프에 적용하면, 디지털 보정 경로의 지연을 효과적으로 상쇄하여 위상 마진을 개선할 수 있어요.</p>
+    <p>특히 HBM은 스택 구조의 Through-Silicon Via(TSV)를 통해 신호가 전달되는데, TSV 및 인터포저 경로에서 발생하는 추가 지연도 CDR 설계 시 고려해야 해요. Smith Predictor의 지연 모델을 TSV 경로의 전기적 특성에 맞게 보정한다면, HBM 인터페이스의 지터 및 위상 정렬 성능을 한 단계 더 끌어올릴 수 있는 가능성이 있어요. 또한 이 기법은 디지털 구현이 가능하므로, 첨단 파인 피치 공정에서의 면적 효율적 통합에도 유리해요.</p>
+
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>다만, Smith Predictor의 성능은 루프 지연 모델의 정확도에 크게 의존하기 때문에, 공정·전압·온도(PVT) 변화에 따른 지연 변화를 실시간으로 추정하는 적응 메커니즘 없이는 오히려 성능이 저하될 수 있어요. 또한 이 논문은 주로 시뮬레이션 수준의 검증에 머물고 있어 실제 실리콘 구현 및 측정 결과가 부재하므로, HBM PHY 적용 전 충분한 하드웨어 검증이 필요해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/0b4486c3780f4255d47328dc4756e1c891d838bf" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

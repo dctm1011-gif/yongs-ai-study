@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DNN-Defender · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">DNN-Defender</span>
+</div>
+<div class="article">
+  <div class="article-venue">Design Automation Conference 2023</div>
+  <h1 class="article-title">DNN-Defender: A Victim-Focused In-DRAM Defense Mechanism for Taming Adversarial Weight Attack on DNNs</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">ML-HW</span></div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://www.semanticscholar.org/paper/a4f09310f15467e021ff70d26cd0aea4bfe60289" target="_blank">원문 보기 →</a>
+    <a class="article-link" href="http://arxiv.org/pdf/2305.08034" target="_blank">PDF →</a>
+  </div>
+  <p class="opener">RowHammer 공격으로 DNN 가중치 비트를 정밀하게 뒤집어 AI 모델을 망가뜨릴 수 있다는 사실이 밝혀지면서, DRAM 내부에서 피해자 행 자체를 보호하는 최초의 in-DRAM 방어 메커니즘이 등장했어요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">RowHammer가 AI 모델을 어떻게 망가뜨릴 수 있을까요?</h2>
+    <p>딥러닝은 자율주행, 의료 진단, 금융 사기 탐지 등 안전이 매우 중요한 영역에 빠르게 퍼져나가고 있어요. 그런데 이 AI 모델들은 결국 DRAM에 가중치(weight) 데이터를 올려서 추론하거든요. 여기서 문제가 시작됩니다. DRAM에는 오래전부터 알려진 RowHammer라는 물리적 취약점이 있어요. 인접한 행(row)을 반복적으로 읽으면, 셀 간 전자 간섭 때문에 타깃 행의 비트가 의도치 않게 뒤집혀요. 이 현상을 악용하면 OS 권한 상승이나 데이터 무결성 침해가 가능하다는 건 보안 연구자들이 이미 잘 알고 있었죠.</p>
+    <p>그런데 2020년대 들어 이걸 DNN 공격에 적용한 연구들이 나오기 시작해요. 공격자가 RowHammer로 DNN 가중치에서 딱 하나, 혹은 몇 개의 특정 비트만 정밀하게 뒤집을 수 있다면? Gradient 기반 분석으로 "이 비트가 0→1로 바뀌면 정확도가 최대로 떨어진다"는 취약 비트를 미리 찾아낸 후 실제로 공격하면, ResNet이나 VGG 같은 대형 모델도 단 몇 번의 비트 플립만으로 정확도를 랜덤 수준(10% 미만)으로 격하시킬 수 있어요. 이를 Adversarial Weight Attack 또는 Bit-flip Attack(BFA)이라고 불러요.</p>
+    <p>기존 방어책들은 크게 두 가지 한계가 있었어요. 소프트웨어 측 방어(재훈련, 양자화, 체크포인트 복원)는 런타임 오버헤드가 크고, DNN 배포 환경에서 실시간 대응이 어려워요. 하드웨어 측에선 Target Row Refresh(TRR)나 PARA 같은 RowHammer 완화 기법이 있지만, 이건 "공격자 행"을 추적하는 방식이에요. 공격자가 전략을 조금만 바꾸면 우회가 가능하고, 무엇보다 DNN 가중치가 저장된 "피해자 행"을 직접 보호하지는 않아요.</p>
+    <div class="insight blue">
+      <div class="insight-label">논문의 출발점</div>
+      <p>공격자 행을 추적하는 기존 RowHammer 방어는 DNN 가중치를 담은 피해자 행을 직접 보호하지 못해요. DNN에 특화된 피해자 중심(victim-focused) in-DRAM 방어가 필요해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">DNN-Defender는 어떻게 피해자 행을 지키나요?</h2>
+    <p>DNN-Defender의 핵심 아이디어는 DRAM 내부에서 DNN 가중치가 저장된 피해자 행을 동적으로 이동(swap)시키는 거예요. 공격자가 아무리 특정 행을 반복 접근해서 인접 행에 비트 플립을 유도하려 해도, 그 인접 행에 가중치가 없으면 공격이 무효화되는 원리예요. 구체적으로는 DRAM 컨트롤러 또는 DRAM 내부 로직이 접근 빈도를 모니터링하다가, 특정 행이 임계값(threshold) 이상으로 반복 접근되면 해당 행의 인접 피해자 행 데이터를 안전한 위치로 스왑해요.</p>
+    <p>이 논문이 특히 영리한 점은 "양자화된 DNN"에 최적화했다는 거예요. 8-bit 또는 4-bit 양자화 가중치에서는 모든 비트가 동등하게 중요하지 않아요. MSB(Most Significant Bit)가 뒤집히면 추론 정확도에 치명적이지만, LSB는 상대적으로 영향이 작죠. DNN-Defender는 이 우선순위를 활용해서, 특히 민감한 비트(sensitivity-aware priority)를 담은 행을 더 자주, 더 빨리 스왑해요. 그래서 하드웨어 오버헤드를 최소화하면서도 보호 효과를 극대화해요.</p>
+    <p>메커니즘 구현 관점에서는, DRAM 내부에 피해자 후보 행 집합을 추적하는 소규모 카운터 테이블을 두고, 스왑 대상과 안전 영역(safe zone)을 관리하는 로직을 DRAM 컨트롤러에 추가해요. 소프트웨어 재훈련이나 ECC 코드 변경이 전혀 필요 없고, DRAM 프로토콜(DDR4/LPDDR5) 수준의 인터페이스만 활용해서 구현 가능하다는 것도 큰 장점이에요.</p>
+    <div class="insight green">
+      <div class="insight-label">핵심 아이디어</div>
+      <p>가중치 민감도(sensitivity) 기반 우선순위 스왑으로, DNN의 정확도에 치명적인 비트를 담은 행을 먼저 이동시켜요. 소프트웨어 수정 없이 DRAM 내부에서 완결되는 방어 메커니즘이에요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">실제로 BFA 공격을 얼마나 잘 막아냈나요?</h2>
+    <p>실험은 CIFAR-10과 ImageNet 데이터셋 위에서 ResNet, VGG, MobileNet 계열 양자화 DNN들을 대상으로 진행됐어요. 공격 시나리오는 최신 Bit-flip Attack(BFA)으로, gradient 분석을 통해 가장 취약한 비트를 순차적으로 공격하는 방식이에요. 정상 상태에서 Top-1 정확도 70% 이상을 보이는 모델들이, 방어 없이 BFA를 받으면 불과 수십 번의 비트 플립만으로 10% 이하(random guess 수준)로 추락해요.</p>
+    <p>DNN-Defender를 적용하면 이야기가 완전히 달라져요. 표적 BFA(targeted bit-flip)의 성공률이 무작위 공격(random attack) 수준으로 낮아지고, 실질적인 정확도 저하가 거의 없어요. CIFAR-10과 ImageNet 모두에서 방어 전후 정확도 차이가 통계적으로 유의미하지 않아요. 특히 기존 소프트웨어 방어(adversarial training 등)나 하드웨어 방어(TRR, PARA)와 비교했을 때, DNN-Defender는 훈련 오버헤드나 성능 저하 없이 동등하거나 우수한 보호 성능을 보여요.</p>
+    <p>하드웨어 오버헤드 측면에서는, 카운터 테이블과 스왑 로직에 필요한 DRAM 내부 면적이 전체 칩의 수 퍼센트 이내로 추정되고, 스왑 동작이 발생하는 빈도가 워크로드 특성상 매우 낮아서 실제 메모리 접근 지연(latency)에 미치는 영향이 미미해요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">~0%</div><div class="stat-desc">정확도 저하<br>(방어 적용 후)</div></div>
+      <div class="stat-box"><div class="stat-num">Random↓</div><div class="stat-desc">표적 BFA 성공률이<br>무작위 수준으로 저하</div></div>
+      <div class="stat-box"><div class="stat-num">No SW</div><div class="stat-desc">소프트웨어 재훈련<br>불필요</div></div>
+      <div class="stat-box"><div class="stat-num">&lt;5%</div><div class="stat-desc">DRAM 내부<br>하드웨어 오버헤드 추정</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM(High Bandwidth Memory)은 AI 가속기(GPU, NPU)와 직접 연결되어 DNN 가중치를 실시간으로 공급하는 핵심 메모리예요. HBM4부터는 Near-Memory Computing 기능도 논의되고 있는데, 이 방향으로 가면 "메모리 안에서 가중치를 처리"하는 시나리오가 현실이 돼요. 이때 DNN-Defender처럼 in-DRAM 방어 로직이 HBM 내부에 탑재된다면, 별도의 보안 프로세서 없이도 AI 모델을 물리적 공격으로부터 보호할 수 있어요.</p>
+    <p>RowHammer는 DRAM의 고집적화(셀 간격 축소)와 함께 점점 심각해지는 문제예요. DDR4 시대에도 문제였지만, HBM처럼 수직 스태킹으로 셀 밀도를 극단적으로 높인 구조에서는 셀 간 전자 간섭이 더 클 수 있어요. HBM의 경우 TSV(Through-Silicon Via)를 통한 물리적 접근이 더 제한적이라 공격 경로가 다소 다르지만, 호스트 CPU/GPU와의 인터페이스를 통해 간접적인 RowHammer 유사 공격이 가능한 시나리오는 배제할 수 없어요.</p>
+    <p>실용적인 적용 방향으로는, HBM 컨트롤러(PHY + 메모리 컨트롤러) 단계에서 가중치 영역을 특별 보호 구역으로 태깅하고, 접근 패턴 모니터링 + 피해자 행 스왑 로직을 통합하는 방식을 생각할 수 있어요. 특히 엣지 AI 디바이스나 자율주행 SoC처럼 보안과 실시간성이 동시에 요구되는 환경에서 이 아이디어는 매력적이에요.</p>
+    <div class="insight yellow">
+      <div class="insight-label">주의할 점</div>
+      <p>HBM의 스태킹 구조와 TSV 기반 접속 방식 때문에 기존 DDR 환경과 RowHammer 공격 경로가 달라요. 또한 스왑 동작이 HBM의 타이밍 제약(tRC, tRAS 등)과 충돌하지 않도록 세밀한 타이밍 설계가 필요해요. 양자화 DNN 전용으로 설계되어서, FP32나 BF16 가중치 환경에서는 민감도 계산 방식이 달라질 수 있어요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — Adversarial Weight Attack 전체 흐름도. 공격자가 gradient 분석으로 취약 비트를 식별하고 → RowHammer로 해당 비트를 뒤집는 과정을 단계별로 보여줘요. 정상 DNN 추론 정확도가 공격 비트 수에 따라 급격히 떨어지는 그래프도 함께 표시돼요.</p>
+    <p><strong>Fig. 2</strong> — DNN-Defender 아키텍처 블록 다이어그램. DRAM 어레이 내 피해자 행 추적 카운터, 스왑 로직, 안전 영역(safe zone) 구성을 보여줘요. 기존 DRAM 컨트롤러에 최소한의 추가 로직만으로 구현되는 구조예요.</p>
+    <p><strong>Fig. 3</strong> — 가중치 민감도(sensitivity) 맵. 양자화된 DNN에서 각 비트 위치별 정확도 기여도를 시각화해요. MSB일수록 민감도가 높고, DNN-Defender가 이 분포를 기반으로 스왑 우선순위를 결정해요.</p>
+    <p><strong>Fig. 4</strong> — 방어 성능 비교 그래프. 방어 없음(baseline), 기존 TRR, 소프트웨어 재훈련, DNN-Defender의 공격 성공률과 정확도를 나란히 비교해요. DNN-Defender가 정확도 손실 없이 가장 낮은 공격 성공률을 달성해요.</p>
+    <p><strong>Fig. 5</strong> — CIFAR-10 / ImageNet 실험 결과 테이블. ResNet-20, ResNet-50, VGG-16, MobileNet-V2에 걸쳐 BFA 공격 전후 Top-1 정확도와 DNN-Defender 적용 후 정확도를 정리해요.</p>
+    <div class="figure-outer">
+      <a class="figure-open-link" href="https://www.semanticscholar.org/paper/a4f09310f15467e021ff70d26cd0aea4bfe60289" target="_blank">↗ 원문에서 그림 보기</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

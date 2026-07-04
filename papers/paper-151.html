@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DRAM Characterization under Relaxed Refresh Period... · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">DRAM Characterization under Relaxed Refresh Period...</span>
+</div>
+<div class="article">
+  <div class="article-venue">IEEE International Symposium on On-Line Testing and Robust System Design 2018</div>
+  <h1 class="article-title">DRAM Characterization under Relaxed Refresh Period Considering System Level Effects within a Commodity Server</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">Thermal</span><span class="tag">Yield</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/44e2e12af61d1fa7e57974398d4de62f302545e6" target="_blank">원문 보기 →</a>
+  <a class="article-link" href="https://pure.qub.ac.uk/files/149454531/paper.pdf" target="_blank">PDF →</a></div>
+  <p class="opener">오늘날의 빠른 데이터 생성과 더 높은 메모리 용량에 대한 요구 증가로 인해 현재 드물게 발생하는 최악의 조건에 따라 설정되는 새로 고침 기간의 공격적인 조정에 대한 많은 연구가 촉발되었습니다. 이러한 연구에서는 데이터 의존형 회로 레벨 요인을 자세히 분석하고 가변적인 셀 보유 시간으로 인해 온라인 DRAM 특성화가 필요함을 나타냈습니다. 그들은 현장에서 사...</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">이 논문은 무엇을 다루나요?</h2>
+    <p>오늘날의 빠른 데이터 생성과 더 높은 메모리 용량에 대한 요구 증가로 인해 현재 드물게 발생하는 최악의 조건에 따라 설정되는 새로 고침 기간의 공격적인 조정에 대한 많은 연구가 촉발되었습니다. 이러한 연구에서는 데이터 의존형 회로 레벨 요인을 자세히 분석하고 가변적인 셀 보유 시간으로 인해 온라인 DRAM 특성화가 필요함을 나타냈습니다. 그들은 현장에서 사용할 수 없는 열 테스트베드를 사용하여 제어된 온도에서 FPGA에서 몇 가지 테스트 데이터 패턴을 실행함으로써 이를 수행했습니다. 더욱이 기존 연구에서는 실제 시스템에서 워크로드를 실행할 때 발생하고 DRAM 신뢰성에 직간접적으로 영향을 미칠 수 있는 시스템 수준 효과를 밝힐 수 없었습니다. 본 논문에서는 Linux OS를 탑재한 최첨단 64비트 ARM 기반 서버를 기반으로 하는 실험적 프레임워크를 개발합니다. 이 프레임워크에서는 일반적인 테스트 데이터 패턴은 물론 널리 사용되는 HPC 및 클라우드 워크로드를 실행하여 편안한 새로 고침 기간에 DRAM 특성화를 활성화했습니다. 우리의 결과는 일반적인 테스트 패턴이 낮은 DRAM 온도에서 오류가 발생하기 쉬운 위치를 식별하는 데 효과적이지 않다는 것을 나타냅니다. 또한, SOC 활용도와 DRAM 신뢰성 사이에는 강한 상관관계가 있음을 밝힙니다. 이러한 결과를 활용하여 우리는 DRAM 온도에 간접적으로 스트레스를 가하여 복잡한 열 장비 없이 현장에서 특성화에 사용할 수 있는 벤치마크를 개발했습니다. 우리의 연구에 따르면 사용 가능한 오류 수정 코드로 모든 오류가 수정되는 상용 시스템에서 새로 고침 기간이 35배 완화되어 평균 11.5%의 전력 절감 효과를 얻을 수 있는 것으로 나타났습니다.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">핵심 방법론</h2>
+    <p class="auto-note">⚙ "이 논문 상세 분석해줘"라고 하면 Claude가 채워드립니다.</p>
+    <div class="article-links" style="margin-top:12px"><a class="article-link primary" href="https://www.semanticscholar.org/paper/44e2e12af61d1fa7e57974398d4de62f302545e6" target="_blank">원문 보기 →</a>
+  <a class="article-link" href="https://pure.qub.ac.uk/files/149454531/paper.pdf" target="_blank">PDF →</a></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">주요 결과</h2>
+    <p class="auto-note">⚙ "이 논문 상세 분석해줘"라고 하면 Claude가 채워드립니다.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p class="auto-note">⚙ "이 논문 상세 분석해줘"라고 하면 Claude가 채워드립니다.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/44e2e12af61d1fa7e57974398d4de62f302545e6" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

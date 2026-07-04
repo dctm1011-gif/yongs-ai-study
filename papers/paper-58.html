@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Modified Greinacher DC-DC Converter · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Modified Greinacher DC-DC</span>
+</div>
+<div class="article">
+  <div class="article-venue">arXiv 2020</div>
+  <h1 class="article-title">A new Topology of a High-Voltage-Gain DC-DC Converter Based on Modified Greinacher Voltage Multiplier</h1>
+  <div class="article-tags"><span class="tag">Power</span></div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://arxiv.org/abs/2004.04259v2" target="_blank">원문 보기 →</a>
+    <a class="article-link" href="https://arxiv.org/pdf/2004.04259v2" target="_blank">PDF →</a>
+  </div>
+  <p class="opener">수정된 Greinacher 전압 배증기(VMC)와 2상 인터리브 부스트 컨버터를 결합해, 낮은 스위치 전압 스트레스와 작은 인덕터 크기만으로 20V → 400V 수준의 고전압 이득을 연속 전도 모드(CCM)에서 달성하는 새로운 비절연 DC-DC 토폴로지예요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">왜 고전압 이득 DC-DC 변환기가 필요한가요?</h2>
+    <p>태양광(PV), DC 마이크로그리드, 연료전지 같은 재생에너지 시스템은 공통적으로 낮은 입력 전압(수십 V)을 고압 DC 버스(수백 V)로 끌어올려야 하는 과제를 안고 있어요. 일반적인 부스트 컨버터는 높은 듀티 사이클에서 동작해야 하는데, 이때 스위칭 손실이 급증하고 다이오드 역회복(reverse recovery) 문제로 효율이 급격히 나빠지죠.</p>
+    <p>고전압 이득을 얻는 방법으로 절연형 변압기를 쓰는 플라이백·SEPIC 등이 있지만, 변압기 크기와 비용, 전자기 간섭(EMI) 문제가 따라와요. 비절연(non-isolated) 방식으로 전압 이득을 높이려면 인덕터 커플링이나 전압 배증기(voltage multiplier) 셀을 추가하는 구조가 유리해요. Greinacher 회로는 Cockcroft-Walton의 초기 형태로, 다이오드-커패시터 래더를 이용해 출력 전압을 단계적으로 높이는 원리인데요. 이를 현대적인 부스트 컨버터와 결합하면 높은 전압 이득과 낮은 소자 스트레스를 동시에 달성할 수 있어요.</p>
+    <p>이 논문은 수정된 Greinacher VMC를 2상 인터리브 부스트 컨버터에 결합한 새로운 비절연 토폴로지를 제안해요. 인터리브 기술로 입력 전류 리플과 인덕터 크기를 줄이고, VMC로 출력 전압을 곱배수로 높이는 아이디어를 결합한 거죠. 설계 절차, 소자 선정 기준, MATLAB/Simulink 시뮬레이션, 그리고 실험 검증까지 포함해 실용적인 설계 가이드로서의 역할도 해요.</p>
+    <div class="insight blue">
+      <div class="insight-label">논문의 출발점</div>
+      <p>기존 고전압 이득 컨버터는 높은 듀티 사이클에서의 스위칭 손실, 또는 절연 변압기의 부피·비용 문제를 피하기 어렵다는 데 있어요. 비절연 방식으로 전압 배증기와 인터리브 부스트를 결합해 이 두 문제를 함께 해결하는 것이 핵심 동기예요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">수정된 Greinacher VMC와 2상 인터리브 결합이란 어떤 구조인가요?</h2>
+    <p>제안된 토폴로지는 크게 두 부분으로 구성돼요. 첫 번째는 2상 인터리브 부스트 단(two-phase interleaved boost stage)으로, 두 개의 스위치와 인덕터가 180° 위상차로 동작해요. 이 인터리브 구조 덕분에 입력 전류 리플이 단상 대비 절반 이하로 줄고, 각 인덕터의 크기도 작아져요. 연속 전도 모드(CCM)에서 동작하기 때문에 스위칭 전류 파형이 안정적이에요.</p>
+    <p>두 번째는 수정된 Greinacher 전압 배증기 셀(VMC)이에요. 원래 Greinacher 회로는 두 개의 다이오드와 두 개의 커패시터로 출력 전압을 2배로 끌어올리는 구조인데, 이 논문에서는 인터리브 부스트의 두 위상 전압을 VMC 입력으로 활용하도록 수정했어요. 위상 차이를 이용해 커패시터 충방전이 교번(alternating)하면서 출력 전압이 더 매끄럽게 높아지는 효과가 있어요.</p>
+    <p>전압 이득 수식은 듀티 사이클 D와 VMC 단수 n의 함수로 표현돼요. 스위치(MOSFET)에 걸리는 최대 전압 스트레스는 출력 전압의 일부에 불과해 일반 부스트 대비 낮은 정격 소자를 쓸 수 있어요. 설계 예시로 입력 20V, 출력 400V, 출력 전력 200W, 스위칭 주파수 50kHz 조건에서 소자 파라미터를 산출하는 과정이 상세히 제시돼요.</p>
+    <div class="insight green">
+      <div class="insight-label">핵심 아이디어</div>
+      <p>인터리브 2상 부스트로 입력 전류 연속성과 소형 인덕터를 확보하고, 수정된 Greinacher VMC로 전압 이득을 곱배수로 키워요. 스위치 전압 스트레스는 출력 전압보다 낮게 유지되어 낮은 정격 MOSFET을 사용할 수 있는 게 핵심 장점이에요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">시뮬레이션과 실험에서 어떤 성능을 확인했나요?</h2>
+    <p>MATLAB/Simulink 시뮬레이션으로 20V 입력 → 400V 출력(200W) 변환이 목표 듀티 사이클 범위 안에서 정상 동작함을 확인했어요. 입력 전류 리플은 2상 인터리브 효과로 단상 대비 크게 감소했고, 출력 전압 리플도 VMC 커패시터 설계에 따라 낮은 수준으로 제어됐어요. 하드웨어 프로토타입 실험에서도 분석·시뮬레이션 결과와 일치하는 성능이 측정됐으며, 스위치 전압 스트레스가 이론값과 잘 맞아 소자 신뢰성이 검증됐어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">20x</div><div class="stat-desc">전압 이득 (20V → 400V)</div></div>
+      <div class="stat-box"><div class="stat-num">200W</div><div class="stat-desc">설계 출력 전력</div></div>
+      <div class="stat-box"><div class="stat-num">CCM</div><div class="stat-desc">동작 모드 (연속 전도 모드)</div></div>
+      <div class="stat-box"><div class="stat-num">50kHz</div><div class="stat-desc">스위칭 주파수</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM/반도체 전원 설계에 어떻게 연결되나요?</h2>
+    <p>HBM 패키지와 AI 가속기 시스템에서 전원 전달 네트워크(PDN)는 점점 중요해지고 있어요. HBM 자체는 VDDQ, VDD1 등 다양한 전압 레일이 필요한데, 시스템 레벨에서는 고전압 DC 버스(12V, 48V)에서 이 낮은 전압들을 효율적으로 변환해야 해요. 특히 서버·AI 인프라에서 48V to PoL(Point of Load) 변환이 트렌드인데, 이 과정에서 이 논문이 다루는 고전압 이득 컨버터의 설계 원리가 중간 버스 변환에 활용될 수 있어요.</p>
+    <p>반도체 칩 수준에서도 on-chip voltage regulator나 package-integrated converter 연구에서 전압 배증기 구조가 등장해요. 저입력 고출력 변환이 필요한 MEMS 드라이버, 플래시 메모리 워드라인 전압, 고전압 I/O 인터페이스 드라이버 등에서 Greinacher/Cockcroft-Walton 계열 전하 펌프 회로가 실제로 사용되고 있어요. 이 논문의 인터리브 + VMC 결합 방식은 전력 밀도와 리플 성능을 동시에 개선하는 아이디어로 온칩 전력 변환 연구에도 영감을 줄 수 있답니다.</p>
+    <div class="insight yellow">
+      <div class="insight-label">주의할 점</div>
+      <p>VMC 단수가 늘어날수록 전압 이득은 높아지지만, 다이오드와 커패시터 개수가 비례해 증가하면서 기생 성분(ESR, 역회복 손실)이 효율에 미치는 영향이 커져요. 고주파 동작 시 다이오드 역회복 문제를 줄이기 위해 SiC 또는 GaN 소자로 교체하거나, 소프트 스위칭 보조 회로를 추가하는 방향이 고려돼야 해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — 제안된 토폴로지 회로도. 2상 인터리브 부스트(L1, L2, S1, S2)와 수정된 Greinacher VMC(D1~D4, C1~C4)가 결합된 전체 회로를 보여줘요.</p>
+    <p><strong>Fig. 2</strong> — CCM에서 주요 파형. 스위치 전류, 인덕터 전류(두 위상 각각), 출력 전압 리플, 커패시터 전압을 시간축으로 표시해요. 두 위상의 인터리브 효과로 입력 전류가 매끄러운 것을 볼 수 있어요.</p>
+    <p><strong>Fig. 3</strong> — 전압 이득 vs 듀티 사이클 곡선. 이론 수식과 시뮬레이션 결과를 함께 플롯해 잘 일치함을 보여줘요.</p>
+    <p><strong>Fig. 4</strong> — 실험 프로토타입 사진과 측정 파형. 입력 20V, 출력 400V 조건에서의 실측 결과가 시뮬레이션과 잘 맞음을 확인할 수 있어요.</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://arxiv.org/abs/2004.04259v2" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+</div>
+</body>
+</html>

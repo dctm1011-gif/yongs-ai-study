@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SALT: Subarray-Level RowHammer Defense · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">SALT: Subarray-Level RowHammer Defense</span>
+</div>
+<div class="article">
+  <div class="article-venue">HPCA 2026</div>
+  <h1 class="article-title">SALT: Track-and-Mitigate Subarrays, Not Rows, for Blast-Radius-Free Rowhammer Defense</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">ECC</span><span class="tag">Security</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/6224f798e75808dfeeb23fabe70b4d167a8ad87d" target="_blank">원문 보기 →</a></div>
+  <p class="opener">행(row) 단위 추적의 구조적 한계인 "blast radius" 문제를 서브어레이(subarray) 단위 추적으로 근본적으로 해결한 RowHammer 방어 메커니즘이에요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">기존 RowHammer 방어가 왜 "blast radius" 문제를 갖고 있나요?</h2>
+    <p>RowHammer는 DRAM에서 특정 행(row)을 반복적으로 활성화하면 인접 행의 전하가 누설되어 비트 플립이 발생하는 물리적 취약점이에요. DRAM 공정이 미세화될수록 셀 간 물리적 거리가 좁아지고, RowHammer 임계값(RHTB, Rowhammer Threshold)은 계속 낮아지고 있어요. 이미 DDR5 기준 RHTB가 수천 회 수준까지 내려왔고, 최악의 경우 수백 회라는 보고도 있어요.</p>
+    <p>현재 JEDEC 표준이 채택한 최신 방어 메커니즘은 PRAC(Per-Row Activation Counting)에요. 각 행의 활성화 횟수를 DRAM 내부에서 추적하다가 임계값 초과 시 ABO(Alert Back-Off) 신호로 메모리 컨트롤러에 알리고, 인접한 2개 피해자 행을 즉시 리프레시하는 방식이에요. 언뜻 보면 완벽해 보이지만, 여기에 치명적인 가정이 숨어 있어요. PRAC는 "공격자 행 양쪽 2개 행만 리프레시하면 충분하다"고 가정하는데, 이 피해자 집합의 반경이 바로 blast radius예요.</p>
+    <p>그런데 실제로는 blast radius 바깥의 먼 행에서도 소량의 전하 누설이 축적될 수 있어요. 이 논문은 "ripple attack"이라는 새로운 공격 기법을 통해 PRAC가 허용하는 수준의 3배~78배에 달하는 전하 손실을 먼 행에서도 유발할 수 있음을 보여줘요. 방어가 완벽하다고 여겼던 PRAC조차 이론적으로 우회 가능하다는 뜻이에요.</p>
+    <div class="insight blue">
+      <div class="insight-label">논문의 출발점</div>
+      <p>PRAC의 blast radius 가정은 실제 DRAM의 물리적 구조와 맞지 않아요. DRAM 서브어레이는 물리적으로 격리돼 있어서 서브어레이 경계를 넘는 전하 누설은 일어나지 않아요. 이 물리적 특성을 방어에 활용하면 blast radius 개념 자체를 없앨 수 있어요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">SALT는 서브어레이를 어떻게 활용해 blast radius를 없애나요?</h2>
+    <p>SALT(Subarray-Level Tracking and Mitigation)의 핵심 통찰은 DRAM의 물리 구조에 있어요. DRAM 뱅크 내부는 여러 서브어레이로 나뉘어 있고, 각 서브어레이는 자체 비트라인과 센스앰프를 가져요. 결정적으로, 한 서브어레이 안에서 일어난 RowHammer 전하 누설은 다른 서브어레이의 셀에 영향을 주지 않아요. 서브어레이 경계가 물리적 격리 장벽 역할을 하는 거예요.</p>
+    <p>이 특성을 이용하면, 행 단위로 추적하는 대신 서브어레이 단위로 활성화 횟수를 추적하고, 서브어레이 전체가 임계값에 도달하면 해당 서브어레이 내의 모든 행을 리프레시하면 돼요. 서브어레이 경계 바깥의 행은 영향을 받지 않으니 추적 범위를 그 서브어레이 내부로만 한정할 수 있고, blast radius라는 개념 자체가 사라져요. 어떤 공격 패턴을 써도 서브어레이 내 모든 행이 결국 리프레시되니까요.</p>
+    <p>더 나아가 SALT-C는 ABO(Alert Back-Off) 발생 횟수를 줄이기 위한 적응형 스케줄링을 추가해요. 서브어레이의 활성화 수가 온디맨드 리프레시로 처리 가능한 수준이라면 ABO를 생략하고 백그라운드 리프레시로 조용히 처리하는 전략이에요. ABO는 메모리 컨트롤러에 "지금 잠깐 멈춰"라고 신호를 보내는 건데, 이게 줄어들수록 성능 저하가 작아져요. SALT-C는 이 방식으로 ABO 발생을 PRAC 대비 48배 줄였어요.</p>
+    <div class="insight green">
+      <div class="insight-label">핵심 아이디어</div>
+      <p>서브어레이 간 물리적 전하 격리라는 이미 존재하는 DRAM 구조적 특성을 방어 로직의 기반으로 삼았어요. 별도 회로를 추가하지 않고도 blast-radius-free 방어가 가능해지는데, 이는 DRAM 물리를 깊이 이해한 데서 나온 아이디어예요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">SALT는 PRAC 대비 얼마나 더 좋은가요?</h2>
+    <p>SALT-C는 PRAC 대비 모든 핵심 지표에서 우월한 결과를 보여요. 보안 측면에서는 blast radius를 없애 ripple attack 같은 우회 공격 자체가 불가능해지고, 오버헤드 측면에서는 PRAC보다 스토리지가 훨씬 적게 필요하며 성능 저하도 작아요. 이론적으로 더 강한 보안을 제공하면서 오버헤드는 오히려 줄었다는 점이 인상적이에요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">48×</div><div class="stat-desc">ABO 발생 횟수 감소 (SALT-C vs PRAC)</div></div>
+      <div class="stat-box"><div class="stat-num">38×</div><div class="stat-desc">스토리지 오버헤드 감소 (SALT-C vs PRAC)</div></div>
+      <div class="stat-box"><div class="stat-num">0.3%</div><div class="stat-desc">SALT-C 성능 저하 (PRAC는 1.7%)</div></div>
+      <div class="stat-box"><div class="stat-num">3~78×</div><div class="stat-desc">PRAC가 허용하는 ripple attack의 전하 손실 배수 (SALT는 원천 차단)</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM은 일반 DRAM보다 훨씬 복잡한 서브어레이 구조를 가지고 있어요. HBM 스택의 각 다이는 여러 채널로 나뉘고, 각 채널 내부에도 다수의 서브어레이가 존재해요. SALT의 서브어레이 단위 추적 방식은 HBM의 이 계층적 구조와 매우 잘 맞아요. 채널 단위로 추적하고, 그 안에서 서브어레이 단위로 세분화하는 2단계 추적 방식을 적용하면 HBM에 특화된 blast-radius-free 방어가 가능해요.</p>
+    <p>HBM에서 RowHammer 방어가 특히 중요한 이유는, 고대역폭 메모리라는 특성상 단위 시간당 행 활성화 횟수가 일반 DRAM보다 훨씬 많다는 점이에요. 짧은 시간에 RHTB에 도달할 수 있어서 방어 메커니즘의 반응 속도가 중요한데, SALT-C의 온디맨드 리프레시 + ABO 최소화 전략은 HBM의 고속 환경에서 오버헤드를 낮게 유지하는 데 유리해요.</p>
+    <p>또한 HBM 다이의 DRAM 셀은 TSV 기반 적층 구조 때문에 일반 DRAM과 물리적 환경이 달라요. 서브어레이 간 격리 특성이 얼마나 강하게 유지되는지는 HBM 전용 실험이 필요하지만, 기본 서브어레이 격리 원리는 동일하게 적용돼요.</p>
+    <div class="insight yellow">
+      <div class="insight-label">주의할 점</div>
+      <p>SALT는 DRAM 내부 서브어레이 구조에 대한 정확한 정보를 전제해요. HBM 제조사마다 서브어레이 크기와 구성이 다르고 공개되지 않는 경우가 많아서, 실제 구현에서는 DRAM 제조사와의 협력 또는 역공학이 필요해요. 또한 서브어레이 전체 리프레시는 한 번에 처리할 데이터 양이 많아 tRFC 시간에 영향을 줄 수 있어요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — DRAM 서브어레이 구조와 전하 누설 격리 모식도: 서브어레이 내부에서는 RowHammer 전하 누설이 전파되지만, 서브어레이 경계(센스앰프 영역)에서 완전히 차단됨을 보여줘요. Blast radius가 서브어레이 안에 국한된다는 핵심 근거예요.</p>
+    <p><strong>Fig. 2</strong> — Ripple attack 시뮬레이션 결과: PRAC 방어 하에서 blast radius 바깥의 먼 행들이 ripple 공격으로 3배~78배 전하 손실을 입는 시나리오를 그래프로 보여줘요.</p>
+    <p><strong>Fig. 3</strong> — SALT 추적 카운터 구조: 서브어레이당 하나의 카운터로 모든 행의 활성화를 합산 추적하는 회로 구조. PRAC의 행당 카운터 대비 스토리지가 38분의 1로 줄어드는 이유를 설명해요.</p>
+    <p><strong>Fig. 4</strong> — SALT-C의 온디맨드 리프레시 스케줄링: 카운터 값이 ABO 없이 처리 가능한 임계값 이하일 때는 정기 리프레시 사이에 조용히 서브어레이를 리프레시하고, ABO가 필요한 경우만 신호를 보내는 흐름도예요.</p>
+    <p><strong>Fig. 5</strong> — PRAC vs SALT-C 성능 비교: 다양한 워크로드에서 두 방식의 ABO 횟수, 성능 저하, 스토리지 오버헤드를 비교한 막대 그래프. SALT-C가 전 지표에서 우월함을 보여줘요.</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/6224f798e75808dfeeb23fabe70b4d167a8ad87d" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Selective Subarray Isolation · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Selective Subarray Isolation</span>
+</div>
+<div class="article">
+  <div class="article-venue">ACM TECS 2025</div>
+  <h1 class="article-title">Selective Subarray Isolation for Mitigating RowHammer Attack</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">ECC</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/735e7b6dc5eeccc5891f165daf845b35f550893a" target="_blank">원문 보기 →</a></div>
+  <p class="opener">DRAM subarray 구조를 활용해 서로 다른 보안 도메인의 기밀 데이터만 선택적으로 격리함으로써, 하드웨어 오버헤드 없이 RowHammer를 방어하면서도 성능 손실을 최소화하는 FSSI 기법을 제안해요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">왜 기존 RowHammer 방어는 성능을 희생해야 했을까요?</h2>
+    <p>RowHammer 공격이 가능한 근본 이유는 DRAM 셀 밀도가 높아질수록 인접 행 간 전기적 간섭이 심해지기 때문이에요. 공격자는 aggressor 행을 수천 번 반복 접근해 victim 행의 비트를 뒤집는데, 이를 막기 위한 기존 방어(TRR, PARA 등)는 대부분 추가 refresh를 발행하거나 카운터 하드웨어를 추가하는 방식이에요. 이는 성능 오버헤드와 에너지 소비 증가라는 비용을 수반해요.</p>
+    <p>특히 최신 세대 DRAM에서 TRH(RH threshold)가 수백 수준까지 떨어지면서, 기존 방어 기법의 오버헤드는 더욱 커지고 있어요. 연구자들은 카운터 기반 방어나 ECC 강화 외에도, DRAM의 물리 구조 자체를 활용한 방어를 탐색하기 시작했어요.</p>
+    <p>이 논문은 DRAM bank 내의 subarray라는 물리 파티션 단위에 주목해요. 서로 다른 보안 도메인(예: 신뢰할 수 없는 프로세스 vs. 커널 메모리)의 데이터를 동일 subarray에 두지 않으면, 인접 행 공격 자체가 도메인 경계를 넘을 수 없어요. 이 단순한 아이디어를 체계화한 게 이 논문의 핵심이에요.</p>
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>RowHammer는 물리적으로 인접한 행 간에만 발생해요. 도메인이 다른 기밀 데이터를 별도 subarray에 두면 공격 경로 자체가 차단돼요 — 추가 하드웨어 없이요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">SI, SSI, FSSI — 세 가지 격리 전략은 어떻게 다른가요?</h2>
+    <p><strong>SI (Subarray Isolation)</strong>는 가장 단순한 접근이에요. 서로 다른 보안 도메인의 모든 데이터를 무조건 별도 subarray에 할당해요. 완전한 격리를 보장하지만, subarray 간 bank-level parallelism이 크게 줄어요. 도메인별 subarray를 별도로 열어야 하니까 메모리 접근 병렬성이 떨어지고 성능 손실이 상당해요.</p>
+    <p><strong>SSI (Selective Subarray Isolation)</strong>는 이를 개선해요. 모든 데이터가 아닌, 도메인 간 경계에서 실제로 기밀(sensitive)로 분류된 데이터만 분리된 subarray에 할당해요. 기밀이 아닌 데이터는 기존처럼 subarray를 공유해도 돼요. 기밀 데이터 비율이 낮을 때 성능이 SI 대비 크게 향상돼요.</p>
+    <p><strong>FSSI (Finer Selective Subarray Isolation)</strong>는 한 발 더 나가요. 별도 subarray 전체를 할당하는 대신, 동일 subarray 내에서 guard row(보호 행)로 구분된 별도 파티션을 기밀 데이터에 할당해요. 이렇게 하면 subarray 내부에서도 격리를 유지하면서 subarray 수 자체를 절약할 수 있어요. 세 가지 방식 중 성능과 에너지 효율이 가장 우수한 방식이에요.</p>
+    <p>격리 대상 선정 알고리즘은 OS 레벨에서 페이지 분류(기밀 여부)를 기준으로 해요. 기밀 페이지는 FSSI 파티션에, 일반 페이지는 기존 방식으로 배치하며, 메모리 할당 시 subarray 내 위치를 OS가 제어해요.</p>
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>FSSI는 하나의 subarray를 guard row로 내부 파티셔닝하여, 기밀 데이터와 일반 데이터가 같은 subarray 안에서도 물리적으로 분리돼요. 추가 DRAM 셀이나 카운터 하드웨어 없이 기존 구조만으로 방어가 가능해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">FSSI는 성능을 얼마나 유지하면서 방어를 달성했나요?</h2>
+    <p>시뮬레이션 기반 평가에서 기밀 데이터 비율에 따른 성능 오버헤드를 측정했어요. FSSI는 기밀 데이터 비율이 50%일 때도 평균 0.89%의 성능 저하만 보였고, 10%·20% 구간에서는 오히려 기준(RH 방어 없음) 대비 각각 1.43%, 1.28%의 성능 향상을 보였어요. 이는 기밀 데이터를 별도 파티션에 집중시키면서 비기밀 접근의 bank-level parallelism이 오히려 개선됐기 때문이에요. 에너지 효율 측면에서도 FSSI가 비교 대상 최첨단 기법들 중 가장 우수한 결과를 냈어요. 또한 세 가지 방식 모두 추가 하드웨어 오버헤드를 발생시키지 않아요 — 기존 DRAM 구조와 OS 메모리 관리자 수정만으로 구현 가능해요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">0.89%</div><div class="stat-desc">기밀 데이터 50% 시 FSSI 성능 저하 (평균)</div></div>
+      <div class="stat-box"><div class="stat-num">+1.43%</div><div class="stat-desc">기밀 데이터 10% 시 기준 대비 성능 향상</div></div>
+      <div class="stat-box"><div class="stat-num">0</div><div class="stat-desc">추가 하드웨어 오버헤드 (기존 DRAM 구조 그대로 사용)</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에서 subarray 격리를 어떻게 적용할 수 있나요?</h2>
+    <p>HBM은 1개 다이에 8개 channel, channel당 2개 bank, bank당 여러 subarray로 구성돼요. 이 계층적 구조는 FSSI 같은 subarray 레벨 격리를 적용하기에 적합한 환경이에요. 특히 HBM을 사용하는 AI 가속기에서는 모델 가중치(기밀)와 사용자 데이터(기밀 가능성)를 일반 중간 연산 데이터와 분리 저장하는 게 보안 관점에서 중요해질 수 있어요.</p>
+    <p>HBM 컨트롤러는 다이와 같은 패키지에 통합(2.5D interposer 또는 3D 스택)되어 있어서 OS보다 더 세밀한 subarray 위치 제어가 가능해요. 이 논문의 FSSI 개념을 HBM 컨트롤러의 메모리 매핑 로직에 적용하면, 추가 실리콘 없이 데이터 격리를 달성할 수 있을 거예요.</p>
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>이 논문은 guard row 파티셔닝이 실제 RowHammer를 완전히 차단하는지에 대한 물리 레벨 검증을 별도 실험으로 다루지 않아요. HBM처럼 고밀도 스택 구조에서 guard row의 전기적 격리 효과가 충분한지는 실리콘 레벨 검증이 필요해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — DRAM Bank-Subarray 구조 개요 및 RowHammer 공격 경로 설명도</p>
+    <p><strong>Fig. 2</strong> — SI / SSI / FSSI 세 가지 격리 전략의 subarray 할당 비교 다이어그램</p>
+    <p><strong>Fig. 3</strong> — 기밀 데이터 비율(10% / 20% / 50%)에 따른 세 방식의 성능·에너지 비교 그래프</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/735e7b6dc5eeccc5891f165daf845b35f550893a" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+</div>
+</body>
+</html>

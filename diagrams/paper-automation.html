@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>개발방향정리</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+  background: #f7f6f3;
+  color: #37352f;
+  min-height: 100vh;
+  padding: 0 0 80px;
+}
+
+/* top bar */
+.top-bar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(247,246,243,.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid #e8e6e0;
+  padding: 12px 28px;
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: #787672;
+}
+.back-link { color: #787672; text-decoration: none; }
+.back-link:hover { color: #37352f; }
+.breadcrumb-sep { opacity: .5; }
+.breadcrumb-cur { color: #37352f; font-weight: 500; }
+
+/* page header */
+.page-header {
+  max-width: 1000px; margin: 48px auto 0; padding: 0 32px;
+}
+.page-title { font-size: 28px; font-weight: 700; letter-spacing: -.5px; }
+.page-sub { margin-top: 8px; font-size: 14px; color: #787672; line-height: 1.6; }
+
+/* diagram wrapper */
+.diagram-wrap {
+  max-width: 1000px; margin: 40px auto 0; padding: 0 32px;
+}
+
+/* ── section headers ── */
+.section-header {
+  font-size: 11px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: #9b9a97;
+  margin: 48px 0 16px;
+}
+
+/* ── flow diagram ── */
+.flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.flow-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  width: 100%;
+  justify-content: center;
+}
+
+/* arrow connector */
+.arrow-down {
+  display: flex; justify-content: center;
+  padding: 4px 0;
+}
+.arrow-down::after {
+  content: '';
+  display: block;
+  width: 2px;
+  height: 28px;
+  background: #c4c2bb;
+}
+.arrow-down.short::after { height: 16px; }
+.arrow-down.with-label {
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+}
+.arrow-label {
+  font-size: 11px; color: #9b9a97;
+  background: #f7f6f3;
+  padding: 0 4px;
+  position: relative; z-index: 1;
+}
+
+/* horizontal arrow */
+.arrow-right {
+  display: flex; align-items: center;
+  padding: 0 4px;
+}
+.arrow-right::after {
+  content: '→';
+  font-size: 16px; color: #c4c2bb;
+}
+
+/* nodes */
+.node {
+  border-radius: 10px;
+  padding: 14px 20px;
+  font-size: 13px;
+  line-height: 1.5;
+  min-width: 220px;
+  max-width: 340px;
+  text-align: center;
+  position: relative;
+}
+.node .node-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  opacity: .65;
+  margin-bottom: 5px;
+}
+.node .node-title {
+  font-weight: 600;
+  font-size: 14px;
+}
+.node .node-detail {
+  font-size: 12px;
+  margin-top: 5px;
+  opacity: .75;
+}
+
+/* node colors */
+.node.trigger {
+  background: #37352f; color: #fff;
+  border: 2px solid #37352f;
+}
+.node.user {
+  background: #fff; color: #37352f;
+  border: 2px solid #d3d1cb;
+}
+.node.process {
+  background: #eef4ff; color: #1e40af;
+  border: 2px solid #bfdbfe;
+}
+.node.analysis {
+  background: #f0fdf4; color: #166534;
+  border: 2px solid #bbf7d0;
+}
+.node.generate {
+  background: #fdf4ff; color: #6b21a8;
+  border: 2px solid #e9d5ff;
+}
+.node.update {
+  background: #fff7ed; color: #9a3412;
+  border: 2px solid #fed7aa;
+}
+.node.done {
+  background: #ecfdf5; color: #065f46;
+  border: 2px dashed #6ee7b7;
+}
+.node.decision {
+  background: #fffbeb; color: #78350f;
+  border: 2px solid #fde68a;
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  width: 180px; height: 100px;
+  display: flex; align-items: center; justify-content: center;
+  min-width: unset;
+}
+.node.decision .node-title { font-size: 12px; }
+
+/* parallel block */
+.parallel-block {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+}
+.parallel-branch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  flex: 1;
+  max-width: 340px;
+}
+.parallel-branch .node { width: 100%; }
+.branch-label {
+  font-size: 11px; font-weight: 600; color: #9b9a97;
+  background: #f7f6f3; border: 1px solid #e8e6e0;
+  border-radius: 20px; padding: 2px 12px;
+  margin-bottom: 6px;
+}
+
+/* sub-detail list inside node */
+.node ul {
+  list-style: none;
+  text-align: left;
+  margin-top: 6px;
+}
+.node ul li { font-size: 11px; color: inherit; opacity: .85; }
+.node ul li::before { content: '· '; }
+
+/* preference card grid */
+.pref-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 4px;
+}
+.pref-card {
+  background: #fff;
+  border: 1px solid #e8e6e0;
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.pref-card-label {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: #9b9a97; margin-bottom: 6px;
+}
+.pref-tag {
+  display: inline-block;
+  background: #f0f0ef;
+  color: #37352f;
+  font-size: 11px;
+  border-radius: 4px;
+  padding: 2px 7px;
+  margin: 2px 2px 2px 0;
+}
+.pref-tag.blue { background: #eef4ff; color: #1e40af; }
+.pref-tag.green { background: #f0fdf4; color: #166534; }
+.pref-tag.purple { background: #fdf4ff; color: #6b21a8; }
+
+/* file output table */
+.file-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin-top: 8px;
+}
+.file-table th {
+  background: #f0f0ef;
+  padding: 7px 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 11px;
+  color: #787672;
+  border-bottom: 1px solid #e8e6e0;
+}
+.file-table td {
+  padding: 7px 12px;
+  border-bottom: 1px solid #f0f0ef;
+  vertical-align: top;
+}
+.file-table tr:last-child td { border-bottom: none; }
+.file-badge {
+  font-size: 10px; font-weight: 600;
+  padding: 2px 8px; border-radius: 4px;
+}
+.file-badge.create { background: #f0fdf4; color: #166534; }
+.file-badge.update { background: #fff7ed; color: #9a3412; }
+.file-badge.optional { background: #f0f0ef; color: #787672; }
+
+/* note box */
+.note-box {
+  background: #fff;
+  border: 1px solid #e8e6e0;
+  border-left: 4px solid #6366f1;
+  border-radius: 8px;
+  padding: 14px 18px;
+  font-size: 13px;
+  color: #37352f;
+  line-height: 1.7;
+  margin-top: 8px;
+}
+.note-box strong { color: #4338ca; }
+
+/* discord section */
+.discord-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 8px;
+}
+.discord-flow-box {
+  background: #fff;
+  border: 1px solid #e8e6e0;
+  border-top: 3px solid #5865F2;
+  border-radius: 8px;
+  padding: 16px 18px;
+}
+.discord-flow-title {
+  font-size: 12px; font-weight: 700;
+  color: #5865F2;
+  margin-bottom: 12px;
+  letter-spacing: .02em;
+}
+.discord-step {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-bottom: 8px;
+  font-size: 12px; line-height: 1.5; color: #37352f;
+}
+.discord-step-num {
+  background: #5865F2; color: #fff;
+  border-radius: 50%;
+  width: 18px; height: 18px;
+  font-size: 10px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+.discord-file-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin-top: 8px;
+}
+.discord-file-table th {
+  background: #f0f0ef;
+  padding: 6px 10px;
+  text-align: left;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+  color: #787672;
+  border-bottom: 1px solid #e8e6e0;
+}
+.discord-file-table td {
+  padding: 7px 10px;
+  border-bottom: 1px solid #f0f0ef;
+  vertical-align: top;
+  line-height: 1.4;
+}
+.discord-file-table tr:last-child td { border-bottom: none; }
+.discord-badge {
+  display: inline-block;
+  font-size: 10px; font-weight: 600;
+  padding: 1px 7px; border-radius: 4px;
+  white-space: nowrap;
+}
+.discord-badge.hook  { background: #fff7ed; color: #9a3412; }
+.discord-badge.poll  { background: #eef4ff; color: #1e40af; }
+.discord-badge.util  { background: #f0f0ef; color: #787672; }
+.discord-cmd-list {
+  margin-top: 8px;
+  background: #fff;
+  border: 1px solid #e8e6e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.discord-cmd-row {
+  display: flex; align-items: baseline; gap: 10px;
+  padding: 7px 14px;
+  border-bottom: 1px solid #f0f0ef;
+  font-size: 12px;
+}
+.discord-cmd-row:last-child { border-bottom: none; }
+.discord-cmd-row code {
+  font-family: 'Menlo','Consolas',monospace;
+  font-size: 11px; font-weight: 700;
+  color: #5865F2;
+  background: #f3f4ff;
+  padding: 1px 6px; border-radius: 3px;
+  white-space: nowrap;
+}
+.discord-cmd-row span { color: #787672; }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a class="back-link" href="../index.html">← 홈</a>
+  <span class="breadcrumb-sep">/</span>
+  <span>자동화 리스트</span>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">개발방향정리</span>
+</div>
+
+<div class="page-header">
+  <h1 class="page-title">개발방향정리</h1>
+  <p class="page-sub">사용자가 "논문 리뷰 업데이트"를 지시했을 때, Claude가 수행하는 전체 알고리즘의 흐름이에요.<br>취향 분석 → 논문 추천 → 분류 추가 → 개별 HTML 생성 → 링크 업데이트까지 모두 자동화돼요.</p>
+</div>
+
+<div class="diagram-wrap">
+
+  <!-- ───── FLOW DIAGRAM ───── -->
+  <div class="section-header">전체 흐름</div>
+  <div class="flow">
+
+    <!-- 1. 사용자 트리거 -->
+    <div class="node trigger">
+      <div class="node-label">Trigger</div>
+      <div class="node-title">사용자: "논문 리뷰 업데이트"</div>
+    </div>
+
+    <div class="arrow-down"></div>
+
+    <!-- 2. Claude 질문 -->
+    <div class="node user">
+      <div class="node-label">Claude → 사용자</div>
+      <div class="node-title">몇 개의 논문을 추가할까요?</div>
+      <div class="node-detail">원하는 주제 방향이 있으면 알려주세요</div>
+    </div>
+
+    <div class="arrow-down with-label">
+      <div class="arrow-label">사용자가 N개 입력</div>
+    </div>
+
+    <!-- 3. 취향 분석 -->
+    <div class="node analysis">
+      <div class="node-label">Step 1 · Preference Analyzer</div>
+      <div class="node-title">기존 좋아요 논문 취향 분석</div>
+      <ul>
+        <li>카테고리 분포 집계</li>
+        <li>키워드 빈도 추출</li>
+        <li>선호 학회 / 저널 파악</li>
+        <li>분석 깊이 수준 확인</li>
+      </ul>
+    </div>
+
+    <div class="arrow-down"></div>
+
+    <!-- 4. 논문 검색·선정 -->
+    <div class="node process">
+      <div class="node-label">Step 2 · Paper Recommender</div>
+      <div class="node-title">N개 논문 검색 · 선정</div>
+      <ul>
+        <li>arXiv / Semantic Scholar 검색</li>
+        <li>취향 프로파일 기반 필터링</li>
+        <li>중복 제거 (기존 목록 대조)</li>
+      </ul>
+    </div>
+
+    <div class="arrow-down"></div>
+
+    <!-- 5. 병렬 생성 -->
+    <div class="node-label" style="align-self:flex-start;margin:0 0 12px 0;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9b9a97">Step 3 · Parallel Generation</div>
+    <div class="parallel-block">
+
+      <div class="parallel-branch">
+        <div class="branch-label">논문 분류 업데이트</div>
+        <div class="node update" style="width:100%">
+          <div class="node-label">history/index.html</div>
+          <div class="node-title">col-card 블록 추가</div>
+          <ul>
+            <li>논문 제목 · 저자 · 연도</li>
+            <li>2줄 요약 (opener)</li>
+            <li>태그 (HBM / ECC …)</li>
+            <li>번호 목록 자동 갱신</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="parallel-branch">
+        <div class="branch-label">개별 분석 HTML 생성</div>
+        <div class="node generate" style="width:100%">
+          <div class="node-label">papers/paper-N.html</div>
+          <div class="node-title">섹션별 에세이 분석</div>
+          <ul>
+            <li>원문 fetch (arXiv/IEEE)</li>
+            <li>Introduction ~ 결론 분석</li>
+            <li>에세이 스타일 한국어</li>
+            <li>기술 용어 tooltip 포함</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="arrow-down"></div>
+
+    <!-- 6. 링크 업데이트 -->
+    <div class="node update">
+      <div class="node-label">Step 4 · Link Patch</div>
+      <div class="node-title">PAPER_ANALYSIS_LINKS 업데이트</div>
+      <div class="node-detail">history/index.html JS 딕셔너리에 새 인덱스 추가</div>
+    </div>
+
+    <div class="arrow-down"></div>
+
+    <!-- 7. 완료 -->
+    <div class="node done">
+      <div class="node-label">Done</div>
+      <div class="node-title">"전체 분석 보기 →" 버튼 활성화</div>
+      <div class="node-detail">사용자가 논문 정리 탭에서 바로 확인 가능</div>
+    </div>
+
+  </div><!-- /flow -->
+
+
+  <!-- ───── PREFERENCE PROFILE ───── -->
+  <div class="section-header" style="margin-top:60px">취향 분석 기준 (현재 좋아요 11개 기반)</div>
+  <div class="pref-grid">
+    <div class="pref-card">
+      <div class="pref-card-label">주제 카테고리</div>
+      <span class="pref-tag blue">HBM</span>
+      <span class="pref-tag blue">ECC</span>
+      <span class="pref-tag blue">SI/PI</span>
+      <span class="pref-tag blue">CDR</span>
+      <span class="pref-tag blue">PLL</span>
+      <span class="pref-tag blue">RowHammer</span>
+      <span class="pref-tag blue">DRAM Refresh</span>
+    </div>
+    <div class="pref-card">
+      <div class="pref-card-label">선호 학회 / 저널</div>
+      <span class="pref-tag green">arXiv (preprint)</span>
+      <span class="pref-tag green">IEEE EMC+SIPI</span>
+      <span class="pref-tag green">MICRO</span>
+      <span class="pref-tag green">HPCA</span>
+      <span class="pref-tag green">ISCA</span>
+      <span class="pref-tag green">IEEE Trans. CPMT</span>
+    </div>
+    <div class="pref-card">
+      <div class="pref-card-label">논문 성격 패턴</div>
+      <span class="pref-tag purple">회로 설계 중심</span>
+      <span class="pref-tag purple">시스템 아키텍처</span>
+      <span class="pref-tag purple">신뢰성 / 보안</span>
+      <span class="pref-tag purple">AI 인프라 접점</span>
+      <span class="pref-tag purple">실측 데이터 포함</span>
+    </div>
+  </div>
+
+
+  <!-- ───── FILE OPERATIONS TABLE ───── -->
+  <div class="section-header" style="margin-top:60px">논문 1개 추가 시 파일 작업 목록</div>
+  <table class="file-table">
+    <thead>
+      <tr>
+        <th>파일</th>
+        <th>작업</th>
+        <th>내용</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>history/index.html</code></td>
+        <td><span class="file-badge update">UPDATE</span></td>
+        <td>col-card 블록 삽입 + PAPER_ANALYSIS_LINKS 딕셔너리 항목 추가</td>
+      </tr>
+      <tr>
+        <td><code>papers/paper-N.html</code></td>
+        <td><span class="file-badge create">CREATE</span></td>
+        <td>섹션별 에세이 분석 · paper.css + tooltip.js 참조</td>
+      </tr>
+      <tr>
+        <td><code>papers/paper.css</code></td>
+        <td><span class="file-badge optional">필요시만</span></td>
+        <td>새로운 스타일 요구사항이 생겼을 때만 수정</td>
+      </tr>
+      <tr>
+        <td><code>papers/tooltip.js</code></td>
+        <td><span class="file-badge optional">필요시만</span></td>
+        <td>TERM_DICT에 새 기술 용어 추가가 필요한 경우</td>
+      </tr>
+      <tr>
+        <td><code>index.html</code></td>
+        <td><span class="file-badge optional">필요시만</span></td>
+        <td>논문 수 배지("논문 176개") 숫자 갱신 원할 경우</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <!-- ───── CONSTRAINTS NOTE ───── -->
+  <div class="section-header" style="margin-top:60px">알고리즘 제약 · 주의사항</div>
+  <div class="note-box">
+    <strong>arXiv HTML 버전</strong>: 일부 논문은 <code>arxiv.org/html/</code>이 404이에요. 그 경우 <code>arxiv.org/abs/</code> abstract 페이지로 폴백해요.<br><br>
+    <strong>Semantic Scholar / IEEE</strong>: 크롤링 제한이 있어 본문이 비어올 수 있어요. 이 경우 Claude의 사전학습 지식 + 기존 논문 분류 내용을 조합해서 분석해요.<br><br>
+    <strong>코드워드 / 수식</strong>: HTML 파일 크기를 줄이기 위해 이미지는 포함하지 않고 텍스트와 <code>.stat-box</code>로 수치를 표현해요. 논문 원문 링크로 원문 확인이 가능해요.<br><br>
+    <strong>history/index.html 7.5 MB 제한</strong>: col-card 블록이 지나치게 길어지면 per-paper HTML 분리 전략을 기본으로 유지해요.<br><br>
+    <strong>취향 분석 업데이트</strong>: 새 논문이 추가될 때마다 위 취향 프로파일이 자동 갱신돼야 해요. 새 카테고리가 3회 이상 반복되면 pref-grid에 반영해요.
+  </div>
+
+
+  <!-- ───── DISCORD INTEGRATION ───── -->
+  <div class="section-header" style="margin-top:60px">Discord 봇 구조</div>
+
+  <!-- 3봇 개요 -->
+  <div class="discord-grid" style="grid-template-columns:1fr 1fr 1fr">
+
+    <div class="discord-flow-box">
+      <div class="discord-flow-title">Claude 알림 봇</div>
+      <div style="font-size:11px;color:#787672;margin-bottom:10px">Webhook URL 방식 · 양방향</div>
+      <div class="discord-step">
+        <div class="discord-step-num">→</div>
+        <div>Claude Code 작업 완료 · 실패 알림 전송</div>
+      </div>
+      <div class="discord-step">
+        <div class="discord-step-num">→</div>
+        <div>위험 명령 실행 전 ✅/❌ 이모지 승인 요청</div>
+      </div>
+      <div class="discord-step">
+        <div class="discord-step-num">←</div>
+        <div><code style="font-size:10px;color:#5865F2">!c &lt;명령&gt;</code> 전송 → PC에서 Claude Code 실행 → 결과 답장</div>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:#9b9a97">
+        <code style="font-size:10px">.claude/scripts/discord-notify.ps1</code><br>
+        <code style="font-size:10px">.claude/scripts/discord-ask.ps1</code><br>
+        <code style="font-size:10px">.claude/scripts/claude_command_listener.py</code><br>
+        채널 ID: 1518286148429156424
+      </div>
+    </div>
+
+    <div class="discord-flow-box">
+      <div class="discord-flow-title">논문봇</div>
+      <div style="font-size:11px;color:#787672;margin-bottom:10px">Bot Token 폴링 방식 (10초)</div>
+      <div class="discord-step">
+        <div class="discord-step-num">←</div>
+        <div>핸드폰에서 <code style="font-size:10px;color:#5865F2">!inject</code> 등 명령 수신</div>
+      </div>
+      <div class="discord-step">
+        <div class="discord-step-num">→</div>
+        <div>논문 추가·배포 실행 후 결과 답장</div>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:#9b9a97">
+        <code style="font-size:10px">CLAUDE_PROJECT_1/discord_listener.py</code><br>
+        채널 ID: 1518761784192925757
+      </div>
+    </div>
+
+    <div class="discord-flow-box">
+      <div class="discord-flow-title">영어전문봇</div>
+      <div style="font-size:11px;color:#787672;margin-bottom:10px">discord.js WebSocket 방식</div>
+      <div class="discord-step">
+        <div class="discord-step-num">↔</div>
+        <div>Lily — 영어 대화 · 표현 교정</div>
+      </div>
+      <div class="discord-step">
+        <div class="discord-step-num">↔</div>
+        <div>Violet — 캐릭터 롤플레이</div>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:#9b9a97">
+        <code style="font-size:10px">english-bot/index.js</code><br>
+        채널 ID: 1518621864329744514 (Lily)<br>
+        채널 ID: 1518950872330277004 (Violet)
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 파일 역할 -->
+  <div class="section-header" style="margin-top:32px">파일 역할 상세</div>
+  <table class="discord-file-table">
+    <thead>
+      <tr><th>봇</th><th>파일</th><th>역할</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="3"><strong>Claude<br>알림봇</strong></td>
+        <td><code>.claude/scripts/discord-notify.ps1</code></td>
+        <td>Webhook으로 알림 전송. 기본 메시지: "Claude 작업 완료!"</td>
+      </tr>
+      <tr>
+        <td><code>.claude/scripts/discord-ask.ps1</code></td>
+        <td>Webhook으로 질문 전송 → ✅/❌ 이모지 리액션 폴링 → exit 0/1 반환</td>
+      </tr>
+      <tr>
+        <td><code>.claude/scripts/claude_command_listener.py</code></td>
+        <td>채널 5초 폴링 → <code>!c &lt;명령&gt;</code> 감지 → <code>claude -p</code> 실행 → Webhook 답장. 로그인 시 자동 시작.</td>
+      </tr>
+      <tr>
+        <td><strong>논문봇</strong></td>
+        <td><code>discord_listener.py</code></td>
+        <td>채널 10초 폴링 → <code>!</code> 명령 감지 → 백그라운드 실행 → 결과 notify</td>
+      </tr>
+      <tr>
+        <td rowspan="2"><strong>영어전문봇</strong></td>
+        <td><code>english-bot/index.js</code></td>
+        <td>Lily(Claude API) + Violet(OpenRouter) 동시 운영</td>
+      </tr>
+      <tr>
+        <td><code>english-bot/conversations.jsonl</code></td>
+        <td>Lily 대화 로그 → generate_english.py가 읽어 영어공부 HTML 생성</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Claude 알림봇 명령어 -->
+  <div class="section-header" style="margin-top:32px">Claude 알림봇 명령어 (!c)</div>
+  <div class="discord-cmd-list">
+    <div class="discord-cmd-row"><code>!c &lt;질문&gt;</code><span>Claude Code가 PC에서 실행 후 결과 Discord 답장 (120초 타임아웃)</span></div>
+  </div>
+
+  <!-- 논문봇 명령어 -->
+  <div class="section-header" style="margin-top:32px">논문봇 명령어 (!inject 등)</div>
+  <div class="discord-cmd-list">
+    <div class="discord-cmd-row"><code>!inject [n]</code><span>논문 n개 추가 + Netlify 자동 배포 (기본 10개)</span></div>
+    <div class="discord-cmd-row"><code>!update</code><span>배치 검색 + inject + 배포 (주간 전체 업데이트)</span></div>
+    <div class="discord-cmd-row"><code>!deploy</code><span>Netlify 배포만 실행</span></div>
+    <div class="discord-cmd-row"><code>!status</code><span>현재 저장 논문 수 · 실행 중인 작업 확인</span></div>
+    <div class="discord-cmd-row"><code>!help</code><span>명령어 목록 출력</span></div>
+  </div>
+
+</div><!-- /diagram-wrap -->
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FPGA PAM4 Sequence Detector · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">FPGA PAM4 Sequence Detector</span>
+</div>
+<div class="article">
+  <div class="article-venue">ACM GLSVLSI 2024</div>
+  <h1 class="article-title">FPGA Implementation of Sequence Detector for High-Speed PAM4 Wireline Transceiver</h1>
+  <div class="article-tags"><span class="tag">PHY</span><span class="tag">Interface</span><span class="tag">FPGA</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/70ee65f8659e64b0f1dfab51e462b59e084fc866" target="_blank">원문 보기 →</a></div>
+  <p class="opener">PAM4 고속 유선 채널에서 발생하는 심각한 ISI 문제를 MLSD 기반 적응형 감소 상태 시퀀스 검출기(ARSSD)로 해결하고, FPGA 프로토타입으로 12~56 Gbps 전 범위에서 DFE 대비 BER을 절반으로 줄인 논문이에요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">PAM4 고속 링크에서 ISI는 왜 그렇게 골치 아픈가요?</h2>
+    <p>데이터센터 내부 연결이나 HBM 같은 고대역폭 메모리 인터페이스는 이미 PAM4 신호 방식을 표준으로 채택하고 있어요. PAM4는 한 심볼에 2비트를 실어 같은 채널 대역폭으로 NRZ 대비 2배의 데이터를 전송할 수 있죠. 문제는 신호 레벨 간격이 NRZ의 1/3로 좁아지면서 채널 손실과 잡음에 훨씬 민감해진다는 거예요. 특히 장거리 또는 고손실 PCB 트레이스에서는 심볼 간 간섭(ISI)이 눈 다이어그램의 눈을 거의 완전히 닫아버려 기존 Decision Feedback Equalizer(DFE)만으로는 한계가 있어요.</p>
+    <p>기존 DFE는 선행 심볼들의 가중 합을 빼는 방식으로 ISI를 제거하는데, 이 접근은 선형 채널 모델을 가정해요. 하지만 실제 고속 채널에서는 비선형 왜곡이 섞이고, ISI 길이가 길어질수록 DFE의 계산 부담도 커지죠. 반면 최대 우도 시퀀스 검출(MLSD)은 채널 임펄스 응답을 모델로 삼아 모든 가능한 심볼 시퀀스 중 가장 그럴듯한 경로를 비터비 알고리즘으로 탐색해요. 이론적으로 MLSD가 최적의 검출 성능을 내지만, 상태 수가 지수적으로 늘어나 하드웨어 구현이 어렵다는 게 발목을 잡았어요.</p>
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>PAM4 ISI 환경에서 DFE는 성능 한계에 봉착했고, 완전 MLSD는 하드웨어 복잡도가 너무 크다 — 둘 사이 어딘가에 "적응형 감소 상태" 검출기가 있다는 아이디어에서 이 연구가 시작돼요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">ARSSD는 어떻게 복잡도를 줄이면서도 MLSD 성능을 유지하나요?</h2>
+    <p>논문의 핵심은 ARSSD(Adaptive Reduced-State Sequence Detector)예요. 비터비 알고리즘의 트렐리스 상태 수를 줄이는 집합 분할(Set Partitioning) 기법을 PAM4에 맞게 변형해서, 전체 상태 공간을 탐색하는 대신 유력한 후보 경로만 추적해요. 상태 수 감소로 FPGA 자원 사용량이 선형에 가깝게 줄어들죠.</p>
+    <p>또 하나의 핵심이 적응형 매개변수 추출이에요. Zero-Forcing(ZF) 알고리즘 기반으로 채널 ISI 계수를 자동으로 추정해서 검출기 파라미터를 온라인으로 갱신해요. 이 덕분에 채널 손실이 -5 dB에서 -17 dB@14 GHz까지 바뀌어도 수동 재조정 없이 최적 상태를 유지할 수 있어요. 병렬 구조로는 32×4 병렬 ARSSD를 채택해서 FPGA의 클럭 속도 한계를 극복하고 고속 PAM4 처리량을 달성했어요.</p>
+    <p>FPGA 검증은 아날로그 프론트엔드와 연결된 실제 채널 환경에서 수행됐어요. PAM4 신호를 아날로그 단에서 수신하고 ADC를 거쳐 FPGA 내부의 ARSSD로 디지털 처리를 이어가는 구조예요. 이 방식은 HBM 인터페이스처럼 고속 I/O PHY를 FPGA로 프로토타입 검증할 때 그대로 적용할 수 있어요.</p>
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>집합 분할로 트렐리스 상태를 줄이고 ZF 기반 적응 추정으로 채널 변화에 자동 추종 — MLSD의 이론적 우위를 FPGA 구현 가능한 복잡도로 끌어내린 설계예요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">실제로 얼마나 좋아졌나요?</h2>
+    <p>행동 시뮬레이션과 FPGA 하드웨어 실험 양쪽에서 일관된 결과가 나왔어요. DFE 대비 BER이 절반으로 줄었고, 채널 손실 범위 전체(-5 dB ~ -17 dB@14 GHz)에서 안정적인 개선 효과가 확인됐어요. 전송 속도는 12 Gbps에서 56 Gbps까지 검증됐는데, 이는 현재 HBM3/HBM3E I/O 속도를 커버하는 범위예요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">2×</div><div class="stat-desc">DFE 대비 BER 감소율 (ARSSD 적용 시)</div></div>
+      <div class="stat-box"><div class="stat-num">12~56 Gbps</div><div class="stat-desc">검증된 PAM4 전송 속도 범위</div></div>
+      <div class="stat-box"><div class="stat-num">32×4</div><div class="stat-desc">병렬 ARSSD 구성 (FPGA 클럭 한계 극복)</div></div>
+      <div class="stat-box"><div class="stat-num">−17 dB</div><div class="stat-desc">@14 GHz 채널 손실에서도 안정 동작</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM3E는 패키지 내부의 짧은 채널이지만 32 Gbps 이상의 속도에서 패키지 기생 성분과 TSV 채널 특성이 만들어내는 ISI가 무시할 수 없는 수준이에요. ARSSD 방식의 MLSD는 이런 짧고 고손실인 채널 환경에도 그대로 적용할 수 있어요. 특히 ZF 기반 적응 채널 추정은 로트(lot)나 온도에 따라 TSV 특성이 달라지는 상황에서 자동 보정 수단으로 유용할 거예요.</p>
+    <p>또 중요한 시사점은 FPGA 기반 PHY 프로토타입 검증 방법론이에요. HBM 컨트롤러 IP나 PHY 에쿼라이저를 테이프아웃 전에 FPGA로 기능 검증하는 흐름에서, 이 논문의 ARSSD 구조와 병렬화 기법은 바로 참고할 수 있는 레퍼런스 아키텍처가 돼요.</p>
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>ARSSD의 상태 감소는 ISI 길이가 짧을수록 효과적이에요. HBM 채널처럼 ISI가 수 심볼 이내로 짧은 경우엔 최적이지만, 장거리 SerDes처럼 ISI가 수십 심볼에 달하면 상태 수 감소 효과가 줄어들고 성능 손실이 커질 수 있어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — 전체 시스템 구성도: 아날로그 프론트엔드(AFE) → ADC → FPGA 내 ARSSD 디지털 처리 블록 연결 흐름</p>
+    <p><strong>Fig. 2</strong> — ARSSD 트렐리스 다이어그램: PAM4 4레벨 심볼에 대한 감소 상태 집합 분할 구조와 비터비 경로 탐색 방식</p>
+    <p><strong>Fig. 3</strong> — ZF 기반 채널 ISI 계수 추정 블록 다이어그램: 수렴 과정과 적응형 파라미터 업데이트 경로</p>
+    <p><strong>Fig. 4</strong> — BER vs. 채널 손실 비교 그래프: DFE / 완전 MLSD / ARSSD 세 방식의 성능 비교 (12~56 Gbps 각 속도별)</p>
+    <p><strong>Fig. 5</strong> — 32×4 병렬 ARSSD FPGA 구현 레이아웃 및 자원 사용량(LUT, FF, DSP) 요약</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/70ee65f8659e64b0f1dfab51e462b59e084fc866" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

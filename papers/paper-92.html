@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A Temperature-Compensated Power-on-Reset Circuit i... · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">A Temperature-Compensated Power-on-Reset Circuit i...</span>
+</div>
+<div class="article">
+  <div class="article-venue">International Conference on Electron Devices and Solid-State Circuits 2019</div>
+  <h1 class="article-title">A Temperature-Compensated Power-on-Reset Circuit in 40nm CMOS</h1>
+  <div class="article-tags"><span class="tag">Thermal</span><span class="tag">Analog</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/2341aead5b57ed94abf1f46763022afb418855b5" target="_blank">원문 보기 →</a>
+  </div>
+  <p class="opener">밴드갭 기준 회로 없이도 온도 보상이 가능한 POR 회로가 40nm CMOS에서 실현되었어요!</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">왜 기존 POR 회로에서 밴드갭 기준 회로가 문제가 되었을까요?</h2>
+    <p>Power-on-Reset(POR) 회로는 시스템 전원이 켜질 때 모든 내부 회로를 안정적인 초기 상태로 리셋시키는 필수적인 기능을 담당해요. 특히 HBM이나 DRAM과 같은 고성능 메모리 시스템에서는 전원 공급 순간의 불안정한 상태를 빠르게 정리하고 정상 동작을 보장해야 하기 때문에 POR 회로의 정확성과 신뢰성이 매우 중요해요. POR 회로가 트리거되는 전압 기준이 온도에 따라 흔들리면, 시스템이 예상치 못한 시점에 리셋되거나 리셋 자체가 누락되는 치명적인 오동작이 발생할 수 있어요.</p>
+    <p>기존의 정밀 POR 회로는 트리거 전압의 온도 안정성을 확보하기 위해 밴드갭 기준(Bandgap Reference) 회로를 내장하는 방식을 채택해 왔어요. 그러나 밴드갭 기준 회로는 상당한 면적과 전력을 소모하며, 복잡한 트리밍 절차가 필요해 제조 비용을 높이는 단점이 있어요. 특히 40nm 이하의 선단 공정에서는 소자 특성의 변화로 인해 밴드갭 설계 자체도 점점 까다로워지고 있어요. 결국 저비용, 저전력 응용에서는 밴드갭 없이도 온도 보상이 가능한 새로운 접근이 절실히 요구되었어요.</p>
+
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>밴드갭 기준 회로를 제거하면서도 넓은 온도 범위에서 안정적인 트리거 전압을 유지할 수 있는 온도 보상 POR 구조가 핵심 문제예요. 이를 해결하기 위해 MOSFET의 고유한 온도 특성을 활용한 새로운 회로 토폴로지가 제안되었어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">어떻게 밴드갭 없이 온도 보상 트리거 전압을 구현했을까요?</h2>
+    <p>제안된 POR 회로는 MOSFET 소자의 문턱 전압(Vth)과 이동도(mobility)가 온도에 따라 서로 반대 방향으로 변화하는 특성을 교묘히 조합하여 온도 보상을 달성해요. 구체적으로, PMOS와 NMOS 소자의 온도 의존성 차이를 활용한 전압 분배 구조를 통해 트리거 전압이 온도 변화에 둔감하게 설계되었어요. 이 접근은 별도의 바이폴라 트랜지스터나 밴드갭 코어 없이도 CMOS 소자만으로 온도 보상 기준 전압을 생성할 수 있다는 점에서 획기적이에요.</p>
+    <p>회로는 전원 전압이 목표 트리거 레벨에 도달할 때까지 리셋 신호를 유지하고, 그 이후 리셋을 해제하는 기본 동작을 수행하며, 히스테리시스를 내장하여 전원 노이즈로 인한 오동작을 방지해요. 40nm CMOS 공정의 특성을 최대한 활용하여 소자 크기를 최소화했으며, 전체 활성 영역은 0.008mm²에 불과해요. 740nA라는 극저 대기 전류는 저전력 IoT 및 모바일 응용에도 충분히 적합한 수준이에요.</p>
+
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>CMOS 소자 고유의 온도 의존적 전기적 특성을 상호 보상적으로 조합함으로써 밴드갭 기준 회로 없이 350ppm/°C 수준의 온도 계수를 달성한 것이 핵심 혁신이에요. 이는 면적과 전력을 대폭 절감하면서도 실용적인 온도 안정성을 동시에 확보한 설계 접근법이에요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">실제 측정 결과는 얼마나 우수한 성능을 보여줬을까요?</h2>
+    <p>제안된 POR 회로는 40nm CMOS 공정으로 제작되어 -40°C에서 120°C까지의 광온도 범위에서 검증되었어요. 트리거 전압 온도 계수는 350ppm/°C로, 밴드갭 없는 구조임을 감안하면 매우 우수한 온도 안정성을 보여줘요. 1.1V 전원에서 740nA의 대기 전류와 0.008mm²의 소면적을 동시에 달성하며 저비용 설계 목표를 충족시켰어요. 이 결과는 기존 밴드갭 기반 POR 대비 면적과 전력 모두에서 유의미한 개선을 보여주는 것이에요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">350ppm/°C</div><div class="stat-desc">트리거 전압 온도 계수 (-40°C ~ 120°C 범위)</div></div>
+      <div class="stat-box"><div class="stat-num">740nA</div><div class="stat-desc">1.1V 전원에서의 대기 전류 (극저전력 동작)</div></div>
+      <div class="stat-box"><div class="stat-num">0.008mm²</div><div class="stat-desc">활성 영역 면적 (40nm CMOS 공정 기준)</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM 및 DRAM 설계자 관점에서 이 POR 회로는 매우 실용적인 가치를 가져요. HBM 스택 내 각 다이에는 독립적인 POR 회로가 필요한데, 다이당 면적이 극히 제한된 환경에서 0.008mm²라는 소면적은 큰 장점이에요. 또한 HBM은 로직 다이와 DRAM 다이가 근접 적층되어 국부적인 온도 변화가 심하게 발생하므로, -40°C~120°C 범위의 온도 보상 능력은 신뢰성 확보에 직결돼요.</p>
+    <p>740nA의 극저 대기 전류는 HBM 시스템의 전체 정적 전력 예산 관리에 유리하게 작용해요. 특히 다수의 DRAM 다이가 적층된 구조에서 POR 회로가 여러 개 존재하더라도 전력 합산이 미미한 수준으로 유지될 수 있어요. 밴드갭 기준 회로 제거로 인한 설계 단순화는 PVT 코너 검증 부담을 줄이고 테이프아웃 일정을 단축시키는 실질적 이점도 제공해요.</p>
+
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>350ppm/°C의 온도 계수는 밴드갭 기반 회로(수십 ppm/°C 수준) 대비 여전히 열등하므로, 매우 엄격한 트리거 전압 정확도가 요구되는 응용에는 추가적인 검토가 필요해요. 또한 40nm 공정 고유의 소자 특성에 의존하는 온도 보상 메커니즘이므로, 다른 공정 노드로의 이식 시 재설계 및 재최적화가 필수적이에요. 공정 편차(process variation)에 따른 트리거 전압 산포도 함께 면밀히 평가해야 해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/2341aead5b57ed94abf1f46763022afb418855b5" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

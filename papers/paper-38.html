@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inter/Intra-Memory Asymmetry Data Mapping · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Inter/Intra-Memory Asymmetry Data Mapping</span>
+</div>
+<div class="article">
+  <div class="article-venue">arXiv 2020</div>
+  <h1 class="article-title">Exploiting Inter- and Intra-Memory Asymmetries for Data Mapping in Hybrid Tiered-Memories</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">HBM</span><span class="tag">Low-Power</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://arxiv.org/abs/2005.04750v1" target="_blank">원문 보기 →</a><a class="article-link" href="https://arxiv.org/pdf/2005.04750v1" target="_blank">PDF →</a></div>
+  <p class="opener">HBM과 DRAM이 함께 쓰이는 하이브리드 계층 메모리에서 메모리 간·내부 비대칭성을 모두 이용한 데이터 매핑으로 성능과 신뢰성을 동시에 끌어올리는 MNEME 프레임워크예요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">HBM + DRAM 하이브리드 메모리, 어떻게 쓰는 게 최선일까요?</h2>
+    <p>HPC·AI 가속기 시스템에서는 HBM과 DDR DRAM을 같이 쓰는 계층 메모리 구성이 점점 흔해지고 있어요. HBM은 대역폭이 넓고 지연이 짧은 반면 용량이 작고 비싸요. DRAM은 용량이 크지만 접근 지연이 HBM보다 길어요. 이 차이를 '메모리 간 비대칭(inter-memory asymmetry)'이라고 불러요.</p>
+    <p>그런데 각 메모리 내부를 들여다보면 또 다른 비대칭이 있어요. DRAM의 비트라인은 물리적으로 길어서 기생 커패시턴스가 크고, 이로 인해 같은 DRAM 안에서도 짧은 세그먼트(빠른 서브어레이)와 긴 세그먼트(느린 서브어레이) 사이에 접근 지연 차이가 생겨요. NVM에서는 이 차이가 더 커지고 고전압 동작으로 인한 신뢰성 문제도 동반돼요. 이게 '메모리 내 비대칭(intra-memory asymmetry)'이에요.</p>
+    <p>기존 OS 페이지 마이그레이션 정책은 메모리 간 비대칭만 보고 데이터를 hot/cold로 분류해 계층 간에 이동시켜요. 하지만 메모리 내부 비대칭을 무시하기 때문에 같은 HBM 안에서도 느린 서브어레이에 hot 데이터가 배치되는 비효율이 생겨요.</p>
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>메모리 간 계층 차이만 보는 기존 데이터 배치 정책은 절반만 맞아요. 메모리 내부 서브어레이 비대칭까지 활용하면 성능과 신뢰성을 추가로 높일 수 있어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">MNEME는 두 가지 비대칭을 어떻게 동시에 활용하나요?</h2>
+    <p>논문이 제안하는 MNEME(Memory Nonuniformity Exploitation for Memory Efficiency) 프레임워크는 세 가지 메커니즘으로 구성돼 있어요. 첫 번째는 계층 인식 페이지 할당이에요. 프로그램이 새 메모리 페이지를 처음 참조할 때, 그 페이지의 예상 접근 강도를 미리 예측해서 HBM의 빠른 서브어레이, HBM의 느린 서브어레이, DDR DRAM 중 가장 적합한 곳에 처음부터 배치해요. 이렇게 하면 나중에 페이지 마이그레이션을 덜 해도 돼요.</p>
+    <p>두 번째는 메모리 내 세그멘테이션이에요. DRAM 비트라인을 절연 트랜지스터로 두 세그먼트로 분할해서, 짧은 세그먼트(낮은 기생 커패시턴스 → 빠른 접근, 낮은 전압)와 긴 세그먼트(느리고 높은 전압)를 명시적으로 구분해요. OS는 이 두 세그먼트를 별개의 '계층'처럼 인식해서 hot 데이터를 짧은 세그먼트에, warm 데이터를 긴 세그먼트에 배치해요.</p>
+    <p>세 번째는 채널 점유 최소화 마이그레이션이에요. 계층 간 데이터를 메모리 채널을 통해 전송하는 대신, 같은 메모리 계층 내 서브어레이 간 이동은 메모리 내부에서 처리해서 채널 대역폭 낭비를 줄여요.</p>
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>비트라인 세그멘테이션으로 DRAM 내부를 '빠른 구역 / 느린 구역'으로 구분하고, OS가 접근 빈도를 예측해 처음부터 최적 위치에 배치하면 마이그레이션 오버헤드가 줄어들어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">실제로 얼마나 빨라지고 안정적으로 됐나요?</h2>
+    <p>다양한 단일 코어 및 멀티프로그래밍 워크로드(SPEC CPU, graph workload 포함)에서 MNEME를 평가했어요. 기존 inter-memory만 활용하는 베이스라인 대비 성능이 향상됐고, NVM 기반 계층에서는 쓰기 전압 감소로 인한 셀 내구성(endurance) 개선 효과도 확인됐어요. 페이지 마이그레이션 횟수도 크게 줄어들어 마이그레이션 트래픽으로 인한 대역폭 소비가 감소했어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">2단계</div><div class="stat-desc">메모리 간 + 메모리 내 비대칭 동시 활용</div></div>
+      <div class="stat-box"><div class="stat-num">감소</div><div class="stat-desc">페이지 마이그레이션 횟수 (초기 배치 최적화)</div></div>
+      <div class="stat-box"><div class="stat-num">향상</div><div class="stat-desc">NVM 셀 내구성 (저전압 서브어레이 우선 사용)</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM 내부 bank 구조를 보면 pseudo channel, bank group, bank 단위로 이미 계층적 구분이 있어요. 이 논문의 접근법을 HBM에 적용하면, HBM 내부의 pseudo channel이나 bank group별 접근 지연 차이를 활용해서 ultra-hot 데이터를 최단 지연 경로에 배치하는 정책을 설계할 수 있어요. 또한 HBM + DDR 구성에서 OS 페이지 관리자가 두 종류의 비대칭을 동시에 인식하도록 드라이버 레벨 힌트를 제공하는 방향으로 확장 가능해요.</p>
+    <p>다만 HBM3의 경우 pseudo channel 수가 더 늘어나고 bank 구조도 복잡해져서, 내부 비대칭 정보를 OS에 정확히 노출하는 인터페이스 설계가 새 과제가 돼요.</p>
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>비트라인 세그멘테이션을 위한 절연 트랜지스터 추가는 면적 오버헤드를 수반해요. HBM처럼 면적이 극히 제한된 다이에서는 이 오버헤드를 신중히 평가해야 해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — HBM + DRAM 하이브리드 계층 메모리 구조: 메모리 간 비대칭(대역폭·지연·용량 차이)을 시각화한 시스템 구성도</p>
+    <p><strong>Fig. 2</strong> — 비트라인 세그멘테이션 구조: 절연 트랜지스터로 긴 비트라인을 두 세그먼트로 분할해 intra-memory 비대칭을 생성하는 회로 다이어그램</p>
+    <p><strong>Fig. 3</strong> — MNEME 페이지 할당 흐름도: 접근 강도 예측 → 계층 선택 → 배치 과정</p>
+    <p><strong>Fig. 4</strong> — 워크로드별 성능 비교 바 차트: 기존 inter-only 정책 vs. MNEME (inter+intra 동시 활용)</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://arxiv.org/abs/2005.04750v1" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+</div>
+</body>
+</html>

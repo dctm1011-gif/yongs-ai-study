@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RowHammer 민감도 분석 논문 · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">RowHammer 민감도 분석</span>
+</div>
+<div class="article">
+  <div class="article-venue">MICRO-54 2021</div>
+  <h1 class="article-title">A Deeper Look into RowHammer's Sensitivities: Experimental Analysis of Real DRAM Chips and Implications on Future Attacks and Defenses</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">RowHammer</span><span class="tag">Security</span><span class="tag">Reliability</span></div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://arxiv.org/abs/2110.10291v1" target="_blank">원문 보기 →</a>
+    <a class="article-link" href="https://arxiv.org/pdf/2110.10291v1" target="_blank">PDF →</a>
+  </div>
+  <p class="opener">248개 DDR4 칩과 24개 DDR3 칩을 직접 실험해서 RowHammer가 실제로 어떤 조건에서 얼마나 심각해지는지를 측정한 논문이에요. 온도, 타이밍, 물리적 위치에 따른 민감도를 정량화하고, 앞으로의 공격과 방어에 주는 시사점을 분석해요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">RowHammer란 무엇이고 왜 점점 심각해지나요?</h2>
+    <p>RowHammer는 DRAM 행(row)을 반복적으로 빠르게 활성화하면 인접한 행의 데이터가 뒤집히는 현상이에요. 물리적으로는 전하 누설이 인접 셀에 영향을 주는 건데, 이걸 의도적으로 이용하면 권한 상승 공격이나 데이터 탈취가 가능해요.</p>
+    <p>문제는 반도체 공정이 미세화될수록 셀 간 간격이 좁아져서 RowHammer가 더 쉬워진다는 거예요. 비트 플립을 유발하는 데 필요한 해머 횟수(Hammer Count)가 10년 동안 10배 이상 줄었어요. 이 추세라면 앞으로 더 적은 접근만으로도 공격이 가능해져요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Experimental Methodology</div>
+    <h2 class="section-title">어떻게 실험했나요?</h2>
+    <p>SAFARI Research Group이 개발한 FPGA 기반 메모리 테스트 플랫폼(SoftMC)을 사용해서, 4개 주요 제조사의 DDR4 248개, DDR3 24개 칩을 체계적으로 실험했어요. 각 칩에서 해머 횟수, 온도, 접근 타이밍, 물리적 행 위치를 바꿔가며 비트 플립 발생 패턴을 측정했어요.</p>
+    <div class="insight blue">
+      <div class="insight-label">핵심 변수들</div>
+      <p>① 해머 횟수(nRH): 비트 플립이 처음 발생하는 최소 횟수 / ② 온도: 섭씨 단위로 정밀하게 제어 / ③ 활성화 유지 시간(tAggON): aggressor row를 얼마나 오래 켜두는가 / ④ 물리적 행 주소: 칩 내 어느 위치의 행이 더 취약한가</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Key Findings</div>
+    <h2 class="section-title">세 가지 주요 발견</h2>
+    <div class="insight red">
+      <div class="insight-label">발견 1 · 온도 민감도</div>
+      <p>RowHammer 취약성은 온도에 따라 달라지는데, 단순히 "온도가 높을수록 취약하다"가 아니에요. 특정 셀은 특정 온도 범위(예: 70°C~90°C)에서만 비트 플립이 발생하고, 그 바깥에서는 발생하지 않아요. 전체 칩의 5.4%가 이런 좁은 온도 범위 특성을 보였어요. 데이터센터 서버처럼 온도 변화가 있는 환경에서 이 점을 고려해야 해요.</p>
+    </div>
+    <div class="insight red">
+      <div class="insight-label">발견 2 · 활성화 유지 시간의 역할</div>
+      <p>Aggressor row를 활성화한 채로 15번의 컬럼 접근만큼 더 유지하면 RowHammer 취약성이 36% 증가해요. 공격자가 단순히 빠르게 반복하는 것뿐 아니라, 각 활성화를 최대한 오래 유지하는 전략을 쓰면 훨씬 적은 해머 횟수로도 공격이 가능하다는 의미예요.</p>
+    </div>
+    <div class="insight red">
+      <div class="insight-label">발견 3 · 물리적 위치 불균일성</div>
+      <p>칩 내의 모든 행이 똑같이 취약하지 않아요. 약 5%의 행이 나머지 행보다 2배 더 취약했어요. 이 취약한 행들을 집중적으로 공격하면 방어 임계값을 훨씬 쉽게 넘어설 수 있어요. 반대로 방어 관점에서는 이 취약 행들에 더 빈번한 인접 행 리프레시가 필요해요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Implications</div>
+    <h2 class="section-title">공격과 방어 양쪽에 주는 시사점</h2>
+    <p>이 논문의 발견들은 공격자와 방어자 모두에게 중요한 정보를 줘요.</p>
+    <div class="insight purple">
+      <div class="insight-label">공격 관점</div>
+      <p>특정 온도 범위를 노리거나, 활성화 유지 시간을 최대화하거나, 취약 행을 찾아내는 전처리(profiling)를 하면 훨씬 효율적인 RowHammer 공격이 가능해요. 기존 방어 메커니즘이 이런 변수들을 고려하지 않으면 우회될 수 있어요.</p>
+    </div>
+    <div class="insight green">
+      <div class="insight-label">방어 관점</div>
+      <p>온도 적응형 리프레시 정책, 취약 행에 대한 차등 보호, 활성화 시간까지 고려하는 해머 카운팅이 필요해요. 현재 DDR5 RFM 같은 방어책이 단순 해머 횟수 기반이어서 이런 복합 조건을 충분히 반영하지 못할 수 있다는 경고예요.</p>
+    </div>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">272개</div><div class="stat-desc">실험한 실제 DRAM 칩 (DDR3/4)</div></div>
+      <div class="stat-box"><div class="stat-num">36%</div><div class="stat-desc">활성화 유지로 인한 취약성 증가</div></div>
+      <div class="stat-box"><div class="stat-num">10×</div><div class="stat-desc">10년간 nRH(해머 횟수) 감소 배율</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM과 DRAM 설계에서 RowHammer가 중요한 이유</h2>
+    <p>HBM은 GPU 옆에 물리적으로 붙어 있고 AI 학습/추론 서버에서 쓰이기 때문에, 신뢰성과 보안 양쪽이 다 중요해요. RowHammer로 인한 비트 플립이 AI 모델 가중치에 영향을 준다면, 은밀한 모델 조작이 가능할 수 있어요.</p>
+    <p>DRAM 설계팀 입장에서 이 논문은 "우리 칩이 얼마나 취약한지"를 시스템 수준에서 측정하는 방법론을 제공해요. 온도 범위, 타이밍 파라미터, 물리적 레이아웃이 RowHammer 취약성에 미치는 영향을 정량화할 수 있으면, 다음 세대 설계에서 어떤 부분을 개선해야 하는지 방향이 잡혀요.</p>
+  </div>
+
+<hr>
+<div class="section">
+  <div class="section-label">논문 그림</div>
+  <h2 class="section-title">Figure 갤러리</h2>
+  <p class="figure-no-embed">PDF를 브라우저에서 바로 열어 그림을 확인할 수 있어요. 로딩이 느리거나 표시가 안 되면 링크를 눌러 새 탭에서 여세요.</p>
+  <div class="figure-outer">
+    <a class="figure-open-link" href="https://arxiv.org/abs/2110.10291" target="_blank">↗ arXiv 원문에서 열기</a>
+    <div class="figure-frame-wrap">
+      <iframe class="figure-frame" src="https://arxiv.org/pdf/2110.10291v1" loading="lazy" title="논문 원문 PDF (그림 포함)"></iframe>
+    </div>
+  </div>
+</div>
+</div>
+<div id="term-tooltip-global"></div>
+<script src="tooltip.js"></script>
+</body>
+</html>

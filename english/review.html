@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>영어 복습 — Spaced Repetition</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #fff; color: #37352f; font-size: 15px; line-height: 1.6;
+}
+.cover { height: 8px; background: linear-gradient(90deg, #8b5cf6 0%, #06b6d4 100%); }
+.page { max-width: 680px; margin: 0 auto; padding: 48px 24px 80px; }
+.back-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; color: #9b9a97; text-decoration: none; margin-bottom: 24px;
+}
+.back-link:hover { color: #37352f; }
+
+/* ── 대시보드 ── */
+.page-icon { font-size: 48px; margin-bottom: 10px; display: block; }
+.page-title { font-size: 28px; font-weight: 700; letter-spacing: -0.4px; margin-bottom: 4px; }
+.page-desc { font-size: 13px; color: #9b9a97; margin-bottom: 28px; }
+.stats-row { display: flex; gap: 10px; margin-bottom: 28px; flex-wrap: wrap; }
+.stat-box {
+  flex: 1; min-width: 100px; background: #f7f6f3; border: 1px solid #e9e9e7;
+  border-radius: 10px; padding: 14px 16px;
+}
+.stat-num { font-size: 28px; font-weight: 700; color: #37352f; }
+.stat-label { font-size: 11px; color: #9b9a97; margin-top: 2px; }
+.stat-box.due .stat-num { color: #8b5cf6; }
+.stat-box.streak .stat-num { color: #f59e0b; }
+
+.btn-start {
+  width: 100%; padding: 16px; font-size: 16px; font-weight: 700;
+  background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+  color: #fff; border: none; border-radius: 12px; cursor: pointer;
+  transition: opacity .15s; margin-bottom: 28px;
+}
+.btn-start:hover { opacity: .9; }
+.btn-start:disabled { background: #e9e9e7; color: #9b9a97; cursor: default; }
+
+.section-label {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .8px; color: #9b9a97; margin-bottom: 12px;
+}
+.word-chip-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+.word-chip {
+  font-size: 13px; padding: 4px 12px; border-radius: 20px; border: 1px solid;
+  font-weight: 500; white-space: nowrap;
+}
+.word-chip.due { background: #f5f3ff; border-color: #c4b5fd; color: #6d28d9; }
+.word-chip.ok { background: #f0fdf4; border-color: #86efac; color: #166534; }
+.word-chip.new { background: #eff6ff; border-color: #93c5fd; color: #1d4ed8; }
+.chip-date { font-size: 10px; opacity: .7; margin-left: 2px; }
+
+/* ── 세션 화면 ── */
+#sessionView { display: none; }
+.session-header {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;
+}
+.session-progress-text { font-size: 13px; color: #9b9a97; }
+.progress-bar-wrap { background: #f1f0ef; border-radius: 4px; height: 6px; margin-bottom: 28px; overflow: hidden; }
+.progress-bar { height: 100%; background: linear-gradient(90deg, #8b5cf6, #06b6d4); border-radius: 4px; transition: width .4s ease; }
+
+.flashcard {
+  border: 1px solid #e9e9e7; border-radius: 16px; padding: 28px;
+  margin-bottom: 20px; min-height: 160px;
+}
+.card-date-badge {
+  display: inline-block; font-size: 10px; background: #f5f3ff;
+  color: #7c3aed; padding: 2px 8px; border-radius: 10px; font-weight: 600; margin-bottom: 14px;
+}
+.card-question {
+  font-size: 22px; font-weight: 700; color: #37352f; margin-bottom: 10px; line-height: 1.4;
+}
+.card-example-ko { font-size: 14px; color: #9b9a97; font-style: italic; margin-bottom: 4px; }
+.card-example-en { font-size: 13px; color: #d1d5db; font-style: italic; }
+
+.quiz-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.opt-btn {
+  text-align: left; background: #f7f6f3; border: 1.5px solid #e9e9e7;
+  border-radius: 10px; padding: 12px 16px; font-size: 14px; font-weight: 600;
+  cursor: pointer; transition: background .1s, border-color .1s; color: #37352f;
+}
+.opt-btn:hover:not(:disabled) { background: #f5f3ff; border-color: #c4b5fd; }
+.opt-btn.correct { background: #f0fdf4; border-color: #86efac; color: #166534; }
+.opt-btn.wrong { background: #fef2f2; border-color: #fca5a5; color: #991b1b; }
+
+.card-emoji { font-size: 52px; text-align: center; margin-bottom: 12px; display: block; }
+.review-illus {
+  border-radius: 12px; padding: 14px 16px; text-align: center; margin-bottom: 12px;
+}
+.review-illus-emoji { font-size: 36px; display: block; margin-bottom: 5px; }
+.review-illus-en { font-size: 16px; font-weight: 800; color: white; margin-bottom: 3px; text-shadow: 0 1px 3px rgba(0,0,0,.2); }
+.review-illus-ko { font-size: 12px; color: rgba(255,255,255,.85); font-weight: 500; }
+.feedback-box {
+  display: none; padding: 12px 16px; border-radius: 10px;
+  font-size: 13px; margin-bottom: 16px; line-height: 1.6;
+}
+.feedback-box.show { display: block; }
+.feedback-box.correct { background: #f0fdf4; border: 1px solid #86efac; color: #166534; }
+.feedback-box.wrong { background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; }
+.feedback-next { font-size: 12px; font-weight: 700; margin-top: 4px; opacity: .8; }
+
+.btn-next {
+  width: 100%; padding: 14px; font-size: 15px; font-weight: 700;
+  background: #37352f; color: #fff; border: none; border-radius: 10px;
+  cursor: pointer; transition: opacity .15s; display: none;
+}
+.btn-next.show { display: block; }
+.btn-next:hover { opacity: .85; }
+
+/* ── 완료 화면 ── */
+#doneView { display: none; text-align: center; }
+.done-emoji { font-size: 64px; margin-bottom: 16px; }
+.done-title { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+.done-sub { font-size: 14px; color: #9b9a97; margin-bottom: 28px; }
+.done-stats { display: flex; gap: 12px; justify-content: center; margin-bottom: 28px; flex-wrap: wrap; }
+.done-stat { background: #f7f6f3; border: 1px solid #e9e9e7; border-radius: 10px; padding: 14px 20px; }
+.done-stat-num { font-size: 24px; font-weight: 700; }
+.done-stat-label { font-size: 11px; color: #9b9a97; }
+.btn-again {
+  padding: 12px 32px; font-size: 15px; font-weight: 700;
+  background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+  color: #fff; border: none; border-radius: 10px; cursor: pointer; margin-right: 10px;
+}
+.btn-home {
+  padding: 12px 24px; font-size: 14px; color: #9b9a97;
+  background: #f7f6f3; border: 1px solid #e9e9e7; border-radius: 10px; cursor: pointer;
+  text-decoration: none; display: inline-block;
+}
+
+@media (max-width: 500px) { .page { padding: 32px 16px 60px; } .page-title { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="cover"></div>
+<div class="page">
+  <a class="back-link" href="../index.html">← Yong's AI Study</a>
+
+  <!-- ── 대시보드 ── -->
+  <div id="dashView">
+    <span class="page-icon">🧠</span>
+    <h1 class="page-title">영어 복습</h1>
+    <p class="page-desc">Spaced Repetition — 배운 단어를 잊기 전에 복습해요</p>
+
+    <div class="stats-row">
+      <div class="stat-box due">
+        <div class="stat-num" id="statDue">—</div>
+        <div class="stat-label">오늘 복습할 카드</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="statTotal">—</div>
+        <div class="stat-label">전체 단어</div>
+      </div>
+      <div class="stat-box streak">
+        <div class="stat-num" id="statStreak">0</div>
+        <div class="stat-label">🔥 연속 학습일</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="statMastered">—</div>
+        <div class="stat-label">✅ 익힌 단어</div>
+      </div>
+    </div>
+
+    <button class="btn-start" id="btnStart" disabled onclick="startSession()">로딩 중...</button>
+
+    <div class="section-label">전체 단어 목록</div>
+    <div class="word-chip-list" id="wordChips"></div>
+  </div>
+
+  <!-- ── 세션 ── -->
+  <div id="sessionView">
+    <div class="session-header">
+      <span class="session-progress-text" id="sessionProgress">0 / 0</span>
+      <button style="font-size:12px;color:#9b9a97;background:none;border:none;cursor:pointer" onclick="endSession()">나가기</button>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar" id="sessionBar" style="width:0%"></div>
+    </div>
+
+    <div class="flashcard" id="flashcard">
+      <div class="card-date-badge" id="cardDateBadge"></div>
+      <span class="card-emoji" id="cardEmoji"></span>
+      <div class="card-question" id="cardQuestion"></div>
+      <div class="card-example-ko" id="cardExampleKo"></div>
+      <div class="card-example-en" id="cardExampleEn"></div>
+    </div>
+
+    <div class="quiz-options" id="quizOptions"></div>
+    <div class="feedback-box" id="feedbackBox"></div>
+    <button class="btn-next" id="btnNext" onclick="nextCard()">다음 →</button>
+  </div>
+
+  <!-- ── 완료 ── -->
+  <div id="doneView">
+    <div class="done-emoji" id="doneEmoji">🎉</div>
+    <div class="done-title" id="doneTitle"></div>
+    <div class="done-sub" id="doneSub"></div>
+    <div class="done-stats">
+      <div class="done-stat"><div class="done-stat-num" id="doneCorrect">0</div><div class="done-stat-label">정답</div></div>
+      <div class="done-stat"><div class="done-stat-num" id="doneWrong">0</div><div class="done-stat-label">오답</div></div>
+      <div class="done-stat"><div class="done-stat-num" id="doneAccuracy">0%</div><div class="done-stat-label">정확도</div></div>
+    </div>
+    <button class="btn-again" onclick="startSession()">한 번 더</button>
+    <a class="btn-home" href="../index.html">홈으로</a>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = 'english_review_v1';
+const TODAY = new Date().toISOString().slice(0, 10);
+let WORDS_DB = [];
+
+function wordGradient(pos) {
+  const p = (pos || '').toLowerCase();
+  if (p.includes('슬랭') || p.includes('slang') || p.includes('구동사'))
+    return 'linear-gradient(135deg,#7c3aed,#4f46e5)';
+  if (p.includes('동사') || p.includes('verb'))
+    return 'linear-gradient(135deg,#0ea5e9,#2563eb)';
+  if (p.includes('형용사') || p.includes('adj'))
+    return 'linear-gradient(135deg,#10b981,#059669)';
+  if (p.includes('명사') || p.includes('noun'))
+    return 'linear-gradient(135deg,#f59e0b,#dc2626)';
+  if (p.includes('관용') || p.includes('idiom') || p.includes('표현'))
+    return 'linear-gradient(135deg,#ec4899,#8b5cf6)';
+  if (p.includes('부사'))
+    return 'linear-gradient(135deg,#06b6d4,#0284c7)';
+  return 'linear-gradient(135deg,#6366f1,#8b5cf6)';
+}
+
+function loadStates() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch { return {}; }
+}
+function saveStates(s) { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
+
+function getState(id) {
+  return loadStates()[id] || { interval: 1, ease: 2.5, reps: 0, due: TODAY, correct: 0, wrong: 0 };
+}
+function setState(id, state) {
+  const s = loadStates(); s[id] = state; saveStates(s);
+}
+
+function addDays(n) {
+  const d = new Date(); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10);
+}
+
+function updateState(id, correct) {
+  let state = getState(id);
+  state.correct = (state.correct || 0) + (correct ? 1 : 0);
+  state.wrong = (state.wrong || 0) + (correct ? 0 : 1);
+  if (!correct) {
+    state.interval = 1; state.reps = 0;
+    state.ease = Math.max(1.3, state.ease - 0.2);
+    state.due = addDays(1);
+  } else {
+    if (state.reps === 0) state.interval = 1;
+    else if (state.reps === 1) state.interval = 6;
+    else state.interval = Math.round(state.interval * state.ease);
+    state.reps++;
+    state.due = addDays(state.interval);
+  }
+  setState(id, state);
+  return state;
+}
+
+function isDue(id) { return getState(id).due <= TODAY; }
+function isMastered(id) { const s = getState(id); return s.reps >= 3 && s.interval >= 14; }
+
+function updateStreak() {
+  const raw = JSON.parse(localStorage.getItem('english_streak') || '{"last":"","count":0}');
+  if (raw.last === TODAY) return raw.count;
+  raw.count = raw.last === addDays(-1) ? raw.count + 1 : 1;
+  raw.last = TODAY;
+  localStorage.setItem('english_streak', JSON.stringify(raw));
+  return raw.count;
+}
+function getStreak() {
+  const raw = JSON.parse(localStorage.getItem('english_streak') || '{"last":"","count":0}');
+  return (raw.last === TODAY || raw.last === addDays(-1)) ? raw.count : 0;
+}
+
+function renderDashboard() {
+  const due = WORDS_DB.filter(w => isDue(w.id)).length;
+  const mastered = WORDS_DB.filter(w => isMastered(w.id)).length;
+  document.getElementById('statDue').textContent = due;
+  document.getElementById('statTotal').textContent = WORDS_DB.length;
+  document.getElementById('statStreak').textContent = getStreak();
+  document.getElementById('statMastered').textContent = mastered;
+
+  const btn = document.getElementById('btnStart');
+  btn.disabled = due === 0;
+  btn.textContent = due > 0 ? `🚀 복습 시작하기 (${due}개)` : '✅ 오늘 복습 완료!';
+
+  document.getElementById('wordChips').innerHTML = WORDS_DB.map(w => {
+    const s = getState(w.id);
+    let cls = 'new', label = '새 단어';
+    if (isMastered(w.id)) { cls = 'ok'; label = `D+${s.interval}`; }
+    else if (s.reps > 0 && !isDue(w.id)) { cls = 'ok'; label = `D+${s.interval}`; }
+    else if (isDue(w.id) && s.reps > 0) { cls = 'due'; label = '복습'; }
+    return `<span class="word-chip ${cls}">${w.word}<span class="chip-date"> ${label}</span></span>`;
+  }).join('');
+}
+
+let sessionQueue = [], sessionIdx = 0, sessionCorrect = 0, sessionWrong = 0;
+
+function startSession() {
+  sessionQueue = WORDS_DB.filter(w => isDue(w.id))
+    .sort((a, b) => (getState(a.id).reps || 0) - (getState(b.id).reps || 0));
+  if (!sessionQueue.length) return;
+  sessionIdx = 0; sessionCorrect = 0; sessionWrong = 0;
+  document.getElementById('dashView').style.display = 'none';
+  document.getElementById('doneView').style.display = 'none';
+  document.getElementById('sessionView').style.display = 'block';
+  showCard();
+}
+
+function showCard() {
+  const total = sessionQueue.length;
+  document.getElementById('sessionProgress').textContent = `${sessionIdx} / ${total}`;
+  document.getElementById('sessionBar').style.width = (sessionIdx / total * 100) + '%';
+  if (sessionIdx >= total) { endDone(); return; }
+
+  const word = sessionQueue[sessionIdx];
+  document.getElementById('cardDateBadge').textContent = `📅 ${word.date} 학습`;
+  document.getElementById('cardEmoji').textContent = word.emoji || '';
+  document.getElementById('cardQuestion').textContent = word.meaning;
+  document.getElementById('cardExampleKo').textContent = `"${word.example_ko}"`;
+  document.getElementById('cardExampleEn').textContent = word.example_en;
+  document.getElementById('feedbackBox').className = 'feedback-box';
+  document.getElementById('feedbackBox').innerHTML = '';
+  document.getElementById('btnNext').className = 'btn-next';
+
+  const others = WORDS_DB.filter(w => w.id !== word.id).sort(() => Math.random() - .5).slice(0, 3);
+  const options = [...others, word].sort(() => Math.random() - .5);
+
+  document.getElementById('quizOptions').innerHTML = options.map((o, i) =>
+    `<button class="opt-btn" id="opt-${i}" onclick="answer('${word.id}','${o.id}',${i})">
+      ${String.fromCharCode(65 + i)}. ${o.word}
+    </button>`
+  ).join('');
+}
+
+function answer(correctId, chosenId, chosenIdx) {
+  const isCorrect = correctId === chosenId;
+  const word = WORDS_DB.find(w => w.id === correctId);
+  const newState = updateState(correctId, isCorrect);
+
+  document.querySelectorAll('.opt-btn').forEach(b => {
+    b.disabled = true;
+    if (b.textContent.trim().replace(/^[A-D]\.\s*/, '') === word.word) b.classList.add('correct');
+  });
+  if (!isCorrect) document.getElementById('opt-' + chosenIdx).classList.add('wrong');
+  if (isCorrect) sessionCorrect++; else sessionWrong++;
+
+  const illustHtml = (word.emoji && word.pos) ? `
+    <div class="review-illus" style="background:${wordGradient(word.pos)}">
+      <span class="review-illus-emoji">${word.emoji}</span>
+      <div class="review-illus-en">${word.word}</div>
+      <div class="review-illus-ko">${word.meaning}</div>
+    </div>` : '';
+  const fb = document.getElementById('feedbackBox');
+  fb.className = 'feedback-box show ' + (isCorrect ? 'correct' : 'wrong');
+  fb.innerHTML = isCorrect
+    ? `${illustHtml}✅ 정답! <b>${word.word}</b> — ${word.explanation}<div class="feedback-next">📅 다음 복습: ${newState.interval}일 후 (${newState.due})</div>`
+    : `${illustHtml}❌ 오답. 정답은 <b>${word.word}</b> — ${word.explanation}<div class="feedback-next">📅 내일 다시 복습할게요</div>`;
+
+  document.getElementById('btnNext').className = 'btn-next show';
+}
+
+function nextCard() { sessionIdx++; showCard(); }
+
+function endDone() {
+  document.getElementById('sessionView').style.display = 'none';
+  document.getElementById('doneView').style.display = 'block';
+  updateStreak();
+  const total = sessionCorrect + sessionWrong;
+  const pct = total ? Math.round(sessionCorrect / total * 100) : 0;
+  document.getElementById('doneEmoji').textContent = pct >= 80 ? '🎉' : pct >= 50 ? '💪' : '📖';
+  document.getElementById('doneTitle').textContent = pct >= 80 ? '완벽해요!' : pct >= 50 ? '잘하고 있어요!' : '계속 연습하면 돼요!';
+  document.getElementById('doneSub').textContent = `${sessionQueue.length}개 카드 복습 완료 · 🔥 ${getStreak()}일 연속`;
+  document.getElementById('doneCorrect').textContent = sessionCorrect;
+  document.getElementById('doneWrong').textContent = sessionWrong;
+  document.getElementById('doneAccuracy').textContent = pct + '%';
+  renderDashboard();
+}
+
+function endSession() {
+  document.getElementById('sessionView').style.display = 'none';
+  document.getElementById('dashView').style.display = 'block';
+  renderDashboard();
+}
+
+fetch('words_db.json?' + Date.now())
+  .then(r => r.json())
+  .then(data => {
+    WORDS_DB = data;
+    renderDashboard();
+  })
+  .catch(() => {
+    document.getElementById('btnStart').textContent = '데이터 로드 실패';
+  });
+</script>
+</body>
+</html>

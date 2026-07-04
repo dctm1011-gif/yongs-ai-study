@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FNN 트랜시버 모델링 논문 분석 · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">FNN 트랜시버 모델링</span>
+</div>
+<div class="article">
+  <div class="article-venue">IEEE Trans. CPMT 2023</div>
+  <h1 class="article-title">Modular Neural Network-Based Models of High-Speed Link Transceivers</h1>
+  <div class="article-tags"><span class="tag">PHY</span><span class="tag">Interface</span><span class="tag">ML-HW</span></div>
+  <div class="article-links">
+    <a class="article-link primary" href="https://www.semanticscholar.org/paper/cea0f5cbe60ade1a47564061a4256790d00edc68" target="_blank">원문 보기 →</a>
+  </div>
+  <p class="opener">고속 링크 시뮬레이션에서 트랜시버를 FNN 기반 커널 행렬로 표현하면, 수십 시간짜리 SPICE 시뮬레이션을 단순한 행렬 곱셈으로 바꿀 수 있어요. HBM PHY 검증 속도를 극적으로 높일 수 있는 접근법이에요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">왜 기존 시뮬레이션 방법이 부족한가요?</h2>
+    <p>고속 링크(High-Speed Link)를 설계할 때 가장 큰 고통 중 하나가 시뮬레이션 시간이에요. SPICE 수준 시뮬레이션은 트랜시버의 비선형 동작을 정확하게 잡아내지만, 회로가 복잡해질수록 수십에서 수백 시간이 걸려요. HBM처럼 I/O 수가 수천 개에 달하는 경우엔 더욱 심각해요.</p>
+    <p>그렇다고 제조사가 제공하는 IBIS나 IBIS-AMI 모델을 쓰면 속도는 빠르지만, 실제 비선형 동작을 충분히 반영하지 못하는 한계가 있어요. 결국 정확성과 속도 사이에서 항상 타협을 해야 했어요.</p>
+    <div class="insight blue">
+      <div class="insight-label">논문의 출발점</div>
+      <p>FNN(피드포워드 신경망)으로 트랜시버 각 블록의 비선형 동작을 학습시키면, 이후 시뮬레이션은 단순한 행렬 곱셈으로 처리할 수 있다는 아이디어예요. 정확도는 SPICE 수준으로, 속도는 IBIS 수준으로요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">FNN 커널 행렬이란 무엇인가요?</h2>
+    <p>이 논문에서 트랜시버는 "모듈"들의 집합이에요. TX 드라이버, 채널, RX 이퀄라이저 각각이 독립적인 FNN으로 모델링돼요. 각 FNN은 훈련을 통해 커널 행렬 형태로 수렴하고, 이후 시뮬레이션에서는 이 행렬에 입력 벡터를 곱하면 출력이 바로 나와요.</p>
+    <p>핵심은 이 커널 행렬이 "비선형 동작을 선형적으로 근사"한다는 거예요. 완벽한 선형 모델은 아니지만, FNN이 학습 과정에서 비선형성을 흡수해서 행렬 곱 형태로 변환해버려요. 그래서 추론(inference) 단계에선 행렬 곱셈만 하면 돼요.</p>
+    <div class="insight green">
+      <div class="insight-label">모듈화의 장점</div>
+      <p>각 블록을 독립적으로 학습시키기 때문에, TX만 바꾸고 싶으면 TX FNN만 다시 훈련하면 돼요. 전체 시스템을 처음부터 다시 시뮬레이션할 필요가 없어서 설계 반복(iteration)이 훨씬 빠르게 돌아가요.</p>
+    </div>
+    <p>또한 균등화(equalization)나 차동 신호(differential signaling)처럼 고급 기능도 프로토콜만 약간 조정하면 동일한 FNN 모델에 포함시킬 수 있어서 확장성도 높아요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">실제로 얼마나 빠르고 정확한가요?</h2>
+    <p>기존 IBIS-AMI 모델이나 SPICE와 비교했을 때, FNN 모델은 SPICE와 비슷한 정확도를 유지하면서 시뮬레이션 속도를 수십 배 향상시켜요. 특히 전압과 프로토콜 정보를 FNN에 같이 입력하면 코너(corner) 케이스까지 빠르게 검증할 수 있어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">수십 배</div><div class="stat-desc">SPICE 대비 시뮬레이션 속도 향상</div></div>
+      <div class="stat-box"><div class="stat-num">최소</div><div class="stat-desc">FNN 모델 생성에 필요한 노력 (IBIS 대비)</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM PHY 검증에 어떻게 쓸 수 있나요?</h2>
+    <p>HBM은 수천 개의 I/O 핀을 가지고 있어서, PHY 수준 SPICE 시뮬레이션을 그냥 돌리면 검증에만 수주가 걸릴 수 있어요. 이 논문의 접근법을 적용하면 TX 드라이버와 RX 이퀄라이저를 각각 FNN 모델로 대체해서 시뮬레이션 루프를 대폭 단축할 수 있어요.</p>
+    <p>특히 파라미터 스윕(parameter sweep)이나 PVT 코너 검증처럼 같은 구조로 조건만 바꾸는 작업에서 효과가 극적이에요. 행렬 파라미터만 바꿔서 빠르게 돌릴 수 있으니까요. 차세대 HBM4처럼 속도가 더 빠른 인터페이스를 설계할 때 이런 빠른 검증 루프가 핵심 경쟁력이 될 수 있어요.</p>
+    <div class="insight yellow">
+      <div class="insight-label">주의할 점</div>
+      <p>FNN 모델은 학습 데이터 범위 밖에서는 정확도가 떨어질 수 있어요. 설계 공간이 크게 달라지면 재훈련이 필요해요. 그래도 반복적인 설계-검증 사이클에서는 충분히 실용적인 도구예요.</p>
+    </div>
+  </div>
+
+<hr>
+<div class="section">
+  <div class="section-label">논문 그림</div>
+  <h2 class="section-title">Figure 갤러리</h2>
+  <p class="figure-no-embed">이 논문은 IEEE Xplore에서 제공돼요. Semantic Scholar 페이지에서 그림 일부를 미리 볼 수 있어요 (무료 접근 가능).</p>
+  <div class="figure-outer">
+    <a class="figure-open-link" href="https://www.semanticscholar.org/paper/cea0f5cbe60ade1a47564061a4256790d00edc68" target="_blank">↗ Semantic Scholar에서 열기 (그림 포함)</a>
+  </div>
+</div>
+</div>
+<div id="term-tooltip-global"></div>
+<script src="tooltip.js"></script>
+</body>
+</html>

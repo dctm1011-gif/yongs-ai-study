@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RowHammer Attack Distance · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">RowHammer Attack Distance</span>
+</div>
+<div class="article">
+  <div class="article-venue">IEEE TCAD 2025</div>
+  <h1 class="article-title">Assessing the Potential of Escalating RowHammer Attack Distance to Bypass Counter-Based Defenses</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">ECC</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/8464b46ddd927a5b581b6cbc38b0779e7f51254c" target="_blank">원문 보기 →</a></div>
+  <p class="opener">victim row에서 물리적으로 멀리 떨어진 "distant aggressor" 행을 이용해 counter 기반 방어를 우회할 수 있는지 DDR4 128개 칩으로 체계적으로 검증했더니, 현실적인 거리 범위에서는 효과가 매우 제한적임을 밝혔어요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">멀리 있는 행도 RowHammer를 일으킬 수 있을까요?</h2>
+    <p>전통적인 RowHammer는 victim row의 바로 인접한 행(보통 1~2행 거리)을 반복 활성화하는 공격이에요. counter 기반 방어(TRR, PARA 등)는 이 "가까운 aggressor" 모델을 전제로 설계됐어요. 그렇다면 victim에서 더 멀리 떨어진 행을 활성화하면 어떨까요? 거리가 멀수록 전기 간섭은 줄겠지만, 그 행은 counter의 감시 범위 밖에 있을 수 있어요.</p>
+    <p>이 아이디어는 "distant row activation" 공격으로 불리며, counter 기반 방어를 구조적으로 우회하는 새로운 경로로 주목받았어요. 만약 TRH보다 훨씬 많은 횟수로 먼 행을 활성화해도 방어가 이를 감지하지 못한다면, 누적 전기 간섭이 결국 victim에 비트 플립을 일으킬 수 있다는 가설이에요.</p>
+    <p>이 논문은 이 가설을 128개 상용 DDR4 DRAM 칩에서 체계적으로 실험해요. 단순히 "되냐 안 되냐"를 넘어, 공격 거리(victim까지의 행 수), 활성화 횟수, 칩 제조사·세대별 특성을 망라하는 대규모 실험 설계로 공격 가능성의 경계를 정밀하게 매핑해요.</p>
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>"거리가 멀면 counter가 세지 않는다"는 방어의 가정이 얼마나 안전한지 실제 칩으로 검증하는 게 이 논문의 핵심이에요. 공격이 성공하면 counter 방어 전체가 흔들리고, 실패하면 방어의 신뢰성을 정량적으로 지지하는 증거가 돼요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">공격 거리를 어떻게 체계적으로 실험했나요?</h2>
+    <p>실험 설계의 핵심은 aggressor-victim 거리(D)를 파라미터로 삼는 광범위한 공간 탐색(design space exploration)이에요. D=1은 인접 행(전통적 RowHammer), D=2, 4, 8, ... 처럼 거리를 늘려가며 각 거리에서 비트 플립이 발생하는 최소 활성화 횟수를 측정해요. FPGA 기반 테스트베드로 row 주소와 활성화 타이밍을 직접 제어했어요.</p>
+    <p>128개 DDR4 칩은 3개 주요 제조사의 다양한 제조 연도와 밀도 스펙을 포함해서, 통계적으로 유의미한 샘플을 구성해요. 각 칩에 대해 여러 뱅크·행 위치에서 반복 실험해 위치 의존성도 함께 분석했어요.</p>
+    <p>추가로 "multi-sided distant attack" — 여러 먼 aggressor를 동시에 활성화하는 조합 — 도 테스트했어요. 이는 paper-28(Threshold Breaker)의 분산 공격 아이디어를 거리 차원으로 확장한 실험이에요. 그리고 이 모든 결과를 기존 양면(double-sided) 인접 공격의 효율성과 정량적으로 비교했어요.</p>
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>공격 거리를 체계적으로 스윕해서 "distant aggressor로 counter 방어를 우회하면서도 비트 플립을 일으킬 수 있는 실제 경계"를 DDR4 실칩에서 정밀하게 측정해요. 이 경계 데이터가 향후 방어 설계의 기준점이 돼요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">먼 거리 공격이 실제로 counter 방어를 뚫었나요?</h2>
+    <p>가장 중요한 결과는 예상과 달리 현실적인 공격 거리 범위에서 distant row activation은 주요 제조사 칩 전반에 걸쳐 비트 플립 발생에 큰 기여를 못 한다는 거예요. 즉, counter 기반 방어가 감시하지 않는 거리의 행을 아무리 많이 활성화해도, 그 전기 간섭이 victim에 도달해 비트 플립을 일으킬 만큼 충분하지 않은 경우가 대부분이었어요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">128개</div><div class="stat-desc">테스트 DDR4 칩 수 (3개 제조사, 다양한 세대)</div></div>
+      <div class="stat-box"><div class="stat-num">제한적 효과</div><div class="stat-desc">현실적 거리에서 distant row activation의 비트 플립 기여 — 대부분의 칩에서 통계적으로 유의미하지 않음</div></div>
+      <div class="stat-box"><div class="stat-num">거리 비례 감쇠</div><div class="stat-desc">aggressor-victim 거리 증가에 따라 전기 간섭이 급격히 감소 — 지수 감쇠 특성</div></div>
+      <div class="stat-box"><div class="stat-num">D=1 지배적</div><div class="stat-desc">실질적 비트 플립은 인접(D=1~2) 행에서 압도적으로 발생 — distant attack은 대안이 되기 어려움</div></div>
+    </div>
+    <p>이 결과는 Threshold Breaker(paper-28)의 맥락과 함께 읽으면 흥미로워요. Threshold Breaker는 여러 가까운 행을 낮은 횟수로 공격하는 것이고, 이 논문은 하나의 먼 행을 많은 횟수로 공격하는 거예요. 두 논문의 결과를 합치면, counter 방어 우회에는 "가깝지만 횟수를 나눠서" 접근하는 쪽이 "멀지만 횟수를 높여서" 접근하는 것보다 훨씬 효과적임을 알 수 있어요.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM의 physical row distance와 RowHammer 취약성을 어떻게 연결할 수 있나요?</h2>
+    <p>HBM은 DDR4보다 wordline이 짧고 셀 크기도 달라요. 이 논문의 "거리 감쇠" 측정 데이터를 HBM 구조에 직접 외삽하기는 어렵지만, 방향성은 적용할 수 있어요. HBM의 고밀도 셀 배열에서 물리 행 간격이 DDR4보다 더 좁다면, 동일한 물리 거리에서 더 많은 행이 포함돼요. 이는 "가까운" 행의 수가 상대적으로 많아진다는 의미예요.</p>
+    <p>HBM 컨트롤러의 RowHammer 방어 설계 시, 이 논문의 거리 감쇠 특성은 "몇 행까지를 위험 반경으로 설정할지"를 결정하는 데 근거 자료가 돼요. DDR4에서 D=4 이상이 안전하다면, HBM에서는 물리 간격을 nm 단위로 환산해서 다시 검토해야 해요.</p>
+    <p>또한 이 논문은 counter 기반 방어가 "distant attack에는 강하다"는 결론도 함께 제시하기 때문에, HBM3/HBM4 세대 PRAC(Per-Row Activation Counting) 방어의 설계 범위를 좁히는 데 도움이 돼요. 감시 반경을 D=1~2로만 잡아도 distant attack 위협은 낮다는 근거예요.</p>
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>이 논문의 결론("distant attack 효과 제한적")은 현재 DDR4 공정 기준 데이터예요. DRAM 공정이 더 미세화되면 셀 간 간섭 특성이 달라질 수 있고, HBM처럼 구조가 다른 메모리에서는 거리 감쇠 프로파일이 달라질 가능성이 있어요. "현재는 안전"이라는 결론을 미래 공정에 그대로 이전하면 위험해요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — 실험 설계 개념도: victim row에서 다양한 거리(D=1, 2, 4, ...)에 배치된 aggressor row 배열. 각 거리에서 활성화 횟수를 스윕해 비트 플립 경계를 탐색해요.</p>
+    <p><strong>Fig. 2</strong> — 거리 vs. 최소 비트 플립 유발 활성화 횟수 그래프: 거리가 증가할수록 필요 활성화 횟수가 지수적으로 증가하는 특성을 128개 칩 통계로 보여줘요.</p>
+    <p><strong>Fig. 3</strong> — 제조사별 비교: 동일한 공격 거리에서 제조사마다 다른 전기 간섭 특성을 가지며, 일부 칩은 다른 칩보다 먼 거리에서도 간섭이 강하게 나타나요.</p>
+    <p><strong>Fig. 4</strong> — distant attack vs. double-sided 인접 공격 효율 비교: 비트 플립 발생 속도와 공격 당 성공률 측면에서 인접 공격이 압도적으로 우세해요.</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/8464b46ddd927a5b581b6cbc38b0779e7f51254c" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+name = "yongs-ai-study"
+type = "javascript"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+[env.production]
+name = "yongs-ai-study-prod"
+
+[build]
+command = "npm install"
+cwd = "./"
+
+[[env.production.routes]]
+pattern = "yongs-ai-study.pages.dev/*"
+zone_name = "pages.dev"

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Session 7 Overview: Ultra-High-Speed Wireline · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">Session 7: Ultra-High-Speed Wireline</span>
+</div>
+<div class="article">
+  <div class="article-venue">IEEE ISSCC 2025</div>
+  <h1 class="article-title">Session 7 Overview: Ultra-High-Speed Wireline</h1>
+  <div class="article-tags"><span class="tag">PHY</span><span class="tag">Interface</span><span class="tag">SerDes</span><span class="tag">PLL-DLL</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/c08552a16849210dd14d12e102032cd4355f7e04" target="_blank">원문 보기 →</a></div>
+  <p class="opener">ISSCC 2025 Session 7은 224Gb/s~200Gb/s+ 급 초고속 유선 SerDes의 최전선을 보여주는 세션으로, 3nm FinFET에서 1pJ/b 미만의 에너지 효율과 35dB 이상의 손실 보상을 동시에 달성하는 회로 혁신들을 집대성했어요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">왜 지금 초고속 유선 통신이 이렇게 중요해진 걸까요?</h2>
+    <p>AI 가속기와 대규모 언어 모델의 등장으로 칩 간 데이터 전송 요구량이 폭발적으로 늘어났어요. GPU 클러스터 내부에서 HBM과 SoC를 연결하는 인터포저 PHY든, 스위치 ASIC 간 고속 광 링크든, 단순히 "빠른" 수준을 넘어서 "watt 당 얼마나 많은 비트를 보내느냐"가 핵심 경쟁력이 됐죠. 기존 NRZ(2-level) 방식은 100Gb/s 이상에서 채널 손실이 너무 커서 실질적 한계에 봉착했고, PAM4(4-level)가 표준으로 자리 잡으면서 이제 224Gb/s PAM4가 새로운 기준점이 됐어요.</p>
+    <p>하지만 PAM4만으로는 부족해요. 데이터센터 백플레인과 광 모듈에서는 채널 삽입 손실이 35dB를 훌쩍 넘기 때문에, 이퀄라이저 설계가 전체 트랜시버 성능을 좌우하게 됩니다. CTLE(연속 시간 선형 이퀄라이저), DFE(결정 피드백 이퀄라이저), FFE(피드 포워드 이퀄라이저)를 어떻게 조합하고, 어느 영역에서 디지털 처리를 섞을 것인지가 2025년 ISSCC에서 가장 뜨거운 토론 주제였어요.</p>
+    <p>클로킹 측면에서도 혁신이 필요했어요. 224Gb/s에서 1 UI는 약 4.5ps밖에 안 되는데, 이 안에서 샘플링 타이밍을 잡으려면 PLL의 지터가 수십 fs 수준이어야 해요. 링 오실레이터 기반 PLL은 LC PLL보다 면적이 훨씬 작지만 위상 잡음이 나빠서 고속 SerDes에 쓰기 어렵다는 게 통념이었는데, ISSCC 2025에서는 이 통념을 깨는 발표들이 여럿 나왔어요.</p>
+    <div class="insight blue">
+      <div class="insight-label">세션의 출발점</div>
+      <p>AI 인프라의 대역폭 수요가 매 2년마다 4배씩 늘어나면서, 224Gb/s SerDes와 에너지 효율 1pJ/b 이하라는 두 목표를 동시에 달성하는 것이 업계 당면 과제가 됐어요. Session 7의 9편 논문은 이 문제에 대한 2025년의 가장 진보된 해답들이에요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">9편의 논문이 각각 어떤 혁신을 가져왔나요?</h2>
+    <p>첫 번째 논문은 200Gb/s 이상의 직접 감지 광 링크를 위한 DSP 기반 완전 집적 트랜시버예요. 기존에는 고속 광 트랜시버의 DSP를 별도 칩으로 구현했는데, 이를 완전 집적해 지연과 전력을 동시에 줄였어요. 7비트 ADC를 갖춘 인버터 기반 RX 프런트엔드가 핵심이고, 디지털로 보정된 1/8 속도 클록 시스템을 활용해 55fs rms 랜덤 지터, 170fs 결정성 지터를 달성했어요.</p>
+    <p>두 번째 논문은 3nm FinFET에서 PAM4와 PAM6을 모두 지원하는 224Gb/s 송신기예요. PAM6은 아직 표준화되지 않았지만 채널 효율이 PAM4보다 높아 미래 옵션으로 주목받고 있어요. 1pJ/b 미만의 에너지 효율을 달성하면서 두 변조 방식을 동일 회로로 지원한다는 점이 인상적이에요. 세 번째 논문은 3nm FinFET에서 3pJ/b로 35dB+ 손실 채널을 완전 보상하는 224Gb/s 트랜시버예요. 공개된 것 중 최고 속도 대비 최대 손실 보상 기록이에요.</p>
+    <p>네 번째 논문은 링 오실레이터 기반 6.6GHz PLL인데, -74.2dBc 스퍼와 -241dB 지터 전력 성능 지수(FOM)라는 놀라운 수치를 보여줬어요. 링 PLL이 LC PLL에 근접하는 성능을 낸다는 점에서 면적 혜택이 더 극대화될 수 있어요. 다섯 번째와 여섯 번째 논문은 각각 130nm SiGe BiCMOS와 28nm CMOS에서 싱글엔드 시그널링으로 224Gb/s와 112Gb/s를 달성했어요. 싱글엔드는 차동 대비 핀 수를 절반으로 줄여 대역폭 밀도를 두 배로 높일 수 있어요.</p>
+    <p>일곱 번째는 28nm CMOS에서 2.16pJ/b 효율의 112Gb/s 2b/3b ADC 기반 XSR(극단 단거리) 트랜시버예요. XSR은 칩 내부 또는 패키지 내부 연결에 최적화된 규격이에요. 여덟 번째는 22nm FinFET에서 13GHz, 69.3fs 지터를 달성한 링 PLL이에요. 아홉 번째는 65nm CMOS에서 DC 변조 램프를 이용해 8비트 선형성을 확보한 위상 보간기로, CDR에서 세밀한 위상 조정을 가능하게 해요.</p>
+    <div class="insight green">
+      <div class="insight-label">핵심 트렌드</div>
+      <p>3nm FinFET 공정의 상용화로 224Gb/s에서 에너지 효율 1~3pJ/b가 현실화됐어요. 링 PLL의 위상 잡음이 LC 수준에 근접하면서 SerDes 설계 자유도가 크게 높아졌고, 싱글엔드 시그널링이 대역폭 밀도 향상의 새 경로로 주목받고 있어요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">각 논문에서 달성한 주요 수치는 어떻게 되나요?</h2>
+    <p>Session 7의 9편은 각각 특정 지표에서 새로운 기록을 세웠어요. 에너지 효율, 채널 손실 보상, 지터, 대역폭 밀도 모두 2023~2024년 대비 눈에 띄게 발전했어요. 아래 수치들이 이 세션을 정의하는 벤치마크예요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">224 Gb/s</div><div class="stat-desc">PAM4 기준 최고 데이터 속도 (3nm FinFET)</div></div>
+      <div class="stat-box"><div class="stat-num">&lt;1 pJ/b</div><div class="stat-desc">최저 에너지 효율 달성 (PAM4/PAM6 듀얼 지원 TX)</div></div>
+      <div class="stat-box"><div class="stat-num">35 dB+</div><div class="stat-desc">채널 삽입 손실 최대 보상 (224Gb/s 완전 집적 TRX)</div></div>
+      <div class="stat-box"><div class="stat-num">55 fs</div><div class="stat-desc">rms 랜덤 지터 (DSP 기반 광 트랜시버 클록)</div></div>
+      <div class="stat-box"><div class="stat-num">69.3 fs</div><div class="stat-desc">링 PLL 지터 (13GHz, 22nm FinFET)</div></div>
+      <div class="stat-box"><div class="stat-num">-241 dB</div><div class="stat-desc">PLL 지터 전력 FOM (6.6GHz 링 기반 PLL)</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>HBM PHY 설계자 입장에서 Session 7은 여러 힌트를 줘요. HBM은 현재 HBM3e에서 최대 9.6Gbps/pin을 지원하는데, HBM4에서 대역폭을 더 끌어올리려면 I/O PHY의 에너지 효율과 지터 성능이 동시에 좋아져야 해요. 이 세션에서 보여준 1pJ/b 이하 에너지 효율 기술과 링 PLL의 50~70fs 급 지터 성능은 HBM4 PHY 설계에 직접 참고할 수 있는 벤치마크예요.</p>
+    <p>특히 XSR(극단 단거리) 트랜시버 기술은 HBM 스택과 SoC 간 인터포저 연결에 직접 적용 가능해요. HBM 인터페이스는 본질적으로 밀리미터 이하의 극단 단거리 링크이기 때문에, 28nm CMOS에서 2.16pJ/b를 달성한 112Gb/s XSR 기술의 회로 아이디어(공유 부하, 전류 모드 드라이버 등)가 HBM 로컬 PHY 설계에 유용해요. 싱글엔드 시그널링의 핀 효율 개선도 HBM의 높은 핀 밀도 요구와 맞닿아 있어요.</p>
+    <p>클로킹 측면에서는 HBM의 Per-Group 클록 분배 구조에 링 PLL을 적용하는 것이 기술적으로 더 현실적이 됐어요. LC PLL은 인덕터 면적 때문에 HBM 다이에 탑재하기 어려운데, Session 7의 링 PLL이 LC 수준 위상 잡음을 달성했다는 점은 HBM 클록 아키텍처 선택지를 넓혀줘요.</p>
+    <div class="insight yellow">
+      <div class="insight-label">주의할 점</div>
+      <p>224Gb/s 기술 대부분이 3nm FinFET 기반이에요. HBM 다이는 비용 문제로 첨단 공정을 쓰기 어렵고, HBM4 기준 베이스 다이는 여전히 5~7nm 영역이에요. 첨단 공정의 성능 수치를 HBM에 그대로 적용하기 어렵고, 공정 여유를 고려한 마진 설계가 필요해요. 또한 PAM6 같은 비표준 변조 방식은 아직 JEDEC에서 채택 여부를 논의 중이에요.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — 세션 오버뷰 테이블: 9편 논문의 주요 성능 지표(데이터 속도, 공정, 에너지 효율, 채널 손실)를 한눈에 비교하는 표. PAM4 vs PAM6, 싱글엔드 vs 차동, DSP vs 아날로그 이퀄라이저 구분이 컬럼별로 정리돼 있어요.</p>
+    <p><strong>Fig. 2</strong> — 200Gb/s 광 트랜시버 블록 다이어그램: 완전 집적 DSP, 7비트 ADC 프런트엔드, 1/8 속도 클록 분배 트리, 디지털 보정 루프가 어떻게 연결되는지 보여줘요.</p>
+    <p><strong>Fig. 3</strong> — PAM4/PAM6 듀얼 모드 TX 회로: 3nm FinFET에서 두 변조 방식을 공통 드라이버로 지원하는 아키텍처. 전류 조합(current combining) 방식의 DAC 트리가 핵심이에요.</p>
+    <p><strong>Fig. 4</strong> — 링 기반 PLL 위상 잡음 스펙트럼: -74.2dBc 스퍼와 -241dB FOM이 실측 그래프로 표시돼요. LC PLL과의 성능 비교도 같이 실려 있어요.</p>
+    <p><strong>Fig. 5</strong> — 싱글엔드 시그널링 대역폭 밀도 비교: 동일 핀 수에서 싱글엔드가 차동 대비 달성하는 총 대역폭 이점을 레이아웃 평면도와 함께 설명해요.</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/c08552a16849210dd14d12e102032cd4355f7e04" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>

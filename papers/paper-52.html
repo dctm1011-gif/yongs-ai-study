@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RAIDR · Yong's AI Study</title>
+<link rel="stylesheet" href="paper.css">
+<script src="tooltip.js" defer></script>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-link" href="../history/index.html#columns">← 논문 정리</a>
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-cur">RAIDR</span>
+</div>
+<div class="article">
+  <div class="article-venue">ISCA 2012</div>
+  <h1 class="article-title">RAIDR: Retention-Aware Intelligent DRAM Refresh</h1>
+  <div class="article-tags"><span class="tag">DRAM</span><span class="tag">Low-Power</span></div>
+  <div class="article-links"><a class="article-link primary" href="https://www.semanticscholar.org/paper/2913004da8f897d20f31c047b46c8cfdcd0eb7d3" target="_blank">원문 보기 →</a></div>
+  <p class="opener">DRAM 셀마다 retention time이 다르다는 사실을 이용해서, 약한 셀만 자주 refresh하고 나머지는 드물게 refresh하는 방식으로 DRAM 전력을 획기적으로 줄인 논문이에요.</p>
+
+  <div class="section">
+    <div class="section-label">Introduction</div>
+    <h2 class="section-title">왜 DRAM refresh가 이렇게 큰 문제가 됐을까요?</h2>
+    <p>DRAM은 커패시터에 전하를 저장하는 방식이라, 시간이 지나면 전하가 자연스럽게 누설돼요. 그래서 데이터가 사라지기 전에 주기적으로 충전을 다시 해줘야 하는데, 이걸 refresh라고 해요. 문제는 DRAM 용량이 늘어날수록 refresh해야 하는 행(row)의 수도 함께 늘어나서, refresh 작업이 전체 DRAM 전력의 약 40%를 차지하는 상황까지 왔다는 거예요.</p>
+    <p>기존 DRAM은 단순하게 "모든 행을 같은 주기(64ms)로 refresh"하는 방식을 썼어요. 왜냐하면 DRAM 표준(JEDEC)이 최악의 경우, 즉 가장 retention time이 짧은 셀을 기준으로 refresh 주기를 정해놓기 때문이에요. 하지만 실제로 측정해보면 DRAM 셀의 retention time 분포는 매우 넓어요. 대부분의 셀은 수백 ms~수 초 이상 데이터를 유지할 수 있는데, 극소수의 "weak cell" 때문에 전체가 64ms마다 refresh를 받아야 하는 거예요. 이건 엄청난 낭비죠.</p>
+    <p>RAIDR은 이 비효율을 정면으로 공략해요. retention time이 짧은 weak cell이 포함된 행만 자주 refresh하고, 나머지 대다수 행은 훨씬 긴 주기로 refresh하면 된다는 아이디어예요.</p>
+    <div class="insight blue"><div class="insight-label">논문의 출발점</div><p>DRAM 셀의 retention time은 행마다 천차만별인데, 기존 시스템은 최악의 셀 하나 때문에 모든 행을 동일한 빈도로 refresh해서 엄청난 전력을 낭비하고 있어요. 이 불균형을 활용하면 refresh를 극적으로 줄일 수 있어요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Proposed Method</div>
+    <h2 class="section-title">RAIDR은 어떻게 retention time을 활용하나요?</h2>
+    <p>RAIDR의 핵심은 세 단계예요. 첫째, DRAM의 모든 행에 대해 retention time을 프로파일링해서 "얼마나 자주 refresh가 필요한지"에 따라 bin(버킷)으로 분류해요. Bin 1은 64ms마다(표준 주기), Bin 2는 128ms마다, Bin 3은 그보다 더 길게 refresh하는 식이에요. 실제 DRAM에서 Bin 1(weak row)에 해당하는 비율은 극히 일부(전체의 1% 미만 수준)예요.</p>
+    <p>둘째, 이 bin 정보를 메모리 컨트롤러에서 Bloom filter를 사용해 매우 효율적으로 저장해요. Bloom filter는 "이 행이 weak cell인가?"를 묻는 확률적 데이터 구조로, 오탐(false positive)은 있어도 놓침(false negative)은 없어요. 즉 실제로는 강한 셀인데 weak으로 분류되는 경우는 있어도(약간의 불필요한 refresh가 생기지만 안전), 실제 weak 셀을 강한 셀로 오분류해서 refresh를 건너뛰는 일은 없어요. 32GB DRAM 전체를 저장하는 데 메모리 컨트롤러에 1.25KB의 Bloom filter만으로 충분해요.</p>
+    <p>셋째, 메모리 컨트롤러는 refresh 명령을 보낼 때마다 Bloom filter를 참조해서 이 행이 Bin 1인지 확인해요. Bin 1이 아니면 refresh를 건너뛰어요. 이 과정에서 DRAM 칩 자체는 전혀 수정할 필요가 없고, 메모리 컨트롤러의 수정도 최소화돼요.</p>
+    <div class="insight green"><div class="insight-label">핵심 아이디어</div><p>Bloom filter라는 초경량 자료구조(1.25KB)로 수십 GB DRAM의 모든 행 retention 정보를 인코딩하고, 메모리 컨트롤러가 행별로 refresh 여부를 결정해요. DRAM 칩 수정 없이 컨트롤러만 바꿔도 되는 게 실용성의 핵심이에요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2 class="section-title">실제로 얼마나 효과가 있었나요?</h2>
+    <p>8코어 시스템에 32GB DRAM을 탑재한 환경에서 실험한 결과, RAIDR은 기존 방식 대비 refresh 횟수를 74.6% 줄였어요. 이 덕분에 DRAM 전력이 평균 16.1% 감소했고, refresh로 인한 메모리 버스 점유가 줄어서 시스템 성능도 평균 8.6% 향상됐어요. DRAM 용량이 클수록, 그리고 메모리 집약적인 워크로드일수록 효과가 더 커요. 메모리 컨트롤러 오버헤드는 1.25KB 스토리지뿐이라 하드웨어 비용은 사실상 무시할 수 있는 수준이에요.</p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">74.6%</div><div class="stat-desc">refresh 횟수 감소 (32GB 기준)</div></div>
+      <div class="stat-box"><div class="stat-num">16.1%</div><div class="stat-desc">DRAM 평균 전력 절감</div></div>
+      <div class="stat-box"><div class="stat-num">8.6%</div><div class="stat-desc">시스템 성능 향상</div></div>
+      <div class="stat-box"><div class="stat-num">1.25 KB</div><div class="stat-desc">컨트롤러 추가 스토리지 (Bloom filter)</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">설계 관점에서 보면요</div>
+    <h2 class="section-title">HBM 설계에 어떻게 적용할 수 있나요?</h2>
+    <p>RAIDR은 LPDDR4/5와 HBM 계열에서 오늘날 구현되는 refresh 최적화 기법들의 아이디어적 뿌리예요. HBM2E 이후의 스펙에는 per-bank refresh, same-bank refresh, refresh management 같은 기능들이 들어 있는데, 이들은 모두 "모든 행을 동일하게 취급하지 말고, 필요한 행에만 더 자주 refresh를 주자"는 RAIDR의 철학을 이어받은 거예요.</p>
+    <p>HBM PHY 설계자 입장에서 특히 흥미로운 점은 refresh가 버스 점유를 유발한다는 사실이에요. HBM은 고대역폭이 생명인데, refresh 명령 하나가 전체 뱅크를 점유해버리면 그 시간만큼 데이터 전송이 중단돼요. RAIDR처럼 불필요한 refresh를 줄이면 유효 대역폭이 늘어나고, 특히 AI 추론처럼 메모리 접근이 집중되는 구간에서 성능 안정성이 높아져요.</p>
+    <p>실제 HBM 칩에 적용한다면, retention time 프로파일은 wafer-level 테스트나 burn-in 공정에서 측정해서 칩에 함께 구워넣고, 호스트(GPU/NPU) 메모리 컨트롤러가 이 정보를 읽어서 per-row refresh 스케줄링을 구현하는 흐름이 될 거예요.</p>
+    <div class="insight yellow"><div class="insight-label">주의할 점</div><p>Retention time은 온도에 민감해요. 온도가 올라가면 전하 누설 속도가 빨라져서 같은 셀이라도 retention time이 짧아져요. HBM은 GPU 다이 바로 위에 적층되므로 동작 온도 범위가 넓어요. RAIDR을 그대로 쓰려면 온도별 bin 재분류 로직이 반드시 추가돼야 해요. LPDDR5 스펙의 temperature compensated self-refresh(TCSR)가 이 문제를 다루는 표준 솔루션이에요.</p></div>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-label">논문 그림</div>
+    <h2 class="section-title">Figure 갤러리</h2>
+    <p><strong>Fig. 1</strong> — DRAM 셀 retention time의 분포 히스토그램. 대부분의 행은 매우 긴 retention time을 가지며, 극소수의 weak row만 64ms 이하의 짧은 retention time을 가져요.</p>
+    <p><strong>Fig. 2</strong> — RAIDR 전체 아키텍처. 메모리 컨트롤러 내의 Bloom filter 모듈이 bin 정보를 저장하고, refresh 스케줄러가 이를 참조해서 행별로 refresh 발행 여부를 결정해요.</p>
+    <p><strong>Fig. 3</strong> — DRAM 전력 breakdown 비교. RAIDR 적용 후 refresh 전력 컴포넌트가 대폭 줄어드는 모습을 보여줘요.</p>
+    <p><strong>Fig. 4</strong> — 메모리 용량별 RAIDR 성능 이득 스케일링. DRAM 용량이 클수록 refresh 절감 효과가 더 크게 나타나요.</p>
+    <div class="figure-outer"><a class="figure-open-link" href="https://www.semanticscholar.org/paper/2913004da8f897d20f31c047b46c8cfdcd0eb7d3" target="_blank">↗ 원문에서 그림 보기</a></div>
+  </div>
+
+</div>
+</body>
+</html>
