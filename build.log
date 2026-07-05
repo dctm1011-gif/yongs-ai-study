@@ -10,7 +10,17 @@ The field "cli.appVersionSource" is not set, but it will be required in the futu
 ✔ Using Keystore from configuration: Build Credentials -KIgF17SgP (default)
 
 Compressing project files and uploading to EAS Build. Learn more: https://expo.fyi/eas-build-archive
-Failed to upload the project tarball to EAS Build
+- Compressing project files
+- Uploading to EAS Build (0 / 24.2 MB)
+✔ Uploaded to EAS 2s
+- Computing project fingerprint
+✔ Computed project fingerprint
 
-Reason: git status -s -uall exited with non-zero code: 3221225794
-    Error: build command failed.
+See logs: https://expo.dev/accounts/dctm1011/projects/yong-study/builds/106abec4-51c2-4a94-a30b-4b22408e9c86
+
+Waiting for build to complete. You can press Ctrl+C to exit.
+- Waiting for build to complete.
+✔ Build finished
+
+🤖 Android app:
+https://expo.dev/artifacts/eas/y4frpF9izfqwQoO22ngJI5qGUbqcwecI5gI3hBVkWgM.apk

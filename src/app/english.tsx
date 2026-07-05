@@ -132,7 +132,7 @@ export default function EnglishScreen() {
         </TouchableOpacity>
       </View>
 
-      <ScrollView style={styles.content}>
+      <ScrollView style={styles.content} contentContainerStyle={styles.contentContainer}>
         {currentTab === 'words' ? (
           <WordsList words={words} />
         ) : (
@@ -258,6 +258,9 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     padding: 16,
+  },
+  contentContainer: {
+    paddingBottom: 120,
   },
   card: {
     backgroundColor: '#fafaf9',

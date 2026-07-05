@@ -20,9 +20,9 @@ export default function TabLayout() {
             backgroundColor: '#fff',
             borderTopWidth: 1,
             borderTopColor: '#e9e9e7',
-            paddingBottom: 16,
+            paddingBottom: 32,
             paddingTop: 8,
-            height: 80,
+            height: 100,
             display: 'flex',
           },
           tabBarLabelStyle: {

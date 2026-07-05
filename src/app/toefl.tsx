@@ -133,7 +133,7 @@ export default function ToeflScreen() {
         ))}
       </View>
 
-      <ScrollView style={styles.content}>
+      <ScrollView style={styles.content} contentContainerStyle={styles.contentContainer}>
         {currentTab === 'reading' && reading && <SectionContent data={reading} title="Reading" />}
         {currentTab === 'writing' && writing && <SectionContent data={writing} title="Writing" />}
         {currentTab === 'speaking' && speaking && <SectionContent data={speaking} title="Speaking" />}
@@ -198,6 +198,9 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     padding: 16,
+  },
+  contentContainer: {
+    paddingBottom: 120,
   },
   sectionCard: {
     backgroundColor: '#fafaf9',

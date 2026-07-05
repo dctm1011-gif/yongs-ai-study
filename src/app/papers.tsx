@@ -167,7 +167,7 @@ export default function PapersScreen() {
         </Text>
       </View>
 
-      <ScrollView style={styles.content}>
+      <ScrollView style={styles.content} contentContainerStyle={styles.contentContainer}>
         {filteredPapers.map((paper) => (
           <View key={paper.id} style={styles.paperCard}>
             <Text style={styles.paperTitle}>{paper.title}</Text>
@@ -278,6 +278,9 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     padding: 12,
+  },
+  contentContainer: {
+    paddingBottom: 120,
   },
   paperCard: {
     backgroundColor: '#fafaf9',
