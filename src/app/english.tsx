@@ -51,51 +51,54 @@ export default function EnglishScreen() {
 
   const fetchAndCacheData = async () => {
     try {
-      const response = await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/english/index.html');
-      const html = await response.text();
+      const response = await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/english/index.json');
+      const data = await response.json();
 
-      const wordsMatch = html.match(/const WORDS = (\[[\s\S]*?\]);/);
-      const quizMatch = html.match(/const QUIZ = (\[[\s\S]*?\]);/);
+      await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(data));
+      await AsyncStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
 
-      if (wordsMatch && quizMatch) {
-        const wordsData = JSON.parse(wordsMatch[1]);
-        const quizData = JSON.parse(quizMatch[1]);
-
-        const data = { words: wordsData, quiz: quizData };
-
-        // localStorage에 저장
-        await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(data));
-        await AsyncStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
-
-        setWords(wordsData);
-        setQuiz(quizData);
-      }
+      setWords(data.words || []);
+      setQuiz(data.quiz || []);
     } catch (error) {
       console.error('Failed to fetch english data:', error);
+      // 테스트 데이터 표시
+      const testData = {
+        words: [
+          {
+            word: 'serendipity',
+            part_of_speech: 'n',
+            meaning_ko: '행운, 우연한 행복',
+            explanation: 'The occurrence of events by chance in a happy or beneficial way',
+            example_from_convo: 'It was pure serendipity that we met at the coffee shop.',
+            example_ko: '우리가 커피숍에서 만난 것은 순전한 행운이었다.',
+            tip: 'Remember: SEREN + DIPITY - a happy accident or lucky discovery',
+          },
+        ],
+        quiz: [
+          {
+            question: 'What does "serendipity" mean?',
+            options: ['Bad luck', 'Happy accident', 'Hard work', 'Waiting'],
+            answer: 1,
+            explanation: 'Serendipity means a fortunate discovery made by accident.',
+          },
+        ],
+      };
+      setWords(testData.words);
+      setQuiz(testData.quiz);
     } finally {
       setLoading(false);
     }
   };
 
   const checkForUpdates = async () => {
-    // 백그라운드에서 새 데이터 확인 (사용자 경험 방해 없음)
     try {
-      const response = await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/english/index.html');
-      const html = await response.text();
-      const wordsMatch = html.match(/const WORDS = (\[[\s\S]*?\]);/);
-      const quizMatch = html.match(/const QUIZ = (\[[\s\S]*?\]);/);
+      const response = await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/english/index.json');
+      const data = await response.json();
 
-      if (wordsMatch && quizMatch) {
-        const wordsData = JSON.parse(wordsMatch[1]);
-        const quizData = JSON.parse(quizMatch[1]);
-        const data = { words: wordsData, quiz: quizData };
-
-        // 캐시 업데이트
-        await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(data));
-        await AsyncStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
-      }
+      await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(data));
+      await AsyncStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
     } catch (error) {
-      // 백그라운드 오류는 무시
+      // 무시
     }
   };
 
@@ -260,7 +263,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   contentContainer: {
-    paddingBottom: 120,
+    paddingBottom: 160,
   },
   card: {
     backgroundColor: '#fafaf9',

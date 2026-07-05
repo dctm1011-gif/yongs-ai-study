@@ -72,6 +72,24 @@ export default function PapersScreen() {
       setPapers(papersData);
     } catch (error) {
       console.error('Failed to fetch papers:', error);
+      // 테스트 데이터
+      const testPapers = [
+        {
+          id: '1',
+          title: 'Sample Paper: Machine Learning',
+          authors: ['John Doe', 'Jane Smith'],
+          year: 2024,
+          summary: 'This is a sample paper about machine learning and AI.',
+        },
+        {
+          id: '2',
+          title: 'Advanced Neural Networks',
+          authors: ['Alice Johnson'],
+          year: 2025,
+          summary: 'A comprehensive study on neural network architectures.',
+        },
+      ];
+      setPapers(testPapers);
     } finally {
       setLoading(false);
     }
@@ -280,7 +298,7 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   contentContainer: {
-    paddingBottom: 120,
+    paddingBottom: 160,
   },
   paperCard: {
     backgroundColor: '#fafaf9',

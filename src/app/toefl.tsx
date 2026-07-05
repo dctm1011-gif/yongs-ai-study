@@ -48,32 +48,29 @@ export default function ToeflScreen() {
 
   const fetchAndCacheToeflData = async () => {
     try {
-      const response = await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/toefl/index.html');
-      const html = await response.text();
+      const response = await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/toefl/index.json');
+      const data = await response.json();
 
-      const readingMatch = html.match(/const READING = (\{[\s\S]*?\});/);
-      const writingMatch = html.match(/const WRITING = (\{[\s\S]*?\});/);
-      const speakingMatch = html.match(/const SPEAKING = (\{[\s\S]*?\});/);
-      const listeningMatch = html.match(/const LISTENING = (\{[\s\S]*?\});/);
+      await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(data));
+      await AsyncStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
 
-      if (readingMatch && writingMatch && speakingMatch && listeningMatch) {
-        const data = {
-          reading: JSON.parse(readingMatch[1]),
-          writing: JSON.parse(writingMatch[1]),
-          speaking: JSON.parse(speakingMatch[1]),
-          listening: JSON.parse(listeningMatch[1])
-        };
-
-        await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(data));
-        await AsyncStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
-
-        setReading(data.reading);
-        setWriting(data.writing);
-        setSpeaking(data.speaking);
-        setListening(data.listening);
-      }
+      setReading(data.reading);
+      setWriting(data.writing);
+      setSpeaking(data.speaking);
+      setListening(data.listening);
     } catch (error) {
       console.error('Failed to fetch TOEFL data:', error);
+      // 테스트 데이터
+      const testData = {
+        reading: { content: 'Sample reading passage for TOEFL preparation.' },
+        writing: { task: 'Write a 300-word essay on a given topic.' },
+        speaking: { topic: 'Describe your favorite place and why.' },
+        listening: { question: 'Listen and answer comprehension questions.' },
+      };
+      setReading(testData.reading);
+      setWriting(testData.writing);
+      setSpeaking(testData.speaking);
+      setListening(testData.listening);
     } finally {
       setLoading(false);
     }
@@ -81,27 +78,13 @@ export default function ToeflScreen() {
 
   const checkForUpdates = async () => {
     try {
-      const response = await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/toefl/index.html');
-      const html = await response.text();
+      const response = await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/toefl/index.json');
+      const data = await response.json();
 
-      const readingMatch = html.match(/const READING = (\{[\s\S]*?\});/);
-      const writingMatch = html.match(/const WRITING = (\{[\s\S]*?\});/);
-      const speakingMatch = html.match(/const SPEAKING = (\{[\s\S]*?\});/);
-      const listeningMatch = html.match(/const LISTENING = (\{[\s\S]*?\});/);
-
-      if (readingMatch && writingMatch && speakingMatch && listeningMatch) {
-        const data = {
-          reading: JSON.parse(readingMatch[1]),
-          writing: JSON.parse(writingMatch[1]),
-          speaking: JSON.parse(speakingMatch[1]),
-          listening: JSON.parse(listeningMatch[1])
-        };
-
-        await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(data));
-        await AsyncStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
-      }
+      await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(data));
+      await AsyncStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
     } catch (error) {
-      // 백그라운드 오류 무시
+      // 무시
     }
   };
 
@@ -200,7 +183,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   contentContainer: {
-    paddingBottom: 120,
+    paddingBottom: 160,
   },
   sectionCard: {
     backgroundColor: '#fafaf9',
