@@ -48,16 +48,30 @@ export default function ToeflScreen() {
 
   const fetchAndCacheToeflData = async () => {
     try {
-      const response = await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/toefl/index.json');
-      const data = await response.json();
+      const response = await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/toefl/');
+      const html = await response.text();
 
-      await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(data));
-      await AsyncStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
+      const readingMatch = html.match(/const READING\s+ = (\{[\s\S]*?\});/);
+      const writingMatch = html.match(/const WRITING\s+ = (\{[\s\S]*?\});/);
+      const speakingMatch = html.match(/const SPEAKING\s+ = (\{[\s\S]*?\});/);
+      const listeningMatch = html.match(/const LISTENING\s+ = (\{[\s\S]*?\});/);
 
-      setReading(data.reading);
-      setWriting(data.writing);
-      setSpeaking(data.speaking);
-      setListening(data.listening);
+      if (readingMatch && writingMatch && speakingMatch && listeningMatch) {
+        const data = {
+          reading: JSON.parse(readingMatch[1]),
+          writing: JSON.parse(writingMatch[1]),
+          speaking: JSON.parse(speakingMatch[1]),
+          listening: JSON.parse(listeningMatch[1])
+        };
+
+        await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(data));
+        await AsyncStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
+
+        setReading(data.reading);
+        setWriting(data.writing);
+        setSpeaking(data.speaking);
+        setListening(data.listening);
+      }
     } catch (error) {
       console.error('Failed to fetch TOEFL data:', error);
       // 테스트 데이터
@@ -78,11 +92,25 @@ export default function ToeflScreen() {
 
   const checkForUpdates = async () => {
     try {
-      const response = await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/toefl/index.json');
-      const data = await response.json();
+      const response = await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/toefl/');
+      const html = await response.text();
 
-      await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(data));
-      await AsyncStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
+      const readingMatch = html.match(/const READING\s+ = (\{[\s\S]*?\});/);
+      const writingMatch = html.match(/const WRITING\s+ = (\{[\s\S]*?\});/);
+      const speakingMatch = html.match(/const SPEAKING\s+ = (\{[\s\S]*?\});/);
+      const listeningMatch = html.match(/const LISTENING\s+ = (\{[\s\S]*?\});/);
+
+      if (readingMatch && writingMatch && speakingMatch && listeningMatch) {
+        const data = {
+          reading: JSON.parse(readingMatch[1]),
+          writing: JSON.parse(writingMatch[1]),
+          speaking: JSON.parse(speakingMatch[1]),
+          listening: JSON.parse(listeningMatch[1])
+        };
+
+        await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(data));
+        await AsyncStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
+      }
     } catch (error) {
       // 무시
     }

@@ -51,14 +51,24 @@ export default function EnglishScreen() {
 
   const fetchAndCacheData = async () => {
     try {
-      const response = await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/english/index.json');
-      const data = await response.json();
+      const response = await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/english/');
+      const html = await response.text();
 
-      await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(data));
-      await AsyncStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
+      const wordsMatch = html.match(/const WORDS = (\[[\s\S]*?\]);/);
+      const quizMatch = html.match(/const QUIZ\s+ = (\[[\s\S]*?\]);/);
 
-      setWords(data.words || []);
-      setQuiz(data.quiz || []);
+      if (wordsMatch && quizMatch) {
+        const wordsData = JSON.parse(wordsMatch[1]);
+        const quizData = JSON.parse(quizMatch[1]);
+
+        const data = { words: wordsData, quiz: quizData };
+
+        await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(data));
+        await AsyncStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
+
+        setWords(wordsData);
+        setQuiz(quizData);
+      }
     } catch (error) {
       console.error('Failed to fetch english data:', error);
       // 테스트 데이터 표시
@@ -92,11 +102,21 @@ export default function EnglishScreen() {
 
   const checkForUpdates = async () => {
     try {
-      const response = await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/english/index.json');
-      const data = await response.json();
+      const response = await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/english/');
+      const html = await response.text();
 
-      await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(data));
-      await AsyncStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
+      const wordsMatch = html.match(/const WORDS = (\[[\s\S]*?\]);/);
+      const quizMatch = html.match(/const QUIZ\s+ = (\[[\s\S]*?\]);/);
+
+      if (wordsMatch && quizMatch) {
+        const data = {
+          words: JSON.parse(wordsMatch[1]),
+          quiz: JSON.parse(quizMatch[1])
+        };
+
+        await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(data));
+        await AsyncStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
+      }
     } catch (error) {
       // 무시
     }
