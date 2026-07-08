@@ -316,10 +316,19 @@ export default function EnglishScreen() {
 
   const fetchAndCacheData = async () => {
     try {
-      const response = await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/english/index.html');
-      const html     = await response.text();
+      const url = 'https://illustrious-cuchufli-7c4e58.netlify.app/english/index.html';
+      console.log('[FETCH] Starting:', url);
+
+      const response = await fetch(url, { timeout: 10000 });
+      console.log('[FETCH] Response status:', response.status);
+
+      const html = await response.text();
+      console.log('[FETCH] HTML length:', html.length);
+
       const wordsMatch = html.match(/const WORDS = (\[[\s\S]*?\]);/);
       const quizMatch  = html.match(/const QUIZ = (\[[\s\S]*?\]);/);
+
+      console.log('[PARSE] Words match:', !!wordsMatch, 'Quiz match:', !!quizMatch);
 
       if (wordsMatch && quizMatch) {
         const wordsData = JSON.parse(wordsMatch[1]);
@@ -329,10 +338,12 @@ export default function EnglishScreen() {
         await AsyncStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
         setWords(wordsData);
         setQuiz(quizData);
+        console.log('[SUCCESS] Data loaded:', wordsData.length, 'words,', quizData.length, 'quizzes');
       } else {
-        throw new Error('parse error');
+        throw new Error('HTML parsing failed - regex match returned null');
       }
-    } catch {
+    } catch (err) {
+      console.error('[ERROR]', err?.message || err);
       // fallback test data
       const testData = {
         words: [{
