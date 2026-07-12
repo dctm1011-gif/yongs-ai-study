@@ -22,12 +22,3 @@ allprojects {
 
 apply plugin: "expo-root-project"
 apply plugin: "com.facebook.react.rootproject"
-
-// Disable Hermes for all subprojects
-subprojects { project ->
-  if (project.name == 'app') {
-    project.ext.react = [
-      enableHermes: false
-    ]
-  }
-}
