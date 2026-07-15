@@ -1,94 +1,93 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
-import { Tabs } from 'expo-router';
-import { Text } from 'react-native';
+﻿import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { MaterialIcons } from '@expo/vector-icons';
+import EnglishScreen from './english';
+import TOEFLScreen from './toefl';
+import PapersScreen from './papers';
+import PlayScreen from './play';
+import SettingsScreen from './settings';
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
+const Tab = createBottomTabNavigator();
 
-SplashScreen.preventAutoHideAsync();
-
-const TAB_ICON_SIZE = 22;
-
-function TabIcon({ emoji }: { emoji: string }) {
-  return <Text style={{ fontSize: TAB_ICON_SIZE, lineHeight: TAB_ICON_SIZE + 4 }}>{emoji}</Text>;
-}
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-  const isDark      = colorScheme === 'dark';
-
-  const tabBarBg     = isDark ? '#1f2937' : '#ffffff';
-  const tabBarBorder = isDark ? '#374151' : '#e5e7eb';
-  const activeColor  = isDark ? '#38bdf8' : '#0ea5e9';
-  const inactiveColor= isDark ? '#6b7280' : '#9b9a97';
-
+export default function RootLayout() {
   return (
-    <ThemeProvider value={isDark ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <Tabs
+    <NavigationContainer>
+      <Tab.Navigator
         screenOptions={{
           headerShown: false,
-          tabBarStyle: {
-            backgroundColor: tabBarBg,
-            borderTopWidth:  1,
-            borderTopColor:  tabBarBorder,
-            paddingBottom:   16,
-            paddingTop:      8,
-            height:          70,
-            position:        'relative',
-            // shadow (iOS)
-            shadowColor:     '#000',
-            shadowOffset:    { width: 0, height: -2 },
-            shadowOpacity:   isDark ? 0.3 : 0.06,
-            shadowRadius:    8,
-            // elevation (Android)
-            elevation:       8,
-          },
+          tabBarActiveTintColor: '#2563eb',
+          tabBarInactiveTintColor: '#ccc',
           tabBarLabelStyle: {
-            fontSize:   11,
-            fontWeight: '700',
-            marginTop:  2,
-            letterSpacing: 0.2,
+            fontSize: 11,
+            fontWeight: '600',
+            marginTop: 2,
+            marginBottom: 4,
           },
-          tabBarActiveTintColor:   activeColor,
-          tabBarInactiveTintColor: inactiveColor,
-          tabBarHideOnKeyboard: true,
+          tabBarStyle: {
+            backgroundColor: '#fff',
+            borderTopWidth: 1,
+            borderTopColor: '#e5e7eb',
+            height: 56,
+            paddingTop: 4,
+            paddingBottom: 4,
+            elevation: 2,
+          },
+          tabBarIconStyle: {
+            marginTop: 2,
+          },
         }}
       >
-        <Tabs.Screen
-          name="index"
+        <Tab.Screen
+          name="English"
+          component={EnglishScreen}
           options={{
-            title:        '홈',
-            tabBarLabel:  '홈',
-            tabBarIcon:   ({ color }) => <TabIcon emoji="🏠" />,
+            title: 'English',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialIcons name="language" size={24} color={color} />
+            ),
           }}
         />
-        <Tabs.Screen
-          name="english"
+        <Tab.Screen
+          name="TOEFL"
+          component={TOEFLScreen}
           options={{
-            title:        '영어',
-            tabBarLabel:  '영어',
-            tabBarIcon:   ({ color }) => <TabIcon emoji="📚" />,
+            title: 'TOEFL',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialIcons name="school" size={24} color={color} />
+            ),
           }}
         />
-        <Tabs.Screen
-          name="toefl"
+        <Tab.Screen
+          name="Papers"
+          component={PapersScreen}
           options={{
-            title:        'TOEFL',
-            tabBarLabel:  'TOEFL',
-            tabBarIcon:   ({ color }) => <TabIcon emoji="🎓" />,
+            title: 'Papers',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialIcons name="description" size={24} color={color} />
+            ),
           }}
         />
-        <Tabs.Screen
-          name="papers"
+        <Tab.Screen
+          name="Play"
+          component={PlayScreen}
           options={{
-            title:        '논문',
-            tabBarLabel:  '논문',
-            tabBarIcon:   ({ color }) => <TabIcon emoji="📄" />,
+            title: 'Play',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialIcons name="sports-esports" size={24} color={color} />
+            ),
           }}
         />
-      </Tabs>
-    </ThemeProvider>
+        <Tab.Screen
+          name="Settings"
+          component={SettingsScreen}
+          options={{
+            title: 'Settings',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialIcons name="settings" size={24} color={color} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }

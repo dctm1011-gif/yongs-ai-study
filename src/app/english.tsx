@@ -1,509 +1,745 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import {
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  TouchableOpacity,
-  Animated,
-  Easing,
-  useColorScheme,
-  AsyncStorage,
-} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, Alert, ToastAndroid } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const CACHE_KEY           = 'english_data_cache';
-const CACHE_TIMESTAMP_KEY = 'english_data_timestamp';
-const CACHE_DURATION      = 60 * 60 * 1000;
-
-// ─── colour tokens ────────────────────────────────────────────────────────────
-const C = {
-  primary:     '#0ea5e9',
-  primaryDark: '#0284c7',
-  primaryLight:'#e0f2fe',
-  accent:      '#fbbf24',
-  success:     '#22c55e',
-  successLight:'#f0fdf4',
-  error:       '#ef4444',
-  errorLight:  '#fef2f2',
-  surface:     '#fafaf9',
-  border:      '#e9e9e7',
-  text:        '#111827',
-  textSec:     '#6b7280',
-  textMuted:   '#9b9a97',
-  white:       '#ffffff',
-  // dark
-  darkBg:      '#111827',
-  darkSurface: '#1f2937',
-  darkBorder:  '#374151',
-  darkText:    '#f9fafb',
-  darkTextSec: '#d1d5db',
-};
-
-// ─── skeleton loader ──────────────────────────────────────────────────────────
-function SkeletonBlock({ width = '100%', height = 16, radius = 8, style = {} }: any) {
-  const shimmer = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    const loop = Animated.loop(
-      Animated.sequence([
-        Animated.timing(shimmer, { toValue: 1, duration: 900, useNativeDriver: true }),
-        Animated.timing(shimmer, { toValue: 0, duration: 900, useNativeDriver: true }),
-      ])
-    );
-    loop.start();
-    return () => loop.stop();
-  }, []);
-
-  const opacity = shimmer.interpolate({ inputRange: [0, 1], outputRange: [0.35, 0.75] });
-
-  return (
-    <Animated.View
-      style={[
-        { width, height, borderRadius: radius, backgroundColor: '#d1d5db', opacity },
-        style,
-      ]}
-    />
-  );
+interface NetlifyWord {
+  id: string;
+  word: string;
+  pos: string;
+  date: string;
+  meaning: string;
+  example_ko: string;
+  example_en: string;
+  explanation: string;
+  emoji: string;
 }
 
-function SkeletonCard() {
-  return (
-    <View style={sk.card}>
-      <View style={sk.row}>
-        <SkeletonBlock width="40%" height={22} />
-        <SkeletonBlock width="10%" height={18} radius={4} />
-      </View>
-      <SkeletonBlock width="55%" height={18} style={{ marginBottom: 8 }} />
-      <SkeletonBlock width="100%" height={14} style={{ marginBottom: 4 }} />
-      <SkeletonBlock width="80%"  height={14} style={{ marginBottom: 12 }} />
-      <SkeletonBlock width="100%" height={52} radius={6} style={{ marginBottom: 12 }} />
-      <SkeletonBlock width="70%"  height={13} />
-    </View>
-  );
+interface Word extends NetlifyWord {
+  isRead: boolean;
 }
 
-const sk = StyleSheet.create({
-  card: {
-    backgroundColor: C.surface,
-    borderWidth: 1, borderColor: C.border,
-    borderRadius: 14, padding: 16, marginBottom: 16,
-    gap: 8,
-  },
-  row: { flexDirection: 'row', gap: 10, alignItems: 'center', marginBottom: 4 },
-});
-
-// ─── word card ────────────────────────────────────────────────────────────────
-function WordCard({ word, index }: { word: any; index: number }) {
-  const isDark = useColorScheme() === 'dark';
-  const fadeIn  = useRef(new Animated.Value(0)).current;
-  const slideIn = useRef(new Animated.Value(20)).current;
-
-  useEffect(() => {
-    const delay = Math.min(index * 80, 600);
-    Animated.parallel([
-      Animated.timing(fadeIn,  { toValue: 1, duration: 400, delay, useNativeDriver: true }),
-      Animated.timing(slideIn, { toValue: 0, duration: 400, delay, easing: Easing.out(Easing.quad), useNativeDriver: true }),
-    ]).start();
-  }, []);
-
-  return (
-    <Animated.View style={{ opacity: fadeIn, transform: [{ translateY: slideIn }] }}>
-      <View style={[wStyles.card, isDark && { backgroundColor: C.darkSurface, borderColor: C.darkBorder }]}>
-        <View style={wStyles.header}>
-          <Text style={[wStyles.word, isDark && { color: C.darkText }]}>{word.word}</Text>
-          {word.part_of_speech ? (
-            <View style={wStyles.posBadge}>
-              <Text style={wStyles.posText}>{word.part_of_speech}</Text>
-            </View>
-          ) : null}
-        </View>
-        <Text style={wStyles.meaning}>{word.meaning_ko}</Text>
-        {word.explanation ? (
-          <Text style={[wStyles.explanation, isDark && { color: C.darkTextSec }]}>{word.explanation}</Text>
-        ) : null}
-        {word.example_from_convo ? (
-          <View style={wStyles.exampleBox}>
-            <Text style={wStyles.exampleLabel}>예문</Text>
-            <Text style={wStyles.exampleEn}>{word.example_from_convo}</Text>
-            {word.example_ko ? (
-              <Text style={wStyles.exampleKo}>{word.example_ko}</Text>
-            ) : null}
-          </View>
-        ) : null}
-        {word.tip ? (
-          <View style={wStyles.tipBox}>
-            <Text style={wStyles.tipText}>💡 {word.tip}</Text>
-          </View>
-        ) : null}
-      </View>
-    </Animated.View>
-  );
+interface Quiz {
+  id: string;
+  wordId: string;
+  type: 'meaning' | 'blanks' | 'situation';
+  question: string;
+  options: string[];
+  correct: string;
+  answered?: boolean;
+  correct_answer?: boolean;
 }
 
-const wStyles = StyleSheet.create({
-  card: {
-    backgroundColor: C.white,
-    borderWidth: 1, borderColor: C.border,
-    borderRadius: 14, padding: 16, marginBottom: 14,
-    shadowColor: '#000', shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.06, shadowRadius: 4, elevation: 2,
-  },
-  header:      { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 6 },
-  word:        { fontSize: 24, fontWeight: '800', color: C.text },
-  posBadge:    { backgroundColor: C.primaryLight, borderRadius: 6, paddingHorizontal: 8, paddingVertical: 2 },
-  posText:     { fontSize: 11, fontWeight: '700', color: C.primary },
-  meaning:     { fontSize: 18, fontWeight: '700', color: C.primary, marginBottom: 6 },
-  explanation: { fontSize: 14, color: C.textSec, lineHeight: 21, marginBottom: 10 },
-  exampleBox:  { backgroundColor: '#f0f9ff', borderLeftWidth: 3, borderLeftColor: C.primary, borderRadius: 6, padding: 12, marginBottom: 10 },
-  exampleLabel:{ fontSize: 10, fontWeight: '700', color: C.primary, letterSpacing: 0.8, marginBottom: 4 },
-  exampleEn:   { fontSize: 14, fontStyle: 'italic', color: C.text, lineHeight: 20, marginBottom: 4 },
-  exampleKo:   { fontSize: 12, color: C.textSec },
-  tipBox:      { backgroundColor: '#fffbeb', borderRadius: 8, padding: 10 },
-  tipText:     { fontSize: 13, color: '#92400e', lineHeight: 18 },
-});
+type ViewType = 'words' | 'quiz' | 'stats';
 
-// ─── quiz ─────────────────────────────────────────────────────────────────────
-function QuizList({ quiz }: { quiz: any[] }) {
-  const isDark = useColorScheme() === 'dark';
-  const [answered, setAnswered] = useState<Record<number, number>>({});
-  const score = Object.entries(answered).filter(([qi, ai]) => quiz[Number(qi)]?.answer === ai).length;
-  const allDone = Object.keys(answered).length === quiz.length && quiz.length > 0;
+const NETLIFY_BASE_URL = 'https://illustrious-cuchufli-7c4e58.netlify.app';
 
-  const handleAnswer = (qIdx: number, optIdx: number) => {
-    if (answered[qIdx] !== undefined) return;
-    setAnswered((prev) => ({ ...prev, [qIdx]: optIdx }));
-  };
-
-  if (quiz.length === 0) {
-    return (
-      <View style={qStyles.empty}>
-        <Text style={qStyles.emptyEmoji}>📝</Text>
-        <Text style={[qStyles.emptyText, isDark && { color: C.darkTextSec }]}>아직 퀴즈가 없어요</Text>
-      </View>
-    );
-  }
-
-  return (
-    <View>
-      {/* score banner */}
-      <View style={[qStyles.scoreBanner, allDone && qStyles.scoreBannerDone]}>
-        <Text style={qStyles.scoreLabel}>점수</Text>
-        <Text style={qStyles.scoreNum}>{score} <Text style={qStyles.scoreOf}>/ {quiz.length}</Text></Text>
-        {allDone && <Text style={qStyles.scoreDone}>완료! 🎉</Text>}
-      </View>
-
-      {quiz.map((q, qIdx) => {
-        const userAns = answered[qIdx];
-        const done    = userAns !== undefined;
-        return (
-          <View key={qIdx} style={[qStyles.card, isDark && { backgroundColor: C.darkSurface, borderColor: C.darkBorder }]}>
-            <Text style={qStyles.qNum}>Q{qIdx + 1}</Text>
-            <Text style={[qStyles.question, isDark && { color: C.darkText }]}>{q.question}</Text>
-            <View style={qStyles.options}>
-              {q.options?.map((opt: string, optIdx: number) => {
-                const isCorrect = optIdx === q.answer;
-                const isChosen  = optIdx === userAns;
-                let optStyle: any[] = [qStyles.optBtn];
-                let textStyle: any[] = [qStyles.optText];
-                if (done && isCorrect) {
-                  optStyle.push(qStyles.optCorrect);
-                  textStyle.push(qStyles.optTextCorrect);
-                } else if (done && isChosen && !isCorrect) {
-                  optStyle.push(qStyles.optWrong);
-                  textStyle.push(qStyles.optTextWrong);
-                }
-                return (
-                  <TouchableOpacity
-                    key={optIdx}
-                    style={optStyle}
-                    onPress={() => handleAnswer(qIdx, optIdx)}
-                    disabled={done}
-                    activeOpacity={0.7}
-                  >
-                    <View style={qStyles.optInner}>
-                      <View style={[qStyles.optCircle, done && isCorrect && qStyles.optCircleCorrect, done && isChosen && !isCorrect && qStyles.optCircleWrong]}>
-                        <Text style={qStyles.optCircleText}>{String.fromCharCode(65 + optIdx)}</Text>
-                      </View>
-                      <Text style={textStyle}>{opt}</Text>
-                    </View>
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
-            {done && q.explanation ? (
-              <View style={qStyles.explanBox}>
-                <Text style={qStyles.explanText}>{q.explanation}</Text>
-              </View>
-            ) : null}
-          </View>
-        );
-      })}
-    </View>
-  );
-}
-
-const qStyles = StyleSheet.create({
-  empty:      { alignItems: 'center', paddingVertical: 60 },
-  emptyEmoji: { fontSize: 48, marginBottom: 12 },
-  emptyText:  { fontSize: 15, color: C.textSec },
-
-  scoreBanner:     { backgroundColor: C.primaryLight, borderRadius: 14, padding: 16, marginBottom: 16, flexDirection: 'row', alignItems: 'center', gap: 12 },
-  scoreBannerDone: { backgroundColor: '#f0fdf4' },
-  scoreLabel: { fontSize: 12, fontWeight: '700', color: C.primary, flex: 1 },
-  scoreNum:   { fontSize: 22, fontWeight: '800', color: C.primary },
-  scoreOf:    { fontSize: 14, fontWeight: '500', color: C.textSec },
-  scoreDone:  { fontSize: 13, fontWeight: '700', color: C.success },
-
-  card:     { backgroundColor: C.white, borderWidth: 1, borderColor: C.border, borderRadius: 14, padding: 16, marginBottom: 14 },
-  qNum:     { fontSize: 11, fontWeight: '700', color: C.primary, letterSpacing: 0.8, marginBottom: 6 },
-  question: { fontSize: 15, fontWeight: '700', color: C.text, lineHeight: 22, marginBottom: 14 },
-  options:  { gap: 8 },
-  optBtn:   { backgroundColor: C.surface, borderWidth: 1.5, borderColor: C.border, borderRadius: 10, padding: 12 },
-  optCorrect:{ backgroundColor: '#f0fdf4', borderColor: C.success },
-  optWrong:  { backgroundColor: C.errorLight, borderColor: C.error },
-  optInner:  { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  optCircle: { width: 28, height: 28, borderRadius: 14, backgroundColor: '#e5e7eb', alignItems: 'center', justifyContent: 'center' },
-  optCircleCorrect: { backgroundColor: C.success },
-  optCircleWrong:   { backgroundColor: C.error },
-  optCircleText:    { fontSize: 12, fontWeight: '700', color: '#fff' },
-  optText:          { fontSize: 14, color: C.text, flex: 1, lineHeight: 20 },
-  optTextCorrect:   { color: '#166534', fontWeight: '600' },
-  optTextWrong:     { color: '#991b1b' },
-  explanBox:{ marginTop: 12, backgroundColor: '#fffbeb', borderRadius: 8, padding: 10 },
-  explanText:{ fontSize: 13, color: '#92400e', lineHeight: 18 },
-});
-
-// ─── main screen ──────────────────────────────────────────────────────────────
 export default function EnglishScreen() {
-  const isDark = useColorScheme() === 'dark';
-  const [words, setWords]         = useState<any[]>([]);
-  const [quiz, setQuiz]           = useState<any[]>([]);
-  const [loading, setLoading]     = useState(true);
-  const [error, setError]         = useState(false);
-  const [currentTab, setCurrentTab] = useState<'words' | 'quiz'>('words');
+  const [view, setView] = useState<ViewType>('words');
+  const [words, setWords] = useState<Word[]>([]);
+  const [quizzes, setQuizzes] = useState<Quiz[]>([]);
+  const [stats, setStats] = useState({ totalWords: 0, readWords: 0, quizzesCorrect: 0, quizzesTotal: 0 });
+  const [loading, setLoading] = useState(true);
+  const [hideReadWords, setHideReadWords] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
-    loadEnglishData();
-    checkForUpdates();
+    loadData();
+    checkAndRefreshAtMorning();
   }, []);
 
-  const loadEnglishData = async () => {
-    try {
-      setLoading(true);
-      setError(false);
-      const cached    = await AsyncStorage.getItem(CACHE_KEY);
-      const timestamp = await AsyncStorage.getItem(CACHE_TIMESTAMP_KEY);
-      const now       = Date.now();
+  useEffect(() => {
+    updateStats();
+  }, [words]);
 
-      if (cached && timestamp) {
-        const cachedTime  = parseInt(timestamp, 10);
-        const isCacheValid = now - cachedTime < CACHE_DURATION;
-        if (isCacheValid) {
-          const data = JSON.parse(cached);
-          setWords(data.words ?? []);
-          setQuiz(data.quiz ?? []);
-          setLoading(false);
-          return;
-        }
+  const checkAndRefreshAtMorning = async () => {
+    const lastRefresh = await AsyncStorage.getItem('english_last_refresh');
+    const now = new Date();
+    const today = now.toISOString().split('T')[0];
+
+    if (!lastRefresh || !lastRefresh.startsWith(today)) {
+      if (now.getHours() >= 6) {
+        setTimeout(refreshFromNetlify, 1000);
+        await AsyncStorage.setItem('english_last_refresh', `${today}T06:00:00`);
       }
-      await fetchAndCacheData();
-    } catch {
-      setError(true);
-      setLoading(false);
     }
   };
 
-  const fetchAndCacheData = async () => {
+  const loadData = async () => {
     try {
-      const url = 'https://illustrious-cuchufli-7c4e58.netlify.app/english/index.html';
-      console.log('[FETCH] Starting:', url);
+      setLoading(true);
 
-      const response = await fetch(url, { timeout: 10000 });
-      console.log('[FETCH] Response status:', response.status);
+      // Try to fetch from Netlify
+      const netlifyData = await fetchEnglishFromNetlify();
 
-      const html = await response.text();
-      console.log('[FETCH] HTML length:', html.length);
+      if (netlifyData && netlifyData.length > 0) {
+        // Merge with local read status
+        const savedWords = await AsyncStorage.getItem('english_words');
+        const savedReadStatus = savedWords ? JSON.parse(savedWords).reduce((acc: any, w: Word) => ({ ...acc, [w.id]: w.isRead }), {}) : {};
 
-      const wordsMatch = html.match(/const WORDS = (\[[\s\S]*?\]);/);
-      const quizMatch  = html.match(/const QUIZ = (\[[\s\S]*?\]);/);
+        const mergedWords = netlifyData.map(w => ({
+          ...w,
+          isRead: savedReadStatus[w.id] || false,
+        }));
 
-      console.log('[PARSE] Words match:', !!wordsMatch, 'Quiz match:', !!quizMatch);
+        setWords(mergedWords);
+        await AsyncStorage.setItem('english_words', JSON.stringify(mergedWords));
 
-      if (wordsMatch && quizMatch) {
-        const wordsData = JSON.parse(wordsMatch[1]);
-        const quizData  = JSON.parse(quizMatch[1]);
-        const data      = { words: wordsData, quiz: quizData };
-        await AsyncStorage.setItem(CACHE_KEY,           JSON.stringify(data));
-        await AsyncStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
-        setWords(wordsData);
-        setQuiz(quizData);
-        console.log('[SUCCESS] Data loaded:', wordsData.length, 'words,', quizData.length, 'quizzes');
+        // Generate quizzes
+        const generatedQuizzes = generateQuizzes(mergedWords);
+        setQuizzes(generatedQuizzes);
+        await AsyncStorage.setItem('english_quizzes', JSON.stringify(generatedQuizzes));
       } else {
-        throw new Error('HTML parsing failed - regex match returned null');
+        // Fallback to local data
+        const savedWords = await AsyncStorage.getItem('english_words');
+        if (savedWords) {
+          const localWords = JSON.parse(savedWords);
+          setWords(localWords);
+
+          const savedQuizzes = await AsyncStorage.getItem('english_quizzes');
+          if (savedQuizzes) setQuizzes(JSON.parse(savedQuizzes));
+        } else {
+          // Use default words
+          const defaultWords = getDefaultWords();
+          setWords(defaultWords);
+          const generatedQuizzes = generateQuizzes(defaultWords);
+          setQuizzes(generatedQuizzes);
+        }
       }
-    } catch (err) {
-      console.error('[ERROR]', err?.message || err);
-      // fallback test data
-      const testData = {
-        words: [{
-          word: 'serendipity', part_of_speech: 'n.',
-          meaning_ko: '행운, 우연한 행복',
-          explanation: 'The occurrence of events by chance in a happy or beneficial way.',
-          example_from_convo: 'It was pure serendipity that we met at the coffee shop.',
-          example_ko: '우리가 커피숍에서 만난 것은 순전한 행운이었다.',
-          tip: 'SEREN + DIPITY — a happy accident or lucky discovery',
-        }],
-        quiz: [{
-          question: 'What does "serendipity" mean?',
-          options: ['Bad luck', 'Happy accident', 'Hard work', 'Waiting'],
-          answer: 1,
-          explanation: 'Serendipity means a fortunate discovery made by accident.',
-        }],
-      };
-      setWords(testData.words);
-      setQuiz(testData.quiz);
+    } catch (error) {
+      console.error('Failed to load English data:', error);
+      const defaultWords = getDefaultWords();
+      setWords(defaultWords);
+      setQuizzes(generateQuizzes(defaultWords));
     } finally {
       setLoading(false);
     }
   };
 
-  const checkForUpdates = async () => {
+  const fetchEnglishFromNetlify = async (): Promise<NetlifyWord[] | null> => {
     try {
-      const response = await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/english/index.html');
-      const html     = await response.text();
-      const wordsMatch = html.match(/const WORDS = (\[[\s\S]*?\]);/);
-      const quizMatch  = html.match(/const QUIZ = (\[[\s\S]*?\]);/);
-      if (wordsMatch && quizMatch) {
-        const data = { words: JSON.parse(wordsMatch[1]), quiz: JSON.parse(quizMatch[1]) };
-        await AsyncStorage.setItem(CACHE_KEY,           JSON.stringify(data));
-        await AsyncStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
-      }
-    } catch { /* 무시 */ }
+      const response = await fetch(`${NETLIFY_BASE_URL}/english/words_db.json`);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+      return Array.isArray(data) ? data : null;
+    } catch (error) {
+      console.error('Netlify fetch failed:', error);
+      return null;
+    }
   };
 
-  const bg      = isDark ? C.darkBg      : '#f8fafc';
-  const surface = isDark ? C.darkSurface : C.white;
-  const border  = isDark ? C.darkBorder  : C.border;
-  const text    = isDark ? C.darkText    : C.text;
-  const textSec = isDark ? C.darkTextSec : C.textSec;
+  const getDefaultWords = (): Word[] => [
+    {
+      id: 'w1',
+      word: 'serendipity',
+      pos: 'noun',
+      date: '2026-07-14',
+      meaning: '행운의 우연',
+      example_ko: '좋은 책을 우연히 발견한 것은 진정한 세렌디피티였다.',
+      example_en: 'Finding this amazing book was pure serendipity.',
+      explanation: '뜻밖에 운이 좋게 되는 일, 예상치 못한 행운',
+      emoji: '🍀',
+      isRead: false,
+    },
+    {
+      id: 'w2',
+      word: 'ephemeral',
+      pos: 'adjective',
+      date: '2026-07-14',
+      meaning: '덧없는, 일시적인',
+      example_ko: '봄의 벚꽃은 너무나 ephemeral하다.',
+      example_en: 'The beauty of cherry blossoms is ephemeral.',
+      explanation: '아주 짧은 시간 동안만 존재하는',
+      emoji: '🌸',
+      isRead: false,
+    },
+    {
+      id: 'w3',
+      word: 'mellifluous',
+      pos: 'adjective',
+      date: '2026-07-14',
+      meaning: '달콤하고 부드러운 (소리)',
+      example_ko: '그의 목소리는 매우 mellifluous했다.',
+      example_en: 'His mellifluous voice captivated the audience.',
+      explanation: '꿀처럼 달콤하고 부드러운 음성이나 소리',
+      emoji: '🎵',
+      isRead: false,
+    },
+    {
+      id: 'w4',
+      word: 'pragmatic',
+      pos: 'adjective',
+      date: '2026-07-14',
+      meaning: '현실적인, 실용적인',
+      example_ko: '우리는 pragmatic한 접근이 필요하다.',
+      example_en: 'We need a pragmatic approach to this problem.',
+      explanation: '이론보다는 실제 결과에 중점을 두는',
+      emoji: '⚙️',
+      isRead: false,
+    },
+    {
+      id: 'w5',
+      word: 'vivacious',
+      pos: 'adjective',
+      date: '2026-07-14',
+      meaning: '생기 넘치는, 활발한',
+      example_ko: '그녀의 vivacious한 성격은 모두를 매료시켰다.',
+      example_en: 'Her vivacious personality lights up any room.',
+      explanation: '활기차고 생기 있는 모습',
+      emoji: '✨',
+      isRead: false,
+    },
+  ];
 
-  // ── skeleton loading ──
+  const shuffleArray = <T,>(array: T[]): T[] => {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  };
+
+  const generateQuizzes = (wordsData: Word[]): Quiz[] => {
+    const quizzes: Quiz[] = [];
+
+    wordsData.slice(0, 5).forEach((word, idx) => {
+      // Meaning quiz
+      quizzes.push({
+        id: `m${idx}`,
+        wordId: word.id,
+        type: 'meaning',
+        question: `"${word.word}"의 의미는?`,
+        options: shuffleArray([word.meaning, '정반대 의미', '비슷한 품사', '다른 언어']),
+        correct: word.meaning,
+      });
+
+      // Blanks quiz - 더 어려운 선택지 생성
+      if (word.example_en) {
+        // 같은 품사의 비슷한 단어들을 선택지로 사용
+        const distractors = ['absolutely', 'quite', 'somewhat', 'fairly', 'really', 'very', 'somewhat', 'kind of'];
+        const filteredDisractors = distractors.filter((d, i) => i < 3).slice(0, 3);
+        const blankOptions = shuffleArray([word.word, ...filteredDisractors]);
+        quizzes.push({
+          id: `b${idx}`,
+          wordId: word.id,
+          type: 'blanks',
+          question: `${word.example_en.replace(word.word, '_______')}`,
+          options: blankOptions,
+          correct: word.word,
+        });
+      }
+    });
+
+    // 같은 단어의 문제가 연달아 나오지 않도록 섞기
+    return shuffleArray(quizzes);
+  };
+
+  const saveWords = async (updatedWords: Word[]) => {
+    setWords(updatedWords);
+    await AsyncStorage.setItem('english_words', JSON.stringify(updatedWords));
+    updateStats();
+  };
+
+  const saveQuizzes = async (updatedQuizzes: Quiz[]) => {
+    setQuizzes(updatedQuizzes);
+    await AsyncStorage.setItem('english_quizzes', JSON.stringify(updatedQuizzes));
+    updateStats();
+  };
+
+  const updateStats = () => {
+    const readCount = words.filter(w => w.isRead).length;
+    const correctCount = quizzes.filter(q => q.correct_answer === true).length;
+    setStats({
+      totalWords: words.length,
+      readWords: readCount,
+      quizzesCorrect: correctCount,
+      quizzesTotal: quizzes.length,
+    });
+  };
+
+  const toggleWordRead = (wordId: string) => {
+    const updated = words.map(w =>
+      w.id === wordId ? { ...w, isRead: !w.isRead } : w
+    );
+    saveWords(updated);
+  };
+
+  const answerQuiz = (quizId: string, selectedOption: string) => {
+    const updated = quizzes.map(q => {
+      if (q.id === quizId) {
+        const isCorrect = selectedOption === q.correct;
+        return { ...q, answered: true, correct_answer: isCorrect };
+      }
+      return q;
+    });
+    saveQuizzes(updated);
+  };
+
+  const refreshFromNetlify = async () => {
+    setRefreshing(true);
+    try {
+      const netlifyData = await fetchEnglishFromNetlify();
+      if (netlifyData && netlifyData.length > 0) {
+        const savedWords = await AsyncStorage.getItem('english_words');
+        const oldWordIds = savedWords ? JSON.parse(savedWords).map((w: Word) => w.id).sort().join(',') : '';
+        const newWordIds = netlifyData.map(w => w.id).sort().join(',');
+        const isUpdated = oldWordIds !== newWordIds;
+
+        const savedReadStatus = savedWords ? JSON.parse(savedWords).reduce((acc: any, w: Word) => ({ ...acc, [w.id]: w.isRead }), {}) : {};
+
+        const mergedWords = netlifyData.map(w => ({
+          ...w,
+          isRead: savedReadStatus[w.id] || false,
+        }));
+
+        setWords(mergedWords);
+        await AsyncStorage.setItem('english_words', JSON.stringify(mergedWords));
+
+        const generatedQuizzes = generateQuizzes(mergedWords);
+        setQuizzes(generatedQuizzes);
+        await AsyncStorage.setItem('english_quizzes', JSON.stringify(generatedQuizzes));
+
+        if (isUpdated) {
+          ToastAndroid.show('✅ 새로운 단어가 추가되었습니다!', ToastAndroid.SHORT);
+        } else {
+          ToastAndroid.show('✓ 이미 최신 상태입니다', ToastAndroid.SHORT);
+        }
+      }
+    } catch (error) {
+      console.error('Refresh failed:', error);
+      ToastAndroid.show('❌ 새로고침 실패', ToastAndroid.SHORT);
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
   if (loading) {
     return (
-      <SafeAreaView style={[s.safe, { backgroundColor: bg }]}>
-        <View style={s.header}>
-          <Text style={s.headerTitle}>📚 영어 공부</Text>
-          <Text style={s.headerSub}>오늘의 단어를 학습해요</Text>
+      <SafeAreaView style={styles.screen}>
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>📚 영어 단어</Text>
         </View>
-        <View style={s.tabBar}>
-          {['단어', '퀴즈'].map((t) => (
-            <View key={t} style={[s.tabBtn, t === '단어' && s.tabBtnActive]}>
-              <Text style={[s.tabText, t === '단어' && s.tabTextActive]}>{t}</Text>
-            </View>
-          ))}
-        </View>
-        <ScrollView contentContainerStyle={{ padding: 16, paddingBottom: 120 }}>
-          {[0, 1, 2].map((i) => <SkeletonCard key={i} />)}
-        </ScrollView>
-      </SafeAreaView>
-    );
-  }
-
-  // ── error state ──
-  if (error) {
-    return (
-      <SafeAreaView style={[s.safe, { backgroundColor: bg }]}>
-        <View style={s.header}><Text style={s.headerTitle}>📚 영어 공부</Text></View>
-        <View style={s.centerState}>
-          <Text style={s.stateEmoji}>😅</Text>
-          <Text style={[s.stateTitle, { color: text }]}>데이터를 불러오지 못했어요</Text>
-          <Text style={[s.stateSub, { color: textSec }]}>네트워크 연결을 확인해 주세요</Text>
-          <TouchableOpacity style={s.retryBtn} onPress={loadEnglishData}>
-            <Text style={s.retryText}>다시 시도</Text>
-          </TouchableOpacity>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#2563eb" />
+          <Text style={styles.loadingText}>Netlify에서 데이터를 가져오는 중...</Text>
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={[s.safe, { backgroundColor: bg }]}>
-      {/* header */}
-      <View style={s.header}>
-        <Text style={s.headerTitle}>📚 영어 공부</Text>
-        <Text style={s.headerSub}>오늘의 단어를 학습해요</Text>
+    <SafeAreaView style={styles.screen}>
+      <View style={styles.header}>
+        <View style={styles.headerTop}>
+          <View>
+            <Text style={styles.headerTitle}>📚 영어 단어</Text>
+            <Text style={styles.headerSubtitle}>Netlify 실시간 동기화</Text>
+          </View>
+          <TouchableOpacity onPress={refreshFromNetlify} disabled={refreshing} style={styles.refreshButton}>
+            <Text style={styles.refreshIcon}>{refreshing ? '⏳' : '🔄'}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
-      {/* tab bar */}
-      <View style={[s.tabBar, { backgroundColor: surface, borderBottomColor: border }]}>
+      {/* Tab buttons */}
+      <View style={styles.tabButtons}>
         <TouchableOpacity
-          style={[s.tabBtn, currentTab === 'words' && s.tabBtnActive]}
-          onPress={() => setCurrentTab('words')}
+          style={[styles.tabButton, view === 'words' && styles.tabButtonActive]}
+          onPress={() => setView('words')}
         >
-          <Text style={[s.tabText, currentTab === 'words' && s.tabTextActive]}>단어 ({words.length})</Text>
+          <Text style={[styles.tabButtonText, view === 'words' && styles.tabButtonTextActive]}>단어장</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[s.tabBtn, currentTab === 'quiz' && s.tabBtnActive]}
-          onPress={() => setCurrentTab('quiz')}
+          style={[styles.tabButton, view === 'quiz' && styles.tabButtonActive]}
+          onPress={() => setView('quiz')}
         >
-          <Text style={[s.tabText, currentTab === 'quiz' && s.tabTextActive]}>퀴즈 ({quiz.length})</Text>
+          <Text style={[styles.tabButtonText, view === 'quiz' && styles.tabButtonTextActive]}>퀴즈</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.tabButton, view === 'stats' && styles.tabButtonActive]}
+          onPress={() => setView('stats')}
+        >
+          <Text style={[styles.tabButtonText, view === 'stats' && styles.tabButtonTextActive]}>통계</Text>
         </TouchableOpacity>
       </View>
 
-      <ScrollView
-        style={{ flex: 1 }}
-        contentContainerStyle={{ padding: 16, paddingBottom: 120 }}
-        showsVerticalScrollIndicator={false}
-      >
-        {currentTab === 'words' ? (
-          words.length === 0 ? (
-            <View style={s.centerState}>
-              <Text style={s.stateEmoji}>📖</Text>
-              <Text style={[s.stateTitle, { color: text }]}>단어가 아직 없어요</Text>
-            </View>
-          ) : (
-            words.map((word, idx) => <WordCard key={idx} word={word} index={idx} />)
-          )
-        ) : (
-          <QuizList quiz={quiz} />
-        )}
-      </ScrollView>
+      {/* Content */}
+      {view === 'words' && (
+        <View style={{ flex: 1 }}>
+          <View style={styles.filterBar}>
+            <TouchableOpacity
+              style={[styles.filterButton, hideReadWords && styles.filterButtonActive]}
+              onPress={() => setHideReadWords(!hideReadWords)}
+            >
+              <Text style={[styles.filterButtonText, hideReadWords && styles.filterButtonTextActive]}>
+                {hideReadWords ? '✓ 미읽음만' : '○ 모두 보기'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <WordsView
+            words={hideReadWords ? words.filter(w => !w.isRead) : words}
+            onToggleRead={toggleWordRead}
+          />
+        </View>
+      )}
+      {view === 'quiz' && <QuizView quizzes={quizzes} words={words} onAnswer={answerQuiz} />}
+      {view === 'stats' && <StatsView stats={stats} />}
     </SafeAreaView>
   );
 }
 
-const s = StyleSheet.create({
-  safe: { flex: 1 },
+function WordsView({ words, onToggleRead }: { words: Word[], onToggleRead: (id: string) => void }) {
+  return (
+    <FlatList
+      data={words}
+      keyExtractor={(item) => item.id}
+      contentContainerStyle={styles.listContent}
+      renderItem={({ item }) => (
+        <TouchableOpacity
+          style={[styles.card, item.isRead && styles.cardRead]}
+          onPress={() => onToggleRead(item.id)}
+        >
+          <View style={styles.cardHeader}>
+            <View style={styles.wordInfo}>
+              <Text style={styles.emoji}>{item.emoji}</Text>
+              <View style={styles.wordDetails}>
+                <Text style={styles.word}>{item.word}</Text>
+                <Text style={styles.pos}>{item.pos}</Text>
+              </View>
+            </View>
+            <Text style={styles.readBadge}>{item.isRead ? '✓' : '○'}</Text>
+          </View>
+          <Text style={styles.meaning}>{item.meaning}</Text>
+          <Text style={styles.explanation}>{item.explanation}</Text>
+          <Text style={styles.example}>예: {item.example_en}</Text>
+        </TouchableOpacity>
+      )}
+    />
+  );
+}
 
+function QuizView({ quizzes, words, onAnswer }: { quizzes: Quiz[], words: Word[], onAnswer: (id: string, selected: string) => void }) {
+  const getWordName = (wordId: string) => words.find(w => w.id === wordId)?.word || '';
+
+  return (
+    <FlatList
+      data={quizzes}
+      keyExtractor={(item) => item.id}
+      contentContainerStyle={styles.listContent}
+      renderItem={({ item }) => (
+        <View style={styles.quizCard}>
+          {item.type !== 'blanks' && <Text style={styles.quizWord}>{getWordName(item.wordId)}</Text>}
+          <Text style={styles.quizQuestion}>{item.question}</Text>
+          <View style={styles.optionsContainer}>
+            {item.options.map((option, idx) => (
+              <TouchableOpacity
+                key={idx}
+                style={[
+                  styles.optionButton,
+                  item.answered && option === item.correct && styles.optionCorrect,
+                  item.answered && option !== item.correct && item.correct_answer === false && styles.optionIncorrect,
+                ]}
+                onPress={() => !item.answered && onAnswer(item.id, option)}
+                disabled={item.answered}
+              >
+                <Text style={styles.optionText}>{option}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+          {item.answered && (
+            <Text style={[styles.answerFeedback, item.correct_answer ? styles.correct : styles.incorrect]}>
+              {item.correct_answer ? '✓ 정답!' : '✗ 오답'}
+            </Text>
+          )}
+        </View>
+      )}
+    />
+  );
+}
+
+function StatsView({ stats }: { stats: any }) {
+  return (
+    <ScrollView contentContainerStyle={styles.statsContent}>
+      <View style={styles.statCard}>
+        <Text style={styles.statLabel}>총 단어 수</Text>
+        <Text style={styles.statValue}>{stats.totalWords}</Text>
+      </View>
+      <View style={styles.statCard}>
+        <Text style={styles.statLabel}>읽은 단어</Text>
+        <Text style={styles.statValue}>{stats.readWords} / {stats.totalWords}</Text>
+      </View>
+      <View style={styles.statCard}>
+        <Text style={styles.statLabel}>퀴즈 정답</Text>
+        <Text style={styles.statValue}>{stats.quizzesCorrect} / {stats.quizzesTotal}</Text>
+      </View>
+      <View style={styles.statCard}>
+        <Text style={styles.statLabel}>정답률</Text>
+        <Text style={styles.statValue}>
+          {stats.quizzesTotal > 0 ? ((stats.quizzesCorrect / stats.quizzesTotal) * 100).toFixed(1) : 0}%
+        </Text>
+      </View>
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: '#f8fafc',
+  },
   header: {
-    backgroundColor: C.primary,
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 22,
-  },
-  headerTitle: { fontSize: 24, fontWeight: '800', color: '#fff', marginBottom: 4 },
-  headerSub:   { fontSize: 13, color: 'rgba(255,255,255,0.8)' },
-
-  tabBar: {
-    flexDirection: 'row',
-    borderBottomWidth: 1,
+    backgroundColor: '#2563eb',
     paddingHorizontal: 16,
+    paddingVertical: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 3,
   },
-  tabBtn: {
-    paddingVertical: 13,
-    marginRight: 24,
-    borderBottomWidth: 2.5,
-    borderBottomColor: 'transparent',
+  headerTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
-  tabBtnActive:  { borderBottomColor: C.primary },
-  tabText:       { fontSize: 14, fontWeight: '600', color: C.textMuted },
-  tabTextActive: { color: C.text },
-
-  centerState: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingVertical: 80 },
-  stateEmoji:  { fontSize: 52, marginBottom: 14 },
-  stateTitle:  { fontSize: 17, fontWeight: '700', marginBottom: 6 },
-  stateSub:    { fontSize: 13, marginBottom: 24, textAlign: 'center' },
-  retryBtn:    { backgroundColor: C.primary, borderRadius: 12, paddingHorizontal: 24, paddingVertical: 12 },
-  retryText:   { fontSize: 14, fontWeight: '700', color: '#fff' },
+  headerTitle: {
+    fontSize: 22,
+    fontWeight: '800',
+    color: '#fff',
+    marginBottom: 2,
+  },
+  headerSubtitle: {
+    fontSize: 11,
+    color: '#dbeafe',
+  },
+  refreshButton: {
+    padding: 8,
+  },
+  refreshIcon: {
+    fontSize: 20,
+  },
+  filterBar: {
+    flexDirection: 'row',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e5e7eb',
+    gap: 8,
+  },
+  filterButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+    backgroundColor: '#f1f5f9',
+    borderWidth: 1,
+    borderColor: '#cbd5e1',
+  },
+  filterButtonActive: {
+    backgroundColor: '#dbeafe',
+    borderColor: '#2563eb',
+  },
+  filterButtonText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#64748b',
+  },
+  filterButtonTextActive: {
+    color: '#2563eb',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 12,
+    fontSize: 14,
+    color: '#64748b',
+  },
+  tabButtons: {
+    flexDirection: 'row',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e5e7eb',
+  },
+  tabButton: {
+    flex: 1,
+    paddingVertical: 10,
+    marginHorizontal: 4,
+    borderRadius: 8,
+    alignItems: 'center',
+    backgroundColor: '#f1f5f9',
+  },
+  tabButtonActive: {
+    backgroundColor: '#2563eb',
+  },
+  tabButtonText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#64748b',
+  },
+  tabButtonTextActive: {
+    color: '#fff',
+  },
+  listContent: {
+    padding: 12,
+    paddingBottom: 80,
+  },
+  card: {
+    backgroundColor: '#fff',
+    marginVertical: 6,
+    padding: 14,
+    borderRadius: 12,
+    borderLeftWidth: 5,
+    borderLeftColor: '#2563eb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  cardRead: {
+    opacity: 0.5,
+    backgroundColor: '#f1f5f9',
+  },
+  cardHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  wordInfo: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 8,
+  },
+  emoji: {
+    fontSize: 24,
+  },
+  wordDetails: {
+    flex: 1,
+  },
+  word: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#1e293b',
+  },
+  pos: {
+    fontSize: 11,
+    color: '#94a3b8',
+    marginTop: 2,
+  },
+  readBadge: {
+    fontSize: 16,
+    color: '#2563eb',
+  },
+  meaning: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#1e293b',
+    marginBottom: 6,
+  },
+  explanation: {
+    fontSize: 12,
+    color: '#64748b',
+    marginBottom: 6,
+    lineHeight: 18,
+  },
+  example: {
+    fontSize: 12,
+    color: '#94a3b8',
+    fontStyle: 'italic',
+  },
+  quizCard: {
+    backgroundColor: '#fff',
+    marginVertical: 6,
+    padding: 16,
+    borderRadius: 12,
+    borderLeftWidth: 5,
+    borderLeftColor: '#2563eb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  quizWord: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#2563eb',
+    marginBottom: 8,
+  },
+  quizQuestion: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#1e293b',
+    marginBottom: 12,
+  },
+  optionsContainer: {
+    gap: 8,
+  },
+  optionButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    backgroundColor: '#f1f5f9',
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+  },
+  optionCorrect: {
+    backgroundColor: '#d1fae5',
+    borderColor: '#10b981',
+  },
+  optionIncorrect: {
+    backgroundColor: '#fee2e2',
+    borderColor: '#ef4444',
+  },
+  optionText: {
+    fontSize: 13,
+    color: '#1e293b',
+    fontWeight: '500',
+  },
+  answerFeedback: {
+    marginTop: 10,
+    textAlign: 'center',
+    fontWeight: '600',
+    fontSize: 14,
+  },
+  correct: {
+    color: '#10b981',
+  },
+  incorrect: {
+    color: '#ef4444',
+  },
+  statsContent: {
+    padding: 16,
+    paddingBottom: 100,
+  },
+  statCard: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 16,
+    marginVertical: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  statLabel: {
+    fontSize: 13,
+    color: '#64748b',
+    fontWeight: '600',
+    marginBottom: 6,
+  },
+  statValue: {
+    fontSize: 28,
+    fontWeight: '800',
+    color: '#2563eb',
+  },
 });

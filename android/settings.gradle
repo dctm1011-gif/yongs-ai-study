@@ -28,8 +28,6 @@ extensions.configure(com.facebook.react.ReactSettingsExtension) { ex ->
   } else {
     ex.autolinkLibrariesFromCommand(expoAutolinking.rnConfigCommand)
   }
-  // Disable Hermes - use JSC instead
-  ex.hermesFlagOverride = false
 }
 expoAutolinking.useExpoModules()
 

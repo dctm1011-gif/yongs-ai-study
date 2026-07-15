@@ -2,6 +2,7 @@ package com.dctm1011.yongstudy
 
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
@@ -17,6 +18,14 @@ class MainActivity : ReactActivity() {
     // This is required for expo-splash-screen.
     setTheme(R.style.AppTheme);
     super.onCreate(null)
+
+    // Hide navigation bar (immersive mode)
+    val decorView = window.decorView
+    decorView.systemUiVisibility = (
+      View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+      or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+      or View.SYSTEM_UI_FLAG_FULLSCREEN
+    )
   }
 
   /**

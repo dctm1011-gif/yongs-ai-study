@@ -1,36 +1,45 @@
 {
   "cli": {
     "version": ">= 5.0.0",
-    "requireCommit": false
+    "requireCommit": false,
+    "appVersionSource": "local"
   },
   "build": {
     "preview": {
       "android": {
         "buildType": "apk",
         "env": {
-          "EXPO_USE_HERMES": "0"
+          "EXPO_USE_HERMES": "0",
+          "EXPO_DISABLE_HERMES": "1"
         }
-      },
-      "channel": "preview"
+      }
     },
     "preview2": {
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "env": {
+          "EXPO_USE_HERMES": "0",
+          "EXPO_DISABLE_HERMES": "1"
+        }
       }
     },
     "preview3": {
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "env": {
+          "EXPO_USE_HERMES": "0",
+          "EXPO_DISABLE_HERMES": "1"
+        }
       }
     },
     "production": {
       "android": {
         "buildType": "apk",
         "env": {
-          "EXPO_USE_HERMES": "0"
+          "EXPO_USE_HERMES": "0",
+          "EXPO_DISABLE_HERMES": "1"
         }
-      },
-      "channel": "production"
+      }
     }
   },
   "submit": {

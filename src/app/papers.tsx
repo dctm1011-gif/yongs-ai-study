@@ -1,487 +1,636 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import {
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  Animated,
-  Easing,
-  useColorScheme,
-  AsyncStorage,
-} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const CACHE_KEY           = 'papers_data_cache';
-const CACHE_TIMESTAMP_KEY = 'papers_data_timestamp';
-const CACHE_DURATION      = 60 * 60 * 1000;
-const LIKES_KEY           = 'papers_likes';
-const READ_KEY            = 'papers_read';
-
-// ─── colours ──────────────────────────────────────────────────────────────────
-const C = {
-  purple:       '#8b5cf6',
-  purpleLight:  '#f5f3ff',
-  purpleBorder: '#ddd6fe',
-  primary:      '#0ea5e9',
-  primaryLight: '#e0f2fe',
-  success:      '#22c55e',
-  successLight: '#f0fdf4',
-  error:        '#ef4444',
-  orange:       '#f97316',
-  surface:      '#ffffff',
-  bg:           '#f8fafc',
-  border:       '#e9e9e7',
-  text:         '#111827',
-  textSec:      '#6b7280',
-  textMuted:    '#9b9a97',
-  // dark
-  darkBg:       '#111827',
-  darkSurface:  '#1f2937',
-  darkBorder:   '#374151',
-  darkText:     '#f9fafb',
-  darkTextSec:  '#d1d5db',
-};
-
-// ─── skeleton ─────────────────────────────────────────────────────────────────
-function SkeletonBlock({ width = '100%', height = 16, radius = 8, style = {} }: any) {
-  const shimmer = useRef(new Animated.Value(0)).current;
-  useEffect(() => {
-    const loop = Animated.loop(
-      Animated.sequence([
-        Animated.timing(shimmer, { toValue: 1, duration: 900, useNativeDriver: true }),
-        Animated.timing(shimmer, { toValue: 0, duration: 900, useNativeDriver: true }),
-      ])
-    );
-    loop.start();
-    return () => loop.stop();
-  }, []);
-  const opacity = shimmer.interpolate({ inputRange: [0, 1], outputRange: [0.3, 0.7] });
-  return (
-    <Animated.View style={[{ width, height, borderRadius: radius, backgroundColor: '#d1d5db', opacity }, style]} />
-  );
-}
-
-function PaperSkeleton() {
-  return (
-    <View style={sk.card}>
-      <SkeletonBlock width="80%" height={18} style={{ marginBottom: 8 }} />
-      <SkeletonBlock width="50%" height={13} style={{ marginBottom: 6 }} />
-      <SkeletonBlock width="25%" height={12} style={{ marginBottom: 12 }} />
-      <SkeletonBlock width="100%" height={14} style={{ marginBottom: 4 }} />
-      <SkeletonBlock width="90%"  height={14} style={{ marginBottom: 14 }} />
-      <View style={sk.row}>
-        <SkeletonBlock width={60} height={36} radius={10} />
-        <SkeletonBlock width={60} height={36} radius={10} />
-      </View>
-    </View>
-  );
-}
-
-const sk = StyleSheet.create({
-  card: { backgroundColor: '#f3f4f6', borderRadius: 14, padding: 14, marginBottom: 12 },
-  row:  { flexDirection: 'row', gap: 8 },
-});
-
-// ─── paper card ───────────────────────────────────────────────────────────────
 interface Paper {
   id: string;
-  title?: string;
-  authors?: string | string[];
-  year?: number | string;
-  summary?: string;
-  url?: string;
-  keywords?: string[];
-  hidden?: boolean;
+  title: string;
+  headline: string;
+  why_important: string;
+  hbm_perspective: string;
+  bookmarked: boolean;
+  read: boolean;
 }
 
-function PaperCard({
-  paper,
-  index,
-  liked,
-  isRead,
-  onLike,
-  onRead,
-}: {
-  paper: Paper;
-  index: number;
-  liked: boolean;
-  isRead: boolean;
-  onLike: () => void;
-  onRead: () => void;
-}) {
-  const isDark  = useColorScheme() === 'dark';
-  const fadeIn  = useRef(new Animated.Value(0)).current;
-  const slideIn = useRef(new Animated.Value(16)).current;
+type ViewType = 'list' | 'stats';
+type FilterType = 'all' | 'bookmarked' | 'read';
 
-  useEffect(() => {
-    const delay = Math.min(index * 60, 500);
-    Animated.parallel([
-      Animated.timing(fadeIn,  { toValue: 1, duration: 350, delay, useNativeDriver: true }),
-      Animated.timing(slideIn, { toValue: 0, duration: 350, delay, easing: Easing.out(Easing.quad), useNativeDriver: true }),
-    ]).start();
-  }, []);
-
-  const surface = isDark ? C.darkSurface : C.surface;
-  const border  = isDark ? C.darkBorder  : C.border;
-  const text    = isDark ? C.darkText    : C.text;
-  const textSec = isDark ? C.darkTextSec : C.textSec;
-
-  const authors = Array.isArray(paper.authors) ? paper.authors.join(', ') : (paper.authors ?? '');
-
-  if (paper.hidden) return null;
-
-  return (
-    <Animated.View style={{ opacity: fadeIn, transform: [{ translateY: slideIn }] }}>
-      <View style={[pc.card, { backgroundColor: surface, borderColor: border }, isRead && pc.cardRead]}>
-        {/* read indicator stripe */}
-        {isRead && <View style={pc.readStripe} />}
-
-        {/* title */}
-        <Text style={[pc.title, { color: text }]} numberOfLines={3}>{paper.title ?? '제목 없음'}</Text>
-
-        {/* meta row */}
-        <View style={pc.metaRow}>
-          {authors ? <Text style={[pc.authors, { color: textSec }]} numberOfLines={1}>{authors}</Text> : null}
-          {paper.year ? (
-            <View style={pc.yearBadge}>
-              <Text style={pc.yearText}>{paper.year}</Text>
-            </View>
-          ) : null}
-        </View>
-
-        {/* keywords */}
-        {paper.keywords && paper.keywords.length > 0 && (
-          <View style={pc.keywordsRow}>
-            {paper.keywords.slice(0, 4).map((kw, i) => (
-              <View key={i} style={pc.keyword}>
-                <Text style={pc.keywordText}>{kw}</Text>
-              </View>
-            ))}
-          </View>
-        )}
-
-        {/* summary */}
-        {paper.summary ? (
-          <Text style={[pc.summary, { color: textSec }]} numberOfLines={3}>{paper.summary}</Text>
-        ) : null}
-
-        {/* actions */}
-        <View style={[pc.actions, { borderTopColor: border }]}>
-          <TouchableOpacity
-            style={[pc.actionBtn, liked && pc.actionBtnLiked]}
-            onPress={onLike}
-            activeOpacity={0.75}
-          >
-            <Text style={pc.actionIcon}>{liked ? '❤️' : '🤍'}</Text>
-            <Text style={[pc.actionLabel, liked && { color: '#ef4444' }]}>
-              {liked ? '좋아요' : '좋아요'}
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[pc.actionBtn, isRead && pc.actionBtnRead]}
-            onPress={onRead}
-            activeOpacity={0.75}
-          >
-            <Text style={pc.actionIcon}>{isRead ? '✅' : '⬜'}</Text>
-            <Text style={[pc.actionLabel, isRead && { color: C.success }]}>
-              {isRead ? '읽음' : '미읽음'}
-            </Text>
-          </TouchableOpacity>
-
-          {paper.url ? (
-            <View style={[pc.actionBtn, pc.actionBtnLink]}>
-              <Text style={pc.actionIcon}>🔗</Text>
-              <Text style={[pc.actionLabel, { color: C.primary }]}>링크</Text>
-            </View>
-          ) : null}
-        </View>
-      </View>
-    </Animated.View>
-  );
-}
-
-const pc = StyleSheet.create({
-  card: {
-    borderWidth: 1, borderRadius: 14, padding: 14, marginBottom: 12,
-    shadowColor: '#000', shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.06, shadowRadius: 4, elevation: 2,
-    overflow: 'hidden', position: 'relative',
-  },
-  cardRead:   { borderColor: C.success + '60' },
-  readStripe: { position: 'absolute', left: 0, top: 0, bottom: 0, width: 4, backgroundColor: C.success, borderRadius: 2 },
-  title:    { fontSize: 15, fontWeight: '700', lineHeight: 21, marginBottom: 8, paddingLeft: 4 },
-  metaRow:  { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 8 },
-  authors:  { flex: 1, fontSize: 12, lineHeight: 16 },
-  yearBadge:{ backgroundColor: C.purpleLight, borderRadius: 6, paddingHorizontal: 8, paddingVertical: 3 },
-  yearText: { fontSize: 11, fontWeight: '700', color: C.purple },
-  keywordsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginBottom: 8 },
-  keyword:  { backgroundColor: C.primaryLight, borderRadius: 6, paddingHorizontal: 8, paddingVertical: 3 },
-  keywordText: { fontSize: 10, fontWeight: '600', color: C.primary },
-  summary:  { fontSize: 13, lineHeight: 19, marginBottom: 12 },
-  actions:  { flexDirection: 'row', gap: 8, paddingTop: 10, borderTopWidth: 1 },
-  actionBtn:{ flexDirection: 'row', alignItems: 'center', gap: 5, backgroundColor: '#f1f0ef', borderRadius: 10, paddingHorizontal: 10, paddingVertical: 8, minHeight: 36 },
-  actionBtnLiked: { backgroundColor: '#fff1f2' },
-  actionBtnRead:  { backgroundColor: C.successLight },
-  actionBtnLink:  { backgroundColor: C.primaryLight },
-  actionIcon:  { fontSize: 15 },
-  actionLabel: { fontSize: 12, fontWeight: '600', color: C.textMuted },
-});
-
-// ─── main screen ──────────────────────────────────────────────────────────────
-type FilterKey = 'all' | 'liked' | 'read';
-
-const FILTER_LABELS: Record<FilterKey, string> = { all: '전체', liked: '❤️ 좋아요', read: '✅ 읽음' };
+const NETLIFY_BASE_URL = 'https://illustrious-cuchufli-7c4e58.netlify.app';
+const USER_PREFS_JSON = 'https://illustrious-cuchufli-7c4e58.netlify.app/paper_search/user_prefs.json';
+const COLUMN_NOTES_JSON = 'https://illustrious-cuchufli-7c4e58.netlify.app/paper_search/column_notes.json';
 
 export default function PapersScreen() {
-  const isDark = useColorScheme() === 'dark';
-  const [papers,          setPapers]          = useState<Paper[]>([]);
-  const [filteredPapers,  setFilteredPapers]  = useState<Paper[]>([]);
-  const [loading,         setLoading]         = useState(true);
-  const [error,           setError]           = useState(false);
-  const [searchText,      setSearchText]      = useState('');
-  const [likes,           setLikes]           = useState(new Set<string>());
-  const [readSet,         setReadSet]         = useState(new Set<string>());
-  const [filter,          setFilter]          = useState<FilterKey>('all');
-  const [searchFocused,   setSearchFocused]   = useState(false);
+  const [view, setView] = useState<ViewType>('list');
+  const [papers, setPapers] = useState<Paper[]>([]);
+  const [filter, setFilter] = useState<FilterType>('all');
+  const [stats, setStats] = useState({ total: 0, read: 0, bookmarked: 0 });
+  const [loading, setLoading] = useState(true);
+  const [selectedPaper, setSelectedPaper] = useState<Paper | null>(null);
 
-  useEffect(() => { loadData(); }, []);
-  useEffect(() => { filterPapers(); }, [papers, searchText, filter, likes, readSet]);
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  useEffect(() => {
+    updateStats();
+  }, [papers]);
 
   const loadData = async () => {
     try {
       setLoading(true);
-      setError(false);
-      const [cachedPapers, cachedLikes, cachedRead, timestamp] = await Promise.all([
-        AsyncStorage.getItem(CACHE_KEY),
-        AsyncStorage.getItem(LIKES_KEY),
-        AsyncStorage.getItem(READ_KEY),
-        AsyncStorage.getItem(CACHE_TIMESTAMP_KEY),
-      ]);
 
-      setLikes(cachedLikes ? new Set(JSON.parse(cachedLikes)) : new Set());
-      setReadSet(cachedRead ? new Set(JSON.parse(cachedRead)) : new Set());
+      // Fetch from Netlify
+      const userPrefs = await fetchUserPrefs();
+      const columnNotes = await fetchColumnNotes();
 
-      if (cachedPapers && timestamp) {
-        const cachedTime = parseInt(timestamp, 10);
-        if (Date.now() - cachedTime < CACHE_DURATION) {
-          setPapers(JSON.parse(cachedPapers));
-          setLoading(false);
-          return;
+      if (userPrefs && userPrefs.liked && columnNotes) {
+        // Build papers from liked list + column notes
+        const likedPaperIds = userPrefs.liked || [];
+        const savedPrefs = await AsyncStorage.getItem('papers_prefs');
+        const prefs = savedPrefs ? JSON.parse(savedPrefs) : {};
+
+        const papers_list = likedPaperIds
+          .map((id: string) => {
+            const notes = columnNotes[id];
+            if (!notes) return null;
+            return {
+              id,
+              title: formatTitle(id),
+              headline: notes.headline || '',
+              why_important: notes.why_important || '',
+              hbm_perspective: notes.hbm_perspective || '',
+              bookmarked: prefs[id]?.bookmarked || false,
+              read: prefs[id]?.read || false,
+            };
+          })
+          .filter((p: any) => p !== null) as Paper[];
+
+        setPapers(papers_list);
+        await AsyncStorage.setItem('papers', JSON.stringify(papers_list));
+      } else {
+        // Fallback to local data
+        const savedPapers = await AsyncStorage.getItem('papers');
+        if (savedPapers) {
+          setPapers(JSON.parse(savedPapers));
+        } else {
+          setPapers(getDefaultPapers());
         }
       }
-      await fetchAndCache();
-    } catch {
-      setError(true);
-      setLoading(false);
-    }
-  };
-
-  const fetchAndCache = async () => {
-    try {
-      const response   = await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/papers/papers.json');
-      const papersData = await response.json();
-      await AsyncStorage.setItem(CACHE_KEY,           JSON.stringify(papersData));
-      await AsyncStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
-      setPapers(papersData);
-    } catch {
-      const testPapers: Paper[] = [
-        { id: '1', title: 'Sample Paper: Machine Learning', authors: ['John Doe', 'Jane Smith'], year: 2024, summary: 'This is a sample paper about machine learning and AI.', keywords: ['ML', 'AI'] },
-        { id: '2', title: 'Advanced Neural Networks',       authors: ['Alice Johnson'],            year: 2025, summary: 'A comprehensive study on neural network architectures.',  keywords: ['Deep Learning', 'CNN'] },
-      ];
-      setPapers(testPapers);
+    } catch (error) {
+      console.error('Failed to load Papers data:', error);
+      setPapers(getDefaultPapers());
     } finally {
       setLoading(false);
     }
   };
 
-  const filterPapers = useCallback(() => {
-    let result = papers.filter((p) => !p.hidden);
-
-    if (searchText.trim()) {
-      const q = searchText.toLowerCase();
-      result = result.filter((p) =>
-        p.title?.toLowerCase().includes(q) ||
-        (Array.isArray(p.authors) ? p.authors : [p.authors ?? '']).some((a) => a.toLowerCase().includes(q)) ||
-        p.summary?.toLowerCase().includes(q) ||
-        p.keywords?.some((k) => k.toLowerCase().includes(q))
-      );
+  const fetchUserPrefs = async () => {
+    try {
+      const response = await fetch(USER_PREFS_JSON);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return await response.json();
+    } catch (error) {
+      console.error('Failed to fetch user prefs:', error);
+      return null;
     }
-
-    if (filter === 'liked') result = result.filter((p) => likes.has(p.id));
-    if (filter === 'read')  result = result.filter((p) => readSet.has(p.id));
-
-    setFilteredPapers(result);
-  }, [papers, searchText, filter, likes, readSet]);
-
-  const toggleLike = async (id: string) => {
-    const n = new Set(likes);
-    n.has(id) ? n.delete(id) : n.add(id);
-    setLikes(n);
-    await AsyncStorage.setItem(LIKES_KEY, JSON.stringify(Array.from(n)));
   };
 
-  const toggleRead = async (id: string) => {
-    const n = new Set(readSet);
-    n.has(id) ? n.delete(id) : n.add(id);
-    setReadSet(n);
-    await AsyncStorage.setItem(READ_KEY, JSON.stringify(Array.from(n)));
+  const fetchColumnNotes = async () => {
+    try {
+      const response = await fetch(COLUMN_NOTES_JSON);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return await response.json();
+    } catch (error) {
+      console.error('Failed to fetch column notes:', error);
+      return null;
+    }
   };
 
-  const bg      = isDark ? C.darkBg      : C.bg;
-  const surface = isDark ? C.darkSurface : C.surface;
-  const border  = isDark ? C.darkBorder  : C.border;
-  const text    = isDark ? C.darkText    : C.text;
-  const textSec = isDark ? C.darkTextSec : C.textSec;
+  const formatTitle = (id: string): string => {
+    return id.replace(/_/g, ' ').substring(0, 60);
+  };
 
-  // ── skeleton ──
+  const getDefaultPapers = (): Paper[] => [
+    {
+      id: 'paper_1',
+      title: 'Power Supply Induced Jitter Model',
+      headline: 'HBM 세대별 전원 노이즈 → 지터 변환 메커니즘의 정량적 분해',
+      why_important: 'PSIJ는 HBM I/O 눈 다이어그램의 주요 원인...',
+      hbm_perspective: 'HBM PHY 설계에서 PSIJ를 줄이는 것이 핵심...',
+      bookmarked: false,
+      read: false,
+    },
+  ];
+
+  const savePapers = async (updatedPapers: Paper[]) => {
+    setPapers(updatedPapers);
+    await AsyncStorage.setItem('papers', JSON.stringify(updatedPapers));
+
+    const prefs: any = {};
+    updatedPapers.forEach(p => {
+      prefs[p.id] = { bookmarked: p.bookmarked, read: p.read };
+    });
+    await AsyncStorage.setItem('papers_prefs', JSON.stringify(prefs));
+  };
+
+  const updateStats = () => {
+    const read = papers.filter(p => p.read).length;
+    const bookmarked = papers.filter(p => p.bookmarked).length;
+    setStats({
+      total: papers.length,
+      read,
+      bookmarked,
+    });
+  };
+
+  const toggleRead = (paperId: string) => {
+    const updated = papers.map(p =>
+      p.id === paperId ? { ...p, read: !p.read } : p
+    );
+    savePapers(updated);
+  };
+
+  const toggleBookmark = (paperId: string) => {
+    const updated = papers.map(p =>
+      p.id === paperId ? { ...p, bookmarked: !p.bookmarked } : p
+    );
+    savePapers(updated);
+  };
+
+  const getFilteredPapers = () => {
+    switch (filter) {
+      case 'bookmarked':
+        return papers.filter(p => p.bookmarked);
+      case 'read':
+        return papers.filter(p => p.read);
+      default:
+        return papers;
+    }
+  };
+
   if (loading) {
     return (
-      <SafeAreaView style={[s.safe, { backgroundColor: bg }]}>
-        <View style={s.header}>
-          <Text style={s.headerTitle}>📄 논문</Text>
-          <Text style={s.headerSub}>arXiv 논문을 탐색해요</Text>
+      <SafeAreaView style={styles.screen}>
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>📄 연구 논문</Text>
         </View>
-        <ScrollView contentContainerStyle={{ padding: 16, paddingBottom: 120 }}>
-          {[0, 1, 2, 3].map((i) => <PaperSkeleton key={i} />)}
-        </ScrollView>
-      </SafeAreaView>
-    );
-  }
-
-  // ── error ──
-  if (error) {
-    return (
-      <SafeAreaView style={[s.safe, { backgroundColor: bg }]}>
-        <View style={s.header}><Text style={s.headerTitle}>📄 논문</Text></View>
-        <View style={s.center}>
-          <Text style={s.stateEmoji}>😅</Text>
-          <Text style={[s.stateTitle, { color: text }]}>논문을 불러오지 못했어요</Text>
-          <Text style={[s.stateSub, { color: textSec }]}>네트워크 연결을 확인해 주세요</Text>
-          <TouchableOpacity style={s.retryBtn} onPress={loadData}>
-            <Text style={s.retryText}>다시 시도</Text>
-          </TouchableOpacity>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#8b5cf6" />
+          <Text style={styles.loadingText}>취향 기반 논문을 로드하는 중...</Text>
         </View>
       </SafeAreaView>
     );
   }
-
-  const visibleCount = filteredPapers.length;
-  const totalCount   = papers.filter((p) => !p.hidden).length;
 
   return (
-    <SafeAreaView style={[s.safe, { backgroundColor: bg }]}>
-      {/* header */}
-      <View style={s.header}>
-        <Text style={s.headerTitle}>📄 논문</Text>
-        <Text style={s.headerSub}>arXiv 논문을 탐색해요</Text>
+    <SafeAreaView style={styles.screen}>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>📄 연구 논문</Text>
+        <Text style={styles.headerSubtitle}>내 취향 기반 {stats.total}개</Text>
       </View>
 
-      {/* search */}
-      <View style={[s.searchWrap, { backgroundColor: surface, borderBottomColor: border }]}>
-        <View style={[s.searchBox, { borderColor: searchFocused ? C.purple : border, backgroundColor: isDark ? C.darkBg : '#f1f0ef' }]}>
-          <Text style={s.searchIcon}>🔍</Text>
-          <TextInput
-            style={[s.searchInput, { color: text }]}
-            placeholder="제목, 저자, 키워드 검색..."
-            placeholderTextColor={C.textMuted}
-            value={searchText}
-            onChangeText={setSearchText}
-            onFocus={() => setSearchFocused(true)}
-            onBlur={() => setSearchFocused(false)}
-            returnKeyType="search"
-          />
-          {searchText.length > 0 && (
-            <TouchableOpacity onPress={() => setSearchText('')} activeOpacity={0.6}>
-              <Text style={s.clearBtn}>✕</Text>
+      {/* Tab buttons */}
+      <View style={styles.tabButtons}>
+        <TouchableOpacity
+          style={[styles.tabButton, view === 'list' && styles.tabButtonActive]}
+          onPress={() => setView('list')}
+        >
+          <Text style={[styles.tabButtonText, view === 'list' && styles.tabButtonTextActive]}>논문</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.tabButton, view === 'stats' && styles.tabButtonActive]}
+          onPress={() => setView('stats')}
+        >
+          <Text style={[styles.tabButtonText, view === 'stats' && styles.tabButtonTextActive]}>통계</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Filter buttons */}
+      {view === 'list' && (
+        <View style={styles.filterButtons}>
+          <TouchableOpacity
+            style={[styles.filterButton, filter === 'all' && styles.filterButtonActive]}
+            onPress={() => setFilter('all')}
+          >
+            <Text style={[styles.filterButtonText, filter === 'all' && styles.filterButtonTextActive]}>전체</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.filterButton, filter === 'bookmarked' && styles.filterButtonActive]}
+            onPress={() => setFilter('bookmarked')}
+          >
+            <Text style={[styles.filterButtonText, filter === 'bookmarked' && styles.filterButtonTextActive]}>북마크</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.filterButton, filter === 'read' && styles.filterButtonActive]}
+            onPress={() => setFilter('read')}
+          >
+            <Text style={[styles.filterButtonText, filter === 'read' && styles.filterButtonTextActive]}>읽음</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
+      {/* Detail View */}
+      {selectedPaper ? (
+        <ScrollView style={styles.detailView}>
+          <TouchableOpacity onPress={() => setSelectedPaper(null)} style={styles.backButton}>
+            <Text style={styles.backButtonText}>← 뒤로</Text>
+          </TouchableOpacity>
+
+          <Text style={styles.detailTitle}>{selectedPaper.headline}</Text>
+
+          <View style={styles.detailSection}>
+            <Text style={styles.sectionTitle}>왜 중요한가?</Text>
+            <Text style={styles.sectionContent}>{selectedPaper.why_important}</Text>
+          </View>
+
+          <View style={styles.detailSection}>
+            <Text style={styles.sectionTitle}>HBM 관점</Text>
+            <Text style={styles.sectionContent}>{selectedPaper.hbm_perspective}</Text>
+          </View>
+
+          <View style={styles.detailActions}>
+            <TouchableOpacity
+              style={[styles.detailActionBtn, selectedPaper.read && styles.detailActionBtnActive]}
+              onPress={() => {
+                toggleRead(selectedPaper.id);
+                setSelectedPaper({ ...selectedPaper, read: !selectedPaper.read });
+              }}
+            >
+              <Text style={[styles.detailActionText, selectedPaper.read && styles.detailActionTextActive]}>
+                {selectedPaper.read ? '✓ 읽음' : '읽음 표시'}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.detailActionBtn, selectedPaper.bookmarked && styles.detailActionBtnActive]}
+              onPress={() => {
+                toggleBookmark(selectedPaper.id);
+                setSelectedPaper({ ...selectedPaper, bookmarked: !selectedPaper.bookmarked });
+              }}
+            >
+              <Text style={[styles.detailActionText, selectedPaper.bookmarked && styles.detailActionTextActive]}>
+                {selectedPaper.bookmarked ? '🔖 북마크됨' : '🔖 북마크'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      ) : view === 'list' ? (
+        <FlatList
+          data={getFilteredPapers()}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.listContent}
+          renderItem={({ item }) => (
+            <TouchableOpacity onPress={() => setSelectedPaper(item)} style={[styles.card, item.read && styles.cardRead]}>
+              <View style={styles.cardHeader}>
+                <View style={styles.cardTitle}>
+                  <Text style={styles.title} numberOfLines={2}>{item.headline}</Text>
+                </View>
+                <View style={styles.badges}>
+                  {item.bookmarked && <Text style={styles.badge}>🔖</Text>}
+                  {item.read && <Text style={styles.badge}>✓</Text>}
+                </View>
+              </View>
+
+              <Text style={styles.subtitle} numberOfLines={3}>{item.why_important}</Text>
+
+              <View style={styles.perspective}>
+                <Text style={styles.perspectiveLabel}>HBM 관점</Text>
+                <Text style={styles.perspectiveText} numberOfLines={2}>{item.hbm_perspective}</Text>
+              </View>
+
+              <View style={styles.actionButtons}>
+                <TouchableOpacity
+                  style={[styles.actionBtn, item.read && styles.actionBtnActive]}
+                  onPress={() => toggleRead(item.id)}
+                >
+                  <Text style={[styles.actionBtnText, item.read && styles.actionBtnTextActive]}>
+                    {item.read ? '✓ 읽음' : '읽음'}
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={[styles.actionBtn, item.bookmarked && styles.bookmarkBtnActive]}
+                  onPress={() => toggleBookmark(item.id)}
+                >
+                  <Text style={[styles.actionBtnText, item.bookmarked && styles.bookmarkBtnText]}>
+                    {item.bookmarked ? '🔖' : '북마크'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </TouchableOpacity>
           )}
-        </View>
-      </View>
-
-      {/* filter chips */}
-      <View style={[s.filterRow, { backgroundColor: surface, borderBottomColor: border }]}>
-        {(Object.keys(FILTER_LABELS) as FilterKey[]).map((f) => (
-          <TouchableOpacity
-            key={f}
-            style={[s.chip, filter === f && { backgroundColor: C.purple }]}
-            onPress={() => setFilter(f)}
-            activeOpacity={0.75}
-          >
-            <Text style={[s.chipText, filter === f && { color: '#fff' }]}>{FILTER_LABELS[f]}</Text>
-          </TouchableOpacity>
-        ))}
-        <Text style={[s.countLabel, { color: textSec }]}>{visibleCount} / {totalCount}</Text>
-      </View>
-
-      <ScrollView
-        style={{ flex: 1 }}
-        contentContainerStyle={{ padding: 14, paddingBottom: 120 }}
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
-      >
-        {filteredPapers.length === 0 ? (
-          <View style={s.center}>
-            <Text style={s.stateEmoji}>
-              {filter === 'liked' ? '🤍' : filter === 'read' ? '📖' : '🔍'}
-            </Text>
-            <Text style={[s.stateTitle, { color: text }]}>
-              {filter === 'liked' ? '좋아요한 논문이 없어요' :
-               filter === 'read'  ? '읽은 논문이 없어요' :
-               searchText         ? '검색 결과가 없어요' :
-               '논문이 없어요'}
-            </Text>
-            <Text style={[s.stateSub, { color: textSec }]}>
-              {filter !== 'all' ? '필터를 변경해 보세요' : '나중에 다시 확인해 보세요'}
+          ListEmptyComponent={
+            <View style={styles.emptyContainer}>
+              <Text style={styles.emptyText}>취향에 맞는 논문이 없습니다.</Text>
+            </View>
+          }
+        />
+      ) : (
+        <ScrollView contentContainerStyle={styles.statsContent}>
+          <View style={styles.statCard}>
+            <Text style={styles.statLabel}>전체 논문</Text>
+            <Text style={styles.statValue}>{stats.total}</Text>
+          </View>
+          <View style={styles.statCard}>
+            <Text style={styles.statLabel}>읽은 논문</Text>
+            <Text style={styles.statValue}>{stats.read}</Text>
+          </View>
+          <View style={styles.statCard}>
+            <Text style={styles.statLabel}>북마크</Text>
+            <Text style={styles.statValue}>{stats.bookmarked}</Text>
+          </View>
+          <View style={styles.statCard}>
+            <Text style={styles.statLabel}>읽음률</Text>
+            <Text style={styles.statValue}>
+              {stats.total > 0 ? ((stats.read / stats.total) * 100).toFixed(1) : 0}%
             </Text>
           </View>
-        ) : (
-          filteredPapers.map((paper, idx) => (
-            <PaperCard
-              key={paper.id}
-              paper={paper}
-              index={idx}
-              liked={likes.has(paper.id)}
-              isRead={readSet.has(paper.id)}
-              onLike={() => toggleLike(paper.id)}
-              onRead={() => toggleRead(paper.id)}
-            />
-          ))
-        )}
-      </ScrollView>
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 }
 
-const s = StyleSheet.create({
-  safe: { flex: 1 },
-
-  header: {
-    backgroundColor: C.purple,
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 22,
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: '#f8fafc',
   },
-  headerTitle: { fontSize: 24, fontWeight: '800', color: '#fff', marginBottom: 4 },
-  headerSub:   { fontSize: 13, color: 'rgba(255,255,255,0.85)' },
-
-  searchWrap: { paddingHorizontal: 14, paddingVertical: 10, borderBottomWidth: 1 },
-  searchBox:  { flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, borderRadius: 12, paddingHorizontal: 12, paddingVertical: 10, gap: 8 },
-  searchIcon: { fontSize: 15 },
-  searchInput:{ flex: 1, fontSize: 15, padding: 0 },
-  clearBtn:   { fontSize: 14, color: C.textMuted, paddingHorizontal: 4 },
-
-  filterRow:  { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 14, paddingVertical: 10, borderBottomWidth: 1 },
-  chip:       { backgroundColor: '#f1f0ef', borderRadius: 20, paddingHorizontal: 12, paddingVertical: 7 },
-  chipText:   { fontSize: 13, fontWeight: '600', color: C.textMuted },
-  countLabel: { marginLeft: 'auto', fontSize: 12, fontWeight: '500' },
-
-  center:     { alignItems: 'center', justifyContent: 'center', paddingVertical: 80 },
-  stateEmoji: { fontSize: 52, marginBottom: 14 },
-  stateTitle: { fontSize: 17, fontWeight: '700', marginBottom: 6 },
-  stateSub:   { fontSize: 13, textAlign: 'center', marginBottom: 24 },
-  retryBtn:   { backgroundColor: C.purple, borderRadius: 12, paddingHorizontal: 24, paddingVertical: 12 },
-  retryText:  { fontSize: 14, fontWeight: '700', color: '#fff' },
+  header: {
+    backgroundColor: '#8b5cf6',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 3,
+  },
+  headerTitle: {
+    fontSize: 22,
+    fontWeight: '800',
+    color: '#fff',
+    marginBottom: 2,
+  },
+  headerSubtitle: {
+    fontSize: 11,
+    color: '#ede9fe',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 12,
+    fontSize: 14,
+    color: '#64748b',
+  },
+  tabButtons: {
+    flexDirection: 'row',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e5e7eb',
+  },
+  tabButton: {
+    flex: 1,
+    paddingVertical: 10,
+    marginHorizontal: 4,
+    borderRadius: 8,
+    alignItems: 'center',
+    backgroundColor: '#f1f5f9',
+  },
+  tabButtonActive: {
+    backgroundColor: '#8b5cf6',
+  },
+  tabButtonText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#64748b',
+  },
+  tabButtonTextActive: {
+    color: '#fff',
+  },
+  filterButtons: {
+    flexDirection: 'row',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e5e7eb',
+    gap: 6,
+  },
+  filterButton: {
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 16,
+    backgroundColor: '#f1f5f9',
+  },
+  filterButtonActive: {
+    backgroundColor: '#8b5cf6',
+  },
+  filterButtonText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#64748b',
+  },
+  filterButtonTextActive: {
+    color: '#fff',
+  },
+  listContent: {
+    padding: 12,
+    paddingBottom: 80,
+  },
+  card: {
+    backgroundColor: '#fff',
+    marginVertical: 6,
+    padding: 14,
+    borderRadius: 12,
+    borderLeftWidth: 5,
+    borderLeftColor: '#8b5cf6',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  cardRead: {
+    opacity: 0.5,
+    backgroundColor: '#f1f5f9',
+  },
+  cardHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: 8,
+  },
+  cardTitle: {
+    flex: 1,
+    marginRight: 8,
+  },
+  title: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#1e293b',
+    marginBottom: 4,
+  },
+  subtitle: {
+    fontSize: 12,
+    color: '#64748b',
+    marginBottom: 8,
+    lineHeight: 18,
+  },
+  perspective: {
+    backgroundColor: '#f3f0ff',
+    borderLeftWidth: 3,
+    borderLeftColor: '#8b5cf6',
+    paddingLeft: 10,
+    paddingVertical: 8,
+    marginBottom: 10,
+    borderRadius: 4,
+  },
+  perspectiveLabel: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#8b5cf6',
+    marginBottom: 2,
+  },
+  perspectiveText: {
+    fontSize: 11,
+    color: '#6b7280',
+    lineHeight: 16,
+  },
+  badges: {
+    flexDirection: 'row',
+    gap: 4,
+  },
+  badge: {
+    fontSize: 14,
+  },
+  actionButtons: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  actionBtn: {
+    flex: 1,
+    paddingVertical: 8,
+    backgroundColor: '#f1f5f9',
+    borderRadius: 6,
+    alignItems: 'center',
+  },
+  actionBtnActive: {
+    backgroundColor: '#10b981',
+  },
+  bookmarkBtnActive: {
+    backgroundColor: '#fbbf24',
+  },
+  actionBtnText: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#1e293b',
+  },
+  actionBtnTextActive: {
+    color: '#fff',
+  },
+  bookmarkBtnText: {
+    color: '#fff',
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 40,
+  },
+  emptyText: {
+    fontSize: 14,
+    color: '#94a3b8',
+  },
+  statsContent: {
+    padding: 16,
+    paddingBottom: 100,
+  },
+  statCard: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 16,
+    marginVertical: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  statLabel: {
+    fontSize: 13,
+    color: '#64748b',
+    fontWeight: '600',
+    marginBottom: 6,
+  },
+  statValue: {
+    fontSize: 28,
+    fontWeight: '800',
+    color: '#8b5cf6',
+  },
+  detailView: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#fff',
+  },
+  backButton: {
+    paddingVertical: 8,
+    marginBottom: 16,
+  },
+  backButtonText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#8b5cf6',
+  },
+  detailTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#1e293b',
+    marginBottom: 16,
+    lineHeight: 26,
+  },
+  detailSection: {
+    marginBottom: 20,
+  },
+  sectionTitle: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#8b5cf6',
+    marginBottom: 8,
+    textTransform: 'uppercase',
+  },
+  sectionContent: {
+    fontSize: 13,
+    color: '#475569',
+    lineHeight: 20,
+  },
+  detailActions: {
+    flexDirection: 'row',
+    gap: 8,
+    marginTop: 24,
+    paddingBottom: 40,
+  },
+  detailActionBtn: {
+    flex: 1,
+    paddingVertical: 12,
+    backgroundColor: '#f1f5f9',
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  detailActionBtnActive: {
+    backgroundColor: '#8b5cf6',
+  },
+  detailActionText: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#1e293b',
+  },
+  detailActionTextActive: {
+    color: '#fff',
+  },
 });
