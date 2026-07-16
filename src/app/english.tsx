@@ -40,7 +40,7 @@ export default function EnglishScreen() {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [stats, setStats] = useState({ totalWords: 0, readWords: 0, quizzesCorrect: 0, quizzesTotal: 0 });
   const [loading, setLoading] = useState(true);
-  const [hideReadWords, setHideReadWords] = useState(false);
+  const [hideReadWords, setHideReadWords] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
@@ -408,7 +408,10 @@ function WordsView({ words, onToggleRead }: { words: Word[], onToggleRead: (id: 
                 <Text style={styles.pos}>{item.pos}</Text>
               </View>
             </View>
-            <Text style={styles.readBadge}>{item.isRead ? '✓' : '○'}</Text>
+            <View style={styles.cardHeaderRight}>
+              <Text style={styles.updateDate}>{item.date}</Text>
+              <Text style={styles.readBadge}>{item.isRead ? '✓' : '○'}</Text>
+            </View>
           </View>
           <Text style={styles.meaning}>{item.meaning}</Text>
           <Text style={styles.explanation}>{item.explanation}</Text>
@@ -633,6 +636,15 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: '#94a3b8',
     marginTop: 2,
+  },
+  cardHeaderRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  updateDate: {
+    fontSize: 10,
+    color: '#94a3b8',
   },
   readBadge: {
     fontSize: 16,

@@ -32,11 +32,29 @@ export default function TOEFLScreen() {
 
   useEffect(() => {
     loadData();
+    checkAndResetDaily();
   }, []);
 
   useEffect(() => {
     updateStats();
   }, [sections]);
+
+  const checkAndResetDaily = async () => {
+    const lastReset = await AsyncStorage.getItem('toefl_last_reset');
+    const now = new Date();
+    const today = now.toISOString().split('T')[0];
+
+    if (!lastReset || !lastReset.startsWith(today)) {
+      const resetSections = sections.map(s => ({
+        ...s,
+        progress: 0,
+        completed: false,
+      }));
+      setSections(resetSections);
+      await AsyncStorage.setItem('toefl_sections', JSON.stringify(resetSections));
+      await AsyncStorage.setItem('toefl_last_reset', `${today}T00:00:00`);
+    }
+  };
 
   const loadData = async () => {
     try {
