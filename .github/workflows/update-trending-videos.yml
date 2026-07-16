@@ -2,132 +2,27 @@ name: Update Trending Videos Daily
 
 on:
   schedule:
-    - cron: '0 21 * * *'  # 매일 21:00 UTC (한국 시간 06:00 +9시간)
+    - cron: '0 21 * * *'
   workflow_dispatch:
 
 jobs:
   update-videos:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
         with:
-          node-version: '18'
+          python-version: '3.9'
 
-      - name: Install dependencies
-        run: npm install node-fetch
+      - name: Install requests
+        run: pip install requests
 
-      - name: Fetch trending videos
-        id: fetch
+      - name: Update trending videos
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-        run: |
-          node - <<'EOF'
-          const fetch = require('node-fetch');
-
-          async function getTrendingVideos() {
-            const API_KEY = process.env.YOUTUBE_API_KEY;
-            if (!API_KEY) {
-              console.error('API_KEY not set');
-              process.exit(1);
-            }
-
-            const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&regionCode=KR&maxResults=3&key=${API_KEY}`;
-
-            try {
-              const response = await fetch(url);
-              const data = await response.json();
-
-              if (!data.items) {
-                throw new Error('No items in response');
-              }
-
-              const videos = data.items.map(item => ({
-                id: item.id,
-                title: item.snippet.title,
-                channel: item.snippet.channelTitle,
-                thumbnail: item.snippet.thumbnails.medium.url,
-                views: parseInt(item.statistics.viewCount).toLocaleString('ko-KR'),
-                url: `https://www.youtube.com/watch?v=${item.id}`,
-              }));
-
-              console.log(JSON.stringify(videos, null, 2));
-            } catch (error) {
-              console.error('Error:', error.message);
-              process.exit(1);
-            }
-          }
-
-          getTrendingVideos();
-          EOF
-        shell: bash
-
-      - name: Update play.tsx
-        run: |
-          python3 - <<'EOF'
-          import json
-          import subprocess
-
-          # YouTube API 호출로 영상 데이터 가져오기
-          result = subprocess.run(['node', '-c', '''
-          const fetch = require("node-fetch");
-          (async () => {
-            const API_KEY = process.env.YOUTUBE_API_KEY;
-            const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&regionCode=KR&maxResults=3&key=${API_KEY}`;
-            const response = await fetch(url);
-            const data = await response.json();
-            const videos = data.items.map(item => ({
-              id: item.id,
-              title: item.snippet.title,
-              channel: item.snippet.channelTitle,
-              thumbnail: item.snippet.thumbnails.medium.url,
-              views: parseInt(item.statistics.viewCount).toLocaleString("ko-KR"),
-              url: "https://www.youtube.com/watch?v=" + item.id,
-            }));
-            console.log(JSON.stringify(videos, null, 2));
-          })();
-          '''], capture_output=True, text=True, env={'YOUTUBE_API_KEY': os.environ['YOUTUBE_API_KEY']})
-
-          if result.returncode != 0:
-            print('Error fetching videos:', result.stderr)
-            exit(1)
-
-          videos = json.loads(result.stdout)
-
-          # play.tsx 파일 읽기
-          with open('src/app/play.tsx', 'r', encoding='utf-8') as f:
-            content = f.read()
-
-          # 영상 데이터를 JavaScript 객체로 변환
-          videos_js = 'const TRENDING_VIDEOS = [\n'
-          for video in videos:
-            videos_js += f'''  {{
-    id: '{video['id']}',
-    title: '{video['title'].replace("'", "\\'")}',
-    channel: '{video['channel'].replace("'", "\\'")}',
-    thumbnail: '{video['thumbnail']}',
-    views: '{video['views']}',
-    url: '{video['url']}',
-  }},
-'''
-          videos_js += '];'
-
-          # play.tsx 업데이트 (TRENDING_VIDEOS 부분만 교체)
-          import re
-          pattern = r'const TRENDING_VIDEOS = \[[\s\S]*?\];'
-          content = re.sub(pattern, videos_js, content)
-
-          # 파일 저장
-          with open('src/app/play.tsx', 'w', encoding='utf-8') as f:
-            f.write(content)
-
-          print('play.tsx updated successfully')
-          EOF
-        env:
-          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: python3 .github/scripts/update_trending.py
 
       - name: Commit and push
         run: |
