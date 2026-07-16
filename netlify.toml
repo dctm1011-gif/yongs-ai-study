@@ -1,7 +1,3 @@
-[build]
-  command = "echo 'Functions deployed'"
-  publish = "."
-
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
