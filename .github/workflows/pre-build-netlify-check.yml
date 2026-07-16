@@ -1,0 +1,65 @@
+name: Pre-Build Netlify Validation
+
+# APK 빌드 전 Netlify 상태 확인
+# 이 워크플로우는 배포 전에 모든 백엔드 서비스가 정상인지 검증
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    outputs:
+      netlify_status: ${{ steps.check.outputs.status }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Validate Netlify Functions
+        id: check
+        run: |
+          echo "🔍 Checking Netlify Functions..."
+
+          # Test endpoints
+          ENDPOINTS=(
+            "https://illustrious-cuchufli-7c4e58.netlify.app/.netlify/functions/test"
+            "https://illustrious-cuchufli-7c4e58.netlify.app/.netlify/functions/trending-videos"
+            "https://illustrious-cuchufli-7c4e58.netlify.app/api/toefl_prefs"
+          )
+
+          FAILED=0
+          for url in "${ENDPOINTS[@]}"; do
+            echo "Testing: $url"
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$url" --max-time 5)
+
+            if [ "$STATUS" -ge 200 ] && [ "$STATUS" -lt 300 ]; then
+              echo "✅ $url: $STATUS"
+            else
+              echo "❌ $url: $STATUS"
+              FAILED=$((FAILED + 1))
+            fi
+          done
+
+          if [ $FAILED -eq 0 ]; then
+            echo "status=healthy" >> $GITHUB_OUTPUT
+            echo "✅ All Netlify endpoints are healthy!"
+            exit 0
+          else
+            echo "status=unhealthy" >> $GITHUB_OUTPUT
+            echo "❌ Some Netlify endpoints are not responding!"
+            exit 1
+          fi
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## Netlify Validation Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Status:** ${{ steps.check.outputs.netlify_status }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Time:** $(date)" >> $GITHUB_STEP_SUMMARY

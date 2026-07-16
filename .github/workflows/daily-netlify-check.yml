@@ -1,0 +1,45 @@
+name: Daily Netlify Health Check
+
+on:
+  schedule:
+    # 매일 오전 6:30 (배포 스크립트 후)
+    - cron: '30 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run Netlify monitoring
+        run: python3 .github/scripts/monitor-netlify.py
+
+      - name: Commit monitoring report
+        if: always()
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add netlify-monitoring-report.json 2>/dev/null || true
+          git diff --quiet && git diff --staged --quiet || (git commit -m "📊 Update Netlify monitoring report" && git push)
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: netlify-monitoring-report
+          path: netlify-monitoring-report.json
+          retention-days: 90
+
+      - name: Notify Slack on failure
+        if: failure()
+        run: |
+          echo "⚠️ Netlify monitoring failed. Check the report."

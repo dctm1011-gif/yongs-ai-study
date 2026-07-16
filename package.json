@@ -35,7 +35,10 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "dev": "node scripts/dev.js",
-    "build": "node scripts/build.js"
+    "build": "node scripts/build.js",
+    "test:netlify": "node .github/scripts/test-netlify-functions.mjs",
+    "monitor:netlify": "python3 .github/scripts/monitor-netlify.py",
+    "check:functions": "node netlify/functions/test-all.mjs"
   },
   "private": true
 }

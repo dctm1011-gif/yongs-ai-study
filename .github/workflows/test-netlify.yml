@@ -1,0 +1,53 @@
+name: Test Netlify Functions
+
+on:
+  push:
+    paths:
+      - 'netlify/functions/**'
+      - 'netlify.toml'
+      - '.github/workflows/test-netlify.yml'
+  schedule:
+    # 매일 오전 6시 (한국시간: 오후 3시)
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Wait for Netlify deployment
+        run: |
+          echo "⏳ Waiting 30 seconds for Netlify to deploy..."
+          sleep 30
+
+      - name: Test Netlify Functions
+        run: node .github/scripts/test-netlify-functions.mjs
+
+      - name: Generate report
+        if: always()
+        run: |
+          echo "📋 Netlify Functions Test Report" > netlify-test-report.md
+          echo "Date: $(date)" >> netlify-test-report.md
+          echo "Status: ${{ job.status }}" >> netlify-test-report.md
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: netlify-test-report
+          path: netlify-test-report.md
+          retention-days: 30
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "❌ Netlify Functions test failed!"
+          echo "Check the test report for details."
+          exit 1
