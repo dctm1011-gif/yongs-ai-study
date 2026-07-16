@@ -104,16 +104,15 @@ export default function TOEFLScreen() {
   };
 
   const refreshFromNetlify = async () => {
-    const netlifyData = await fetchTOEFLFromNetlify();
-    if (netlifyData && netlifyData.sections) {
-      const mergedSections = netlifyData.sections.map((s: TOEFLSection) => ({
-        ...s,
-        progress: sections.find(sec => sec.id === s.id)?.progress || 0,
-        completed: sections.find(sec => sec.id === s.id)?.completed || false,
-      }));
-      setSections(mergedSections);
-      await AsyncStorage.setItem('toefl_sections', JSON.stringify(mergedSections));
-    }
+    // 기본 섹션으로 새로고침 (진행도는 유지)
+    const defaultSections = getDefaultSections();
+    const mergedSections = defaultSections.map((s: TOEFLSection) => ({
+      ...s,
+      progress: sections.find(sec => sec.id === s.id)?.progress || 0,
+      completed: sections.find(sec => sec.id === s.id)?.completed || false,
+    }));
+    setSections(mergedSections);
+    await AsyncStorage.setItem('toefl_sections', JSON.stringify(mergedSections));
   };
 
   const getDefaultSections = (): TOEFLSection[] => [

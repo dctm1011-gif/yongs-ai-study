@@ -389,6 +389,17 @@ export default function EnglishScreen() {
   );
 }
 
+function formatDate(dateStr: string): string {
+  try {
+    const date = new Date(dateStr);
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${month}/${day}`;
+  } catch {
+    return dateStr;
+  }
+}
+
 function WordsView({ words, onToggleRead }: { words: Word[], onToggleRead: (id: string) => void }) {
   return (
     <FlatList
@@ -409,7 +420,7 @@ function WordsView({ words, onToggleRead }: { words: Word[], onToggleRead: (id: 
               </View>
             </View>
             <View style={styles.cardHeaderRight}>
-              <Text style={styles.updateDate}>{item.date}</Text>
+              <Text style={styles.updateDate}>{formatDate(item.date)}</Text>
               <Text style={styles.readBadge}>{item.isRead ? '✓' : '○'}</Text>
             </View>
           </View>
