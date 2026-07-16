@@ -12,12 +12,12 @@ export default function PlayScreen() {
 
   const fetchTrendingVideos = async () => {
     try {
-      const response = await fetch('/.netlify/functions/trending-videos');
+      const response = await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/.netlify/functions/trending-videos');
       const data = await response.json();
       setTrendingVideos(data);
+      setLoading(false);
     } catch (error) {
       console.log('Error fetching trending videos:', error);
-    } finally {
       setLoading(false);
     }
   };
