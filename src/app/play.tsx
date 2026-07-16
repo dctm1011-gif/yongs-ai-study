@@ -1,37 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Linking, Image, ScrollView, ActivityIndicator } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Linking, ScrollView, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+const TRENDING_VIDEOS = [
+  {
+    id: 'dQw4w9WgXcQ',
+    title: '지금 한국에서 인기있는 영상을 로드 중입니다...',
+    channel: 'YouTube Korea',
+    thumbnail: 'https://via.placeholder.com/320x180',
+    views: '1.2M',
+    url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+  },
+];
+
 export default function PlayScreen() {
-  const [trendingVideos, setTrendingVideos] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchTrendingVideos();
-  }, []);
-
-  const fetchTrendingVideos = async () => {
-    try {
-      const response = await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/.netlify/functions/trending-videos');
-      const data = await response.json();
-      setTrendingVideos(data);
-      setLoading(false);
-    } catch (error) {
-      console.log('Error fetching trending videos:', error);
-      setLoading(false);
-    }
-  };
-
   const openYouTube = () => {
-    Linking.openURL('https://www.youtube.com').catch(err =>
-      Linking.openURL('https://www.youtube.com')
-    );
+    Linking.openURL('https://www.youtube.com');
   };
 
   const openYouTubePremium = () => {
-    Linking.openURL('https://www.youtube.com/premium').catch(err =>
-      Linking.openURL('https://www.youtube.com/premium')
-    );
+    Linking.openURL('https://www.youtube.com/premium');
   };
 
   const openVideo = (videoUrl) => {
@@ -42,52 +30,45 @@ export default function PlayScreen() {
     <SafeAreaView style={styles.screen}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>🎮 놀이</Text>
-        <Text style={styles.subtitle}>YouTube 콘텐츠</Text>
+        <Text style={styles.subtitle}>오늘의 추천 영상</Text>
       </View>
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        <Text style={styles.description}>
-          지금 한국에서{'\n'}
-          가장 인기있는 영상
+        <Text style={styles.sectionTitle}>
+          🔥 지금 한국에서 인기있는 영상
+        </Text>
+        <Text style={styles.sectionDesc}>
+          매일 새로운 트렌딩 영상이 자동 업데이트됩니다
         </Text>
 
-        {loading ? (
-          <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color="#8b5cf6" />
-            <Text style={styles.loadingText}>영상 로딩 중...</Text>
-          </View>
-        ) : trendingVideos.length > 0 ? (
-          <View style={styles.videosContainer}>
-            {trendingVideos.slice(0, 3).map((video, index) => (
-              <TouchableOpacity
-                key={video.id}
-                style={styles.videoCard}
-                onPress={() => openVideo(video.url)}
-              >
-                <Image
-                  source={{ uri: video.thumbnail }}
-                  style={styles.thumbnail}
-                />
-                <View style={styles.videoInfo}>
-                  <Text style={styles.videoTitle} numberOfLines={2}>
-                    {video.title}
-                  </Text>
-                  <Text style={styles.videoChannel} numberOfLines={1}>
-                    {video.channel}
-                  </Text>
-                  <Text style={styles.videoViews}>
-                    조회수: {video.views}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            ))}
-          </View>
-        ) : (
-          <Text style={styles.errorText}>영상을 불러올 수 없습니다</Text>
-        )}
+        <View style={styles.videosContainer}>
+          {TRENDING_VIDEOS.map((video, index) => (
+            <TouchableOpacity
+              key={video.id}
+              style={styles.videoCard}
+              onPress={() => openVideo(video.url)}
+            >
+              <Image
+                source={{ uri: video.thumbnail }}
+                style={styles.thumbnail}
+              />
+              <View style={styles.videoInfo}>
+                <Text style={styles.rankBadge}>#{index + 1}</Text>
+                <Text style={styles.videoTitle} numberOfLines={2}>
+                  {video.title}
+                </Text>
+                <Text style={styles.videoChannel} numberOfLines={1}>
+                  {video.channel}
+                </Text>
+                <Text style={styles.videoViews}>
+                  조회수: {video.views}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
 
-        <Text style={styles.description}>
-          더 많은 콘텐츠를{'\n'}
-          탐색하세요
+        <Text style={styles.sectionTitle} style={{marginTop: 32}}>
+          YouTube 앱 열기
         </Text>
 
         <TouchableOpacity style={styles.buttonYT} onPress={openYouTube}>
@@ -98,10 +79,12 @@ export default function PlayScreen() {
           <Text style={styles.buttonText}>✨ YouTube Premium</Text>
         </TouchableOpacity>
 
-        <Text style={styles.hint}>
-          매일 새로운 인기 영상이{'\n'}
-          업데이트됩니다!
-        </Text>
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>
+            매일 오전 6시에 자동 업데이트되는{'\n'}
+            한국 트렌딩 영상을 즐겨보세요!
+          </Text>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -136,30 +119,23 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: 16,
-    paddingVertical: 20,
+    paddingVertical: 24,
   },
-  description: {
+  sectionTitle: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#334155',
-    textAlign: 'center',
-    marginBottom: 20,
-    lineHeight: 28,
+    fontWeight: '700',
+    color: '#1e293b',
+    marginBottom: 8,
   },
-  loadingContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 40,
-  },
-  loadingText: {
-    marginTop: 12,
-    color: '#64748b',
+  sectionDesc: {
     fontSize: 14,
-    fontWeight: '500',
+    color: '#64748b',
+    marginBottom: 20,
+    lineHeight: 22,
   },
   videosContainer: {
-    marginBottom: 24,
     gap: 12,
+    marginBottom: 32,
   },
   videoCard: {
     backgroundColor: '#fff',
@@ -179,12 +155,23 @@ const styles = StyleSheet.create({
   videoInfo: {
     padding: 12,
   },
+  rankBadge: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#fff',
+    backgroundColor: '#ff6b6b',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 4,
+    alignSelf: 'flex-start',
+    marginBottom: 8,
+  },
   videoTitle: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: '700',
     color: '#1e293b',
     marginBottom: 6,
-    lineHeight: 20,
+    lineHeight: 21,
   },
   videoChannel: {
     fontSize: 12,
@@ -195,12 +182,6 @@ const styles = StyleSheet.create({
   videoViews: {
     fontSize: 11,
     color: '#94a3b8',
-    fontWeight: '500',
-  },
-  errorText: {
-    color: '#e11d48',
-    textAlign: 'center',
-    marginVertical: 20,
     fontWeight: '500',
   },
   buttonYT: {
@@ -235,12 +216,18 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
   },
-  hint: {
+  footer: {
+    paddingVertical: 20,
+    paddingHorizontal: 12,
+    backgroundColor: '#f1f5f9',
+    borderRadius: 12,
+    marginBottom: 20,
+  },
+  footerText: {
     fontSize: 14,
-    color: '#64748b',
+    color: '#475569',
     textAlign: 'center',
     lineHeight: 22,
-    marginTop: 20,
-    marginBottom: 20,
+    fontWeight: '500',
   },
 });
