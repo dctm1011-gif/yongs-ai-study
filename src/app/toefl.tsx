@@ -94,10 +94,25 @@ export default function TOEFLScreen() {
 
   const fetchTOEFLFromNetlify = async (): Promise<any | null> => {
     try {
-      return null;
+      const response = await fetch(`${NETLIFY_BASE_URL}/.netlify/functions/toefl_prefs`);
+      if (!response.ok) return null;
+      return await response.json();
     } catch (error) {
       console.error('Netlify fetch failed:', error);
       return null;
+    }
+  };
+
+  const refreshFromNetlify = async () => {
+    const netlifyData = await fetchTOEFLFromNetlify();
+    if (netlifyData && netlifyData.sections) {
+      const mergedSections = netlifyData.sections.map((s: TOEFLSection) => ({
+        ...s,
+        progress: sections.find(sec => sec.id === s.id)?.progress || 0,
+        completed: sections.find(sec => sec.id === s.id)?.completed || false,
+      }));
+      setSections(mergedSections);
+      await AsyncStorage.setItem('toefl_sections', JSON.stringify(mergedSections));
     }
   };
 
