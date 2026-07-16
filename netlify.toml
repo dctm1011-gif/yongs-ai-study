@@ -1,7 +1,3 @@
-[build]
-  publish = "public"
-  command = "mkdir -p public && echo 'Deployed' > public/index.html"
-
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
