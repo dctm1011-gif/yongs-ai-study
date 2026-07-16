@@ -1,18 +1,38 @@
-﻿import { NavigationContainer } from '@react-navigation/native';
+﻿import React, { useState, useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
+import { View } from 'react-native';
 import EnglishScreen from './english';
 import TOEFLScreen from './toefl';
 import PapersScreen from './papers';
 import PlayScreen from './play';
 import SettingsScreen from './settings';
+import { useAnnouncements } from '../hooks/useAnnouncements';
+import { AnnouncementModal } from '../components/AnnouncementModal';
 
 const Tab = createBottomTabNavigator();
 
 export default function RootLayout() {
+  const [showAnnouncements, setShowAnnouncements] = useState(false);
+  const {
+    announcements,
+    unreadCount,
+    loading,
+    markAsRead,
+  } = useAnnouncements();
+
+  // 읽지 않은 공지사항이 있으면 자동으로 표시
+  useEffect(() => {
+    if (!loading && unreadCount > 0) {
+      setShowAnnouncements(true);
+    }
+  }, [loading, unreadCount]);
+
   return (
-    <NavigationContainer>
-      <Tab.Navigator
+    <View style={{ flex: 1 }}>
+      <NavigationContainer>
+        <Tab.Navigator
         screenOptions={{
           headerShown: false,
           tabBarActiveTintColor: '#2563eb',
@@ -88,6 +108,14 @@ export default function RootLayout() {
           }}
         />
       </Tab.Navigator>
-    </NavigationContainer>
+      </NavigationContainer>
+
+      <AnnouncementModal
+        visible={showAnnouncements}
+        announcements={announcements}
+        onClose={() => setShowAnnouncements(false)}
+        onMarkAsRead={markAsRead}
+      />
+    </View>
   );
 }

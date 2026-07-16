@@ -3,6 +3,8 @@ import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, Alert,
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
+import { useAnnouncements } from '../hooks/useAnnouncements';
+import { AnnouncementModal } from '../components/AnnouncementModal';
 
 interface FeedbackItem {
   id: string;
@@ -17,6 +19,8 @@ export default function SettingsScreen() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [feedbackList, setFeedbackList] = useState<FeedbackItem[]>([]);
   const [remindersEnabled, setRemindersEnabled] = useState(false);
+  const [showAnnouncements, setShowAnnouncements] = useState(false);
+  const { announcements, unreadCount, markAsRead } = useAnnouncements();
 
   useEffect(() => {
     loadFeedback();
@@ -190,6 +194,32 @@ export default function SettingsScreen() {
         <View style={styles.divider} />
 
         <View style={styles.section}>
+          <View style={styles.announcementHeader}>
+            <Text style={styles.sectionTitle}>📢 공지사항</Text>
+            {unreadCount > 0 && (
+              <View style={styles.badge}>
+                <Text style={styles.badgeText}>{unreadCount}</Text>
+              </View>
+            )}
+          </View>
+          <Text style={styles.feedbackDesc}>
+            {announcements.length === 0
+              ? '공지사항이 없습니다.'
+              : `${announcements.length}개의 공지사항이 있습니다.`}
+          </Text>
+          <TouchableOpacity
+            style={styles.testButton}
+            onPress={() => setShowAnnouncements(true)}
+          >
+            <Text style={styles.testButtonText}>
+              📖 공지사항 보기
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.divider} />
+
+        <View style={styles.section}>
           <Text style={styles.sectionTitle}>💬 피드백</Text>
           <Text style={styles.feedbackDesc}>
             앱을 사용하면서 불편한 점이나 추가했으면 하는 기능을 알려주세요.
@@ -307,6 +337,13 @@ export default function SettingsScreen() {
           </View>
         </View>
       </ScrollView>
+
+      <AnnouncementModal
+        visible={showAnnouncements}
+        announcements={announcements}
+        onClose={() => setShowAnnouncements(false)}
+        onMarkAsRead={markAsRead}
+      />
     </SafeAreaView>
   );
 }
@@ -509,5 +546,24 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 14,
     fontWeight: '600',
+  },
+  announcementHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingRight: 16,
+  },
+  badge: {
+    backgroundColor: '#ef4444',
+    borderRadius: 12,
+    width: 24,
+    height: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  badgeText: {
+    color: '#fff',
+    fontSize: 11,
+    fontWeight: '700',
   },
 });
