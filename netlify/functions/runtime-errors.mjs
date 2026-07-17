@@ -1,30 +1,28 @@
 import { getStore } from '@netlify/blobs';
+import { createLogger, corsHeaders } from './_utils.mjs';
 
-const STORE_KEY = 'runtime-errors';
+const log = createLogger('runtime-errors');
 const MAX_ERRORS = 500;
 
 export default async (req, context) => {
-  const headers = {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-  };
+  const cors = corsHeaders();
 
   if (req.method === 'OPTIONS') {
-    return new Response(null, { status: 204, headers });
+    return new Response(null, { status: 204, headers: cors });
   }
 
   try {
-    const store = getStore('yongstudy-runtime-errors');
+    const store = getStore({ name: 'runtime-errors', consistency: 'strong' });
 
     if (req.method === 'GET') {
       try {
-        const data = await store.get(STORE_KEY);
-        const errors = data ? JSON.parse(data) : [];
-        return new Response(JSON.stringify(errors), { status: 200, headers });
+        const data = await store.get('list', { type: 'json' }).catch(() => null);
+        const errors = data || [];
+        log.log('GET runtime errors', { count: errors.length });
+        return Response.json(errors, { headers: cors });
       } catch (e) {
-        return new Response(JSON.stringify([]), { status: 200, headers });
+        log.error('GET failed', { message: String(e) });
+        return Response.json([], { status: 200, headers: cors });
       }
     }
 
@@ -34,8 +32,8 @@ export default async (req, context) => {
 
         let errors = [];
         try {
-          const data = await store.get(STORE_KEY);
-          errors = data ? JSON.parse(data) : [];
+          const data = await store.get('list', { type: 'json' }).catch(() => null);
+          errors = data || [];
         } catch (e) {
           errors = [];
         }
@@ -52,31 +50,33 @@ export default async (req, context) => {
           errors = errors.slice(0, MAX_ERRORS);
         }
 
-        await store.set(STORE_KEY, JSON.stringify(errors));
+        await store.set('list', JSON.stringify(errors));
+        log.log('POST successful', { total: errors.length });
 
-        return new Response(JSON.stringify({ success: true, total: errors.length }), {
-          status: 201,
-          headers,
-        });
+        return Response.json({ success: true, total: errors.length }, { headers: cors });
       } catch (e) {
-        return new Response(JSON.stringify({ error: String(e) }), { status: 400, headers });
+        log.error('POST failed', { message: String(e) });
+        return Response.json({ error: String(e) }, { status: 400, headers: cors });
       }
     }
 
     if (req.method === 'DELETE') {
       try {
-        await store.delete(STORE_KEY);
-        return new Response(JSON.stringify({ success: true }), { status: 200, headers });
+        await store.delete('list');
+        log.log('DELETE successful');
+        return Response.json({ success: true }, { headers: cors });
       } catch (e) {
-        return new Response(JSON.stringify({ error: String(e) }), { status: 400, headers });
+        log.error('DELETE failed', { message: String(e) });
+        return Response.json({ error: String(e) }, { status: 400, headers: cors });
       }
     }
 
-    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
-      status: 405,
-      headers,
-    });
+    log.error('Unsupported method', { method: req.method });
+    return new Response('Method not allowed', { status: 405, headers: cors });
   } catch (error) {
-    return new Response(JSON.stringify({ error: String(error) }), { status: 500, headers });
+    log.error('Request failed', { message: error.message });
+    return Response.json({ error: String(error) }, { status: 500, headers: cors });
   }
 };
+
+export const config = { path: '/api/runtime-errors' };
