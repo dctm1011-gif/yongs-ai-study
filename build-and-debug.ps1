@@ -91,5 +91,5 @@ try {
 $duration = ((Get-Date) - $startTime).TotalSeconds
 Write-Host ""
 Write-Host "═══════════════════════════════════════════════════════════════" -ForegroundColor Cyan
-Write-Host "COMPLETE - $(Build Took $([Math]::Round($duration))s)" -ForegroundColor Green
+Write-Host "COMPLETE - Took $([Math]::Round($duration))s" -ForegroundColor Green
 Write-Host "═══════════════════════════════════════════════════════════════" -ForegroundColor Cyan
