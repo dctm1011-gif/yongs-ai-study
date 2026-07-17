@@ -6,6 +6,7 @@ import * as Notifications from 'expo-notifications';
 import { useAnnouncements } from '../hooks/useAnnouncements';
 import { AnnouncementModal } from '../components/AnnouncementModal';
 import { useHealthCheck } from '../hooks/useHealthCheck';
+import { useErrorLog, type ErrorLog } from '../hooks/useErrorLog';
 import type { HealthCheckReport } from '../hooks/useHealthCheck';
 
 interface FeedbackItem {
@@ -25,12 +26,22 @@ export default function SettingsScreen() {
   const { announcements, unreadCount, markAsRead } = useAnnouncements();
   const { report, isChecking, runHealthCheck } = useHealthCheck();
   const [showHealthReport, setShowHealthReport] = useState(false);
+  const { getLogs: getErrorLogs, clearLogs: clearErrorLogs } = useErrorLog();
+  const [errorLogs, setErrorLogs] = useState<ErrorLog[]>([]);
+  const [showErrorLogs, setShowErrorLogs] = useState(false);
 
   useEffect(() => {
     loadFeedback();
     loadReminderStatus();
     syncWithNetlify(); // 앱 시작 시 Netlify에서 최신 상태 동기화
-  }, []);
+
+    // 에러 로그 로드
+    const loadErrors = async () => {
+      const logs = await getErrorLogs();
+      setErrorLogs(logs);
+    };
+    loadErrors();
+  }, [getErrorLogs]);
 
   const loadFeedback = async () => {
     try {
@@ -267,6 +278,72 @@ export default function SettingsScreen() {
             </View>
           )}
         </View>
+
+        {errorLogs.length > 0 && !showErrorLogs && (
+          <View style={styles.section}>
+            <View style={styles.announcementHeader}>
+              <Text style={styles.sectionTitle}>🔴 에러 로그</Text>
+              <View style={styles.badge}>
+                <Text style={styles.badgeText}>{errorLogs.length}</Text>
+              </View>
+            </View>
+            <Text style={styles.feedbackDesc}>
+              앱에서 발생한 에러들이 기록되었습니다.
+            </Text>
+            <TouchableOpacity
+              style={styles.testButton}
+              onPress={() => setShowErrorLogs(true)}
+            >
+              <Text style={styles.testButtonText}>
+                🔍 에러 로그 확인
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        {showErrorLogs && errorLogs.length > 0 && (
+          <View style={styles.section}>
+            <TouchableOpacity onPress={() => setShowErrorLogs(false)}>
+              <Text style={styles.sectionTitle}>🔴 에러 로그 상세</Text>
+            </TouchableOpacity>
+
+            {errorLogs.map((log, idx) => (
+              <View
+                key={idx}
+                style={[
+                  styles.healthItem,
+                  log.severity === 'fatal' && styles.healthItemError,
+                  log.severity === 'error' && styles.healthItemError,
+                  log.severity === 'warning' && styles.healthItemWarning,
+                ]}
+              >
+                <Text style={styles.healthItemTitle}>
+                  {log.tab} - {log.severity.toUpperCase()}
+                </Text>
+                <Text style={styles.healthItemMessage}>{log.error}</Text>
+                <Text style={{ fontSize: 10, color: '#94a3b8', marginTop: 4 }}>
+                  {new Date(log.timestamp).toLocaleString('ko-KR')}
+                </Text>
+                {log.stack && (
+                  <Text style={{ fontSize: 9, color: '#64748b', marginTop: 4, fontFamily: 'monospace' }}>
+                    {log.stack.split('\n')[0]}
+                  </Text>
+                )}
+              </View>
+            ))}
+
+            <TouchableOpacity
+              style={[styles.testButton, { backgroundColor: '#ef4444', marginTop: 12 }]}
+              onPress={async () => {
+                await clearErrorLogs();
+                setErrorLogs([]);
+                setShowErrorLogs(false);
+              }}
+            >
+              <Text style={styles.testButtonText}>🗑️ 에러 로그 삭제</Text>
+            </TouchableOpacity>
+          </View>
+        )}
 
         {report && showHealthReport && (
           <View style={styles.section}>

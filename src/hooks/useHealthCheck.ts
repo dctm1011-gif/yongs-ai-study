@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { errorLogger } from './useErrorLog';
 
 export interface HealthCheckResult {
   tab: string;
@@ -80,9 +81,14 @@ async function checkEnglish(): Promise<HealthCheckResult> {
       await AsyncStorage.setItem(testKey, 'test');
       const read = await AsyncStorage.getItem(testKey);
       await AsyncStorage.removeItem(testKey);
-      if (read !== 'test') errors.push('저장소 읽기/쓰기 실패');
+      if (read !== 'test') {
+        errors.push('저장소 읽기/쓰기 실패');
+        await errorLogger.log('English', 'AsyncStorage read/write failed', 'error');
+      }
     } catch (e) {
-      errors.push('AsyncStorage 접근 불가');
+      const msg = 'AsyncStorage 접근 불가';
+      errors.push(msg);
+      await errorLogger.log('English', e as Error, 'error');
     }
 
     // 데이터 확인
