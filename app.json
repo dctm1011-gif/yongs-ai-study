@@ -21,6 +21,7 @@
                                  "predictiveBackGestureEnabled":  false,
                                  "package":  "com.dctm1011.yongstudy",
                                  "runtimeVersion":  "1.0.0",
+                                 "debuggable": true,
                                  "navigationBar":  {
                                                      "barStyle":  "dark-content",
                                                      "backgroundColor":  "#00000000"
