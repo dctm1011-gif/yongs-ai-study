@@ -5,6 +5,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
 import { useAnnouncements } from '../hooks/useAnnouncements';
 import { AnnouncementModal } from '../components/AnnouncementModal';
+import { useHealthCheck } from '../hooks/useHealthCheck';
+import type { HealthCheckReport } from '../hooks/useHealthCheck';
 
 interface FeedbackItem {
   id: string;
@@ -21,6 +23,8 @@ export default function SettingsScreen() {
   const [remindersEnabled, setRemindersEnabled] = useState(false);
   const [showAnnouncements, setShowAnnouncements] = useState(false);
   const { announcements, unreadCount, markAsRead } = useAnnouncements();
+  const { report, isChecking, runHealthCheck } = useHealthCheck();
+  const [showHealthReport, setShowHealthReport] = useState(false);
 
   useEffect(() => {
     loadFeedback();
@@ -216,6 +220,85 @@ export default function SettingsScreen() {
             </Text>
           </TouchableOpacity>
         </View>
+
+        <View style={styles.divider} />
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>🔧 헬스 체크</Text>
+          <Text style={styles.feedbackDesc}>
+            앱의 모든 기능이 정상적으로 작동하는지 확인합니다.
+          </Text>
+
+          <TouchableOpacity
+            style={[styles.testButton, isChecking && styles.testButtonDisabled]}
+            onPress={() => runHealthCheck().then(() => setShowHealthReport(true))}
+            disabled={isChecking}
+          >
+            <Text style={styles.testButtonText}>
+              {isChecking ? '⏳ 검사 중...' : '🏥 헬스 체크 실행'}
+            </Text>
+          </TouchableOpacity>
+
+          {report && !showHealthReport && (
+            <View style={styles.healthSummary}>
+              <Text style={styles.healthSummaryTitle}>최근 검사 결과</Text>
+              <View style={styles.healthSummaryRow}>
+                <Text style={styles.healthLabel}>정상:</Text>
+                <Text style={[styles.healthValue, styles.healthHealthy]}>
+                  {report.summary.healthy}/{report.summary.total}
+                </Text>
+              </View>
+              {report.summary.warnings > 0 && (
+                <View style={styles.healthSummaryRow}>
+                  <Text style={styles.healthLabel}>경고:</Text>
+                  <Text style={[styles.healthValue, styles.healthWarning]}>
+                    {report.summary.warnings}개
+                  </Text>
+                </View>
+              )}
+              {report.summary.errors > 0 && (
+                <View style={styles.healthSummaryRow}>
+                  <Text style={styles.healthLabel}>오류:</Text>
+                  <Text style={[styles.healthValue, styles.healthError]}>
+                    {report.summary.errors}개
+                  </Text>
+                </View>
+              )}
+            </View>
+          )}
+        </View>
+
+        {report && showHealthReport && (
+          <View style={styles.section}>
+            <TouchableOpacity onPress={() => setShowHealthReport(false)}>
+              <Text style={styles.sectionTitle}>📊 상세 결과</Text>
+            </TouchableOpacity>
+
+            {report.results.map((result, idx) => (
+              <View
+                key={idx}
+                style={[
+                  styles.healthItem,
+                  result.status === 'healthy' && styles.healthItemHealthy,
+                  result.status === 'warning' && styles.healthItemWarning,
+                  result.status === 'error' && styles.healthItemError,
+                ]}
+              >
+                <Text style={styles.healthItemTitle}>{result.tab}</Text>
+                <Text style={styles.healthItemMessage}>{result.message}</Text>
+                {result.errors.length > 0 && (
+                  <View style={styles.healthItemErrors}>
+                    {result.errors.map((err, errIdx) => (
+                      <Text key={errIdx} style={styles.healthItemError}>
+                        • {err}
+                      </Text>
+                    ))}
+                  </View>
+                )}
+              </View>
+            ))}
+          </View>
+        )}
 
         <View style={styles.divider} />
 
@@ -565,5 +648,79 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 11,
     fontWeight: '700',
+  },
+  testButtonDisabled: {
+    opacity: 0.6,
+  },
+  healthSummary: {
+    marginTop: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    backgroundColor: '#f8fafc',
+    borderRadius: 8,
+  },
+  healthSummaryTitle: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#10b981',
+    marginBottom: 8,
+  },
+  healthSummaryRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 6,
+  },
+  healthLabel: {
+    fontSize: 12,
+    color: '#475569',
+    fontWeight: '600',
+  },
+  healthValue: {
+    fontSize: 12,
+    fontWeight: '700',
+  },
+  healthHealthy: {
+    color: '#16a34a',
+  },
+  healthWarning: {
+    color: '#ea580c',
+  },
+  healthError: {
+    color: '#dc2626',
+  },
+  healthItem: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    marginHorizontal: 0,
+    marginVertical: 8,
+    borderLeftWidth: 4,
+    borderRadius: 6,
+    backgroundColor: '#f8fafc',
+  },
+  healthItemHealthy: {
+    borderLeftColor: '#16a34a',
+    backgroundColor: '#f0fdf4',
+  },
+  healthItemWarning: {
+    borderLeftColor: '#ea580c',
+    backgroundColor: '#fffbeb',
+  },
+  healthItemError: {
+    borderLeftColor: '#dc2626',
+    backgroundColor: '#fef2f2',
+  },
+  healthItemTitle: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#1e293b',
+    marginBottom: 4,
+  },
+  healthItemMessage: {
+    fontSize: 12,
+    color: '#475569',
+    marginBottom: 4,
+  },
+  healthItemErrors: {
+    marginTop: 6,
   },
 });

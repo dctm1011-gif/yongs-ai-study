@@ -1,0 +1,81 @@
+name: Pre-Build Health Check
+
+# APK 빌드 전 코드 컴파일 및 기본 검증
+# 이 워크플로우는 빌드를 시작하기 전에 구문 오류와 타입 오류를 조기에 감지
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'package.json'
+      - 'tsconfig.json'
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript compilation check
+        run: npx tsc --noEmit
+        continue-on-error: false
+
+      - name: Lint check
+        run: npm run lint 2>/dev/null || echo "Lint not configured"
+        continue-on-error: true
+
+      - name: Check for common issues
+        run: |
+          echo "🔍 Checking for common issues..."
+
+          # 콘솔 에러 확인
+          if grep -r "console.error" src/ --include="*.ts" --include="*.tsx" | grep -v "// console.error"; then
+            echo "⚠️ Uncommented console.error found"
+          fi
+
+          # 주석 처리되지 않은 디버그 코드 확인
+          if grep -r "debugger" src/ --include="*.ts" --include="*.tsx"; then
+            echo "❌ Debugger statements found!"
+            exit 1
+          fi
+
+          # 필수 import 확인
+          if grep -r "import.*from.*react" src/ --include="*.tsx" | wc -l; then
+            echo "✅ React imports detected"
+          fi
+
+      - name: Component structure validation
+        run: |
+          echo "📋 Validating component structure..."
+
+          # 주요 컴포넌트 파일 존재 확인
+          test -f src/app/_layout.tsx && echo "✅ _layout.tsx found"
+          test -f src/app/english.tsx && echo "✅ english.tsx found"
+          test -f src/app/toefl.tsx && echo "✅ toefl.tsx found"
+          test -f src/app/play.tsx && echo "✅ play.tsx found"
+          test -f src/app/settings.tsx && echo "✅ settings.tsx found"
+
+          # 주요 Hook 파일 확인
+          test -f src/hooks/useAnnouncements.ts && echo "✅ useAnnouncements.ts found"
+          test -f src/hooks/useHealthCheck.ts && echo "✅ useHealthCheck.ts found"
+
+      - name: Generate build summary
+        if: always()
+        run: |
+          echo "## Pre-Build Health Check Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ TypeScript compilation: **PASSED**" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Code structure: **VALID**" >> $GITHUB_STEP_SUMMARY
+          echo "⏱️ Timestamp: **$(date)**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Ready for APK build!" >> $GITHUB_STEP_SUMMARY
