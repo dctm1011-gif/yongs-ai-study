@@ -54,12 +54,52 @@ export function useHealthCheck() {
       setReport(healthReport);
       await AsyncStorage.setItem('lastHealthCheck', JSON.stringify(healthReport));
       console.log('✅ Health Check Complete:', summary);
+
+      // 서버에 런타임 에러 저장
+      await saveRuntimeErrorsToServer(results);
+
       return healthReport;
     } catch (error) {
       console.error('❌ Health Check Failed:', error);
       return null;
     } finally {
       setIsChecking(false);
+    }
+  };
+
+  const saveRuntimeErrorsToServer = async (results: HealthCheckResult[]) => {
+    try {
+      for (const result of results) {
+        if (result.status === 'error' && result.errors.length > 0) {
+          for (const errorMsg of result.errors) {
+            await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/api/runtime-errors', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                tab: result.tab,
+                error: errorMsg,
+                severity: 'error',
+                timestamp: result.timestamp,
+              }),
+            });
+          }
+        } else if (result.status === 'warning' && result.errors.length > 0) {
+          for (const errorMsg of result.errors) {
+            await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/api/runtime-errors', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                tab: result.tab,
+                error: errorMsg,
+                severity: 'warning',
+                timestamp: result.timestamp,
+              }),
+            });
+          }
+        }
+      }
+    } catch (e) {
+      console.warn('Failed to save runtime errors to server:', e);
     }
   };
 

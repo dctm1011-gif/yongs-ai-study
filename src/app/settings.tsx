@@ -29,6 +29,8 @@ export default function SettingsScreen() {
   const { getLogs: getErrorLogs, clearLogs: clearErrorLogs } = useErrorLog();
   const [errorLogs, setErrorLogs] = useState<ErrorLog[]>([]);
   const [showErrorLogs, setShowErrorLogs] = useState(false);
+  const [runtimeErrors, setRuntimeErrors] = useState<any[]>([]);
+  const [showRuntimeErrors, setShowRuntimeErrors] = useState(false);
 
   useEffect(() => {
     loadFeedback();
@@ -120,6 +122,17 @@ export default function SettingsScreen() {
       setRemindersEnabled(status === 'true');
     } catch (error) {
       console.error('알림 상태 로드 실패:', error);
+    }
+  };
+
+  const loadRuntimeErrors = async () => {
+    try {
+      const response = await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/api/runtime-errors');
+      const errors = await response.json();
+      setRuntimeErrors(errors || []);
+      console.log('✅ 런타임 에러 로드:', errors?.length || 0);
+    } catch (error) {
+      console.error('런타임 에러 로드 실패:', error);
     }
   };
 
@@ -242,7 +255,11 @@ export default function SettingsScreen() {
 
           <TouchableOpacity
             style={[styles.testButton, isChecking && styles.testButtonDisabled]}
-            onPress={() => runHealthCheck().then(() => setShowHealthReport(true))}
+            onPress={async () => {
+              await runHealthCheck();
+              await loadRuntimeErrors();
+              setShowHealthReport(true);
+            }}
             disabled={isChecking}
           >
             <Text style={styles.testButtonText}>
@@ -374,6 +391,73 @@ export default function SettingsScreen() {
                 )}
               </View>
             ))}
+          </View>
+        )}
+
+        {runtimeErrors.length > 0 && !showRuntimeErrors && (
+          <View style={styles.section}>
+            <View style={styles.announcementHeader}>
+              <Text style={styles.sectionTitle}>⚡ 런타임 에러</Text>
+              <View style={styles.badge}>
+                <Text style={styles.badgeText}>{runtimeErrors.length}</Text>
+              </View>
+            </View>
+            <Text style={styles.feedbackDesc}>
+              헬스 체크 중 발생한 런타임 에러들입니다.
+            </Text>
+            <TouchableOpacity
+              style={styles.testButton}
+              onPress={() => setShowRuntimeErrors(true)}
+            >
+              <Text style={styles.testButtonText}>
+                📋 런타임 에러 상세 ({runtimeErrors.length})
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        {showRuntimeErrors && runtimeErrors.length > 0 && (
+          <View style={styles.section}>
+            <TouchableOpacity onPress={() => setShowRuntimeErrors(false)}>
+              <Text style={styles.sectionTitle}>⚡ 런타임 에러 상세</Text>
+            </TouchableOpacity>
+
+            {runtimeErrors.map((err, idx) => (
+              <View
+                key={idx}
+                style={[
+                  styles.healthItem,
+                  err.severity === 'error' && styles.healthItemError,
+                  err.severity === 'warning' && styles.healthItemWarning,
+                ]}
+              >
+                <Text style={styles.healthItemTitle}>
+                  {err.tab} - {err.severity.toUpperCase()}
+                </Text>
+                <Text style={styles.healthItemMessage}>{err.error}</Text>
+                <Text style={{ fontSize: 10, color: '#94a3b8', marginTop: 4 }}>
+                  {new Date(err.timestamp).toLocaleString('ko-KR')}
+                </Text>
+              </View>
+            ))}
+
+            <TouchableOpacity
+              style={[styles.testButton, { backgroundColor: '#8b5cf6', marginTop: 12 }]}
+              onPress={async () => {
+                try {
+                  await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/api/runtime-errors', {
+                    method: 'DELETE',
+                  });
+                  setRuntimeErrors([]);
+                  setShowRuntimeErrors(false);
+                  Alert.alert('삭제됨', '런타임 에러가 삭제되었습니다.');
+                } catch (error) {
+                  Alert.alert('삭제 실패', String(error));
+                }
+              }}
+            >
+              <Text style={styles.testButtonText}>🗑️ 런타임 에러 삭제</Text>
+            </TouchableOpacity>
           </View>
         )}
 

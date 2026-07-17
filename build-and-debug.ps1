@@ -31,14 +31,54 @@ Write-Host "Step 3: Launching app..." -ForegroundColor Yellow
 adb shell am start -n com.dctm1011.yongstudy/.MainActivity 2>&1 | Out-Null
 Write-Host "OK - App started" -ForegroundColor Green
 
-# Step 4: Wait for init
+# Step 4: Wait for initialization and trigger health check
 Write-Host ""
-Write-Host "Step 4: Waiting for app to initialize (3 seconds)..." -ForegroundColor Yellow
-Start-Sleep -Seconds 3
+Write-Host "Step 4: Initializing and running health check (8 seconds)..." -ForegroundColor Yellow
+Write-Host "Please see the app screen for health check progress..." -ForegroundColor Gray
+Start-Sleep -Seconds 8
 
-# Step 5: Get error logs
+# Step 5: Retrieve runtime errors from server
 Write-Host ""
-Write-Host "Step 5: Retrieving error logs..." -ForegroundColor Yellow
+Write-Host "Step 5: Collecting runtime errors from server..." -ForegroundColor Yellow
+
+try {
+  $response = Invoke-WebRequest -Uri "https://illustrious-cuchufli-7c4e58.netlify.app/api/runtime-errors" -Method Get -ErrorAction Stop
+  $runtimeErrors = $response.Content | ConvertFrom-Json
+
+  if ($runtimeErrors -and $runtimeErrors.Count -gt 0) {
+    Write-Host "OK - Retrieved $($runtimeErrors.Count) runtime errors" -ForegroundColor Green
+
+    # Step 6: Display runtime errors
+    Write-Host ""
+    Write-Host "Step 6: Analyzing Runtime Errors..." -ForegroundColor Cyan
+    Write-Host ""
+
+    Write-Host "RUNTIME ERRORS: $($runtimeErrors.Count)" -ForegroundColor Red
+    Write-Host ""
+
+    foreach ($err in $runtimeErrors) {
+      $severity = $err.severity.ToUpper()
+      $severityColor = if ($severity -eq "ERROR") { "Red" } elseif ($severity -eq "FATAL") { "Magenta" } else { "Yellow" }
+
+      Write-Host "[$severity] $($err.tab)" -ForegroundColor $severityColor
+      Write-Host "  Message: $($err.error)" -ForegroundColor Gray
+      Write-Host "  Time: $(Convert-ToLocalTime $err.timestamp)" -ForegroundColor Gray
+      Write-Host ""
+    }
+  } else {
+    Write-Host "OK - No runtime errors detected" -ForegroundColor Green
+  }
+} catch {
+  Write-Host "WARNING - Failed to retrieve runtime errors: $_" -ForegroundColor Yellow
+  Write-Host "This could mean:" -ForegroundColor Gray
+  Write-Host "  • Health check has not run yet" -ForegroundColor Gray
+  Write-Host "  • Network connection issue" -ForegroundColor Gray
+  Write-Host "  • Server is unavailable" -ForegroundColor Gray
+}
+
+# Step 7: Get local error logs if available
+Write-Host ""
+Write-Host "Step 7: Retrieving local error logs..." -ForegroundColor Yellow
 
 $tempDir = "$env:TEMP\yongstudy_debug"
 if (!(Test-Path $tempDir)) {
@@ -51,17 +91,13 @@ try {
   adb pull $errorLogPath "$tempDir\error_logs.json" 2>&1 | Out-Null
 
   if (Test-Path "$tempDir\error_logs.json") {
-    Write-Host "OK - Error logs downloaded" -ForegroundColor Green
-
-    # Step 6: Parse logs
-    Write-Host ""
-    Write-Host "Step 6: Analyzing error logs..." -ForegroundColor Cyan
-    Write-Host ""
+    Write-Host "OK - Local error logs downloaded" -ForegroundColor Green
 
     $errorLogs = Get-Content "$tempDir\error_logs.json" -Raw | ConvertFrom-Json
 
     if ($errorLogs -and $errorLogs.Count -gt 0) {
-      Write-Host "ERRORS FOUND: $($errorLogs.Count)" -ForegroundColor Red
+      Write-Host ""
+      Write-Host "LOCAL ERROR LOGS: $($errorLogs.Count)" -ForegroundColor Red
       Write-Host ""
 
       foreach ($log in $errorLogs) {
@@ -70,21 +106,31 @@ try {
 
         Write-Host "[$severity] $($log.tab)" -ForegroundColor $severityColor
         Write-Host "  Message: $($log.error)" -ForegroundColor Gray
-        Write-Host "  Time: $($log.timestamp)" -ForegroundColor Gray
+        Write-Host "  Time: $(Convert-ToLocalTime $log.timestamp)" -ForegroundColor Gray
         if ($log.stack) {
           Write-Host "  Stack: $($log.stack.Split([Environment]::NewLine)[0])" -ForegroundColor DarkGray
         }
         Write-Host ""
       }
     } else {
-      Write-Host "OK - No errors detected" -ForegroundColor Green
+      Write-Host "OK - No local errors detected" -ForegroundColor Green
     }
   } else {
-    Write-Host "WARNING - Error log file not found" -ForegroundColor Yellow
-    Write-Host "(App may not have generated error logs yet)" -ForegroundColor Gray
+    Write-Host "WARNING - Local error log file not found" -ForegroundColor Yellow
   }
 } catch {
-  Write-Host "WARNING - Failed to retrieve error logs: $_" -ForegroundColor Yellow
+  Write-Host "WARNING - Failed to retrieve local error logs: $_" -ForegroundColor Yellow
+}
+
+# Helper function to convert timestamp to local time
+function Convert-ToLocalTime {
+  param([string]$timestamp)
+  try {
+    $utcTime = [DateTime]::Parse($timestamp)
+    return $utcTime.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss")
+  } catch {
+    return $timestamp
+  }
 }
 
 # Done
