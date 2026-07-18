@@ -7,9 +7,13 @@ import EnglishScreen from './english';
 import TOEFLScreen from './toefl';
 import PapersScreen from './papers';
 import PlayScreen from './play';
+import StorageScreen from './storage';
 import SettingsScreen from './settings';
+import ProgressScreen from './progress';
+import InvestmentScreen from './investment';
 import { useAnnouncements } from '../hooks/useAnnouncements';
 import { AnnouncementModal } from '../components/AnnouncementModal';
+import { useErrorLogger } from '../hooks/useErrorLogger';
 
 const Tab = createBottomTabNavigator();
 
@@ -21,6 +25,14 @@ export default function RootLayout() {
     loading,
     markAsRead,
   } = useAnnouncements();
+
+  // Initialize error logger on app start
+  const { setDebugMode, getDebugMode } = useErrorLogger();
+  useEffect(() => {
+    // Load debug mode from storage
+    getDebugMode();
+    console.log('[App] Error logger initialized');
+  }, []);
 
   // 읽지 않은 공지사항이 있으면 자동으로 표시
   useEffect(() => {
@@ -98,12 +110,42 @@ export default function RootLayout() {
           }}
         />
         <Tab.Screen
+          name="Storage"
+          component={StorageScreen}
+          options={{
+            title: 'Storage',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialIcons name="storage" size={24} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
           name="Settings"
           component={SettingsScreen}
           options={{
             title: 'Settings',
             tabBarIcon: ({ color, size }) => (
               <MaterialIcons name="settings" size={24} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Progress"
+          component={ProgressScreen}
+          options={{
+            title: 'Progress',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialIcons name="insert-chart" size={24} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Investment"
+          component={InvestmentScreen}
+          options={{
+            title: 'Investment',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialIcons name="trending-up" size={24} color={color} />
             ),
           }}
         />

@@ -48,14 +48,6 @@ class ErrorLogger {
   private async saveToStorage() {
     try {
       await AsyncStorage.setItem('errorLogs', JSON.stringify(this.logs));
-
-      // 또한 파일 시스템에 저장 (adb pull로 접근 가능)
-      const errorLogPath = `${FileSystem.documentDirectory}error_logs.json`;
-      await FileSystem.writeAsStringAsync(
-        errorLogPath,
-        JSON.stringify(this.logs, null, 2),
-        { encoding: FileSystem.EncodingType.UTF8 }
-      );
     } catch (e) {
       console.error('Failed to save error logs', e);
     }

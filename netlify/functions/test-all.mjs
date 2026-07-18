@@ -33,6 +33,9 @@ async function main() {
     'toefl_prefs.mjs',
     'english_prefs.mjs',
     'feedback.mjs',
+    'fetch-trends.mjs',
+    'get-progress.mjs',
+    'update-progress.mjs',
   ];
 
   let totalIssues = 0;

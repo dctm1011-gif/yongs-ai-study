@@ -1,0 +1,57 @@
+{
+  "Power_Supply_Induced_Jitter__PSIJ__Model": {
+    "headline": "HBM 세대별 전원 노이즈 → 지터 변환 메커니즘의 정량적 분해",
+    "why_important": "PSIJ는 HBM I/O 눈 다이어그램을 잠식하는 주요 원인 중 하나이지만, 어느 주파수 대역에서 어떤 회로 블록이 지배적인지를 정량화한 연구는 드물다. 이 논문은 VDDQ PDN, SSC, 클록·IO 버퍼 지터 감도 세 가지를 독립 모델로 구성해 SPICE 대비 평균 오차 4.26%로 추정하고, 임계 주파수 대역을 주파수 영역에서 식별한다. 나아가 ML 기반 온칩·온인터포저 디캡 배치 전략으로 최적화 방향까지 제시한다.",
+    "hbm_perspective": "HBM PHY 설계에서 PSIJ를 줄이려면 어디에 디캡을 얼마나 배치해야 하는가가 핵심 질문인데, 이 논문은 그 질문에 주파수 도메인 분석으로 답을 준다. 고주파 PSIJ는 디캡만으로 해결이 어렵다는 한계도 명확히 짚어, 차세대 HBM에서 버퍼 회로 자체의 전원 거부 능력(PSRR) 강화가 필요하다는 설계 방향을 시사한다."
+  },
+  "SI_PI_Co_Design_of_12_8_Gbps_HBM_I_O_Int": {
+    "headline": "Bayesian Optimization으로 SI·PI 11개 파라미터를 동시에 최적화해 PSIJ를 최소화",
+    "why_important": "12.8 Gbps HBM I/O에서 PSIJ는 채널 손실(SI)과 PDN 임피던스(PI) 양쪽에 모두 의존하므로 둘을 따로 최적화하면 해가 틀려진다. 이 논문은 인터포저 RLC, 온칩 디캡, IO 드라이버 지연, 인터포저 물리 치수까지 11개 파라미터를 하나의 BO 프레임워크로 묶어 PSIJ 기준 연속 공간 최적화를 수행한다. Random Search 대비 더 빠른 수렴과 더 낮은 PSIJ를 달성한다.",
+    "hbm_perspective": "이 논문이 보여주는 핵심은 SI와 PI를 분리해서 설계하면 안 된다는 것이다. HBM 다음 세대(HBM4 등)의 인터페이스 속도가 올라갈수록 두 도메인의 상호작용이 더 복잡해지므로, 공동 최적화 자동화가 사실상 필수 조건이 된다. BO는 Gaussian Process 기반 서로게이트 모델을 써서 시뮬레이션 횟수를 최소화하므로, 계산 비용이 큰 PSIJ 추정에 적합하다."
+  },
+  "Modular_Neural_Network_Based_Models_of_H": {
+    "headline": "FNN 커널 행렬로 트랜시버 비선형 동작을 모듈화해 고속 링크 시뮬레이션을 수십 배 가속",
+    "why_important": "IBIS-AMI 모델은 제조사가 제공해야 하고, SPICE 수준 시뮬레이션은 너무 느리다. 이 논문은 각 트랜시버 블록을 FNN으로 훈련된 커널 행렬로 표현해, 비선형 시간 영역 분석을 단순 행렬 곱셈으로 전환한다. Equalization·차동 신호 같은 고급 설정도 프로토콜 수정만으로 동일 FNN에 포함시킬 수 있어 확장성이 높다.",
+    "hbm_perspective": "HBM 링크 검증 시 PHY 수준 SPICE 시뮬레이션은 수십~수백 시간이 걸린다. 이 논문의 접근법을 적용하면 트랜시버를 FNN 모델로 대체해 시뮬레이션 루프를 대폭 단축할 수 있다. 특히 HBM PHY에서 TX 드라이버와 RX 이퀄라이저의 비선형 특성을 모듈별로 분리해 학습시키면, 파라미터 스윕이나 코너 검증 속도를 크게 높일 수 있다."
+  },
+  "Making_Strong_Error_Correcting_Codes_Wor": {
+    "headline": "HBM PHY·인터페이스 변경 없이 컨트롤러 ECC만으로 원시 BER 허용치를 1000배 확장",
+    "why_important": "현재 HBM 온다이 ECC는 32B 단위 단일 레벨 코드라 강력한 long-span 코드를 적용하기 어렵다. REACH는 이 제약을 우회한다. inner RS(36,32)로 각 32B 청크를 처리하고, 수정 불가 청크는 erasure로 표시해 outer RS (킬로바이트 span)가 erasure-only 모드로 복구한다. Differential parity 업데이트로 write amplification을 억제하고, BF16 지수 같은 중요 필드만 선택 보호하는 bit-plane 정책도 포함한다. ASAP7 기준 15.2 mm², 17.5 W @ 3.56 TB/s, naive RS 대비 면적 11.6배·전력 60% 절감.",
+    "hbm_perspective": "삼성 HBM 관점에서 이 논문의 의미는 크다. 온다이 ECC 요건을 완화하면 DRAM 셀 어레이 면적과 제조 yield 전략이 달라진다. '신뢰성은 하드웨어 고정값이 아니라 시스템 조정 파라미터'라는 프레임 전환이 핵심 메시지다. 같은 PHY 인터페이스를 유지하면서 컨트롤러 쪽에서 ECC 정책을 소프트웨어적으로 조정할 수 있다면, HBM 제품 라인업을 용량/신뢰성 트레이드오프로 세분화하는 새로운 비즈니스 모델이 가능하다."
+  },
+  "Breaking_the_HBM_Bit_Cost_Barrier__Domai": {
+    "headline": "온다이 ECC 제거 + 컨트롤러 RS ECC로 LLM 추론 처리량 78%·정확도 97% 유지하면서 HBM 비트 단가를 낮춘다",
+    "why_important": "AI 인프라에서 HBM GB당 비용이 시스템 비용을 지배하는 상황에서, 온다이 ECC 완화로 얻는 비용 절감 효과를 시스템 레벨 ECC 강화로 보상할 수 있는지 검증한다. Large-codeword RS + CRC 감지 + differential parity + 데이터 중요도 기반 보호 조합으로 BER 10⁻³ 환경에서도 LLM 추론 품질을 실용 수준으로 유지한다.",
+    "hbm_perspective": "REACH 논문과 함께 읽으면 차세대 HBM ECC 아키텍처의 두 가지 설계 방향이 보인다. 공통점은 '강력한 ECC를 컨트롤러로 이동'이고, 차이는 PHY 인터페이스 변경 여부와 코드 설계 세부 사항이다. Samsung HBM 설계팀 입장에서는 온다이 ECC를 얼마나 단순화해도 시스템 레벨에서 보상 가능한지가 핵심 질문이 되고, 이 두 논문이 그 답의 범위를 규정한다."
+  },
+  "Design_of_Phase_Locked_Loop_in_180_nm_Te": {
+    "headline": "180nm CMOS CSVCO 기반 PLL - 기본 구성요소 설계와 성능 파라미터 총정리",
+    "why_important": "PFD·CP·루프 필터·CSVCO·분주기 다섯 블록이 어떻게 맞물려 2.4 GHz 클록을 생성하는지 회로 수준에서 보여주는 레퍼런스 설계다. 3단 CSVCO 중심 주파수 3.208 GHz, VCO 튜닝 범위 1.066~3.731 GHz, 고정시간 260.03 ns, 소비전력 5.15 mW @ 2.4 GHz 등 구체적 수치를 제공한다.",
+    "hbm_perspective": "실제 HBM은 최첨단 공정이지만 PLL 클록 생성의 기본 구조는 동일하다. 특히 CSVCO의 전원 전압 대 주파수 특성(Kv)이 HBM 클록 지터와 PSIJ에 직결되므로, VCO 설계에서 Kv와 위상 잡음 간 트레이드오프를 이해하는 출발점으로 이 논문이 유용하다. HBM PHY에서 클록 분배망과 PLL 루프 필터 설계는 결국 이 기본 원리 위에 쌓인다."
+  },
+  "Retrospective__RAIDR__Retention_Aware_In": {
+    "headline": "보존 시간 분포를 활용해 DRAM 행마다 다른 속도로 리프레시 — 에너지·성능 동시 개선의 원조 방법론",
+    "why_important": "ISCA 2012 RAIDR의 핵심 아이디어는 단순하다: 모든 행을 같은 속도로 리프레시할 이유가 없다. 행을 보존 시간 기준으로 bin으로 묶고, Bloom filter에 저장해 각 bin을 다른 속도로 리프레시한다. 이 회고 논문은 10년간의 후속 연구를 조망하며 아이디어의 파급 효과와 아직 남은 문제를 짚는다.",
+    "hbm_perspective": "HBM 세대가 올라갈수록 셀 크기 감소 → 보존 시간 단축 → 리프레시 빈도 증가 → 대역폭 손실 증가 악순환이 심화된다. RAIDR의 '시스템-DRAM 공동 설계' 철학은 HBM 컨트롤러가 각 셀의 보존 시간 정보를 DRAM으로부터 전달받아 가변 리프레시 정책을 실행하는 구조로 발전할 수 있다. 실제로 HBM 스펙 일부는 per-row 리프레시 제어를 지원하고 있어, 이 논문의 방법론이 구현으로 이어지고 있다."
+  },
+  "Self_Managing_DRAM__A_Low_Cost_Framework": {
+    "headline": "유지관리 제어권을 컨트롤러에서 DRAM 칩으로 이전 — 새 표준 없이 혁신 속도를 높이는 아키텍처",
+    "why_important": "기존에는 리프레시·RowHammer 보호·스크러빙 같은 유지관리 작업을 메모리 컨트롤러가 주도하므로, DRAM 측 혁신은 새 표준이 채택될 때까지 기다려야 한다. SMD는 DRAM 인터페이스에 단 하나의 수정(유지관리 중인 영역 접근 거부 핀 추가)으로 DRAM 칩이 자율적으로 유지관리를 수행하게 한다. 4코어 메모리 집약적 워크로드에서 평균 4.1% 속도 향상을 달성한다.",
+    "hbm_perspective": "HBM4/5 세대에서 in-DRAM 연산 능력이 강조되는 추세와 같은 방향이다. 컨트롤러 개입 없이 DRAM 내부에서 리프레시나 RH 보호를 자율 처리하면, PHY 인터페이스 대역폭을 유지관리가 아닌 데이터 전송에 온전히 쓸 수 있다. Samsung HBM의 다음 세대 아키텍처 논의에서 어디까지를 칩 내부 자율 처리로 가져갈지가 핵심 설계 결정 중 하나다."
+  },
+  "BlockHammer__Preventing_RowHammer_at_Low": {
+    "headline": "Bloom filter로 행 활성화 속도를 추적해 RowHammer 유발 접근을 throttling — DRAM 수정 불필요",
+    "why_important": "최첨단 RH 완화 메커니즘은 DRAM 내부 정보나 수정이 필요하거나, 더 취약한 칩에 적용할수록 오버헤드가 기하급수적으로 증가한다. BlockHammer는 이 두 과제를 동시에 해결한다. 영역 효율적인 Bloom filter로 행 활성화 속도를 추적하고, 임계값 이상이면 해당 행 접근을 throttling해 RH 비트플립 자체를 불가능하게 만든다.",
+    "hbm_perspective": "HBM은 일반 DDR보다 셀 밀도가 높고 적층 구조이므로 RH 취약성이 더 심각할 수 있다. BlockHammer가 컨트롤러 레벨에서 DRAM 수정 없이 적용 가능하다는 점은, HBM 칩 설계 변경 없이 시스템 레벨 방어를 추가할 수 있음을 의미한다. Bloom filter의 낮은 면적 오버헤드도 HBM 컨트롤러 로직에 통합하기에 현실적인 크기다."
+  },
+  "A_Deeper_Look_into_RowHammer_s_Sensitivi": {
+    "headline": "실제 DDR4 248개 칩 실험 — 온도·활성시간·물리적 위치가 RowHammer 취약성을 결정하는 방식",
+    "why_important": "4개 주요 DRAM 제조사의 248개 DDR4 + 24개 DDR3 칩을 세 가지 변수로 실험 분석한다. 핵심 발견: ①취약 셀의 5.4%가 70~90°C 범위에서만 오류 발생, ②셀이 15 column 접근 동안 활성 상태로 유지되면 RH 취약성 36% 증가, ③행의 5%가 나머지 95%보다 2배 취약. 이 16개 관찰은 기존에 엄밀히 연구되지 않은 영역을 파고든다.",
+    "hbm_perspective": "HBM은 적층 구조 특성상 동작 온도가 높고 공정 변이에 따른 셀별 차이도 존재한다. 이 논문이 보여주는 온도 의존성과 물리적 위치 의존성은 HBM 레이아웃 설계 시 반드시 고려해야 할 요소다. 특히 취약 셀이 물리적으로 편향되어 있다는 발견은, HBM 내부 배선 구조와 RH 취약성 분포의 상관관계를 조사하는 후속 연구의 동기가 된다."
+  },
+  "Impact_of_Sampler_Offset_on_Jitter_Trans": {
+    "headline": "Alexander PD 샘플링 플립플롭의 오프셋이 CDR 지터 전달 함수를 어떻게 왜곡하는가",
+    "why_important": "CDR 회로에서 지터 전달 함수(JTF)는 PLL/DLL 루프 대역폭과 위상 검출기 특성에 의해 결정된다고 흔히 알려져 있다. 그러나 이 논문은 샘플링 FF의 입력 오프셋이라는 종종 간과되는 요소가 JTF를 크게 바꿀 수 있음을 보인다. 중요한 것은 오프셋 0이 항상 최적이 아니라는 점 — DDJ 레벨에 따라 최적 오프셋이 존재하며, 이를 추적하는 회로를 제안한다.",
+    "hbm_perspective": "HBM RX PHY에서 CDR 지터 성능은 eye 마진에 직결된다. 특히 12.8 Gbps 이상의 속도에서 작은 오프셋 오차도 JTF를 비대칭으로 만들어 recovered clock의 지터를 키울 수 있다. 이 논문의 분석은 HBM PHY calibration 알고리즘 — 특히 sampler offset calibration 루프 설계 — 에서 '어느 오프셋으로 수렴시켜야 하는가'라는 질문에 이론적 근거를 제공한다."
+  }
+}

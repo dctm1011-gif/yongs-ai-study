@@ -1,0 +1,48 @@
+{
+  "phases": [
+    {
+      "id": "A",
+      "name": "Play + Progress + Sync",
+      "progress": 85,
+      "status": "in-progress",
+      "description": "Trending topics display + Progress tracking UI"
+    },
+    {
+      "id": "B",
+      "name": "Error Logging + Monitoring",
+      "progress": 0,
+      "status": "pending",
+      "description": "Comprehensive error tracking and monitoring system"
+    },
+    {
+      "id": "C",
+      "name": "Performance < 500ms",
+      "progress": 0,
+      "status": "pending",
+      "description": "App response time optimization to under 500ms"
+    },
+    {
+      "id": "D",
+      "name": "Investment Tab",
+      "progress": 0,
+      "status": "pending",
+      "description": "Investment tracking and portfolio management"
+    },
+    {
+      "id": "E",
+      "name": "Data Sync Monitoring",
+      "progress": 0,
+      "status": "pending",
+      "description": "Real-time data synchronization monitoring"
+    },
+    {
+      "id": "F",
+      "name": "Security & Review",
+      "progress": 0,
+      "status": "pending",
+      "description": "Security audit and final code review"
+    }
+  ],
+  "lastSync": "2026-07-18T16:10:00Z",
+  "buildTime": "2026-07-18T16:10:00Z"
+}

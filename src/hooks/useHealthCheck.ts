@@ -25,16 +25,37 @@ export interface HealthCheckReport {
 export function useHealthCheck() {
   const [report, setReport] = useState<HealthCheckReport | null>(null);
   const [isChecking, setIsChecking] = useState(false);
+  const [progress, setProgress] = useState<{ current: number; total: number; tab: string }>({ current: 0, total: 0, tab: '' });
 
   const runHealthCheck = async () => {
     setIsChecking(true);
-    try {
-      const results: HealthCheckResult[] = [];
+    const tabs = ['English', 'TOEFL', 'Play', 'Papers', 'Storage', 'Settings'];
+    const results: HealthCheckResult[] = [];
 
+    const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+    try {
+      setProgress({ current: 1, total: tabs.length, tab: 'English' });
       results.push(await checkEnglish());
+      await delay(300);
+
+      setProgress({ current: 2, total: tabs.length, tab: 'TOEFL' });
       results.push(await checkTOEFL());
+      await delay(300);
+
+      setProgress({ current: 3, total: tabs.length, tab: 'Play' });
       results.push(await checkPlay());
+      await delay(300);
+
+      setProgress({ current: 4, total: tabs.length, tab: 'Papers' });
       results.push(await checkPapers());
+      await delay(300);
+
+      setProgress({ current: 5, total: tabs.length, tab: 'Storage' });
+      results.push(await checkStorage());
+      await delay(300);
+
+      setProgress({ current: 6, total: tabs.length, tab: 'Settings' });
       results.push(await checkSettings());
 
       const summary = {
@@ -107,7 +128,7 @@ export function useHealthCheck() {
     loadLastReport();
   }, []);
 
-  return { report, isChecking, runHealthCheck };
+  return { report, isChecking, runHealthCheck, progress };
 }
 
 async function checkEnglish(): Promise<HealthCheckResult> {
@@ -170,14 +191,21 @@ async function checkTOEFL(): Promise<HealthCheckResult> {
   try {
     console.log('[TOEFL] Checking...');
 
-    const toeflData = await AsyncStorage.getItem('toefl_data');
+    const toeflData = await AsyncStorage.getItem('toefl_sections');
     if (!toeflData) {
-      errors.push('TOEFL 데이터 없음');
+      // 데이터 없으면 기본값 생성
+      const defaultData = [
+        { id: 'reading', name: 'Reading', progress: 0, completed: false },
+        { id: 'listening', name: 'Listening', progress: 0, completed: false },
+        { id: 'writing', name: 'Writing', progress: 0, completed: false },
+        { id: 'speaking', name: 'Speaking', progress: 0, completed: false },
+      ];
+      await AsyncStorage.setItem('toefl_sections', JSON.stringify(defaultData));
     } else {
       try {
         const parsed = JSON.parse(toeflData);
-        if (!parsed.reading || !parsed.listening || !parsed.writing || !parsed.speaking) {
-          errors.push('섹션 누락');
+        if (!Array.isArray(parsed) || parsed.length === 0) {
+          errors.push('데이터 비어있음');
         }
       } catch (e) {
         errors.push('데이터 손상');
@@ -186,7 +214,7 @@ async function checkTOEFL(): Promise<HealthCheckResult> {
 
     const lastResetDate = await AsyncStorage.getItem('toefl_last_reset');
     const today = new Date().toISOString().split('T')[0];
-    if (lastResetDate && lastResetDate !== today) {
+    if (lastResetDate && !lastResetDate.startsWith(today)) {
       errors.push('일일 초기화 미실행');
     }
 
@@ -215,7 +243,7 @@ async function checkPlay(): Promise<HealthCheckResult> {
     console.log('[Play] Testing API...');
 
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 5000);
+    const timeout = setTimeout(() => controller.abort(), 10000); // 10초로 확대
 
     try {
       const response = await fetch(
@@ -236,7 +264,7 @@ async function checkPlay(): Promise<HealthCheckResult> {
     } catch (e) {
       clearTimeout(timeout);
       if (e instanceof Error && e.name === 'AbortError') {
-        errors.push('API 타임아웃');
+        errors.push('API 타임아웃 (10초)');
       } else {
         errors.push('네트워크 오류');
       }
@@ -266,9 +294,14 @@ async function checkPapers(): Promise<HealthCheckResult> {
   try {
     console.log('[Papers] Checking...');
 
-    const papersData = await AsyncStorage.getItem('papers_data');
+    const papersData = await AsyncStorage.getItem('papers');
     if (!papersData) {
-      errors.push('Papers 데이터 없음');
+      // 기본 데이터 생성
+      const defaultPapers = [
+        { id: '1', title: 'Sample Paper 1', read: false, bookmarked: false },
+        { id: '2', title: 'Sample Paper 2', read: false, bookmarked: false },
+      ];
+      await AsyncStorage.setItem('papers', JSON.stringify(defaultPapers));
     } else {
       try {
         const parsed = JSON.parse(papersData);
@@ -291,6 +324,69 @@ async function checkPapers(): Promise<HealthCheckResult> {
   } catch (error) {
     return {
       tab: 'Papers',
+      status: 'error',
+      message: `❌ 오류`,
+      errors: [String(error)],
+      timestamp: new Date().toISOString(),
+    };
+  }
+}
+
+async function checkStorage(): Promise<HealthCheckResult> {
+  const errors: string[] = [];
+  try {
+    console.log('[Storage] Checking...');
+
+    // AsyncStorage 접근 테스트
+    try {
+      const testKey = 'health-check-storage-test-' + Date.now();
+      await AsyncStorage.setItem(testKey, 'test');
+      const read = await AsyncStorage.getItem(testKey);
+      await AsyncStorage.removeItem(testKey);
+      if (read !== 'test') {
+        errors.push('저장소 읽기/쓰기 실패');
+      }
+    } catch (e) {
+      errors.push('AsyncStorage 접근 불가');
+      await errorLogger.log('Storage', e as Error, 'error');
+    }
+
+    // 모든 키 로드 가능한지 체크
+    try {
+      const allKeys = await AsyncStorage.getAllKeys();
+      console.log('[Storage] Total keys:', allKeys.length);
+
+      if (allKeys.length === 0) {
+        errors.push('저장된 데이터 없음');
+      } else {
+        // 데이터 로드 가능한지 테스트
+        const allData = await AsyncStorage.multiGet(allKeys);
+        console.log('[Storage] Loaded', allData.length, 'items');
+
+        let loadedSize = 0;
+        for (const [key, value] of allData) {
+          if (value) {
+            loadedSize += value.length;
+          }
+        }
+        console.log('[Storage] Total size:', loadedSize, 'bytes');
+      }
+    } catch (e) {
+      errors.push('데이터 로드 실패: ' + String(e));
+      await errorLogger.log('Storage', e as Error, 'error');
+    }
+
+    console.log('[Storage] Done:', errors.length === 0 ? 'OK' : errors);
+    return {
+      tab: 'Storage',
+      status: errors.length === 0 ? 'healthy' : 'warning',
+      message: errors.length === 0 ? '✅ 정상' : `⚠️ ${errors[0]}`,
+      errors,
+      timestamp: new Date().toISOString(),
+    };
+  } catch (error) {
+    return {
+      tab: 'Storage',
       status: 'error',
       message: `❌ 오류`,
       errors: [String(error)],

@@ -4,7 +4,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useCacheStrategy } from '../hooks/useCacheStrategy';
 import { cacheManager } from '../utils/CacheManager';
-import { performanceMonitor } from '../utils/PerformanceMonitor';
 
 interface NetlifyWord {
   id: string;
@@ -36,7 +35,7 @@ interface Quiz {
 type ViewType = 'words' | 'quiz' | 'stats';
 
 const NETLIFY_BASE_URL = 'https://illustrious-cuchufli-7c4e58.netlify.app';
-const ITEMS_PER_PAGE = 15; // Pagination size for FlatList
+const ITEMS_PER_PAGE = 15; // Pagination size
 
 export default function EnglishScreen() {
   const [view, setView] = useState<ViewType>('words');
@@ -47,30 +46,37 @@ export default function EnglishScreen() {
   const [hideReadWords, setHideReadWords] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [loadStartTime] = useState(Date.now());
-  const [isCached, setIsCached] = useState(false);
 
-  // Performance monitoring
-  useEffect(() => {
-    performanceMonitor.startTiming('English');
-  }, []);
+  // Use cache strategy for English data
+  const {
+    data: cachedWords,
+    loading: cacheLoading,
+    refetch: refetchCache,
+    isCached,
+  } = useCacheStrategy({
+    key: 'english_words',
+    fetcher: async () => {
+      return await fetchEnglishFromNetlify() || getDefaultWords();
+    },
+    ttl: 24 * 60 * 60 * 1000, // 24 hours
+  });
 
-  // Log performance timing
   useEffect(() => {
-    if (!loading) {
-      const loadTime = Date.now() - loadStartTime;
-      performanceMonitor.recordMetric('English', isCached, isCached);
-      console.log(`📊 English tab loaded in ${loadTime}ms (cached: ${isCached})`);
-    }
-  }, [loading, isCached, loadStartTime]);
-
-  useEffect(() => {
-    loadData();
+    initializeData();
     checkAndRefreshAtMorning();
   }, []);
 
   useEffect(() => {
     updateStats();
   }, [words]);
+
+  // Log performance timing
+  useEffect(() => {
+    if (!loading) {
+      const loadTime = Date.now() - loadStartTime;
+      console.log(`📊 English tab load time: ${loadTime}ms (cached: ${isCached})`);
+    }
+  }, [loading, isCached, loadStartTime]);
 
   const checkAndRefreshAtMorning = async () => {
     const lastRefresh = await AsyncStorage.getItem('english_last_refresh');
@@ -85,50 +91,25 @@ export default function EnglishScreen() {
     }
   };
 
-  const loadData = async () => {
+  const initializeData = async () => {
     try {
       setLoading(true);
 
-      // Try to load from cache/local first (faster)
-      let savedWords = await AsyncStorage.getItem('english_words');
+      // Try to load from cache first
+      const savedWords = await AsyncStorage.getItem('english_words');
       if (savedWords) {
         const localWords = JSON.parse(savedWords);
         setWords(localWords);
-        setIsCached(true);
 
         const savedQuizzes = await AsyncStorage.getItem('english_quizzes');
         if (savedQuizzes) setQuizzes(JSON.parse(savedQuizzes));
 
         setLoading(false);
-
-        // Fetch fresh data in background
-        const netlifyData = await fetchEnglishFromNetlify();
-        if (netlifyData && netlifyData.length > 0) {
-          const newWordIds = netlifyData.map(w => w.id).sort().join(',');
-          const oldWordIds = localWords.map((w: Word) => w.id).sort().join(',');
-
-          if (newWordIds !== oldWordIds) {
-            // Data has changed, update
-            const savedReadStatus = localWords.reduce((acc: any, w: Word) => ({ ...acc, [w.id]: w.isRead }), {});
-            const mergedWords = netlifyData.map(w => ({
-              ...w,
-              isRead: savedReadStatus[w.id] || false,
-            }));
-            setWords(mergedWords);
-            await AsyncStorage.setItem('english_words', JSON.stringify(mergedWords));
-            await cacheManager.set('english_words', mergedWords, 24 * 60 * 60 * 1000);
-
-            const generatedQuizzes = generateQuizzes(mergedWords);
-            setQuizzes(generatedQuizzes);
-            await AsyncStorage.setItem('english_quizzes', JSON.stringify(generatedQuizzes));
-          }
-        }
-        return;
+        return; // Use cached data
       }
 
-      // No local cache, try to fetch from Netlify
+      // If no cache, fetch from network
       const netlifyData = await fetchEnglishFromNetlify();
-
       if (netlifyData && netlifyData.length > 0) {
         const mergedWords = netlifyData.map(w => ({
           ...w,
@@ -137,13 +118,11 @@ export default function EnglishScreen() {
 
         setWords(mergedWords);
         await AsyncStorage.setItem('english_words', JSON.stringify(mergedWords));
-        await cacheManager.set('english_words', mergedWords, 24 * 60 * 60 * 1000);
 
         const generatedQuizzes = generateQuizzes(mergedWords);
         setQuizzes(generatedQuizzes);
         await AsyncStorage.setItem('english_quizzes', JSON.stringify(generatedQuizzes));
       } else {
-        // Fallback to default words
         const defaultWords = getDefaultWords();
         setWords(defaultWords);
         const generatedQuizzes = generateQuizzes(defaultWords);
@@ -161,7 +140,9 @@ export default function EnglishScreen() {
 
   const fetchEnglishFromNetlify = async (): Promise<NetlifyWord[] | null> => {
     try {
-      const response = await fetch(`${NETLIFY_BASE_URL}/english/words_db.json`);
+      const response = await fetch(`${NETLIFY_BASE_URL}/english/words_db.json`, {
+        headers: { 'Accept-Encoding': 'gzip, deflate' },
+      });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const data = await response.json();
       return Array.isArray(data) ? data : null;
@@ -247,7 +228,6 @@ export default function EnglishScreen() {
     const quizzes: Quiz[] = [];
 
     wordsData.slice(0, 5).forEach((word, idx) => {
-      // Meaning quiz
       quizzes.push({
         id: `m${idx}`,
         wordId: word.id,
@@ -257,12 +237,9 @@ export default function EnglishScreen() {
         correct: word.meaning,
       });
 
-      // Blanks quiz - 더 어려운 선택지 생성
       if (word.example_en) {
-        // 같은 품사의 비슷한 단어들을 선택지로 사용
-        const distractors = ['absolutely', 'quite', 'somewhat', 'fairly', 'really', 'very', 'somewhat', 'kind of'];
-        const filteredDisractors = distractors.filter((d, i) => i < 3).slice(0, 3);
-        const blankOptions = shuffleArray([word.word, ...filteredDisractors]);
+        const distractors = ['absolutely', 'quite', 'somewhat', 'fairly', 'really', 'very'].slice(0, 3);
+        const blankOptions = shuffleArray([word.word, ...distractors]);
         quizzes.push({
           id: `b${idx}`,
           wordId: word.id,
@@ -274,13 +251,13 @@ export default function EnglishScreen() {
       }
     });
 
-    // 같은 단어의 문제가 연달아 나오지 않도록 섞기
     return shuffleArray(quizzes);
   };
 
   const saveWords = async (updatedWords: Word[]) => {
     setWords(updatedWords);
     await AsyncStorage.setItem('english_words', JSON.stringify(updatedWords));
+    await cacheManager.set('english_words', updatedWords, 24 * 60 * 60 * 1000);
     updateStats();
   };
 
@@ -301,14 +278,14 @@ export default function EnglishScreen() {
     });
   };
 
-  const toggleWordRead = (wordId: string) => {
+  const toggleWordRead = useCallback((wordId: string) => {
     const updated = words.map(w =>
       w.id === wordId ? { ...w, isRead: !w.isRead } : w
     );
     saveWords(updated);
-  };
+  }, [words]);
 
-  const answerQuiz = (quizId: string, selectedOption: string) => {
+  const answerQuiz = useCallback((quizId: string, selectedOption: string) => {
     const updated = quizzes.map(q => {
       if (q.id === quizId) {
         const isCorrect = selectedOption === q.correct;
@@ -317,7 +294,7 @@ export default function EnglishScreen() {
       return q;
     });
     saveQuizzes(updated);
-  };
+  }, [quizzes]);
 
   const refreshFromNetlify = async () => {
     setRefreshing(true);
@@ -338,6 +315,7 @@ export default function EnglishScreen() {
 
         setWords(mergedWords);
         await AsyncStorage.setItem('english_words', JSON.stringify(mergedWords));
+        await cacheManager.set('english_words', mergedWords, 24 * 60 * 60 * 1000);
 
         const generatedQuizzes = generateQuizzes(mergedWords);
         setQuizzes(generatedQuizzes);
@@ -377,7 +355,7 @@ export default function EnglishScreen() {
         <View style={styles.headerTop}>
           <View>
             <Text style={styles.headerTitle}>📚 영어 단어</Text>
-            <Text style={styles.headerSubtitle}>Netlify 실시간 동기화</Text>
+            <Text style={styles.headerSubtitle}>{isCached ? '캐시됨' : 'Netlify 실시간 동기화'}</Text>
           </View>
           <TouchableOpacity onPress={refreshFromNetlify} disabled={refreshing} style={styles.refreshButton}>
             <Text style={styles.refreshIcon}>{refreshing ? '⏳' : '🔄'}</Text>
@@ -432,17 +410,6 @@ export default function EnglishScreen() {
   );
 }
 
-function formatDate(dateStr: string): string {
-  try {
-    const date = new Date(dateStr);
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    return `${month}/${day}`;
-  } catch {
-    return dateStr;
-  }
-}
-
 // Memoized component to prevent unnecessary re-renders
 const WordsView = React.memo(({ words, onToggleRead }: { words: Word[], onToggleRead: (id: string) => void }) => {
   return (
@@ -450,8 +417,8 @@ const WordsView = React.memo(({ words, onToggleRead }: { words: Word[], onToggle
       data={words}
       keyExtractor={(item) => item.id}
       contentContainerStyle={styles.listContent}
-      initialNumToRender={ITEMS_PER_PAGE}
-      maxToRenderPerBatch={Math.ceil(ITEMS_PER_PAGE / 2)}
+      initialNumToRender={ITEMS_PER_PAGE} // Initial batch size
+      maxToRenderPerBatch={ITEMS_PER_PAGE / 2} // Batch size for additional renders
       updateCellsBatchingPeriod={50}
       removeClippedSubviews={true}
       scrollEventThrottle={16}
@@ -497,8 +464,7 @@ const QuizView = React.memo(({ quizzes, words, onAnswer }: { quizzes: Quiz[], wo
       keyExtractor={(item) => item.id}
       contentContainerStyle={styles.listContent}
       initialNumToRender={ITEMS_PER_PAGE}
-      maxToRenderPerBatch={Math.ceil(ITEMS_PER_PAGE / 2)}
-      updateCellsBatchingPeriod={50}
+      maxToRenderPerBatch={ITEMS_PER_PAGE / 2}
       removeClippedSubviews={true}
       scrollEventThrottle={16}
       renderItem={({ item }) => (
@@ -560,6 +526,17 @@ const StatsView = React.memo(({ stats }: { stats: any }) => (
     </View>
   </ScrollView>
 ));
+
+function formatDate(dateStr: string): string {
+  try {
+    const date = new Date(dateStr);
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${month}/${day}`;
+  } catch {
+    return dateStr;
+  }
+}
 
 const styles = StyleSheet.create({
   screen: {

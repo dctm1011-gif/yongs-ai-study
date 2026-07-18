@@ -380,11 +380,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 24,
   },
   loadingText: {
     marginTop: 12,
     fontSize: 14,
     color: '#64748b',
+    textAlign: 'center',
   },
   tabButtons: {
     flexDirection: 'row',

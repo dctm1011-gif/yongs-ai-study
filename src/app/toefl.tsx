@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, TextInput } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, TextInput, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Speech from 'expo-speech';
@@ -19,8 +19,47 @@ type ViewType = 'sections' | 'stats';
 const NETLIFY_BASE_URL = 'https://illustrious-cuchufli-7c4e58.netlify.app';
 
 export default function TOEFLScreen() {
+  const defaultSections = [
+    {
+      id: 'reading' as const,
+      name: 'READING',
+      description: '지문 읽기 및 이해',
+      emoji: '📖',
+      color: '#3b82f6',
+      progress: 0,
+      completed: false,
+    },
+    {
+      id: 'listening' as const,
+      name: 'LISTENING',
+      description: '강의 및 대화 청취',
+      emoji: '🎧',
+      color: '#8b5cf6',
+      progress: 0,
+      completed: false,
+    },
+    {
+      id: 'writing' as const,
+      name: 'WRITING',
+      description: '에세이 작성',
+      emoji: '✍️',
+      color: '#ec4899',
+      progress: 0,
+      completed: false,
+    },
+    {
+      id: 'speaking' as const,
+      name: 'SPEAKING',
+      description: '말하기 연습',
+      emoji: '🎤',
+      color: '#f59e0b',
+      progress: 0,
+      completed: false,
+    },
+  ];
+
   const [view, setView] = useState<ViewType>('sections');
-  const [sections, setSections] = useState<TOEFLSection[]>([]);
+  const [sections, setSections] = useState<TOEFLSection[]>(defaultSections);
   const [stats, setStats] = useState({ total: 0, completed: 0, avgProgress: 0 });
   const [loading, setLoading] = useState(true);
   const [selectedSection, setSelectedSection] = useState<TOEFLSection | null>(null);
@@ -59,7 +98,13 @@ export default function TOEFLScreen() {
   const loadData = async () => {
     try {
       setLoading(true);
-      const netlifyData = await fetchTOEFLFromNetlify();
+
+      // 1초 타임아웃으로 Netlify에서 데이터 시도
+      const timeoutPromise = new Promise(resolve =>
+        setTimeout(() => resolve(null), 1000)
+      );
+      const fetchPromise = fetchTOEFLFromNetlify();
+      const netlifyData = await Promise.race([fetchPromise, timeoutPromise]);
 
       if (netlifyData && netlifyData.sections && netlifyData.sections.length > 0) {
         const savedSections = await AsyncStorage.getItem('toefl_sections');
@@ -80,13 +125,10 @@ export default function TOEFLScreen() {
         const savedSections = await AsyncStorage.getItem('toefl_sections');
         if (savedSections) {
           setSections(JSON.parse(savedSections));
-        } else {
-          setSections(getDefaultSections());
         }
       }
     } catch (error) {
       console.error('Failed to load TOEFL data:', error);
-      setSections(getDefaultSections());
     } finally {
       setLoading(false);
     }
@@ -244,6 +286,78 @@ export default function TOEFLScreen() {
     const updated = savedEssays.filter(e => e.id !== id);
     setSavedEssays(updated);
     await AsyncStorage.setItem('writing_saved', JSON.stringify(updated));
+  };
+
+  const submitEssay = async () => {
+    const content = writingAnswers['essay1']?.trim();
+    if (!content) {
+      Alert.alert('알림', '에세이를 입력해주세요.');
+      return;
+    }
+
+    if (content.split(/\s+/).length < 150) {
+      Alert.alert('알림', '최소 150단어 이상 작성해주세요.');
+      return;
+    }
+
+    try {
+      const submission = {
+        id: Date.now().toString(),
+        content,
+        submitDate: new Date().toLocaleString('ko-KR'),
+        wordCount: content.split(/\s+/).length,
+      };
+
+      const existingSubmissions = await AsyncStorage.getItem('writing_submitted');
+      const submissions = existingSubmissions ? JSON.parse(existingSubmissions) : [];
+      submissions.push(submission);
+
+      await AsyncStorage.setItem('writing_submitted', JSON.stringify(submissions));
+      await reflectToEnglishLearning(content);
+
+      Alert.alert('✅ 제출 완료', `제출되었습니다! (${submission.wordCount}단어)`);
+      setWritingAnswers({ essay1: '' });
+    } catch (error) {
+      Alert.alert('오류', '제출 실패');
+    }
+  };
+
+  const reflectToEnglishLearning = async (essayContent: string) => {
+    try {
+      const words = essayContent
+        .split(/\s+/)
+        .map(w => w.replace(/[^a-zA-Z]/g, '').toLowerCase())
+        .filter(w => w.length >= 3);
+
+      const wordFreq: { [key: string]: number } = {};
+      words.forEach(w => {
+        wordFreq[w] = (wordFreq[w] || 0) + 1;
+      });
+
+      const frequentWords = Object.entries(wordFreq)
+        .filter(([_, freq]) => freq >= 2)
+        .map(([word]) => word)
+        .slice(0, 10);
+
+      if (frequentWords.length > 0) {
+        const englishData = await AsyncStorage.getItem('english_words');
+        const words_list = englishData ? JSON.parse(englishData) : [];
+
+        const newWords = frequentWords.map(word => ({
+          id: `writing_${Date.now()}_${word}`,
+          word,
+          from: 'TOEFL Writing',
+          learned: false,
+          priority: 'high',
+        }));
+
+        const updated = [...newWords, ...words_list];
+        await AsyncStorage.setItem('english_words', JSON.stringify(updated));
+        console.log('Writing 단어들이 English 학습에 추가됨:', frequentWords);
+      }
+    } catch (error) {
+      console.warn('English 반영 실패:', error);
+    }
   };
 
   useEffect(() => {
@@ -445,9 +559,14 @@ export default function TOEFLScreen() {
             onChangeText={(text) => setWritingAnswers({...writingAnswers, 'essay1': text})}
           />
 
-          <TouchableOpacity style={styles.saveButton} onPress={saveEssay}>
-            <Text style={styles.saveButtonText}>💾 임시저장</Text>
-          </TouchableOpacity>
+          <View style={styles.buttonRow}>
+            <TouchableOpacity style={styles.saveButton} onPress={saveEssay}>
+              <Text style={styles.saveButtonText}>💾 임시저장</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.submitButton} onPress={submitEssay}>
+              <Text style={styles.submitButtonText}>📤 제출</Text>
+            </TouchableOpacity>
+          </View>
 
           <View style={styles.writingHints}>
             <Text style={styles.writingHintTitle}>💡 작성 팁:</Text>
@@ -752,11 +871,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 24,
   },
   loadingText: {
     marginTop: 12,
     fontSize: 14,
     color: '#64748b',
+    textAlign: 'center',
   },
   tabButtons: {
     flexDirection: 'row',
@@ -1139,6 +1260,25 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     lineHeight: 18,
   },
+  buttonRow: {
+    flexDirection: 'row',
+    gap: 8,
+    marginHorizontal: 16,
+    marginVertical: 12,
+  },
+  submitButton: {
+    flex: 1,
+    backgroundColor: '#10b981',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  submitButtonText: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#fff',
+  },
   writingTabs: {
     flexDirection: 'row',
     gap: 8,
@@ -1167,17 +1307,16 @@ const styles = StyleSheet.create({
     fontWeight: '800',
   },
   saveButton: {
-    marginHorizontal: 16,
-    marginVertical: 12,
-    paddingVertical: 11,
-    paddingHorizontal: 16,
+    flex: 1,
     backgroundColor: '#10b981',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
     borderRadius: 8,
     alignItems: 'center',
   },
   saveButtonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '700',
   },
   savedEssaysContainer: {

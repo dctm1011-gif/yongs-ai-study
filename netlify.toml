@@ -2,6 +2,30 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
+# Fetch trending topics daily at 06:00 AM UTC
+[[functions]]
+  node_bundler = "esbuild"
+  name = "fetch-trends"
+  schedule = "0 6 * * *"
+
+# Update progress daily at 06:00 AM UTC
+[[functions]]
+  node_bundler = "esbuild"
+  name = "update-progress"
+  schedule = "0 6 * * *"
+
+# Daily sync orchestration at 06:00 AM UTC
+[[functions]]
+  node_bundler = "esbuild"
+  name = "daily-sync-orchestration"
+  schedule = "0 6 * * *"
+
+# Batch sync retry every 6 hours
+[[functions]]
+  node_bundler = "esbuild"
+  name = "batch-sync-retry"
+  schedule = "0 */6 * * *"
+
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"

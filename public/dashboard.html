@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YongStudy Error Dashboard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .header {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .header h1 {
+      color: #2563eb;
+      font-size: 28px;
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .status-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #10b981;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .status-dot.error {
+      background: #ef4444;
+    }
+
+    .refresh-btn {
+      padding: 8px 16px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .refresh-btn:hover {
+      background: #1d4ed8;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+
+    .card-value {
+      font-size: 32px;
+      font-weight: 700;
+      color: #2563eb;
+    }
+
+    .card-subtitle {
+      font-size: 12px;
+      color: #999;
+      margin-top: 8px;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .stat-item {
+      background: #f9fafb;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: #999;
+      text-transform: uppercase;
+    }
+
+    .stat-value {
+      font-size: 18px;
+      font-weight: 700;
+      color: #2563eb;
+      margin-top: 4px;
+    }
+
+    .stat-value.fatal {
+      color: #dc2626;
+    }
+
+    .stat-value.error {
+      color: #f97316;
+    }
+
+    .stat-value.warning {
+      color: #eab308;
+    }
+
+    .tab-heatmap {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .heatmap-cell {
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      color: white;
+      font-weight: 600;
+    }
+
+    .heatmap-label {
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+
+    .heatmap-value {
+      font-size: 20px;
+    }
+
+    .heatmap-cell.level0 { background: #e5e7eb; color: #666; }
+    .heatmap-cell.level1 { background: #fef3c7; color: #666; }
+    .heatmap-cell.level2 { background: #fed7aa; }
+    .heatmap-cell.level3 { background: #fdba74; }
+    .heatmap-cell.level4 { background: #fb923c; }
+    .heatmap-cell.level5 { background: #f97316; }
+
+    .chart-container {
+      margin-top: 15px;
+      padding: 15px;
+      background: #f9fafb;
+      border-radius: 8px;
+    }
+
+    .chart-bar {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 10px;
+    }
+
+    .chart-label {
+      font-size: 12px;
+      color: #666;
+      width: 50px;
+      text-align: right;
+    }
+
+    .chart-fill {
+      height: 24px;
+      background: linear-gradient(90deg, #2563eb, #1d4ed8);
+      border-radius: 4px;
+      min-width: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 8px;
+      color: white;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .error-list {
+      margin-top: 20px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .error-item {
+      padding: 12px;
+      border-left: 4px solid #2563eb;
+      background: #f9fafb;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .error-item.fatal {
+      border-left-color: #dc2626;
+    }
+
+    .error-item.error {
+      border-left-color: #f97316;
+    }
+
+    .error-item.warning {
+      border-left-color: #eab308;
+    }
+
+    .error-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .error-tab {
+      font-weight: 600;
+      color: #2563eb;
+    }
+
+    .error-time {
+      font-size: 11px;
+      color: #999;
+    }
+
+    .error-message {
+      color: #333;
+      word-break: break-all;
+      margin: 4px 0;
+    }
+
+    .error-severity {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .error-severity.fatal {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    .error-severity.error {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .error-severity.warning {
+      background: #fef3c7;
+      color: #eab308;
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #999;
+    }
+
+    .empty-state-icon {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .two-column {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <h1>📊 YongStudy Error Dashboard</h1>
+        <p style="color: #999; margin-top: 5px;">Real-time error monitoring & analytics</p>
+      </div>
+      <div style="display: flex; gap: 15px; align-items: center;">
+        <div class="status-indicator">
+          <div class="status-dot" id="statusDot"></div>
+          <span id="statusText">Loading...</span>
+        </div>
+        <button class="refresh-btn" onclick="refreshData()">🔄 Refresh</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">Total Errors (24h)</div>
+        <div class="card-value" id="totalErrors">-</div>
+        <div class="card-subtitle">Last updated: <span id="lastUpdate">-</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Severity Distribution</div>
+        <div class="stat-grid">
+          <div class="stat-item">
+            <div class="stat-label">Fatal</div>
+            <div class="stat-value fatal" id="fatalCount">0</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Error</div>
+            <div class="stat-value error" id="errorCount">0</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Warning</div>
+            <div class="stat-value warning" id="warningCount">0</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Errors by Tab</div>
+        <div id="tabStats" style="font-size: 13px; line-height: 1.8;">-</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card full-width">
+        <div class="card-title">Error Heatmap by Tab</div>
+        <div class="tab-heatmap" id="heatmap">Loading...</div>
+      </div>
+    </div>
+
+    <div class="two-column">
+      <div class="card">
+        <div class="card-title">Recent Errors (Last 50)</div>
+        <div id="errorsList" class="error-list">Loading...</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Hourly Trend</div>
+        <div class="chart-container" id="hourlyChart">Loading...</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card full-width">
+        <div class="card-title">Top Errors</div>
+        <div id="topErrors" style="font-size: 13px;">Loading...</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = 'https://illustrious-cuchufli-7c4e58.netlify.app/.netlify/functions/get-error-stats';
+    const ERRORS_API_URL = 'https://illustrious-cuchufli-7c4e58.netlify.app/.netlify/functions/log-error';
+    const AUTO_REFRESH = 10000; // 10 seconds
+
+    let autoRefreshInterval;
+
+    async function fetchStats() {
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return await response.json();
+      } catch (error) {
+        console.error('Failed to fetch stats:', error);
+        return null;
+      }
+    }
+
+    async function fetchErrors() {
+      try {
+        const response = await fetch(ERRORS_API_URL);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return await response.json();
+      } catch (error) {
+        console.error('Failed to fetch errors:', error);
+        return [];
+      }
+    }
+
+    function updateUI(stats, errors) {
+      if (!stats) {
+        document.getElementById('statusDot').classList.add('error');
+        document.getElementById('statusText').textContent = 'Error loading data';
+        return;
+      }
+
+      // Update status
+      document.getElementById('statusDot').classList.remove('error');
+      document.getElementById('statusText').textContent = 'Live';
+      document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
+
+      // Update cards
+      const total = stats.summary?.in24h || 0;
+      document.getElementById('totalErrors').textContent = total.toLocaleString();
+      document.getElementById('fatalCount').textContent = stats.summary?.severity?.fatal || 0;
+      document.getElementById('errorCount').textContent = stats.summary?.severity?.error || 0;
+      document.getElementById('warningCount').textContent = stats.summary?.severity?.warning || 0;
+
+      // Tab stats
+      const tabStats = stats.byTab || {};
+      const tabHtml = Object.entries(tabStats)
+        .sort(([, a], [, b]) => b - a)
+        .map(([tab, count]) => `<div>• ${tab}: <strong>${count}</strong></div>`)
+        .join('');
+      document.getElementById('tabStats').innerHTML = tabHtml || '<div>-</div>';
+
+      // Heatmap
+      renderHeatmap(tabStats);
+
+      // Hourly chart
+      renderHourlyChart(stats.hourlyTrend || {});
+
+      // Top errors
+      renderTopErrors(stats.topErrors || []);
+
+      // Recent errors
+      renderErrorsList(errors);
+    }
+
+    function renderHeatmap(tabStats) {
+      const maxValue = Math.max(...Object.values(tabStats), 1);
+      const html = Object.entries(tabStats)
+        .sort(([, a], [, b]) => b - a)
+        .map(([tab, count]) => {
+          const level = Math.min(5, Math.floor((count / maxValue) * 5));
+          return `
+            <div class="heatmap-cell level${level}">
+              <div class="heatmap-label">${tab}</div>
+              <div class="heatmap-value">${count}</div>
+            </div>
+          `;
+        })
+        .join('');
+
+      document.getElementById('heatmap').innerHTML = html || '<div class="empty-state">No data</div>';
+    }
+
+    function renderHourlyChart(hourlyTrend) {
+      const maxCount = Math.max(...Object.values(hourlyTrend), 1);
+      const html = Object.entries(hourlyTrend)
+        .sort(([a], [b]) => parseInt(a) - parseInt(b))
+        .map(([hour, count]) => {
+          const width = Math.max((count / maxCount) * 100, 5);
+          return `
+            <div class="chart-bar">
+              <div class="chart-label">${hour}</div>
+              <div class="chart-fill" style="width: ${width}%">${count}</div>
+            </div>
+          `;
+        })
+        .join('');
+
+      document.getElementById('hourlyChart').innerHTML = html || '<div class="empty-state">No data</div>';
+    }
+
+    function renderTopErrors(topErrors) {
+      if (topErrors.length === 0) {
+        document.getElementById('topErrors').innerHTML = '<div class="empty-state">No errors</div>';
+        return;
+      }
+
+      const html = topErrors
+        .map((item, idx) => `
+          <div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+              <span style="font-weight: 600;">#{idx + 1} ${item.tab}</span>
+              <span style="color: #999;">${item.count}x</span>
+            </div>
+            <div style="color: #666; word-break: break-all; font-size: 12px;">${item.error}</div>
+          </div>
+        `)
+        .join('');
+
+      document.getElementById('topErrors').innerHTML = html;
+    }
+
+    function renderErrorsList(errors) {
+      if (!Array.isArray(errors) || errors.length === 0) {
+        document.getElementById('errorsList').innerHTML = '<div class="empty-state"><div class="empty-state-icon">✓</div>No errors logged</div>';
+        return;
+      }
+
+      const recent = errors.slice(0, 50);
+      const html = recent
+        .map((err) => {
+          const time = new Date(err.timestamp);
+          const timeStr = time.toLocaleTimeString();
+          return `
+            <div class="error-item ${err.severity}">
+              <div class="error-header">
+                <span class="error-tab">${err.tab}</span>
+                <span class="error-time">${timeStr}</span>
+              </div>
+              <div class="error-message">${err.error}</div>
+              <div style="margin-top: 6px;">
+                <span class="error-severity ${err.severity}">${err.severity}</span>
+              </div>
+            </div>
+          `;
+        })
+        .join('');
+
+      document.getElementById('errorsList').innerHTML = html;
+    }
+
+    async function refreshData() {
+      const stats = await fetchStats();
+      const errors = await fetchErrors();
+      updateUI(stats, errors);
+    }
+
+    function startAutoRefresh() {
+      refreshData();
+      autoRefreshInterval = setInterval(refreshData, AUTO_REFRESH);
+    }
+
+    function stopAutoRefresh() {
+      if (autoRefreshInterval) {
+        clearInterval(autoRefreshInterval);
+      }
+    }
+
+    // Page lifecycle
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        stopAutoRefresh();
+      } else {
+        startAutoRefresh();
+      }
+    });
+
+    // Start on load
+    window.addEventListener('load', startAutoRefresh);
+    window.addEventListener('beforeunload', stopAutoRefresh);
+  </script>
+</body>
+</html>

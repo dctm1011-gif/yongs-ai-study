@@ -1,19 +1,101 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Linking, ScrollView, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Linking, ScrollView, Image, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { MaterialIcons } from '@expo/vector-icons';
 
-const TRENDING_VIDEOS = [
+interface TrendingItem {
+  id: string;
+  title: string;
+  category: string;
+  description: string;
+  platform: string;
+  timestamp: string;
+  likes: number;
+  mentions?: number;
+}
+
+const DEFAULT_TRENDS: TrendingItem[] = [
   {
-    id: 'dQw4w9WgXcQ',
-    title: '지금 한국에서 인기있는 영상을 로드 중입니다...',
-    channel: 'YouTube Korea',
-    thumbnail: 'https://via.placeholder.com/320x180',
-    views: '1.2M',
-    url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    id: '1',
+    title: '한국 날씨 폭염 경고 발령',
+    category: '#뉴스',
+    description: '전국 대부분 지역에 폭염 경고가 발령되었습니다.',
+    platform: 'Instagram',
+    timestamp: new Date().toISOString(),
+    likes: 15420,
+  },
+  {
+    id: '2',
+    title: '신곡 "Summer Breeze" 뮤직비디오 공개',
+    category: '#음악',
+    description: '유명 가수가 새로운 여름 노래 뮤직비디오를 공개했습니다.',
+    platform: 'YouTube',
+    timestamp: new Date(Date.now() - 3600000).toISOString(),
+    likes: 8923,
+  },
+  {
+    id: '3',
+    title: '2026년 월드컵 한국팀 신명부 발표',
+    category: '#뉴스',
+    description: '한국 축구 국가대표팀의 월드컵 최종 신명부가 발표되었습니다.',
+    platform: 'Twitter',
+    timestamp: new Date(Date.now() - 7200000).toISOString(),
+    likes: 22150,
   },
 ];
 
 export default function PlayScreen() {
+  const [trends, setTrends] = useState<TrendingItem[]>(DEFAULT_TRENDS);
+  const [loading, setLoading] = useState(false);
+  const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
+
+  useEffect(() => {
+    fetchTrends();
+  }, []);
+
+  const fetchTrends = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        'https://illustrious-cuchufli-7c4e58.netlify.app/api/fetch-trends',
+        { method: 'GET' }
+      );
+
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+      const data = await response.json();
+
+      if (data.success && data.trends && Array.isArray(data.trends)) {
+        setTrends(data.trends);
+        setLastUpdate(new Date());
+        console.log('[PlayScreen] Fetched trends:', data.trends.length);
+      } else {
+        setTrends(DEFAULT_TRENDS);
+      }
+    } catch (error) {
+      console.error('[PlayScreen] Failed to fetch trends:', error);
+      setTrends(DEFAULT_TRENDS);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const formatTime = (timestamp: string) => {
+    try {
+      const date = new Date(timestamp);
+      const now = new Date();
+      const diffMs = now.getTime() - date.getTime();
+      const diffMins = Math.floor(diffMs / 60000);
+
+      if (diffMins < 1) return 'Just now';
+      if (diffMins < 60) return `${diffMins}m ago`;
+      if (diffMins < 1440) return `${Math.floor(diffMins / 60)}h ago`;
+      return date.toLocaleDateString();
+    } catch {
+      return 'Unknown';
+    }
+  };
+
   const openYouTube = () => {
     Linking.openURL('https://www.youtube.com');
   };
@@ -22,67 +104,132 @@ export default function PlayScreen() {
     Linking.openURL('https://www.youtube.com/premium');
   };
 
-  const openVideo = (videoUrl) => {
-    Linking.openURL(videoUrl);
+  const openLink = (platform: string) => {
+    const urls: Record<string, string> = {
+      Instagram: 'https://www.instagram.com',
+      YouTube: 'https://www.youtube.com',
+      Twitter: 'https://www.twitter.com',
+    };
+    if (urls[platform]) {
+      Linking.openURL(urls[platform]);
+    }
   };
 
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>🎮 놀이</Text>
-        <Text style={styles.subtitle}>오늘의 추천 영상</Text>
+        <View style={styles.headerContent}>
+          <Text style={styles.headerTitle}>🎮 Play</Text>
+          <Text style={styles.subtitle}>Trending Topics & News</Text>
+        </View>
+        <TouchableOpacity
+          style={styles.refreshButton}
+          onPress={fetchTrends}
+          disabled={loading}
+        >
+          <MaterialIcons
+            name={loading ? 'hourglass-empty' : 'refresh'}
+            size={20}
+            color="#fff"
+          />
+        </TouchableOpacity>
       </View>
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.content}
+        showsVerticalScrollIndicator={false}
+        refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchTrends} />}
+      >
         <Text style={styles.sectionTitle}>
-          🔥 지금 한국에서 인기있는 영상
+          🔥 Korean Trending Topics
         </Text>
         <Text style={styles.sectionDesc}>
-          매일 새로운 트렌딩 영상이 자동 업데이트됩니다
+          Daily updates from Instagram, YouTube, Twitter - 6:00 AM KST
         </Text>
 
-        <View style={styles.videosContainer}>
-          {TRENDING_VIDEOS.map((video, index) => (
+        {lastUpdate && (
+          <View style={styles.lastUpdateCard}>
+            <MaterialIcons name="access-time" size={14} color="#1e40af" />
+            <Text style={styles.lastUpdateText}>
+              Last updated: {lastUpdate.toLocaleTimeString('ko-KR')}
+            </Text>
+          </View>
+        )}
+
+        <View style={styles.trendingsContainer}>
+          {trends.map((trend, index) => (
             <TouchableOpacity
-              key={video.id}
-              style={styles.videoCard}
-              onPress={() => openVideo(video.url)}
+              key={trend.id}
+              style={styles.trendCard}
+              onPress={() => openLink(trend.platform)}
             >
-              <Image
-                source={{ uri: video.thumbnail }}
-                style={styles.thumbnail}
-              />
-              <View style={styles.videoInfo}>
-                <Text style={styles.rankBadge}>#{index + 1}</Text>
-                <Text style={styles.videoTitle} numberOfLines={2}>
-                  {video.title}
+              <View style={styles.rankSection}>
+                <View
+                  style={[
+                    styles.rankBadge,
+                    {
+                      backgroundColor:
+                        index === 0 ? '#fbbf24' : index === 1 ? '#c0c0c0' : '#cd7f32',
+                    },
+                  ]}
+                >
+                  <Text style={styles.rankNumber}>#{index + 1}</Text>
+                </View>
+              </View>
+
+              <View style={styles.trendInfo}>
+                <View style={styles.trendHeader}>
+                  <Text style={styles.categoryBadge}>{trend.category}</Text>
+                  <Text style={styles.platform}>📱 {trend.platform}</Text>
+                </View>
+
+                <Text style={styles.trendTitle} numberOfLines={2}>
+                  {trend.title}
                 </Text>
-                <Text style={styles.videoChannel} numberOfLines={1}>
-                  {video.channel}
+
+                <Text style={styles.trendDesc} numberOfLines={2}>
+                  {trend.description}
                 </Text>
-                <Text style={styles.videoViews}>
-                  조회수: {video.views}
-                </Text>
+
+                <View style={styles.trendFooter}>
+                  <View style={styles.statItem}>
+                    <MaterialIcons name="favorite" size={14} color="#ef4444" />
+                    <Text style={styles.statText}>
+                      {(trend.likes / 1000).toFixed(1)}K
+                    </Text>
+                  </View>
+                  <View style={styles.statItem}>
+                    <MaterialIcons name="access-time" size={14} color="#6b7280" />
+                    <Text style={styles.statText}>{formatTime(trend.timestamp)}</Text>
+                  </View>
+                </View>
               </View>
             </TouchableOpacity>
           ))}
         </View>
 
-        <Text style={styles.sectionTitle} style={{marginTop: 32}}>
-          YouTube 앱 열기
+        <Text style={styles.sectionTitle} style={{ marginTop: 32 }}>
+          Quick Links
         </Text>
 
         <TouchableOpacity style={styles.buttonYT} onPress={openYouTube}>
-          <Text style={styles.buttonText}>▶️ YouTube 앱 열기</Text>
+          <MaterialIcons name="play-circle" size={20} color="#fff" />
+          <Text style={styles.buttonText}>YouTube</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.buttonPremium} onPress={openYouTubePremium}>
-          <Text style={styles.buttonText}>✨ YouTube Premium</Text>
+        <TouchableOpacity style={styles.buttonIG} onPress={() => openLink('Instagram')}>
+          <MaterialIcons name="camera" size={20} color="#fff" />
+          <Text style={styles.buttonText}>Instagram</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.buttonTW} onPress={() => openLink('Twitter')}>
+          <MaterialIcons name="share" size={20} color="#fff" />
+          <Text style={styles.buttonText}>Twitter</Text>
         </TouchableOpacity>
 
         <View style={styles.footer}>
+          <MaterialIcons name="info" size={16} color="#4b5563" />
           <Text style={styles.footerText}>
-            매일 오전 6시에 자동 업데이트되는{'\n'}
-            한국 트렌딩 영상을 즐겨보세요!
+            Trending data updates daily at 6:00 AM KST. Pull down to refresh manually.
           </Text>
         </View>
       </ScrollView>
@@ -96,7 +243,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#f8fafc',
   },
   header: {
-    backgroundColor: '#8b5cf6',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#7c3aed',
     paddingHorizontal: 16,
     paddingVertical: 18,
     shadowColor: '#000',
@@ -104,6 +254,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 3,
     elevation: 3,
+  },
+  headerContent: {
+    flex: 1,
   },
   headerTitle: {
     fontSize: 22,
@@ -116,10 +269,18 @@ const styles = StyleSheet.create({
     marginTop: 4,
     fontWeight: '600',
   },
+  refreshButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   content: {
     flex: 1,
     paddingHorizontal: 16,
-    paddingVertical: 24,
+    paddingVertical: 16,
   },
   sectionTitle: {
     fontSize: 18,
@@ -130,104 +291,183 @@ const styles = StyleSheet.create({
   sectionDesc: {
     fontSize: 14,
     color: '#64748b',
-    marginBottom: 20,
+    marginBottom: 12,
     lineHeight: 22,
   },
-  videosContainer: {
-    gap: 12,
-    marginBottom: 32,
+  lastUpdateCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#dbeafe',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+    marginBottom: 16,
+    gap: 8,
   },
-  videoCard: {
+  lastUpdateText: {
+    fontSize: 12,
+    color: '#1e40af',
+    fontWeight: '600',
+  },
+  trendingsContainer: {
+    gap: 12,
+    marginBottom: 24,
+  },
+  trendCard: {
+    flexDirection: 'row',
     backgroundColor: '#fff',
     borderRadius: 12,
     overflow: 'hidden',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
   },
-  thumbnail: {
-    width: '100%',
-    height: 180,
-    backgroundColor: '#e2e8f0',
-  },
-  videoInfo: {
-    padding: 12,
+  rankSection: {
+    paddingHorizontal: 12,
+    paddingVertical: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   rankBadge: {
-    fontSize: 12,
-    fontWeight: '700',
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  rankNumber: {
+    fontSize: 16,
+    fontWeight: '800',
     color: '#fff',
-    backgroundColor: '#ff6b6b',
+  },
+  trendInfo: {
+    flex: 1,
+    paddingVertical: 12,
+    paddingRight: 12,
+    justifyContent: 'space-between',
+  },
+  trendHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 6,
+  },
+  categoryBadge: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#6366f1',
+    backgroundColor: '#e0e7ff',
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 4,
-    alignSelf: 'flex-start',
-    marginBottom: 8,
   },
-  videoTitle: {
-    fontSize: 15,
+  platform: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: '#64748b',
+  },
+  trendTitle: {
+    fontSize: 14,
     fontWeight: '700',
     color: '#1e293b',
-    marginBottom: 6,
-    lineHeight: 21,
+    marginBottom: 4,
+    lineHeight: 20,
   },
-  videoChannel: {
+  trendDesc: {
     fontSize: 12,
     color: '#64748b',
-    marginBottom: 6,
-    fontWeight: '500',
+    marginBottom: 8,
+    lineHeight: 16,
   },
-  videoViews: {
+  trendFooter: {
+    flexDirection: 'row',
+    gap: 16,
+  },
+  statItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  statText: {
     fontSize: 11,
-    color: '#94a3b8',
-    fontWeight: '500',
+    color: '#6b7280',
+    fontWeight: '600',
   },
   buttonYT: {
+    flexDirection: 'row',
     backgroundColor: '#FF0000',
-    paddingVertical: 18,
-    paddingHorizontal: 40,
-    borderRadius: 12,
-    marginBottom: 16,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderRadius: 10,
+    marginBottom: 12,
     width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 8,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3,
-    elevation: 5,
+    elevation: 4,
   },
-  buttonPremium: {
-    backgroundColor: '#FFD700',
-    paddingVertical: 18,
-    paddingHorizontal: 40,
-    borderRadius: 12,
-    marginBottom: 40,
+  buttonIG: {
+    flexDirection: 'row',
+    backgroundColor: '#e4405f',
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderRadius: 10,
+    marginBottom: 12,
     width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 8,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3,
-    elevation: 5,
+    elevation: 4,
+  },
+  buttonTW: {
+    flexDirection: 'row',
+    backgroundColor: '#1da1f2',
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderRadius: 10,
+    marginBottom: 24,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3,
+    elevation: 4,
   },
   buttonText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '700',
     color: '#fff',
     textAlign: 'center',
   },
   footer: {
-    paddingVertical: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    paddingVertical: 16,
     paddingHorizontal: 12,
-    backgroundColor: '#f1f5f9',
+    backgroundColor: '#f0fdf4',
     borderRadius: 12,
-    marginBottom: 20,
+    marginBottom: 24,
+    borderLeftWidth: 4,
+    borderLeftColor: '#10b981',
   },
   footerText: {
-    fontSize: 14,
-    color: '#475569',
-    textAlign: 'center',
-    lineHeight: 22,
+    fontSize: 13,
+    color: '#4b5563',
+    lineHeight: 18,
     fontWeight: '500',
   },
 });

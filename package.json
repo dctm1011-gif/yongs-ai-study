@@ -2,6 +2,7 @@
   "name": "yongstudyapp",
   "main": "index.js",
   "version": "1.0.0",
+  "sideEffects": false,
   "dependencies": {
     "@react-native-async-storage/async-storage": "^3.1.1",
     "@react-navigation/bottom-tabs": "^6.5.8",
@@ -42,7 +43,9 @@
     "pre-commit-check": "node .github/scripts/pre-commit-check.js",
     "auto-fix": "node .github/scripts/auto-debug-and-fix.js",
     "ready-to-commit": "npm run auto-fix && npm run pre-commit-check",
-    "build-and-debug": "powershell -ExecutionPolicy Bypass -File ./build-and-debug.ps1"
+    "build-and-debug": "powershell -ExecutionPolicy Bypass -File ./build-and-debug.ps1",
+    "bundle-analyze": "node --max-old-space-size=4096 ./node_modules/.bin/metro --entry-file index.js --dev false --platform android --bundle-output android.js --report-filename sizeReport.json",
+    "lighthouse": "npx lighthouse https://yongstudy.com --view --output-path ./lighthouse-report.html"
   },
   "private": true
 }

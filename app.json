@@ -9,7 +9,8 @@
                  "userInterfaceStyle":  "automatic",
                  "description":  "AI-powered learning platform for English, TOEFL, and research papers",
                  "ios":  {
-                             "icon":  "./assets/expo.icon"
+                             "icon":  "./assets/expo.icon",
+                             "useFrameworks":  "static"
                          },
                  "android":  {
                                  "adaptiveIcon":  {
@@ -21,22 +22,30 @@
                                  "predictiveBackGestureEnabled":  false,
                                  "package":  "com.dctm1011.yongstudy",
                                  "runtimeVersion":  "1.0.0",
-                                 "debuggable": true,
                                  "navigationBar":  {
                                                      "barStyle":  "dark-content",
                                                      "backgroundColor":  "#00000000"
-                                                 }
+                                                 },
+                                 "enableScreenshotPreventionAndroid":  false,
+                                 "softwareKeyboardLayoutMode":  "pan"
                              },
                  "web":  {
                              "output":  "single",
-                             "favicon":  "./assets/images/favicon.png"
+                             "favicon":  "./assets/images/favicon.png",
+                             "bundler":  "metro"
                          },
                  "plugins":  [
                              [
                                "expo-build-properties",
                                {
                                  "android": {
-                                   "enableHermes": true
+                                   "enableHermes": true,
+                                   "debuggable": false,
+                                   "newArchEnabled": false
+                                 },
+                                 "ios": {
+                                   "enableHermes": true,
+                                   "newArchEnabled": false
                                  }
                                }
                              ],

@@ -1,15 +1,112 @@
 # YongStudy Auto Build & Debug System
 
-Write-Host "═══════════════════════════════════════════════════════════════" -ForegroundColor Cyan
+Write-Host "=========================================================" -ForegroundColor Cyan
 Write-Host "YongStudy Auto Build and Debug System" -ForegroundColor White
-Write-Host "═══════════════════════════════════════════════════════════════" -ForegroundColor Cyan
+Write-Host "=========================================================" -ForegroundColor Cyan
 Write-Host ""
 
 $startTime = Get-Date
 
+# Step 0: Analyze changes and decide if clean is needed
+Write-Host "Step 0: Analyzing changes..." -ForegroundColor Cyan
+cd "C:\Users\dctm1\YongStudyApp"
+
+# Build time을 먼저 생성 (빌드에 포함되도록)
+$buildTime = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+$buildInfoFile = "C:\Users\dctm1\YongStudyApp\src\constants\buildInfo.ts"
+$buildInfoContent = @"
+export const LAST_BUILD_TIME = '$buildTime';
+"@
+
+try {
+  if (-not (Test-Path "C:\Users\dctm1\YongStudyApp\src\constants")) {
+    New-Item -ItemType Directory -Path "C:\Users\dctm1\YongStudyApp\src\constants" | Out-Null
+  }
+  Set-Content -Path $buildInfoFile -Value $buildInfoContent -Encoding UTF8
+  Write-Host "  📦 빌드 시간 설정: $buildTime" -ForegroundColor Cyan
+} catch {
+  Write-Host "  ⚠️  빌드 시간 설정 실패: $_" -ForegroundColor Yellow
+}
+
+$needsClean = $false
+$reason = ""
+$configPatterns = @("gradle", "build.gradle", "app.json", "package.json", "package-lock.json", "android/", "eas.json", "src/app/")
+
+try {
+  # 1. Unstaged changes (git diff HEAD)
+  $unstagedFiles = git diff HEAD --name-only 2>$null
+
+  # 2. Staged changes (git diff --cached)
+  $stagedFiles = git diff --cached --name-only 2>$null
+
+  # 3. Untracked files (새로운 파일)
+  $untrackedFiles = git ls-files --others --exclude-standard 2>$null
+
+  # 모든 변경사항 합치기
+  $allChanges = @()
+  if ($unstagedFiles) { $allChanges += $unstagedFiles }
+  if ($stagedFiles) { $allChanges += $stagedFiles }
+  if ($untrackedFiles) { $allChanges += $untrackedFiles }
+
+  Write-Host "  변경사항 감지:" -ForegroundColor Gray
+  if ($allChanges) {
+    Write-Host "    - Unstaged: $($unstagedFiles.Count) 파일" -ForegroundColor Gray
+    Write-Host "    - Staged: $($stagedFiles.Count) 파일" -ForegroundColor Gray
+    Write-Host "    - Untracked: $($untrackedFiles.Count) 파일" -ForegroundColor Gray
+  } else {
+    Write-Host "    - 변경사항 없음" -ForegroundColor Gray
+  }
+
+  # 메타 파일 패턴 확인
+  foreach ($file in $allChanges) {
+    foreach ($pattern in $configPatterns) {
+      if ($file -like "*$pattern*") {
+        $needsClean = $true
+        $reason = "변경됨: $file"
+        break
+      }
+    }
+    if ($needsClean) { break }
+  }
+
+  # 4. node_modules 타임스탐프 확인 (npm install 후 변경 감지)
+  if (-not $needsClean) {
+    $nodeModulesTime = if (Test-Path "node_modules") {
+      (Get-Item "node_modules").LastWriteTime
+    } else {
+      $null
+    }
+
+    $packageJsonTime = if (Test-Path "package.json") {
+      (Get-Item "package.json").LastWriteTime
+    } else {
+      $null
+    }
+
+    if ($nodeModulesTime -and $packageJsonTime -and $nodeModulesTime -lt $packageJsonTime.AddSeconds(-60)) {
+      $needsClean = $true
+      $reason = "npm install 필요 감지 (node_modules 오래됨)"
+    }
+  }
+
+} catch {
+  # Git 또는 기타 에러 - 안전한 clean build
+  $needsClean = $true
+  $reason = "변경 파일 확인 불가: $_"
+}
+
+if ($needsClean) {
+  Write-Host "⚠️  Clean build 필요: $reason" -ForegroundColor Yellow
+  Write-Host "Gradle 캐시 초기화 중..." -ForegroundColor Gray
+  ./android/gradlew.bat -p android clean 2>&1 | Out-Null
+  Write-Host "✅ 캐시 초기화 완료" -ForegroundColor Green
+} else {
+  Write-Host "✅ 소스 코드만 변경됨 - 캐시 유지 (빠른 빌드)" -ForegroundColor Green
+}
+Write-Host ""
+
 # Step 1: Build APK
 Write-Host "Step 1: Building APK..." -ForegroundColor Yellow
-cd "C:\Users\dctm1\YongStudyApp"
 
 ./android/gradlew.bat -p android assembleRelease 2>&1 | Select-Object -Last 5
 if ($LASTEXITCODE -ne 0) {
@@ -18,18 +115,37 @@ if ($LASTEXITCODE -ne 0) {
 }
 Write-Host "OK - APK built" -ForegroundColor Green
 
-# Step 2: Install
+# Step 2: Install with verification
 Write-Host ""
 Write-Host "Step 2: Installing APK..." -ForegroundColor Yellow
-adb uninstall com.dctm1011.yongstudy 2>&1 | Out-Null
-adb install -r "C:\Users\dctm1\YongStudyApp\android\app\build\outputs\apk\release\app-release.apk" 2>&1 | Select-String "Success" | Out-Null
-Write-Host "OK - APK installed" -ForegroundColor Green
+
+# Install new version (기존 데이터 유지)
+$apkPath = "C:\Users\dctm1\YongStudyApp\android\app\build\outputs\apk\release\app-release.apk"
+if (!(Test-Path $apkPath)) {
+  Write-Host "❌ APK 파일을 찾을 수 없음: $apkPath" -ForegroundColor Red
+  exit 1
+}
+
+$installOutput = adb install -r $apkPath 2>&1
+if ($installOutput -like "*Success*") {
+  Write-Host "✅ APK 설치 완료" -ForegroundColor Green
+} else {
+  Write-Host "❌ APK 설치 실패" -ForegroundColor Red
+  Write-Host $installOutput -ForegroundColor Red
+  exit 1
+}
 
 # Step 3: Launch app
 Write-Host ""
 Write-Host "Step 3: Launching app..." -ForegroundColor Yellow
+
 adb shell am start -n com.dctm1011.yongstudy/.MainActivity 2>&1 | Out-Null
-Write-Host "OK - App started" -ForegroundColor Green
+if ($LASTEXITCODE -eq 0) {
+  Write-Host "✅ 앱 실행 완료" -ForegroundColor Green
+  Start-Sleep -Milliseconds 500
+} else {
+  Write-Host "⚠️  앱 실행 명령 전송됨 (백그라운드 확인 필요)" -ForegroundColor Yellow
+}
 
 # Step 4: Wait for initialization and trigger health check
 Write-Host ""
@@ -37,93 +153,123 @@ Write-Host "Step 4: Initializing and running health check (8 seconds)..." -Foreg
 Write-Host "Please see the app screen for health check progress..." -ForegroundColor Gray
 Start-Sleep -Seconds 8
 
-# Step 5: Retrieve runtime errors from server
+# Step 5: Retrieve AsyncStorage data directly
 Write-Host ""
-Write-Host "Step 5: Collecting runtime errors from server..." -ForegroundColor Yellow
-
-try {
-  $response = Invoke-WebRequest -Uri "https://illustrious-cuchufli-7c4e58.netlify.app/api/runtime-errors" -Method Get -ErrorAction Stop
-  $runtimeErrors = $response.Content | ConvertFrom-Json
-
-  if ($runtimeErrors -and $runtimeErrors.Count -gt 0) {
-    Write-Host "OK - Retrieved $($runtimeErrors.Count) runtime errors" -ForegroundColor Green
-
-    # Step 6: Display runtime errors
-    Write-Host ""
-    Write-Host "Step 6: Analyzing Runtime Errors..." -ForegroundColor Cyan
-    Write-Host ""
-
-    Write-Host "RUNTIME ERRORS: $($runtimeErrors.Count)" -ForegroundColor Red
-    Write-Host ""
-
-    foreach ($err in $runtimeErrors) {
-      $severity = $err.severity.ToUpper()
-      $severityColor = if ($severity -eq "ERROR") { "Red" } elseif ($severity -eq "FATAL") { "Magenta" } else { "Yellow" }
-
-      Write-Host "[$severity] $($err.tab)" -ForegroundColor $severityColor
-      Write-Host "  Message: $($err.error)" -ForegroundColor Gray
-      Write-Host "  Time: $(Convert-ToLocalTime $err.timestamp)" -ForegroundColor Gray
-      Write-Host ""
-    }
-  } else {
-    Write-Host "OK - No runtime errors detected" -ForegroundColor Green
-  }
-} catch {
-  Write-Host "WARNING - Failed to retrieve runtime errors: $_" -ForegroundColor Yellow
-  Write-Host "This could mean:" -ForegroundColor Gray
-  Write-Host "  • Health check has not run yet" -ForegroundColor Gray
-  Write-Host "  • Network connection issue" -ForegroundColor Gray
-  Write-Host "  • Server is unavailable" -ForegroundColor Gray
-}
-
-# Step 7: Get local error logs if available
-Write-Host ""
-Write-Host "Step 7: Retrieving local error logs..." -ForegroundColor Yellow
+Write-Host "Step 5: Reading AsyncStorage from device..." -ForegroundColor Yellow
 
 $tempDir = "$env:TEMP\yongstudy_debug"
 if (!(Test-Path $tempDir)) {
   New-Item -ItemType Directory -Path $tempDir | Out-Null
 }
 
-$errorLogPath = "/data/data/com.dctm1011.yongstudy/files/error_logs.json"
+$asyncStoragePath = "/data/data/com.dctm1011.yongstudy/files/RCTAsyncStorage_V1"
 
 try {
-  adb pull $errorLogPath "$tempDir\error_logs.json" 2>&1 | Out-Null
+  # AsyncStorage folder fetch
+  adb pull $asyncStoragePath "$tempDir\RCTAsyncStorage" 2>&1 | Out-Null
 
-  if (Test-Path "$tempDir\error_logs.json") {
-    Write-Host "OK - Local error logs downloaded" -ForegroundColor Green
+  if (Test-Path "$tempDir\RCTAsyncStorage") {
+    Write-Host "OK - AsyncStorage files retrieved" -ForegroundColor Green
 
-    $errorLogs = Get-Content "$tempDir\error_logs.json" -Raw | ConvertFrom-Json
+    # Health check results parsing
+    Write-Host ""
+    Write-Host "Step 6: Parsing Health Check Results..." -ForegroundColor Cyan
+    Write-Host ""
 
-    if ($errorLogs -and $errorLogs.Count -gt 0) {
-      Write-Host ""
-      Write-Host "LOCAL ERROR LOGS: $($errorLogs.Count)" -ForegroundColor Red
-      Write-Host ""
+    $healthCheckFile = Get-ChildItem "$tempDir\RCTAsyncStorage" -Filter "*lastHealthCheck*" -ErrorAction SilentlyContinue | Select-Object -First 1
 
-      foreach ($log in $errorLogs) {
-        $severity = $log.severity.ToUpper()
-        $severityColor = if ($severity -eq "ERROR") { "Red" } elseif ($severity -eq "FATAL") { "Magenta" } else { "Yellow" }
+    if ($healthCheckFile) {
+      try {
+        $healthCheckContent = Get-Content $healthCheckFile.FullName -Raw
+        $healthCheckData = $healthCheckContent | ConvertFrom-Json
 
-        Write-Host "[$severity] $($log.tab)" -ForegroundColor $severityColor
-        Write-Host "  Message: $($log.error)" -ForegroundColor Gray
-        Write-Host "  Time: $(Convert-ToLocalTime $log.timestamp)" -ForegroundColor Gray
-        if ($log.stack) {
-          Write-Host "  Stack: $($log.stack.Split([Environment]::NewLine)[0])" -ForegroundColor DarkGray
+        Write-Host "HEALTH CHECK RESULTS:" -ForegroundColor Cyan
+        Write-Host "=========================================================" -ForegroundColor Cyan
+
+        if ($healthCheckData.summary) {
+          Write-Host "Summary: $($healthCheckData.summary.healthy)/$($healthCheckData.summary.total) healthy" -ForegroundColor White
+          if ($healthCheckData.summary.errors -gt 0) {
+            Write-Host "  [ERROR] Errors: $($healthCheckData.summary.errors)" -ForegroundColor Red
+          }
+          if ($healthCheckData.summary.warnings -gt 0) {
+            Write-Host "  [WARNING] Warnings: $($healthCheckData.summary.warnings)" -ForegroundColor Yellow
+          }
+          Write-Host ""
         }
-        Write-Host ""
+
+        foreach ($result in $healthCheckData.results) {
+          $statusIcon = if ($result.status -eq "healthy") { "[OK]" } elseif ($result.status -eq "warning") { "[WARN]" } else { "[ERR]" }
+
+          $color = if ($result.status -eq "healthy") { "Green" } elseif ($result.status -eq "warning") { "Yellow" } else { "Red" }
+
+          Write-Host "$statusIcon $($result.tab)" -ForegroundColor $color
+          Write-Host "   $($result.message)" -ForegroundColor Gray
+
+          if ($result.errors -and $result.errors.Count -gt 0) {
+            foreach ($err in $result.errors) {
+              Write-Host "   - $err" -ForegroundColor (if ($result.status -eq "error") { "Red" } else { "Yellow" })
+            }
+          }
+          Write-Host ""
+        }
+      } catch {
+        Write-Host "ERROR parsing health check: $_" -ForegroundColor Red
       }
     } else {
-      Write-Host "OK - No local errors detected" -ForegroundColor Green
+      Write-Host "[WARNING] No health check data found" -ForegroundColor Yellow
+      Write-Host "   Make sure to click Health Check button in Settings tab" -ForegroundColor Gray
     }
+
+    # Error logs parsing
+    Write-Host ""
+    Write-Host "Step 7: Parsing Error Logs..." -ForegroundColor Cyan
+    Write-Host ""
+
+    $errorLogFile = Get-ChildItem "$tempDir\RCTAsyncStorage" -Filter "*errorLogs*" -ErrorAction SilentlyContinue | Select-Object -First 1
+
+    if ($errorLogFile) {
+      try {
+        $errorLogContent = Get-Content $errorLogFile.FullName -Raw
+        $errorLogData = $errorLogContent | ConvertFrom-Json
+
+        if ($errorLogData -and $errorLogData.Count -gt 0) {
+          Write-Host "ERROR LOGS: $($errorLogData.Count) total" -ForegroundColor Red
+          Write-Host "=========================================================" -ForegroundColor Red
+          Write-Host ""
+
+          foreach ($log in $errorLogData) {
+            $severity = $log.severity.ToUpper()
+            $severityColor = if ($severity -eq "ERROR") { "Red" } elseif ($severity -eq "FATAL") { "Magenta" } else { "Yellow" }
+
+            Write-Host "[$severity] $($log.tab)" -ForegroundColor $severityColor
+            Write-Host "  Message: $($log.error)" -ForegroundColor Gray
+            Write-Host "  Time: $(ConvertToLocalTime $log.timestamp)" -ForegroundColor DarkGray
+            if ($log.stack) {
+              $stackLine = $log.stack.Split([Environment]::NewLine)[0]
+              Write-Host "  Stack: $stackLine" -ForegroundColor DarkGray
+            }
+            Write-Host ""
+          }
+        } else {
+          Write-Host "[OK] No error logs detected" -ForegroundColor Green
+        }
+      } catch {
+        Write-Host "ERROR parsing error logs: $_" -ForegroundColor Red
+      }
+    } else {
+      Write-Host "[OK] No error logs found (clean run)" -ForegroundColor Green
+    }
+
   } else {
-    Write-Host "WARNING - Local error log file not found" -ForegroundColor Yellow
+    Write-Host "WARNING - AsyncStorage directory not found" -ForegroundColor Yellow
+    Write-Host "App data may not be accessible or app hasn't initialized yet" -ForegroundColor Gray
   }
 } catch {
-  Write-Host "WARNING - Failed to retrieve local error logs: $_" -ForegroundColor Yellow
+  Write-Host "WARNING - Failed to retrieve AsyncStorage: $_" -ForegroundColor Yellow
 }
 
 # Helper function to convert timestamp to local time
-function Convert-ToLocalTime {
+function ConvertToLocalTime {
   param([string]$timestamp)
   try {
     $utcTime = [DateTime]::Parse($timestamp)
@@ -136,6 +282,6 @@ function Convert-ToLocalTime {
 # Done
 $duration = ((Get-Date) - $startTime).TotalSeconds
 Write-Host ""
-Write-Host "═══════════════════════════════════════════════════════════════" -ForegroundColor Cyan
+Write-Host "=========================================================" -ForegroundColor Cyan
 Write-Host "COMPLETE - Took $([Math]::Round($duration))s" -ForegroundColor Green
-Write-Host "═══════════════════════════════════════════════════════════════" -ForegroundColor Cyan
+Write-Host "=========================================================" -ForegroundColor Cyan
