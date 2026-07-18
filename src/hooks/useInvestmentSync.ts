@@ -138,7 +138,9 @@ export function useInvestmentSync() {
         });
 
         if (!response.ok) {
+          const errorMsg = `동기화 실패: 서버 오류 (${response.status})`;
           console.warn(`[useInvestmentSync] Backend returned ${response.status}`);
+          setError(errorMsg);
           return null;
         }
 
@@ -229,9 +231,12 @@ export function useInvestmentSync() {
           console.log('[useInvestmentSync] Falling back to cached data');
           const cachedData = JSON.parse(cached) as InvestmentReport;
           setColumns(cachedData.columns || []);
+          setLastSyncTime(new Date(cachedData.timestamp || new Date().toISOString()));
+          setError('오프라인 상태 또는 네트워크 오류 - 캐시된 데이터 표시');
         } else {
           console.log('[useInvestmentSync] No cached data available');
           setColumns([]);
+          setError('동기화 실패: 캐시된 데이터 없음');
         }
 
         setLoading(false);

@@ -1,0 +1,112 @@
+{
+  "date": "2026-07-18",
+  "reading": {
+    "title": "Bioluminescence in Deep-Sea Organisms",
+    "passage": "Bioluminescence is the production of light by living organisms, a phenomenon particularly common in deep-sea creatures. Over 90% of deep-sea animals produce light through chemical reactions within their bodies. This adaptation serves multiple purposes: attracting prey, communicating with other organisms, and evading predators. The light-producing organs, called photophores, contain specialized proteins that enable these organisms to thrive in the pitch-black environment of the ocean depths where sunlight cannot penetrate.",
+    "questions": [
+      {
+        "q": "According to the passage, what is the primary purpose of bioluminescence in deep-sea creatures?",
+        "options": [
+          "To maintain body temperature",
+          "To attract prey, communicate, and evade predators",
+          "To help organisms swim faster",
+          "To produce oxygen for respiration"
+        ],
+        "answer": 1,
+        "explanation": "지문에서 '생물발광은 먹이를 끌어들이고, 다른 생물과 소통하며, 포식자를 피하기 위한 여러 목적을 수행한다'고 명시되어 있습니다."
+      },
+      {
+        "q": "What does the term 'photophores' refer to?",
+        "options": [
+          "Deep-sea cameras",
+          "Light-producing organs",
+          "Types of fish",
+          "Chemical reactions"
+        ],
+        "answer": 1,
+        "explanation": "지문에서 'photophores'는 '생물발광을 가능하게 하는 특화된 단백질을 포함하는 빛 생성 기관'이라고 정의됩니다."
+      },
+      {
+        "q": "Why is bioluminescence particularly important for deep-sea organisms?",
+        "options": [
+          "Because they need to stay warm",
+          "Because sunlight cannot penetrate the deep ocean",
+          "Because it helps them migrate",
+          "Because it speeds up their metabolism"
+        ],
+        "answer": 1,
+        "explanation": "지문에서 '햇빛이 침투할 수 없는 심해의 칠흑 같은 환경에서 번성하기 위해' 생물발광이 필요하다고 설명합니다."
+      }
+    ]
+  },
+  "writing": {
+    "prompt": "Do you agree or disagree with the following statement: Technology has made our lives more convenient but has reduced meaningful human interaction?",
+    "structure": {
+      "intro": "자신의 입장을 명확히 하되, 기술의 두 가지 측면을 언급하는 도입부를 작성하세요. (기술의 편의성과 사회적 영향)",
+      "body1": "기술이 생활 편의성을 높인 방식들을 구체적인 예시와 함께 설명하세요. (스마트폰, SNS, 배달 앱 등)",
+      "body2": "기술이 인간관계에 미친 부정적 영향이나 긍정적 영향을 대조하여 논의하세요. (심층적 대면 감소 vs 원거리 연결)",
+      "conclusion": "두 관점을 통합하며 자신의 입장을 재확인하고, 기술 사용의 균형 필요성을 제시하세요."
+    },
+    "useful_phrases": [
+      "In my opinion,",
+      "To begin with,",
+      "Furthermore,",
+      "On the other hand,",
+      "It is undeniable that,",
+      "In conclusion,",
+      "Therefore,"
+    ]
+  },
+  "speaking": {
+    "prompt": "Some people prefer to study in groups. Others prefer to study alone. Which do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer to study [alone/in groups] because...",
+      "One reason is that studying [alone/in groups] allows me to...",
+      "Another advantage is that... For example, when I..."
+    ],
+    "sample_points": [
+      "집단 학습: 다양한 관점을 얻을 수 있고, 복잡한 개념을 동료와 함께 토론하며 더 깊이 있게 이해할 수 있음",
+      "개인 학습: 자신의 속도에 맞추어 학습할 수 있고, 방해 없이 집중력을 유지하여 효율적으로 공부할 수 있음"
+    ]
+  },
+  "listening": {
+    "title": "Campus Library Renovation Project",
+    "type": "conversation",
+    "script": "Student: Hi, I heard the library is being renovated. What changes are being made? Librarian: Yes, we're updating the facility significantly. We're adding more study spaces, installing new computers, and creating a collaborative learning area on the third floor. We're also upgrading our book collection with digital databases. The renovation will take about four months, from August to November. During this time, we'll operate a temporary reading room in the student center. Student: That sounds great! Will the quiet study areas remain? Librarian: Absolutely. We're actually expanding the quiet zones on the second floor. We understand that some students need silence to concentrate. The new layout will have dedicated quiet areas, group study rooms, and tech-equipped spaces so everyone can find their ideal learning environment.",
+    "questions": [
+      {
+        "q": "What is the main topic of this conversation?",
+        "options": [
+          "The history of the library",
+          "Plans for the library renovation project",
+          "How to book study rooms",
+          "The cost of updating the library"
+        ],
+        "answer": 1,
+        "explanation": "도서관 리노베이션 계획이 대화의 주요 주제입니다. 학생이 변화에 대해 물어보고 사서가 구체적인 계획을 설명합니다."
+      },
+      {
+        "q": "How long will the library renovation take?",
+        "options": [
+          "Two months",
+          "Three months",
+          "Four months",
+          "Five months"
+        ],
+        "answer": 2,
+        "explanation": "사서가 '8월부터 11월까지 약 4개월이 걸릴 것'이라고 명시적으로 언급했습니다."
+      },
+      {
+        "q": "According to the librarian, what will happen to quiet study areas?",
+        "options": [
+          "They will be removed",
+          "They will be expanded on the second floor",
+          "They will be moved to the third floor",
+          "They will remain unchanged"
+        ],
+        "answer": 1,
+        "explanation": "사서는 '조용한 구역을 2층에서 실제로 확대할 것'이라고 답했으며, 새로운 레이아웃에 전용 조용한 공간이 포함될 것이라고 설명했습니다."
+      }
+    ]
+  }
+}

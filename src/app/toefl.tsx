@@ -175,10 +175,19 @@ export default function TOEFLScreen() {
 
   const fetchTOEFLFromNetlify = async (): Promise<any | null> => {
     try {
-      const response = await fetch(`${NETLIFY_BASE_URL}/api/toefl-problems`);
-      if (!response.ok) return null;
+      // Fetch today's TOEFL problems from daily.json
+      const response = await fetch(`${NETLIFY_BASE_URL}/.netlify/functions/toefl-daily`);
+      if (!response.ok) {
+        console.warn(`Netlify returned ${response.status}`);
+        return null;
+      }
       const data = await response.json();
-      return data;
+      // Validate structure (reading, writing, speaking, listening)
+      if (data && data.reading && data.writing && data.speaking && data.listening) {
+        console.log('✅ TOEFL problems loaded');
+        return data;
+      }
+      return null;
     } catch (error) {
       console.error('Netlify fetch failed:', error);
       return null;
