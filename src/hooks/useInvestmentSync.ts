@@ -1,286 +1,305 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export interface InvestmentProperty {
+export interface InvestmentColumn {
   id: string;
-  name: string;
-  location: string;
-  price: number;
-  roi: number;
-  status: 'available' | 'sold' | 'pending';
-  type: 'apartment' | 'villa' | 'townhouse' | 'land';
-  image?: string;
-  bedrooms?: number;
-  bathrooms?: number;
-  area?: number;
-  trend?: Array<{ date: string; roi: number }>;
+  title: string;
+  category: 'real-estate' | 'stocks';
+  author: string;
+  authorTitle: string;
+  date: string;
+  content: string;
+  summary: string;
+  region?: string;
+  ticker?: string;
+  analysis: string;
+  outlook: 'positive' | 'neutral' | 'negative';
+  readTime: number;
 }
 
-export interface UserInvestmentPreferences {
-  propertyTypes: string[];
-  locations: string[];
-  minPrice: number;
-  maxPrice: number;
-  minROI: number;
-  favoriteIds: string[];
-}
-
-export interface DailyReport {
-  properties: InvestmentProperty[];
+export interface InvestmentReport {
+  columns?: InvestmentColumn[]; // Legacy property name
+  properties?: InvestmentColumn[]; // API response uses this
   timestamp: string;
-  summary?: string;
+  lastUpdated?: string;
 }
 
-const CACHE_KEY = 'investment_data';
-const PREFERENCES_KEY = 'investment_preferences';
+const CACHE_KEY = 'investment_columns_data';
+const BOOKMARKS_KEY = 'investment_bookmarks';
 const LAST_SYNC_KEY = 'investment_last_sync';
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'https://illustrious-cuchufli-7c4e58.netlify.app';
 
+// Request deduplication
+let pendingSyncRequest: Promise<InvestmentReport | null> | null = null;
+
+// Batch AsyncStorage operations
+async function batchAsyncStorageRead(keys: string[]): Promise<Record<string, any>> {
+  const results = await AsyncStorage.multiGet(keys);
+  const data: Record<string, any> = {};
+  results.forEach(([key, value]) => {
+    if (value) {
+      try {
+        data[key] = JSON.parse(value);
+      } catch {
+        data[key] = value;
+      }
+    }
+  });
+  return data;
+}
+
+async function batchAsyncStorageWrite(data: Record<string, any>): Promise<void> {
+  const entries = Object.entries(data).map(([key, value]) => [
+    key,
+    typeof value === 'string' ? value : JSON.stringify(value),
+  ]);
+  await AsyncStorage.multiSet(entries as [string, string][]);
+}
+
 export function useInvestmentSync() {
-  const [properties, setProperties] = useState<InvestmentProperty[]>([]);
-  const [preferences, setPreferences] = useState<UserInvestmentPreferences | null>(null);
+  const [columns, setColumns] = useState<InvestmentColumn[]>([]);
+  const [bookmarks, setBookmarks] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lastSyncTime, setLastSyncTime] = useState<Date | null>(null);
   const [isOnline, setIsOnline] = useState(true);
   const syncTimeoutRef = useRef<any>(undefined);
   const netInfoUnsubscribeRef = useRef<(() => void) | null>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
-  // Initialize preferences with defaults
-  const initializePreferences = useCallback(async (): Promise<UserInvestmentPreferences> => {
+  // Initialize bookmarks with defaults
+  const initializeBookmarks = useCallback(async (): Promise<string[]> => {
     try {
-      const saved = await AsyncStorage.getItem(PREFERENCES_KEY);
+      const saved = await AsyncStorage.getItem(BOOKMARKS_KEY);
       if (saved) {
         return JSON.parse(saved);
       }
     } catch (err) {
-      console.error('[useInvestmentSync] Error loading preferences:', err);
+      console.error('[useInvestmentSync] Error loading bookmarks:', err);
     }
 
-    const defaults: UserInvestmentPreferences = {
-      propertyTypes: ['apartment', 'villa'],
-      locations: [],
-      minPrice: 0,
-      maxPrice: 5000000000, // 50억원
-      minROI: 0,
-      favoriteIds: [],
-    };
+    const defaults: string[] = [];
 
     try {
-      await AsyncStorage.setItem(PREFERENCES_KEY, JSON.stringify(defaults));
+      await AsyncStorage.setItem(BOOKMARKS_KEY, JSON.stringify(defaults));
     } catch (err) {
-      console.error('[useInvestmentSync] Error saving default preferences:', err);
+      console.error('[useInvestmentSync] Error saving default bookmarks:', err);
     }
 
     return defaults;
   }, []);
 
-  // Mock data generator for offline mode
-  const generateMockProperties = useCallback((): InvestmentProperty[] => {
-    return [
-      {
-        id: 'mock-1',
-        name: '강남 럭셔리 아파트',
-        location: '강남구',
-        price: 1250000000,
-        roi: 3.5,
-        status: 'available',
-        type: 'apartment',
-        bedrooms: 3,
-        bathrooms: 2,
-        area: 150,
-        trend: [
-          { date: '2026-07-11', roi: 3.2 },
-          { date: '2026-07-12', roi: 3.3 },
-          { date: '2026-07-13', roi: 3.4 },
-          { date: '2026-07-14', roi: 3.5 },
-        ],
-      },
-      {
-        id: 'mock-2',
-        name: '서초 프리미엄 빌라',
-        location: '서초구',
-        price: 980000000,
-        roi: 2.8,
-        status: 'available',
-        type: 'villa',
-        bedrooms: 4,
-        bathrooms: 3,
-        area: 200,
-        trend: [
-          { date: '2026-07-11', roi: 2.5 },
-          { date: '2026-07-12', roi: 2.6 },
-          { date: '2026-07-13', roi: 2.7 },
-          { date: '2026-07-14', roi: 2.8 },
-        ],
-      },
-      {
-        id: 'mock-3',
-        name: '종로 한옥 타운하우스',
-        location: '종로구',
-        price: 850000000,
-        roi: 2.1,
-        status: 'pending',
-        type: 'townhouse',
-        bedrooms: 2,
-        bathrooms: 2,
-        area: 120,
-        trend: [
-          { date: '2026-07-11', roi: 2.0 },
-          { date: '2026-07-12', roi: 2.0 },
-          { date: '2026-07-13', roi: 2.05 },
-          { date: '2026-07-14', roi: 2.1 },
-        ],
-      },
-    ];
-  }, []);
-
-  // Fetch from backend via Netlify proxy
-  const fetchFromBackend = useCallback(async (): Promise<DailyReport | null> => {
+  // Initialize data on mount (batch load)
+  const initializeData = useCallback(async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/investment/daily-report`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const data = await batchAsyncStorageRead([
+        CACHE_KEY,
+        BOOKMARKS_KEY,
+        LAST_SYNC_KEY,
+      ]);
 
-      if (!response.ok) {
-        console.warn(`[useInvestmentSync] Backend returned ${response.status}`);
-        return null;
+      const bookmarks = data[BOOKMARKS_KEY] || [];
+      if (bookmarks && Array.isArray(bookmarks)) {
+        setBookmarks(bookmarks);
       }
 
-      const data = await response.json();
-      if (data.properties && Array.isArray(data.properties)) {
-        return data as DailyReport;
+      // Restore cached columns if available
+      const cached = data[CACHE_KEY];
+      if (cached && cached.columns) {
+        setColumns(cached.columns);
+      }
+
+      const syncTime = data[LAST_SYNC_KEY];
+      if (syncTime) {
+        setLastSyncTime(new Date(syncTime));
       }
     } catch (err) {
-      console.error('[useInvestmentSync] Failed to fetch from backend:', err);
+      console.error('[useInvestmentSync] Error initializing data:', err);
     }
-
-    return null;
   }, []);
 
-  // Load and sync data
-  const syncData = useCallback(async (forceRefresh = false) => {
-    try {
-      setLoading(true);
-      setError(null);
+  // Fetch from backend via Netlify proxy with optional full trend data
+  const fetchFromBackend = useCallback(
+    async (fullTrend = false): Promise<InvestmentReport | null> => {
+      try {
+        // Create new abort controller for this request
+        abortControllerRef.current = new AbortController();
 
-      // Check cache first (unless forced refresh)
-      if (!forceRefresh) {
-        const cached = await AsyncStorage.getItem(CACHE_KEY);
-        const lastSync = await AsyncStorage.getItem(LAST_SYNC_KEY);
+        const url = `${API_BASE_URL}/api/investment/daily-report${
+          fullTrend ? '?full=true' : ''
+        }`;
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          signal: abortControllerRef.current.signal,
+        });
 
-        if (cached && lastSync) {
-          const syncTime = new Date(lastSync);
-          const now = new Date();
+        if (!response.ok) {
+          console.warn(`[useInvestmentSync] Backend returned ${response.status}`);
+          return null;
+        }
 
-          if (now.getTime() - syncTime.getTime() < CACHE_DURATION) {
-            console.log('[useInvestmentSync] Using cached data');
-            const cachedData = JSON.parse(cached) as DailyReport;
-            setProperties(cachedData.properties);
-            setLastSyncTime(syncTime);
+        const data = await response.json();
+        // API returns "properties" but we need to normalize to "columns" for component compatibility
+        if (data.properties && Array.isArray(data.properties)) {
+          return {
+            ...data,
+            columns: data.properties, // Normalize property key
+          };
+        }
+      } catch (err) {
+        if ((err as DOMException)?.name === 'AbortError') {
+          console.log('[useInvestmentSync] Request cancelled');
+        } else {
+          console.error('[useInvestmentSync] Failed to fetch from backend:', err);
+        }
+      }
+
+      return null;
+    },
+    []
+  );
+
+  // Load and sync data with request deduplication
+  const syncData = useCallback(
+    async (forceRefresh = false) => {
+      try {
+        // Request deduplication - if sync already in progress, wait for it
+        if (pendingSyncRequest && !forceRefresh) {
+          const report = await pendingSyncRequest;
+          if (report?.columns) {
+            setColumns(report.columns);
+            setLastSyncTime(new Date());
+          }
+          return;
+        }
+
+        setLoading(true);
+        setError(null);
+
+        // Check cache first (unless forced refresh)
+        if (!forceRefresh) {
+          const cached = await AsyncStorage.getItem(CACHE_KEY);
+          const lastSync = await AsyncStorage.getItem(LAST_SYNC_KEY);
+
+          if (cached && lastSync) {
+            const syncTime = new Date(lastSync);
+            const now = new Date();
+
+            if (now.getTime() - syncTime.getTime() < CACHE_DURATION) {
+              console.log('[useInvestmentSync] Using cached data');
+              const cachedData = JSON.parse(cached) as InvestmentReport;
+              setColumns(cachedData.columns);
+              setLastSyncTime(syncTime);
+              setLoading(false);
+              return;
+            }
+          }
+        }
+
+        // Try to fetch from backend (lite version for list view)
+        if (isOnline) {
+          const fetchPromise = fetchFromBackend(false); // false = no full trend data initially
+          pendingSyncRequest = fetchPromise;
+
+          const report = await fetchPromise;
+          pendingSyncRequest = null;
+
+          if (report) {
+            const now = new Date().toISOString();
+            // Batch write to AsyncStorage
+            await batchAsyncStorageWrite({
+              [CACHE_KEY]: report,
+              [LAST_SYNC_KEY]: now,
+            });
+
+            setColumns(report.columns || []);
+            setLastSyncTime(new Date());
             setLoading(false);
             return;
           }
         }
-      }
 
-      // Try to fetch from backend
-      if (isOnline) {
-        const report = await fetchFromBackend();
-        if (report) {
-          // Save to cache
-          await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(report));
-          await AsyncStorage.setItem(LAST_SYNC_KEY, new Date().toISOString());
+        // Fallback to cache
+        const cached = await AsyncStorage.getItem(CACHE_KEY);
+        if (cached) {
+          console.log('[useInvestmentSync] Falling back to cached data');
+          const cachedData = JSON.parse(cached) as InvestmentReport;
+          setColumns(cachedData.columns || []);
+        } else {
+          console.log('[useInvestmentSync] No cached data available');
+          setColumns([]);
+        }
 
-          setProperties(report.properties);
-          setLastSyncTime(new Date());
-          setLoading(false);
-          return;
+        setLoading(false);
+      } catch (err) {
+        pendingSyncRequest = null;
+        console.error('[useInvestmentSync] Sync error:', err);
+        setError(err instanceof Error ? err.message : 'Failed to sync data');
+        setLoading(false);
+
+        // Fallback to cache
+        const cached = await AsyncStorage.getItem(CACHE_KEY);
+        if (cached) {
+          const cachedData = JSON.parse(cached) as InvestmentReport;
+          setColumns(cachedData.columns || []);
         }
       }
+    },
+    [isOnline, fetchFromBackend]
+  );
 
-      // Fallback to cache or mock data
-      const cached = await AsyncStorage.getItem(CACHE_KEY);
-      if (cached) {
-        console.log('[useInvestmentSync] Falling back to cached data');
-        const cachedData = JSON.parse(cached) as DailyReport;
-        setProperties(cachedData.properties);
-      } else {
-        console.log('[useInvestmentSync] Using mock data (offline)');
-        const mockData = generateMockProperties();
-        setProperties(mockData);
+  // Toggle bookmark
+  const toggleBookmark = useCallback(
+    async (columnId: string) => {
+      try {
+        const current = bookmarks || [];
+        const updated = new Set(current);
 
-        // Cache mock data for offline access
-        await AsyncStorage.setItem(
-          CACHE_KEY,
-          JSON.stringify({
-            properties: mockData,
-            timestamp: new Date().toISOString(),
-          })
-        );
+        if (updated.has(columnId)) {
+          updated.delete(columnId);
+        } else {
+          updated.add(columnId);
+        }
+
+        const updatedArray = Array.from(updated);
+
+        // Batch write bookmarks and sync immediately
+        await batchAsyncStorageWrite({
+          [BOOKMARKS_KEY]: updatedArray,
+        });
+
+        setBookmarks(updatedArray);
+
+        // Notify backend (non-blocking, with timeout)
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3000);
+
+        fetch(`${API_BASE_URL}/api/investment/bookmarks`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            columnId,
+            isBookmarked: updated.has(columnId),
+          }),
+          signal: controller.signal,
+        })
+          .catch(err =>
+            console.warn('[useInvestmentSync] Failed to sync bookmark:', err)
+          )
+          .finally(() => clearTimeout(timeoutId));
+
+        return updated.has(columnId);
+      } catch (err) {
+        console.error('[useInvestmentSync] Error toggling bookmark:', err);
+        return false;
       }
-
-      setLoading(false);
-    } catch (err) {
-      console.error('[useInvestmentSync] Sync error:', err);
-      setError(err instanceof Error ? err.message : 'Failed to sync data');
-      setLoading(false);
-
-      // Fallback to mock data
-      const mockData = generateMockProperties();
-      setProperties(mockData);
-    }
-  }, [isOnline, fetchFromBackend, generateMockProperties]);
-
-  // Save user preferences
-  const savePreferences = useCallback(async (newPrefs: Partial<UserInvestmentPreferences>): Promise<void> => {
-    try {
-      const current = preferences || (await initializePreferences());
-      const updated = { ...current, ...newPrefs };
-      await AsyncStorage.setItem(PREFERENCES_KEY, JSON.stringify(updated));
-      setPreferences(updated);
-    } catch (err) {
-      console.error('[useInvestmentSync] Error saving preferences:', err);
-      throw err;
-    }
-  }, [preferences, initializePreferences]);
-
-  // Toggle favorite
-  const toggleFavorite = useCallback(async (propertyId: string) => {
-    try {
-      const current = preferences || (await initializePreferences());
-      const favorites = new Set(current.favoriteIds);
-
-      if (favorites.has(propertyId)) {
-        favorites.delete(propertyId);
-      } else {
-        favorites.add(propertyId);
-      }
-
-      const updated = { ...current, favoriteIds: Array.from(favorites) };
-      await AsyncStorage.setItem(PREFERENCES_KEY, JSON.stringify(updated));
-      setPreferences(updated);
-
-      // Notify backend (non-blocking)
-      fetch(`${API_BASE_URL}/api/investment/favorites`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          propertyId,
-          isFavorite: favorites.has(propertyId),
-        }),
-      }).catch(err => console.warn('[useInvestmentSync] Failed to sync favorite:', err));
-
-      return favorites.has(propertyId);
-    } catch (err) {
-      console.error('[useInvestmentSync] Error toggling favorite:', err);
-      return false;
-    }
-  }, [preferences, initializePreferences]);
+    },
+    [bookmarks]
+  );
 
   // Setup network listener (optional - NetInfo may not be installed)
   useEffect(() => {
@@ -289,7 +308,10 @@ export function useInvestmentSync() {
       const unsubscribe = NetInfo.addEventListener((state: any) => {
         const online = state.isConnected ?? false;
         setIsOnline(online);
-        console.log('[useInvestmentSync] Network status:', online ? 'online' : 'offline');
+        console.log(
+          '[useInvestmentSync] Network status:',
+          online ? 'online' : 'offline'
+        );
 
         // Sync when coming back online
         if (online) {
@@ -305,7 +327,9 @@ export function useInvestmentSync() {
         }
       };
     } catch (err) {
-      console.warn('[useInvestmentSync] NetInfo not available, network monitoring disabled');
+      console.warn(
+        '[useInvestmentSync] NetInfo not available, network monitoring disabled'
+      );
       setIsOnline(true); // Assume online if NetInfo not available
       return undefined;
     }
@@ -313,13 +337,10 @@ export function useInvestmentSync() {
 
   // Initial load and periodic sync
   useEffect(() => {
-    // Initial load
-    const initLoad = async () => {
-      const prefs = await initializePreferences();
-      setPreferences(prefs);
-    };
+    // Initialize data from storage first (faster)
+    initializeData();
 
-    initLoad();
+    // Then sync from backend
     syncData();
 
     // Setup periodic sync every 5 minutes
@@ -331,18 +352,21 @@ export function useInvestmentSync() {
       if (syncTimeoutRef.current) {
         clearInterval(syncTimeoutRef.current);
       }
+      // Cancel any pending requests on unmount
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
     };
-  }, [syncData, initializePreferences]);
+  }, [syncData, initializeData]);
 
   return {
-    properties,
-    preferences,
+    columns,
+    bookmarks,
     loading,
     error,
     lastSyncTime,
     isOnline,
     syncData,
-    savePreferences,
-    toggleFavorite,
+    toggleBookmark,
   };
 }

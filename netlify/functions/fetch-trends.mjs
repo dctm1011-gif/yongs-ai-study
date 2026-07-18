@@ -7,14 +7,16 @@ const CACHE_TTL = 30 * 60 * 1000; // 30 minutes
 let cachedTrends = null;
 let cacheTimestamp = 0;
 
-// Mock Korean trending data (since we don't have YouTube API key)
+// Mock Korean trending data with detailed descriptions
 // In production, this would scrape real trending data from RSS feeds or APIs
 const MOCK_TRENDS = [
   {
     id: 'trend-1-2026-07-18',
     title: '한국 날씨 폭염 경고 발령',
     category: '#뉴스',
-    description: '전국 대부분 지역에 폭염 경고가 발령되었습니다. 외출 시 충분한 수분 섭취가 필요합니다.',
+    description: '전국 대부분 지역에 폭염 경고가 발령되었습니다.',
+    detailedDescription: '기상청이 7월 18일부터 전국 17개 시도에 폭염 경고를 발령했습니다. 최고 기온이 33도 이상 예상되며, 특히 서울, 경기, 강원 지역은 35도 이상까지 올라갈 것으로 예보되었습니다. 외출 시 충분한 수분 섭취와 햇빛 차단이 필수입니다. 노약자와 어린이는 가능한 한 실내에 머물 것을 권고하고 있습니다.',
+    whyTrending: '여름 폭염으로 국민 안전과 직결된 정보로, 소셜미디어에서 자체 경험담 공유가 활발함',
     platform: 'Instagram',
     source: 'Instagram Trending',
     timestamp: new Date().toISOString(),
@@ -28,7 +30,9 @@ const MOCK_TRENDS = [
     id: 'trend-2-2026-07-18',
     title: '신곡 "Summer Breeze" 뮤직비디오 공개',
     category: '#음악',
-    description: '유명 가수가 새로운 여름 노래 뮤직비디오를 공개했습니다. 신선한 멜로디가 인기입니다.',
+    description: '유명 가수가 새로운 여름 노래 뮤직비디오를 공개했습니다.',
+    detailedDescription: '"Summer Breeze"는 유명 가수 이준호의 새로운 여름 싱글곡입니다. 하와이의 해변 배경에서 촬영된 뮤직비디오는 청량감 넘치는 영상미로 화제가 되고 있습니다. 신나는 비트와 세련된 보컬이 조화를 이루어 유튜브 뮤직 차트 1위에 올랐습니다. 특히 젊은 세대 사이에서 "여름 감성"의 표본으로 급부상했으며, 전 세계 스트리밍에서도 인기입니다.',
+    whyTrending: '여름 시즌 감성곡으로 틱톡, 인스타그램에서 댄스 챌린지가 확산 중',
     platform: 'YouTube',
     source: 'YouTube Trending',
     timestamp: new Date(Date.now() - 3600000).toISOString(),
@@ -42,7 +46,9 @@ const MOCK_TRENDS = [
     id: 'trend-3-2026-07-18',
     title: '2026년 월드컵 한국팀 신명부 발표',
     category: '#뉴스',
-    description: '한국 축구 국가대표팀의 월드컵 최종 신명부가 발표되었습니다. 강력한 라인업이 기대됩니다.',
+    description: '한국 축구 국가대표팀의 월드컵 최종 신명부가 발표되었습니다.',
+    detailedDescription: '대한민국 축구협회가 2026년 미국 월드컵에 참가할 23명의 최종 신명부를 공식 발표했습니다. 손흥민 선수가 주장으로 선임되었고, 손흥민, 이강인, 김민재 등 국제적으로 인정받는 선수들이 포함되었습니다. 특히 캅스는 새로운 포메이션 3-4-3으로 준비 중이며, 이는 "공격적이면서도 안정적인 전략"이라고 평가받고 있습니다. 한국 축구계는 지난 4년간의 부진을 극복하고 본선 16강 진출을 목표로 하고 있습니다.',
+    whyTrending: '국가 대표팀의 주요 뉴스로, 축구 팬들 사이에서 선수 평가와 전술 논의가 활발함',
     platform: 'Twitter',
     source: 'Twitter Trending',
     timestamp: new Date(Date.now() - 7200000).toISOString(),
@@ -57,6 +63,8 @@ const MOCK_TRENDS = [
     title: 'AI 기술 발전으로 새로운 스타트업 등장',
     category: '#기술',
     description: '최신 AI 기술을 활용한 혁신 기업들이 시장에 진입하면서 업계 주목을 받고 있습니다.',
+    detailedDescription: '생성형 AI 기술의 발전에 따라 2026년 상반기 동안 AI 기반 스타트업이 30% 이상 증가했습니다. 특히 "음성 기반 AI 어시스턴트", "자동 콘텐츠 생성 도구", "의료 진단 AI" 등 실생활 응용 분야의 스타트업들이 벤처캐피탈로부터 대규모 투자를 받고 있습니다. 한 벤처캐피탈은 "AI 1.0 시대가 끝나고 AI 2.0 실용화 시대가 도래했다"고 평가했습니다. 이들 기업은 기존 산업의 혁신은 물론 새로운 일자리 창출을 기대 중입니다.',
+    whyTrending: '테크 업계의 핵심 이슈로, 비즈니스 전문가와 투자자들 사이에 큰 관심사',
     platform: 'LinkedIn',
     source: 'LinkedIn News',
     timestamp: new Date(Date.now() - 5400000).toISOString(),
@@ -71,6 +79,8 @@ const MOCK_TRENDS = [
     title: '서울 여행 가이드 2026',
     category: '#여행',
     description: '올여름 서울 방문객들을 위한 필수 관광지와 숨겨진 명소들이 소개되고 있습니다.',
+    detailedDescription: '서울시 관광청이 "2026년 여름 서울 완벽 가이드"를 발표했습니다. 명동, 강남역, 남대문 시장 등 필수 관광지는 물론, 북촌 한옥마을의 카페 골목, 한강공원 야경 명소, 삼청동 성수 문화 골목 등 숨겨진 명소들이 소개되었습니다. 특히 올 여름은 "야경 관광", "카페 문화", "로컬 음식" 체험이 주목받고 있습니다. 가이드는 5개 지역별로 코스를 제시하여 2박 3일, 3박 4일 일정을 추천하고 있으며, 대중교통과 숙소 정보도 함께 제공합니다.',
+    whyTrending: '여름 휴가 시즌에 맞춰 여행지 선택을 고민하는 사람들의 관심이 집중됨',
     platform: 'Instagram',
     source: 'Instagram Travel',
     timestamp: new Date(Date.now() - 9300000).toISOString(),

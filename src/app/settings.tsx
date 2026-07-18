@@ -3,8 +3,6 @@ import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, Alert,
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
-import { useAnnouncements } from '../hooks/useAnnouncements';
-import { AnnouncementModal } from '../components/AnnouncementModal';
 import { useHealthCheck } from '../hooks/useHealthCheck';
 import { useErrorLog, type ErrorLog } from '../hooks/useErrorLog';
 import { useErrorLogger } from '../hooks/useErrorLogger';
@@ -26,8 +24,6 @@ export default function SettingsScreen() {
   const [feedback, setFeedback] = useState('');
   const [feedbackList, setFeedbackList] = useState<FeedbackItem[]>([]);
   const [remindersEnabled, setRemindersEnabled] = useState(false);
-  const [showAnnouncements, setShowAnnouncements] = useState(false);
-  const { announcements, unreadCount, markAsRead } = useAnnouncements();
   const { report, isChecking, runHealthCheck, progress } = useHealthCheck();
   const [showHealthReport, setShowHealthReport] = useState(false);
   const { getLogs: getErrorLogs, clearLogs: clearErrorLogs } = useErrorLog();
@@ -310,32 +306,6 @@ export default function SettingsScreen() {
           >
             <Text style={styles.testButtonText}>
               {remindersEnabled ? '🔔 학습 알림 ON' : '🔕 학습 알림 OFF'}
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.divider} />
-
-        <View style={styles.section}>
-          <View style={styles.announcementHeader}>
-            <Text style={styles.sectionTitle}>📢 공지사항</Text>
-            {unreadCount > 0 && (
-              <View style={styles.badge}>
-                <Text style={styles.badgeText}>{unreadCount}</Text>
-              </View>
-            )}
-          </View>
-          <Text style={styles.feedbackDesc}>
-            {announcements.length === 0
-              ? '공지사항이 없습니다.'
-              : `${announcements.length}개의 공지사항이 있습니다.`}
-          </Text>
-          <TouchableOpacity
-            style={styles.testButton}
-            onPress={() => setShowAnnouncements(true)}
-          >
-            <Text style={styles.testButtonText}>
-              📖 공지사항 보기
             </Text>
           </TouchableOpacity>
         </View>
@@ -1004,12 +974,6 @@ export default function SettingsScreen() {
         </View>
       </ScrollView>
 
-      <AnnouncementModal
-        visible={showAnnouncements}
-        announcements={announcements}
-        onClose={() => setShowAnnouncements(false)}
-        onMarkAsRead={markAsRead}
-      />
     </SafeAreaView>
   );
 }

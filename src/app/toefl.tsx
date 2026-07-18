@@ -72,6 +72,7 @@ export default function TOEFLScreen() {
   const [savedEssays, setSavedEssays] = useState<{ id: string; content: string; date: string }[]>([]);
   const [isCached, setIsCached] = useState(false);
   const [loadStartTime] = useState(Date.now());
+  const [toeflProblems, setToeflProblems] = useState<any>(null);
 
   // Performance monitoring
   useEffect(() => {
@@ -115,64 +116,53 @@ export default function TOEFLScreen() {
     try {
       setLoading(true);
 
-      // Try to load from cache first (12-hour TTL)
-      const savedSections = await AsyncStorage.getItem('toefl_sections');
-      if (savedSections) {
+      // Try to load cached problems first
+      const cachedProblems = await AsyncStorage.getItem('toefl_problems');
+      const today = new Date().toISOString().split('T')[0];
+
+      if (cachedProblems) {
         try {
-          const parsedSections = JSON.parse(savedSections);
-          setSections(parsedSections);
-          setIsCached(true);
-          setLoading(false);
-          // Still try to fetch fresh data in background
-          fetchTOEFLFromNetlify()
-            .then(async netlifyData => {
-              if (netlifyData && netlifyData.sections && netlifyData.sections.length > 0) {
-                const currentSections = parsedSections;
-                const savedProgress = currentSections.reduce((acc: any, s: TOEFLSection) =>
-                  ({ ...acc, [s.id]: { progress: s.progress, completed: s.completed } }), {});
-
-                const mergedSections = netlifyData.sections.map((s: TOEFLSection) => ({
-                  ...s,
-                  progress: savedProgress[s.id]?.progress || 0,
-                  completed: savedProgress[s.id]?.completed || false,
-                }));
-
-                setSections(mergedSections);
-                await AsyncStorage.setItem('toefl_sections', JSON.stringify(mergedSections));
-              }
-            })
-            .catch(err => console.log('Background refresh failed (non-fatal):', err));
-          return;
+          const parsed = JSON.parse(cachedProblems);
+          if (parsed.date === today) {
+            setToeflProblems(parsed);
+            setIsCached(true);
+            setLoading(false);
+            // Still try to fetch fresh data in background
+            fetchTOEFLFromNetlify()
+              .then(async freshData => {
+                if (freshData && freshData.date === today) {
+                  setToeflProblems(freshData);
+                  await AsyncStorage.setItem('toefl_problems', JSON.stringify(freshData));
+                }
+              })
+              .catch(err => console.log('Background refresh failed (non-fatal):', err));
+            return;
+          }
         } catch (e) {
           console.log('Cache parse failed, fetching fresh data');
         }
       }
 
-      // 1초 타임아웃으로 Netlify에서 데이터 시도
-      const timeoutPromise = new Promise(resolve =>
-        setTimeout(() => resolve(null), 1000)
+      // Fetch fresh data with timeout
+      const timeoutPromise = new Promise<any>(resolve =>
+        setTimeout(() => resolve(null), 2000)
       );
       const fetchPromise = fetchTOEFLFromNetlify();
       const netlifyData = await Promise.race([fetchPromise, timeoutPromise]);
 
-      if (netlifyData && netlifyData.sections && netlifyData.sections.length > 0) {
-        const savedSections = await AsyncStorage.getItem('toefl_sections');
-        const savedProgress = savedSections
-          ? JSON.parse(savedSections).reduce((acc: any, s: TOEFLSection) =>
-              ({ ...acc, [s.id]: { progress: s.progress, completed: s.completed } }), {})
-          : {};
-
-        const mergedSections = netlifyData.sections.map((s: TOEFLSection) => ({
-          ...s,
-          progress: savedProgress[s.id]?.progress || 0,
-          completed: savedProgress[s.id]?.completed || false,
-        }));
-
-        setSections(mergedSections);
-        await AsyncStorage.setItem('toefl_sections', JSON.stringify(mergedSections));
+      if (netlifyData && netlifyData.reading) {
+        setToeflProblems(netlifyData);
+        await AsyncStorage.setItem('toefl_problems', JSON.stringify(netlifyData));
         setIsCached(false);
       } else {
-        // Fallback to default if no fresh data
+        console.warn('No fresh TOEFL problems available, using default sections');
+      }
+
+      // Always load section progress
+      const savedSections = await AsyncStorage.getItem('toefl_sections');
+      if (savedSections) {
+        setSections(JSON.parse(savedSections));
+      } else {
         setSections(defaultSections);
       }
     } catch (error) {
@@ -185,9 +175,10 @@ export default function TOEFLScreen() {
 
   const fetchTOEFLFromNetlify = async (): Promise<any | null> => {
     try {
-      const response = await fetch(`${NETLIFY_BASE_URL}/.netlify/functions/toefl_prefs`);
+      const response = await fetch(`${NETLIFY_BASE_URL}/api/toefl-problems`);
       if (!response.ok) return null;
-      return await response.json();
+      const data = await response.json();
+      return data;
     } catch (error) {
       console.error('Netlify fetch failed:', error);
       return null;
@@ -443,131 +434,96 @@ export default function TOEFLScreen() {
     }
   };
 
-  const renderListeningContent = () => (
-    <ScrollView style={styles.contentScroll}>
-      <Text style={styles.contentTitle}>🎧 Listening Comprehension</Text>
+  const renderListeningContent = () => {
+    if (!toeflProblems?.listening) {
+      return (
+        <ScrollView style={styles.contentScroll}>
+          <Text style={styles.contentTitle}>🎧 Listening Comprehension</Text>
+          <Text style={styles.loadingText}>Loading listening problems...</Text>
+        </ScrollView>
+      );
+    }
 
-      <View style={styles.audioBox}>
-        <Text style={styles.audioLabel}>🎧 강의 스크립트</Text>
-        <View style={styles.audioControls}>
-          <TouchableOpacity
-            style={[styles.audioButton, isPlaying && styles.audioButtonActive]}
-            onPress={() => playAudio(
-              "Today we'll discuss the impact of renewable energy on modern society. Solar panels have become increasingly affordable and efficient, making them accessible to more people worldwide. Many countries now generate over 30 percent of their electricity from renewable sources like solar, wind, and hydroelectric power. This transition helps reduce carbon emissions and creates new job opportunities in the clean energy sector. However, significant challenges remain in energy storage technology and grid stability. Batteries are still expensive and limited in capacity, and the intermittent nature of renewable sources requires better infrastructure. Despite these obstacles, governments and private companies continue to invest heavily in sustainable energy solutions. The transition to renewable energy is not just an environmental necessity but also an economic opportunity for the next generation."
-            )}
-            disabled={isPlaying}
-          >
-            <Text style={styles.audioButtonText}>▶️ 재생</Text>
-          </TouchableOpacity>
+    const listening = toeflProblems.listening;
+    const scriptText = listening.script || '';
 
-          <TouchableOpacity
-            style={styles.audioButton}
-            onPress={stopAudio}
-          >
-            <Text style={styles.audioButtonText}>⏹️ 정지</Text>
-          </TouchableOpacity>
+    return (
+      <ScrollView style={styles.contentScroll}>
+        <Text style={styles.contentTitle}>🎧 Listening Comprehension</Text>
 
-          <TouchableOpacity
-            style={styles.audioButton}
-            onPress={() => {
-              stopAudio();
-              setTimeout(() => playAudio(
-                "Today we'll discuss the impact of renewable energy on modern society. Solar panels have become increasingly affordable and efficient, making them accessible to more people worldwide. Many countries now generate over 30 percent of their electricity from renewable sources like solar, wind, and hydroelectric power. This transition helps reduce carbon emissions and creates new job opportunities in the clean energy sector. However, significant challenges remain in energy storage technology and grid stability. Batteries are still expensive and limited in capacity, and the intermittent nature of renewable sources requires better infrastructure. Despite these obstacles, governments and private companies continue to invest heavily in sustainable energy solutions. The transition to renewable energy is not just an environmental necessity but also an economic opportunity for the next generation."
-              ), 200);
-            }}
-          >
-            <Text style={styles.audioButtonText}>🔄 처음부터</Text>
-          </TouchableOpacity>
-        </View>
-        {isPlaying && <Text style={styles.playingIndicator}>🔊 재생 중...</Text>}
-      </View>
-
-      <View style={styles.keywordsBox}>
-        <Text style={styles.keywordsLabel}>어려운 단어</Text>
-        <View style={styles.vocabularyList}>
-          {[
-            { word: 'Renewable Energy', meaning: '♻️ 태양광, 풍력 같은 자연에서 계속 얻을 수 있는 에너지예요. 석탄처럼 없어지지 않아서 환경 친화적이랍니다!' },
-            { word: 'Solar Panels', meaning: '☀️ 햇빛을 전기로 바꿔주는 판자예요. 지붕이나 들판에 설치해서 깨끗한 전기를 만든답니다.' },
-            { word: 'Intermittent', meaning: '⚡ 계속 일어나는 게 아니라 때때로, 간헐적으로 일어난다는 뜻이에요. 풍력은 바람이 불 때만 작동하는 것처럼요!' },
-            { word: 'Grid Stability', meaning: '🔌 전력망이 안정적으로 전기를 공급하는 상태예요. 정전 없이 항상 전기가 흘러야 한다는 의미입니다.' },
-            { word: 'Infrastructure', meaning: '🏗️ 어떤 체계가 돌아가기 위해 필요한 기초 설비들이에요. 전력망의 경우 송전선, 변전소 같은 것들을 뜻해요.' },
-          ].map((item, idx) => (
+        <View style={styles.audioBox}>
+          <Text style={styles.audioLabel}>🎧 대화 스크립트</Text>
+          <View style={styles.audioControls}>
             <TouchableOpacity
-              key={idx}
-              style={styles.vocabularyItem}
-              onPress={() => saveVocabularyToNetlify(item.word, item.meaning, '🎧', 'listening')}
+              style={[styles.audioButton, isPlaying && styles.audioButtonActive]}
+              onPress={() => playAudio(scriptText)}
+              disabled={isPlaying}
             >
-              <Text style={styles.vocabularyWord}>{item.word}</Text>
-              <Text style={styles.vocabularyMeaning}>{item.meaning}</Text>
-              <Text style={styles.saveHint}>💾 터치하면 저장</Text>
+              <Text style={styles.audioButtonText}>▶️ 재생</Text>
             </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.audioButton}
+              onPress={stopAudio}
+            >
+              <Text style={styles.audioButtonText}>⏹️ 정지</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.audioButton}
+              onPress={() => {
+                stopAudio();
+                setTimeout(() => playAudio(scriptText), 200);
+              }}
+            >
+              <Text style={styles.audioButtonText}>🔄 처음부터</Text>
+            </TouchableOpacity>
+          </View>
+          {isPlaying && <Text style={styles.playingIndicator}>🔊 재생 중...</Text>}
+        </View>
+
+        <View style={styles.questionsBox}>
+          <Text style={styles.questionsLabel}>문제</Text>
+
+          {listening.questions && listening.questions.map((q: any, qIdx: number) => (
+            <View key={`l_q${qIdx}`} style={styles.questionBox}>
+              <Text style={styles.questionText}>{q.q || `Q${qIdx + 1}`}</Text>
+              <View style={styles.optionsContainer}>
+                {q.options && q.options.map((option: string, optIdx: number) => (
+                  <TouchableOpacity
+                    key={optIdx}
+                    style={[
+                      styles.optionButton,
+                      selectedAnswers[`list_q${qIdx}`] === optIdx && styles.optionButtonSelected,
+                      selectedAnswers[`list_q${qIdx}`] === optIdx && optIdx === q.answer && styles.optionButtonCorrect,
+                    ]}
+                    onPress={() => selectAnswer(`list_q${qIdx}`, optIdx)}
+                  >
+                    <Text style={[
+                      styles.optionText,
+                      selectedAnswers[`list_q${qIdx}`] === optIdx && styles.optionTextSelected,
+                    ]}>
+                      {option}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+              {selectedAnswers[`list_q${qIdx}`] !== undefined && (
+                <Text style={selectedAnswers[`list_q${qIdx}`] === q.answer ? styles.correctText : styles.incorrectText}>
+                  {selectedAnswers[`list_q${qIdx}`] === q.answer
+                    ? '✓ 정답!'
+                    : `✗ 틀렸습니다. 정답은 ${String.fromCharCode(65 + q.answer)}입니다.`}
+                </Text>
+              )}
+              {selectedAnswers[`list_q${qIdx}`] !== undefined && q.explanation && (
+                <Text style={styles.explanationText}>{q.explanation}</Text>
+              )}
+            </View>
           ))}
         </View>
-      </View>
-
-      <View style={styles.questionsBox}>
-        <Text style={styles.questionsLabel}>문제</Text>
-
-        <View style={styles.questionBox}>
-          <Text style={styles.questionText}>Q1. What is the main topic of the lecture?</Text>
-          <View style={styles.optionsContainer}>
-            {['A) Solar panel prices', 'B) Impact of renewable energy', 'C) Electricity grids'].map((option, idx) => (
-              <TouchableOpacity
-                key={idx}
-                style={[
-                  styles.optionButton,
-                  selectedAnswers['l_q1'] === idx && styles.optionButtonSelected,
-                  selectedAnswers['l_q1'] === idx && idx === 1 && styles.optionButtonCorrect,
-                ]}
-                onPress={() => selectAnswer('l_q1', idx)}
-              >
-                <Text style={[
-                  styles.optionText,
-                  selectedAnswers['l_q1'] === idx && styles.optionTextSelected,
-                ]}>
-                  {option}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-          {selectedAnswers['l_q1'] !== undefined && (
-            <Text style={selectedAnswers['l_q1'] === 1 ? styles.correctText : styles.incorrectText}>
-              {selectedAnswers['l_q1'] === 1 ? '✓ 정답!' : '✗ 틀렸습니다. 정답은 B입니다.'}
-            </Text>
-          )}
-        </View>
-
-        <View style={styles.questionBox}>
-          <Text style={styles.questionText}>Q2. What does the speaker identify as a significant challenge to renewable energy adoption?</Text>
-          <View style={styles.optionsContainer}>
-            {['A) Solar panels are too affordable', 'B) Energy storage and grid stability issues', 'C) Lack of government investment'].map((option, idx) => (
-              <TouchableOpacity
-                key={idx}
-                style={[
-                  styles.optionButton,
-                  selectedAnswers['l_q2'] === idx && styles.optionButtonSelected,
-                  selectedAnswers['l_q2'] === idx && idx === 1 && styles.optionButtonCorrect,
-                ]}
-                onPress={() => selectAnswer('l_q2', idx)}
-              >
-                <Text style={[
-                  styles.optionText,
-                  selectedAnswers['l_q2'] === idx && styles.optionTextSelected,
-                ]}>
-                  {option}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-          {selectedAnswers['l_q2'] !== undefined && (
-            <Text style={selectedAnswers['l_q2'] === 1 ? styles.correctText : styles.incorrectText}>
-              {selectedAnswers['l_q2'] === 1 ? '✓ 정답!' : '✗ 틀렸습니다. 정답은 B입니다.'}
-            </Text>
-          )}
-        </View>
-      </View>
-    </ScrollView>
-  );
+      </ScrollView>
+    );
+  };
 
   const renderWritingContent = () => (
     <ScrollView style={styles.contentScroll}>
@@ -593,9 +549,41 @@ export default function TOEFLScreen() {
           <View style={styles.writingPromptBox}>
             <Text style={styles.writingPromptLabel}>📝 에세이 주제</Text>
             <Text style={styles.writingPrompt}>
-              "Describe the most significant challenge you faced in your academic life and explain how you overcame it. Provide specific examples and reflect on what you learned from the experience."
+              {toeflProblems?.writing?.prompt || "Loading writing prompt..."}
             </Text>
           </View>
+
+          {toeflProblems?.writing?.structure && (
+            <View style={styles.writingStructureBox}>
+              <Text style={styles.writingStructureLabel}>💡 에세이 구조 가이드</Text>
+              {Object.entries(toeflProblems.writing.structure).map(([key, value], idx) => (
+                <View key={idx} style={styles.structureItem}>
+                  <Text style={styles.structureKey}>{key.toUpperCase()}</Text>
+                  <Text style={styles.structureValue}>{value}</Text>
+                </View>
+              ))}
+            </View>
+          )}
+
+          {toeflProblems?.writing?.useful_phrases && (
+            <View style={styles.phrasesBox}>
+              <Text style={styles.phrasesLabel}>📌 유용한 표현들</Text>
+              <View style={styles.phrasesList}>
+                {toeflProblems.writing.useful_phrases.map((phrase: string, idx: number) => (
+                  <TouchableOpacity
+                    key={idx}
+                    style={styles.phraseChip}
+                    onPress={() => {
+                      const current = writingAnswers['essay1'] || '';
+                      setWritingAnswers({...writingAnswers, 'essay1': current + (current ? ' ' : '') + phrase});
+                    }}
+                  >
+                    <Text style={styles.phraseText}>{phrase}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+          )}
 
           <Text style={styles.writingLabel}>✏️ 당신의 답변 (최소 150단어)</Text>
           <TextInput
@@ -652,136 +640,118 @@ export default function TOEFLScreen() {
     </ScrollView>
   );
 
-  const renderReadingContent = () => (
-    <ScrollView style={styles.contentScroll}>
-      <Text style={styles.contentTitle}>📖 Reading Comprehension</Text>
+  const renderSpeakingContent = () => {
+    if (!toeflProblems?.speaking) {
+      return (
+        <ScrollView style={styles.contentScroll}>
+          <Text style={styles.contentTitle}>🎤 Speaking</Text>
+          <Text style={styles.loadingText}>Loading speaking problems...</Text>
+        </ScrollView>
+      );
+    }
 
-      <View style={styles.passageBox}>
-        <Text style={styles.passageLabel}>지문</Text>
-        <Text style={styles.passageText}>
-          The industrial revolution, which began in the late 18th century, fundamentally transformed human society. It marked the transition from agrarian economies to industrial and machine-based manufacturing. In Britain, the invention of the steam engine by James Watt revolutionized textile production and transportation. This technological advancement spread rapidly across Europe and North America, reshaping social structures, labor practices, and urban development.
+    const speaking = toeflProblems.speaking;
+    return (
+      <ScrollView style={styles.contentScroll}>
+        <Text style={styles.contentTitle}>🎤 Speaking</Text>
 
-          The revolution introduced factories, where workers congregated to operate machinery. While productivity increased dramatically, working conditions were often harsh and dangerous. Children and women labored long hours in dimly lit factories for minimal wages. Environmental pollution became a significant problem as industrial cities grew rapidly without proper planning.
+        <View style={styles.speakingPromptBox}>
+          <Text style={styles.speakingPromptLabel}>📢 스피킹 주제</Text>
+          <Text style={styles.speakingPrompt}>{speaking.prompt || 'Loading prompt...'}</Text>
+        </View>
 
-          Despite these challenges, the industrial revolution elevated living standards for many people in the long term. It created the modern working class and sparked labor movements that eventually led to improved working conditions and workers' rights. The technological innovations from this period laid the foundation for modern industrial society and continue to influence our world today.
-        </Text>
-      </View>
+        {speaking.useful_expressions && speaking.useful_expressions.length > 0 && (
+          <View style={styles.expressionsBox}>
+            <Text style={styles.expressionsLabel}>💬 유용한 표현들</Text>
+            {speaking.useful_expressions.map((expr: string, idx: number) => (
+              <Text key={idx} style={styles.expressionItem}>• {expr}</Text>
+            ))}
+          </View>
+        )}
 
-      <View style={styles.keywordsBox}>
-        <Text style={styles.keywordsLabel}>어려운 단어</Text>
-        <View style={styles.vocabularyList}>
-          {[
-            { word: 'Agrarian', meaning: '🌾 농업에 관련된, 농촌의라는 뜻이에요. 농사나 목축 중심의 사회를 말할 때 써요.' },
-            { word: 'Industrialization', meaning: '🏭 수공업에서 기계 생산으로 바뀌는 과정이에요. 산업화라고도 하지요.' },
-            { word: 'Congregated', meaning: '👥 모여들다, 집결하다는 뜻이에요. 많은 사람들이 한곳에 모일 때 쓰입니다.' },
-            { word: 'Textile', meaning: '🧵 직물, 천이라는 뜻이에요. 면, 비단, 울 같은 옷감 만드는 산업을 말해요.' },
-            { word: 'Labor Movement', meaning: '✊ 노동자들이 권리를 위해 함께 운동하는 것을 말해요. 더 나은 일자리를 만들기 위한 활동입니다.' },
-          ].map((item, idx) => (
-            <TouchableOpacity
-              key={idx}
-              style={styles.vocabularyItem}
-              onPress={() => saveVocabularyToNetlify(item.word, item.meaning, '📖', 'reading')}
-            >
-              <Text style={styles.vocabularyWord}>{item.word}</Text>
-              <Text style={styles.vocabularyMeaning}>{item.meaning}</Text>
-              <Text style={styles.saveHint}>💾 터치하면 저장</Text>
-            </TouchableOpacity>
+        {speaking.sample_points && speaking.sample_points.length > 0 && (
+          <View style={styles.samplePointsBox}>
+            <Text style={styles.samplePointsLabel}>💡 답변 포인트</Text>
+            {speaking.sample_points.map((point: string, idx: number) => (
+              <Text key={idx} style={styles.samplePointItem}>• {point}</Text>
+            ))}
+          </View>
+        )}
+
+        <View style={styles.speakingTipBox}>
+          <Text style={styles.speakingTipLabel}>팁 💡</Text>
+          <Text style={styles.speakingTipText}>1. 충분히 생각할 시간을 가지세요 (약 30초)</Text>
+          <Text style={styles.speakingTipText}>2. 명확하고 천천히 말씀하세요</Text>
+          <Text style={styles.speakingTipText}>3. 구체적인 예시를 포함하세요</Text>
+          <Text style={styles.speakingTipText}>4. 문법과 발음에 신경 쓰세요</Text>
+        </View>
+      </ScrollView>
+    );
+  };
+
+  const renderReadingContent = () => {
+    if (!toeflProblems?.reading) {
+      return (
+        <ScrollView style={styles.contentScroll}>
+          <Text style={styles.contentTitle}>📖 Reading Comprehension</Text>
+          <Text style={styles.loadingText}>Loading reading problems...</Text>
+        </ScrollView>
+      );
+    }
+
+    const reading = toeflProblems.reading;
+    return (
+      <ScrollView style={styles.contentScroll}>
+        <Text style={styles.contentTitle}>📖 Reading Comprehension</Text>
+
+        <View style={styles.passageBox}>
+          <Text style={styles.passageLabel}>지문</Text>
+          {reading.title && <Text style={styles.passageTitle}>{reading.title}</Text>}
+          <Text style={styles.passageText}>{reading.passage}</Text>
+        </View>
+
+        <View style={styles.questionsBox}>
+          <Text style={styles.questionsLabel}>문제</Text>
+
+          {reading.questions && reading.questions.map((q: any, qIdx: number) => (
+            <View key={`q_${qIdx}`} style={styles.questionBox}>
+              <Text style={styles.questionText}>{q.q || `Q${qIdx + 1}`}</Text>
+              <View style={styles.optionsContainer}>
+                {q.options && q.options.map((option: string, optIdx: number) => (
+                  <TouchableOpacity
+                    key={optIdx}
+                    style={[
+                      styles.optionButton,
+                      selectedAnswers[`read_q${qIdx}`] === optIdx && styles.optionButtonSelected,
+                      selectedAnswers[`read_q${qIdx}`] === optIdx && optIdx === q.answer && styles.optionButtonCorrect,
+                    ]}
+                    onPress={() => selectAnswer(`read_q${qIdx}`, optIdx)}
+                  >
+                    <Text style={[
+                      styles.optionText,
+                      selectedAnswers[`read_q${qIdx}`] === optIdx && styles.optionTextSelected,
+                    ]}>
+                      {option}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+              {selectedAnswers[`read_q${qIdx}`] !== undefined && (
+                <Text style={selectedAnswers[`read_q${qIdx}`] === q.answer ? styles.correctText : styles.incorrectText}>
+                  {selectedAnswers[`read_q${qIdx}`] === q.answer
+                    ? '✓ 정답!'
+                    : `✗ 틀렸습니다. 정답은 ${String.fromCharCode(65 + q.answer)}입니다.`}
+                </Text>
+              )}
+              {selectedAnswers[`read_q${qIdx}`] !== undefined && q.explanation && (
+                <Text style={styles.explanationText}>{q.explanation}</Text>
+              )}
+            </View>
           ))}
         </View>
-      </View>
-
-      <View style={styles.questionsBox}>
-        <Text style={styles.questionsLabel}>문제</Text>
-
-        <View style={styles.questionBox}>
-          <Text style={styles.questionText}>Q1. According to the passage, what was James Watt's main contribution?</Text>
-          <View style={styles.optionsContainer}>
-            {['A) He invented the factory system', 'B) He invented the steam engine', 'C) He improved textile production'].map((option, idx) => (
-              <TouchableOpacity
-                key={idx}
-                style={[
-                  styles.optionButton,
-                  selectedAnswers['q1'] === idx && styles.optionButtonSelected,
-                  selectedAnswers['q1'] === idx && idx === 1 && styles.optionButtonCorrect,
-                ]}
-                onPress={() => selectAnswer('q1', idx)}
-              >
-                <Text style={[
-                  styles.optionText,
-                  selectedAnswers['q1'] === idx && styles.optionTextSelected,
-                ]}>
-                  {option}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-          {selectedAnswers['q1'] !== undefined && (
-            <Text style={selectedAnswers['q1'] === 1 ? styles.correctText : styles.incorrectText}>
-              {selectedAnswers['q1'] === 1 ? '✓ 정답!' : '✗ 틀렸습니다. 정답은 B입니다.'}
-            </Text>
-          )}
-        </View>
-
-        <View style={styles.questionBox}>
-          <Text style={styles.questionText}>Q2. What problem is mentioned about working conditions during the industrial revolution?</Text>
-          <View style={styles.optionsContainer}>
-            {['A) Workers were paid too much', 'B) Working conditions were harsh and dangerous', 'C) There were no factories'].map((option, idx) => (
-              <TouchableOpacity
-                key={idx}
-                style={[
-                  styles.optionButton,
-                  selectedAnswers['q2'] === idx && styles.optionButtonSelected,
-                  selectedAnswers['q2'] === idx && idx === 1 && styles.optionButtonCorrect,
-                ]}
-                onPress={() => selectAnswer('q2', idx)}
-              >
-                <Text style={[
-                  styles.optionText,
-                  selectedAnswers['q2'] === idx && styles.optionTextSelected,
-                ]}>
-                  {option}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-          {selectedAnswers['q2'] !== undefined && (
-            <Text style={selectedAnswers['q2'] === 1 ? styles.correctText : styles.incorrectText}>
-              {selectedAnswers['q2'] === 1 ? '✓ 정답!' : '✗ 틀렸습니다. 정답은 B입니다.'}
-            </Text>
-          )}
-        </View>
-
-        <View style={styles.questionBox}>
-          <Text style={styles.questionText}>Q3. What is the main idea of the passage?</Text>
-          <View style={styles.optionsContainer}>
-            {['A) The industrial revolution had negative effects only', 'B) The industrial revolution transformed society with both positive and negative impacts', 'C) Factory workers had good working conditions'].map((option, idx) => (
-              <TouchableOpacity
-                key={idx}
-                style={[
-                  styles.optionButton,
-                  selectedAnswers['q3'] === idx && styles.optionButtonSelected,
-                  selectedAnswers['q3'] === idx && idx === 1 && styles.optionButtonCorrect,
-                ]}
-                onPress={() => selectAnswer('q3', idx)}
-              >
-                <Text style={[
-                  styles.optionText,
-                  selectedAnswers['q3'] === idx && styles.optionTextSelected,
-                ]}>
-                  {option}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-          {selectedAnswers['q3'] !== undefined && (
-            <Text style={selectedAnswers['q3'] === 1 ? styles.correctText : styles.incorrectText}>
-              {selectedAnswers['q3'] === 1 ? '✓ 정답!' : '✗ 틀렸습니다. 정답은 B입니다.'}
-            </Text>
-          )}
-        </View>
-      </View>
-    </ScrollView>
-  );
+      </ScrollView>
+    );
+  };
 
   if (loading) {
     return (
@@ -822,6 +792,7 @@ export default function TOEFLScreen() {
           {selectedSection.id === 'reading' && renderReadingContent()}
           {selectedSection.id === 'listening' && renderListeningContent()}
           {selectedSection.id === 'writing' && renderWritingContent()}
+          {selectedSection.id === 'speaking' && renderSpeakingContent()}
 
           <View style={styles.progressSection}>
             <Text style={styles.progressLabel}>진행 상황</Text>
@@ -927,6 +898,21 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#64748b',
     textAlign: 'center',
+  },
+  passageTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#1e293b',
+    marginBottom: 12,
+  },
+  explanationText: {
+    fontSize: 13,
+    color: '#64748b',
+    marginTop: 8,
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: '#e2e8f0',
+    fontStyle: 'italic',
   },
   tabButtons: {
     flexDirection: 'row',
@@ -1460,6 +1446,154 @@ const styles = StyleSheet.create({
     lineHeight: 36,
     color: '#334155',
     fontFamily: 'System',
+  },
+  writingStructureBox: {
+    backgroundColor: '#f0f9ff',
+    borderRadius: 12,
+    padding: 14,
+    marginHorizontal: 16,
+    marginVertical: 12,
+    borderLeftWidth: 4,
+    borderLeftColor: '#0284c7',
+  },
+  writingStructureLabel: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#0284c7',
+    marginBottom: 12,
+  },
+  structureItem: {
+    marginBottom: 10,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0f2fe',
+  },
+  structureKey: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#0c4a6e',
+    marginBottom: 4,
+  },
+  structureValue: {
+    fontSize: 12,
+    color: '#0c4a6e',
+    lineHeight: 18,
+  },
+  phrasesBox: {
+    backgroundColor: '#fef3c7',
+    borderRadius: 12,
+    padding: 14,
+    marginHorizontal: 16,
+    marginVertical: 12,
+    borderLeftWidth: 4,
+    borderLeftColor: '#f59e0b',
+  },
+  phrasesLabel: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#b45309',
+    marginBottom: 12,
+  },
+  phrasesList: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  phraseChip: {
+    backgroundColor: '#fef08a',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#f59e0b',
+  },
+  phraseText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#78350f',
+  },
+  speakingPromptBox: {
+    backgroundColor: '#f0fdf4',
+    borderRadius: 12,
+    padding: 16,
+    marginHorizontal: 16,
+    marginVertical: 12,
+    borderLeftWidth: 4,
+    borderLeftColor: '#10b981',
+  },
+  speakingPromptLabel: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#10b981',
+    marginBottom: 8,
+  },
+  speakingPrompt: {
+    fontSize: 14,
+    lineHeight: 22,
+    color: '#1e293b',
+  },
+  expressionsBox: {
+    backgroundColor: '#fef3c7',
+    borderRadius: 12,
+    padding: 14,
+    marginHorizontal: 16,
+    marginVertical: 12,
+    borderLeftWidth: 4,
+    borderLeftColor: '#f59e0b',
+  },
+  expressionsLabel: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#b45309',
+    marginBottom: 10,
+  },
+  expressionItem: {
+    fontSize: 13,
+    color: '#78350f',
+    lineHeight: 20,
+    marginBottom: 6,
+  },
+  samplePointsBox: {
+    backgroundColor: '#f0f9ff',
+    borderRadius: 12,
+    padding: 14,
+    marginHorizontal: 16,
+    marginVertical: 12,
+    borderLeftWidth: 4,
+    borderLeftColor: '#0284c7',
+  },
+  samplePointsLabel: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#0284c7',
+    marginBottom: 10,
+  },
+  samplePointItem: {
+    fontSize: 13,
+    color: '#0c4a6e',
+    lineHeight: 20,
+    marginBottom: 6,
+  },
+  speakingTipBox: {
+    backgroundColor: '#fef2f2',
+    borderRadius: 12,
+    padding: 14,
+    marginHorizontal: 16,
+    marginVertical: 12,
+    borderLeftWidth: 4,
+    borderLeftColor: '#ef4444',
+  },
+  speakingTipLabel: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#991b1b',
+    marginBottom: 10,
+  },
+  speakingTipText: {
+    fontSize: 13,
+    color: '#7f1d1d',
+    lineHeight: 20,
+    marginBottom: 6,
   },
   keywordsBox: {
     backgroundColor: '#fef3c7',

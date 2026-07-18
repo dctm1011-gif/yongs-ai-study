@@ -9,7 +9,6 @@ import PapersScreen from './papers';
 import PlayScreen from './play';
 import StorageScreen from './storage';
 import SettingsScreen from './settings';
-import ProgressScreen from './progress';
 import InvestmentScreen from './investment';
 import { useAnnouncements } from '../hooks/useAnnouncements';
 import { AnnouncementModal } from '../components/AnnouncementModal';
@@ -126,16 +125,6 @@ export default function RootLayout() {
             title: 'Settings',
             tabBarIcon: ({ color, size }) => (
               <MaterialIcons name="settings" size={24} color={color} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Progress"
-          component={ProgressScreen}
-          options={{
-            title: 'Progress',
-            tabBarIcon: ({ color, size }) => (
-              <MaterialIcons name="insert-chart" size={24} color={color} />
             ),
           }}
         />

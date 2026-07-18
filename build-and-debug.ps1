@@ -7,6 +7,35 @@ Write-Host ""
 
 $startTime = Get-Date
 
+# WiFi ADB 연결 설정
+Write-Host "Connecting to device via WiFi..." -ForegroundColor Cyan
+$wifiDevice = "192.168.219.135:37081"
+adb connect $wifiDevice 2>&1 | Out-Null
+Start-Sleep -Seconds 2
+
+# 기기 연결 확인
+$devices = adb devices | Select-Object -Skip 1 | Where-Object { $_ -match "device" }
+if ($devices) {
+  Write-Host "✅ Device connected: $wifiDevice" -ForegroundColor Green
+} else {
+  Write-Host "⚠️  Device not found. Attempting reconnection..." -ForegroundColor Yellow
+  adb disconnect $wifiDevice 2>&1 | Out-Null
+  Start-Sleep -Seconds 1
+  adb connect $wifiDevice 2>&1 | Out-Null
+  Start-Sleep -Seconds 2
+
+  $devices = adb devices | Select-Object -Skip 1 | Where-Object { $_ -match "device" }
+  if (-not $devices) {
+    Write-Host "❌ Failed to connect to device at $wifiDevice" -ForegroundColor Red
+    Write-Host "Please ensure:" -ForegroundColor Yellow
+    Write-Host "  1. Device WiFi is enabled" -ForegroundColor Yellow
+    Write-Host "  2. USB Debugging is ON" -ForegroundColor Yellow
+    Write-Host "  3. WiFi ADB is enabled on device" -ForegroundColor Yellow
+    exit 1
+  }
+}
+Write-Host ""
+
 # Step 0: Pre-build checks
 Write-Host "Step 0: Pre-build Checks..." -ForegroundColor Cyan
 cd "C:\Users\dctm1\YongStudyApp"

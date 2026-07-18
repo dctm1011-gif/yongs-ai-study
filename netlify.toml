@@ -4,37 +4,31 @@
 
 # Fetch trending topics daily at 06:00 AM UTC
 [[functions]]
-  node_bundler = "esbuild"
   name = "fetch-trends"
   schedule = "0 6 * * *"
 
 # Update progress daily at 06:00 AM UTC
 [[functions]]
-  node_bundler = "esbuild"
   name = "update-progress"
   schedule = "0 6 * * *"
 
 # Daily sync orchestration at 06:00 AM UTC
 [[functions]]
-  node_bundler = "esbuild"
   name = "daily-sync-orchestration"
   schedule = "0 6 * * *"
 
 # Batch sync retry every 6 hours
 [[functions]]
-  node_bundler = "esbuild"
   name = "batch-sync-retry"
   schedule = "0 */6 * * *"
 
 # Weekly investment summary every Monday at 06:00 UTC
 [[functions]]
-  node_bundler = "esbuild"
   name = "weekly-investment-summary"
   schedule = "0 6 * * 1"
 
 # AI recommendations analysis daily at 07:00 UTC
 [[functions]]
-  node_bundler = "esbuild"
   name = "ai-recommendations"
   schedule = "0 7 * * *"
 

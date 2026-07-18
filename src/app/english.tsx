@@ -48,6 +48,8 @@ export default function EnglishScreen() {
   const [refreshing, setRefreshing] = useState(false);
   const [loadStartTime] = useState(Date.now());
   const [isCached, setIsCached] = useState(false);
+  const [lastUpdateTime, setLastUpdateTime] = useState<string | null>(null);
+  const [cacheTimeLeft, setCacheTimeLeft] = useState<string>('캐시 정보 로딩 중...');
 
   // Performance monitoring
   useEffect(() => {
@@ -62,6 +64,34 @@ export default function EnglishScreen() {
       console.log(`📊 English tab loaded in ${loadTime}ms (cached: ${isCached})`);
     }
   }, [loading, isCached, loadStartTime]);
+
+  // Update cache time display
+  useEffect(() => {
+    const updateCacheDisplay = async () => {
+      const lastUpdate = await AsyncStorage.getItem('english_data_updated_at');
+      if (lastUpdate) {
+        setLastUpdateTime(lastUpdate);
+        const updatedTime = parseInt(lastUpdate);
+        const now = Date.now();
+        const ageMs = now - updatedTime;
+        const cacheExpireMs = 24 * 60 * 60 * 1000; // 24 hours
+        const timeLeftMs = cacheExpireMs - ageMs;
+
+        if (timeLeftMs > 0) {
+          const hours = Math.floor(timeLeftMs / (60 * 60 * 1000));
+          const minutes = Math.floor((timeLeftMs % (60 * 60 * 1000)) / (60 * 1000));
+          setCacheTimeLeft(`${hours}시간 ${minutes}분 남음`);
+        } else {
+          setCacheTimeLeft('캐시 만료됨');
+        }
+      }
+    };
+
+    updateCacheDisplay();
+    const interval = setInterval(updateCacheDisplay, 60000); // Update every minute
+
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     loadData();
@@ -83,6 +113,14 @@ export default function EnglishScreen() {
         await AsyncStorage.setItem('english_last_refresh', `${today}T06:00:00`);
       }
     }
+  };
+
+  const saveUpdateTime = async () => {
+    const timestamp = Date.now().toString();
+    await AsyncStorage.setItem('english_data_updated_at', timestamp);
+    setLastUpdateTime(timestamp);
+    // Reset cache time left
+    setCacheTimeLeft('24시간 남음');
   };
 
   const loadData = async () => {
@@ -117,6 +155,7 @@ export default function EnglishScreen() {
             setWords(mergedWords);
             await AsyncStorage.setItem('english_words', JSON.stringify(mergedWords));
             await cacheManager.set('english_words', mergedWords, 24 * 60 * 60 * 1000);
+            await saveUpdateTime();
 
             const generatedQuizzes = generateQuizzes(mergedWords);
             setQuizzes(generatedQuizzes);
@@ -138,6 +177,7 @@ export default function EnglishScreen() {
         setWords(mergedWords);
         await AsyncStorage.setItem('english_words', JSON.stringify(mergedWords));
         await cacheManager.set('english_words', mergedWords, 24 * 60 * 60 * 1000);
+        await saveUpdateTime();
 
         const generatedQuizzes = generateQuizzes(mergedWords);
         setQuizzes(generatedQuizzes);
@@ -161,6 +201,34 @@ export default function EnglishScreen() {
 
   const fetchEnglishFromNetlify = async (): Promise<NetlifyWord[] | null> => {
     try {
+      // Try to fetch today's 10 phrases first (new daily format)
+      try {
+        const dailyResponse = await fetch(`${NETLIFY_BASE_URL}/.netlify/functions/english-daily`, {
+          headers: { 'Cache-Control': 'no-cache' },
+        });
+        if (dailyResponse.ok) {
+          const dailyData = await dailyResponse.json();
+          if (dailyData.words && Array.isArray(dailyData.words)) {
+            console.log(`📚 Loaded ${dailyData.words.length} daily English phrases`);
+            // Transform to NetlifyWord format
+            return dailyData.words.map((w: any) => ({
+              id: w.id,
+              word: w.word,
+              pos: w.part_of_speech,
+              date: dailyData.date || new Date().toISOString().split('T')[0],
+              meaning: w.meaning_ko,
+              example_ko: w.example_ko,
+              example_en: w.example_en,
+              explanation: w.explanation,
+              emoji: w.emoji,
+            }));
+          }
+        }
+      } catch (e) {
+        console.warn('Daily phrases fetch failed, trying word database...');
+      }
+
+      // Fallback: fetch from words_db.json for all historical words
       const response = await fetch(`${NETLIFY_BASE_URL}/english/words_db.json`);
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const data = await response.json();
@@ -338,6 +406,7 @@ export default function EnglishScreen() {
 
         setWords(mergedWords);
         await AsyncStorage.setItem('english_words', JSON.stringify(mergedWords));
+        await saveUpdateTime();
 
         const generatedQuizzes = generateQuizzes(mergedWords);
         setQuizzes(generatedQuizzes);
@@ -371,6 +440,20 @@ export default function EnglishScreen() {
     );
   }
 
+  const formatLastUpdateTime = (timestamp: string | null): string => {
+    if (!timestamp) return '업데이트 정보 없음';
+    try {
+      const date = new Date(parseInt(timestamp));
+      const hours = date.getHours().toString().padStart(2, '0');
+      const minutes = date.getMinutes().toString().padStart(2, '0');
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0');
+      return `${month}/${day} ${hours}:${minutes}`;
+    } catch {
+      return '업데이트 정보 없음';
+    }
+  };
+
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.header}>
@@ -382,6 +465,10 @@ export default function EnglishScreen() {
           <TouchableOpacity onPress={refreshFromNetlify} disabled={refreshing} style={styles.refreshButton}>
             <Text style={styles.refreshIcon}>{refreshing ? '⏳' : '🔄'}</Text>
           </TouchableOpacity>
+        </View>
+        <View style={styles.headerInfo}>
+          <Text style={styles.headerInfoText}>⏰ 마지막 업데이트: {formatLastUpdateTime(lastUpdateTime)}</Text>
+          <Text style={styles.headerInfoText}>💾 {cacheTimeLeft}</Text>
         </View>
       </View>
 
@@ -590,6 +677,17 @@ const styles = StyleSheet.create({
   headerSubtitle: {
     fontSize: 11,
     color: '#dbeafe',
+  },
+  headerInfo: {
+    marginTop: 10,
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255,255,255,0.2)',
+  },
+  headerInfoText: {
+    fontSize: 10,
+    color: '#e0e7ff',
+    marginVertical: 2,
   },
   refreshButton: {
     padding: 8,

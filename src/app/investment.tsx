@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
   View,
   Text,
@@ -14,260 +14,164 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useInvestmentSync, InvestmentProperty, UserInvestmentPreferences } from '../hooks/useInvestmentSync';
+import { useInvestmentSync, InvestmentColumn } from '../hooks/useInvestmentSync';
 
 const { width } = Dimensions.get('window');
 
-interface PropertyCardProps {
-  property: InvestmentProperty;
-  isFavorite: boolean;
-  onToggleFavorite: () => void;
+interface ColumnCardProps {
+  column: InvestmentColumn;
+  isBookmarked: boolean;
+  onToggleBookmark: () => void;
   onPress: () => void;
 }
 
-interface InvestmentAlert {
-  propertyId: string;
-  severity: string;
-  name: string;
-  location: string;
-  alert: string;
-  changePercent: number;
-}
+const ColumnCard: React.FC<ColumnCardProps> = React.memo(
+  ({
+    column,
+    isBookmarked,
+    onToggleBookmark,
+    onPress,
+  }) => {
+    const getCategoryLabel = useCallback((category: string) => {
+      return category === 'real-estate' ? '부동산' : '주식';
+    }, []);
 
-interface AlertCardProps {
-  alert: InvestmentAlert;
-}
+    const getCategoryColor = useCallback((category: string) => {
+      return category === 'real-estate' ? '#8b5cf6' : '#06b6d4';
+    }, []);
 
-const AlertCard: React.FC<AlertCardProps> = ({ alert }) => {
-  const getAlertColor = (severity: string) => {
-    switch (severity) {
-      case 'high':
-        return '#ef4444';
-      case 'medium':
-        return '#f59e0b';
-      default:
-        return '#3b82f6';
-    }
-  };
+    const getOutlookIcon = useCallback((outlook: string) => {
+      switch (outlook) {
+        case 'positive':
+          return 'trending-up';
+        case 'negative':
+          return 'trending-down';
+        default:
+          return 'trending-flat';
+      }
+    }, []);
 
-  return (
-    <View style={[styles.alertCard, { borderLeftColor: getAlertColor(alert.severity) }]}>
-      <View style={styles.alertHeader}>
-        <MaterialIcons
-          name={alert.severity === 'high' ? 'trending-up' : 'info'}
-          size={20}
-          color={getAlertColor(alert.severity)}
-        />
-        <View style={styles.alertContent}>
-          <Text style={styles.alertTitle}>{alert.name}</Text>
-          <Text style={styles.alertSubtitle}>{alert.location}</Text>
-        </View>
-      </View>
-      <Text style={[styles.alertMessage, { color: getAlertColor(alert.severity) }]}>
-        {alert.alert}
-      </Text>
-    </View>
-  );
-};
+    const getOutlookColor = useCallback((outlook: string) => {
+      switch (outlook) {
+        case 'positive':
+          return '#10b981';
+        case 'negative':
+          return '#ef4444';
+        default:
+          return '#f59e0b';
+      }
+    }, []);
 
-interface PortfolioCardProps {
-  stats: PortfolioStats;
-}
-
-const PortfolioCard: React.FC<PortfolioCardProps> = ({ stats }) => {
-  const formatPrice = (price: number) => {
-    if (price >= 1000000000) {
-      return `${(price / 1000000000).toFixed(1)}억`;
-    }
-    return `${(price / 1000000).toFixed(0)}백만`;
-  };
+    const formatDate = useCallback((dateString: string) => {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' });
+    }, []);
 
   return (
-    <View style={styles.portfolioCard}>
-      <View style={styles.portfolioHeader}>
-        <MaterialIcons name="account-balance-wallet" size={20} color="#2563eb" />
-        <Text style={styles.portfolioTitle}>포트폴리오 추적</Text>
-      </View>
-
-      <View style={styles.portfolioStats}>
-        <View style={styles.statItem}>
-          <Text style={styles.statLabel}>보유 자산</Text>
-          <Text style={styles.statValue}>{stats.totalFavorites}개</Text>
-        </View>
-        <View style={styles.statItem}>
-          <Text style={styles.statLabel}>누적 ROI</Text>
-          <Text style={[styles.statValue, { color: '#10b981' }]}>
-            {stats.cumulativeROI.toFixed(1)}%
-          </Text>
-        </View>
-        <View style={styles.statItem}>
-          <Text style={styles.statLabel}>평균 ROI</Text>
-          <Text style={[styles.statValue, { color: '#3b82f6' }]}>
-            {stats.averageROI.toFixed(2)}%
-          </Text>
-        </View>
-      </View>
-
-      <View style={styles.portfolioBreakdown}>
-        <Text style={styles.breakdownTitle}>자산 구성</Text>
-        {stats.portfolio.map((item, index) => (
-          <View key={index} style={styles.breakdownItem}>
-            <View style={styles.breakdownLabel}>
-              <Text style={styles.breakdownType}>{item.type}</Text>
-              <Text style={styles.breakdownCount}>{item.count}개</Text>
-            </View>
-            <View style={styles.breakdownBar}>
-              <View
-                style={[
-                  styles.breakdownFill,
-                  { width: `${item.percentage}%` },
-                ]}
-              />
-            </View>
-            <Text style={styles.breakdownPercent}>{item.percentage.toFixed(0)}%</Text>
+    <TouchableOpacity style={styles.columnCard} onPress={onPress} activeOpacity={0.7}>
+      <View style={styles.columnHeader}>
+        <View style={styles.columnMeta}>
+          <View
+            style={[
+              styles.categoryBadge,
+              { backgroundColor: getCategoryColor(column.category) },
+            ]}
+          >
+            <Text style={styles.categoryLabel}>{getCategoryLabel(column.category)}</Text>
           </View>
-        ))}
-      </View>
-
-      {stats.totalValue > 0 && (
-        <View style={styles.portfolioTotal}>
-          <Text style={styles.totalLabel}>총 자산가</Text>
-          <Text style={styles.totalValue}>{formatPrice(stats.totalValue)}</Text>
-        </View>
-      )}
-
-      {stats.portfolio.some(p => p.percentage > 70) && (
-        <View style={styles.balanceRecommendation}>
-          <MaterialIcons name="lightbulb" size={16} color="#f59e0b" />
-          <Text style={styles.recommendationText}>
-            포트폴리오 균형 조정을 권장합니다
-          </Text>
-        </View>
-      )}
-    </View>
-  );
-};
-
-const PropertyCard: React.FC<PropertyCardProps> = ({
-  property,
-  isFavorite,
-  onToggleFavorite,
-  onPress,
-}) => {
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'available':
-        return '#10b981';
-      case 'pending':
-        return '#f59e0b';
-      case 'sold':
-        return '#ef4444';
-      default:
-        return '#6b7280';
-    }
-  };
-
-  const getROIColor = (roi: number) => {
-    if (roi > 3) return '#10b981';
-    if (roi > 2) return '#3b82f6';
-    return '#f59e0b';
-  };
-
-  const formatPrice = (price: number) => {
-    if (price >= 1000000000) {
-      return `${(price / 1000000000).toFixed(1)}억`;
-    }
-    return `${(price / 1000000).toFixed(0)}백만`;
-  };
-
-  return (
-    <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.7}>
-      <View style={styles.cardHeader}>
-        <View style={styles.cardTitleSection}>
-          <Text style={styles.propertyName} numberOfLines={2}>
-            {property.name}
-          </Text>
-          <View style={styles.locationBadge}>
-            <MaterialIcons name="location-on" size={14} color="#6b7280" />
-            <Text style={styles.location}>{property.location}</Text>
-          </View>
+          <Text style={styles.dateText}>{formatDate(column.date)}</Text>
         </View>
         <TouchableOpacity
-          style={styles.favoriteButton}
-          onPress={onToggleFavorite}
+          style={styles.bookmarkButton}
+          onPress={onToggleBookmark}
           hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
         >
           <MaterialIcons
-            name={isFavorite ? 'favorite' : 'favorite-border'}
+            name={isBookmarked ? 'bookmark' : 'bookmark-border'}
             size={24}
-            color={isFavorite ? '#ef4444' : '#d1d5db'}
+            color={isBookmarked ? '#f59e0b' : '#d1d5db'}
           />
         </TouchableOpacity>
       </View>
 
-      <View style={styles.cardMetrics}>
-        <View style={styles.metricBox}>
-          <Text style={styles.metricLabel}>ROI</Text>
-          <Text style={[styles.metricValue, { color: getROIColor(property.roi) }]}>
-            {property.roi.toFixed(1)}%
-          </Text>
-        </View>
-        <View style={styles.metricBox}>
-          <Text style={styles.metricLabel}>가격</Text>
-          <Text style={styles.metricValue}>{formatPrice(property.price)}</Text>
-        </View>
-        <View style={styles.metricBox}>
-          <Text style={styles.metricLabel}>타입</Text>
-          <Text style={styles.metricValue}>{getPropertyTypeKorean(property.type)}</Text>
-        </View>
-        <View style={styles.metricBox}>
-          <Text style={styles.metricLabel}>상태</Text>
-          <View
-            style={[
-              styles.statusBadge,
-              { backgroundColor: getStatusColor(property.status) },
-            ]}
-          >
-            <Text style={styles.statusText}>{getStatusKorean(property.status)}</Text>
+      <Text style={styles.columnTitle} numberOfLines={2}>
+        {column.title}
+      </Text>
+
+      <View style={styles.columnInfo}>
+        <View style={styles.authorInfo}>
+          <MaterialIcons name="person" size={14} color="#6b7280" />
+          <View style={styles.authorDetails}>
+            <Text style={styles.authorName}>{column.author}</Text>
+            <Text style={styles.authorTitle}>{column.authorTitle}</Text>
           </View>
+        </View>
+        <View style={styles.outlookBadge}>
+          <MaterialIcons
+            name={getOutlookIcon(column.outlook)}
+            size={14}
+            color={getOutlookColor(column.outlook)}
+          />
+          <Text style={[styles.outlookText, { color: getOutlookColor(column.outlook) }]}>
+            {column.outlook === 'positive' ? '긍정' : column.outlook === 'negative' ? '부정' : '중립'}
+          </Text>
         </View>
       </View>
 
-      {property.bedrooms && property.bathrooms && property.area && (
-        <View style={styles.cardDetails}>
-          <View style={styles.detailItem}>
-            <MaterialIcons name="king-bed" size={16} color="#6b7280" />
-            <Text style={styles.detailText}>{property.bedrooms}침</Text>
-          </View>
-          <View style={styles.detailItem}>
-            <MaterialIcons name="shower" size={16} color="#6b7280" />
-            <Text style={styles.detailText}>{property.bathrooms}욕</Text>
-          </View>
-          <View style={styles.detailItem}>
-            <MaterialIcons name="square-foot" size={16} color="#6b7280" />
-            <Text style={styles.detailText}>{property.area}m²</Text>
-          </View>
-        </View>
-      )}
+      <Text style={styles.columnSummary} numberOfLines={2}>
+        {column.summary}
+      </Text>
+
+      <View style={styles.columnFooter}>
+        <Text style={styles.readTime}>약 {column.readTime}분 읽음</Text>
+        <MaterialIcons name="chevron-right" size={20} color="#d1d5db" />
+      </View>
     </TouchableOpacity>
-  );
-};
+    );
+  },
+  (prev, next) => {
+    return (
+      prev.column.id === next.column.id &&
+      prev.isBookmarked === next.isBookmarked
+    );
+  }
+);
 
 interface DetailModalProps {
-  property: InvestmentProperty | null;
+  column: InvestmentColumn | null;
   visible: boolean;
   onClose: () => void;
 }
 
-const DetailModal: React.FC<DetailModalProps> = ({ property, visible, onClose }) => {
-  if (!property) return null;
+const DetailModal: React.FC<DetailModalProps> = React.memo(
+  ({ column, visible, onClose }) => {
+    if (!column) return null;
 
-  const formatPrice = (price: number) => {
-    if (price >= 1000000000) {
-      return `${(price / 1000000000).toFixed(2)}억 원`;
-    }
-    return `${(price / 1000000).toFixed(0)}백만 원`;
-  };
+    const getCategoryLabel = useCallback((category: string) => {
+      return category === 'real-estate'
+        ? '부동산 분석'
+        : '주식 시장 분석';
+    }, []);
+
+    const getOutlookKorean = useCallback((outlook: string) => {
+      switch (outlook) {
+        case 'positive':
+          return '긍정';
+        case 'negative':
+          return '부정';
+        default:
+          return '중립';
+      }
+    }, []);
+
+    const formatDate = useCallback((dateString: string) => {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
+    }, []);
 
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
@@ -276,402 +180,196 @@ const DetailModal: React.FC<DetailModalProps> = ({ property, visible, onClose })
           <TouchableOpacity onPress={onClose} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
             <MaterialIcons name="close" size={28} color="#1f2937" />
           </TouchableOpacity>
-          <Text style={styles.detailTitle}>{property.name}</Text>
+          <Text style={styles.detailTitle}>{getCategoryLabel(column.category)}</Text>
           <View style={{ width: 28 }} />
         </View>
 
         <ScrollView style={styles.detailContent} showsVerticalScrollIndicator={false}>
-          <View style={styles.detailSection}>
-            <Text style={styles.detailSectionTitle}>기본 정보</Text>
-            <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>위치</Text>
-              <Text style={styles.detailValue}>{property.location}</Text>
-            </View>
-            <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>가격</Text>
-              <Text style={styles.detailValue}>{formatPrice(property.price)}</Text>
-            </View>
-            <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>타입</Text>
-              <Text style={styles.detailValue}>{getPropertyTypeKorean(property.type)}</Text>
-            </View>
-            <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>상태</Text>
-              <Text style={styles.detailValue}>{getStatusKorean(property.status)}</Text>
+          <View style={styles.detailMeta}>
+            <Text style={styles.detailDate}>{formatDate(column.date)}</Text>
+            <Text style={styles.detailReadTime}>약 {column.readTime}분 읽음</Text>
+          </View>
+
+          <Text style={styles.detailColumnTitle}>{column.title}</Text>
+
+          <View style={styles.detailAuthor}>
+            <MaterialIcons name="person" size={16} color="#2563eb" />
+            <View>
+              <Text style={styles.detailAuthorName}>{column.author}</Text>
+              <Text style={styles.detailAuthorTitle}>{column.authorTitle}</Text>
             </View>
           </View>
 
-          <View style={styles.detailSection}>
-            <Text style={styles.detailSectionTitle}>투자 정보</Text>
-            <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>ROI</Text>
-              <Text style={[styles.detailValue, styles.roiHighlight]}>
-                {property.roi.toFixed(2)}%
-              </Text>
+          <View style={styles.detailStats}>
+            <View style={styles.statBox}>
+              <Text style={styles.statLabel}>전망</Text>
+              <Text style={styles.statValue}>{getOutlookKorean(column.outlook)}</Text>
             </View>
-            {property.area && (
-              <View style={styles.detailRow}>
-                <Text style={styles.detailLabel}>면적</Text>
-                <Text style={styles.detailValue}>{property.area}m²</Text>
+            {column.region && (
+              <View style={styles.statBox}>
+                <Text style={styles.statLabel}>지역</Text>
+                <Text style={styles.statValue}>{column.region}</Text>
+              </View>
+            )}
+            {column.ticker && (
+              <View style={styles.statBox}>
+                <Text style={styles.statLabel}>티커</Text>
+                <Text style={styles.statValue}>{column.ticker}</Text>
               </View>
             )}
           </View>
 
-          {property.bedrooms && property.bathrooms && (
-            <View style={styles.detailSection}>
-              <Text style={styles.detailSectionTitle}>시설</Text>
-              <View style={styles.detailRow}>
-                <Text style={styles.detailLabel}>침실</Text>
-                <Text style={styles.detailValue}>{property.bedrooms}개</Text>
-              </View>
-              <View style={styles.detailRow}>
-                <Text style={styles.detailLabel}>욕실</Text>
-                <Text style={styles.detailValue}>{property.bathrooms}개</Text>
-              </View>
-            </View>
-          )}
+          <View style={styles.detailSection}>
+            <Text style={styles.detailSectionTitle}>개요</Text>
+            <Text style={styles.detailSectionContent}>{column.summary}</Text>
+          </View>
 
-          {property.trend && property.trend.length > 0 && (
-            <View style={styles.detailSection}>
-              <Text style={styles.detailSectionTitle}>ROI 추이 (최근 30일)</Text>
-              <View style={styles.trendChart}>
-                {property.trend.map((item, index) => (
-                  <View key={index} style={styles.trendBar}>
-                    <View
-                      style={[
-                        styles.trendBarFill,
-                        { height: `${Math.min(item.roi * 10, 100)}%` },
-                      ]}
-                    />
-                  </View>
-                ))}
-              </View>
-              <View style={styles.trendLabels}>
-                <Text style={styles.trendLabel}>15일 전</Text>
-                <Text style={styles.trendLabel}>최근</Text>
-              </View>
-            </View>
-          )}
+          <View style={styles.detailSection}>
+            <Text style={styles.detailSectionTitle}>상세 분석</Text>
+            <Text style={styles.detailSectionContent}>{column.content}</Text>
+          </View>
+
+          <View style={styles.detailSection}>
+            <Text style={styles.detailSectionTitle}>결론</Text>
+            <Text style={styles.detailSectionContent}>{column.analysis}</Text>
+          </View>
         </ScrollView>
       </SafeAreaView>
     </Modal>
-  );
-};
+    );
+  }
+);
 
-interface PreferencesModalProps {
-  preferences: UserInvestmentPreferences | null;
+interface FilterModalProps {
   visible: boolean;
+  selectedCategory: 'all' | 'real-estate' | 'stocks';
   onClose: () => void;
-  onSave: (prefs: Partial<UserInvestmentPreferences>) => Promise<void>;
+  onSelectCategory: (category: 'all' | 'real-estate' | 'stocks') => void;
 }
 
-const PreferencesModal: React.FC<PreferencesModalProps> = ({
-  preferences,
-  visible,
-  onClose,
-  onSave,
-}) => {
-  const [types, setTypes] = useState<string[]>([]);
-  const [locations, setLocations] = useState<string[]>([]);
-  const [minPrice, setMinPrice] = useState('0');
-  const [maxPrice, setMaxPrice] = useState('5000000000');
-  const [minROI, setMinROI] = useState('0');
-  const [saving, setSaving] = useState(false);
-
-  useEffect(() => {
-    if (preferences && visible) {
-      setTypes(preferences.propertyTypes);
-      setLocations(preferences.locations);
-      setMinPrice(String(preferences.minPrice));
-      setMaxPrice(String(preferences.maxPrice));
-      setMinROI(String(preferences.minROI));
-    }
-  }, [preferences, visible]);
-
-  const handleSave = async () => {
-    setSaving(true);
-    try {
-      await onSave({
-        propertyTypes: types,
-        locations,
-        minPrice: parseFloat(minPrice) || 0,
-        maxPrice: parseFloat(maxPrice) || 5000000000,
-        minROI: parseFloat(minROI) || 0,
-      });
-      RNAlert.alert('설정 저장됨', '투자 선호도가 저장되었습니다.');
-      onClose();
-    } catch (error) {
-      RNAlert.alert('오류', '설정 저장에 실패했습니다.');
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const toggleType = (type: string) => {
-    setTypes(prev =>
-      prev.includes(type) ? prev.filter(t => t !== type) : [...prev, type]
+const FilterModal: React.FC<FilterModalProps> = React.memo(
+  ({
+    visible,
+    selectedCategory,
+    onClose,
+    onSelectCategory,
+  }) => {
+    const categories = useMemo(
+      () => [
+        { id: 'all', label: '모든 분석' },
+        { id: 'real-estate', label: '부동산 트렌드' },
+        { id: 'stocks', label: '주식 분석' },
+      ],
+      []
     );
-  };
-
-  const toggleLocation = (location: string) => {
-    setLocations(prev =>
-      prev.includes(location) ? prev.filter(l => l !== location) : [...prev, location]
-    );
-  };
-
-  const propertyTypes = ['apartment', 'villa', 'townhouse', 'land'];
-  const availableLocations = ['강남구', '서초구', '종로구', '성남시', '수원시', '용인시', '고양시'];
 
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
-      <SafeAreaView style={styles.preferencesContainer}>
-        <View style={styles.preferencesHeader}>
+      <SafeAreaView style={styles.filterContainer}>
+        <View style={styles.filterHeader}>
           <TouchableOpacity onPress={onClose} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
             <MaterialIcons name="close" size={28} color="#1f2937" />
           </TouchableOpacity>
-          <Text style={styles.preferencesTitle}>투자 선호도</Text>
-          <TouchableOpacity
-            onPress={handleSave}
-            disabled={saving}
-            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-          >
-            {saving ? (
-              <ActivityIndicator size="small" color="#2563eb" />
-            ) : (
-              <MaterialIcons name="check" size={28} color="#2563eb" />
-            )}
-          </TouchableOpacity>
+          <Text style={styles.filterTitle}>분석 필터</Text>
+          <View style={{ width: 28 }} />
         </View>
 
-        <ScrollView style={styles.preferencesContent} showsVerticalScrollIndicator={false}>
-          <View style={styles.preferencesSection}>
-            <Text style={styles.preferencesLabel}>선호하는 부동산 타입</Text>
-            <View style={styles.toggleGroup}>
-              {propertyTypes.map(type => (
+        <ScrollView style={styles.filterContent}>
+          <View style={styles.filterSection}>
+            <Text style={styles.filterLabel}>카테고리 선택</Text>
+            <View style={styles.filterOptions}>
+              {categories.map(category => (
                 <TouchableOpacity
-                  key={type}
+                  key={category.id}
                   style={[
-                    styles.toggleButton,
-                    types.includes(type) && styles.toggleButtonActive,
+                    styles.filterOption,
+                    selectedCategory === category.id && styles.filterOptionActive,
                   ]}
-                  onPress={() => toggleType(type)}
+                  onPress={() => {
+                    onSelectCategory(category.id as 'all' | 'real-estate' | 'stocks');
+                    onClose();
+                  }}
                 >
+                  <MaterialIcons
+                    name={selectedCategory === category.id ? 'radio-button-checked' : 'radio-button-unchecked'}
+                    size={24}
+                    color={selectedCategory === category.id ? '#2563eb' : '#d1d5db'}
+                  />
                   <Text
                     style={[
-                      styles.toggleButtonText,
-                      types.includes(type) && styles.toggleButtonTextActive,
+                      styles.filterOptionText,
+                      selectedCategory === category.id && styles.filterOptionTextActive,
                     ]}
                   >
-                    {getPropertyTypeKorean(type)}
+                    {category.label}
                   </Text>
                 </TouchableOpacity>
               ))}
-            </View>
-          </View>
-
-          <View style={styles.preferencesSection}>
-            <Text style={styles.preferencesLabel}>선호하는 지역</Text>
-            <View style={styles.toggleGroup}>
-              {availableLocations.map(location => (
-                <TouchableOpacity
-                  key={location}
-                  style={[
-                    styles.toggleButton,
-                    locations.includes(location) && styles.toggleButtonActive,
-                  ]}
-                  onPress={() => toggleLocation(location)}
-                >
-                  <Text
-                    style={[
-                      styles.toggleButtonText,
-                      locations.includes(location) && styles.toggleButtonTextActive,
-                    ]}
-                  >
-                    {location}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-
-          <View style={styles.preferencesSection}>
-            <Text style={styles.preferencesLabel}>최소 ROI (%)</Text>
-            <View style={styles.inputGroup}>
-              <Text style={styles.inputValue}>{parseFloat(minROI).toFixed(1)}%</Text>
-            </View>
-          </View>
-
-          <View style={styles.preferencesSection}>
-            <Text style={styles.preferencesLabel}>가격 범위</Text>
-            <View style={styles.rangeGroup}>
-              <View style={styles.rangeItem}>
-                <Text style={styles.rangeLabel}>최소</Text>
-                <Text style={styles.rangeValue}>
-                  {parseFloat(minPrice) >= 1000000000
-                    ? `${(parseFloat(minPrice) / 1000000000).toFixed(1)}억`
-                    : '무제한'}
-                </Text>
-              </View>
-              <View style={styles.rangeItem}>
-                <Text style={styles.rangeLabel}>최대</Text>
-                <Text style={styles.rangeValue}>
-                  {parseFloat(maxPrice) >= 1000000000
-                    ? `${(parseFloat(maxPrice) / 1000000000).toFixed(1)}억`
-                    : '무제한'}
-                </Text>
-              </View>
             </View>
           </View>
         </ScrollView>
       </SafeAreaView>
     </Modal>
-  );
-};
-
-interface Alert {
-  propertyId: string;
-  name: string;
-  location: string;
-  alert: string;
-  severity: 'high' | 'medium' | 'low';
-  changePercent: number;
-}
-
-interface PortfolioStats {
-  totalFavorites: number;
-  cumulativeROI: number;
-  averageROI: number;
-  portfolio: Array<{ type: string; count: number; percentage: number }>;
-  totalValue: number;
-}
+    );
+  }
+);
 
 export default function InvestmentScreen() {
   const {
-    properties,
-    preferences,
+    columns,
+    bookmarks,
     loading,
     error,
     lastSyncTime,
     isOnline,
     syncData,
-    savePreferences,
-    toggleFavorite,
+    toggleBookmark,
   } = useInvestmentSync();
 
   const [refreshing, setRefreshing] = useState(false);
-  const [selectedProperty, setSelectedProperty] = useState<InvestmentProperty | null>(null);
+  const [selectedColumn, setSelectedColumn] = useState<InvestmentColumn | null>(null);
   const [detailVisible, setDetailVisible] = useState(false);
-  const [preferencesVisible, setPreferencesVisible] = useState(false);
-  const [alerts, setAlerts] = useState<InvestmentAlert[]>([]);
-  const [portfolioStats, setPortfolioStats] = useState<PortfolioStats | null>(null);
+  const [filterVisible, setFilterVisible] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<'all' | 'real-estate' | 'stocks'>('all');
 
-  // Calculate portfolio statistics
-  const calculatePortfolioStats = (favProps: InvestmentProperty[]) => {
-    if (favProps.length === 0) {
-      return {
-        totalFavorites: 0,
-        cumulativeROI: 0,
-        averageROI: 0,
-        portfolio: [],
-        totalValue: 0,
-      };
-    }
-
-    const totalValue = favProps.reduce((sum, p) => sum + p.price, 0);
-    const cumulativeROI = favProps.reduce((sum, p) => sum + p.roi, 0);
-    const averageROI = cumulativeROI / favProps.length;
-
-    // Portfolio breakdown by type
-    const typeMap: { [key: string]: number } = {};
-    favProps.forEach(p => {
-      typeMap[p.type] = (typeMap[p.type] || 0) + 1;
-    });
-
-    const portfolio = Object.entries(typeMap).map(([type, count]) => ({
-      type: getPropertyTypeKorean(type),
-      count: count as number,
-      percentage: ((count as number) / favProps.length) * 100,
-    }));
-
-    return {
-      totalFavorites: favProps.length,
-      cumulativeROI: parseFloat(cumulativeROI.toFixed(2)),
-      averageROI: parseFloat(averageROI.toFixed(2)),
-      portfolio,
-      totalValue,
-    };
-  };
-
-  // Detect rapid ROI increases
-  const detectAlerts = (props: InvestmentProperty[]): InvestmentAlert[] => {
-    const detectedAlerts: InvestmentAlert[] = [];
-
-    props.forEach(property => {
-      if (!property.trend || property.trend.length < 2) return;
-
-      const sorted = [...property.trend].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-      const recentROI = sorted[sorted.length - 1]?.roi || 0;
-      const previousROI = sorted[sorted.length - 2]?.roi || 0;
-
-      const roiChange = recentROI - previousROI;
-      const changePercent = previousROI !== 0 ? (roiChange / previousROI) * 100 : 0;
-
-      if (changePercent > 10) {
-        detectedAlerts.push({
-          propertyId: property.id,
-          name: property.name,
-          location: property.location,
-          alert: `ROI ${changePercent.toFixed(1)}% 상승!`,
-          severity: changePercent > 20 ? 'high' : 'medium',
-          changePercent: parseFloat(changePercent.toFixed(1)),
-        });
-      }
-    });
-
-    return detectedAlerts.slice(0, 3); // Top 3 alerts
-  };
-
-  const handleRefresh = async () => {
+  const handleRefresh = useCallback(async () => {
     setRefreshing(true);
     try {
       await syncData(true);
     } finally {
       setRefreshing(false);
     }
-  };
+  }, [syncData]);
 
-  const handlePropertyPress = (property: InvestmentProperty) => {
-    setSelectedProperty(property);
+  const handleColumnPress = useCallback((column: InvestmentColumn) => {
+    setSelectedColumn(column);
     setDetailVisible(true);
-  };
+  }, []);
 
-  const handleToggleFavorite = async (property: InvestmentProperty) => {
-    await toggleFavorite(property.id);
-  };
+  const handleToggleBookmark = useCallback(
+    async (column: InvestmentColumn) => {
+      await toggleBookmark(column.id);
+    },
+    [toggleBookmark]
+  );
 
-  const isFavorite = (propertyId: string) => {
-    return preferences?.favoriteIds.includes(propertyId) ?? false;
-  };
+  const isBookmarked = useCallback(
+    (columnId: string) => {
+      return bookmarks?.includes(columnId) ?? false;
+    },
+    [bookmarks]
+  );
 
-  // Update portfolio stats and alerts when properties or preferences change
-  useEffect(() => {
-    if (properties.length > 0 && preferences) {
-      // Get favorite properties
-      const favoriteProperties = properties.filter(p =>
-        preferences.favoriteIds.includes(p.id)
-      );
+  // Memoize filtered columns
+  const filteredColumns = useMemo(
+    () =>
+      selectedCategory === 'all'
+        ? columns
+        : columns.filter(c => c.category === selectedCategory),
+    [columns, selectedCategory]
+  );
 
-      // Calculate portfolio stats
-      const stats = calculatePortfolioStats(favoriteProperties);
-      setPortfolioStats(stats);
-
-      // Detect alerts
-      const detectedAlerts = detectAlerts(properties);
-      setAlerts(detectedAlerts);
-    }
-  }, [properties, preferences]);
-
-  const formatLastSync = () => {
+  const formatLastSync = useCallback(() => {
     if (!lastSyncTime) return '동기화 안 됨';
     const now = new Date();
     const diff = Math.floor((now.getTime() - lastSyncTime.getTime()) / 1000);
@@ -680,13 +378,22 @@ export default function InvestmentScreen() {
     if (diff < 3600) return `${Math.floor(diff / 60)}분 전`;
     if (diff < 86400) return `${Math.floor(diff / 3600)}시간 전`;
     return lastSyncTime.toLocaleDateString();
-  };
+  }, [lastSyncTime]);
+
+  // Memoize category stats
+  const stats = useMemo(() => {
+    const realEstate = columns.filter(
+      c => c.category === 'real-estate'
+    ).length;
+    const stocks = columns.filter(c => c.category === 'stocks').length;
+    return { realEstate, stocks };
+  }, [columns]);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <View style={styles.headerTitleSection}>
-          <Text style={styles.headerTitle}>💹 투자 리포트</Text>
+          <Text style={styles.headerTitle}>💼 투자 분석</Text>
           <View style={styles.syncStatus}>
             <MaterialIcons
               name={isOnline ? 'cloud-done' : 'cloud-off'}
@@ -697,8 +404,8 @@ export default function InvestmentScreen() {
           </View>
         </View>
         <TouchableOpacity
-          style={styles.preferencesButton}
-          onPress={() => setPreferencesVisible(true)}
+          style={styles.filterButton}
+          onPress={() => setFilterVisible(true)}
           hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
         >
           <MaterialIcons name="tune" size={24} color="#2563eb" />
@@ -712,88 +419,83 @@ export default function InvestmentScreen() {
         </View>
       )}
 
-      {alerts.length > 0 && (
-        <View style={styles.alertsSection}>
-          <View style={styles.alertsSectionHeader}>
-            <MaterialIcons name="notifications-active" size={18} color="#ef4444" />
-            <Text style={styles.alertsSectionTitle}>실시간 알림 ({alerts.length})</Text>
-          </View>
-          {alerts.map(alert => (
-            <AlertCard key={alert.propertyId} alert={alert} />
-          ))}
-        </View>
-      )}
-
-      {loading && !properties.length ? (
+      {loading && !columns.length ? (
         <View style={styles.centerContainer}>
           <ActivityIndicator size="large" color="#2563eb" />
-          <Text style={styles.loadingText}>부동산 정보를 불러오는 중...</Text>
+          <Text style={styles.loadingText}>투자 분석을 불러오는 중...</Text>
         </View>
-      ) : properties.length > 0 ? (
+      ) : columns.length > 0 ? (
         <FlatList
-          data={properties}
-          renderItem={({ item }) => (
-            <PropertyCard
-              property={item}
-              isFavorite={isFavorite(item.id)}
-              onToggleFavorite={() => handleToggleFavorite(item)}
-              onPress={() => handlePropertyPress(item)}
-            />
+          data={filteredColumns}
+          renderItem={useCallback(
+            ({ item }) => (
+              <ColumnCard
+                column={item}
+                isBookmarked={isBookmarked(item.id)}
+                onToggleBookmark={() => handleToggleBookmark(item)}
+                onPress={() => handleColumnPress(item)}
+              />
+            ),
+            [isBookmarked, handleToggleBookmark, handleColumnPress]
           )}
-          keyExtractor={item => item.id}
+          keyExtractor={useCallback((item: InvestmentColumn) => item.id, [])}
           contentContainerStyle={styles.listContent}
           scrollEnabled={true}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
           }
-          ListHeaderComponent={
-            portfolioStats && portfolioStats.totalFavorites > 0 ? (
-              <PortfolioCard stats={portfolioStats} />
-            ) : null
-          }
-          ListFooterComponent={
-            <View style={styles.footer}>
-              <Text style={styles.footerText}>
-                모든 정보는 {formatLastSync()} 기준입니다
-              </Text>
-            </View>
-          }
+          ListHeaderComponent={useMemo(
+            () => (
+              <View style={styles.statsSection}>
+                <View style={styles.statCard}>
+                  <MaterialIcons
+                    name="home-work"
+                    size={24}
+                    color="#8b5cf6"
+                  />
+                  <Text style={styles.statNumber}>{stats.realEstate}</Text>
+                  <Text style={styles.statLabel}>부동산 분석</Text>
+                </View>
+                <View style={styles.statCard}>
+                  <MaterialIcons
+                    name="trending-up"
+                    size={24}
+                    color="#06b6d4"
+                  />
+                  <Text style={styles.statNumber}>{stats.stocks}</Text>
+                  <Text style={styles.statLabel}>주식 분석</Text>
+                </View>
+              </View>
+            ),
+            [stats]
+          )}
+          ListFooterComponent={useMemo(
+            () => (
+              <View style={styles.footer}>
+                <Text style={styles.footerText}>
+                  모든 정보는 {formatLastSync()} 기준입니다
+                </Text>
+              </View>
+            ),
+            [formatLastSync]
+          )}
         />
       ) : (
         <View style={styles.centerContainer}>
-          <MaterialIcons name="home-work" size={48} color="#d1d5db" />
-          <Text style={styles.emptyText}>이용 가능한 부동산이 없습니다</Text>
+          <MaterialIcons name="article" size={48} color="#d1d5db" />
+          <Text style={styles.emptyText}>이용 가능한 투자 분석이 없습니다</Text>
         </View>
       )}
 
-      <DetailModal property={selectedProperty} visible={detailVisible} onClose={() => setDetailVisible(false)} />
-      <PreferencesModal
-        preferences={preferences}
-        visible={preferencesVisible}
-        onClose={() => setPreferencesVisible(false)}
-        onSave={savePreferences}
+      <DetailModal column={selectedColumn} visible={detailVisible} onClose={() => setDetailVisible(false)} />
+      <FilterModal
+        visible={filterVisible}
+        selectedCategory={selectedCategory}
+        onClose={() => setFilterVisible(false)}
+        onSelectCategory={setSelectedCategory}
       />
     </SafeAreaView>
   );
-}
-
-function getPropertyTypeKorean(type: string): string {
-  const typeMap: { [key: string]: string } = {
-    apartment: '아파트',
-    villa: '빌라',
-    townhouse: '타운하우스',
-    land: '토지',
-  };
-  return typeMap[type] || type;
-}
-
-function getStatusKorean(status: string): string {
-  const statusMap: { [key: string]: string } = {
-    available: '판매 중',
-    pending: '계약 중',
-    sold: '판매 완료',
-  };
-  return statusMap[status] || status;
 }
 
 const styles = StyleSheet.create({
@@ -829,7 +531,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#6b7280',
   },
-  preferencesButton: {
+  filterButton: {
     padding: 8,
   },
   errorBanner: {
@@ -870,7 +572,33 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 8,
   },
-  card: {
+  statsSection: {
+    flexDirection: 'row',
+    gap: 12,
+    marginBottom: 16,
+    marginHorizontal: 4,
+  },
+  statCard: {
+    flex: 1,
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 16,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#e5e7eb',
+  },
+  statNumber: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#1f2937',
+    marginTop: 8,
+  },
+  statLabel: {
+    fontSize: 12,
+    color: '#6b7280',
+    marginTop: 4,
+  },
+  columnCard: {
     backgroundColor: '#fff',
     borderRadius: 12,
     marginVertical: 6,
@@ -884,81 +612,100 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 2,
   },
-  cardHeader: {
+  columnHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     marginBottom: 12,
   },
-  cardTitleSection: {
-    flex: 1,
-    marginRight: 12,
+  columnMeta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
-  propertyName: {
+  categoryBadge: {
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 6,
+  },
+  categoryLabel: {
+    fontSize: 12,
+    color: '#fff',
+    fontWeight: '600',
+  },
+  dateText: {
+    fontSize: 12,
+    color: '#9ca3af',
+  },
+  bookmarkButton: {
+    padding: 4,
+  },
+  columnTitle: {
     fontSize: 16,
     fontWeight: '600',
     color: '#1f2937',
-    marginBottom: 6,
+    marginBottom: 10,
+    lineHeight: 22,
   },
-  locationBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-  },
-  location: {
-    fontSize: 13,
-    color: '#6b7280',
-  },
-  favoriteButton: {
-    padding: 4,
-  },
-  cardMetrics: {
+  columnInfo: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 12,
-    paddingVertical: 12,
+    alignItems: 'center',
+    marginBottom: 10,
+    paddingVertical: 10,
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderTopColor: '#f3f4f6',
     borderBottomColor: '#f3f4f6',
   },
-  metricBox: {
+  authorInfo: {
+    flexDirection: 'row',
     alignItems: 'center',
+    gap: 8,
+    flex: 1,
   },
-  metricLabel: {
-    fontSize: 11,
-    color: '#9ca3af',
-    marginBottom: 4,
-    fontWeight: '500',
+  authorDetails: {
+    flex: 1,
   },
-  metricValue: {
-    fontSize: 14,
+  authorName: {
+    fontSize: 12,
     fontWeight: '600',
     color: '#1f2937',
   },
-  statusBadge: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 4,
+  authorTitle: {
+    fontSize: 11,
+    color: '#6b7280',
   },
-  statusText: {
-    fontSize: 12,
-    color: '#fff',
-    fontWeight: '500',
-  },
-  cardDetails: {
-    flexDirection: 'row',
-    gap: 16,
-    paddingTop: 8,
-  },
-  detailItem: {
+  outlookBadge: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
+    gap: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    backgroundColor: '#f3f4f6',
+    borderRadius: 6,
   },
-  detailText: {
-    fontSize: 12,
+  outlookText: {
+    fontSize: 11,
+    fontWeight: '600',
+  },
+  columnSummary: {
+    fontSize: 13,
     color: '#6b7280',
+    lineHeight: 18,
+    marginBottom: 10,
+  },
+  columnFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: 10,
+    borderTopWidth: 1,
+    borderTopColor: '#f3f4f6',
+  },
+  readTime: {
+    fontSize: 12,
+    color: '#9ca3af',
   },
   footer: {
     paddingVertical: 16,
@@ -968,7 +715,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#9ca3af',
   },
-  // Detail Modal Styles
   detailContainer: {
     flex: 1,
     backgroundColor: '#f9fafb',
@@ -987,11 +733,76 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     color: '#1f2937',
-    maxWidth: width - 100,
   },
   detailContent: {
     flex: 1,
     padding: 16,
+  },
+  detailMeta: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+    paddingBottom: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e5e7eb',
+  },
+  detailDate: {
+    fontSize: 13,
+    color: '#6b7280',
+  },
+  detailReadTime: {
+    fontSize: 13,
+    color: '#6b7280',
+  },
+  detailColumnTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#1f2937',
+    marginBottom: 16,
+    lineHeight: 28,
+  },
+  detailAuthor: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    backgroundColor: '#f0f9ff',
+    padding: 12,
+    borderRadius: 10,
+    marginBottom: 16,
+  },
+  detailAuthorName: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#1f2937',
+  },
+  detailAuthorTitle: {
+    fontSize: 12,
+    color: '#6b7280',
+    marginTop: 2,
+  },
+  detailStats: {
+    flexDirection: 'row',
+    gap: 10,
+    marginBottom: 16,
+  },
+  statBox: {
+    flex: 1,
+    backgroundColor: '#fff',
+    padding: 12,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#e5e7eb',
+  },
+  statLabel: {
+    fontSize: 11,
+    color: '#9ca3af',
+    marginBottom: 4,
+  },
+  statValue: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#1f2937',
   },
   detailSection: {
     backgroundColor: '#fff',
@@ -1010,61 +821,16 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#f3f4f6',
   },
-  detailRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f3f4f6',
-  },
-  detailLabel: {
+  detailSectionContent: {
     fontSize: 14,
-    color: '#6b7280',
-    fontWeight: '500',
+    color: '#4b5563',
+    lineHeight: 22,
   },
-  detailValue: {
-    fontSize: 14,
-    color: '#1f2937',
-    fontWeight: '600',
-  },
-  roiHighlight: {
-    color: '#10b981',
-    fontSize: 16,
-  },
-  trendChart: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'space-around',
-    height: 100,
-    marginVertical: 16,
-    gap: 6,
-  },
-  trendBar: {
-    flex: 1,
-    backgroundColor: '#f3f4f6',
-    borderRadius: 4,
-    overflow: 'hidden',
-  },
-  trendBarFill: {
-    backgroundColor: '#3b82f6',
-    borderRadius: 4,
-  },
-  trendLabels: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 8,
-  },
-  trendLabel: {
-    fontSize: 12,
-    color: '#9ca3af',
-  },
-  // Preferences Modal Styles
-  preferencesContainer: {
+  filterContainer: {
     flex: 1,
     backgroundColor: '#f9fafb',
   },
-  preferencesHeader: {
+  filterHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -1074,257 +840,52 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#e5e7eb',
   },
-  preferencesTitle: {
+  filterTitle: {
     fontSize: 18,
     fontWeight: '600',
     color: '#1f2937',
   },
-  preferencesContent: {
+  filterContent: {
     flex: 1,
     padding: 16,
   },
-  preferencesSection: {
+  filterSection: {
     backgroundColor: '#fff',
     borderRadius: 12,
     padding: 16,
-    marginBottom: 12,
     borderWidth: 1,
     borderColor: '#e5e7eb',
   },
-  preferencesLabel: {
+  filterLabel: {
     fontSize: 14,
     fontWeight: '600',
     color: '#1f2937',
     marginBottom: 12,
   },
-  toggleGroup: {
+  filterOptions: {
+    gap: 10,
+  },
+  filterOption: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  toggleButton: {
-    paddingHorizontal: 12,
-    paddingVertical: 8,
+    alignItems: 'center',
+    gap: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
     borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#d1d5db',
     backgroundColor: '#f9fafb',
+    borderWidth: 1,
+    borderColor: '#e5e7eb',
   },
-  toggleButtonActive: {
+  filterOptionActive: {
     backgroundColor: '#dbeafe',
     borderColor: '#2563eb',
   },
-  toggleButtonText: {
-    fontSize: 13,
+  filterOptionText: {
+    fontSize: 14,
     color: '#6b7280',
-    fontWeight: '500',
   },
-  toggleButtonTextActive: {
+  filterOptionTextActive: {
     color: '#2563eb',
-  },
-  inputGroup: {
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#d1d5db',
-    backgroundColor: '#f9fafb',
-  },
-  inputValue: {
-    fontSize: 14,
-    color: '#1f2937',
     fontWeight: '600',
-  },
-  rangeGroup: {
-    flexDirection: 'row',
-    gap: 12,
-  },
-  rangeItem: {
-    flex: 1,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#d1d5db',
-    backgroundColor: '#f9fafb',
-  },
-  rangeLabel: {
-    fontSize: 12,
-    color: '#9ca3af',
-    marginBottom: 4,
-  },
-  rangeValue: {
-    fontSize: 13,
-    color: '#1f2937',
-    fontWeight: '600',
-  },
-  // Alerts Section Styles
-  alertsSection: {
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    backgroundColor: '#fef2f2',
-    borderBottomWidth: 1,
-    borderBottomColor: '#fee2e2',
-  },
-  alertsSectionHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    marginBottom: 12,
-    paddingHorizontal: 4,
-  },
-  alertsSectionTitle: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#dc2626',
-  },
-  alertCard: {
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    borderLeftWidth: 4,
-    padding: 12,
-    marginVertical: 6,
-    borderWidth: 1,
-    borderColor: '#fee2e2',
-  },
-  alertHeader: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: 10,
-    marginBottom: 8,
-  },
-  alertContent: {
-    flex: 1,
-  },
-  alertTitle: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#1f2937',
-  },
-  alertSubtitle: {
-    fontSize: 12,
-    color: '#6b7280',
-    marginTop: 2,
-  },
-  alertMessage: {
-    fontSize: 13,
-    fontWeight: '600',
-    marginLeft: 30,
-  },
-  // Portfolio Card Styles
-  portfolioCard: {
-    backgroundColor: '#f0f9ff',
-    borderRadius: 12,
-    padding: 16,
-    marginVertical: 12,
-    marginHorizontal: 4,
-    borderWidth: 1,
-    borderColor: '#dbeafe',
-  },
-  portfolioHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    marginBottom: 16,
-  },
-  portfolioTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1f2937',
-  },
-  portfolioStats: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 16,
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#bfdbfe',
-  },
-  statItem: {
-    alignItems: 'center',
-  },
-  statLabel: {
-    fontSize: 11,
-    color: '#6b7280',
-    marginBottom: 4,
-    fontWeight: '500',
-  },
-  statValue: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: '#1f2937',
-  },
-  portfolioBreakdown: {
-    marginBottom: 12,
-  },
-  breakdownTitle: {
-    fontSize: 13,
-    fontWeight: '600',
-    color: '#1f2937',
-    marginBottom: 8,
-  },
-  breakdownItem: {
-    marginBottom: 10,
-  },
-  breakdownLabel: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 4,
-  },
-  breakdownType: {
-    fontSize: 12,
-    color: '#374151',
-    fontWeight: '500',
-  },
-  breakdownCount: {
-    fontSize: 11,
-    color: '#6b7280',
-  },
-  breakdownBar: {
-    height: 8,
-    backgroundColor: '#e5e7eb',
-    borderRadius: 4,
-    overflow: 'hidden',
-    marginBottom: 4,
-  },
-  breakdownFill: {
-    height: '100%',
-    backgroundColor: '#3b82f6',
-  },
-  breakdownPercent: {
-    fontSize: 11,
-    color: '#9ca3af',
-    textAlign: 'right',
-  },
-  portfolioTotal: {
-    paddingTop: 12,
-    borderTopWidth: 1,
-    borderTopColor: '#bfdbfe',
-    marginBottom: 12,
-  },
-  totalLabel: {
-    fontSize: 12,
-    color: '#6b7280',
-    marginBottom: 4,
-  },
-  totalValue: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#2563eb',
-  },
-  balanceRecommendation: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    backgroundColor: '#fffbeb',
-    borderRadius: 8,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: '#fcd34d',
-  },
-  recommendationText: {
-    fontSize: 12,
-    color: '#78350f',
-    fontWeight: '500',
   },
 });

@@ -1,0 +1,115 @@
+{
+  "date": "2026-07-18",
+  "words": [
+    {
+      "id": "phrase-1",
+      "word": "lowkey",
+      "part_of_speech": "부사/형용사",
+      "meaning_ko": "은근히, 어느 정도",
+      "explanation": "일상 영어에서 자주 쓰이는 표현. 뭔가를 인정하지만 강하지 않게 표현할 때 사용합니다.",
+      "example_en": "I'm lowkey tired after the meeting",
+      "example_ko": "회의 후에 은근히 피곤해",
+      "tip": "SNS나 캐주얼한 대화에서 매우 자주 등장해요.",
+      "emoji": "😏"
+    },
+    {
+      "id": "phrase-2",
+      "word": "hang out",
+      "part_of_speech": "동사구",
+      "meaning_ko": "어울리다, 함께 시간을 보내다",
+      "explanation": "친구들과 함께 시간을 보내거나 어딘가에서 머물 때 사용하는 자연스러운 표현입니다.",
+      "example_en": "Want to hang out this weekend?",
+      "example_ko": "이번 주말에 시간 함께 보낼래?",
+      "tip": "meet up과 유사하지만 더 캐주얼하고 자유로운 분위기를 나타내요.",
+      "emoji": "👋"
+    },
+    {
+      "id": "phrase-3",
+      "word": "piece of cake",
+      "part_of_speech": "관용구",
+      "meaning_ko": "매우 쉬운 일",
+      "explanation": "어떤 일이 매우 간단하거나 쉬울 때 사용하는 일반적인 관용구입니다.",
+      "example_en": "Don't worry, this project is a piece of cake",
+      "example_ko": "걱정하지 마, 이 프로젝트는 아주 쉬워",
+      "tip": "cake 대신 pie를 사용하기도 해요: 'piece of pie'",
+      "emoji": "🍰"
+    },
+    {
+      "id": "phrase-4",
+      "word": "call it a day",
+      "part_of_speech": "동사구",
+      "meaning_ko": "하루 일을 끝내다, 포기하다",
+      "explanation": "일을 멈추고 그만두거나 하루의 일정을 끝낼 때 사용하는 표현입니다.",
+      "example_en": "It's getting late, let's call it a day",
+      "example_ko": "시간이 늦었으니 오늘 여기서 마무리하자",
+      "tip": "포기할 때도 사용할 수 있어요: 'Let's call it a day and try again tomorrow.'",
+      "emoji": "🛑"
+    },
+    {
+      "id": "phrase-5",
+      "word": "catch up",
+      "part_of_speech": "동사구",
+      "meaning_ko": "따라잡다, 근황을 나누다",
+      "explanation": "누군가와 뒤처진 부분을 따라잡거나 오랜만에 만나 근황을 이야기할 때 사용합니다.",
+      "example_en": "Let's grab coffee and catch up!",
+      "example_ko": "커피 마시면서 근황 나눠요!",
+      "tip": "좋은 친구들과 만날 때 자주 사용하는 자연스러운 표현이에요.",
+      "emoji": "☕"
+    },
+    {
+      "id": "phrase-6",
+      "word": "no worries",
+      "part_of_speech": "감탄사/표현",
+      "meaning_ko": "괜찮아, 걱정하지 마",
+      "explanation": "누군가가 미안해하거나 문제를 일으켰을 때 괜찮다는 것을 표현하는 친근한 말입니다.",
+      "example_en": "Sorry I'm late! - No worries, take your time",
+      "example_ko": "늦어서 미안해! - 괜찮아, 천천히 와",
+      "tip": "호주 영어에서 특히 자주 사용되며, 미국에서도 캐주얼하게 쓰여요.",
+      "emoji": "😊"
+    },
+    {
+      "id": "phrase-7",
+      "word": "break the ice",
+      "part_of_speech": "동사구",
+      "meaning_ko": "어색함을 깨다, 처음 시작하다",
+      "explanation": "처음 만난 사람들 사이의 어색한 분위기를 깨거나 처음으로 어떤 것을 시작할 때 사용합니다.",
+      "example_en": "He told a joke to break the ice",
+      "example_ko": "그는 어색함을 깨기 위해 농담을 했어",
+      "tip": "첫 만남이나 새로운 상황에서 매우 유용한 표현이에요.",
+      "emoji": "❄️"
+    },
+    {
+      "id": "phrase-8",
+      "word": "hit the books",
+      "part_of_speech": "동사구",
+      "meaning_ko": "공부를 시작하다",
+      "explanation": "본격적으로 공부를 시작하거나 열심히 공부할 때 사용하는 비공식적 표현입니다.",
+      "example_en": "I need to hit the books for my exam",
+      "example_ko": "시험 준비를 위해 공부를 시작해야 해",
+      "tip": "학생들이 자주 사용하는 캐주얼한 표현이에요.",
+      "emoji": "📚"
+    },
+    {
+      "id": "phrase-9",
+      "word": "spill the tea",
+      "part_of_speech": "동사구",
+      "meaning_ko": "비밀을 말하다, 소문을 퍼뜨리다",
+      "explanation": "흥미로운 소식이나 비밀스러운 정보를 누군가에게 알려줄 때 사용하는 현대 속어입니다.",
+      "example_en": "Come on, spill the tea! What happened?",
+      "example_ko": "얘기해봐! 뭐가 일어났어?",
+      "tip": "주로 젊은 세대가 SNS에서 자주 사용하는 트렌디한 표현이에요.",
+      "emoji": "🍵"
+    },
+    {
+      "id": "phrase-10",
+      "word": "sleep on it",
+      "part_of_speech": "동사구",
+      "meaning_ko": "하룻밤 자고 생각해보다, 신중히 생각하다",
+      "explanation": "중요한 결정을 내리기 전에 충분한 시간을 가지고 생각해보라고 권할 때 사용합니다.",
+      "example_en": "Don't decide now, sleep on it and let me know tomorrow",
+      "example_ko": "지금 결정하지 말고, 하룻밤 자고 내일 말해줘",
+      "tip": "중요한 선택을 할 때 현명한 조언으로 자주 사용되는 표현이에요.",
+      "emoji": "😴"
+    }
+  ]
+}

@@ -602,5 +602,93 @@
     "explanation": "Frank, honest, and straightforward; not hiding anything",
     "tip": "Related to 'candor' - the quality of being candid",
     "emoji": "🗣️"
+  },
+  {
+    "id": "procrastinate",
+    "word": "procrastinate",
+    "pos": "동사",
+    "date": "2026-07-18",
+    "meaning": "미루다, 계속 연기하다",
+    "example_ko": "나는 마감일이 다가올 때까지 항상 일을 미뤘다.",
+    "example_en": "I tend to procrastinate until the deadline is just around the corner.",
+    "explanation": "'put off'와 비슷하지만 더 정식적인 표현. 심리학, 업무 환경에서 자주 쓰여요.",
+    "emoji": "⏰"
+  },
+  {
+    "id": "serendipitous",
+    "word": "serendipitous",
+    "pos": "형용사",
+    "date": "2026-07-18",
+    "meaning": "행운의, 우연의 좋은 일이",
+    "example_ko": "우리의 만남은 정말 우연의 일치였어.",
+    "example_en": "Our meeting was quite serendipitous — we both showed up at the right place and time.",
+    "explanation": "'serendipity'의 형용사 형태. 계획하지 않았지만 좋은 결과가 나온 상황을 묘사해요.",
+    "emoji": "🎲"
+  },
+  {
+    "id": "resilient",
+    "word": "resilient",
+    "pos": "형용사",
+    "date": "2026-07-18",
+    "meaning": "회복력 있는, 탄력적인, 강인한",
+    "example_ko": "그 회사는 많은 어려움을 겪었지만 회복력이 있었다.",
+    "example_en": "The company faced many challenges, but it remained resilient.",
+    "explanation": "'elastic'처럼 물리적 탄력성도 의미하지만 주로 심리적 강인함을 뜻해요.",
+    "emoji": "💪"
+  },
+  {
+    "id": "ambiguous",
+    "word": "ambiguous",
+    "pos": "형용사",
+    "date": "2026-07-18",
+    "meaning": "애매한, 불명확한, 두 가지로 해석될 수 있는",
+    "example_ko": "그의 답변은 너무 애매해서 뭘 의도한 건지 모르겠어.",
+    "example_en": "His response was ambiguous — I couldn't tell if he meant yes or no.",
+    "explanation": "'vague'와 비슷하지만 ambiguous는 두 가지 의미로 해석 가능한 경우를 뜻해요.",
+    "emoji": "❓"
+  },
+  {
+    "id": "nostalgia",
+    "word": "nostalgia",
+    "pos": "명사",
+    "date": "2026-07-18",
+    "meaning": "향수, 그리움, 과거에 대한 그리움",
+    "example_ko": "그 노래를 들으면 어린 시절이 생각나서 향수가 밀려온다.",
+    "example_en": "That song brings back a wave of nostalgia — it reminds me of my childhood.",
+    "explanation": "'homesick'과 다릅니다. nostalgia는 특정 시간/장소에 대한 부드러운 그리움을 뜻해요.",
+    "emoji": "🌅"
+  },
+  {
+    "id": "pragmatic",
+    "word": "pragmatic",
+    "pos": "형용사",
+    "date": "2026-07-18",
+    "meaning": "실용적인, 현실적인, 실제 효과를 중시하는",
+    "example_ko": "우리는 이상적인 계획보다는 현실적인 방법을 택했다.",
+    "example_en": "We took a pragmatic approach rather than chasing an idealistic solution.",
+    "explanation": "'practical'과 거의 비슷하지만 pragmatic은 철저하게 실제 결과에 초점을 맞춰요.",
+    "emoji": "⚙️"
+  },
+  {
+    "id": "meticulous",
+    "word": "meticulous",
+    "pos": "형용사",
+    "date": "2026-07-18",
+    "meaning": "세심한, 꼼꼼한, 정확한",
+    "example_ko": "그 건축가는 세심한 계획으로 유명했다.",
+    "example_en": "That architect is famous for her meticulous attention to detail.",
+    "explanation": "'careful'이나 'precise'보다 더 강한 의미. 작은 디테일까지 완벽하게 챙기는 태도예요.",
+    "emoji": "🔍"
+  },
+  {
+    "id": "volatile",
+    "word": "volatile",
+    "pos": "형용사",
+    "date": "2026-07-18",
+    "meaning": "불안정한, 변덕스러운, 폭발성의",
+    "example_ko": "요즘 주식 시장이 불안정하다.",
+    "example_en": "The stock market has been quite volatile lately.",
+    "explanation": "화학에서는 '휘발성'을 뜻하지만 일상에서는 '불안정한' 또는 '급변하는'을 의미해요.",
+    "emoji": "📈"
   }
 ]
