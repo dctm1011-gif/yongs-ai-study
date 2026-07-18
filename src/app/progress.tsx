@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import {
   View,
   Text,
@@ -14,6 +14,23 @@ import { useProgressSync } from '../hooks/useProgressSync';
 export default function ProgressScreen() {
   const { progressData, loading, error, lastSyncTime, sync, getStatusEmoji } = useProgressSync();
   const [refreshing, setRefreshing] = useState(false);
+  const [syncMinutesAgo, setSyncMinutesAgo] = useState<number | null>(null);
+
+  // Update sync time display every minute
+  useEffect(() => {
+    const updateSyncDisplay = () => {
+      if (lastSyncTime) {
+        const now = new Date();
+        const diffMs = now.getTime() - lastSyncTime.getTime();
+        const diffMins = Math.floor(diffMs / 60000);
+        setSyncMinutesAgo(diffMins);
+      }
+    };
+
+    updateSyncDisplay();
+    const interval = setInterval(updateSyncDisplay, 60000);
+    return () => clearInterval(interval);
+  }, [lastSyncTime]);
 
   const handleRefresh = async () => {
     setRefreshing(true);
@@ -77,7 +94,7 @@ export default function ProgressScreen() {
         {/* Sync Status */}
         <View style={styles.statusCard}>
           <View style={styles.statusHeader}>
-            <Text style={styles.statusTitle}>Last Sync</Text>
+            <Text style={styles.statusTitle}>🔄 Auto-Sync Status</Text>
             <View
               style={[
                 styles.syncIndicator,
@@ -86,6 +103,11 @@ export default function ProgressScreen() {
             />
           </View>
           <Text style={styles.statusText}>{formatSyncTime(lastSyncTime)}</Text>
+          {syncMinutesAgo !== null && (
+            <Text style={styles.syncDetailText}>
+              Last sync: {syncMinutesAgo === 0 ? 'Just now' : `${syncMinutesAgo}m ago`} • Every 5 minutes
+            </Text>
+          )}
           {error && <Text style={styles.errorText}>Error: {error}</Text>}
         </View>
 
@@ -98,8 +120,70 @@ export default function ProgressScreen() {
           </View>
         </View>
 
+        {/* Tab Progress */}
+        {progressData?.tabProgress && (
+          <View>
+            <Text style={styles.phasesTitle}>📚 Learning Progress</Text>
+            <View style={styles.tabProgressContainer}>
+              <View style={styles.tabProgressItem}>
+                <View style={styles.tabProgressHeader}>
+                  <Text style={styles.tabProgressLabel}>English</Text>
+                  <Text style={styles.tabProgressPercent}>{progressData.tabProgress.english}%</Text>
+                </View>
+                <View style={styles.tabProgressBar}>
+                  <View
+                    style={[
+                      styles.tabProgressBarFill,
+                      {
+                        width: `${progressData.tabProgress.english}%`,
+                        backgroundColor: '#3b82f6',
+                      },
+                    ]}
+                  />
+                </View>
+              </View>
+
+              <View style={styles.tabProgressItem}>
+                <View style={styles.tabProgressHeader}>
+                  <Text style={styles.tabProgressLabel}>TOEFL</Text>
+                  <Text style={styles.tabProgressPercent}>{progressData.tabProgress.toefl}%</Text>
+                </View>
+                <View style={styles.tabProgressBar}>
+                  <View
+                    style={[
+                      styles.tabProgressBarFill,
+                      {
+                        width: `${progressData.tabProgress.toefl}%`,
+                        backgroundColor: '#8b5cf6',
+                      },
+                    ]}
+                  />
+                </View>
+              </View>
+
+              <View style={styles.tabProgressItem}>
+                <View style={styles.tabProgressHeader}>
+                  <Text style={styles.tabProgressLabel}>Papers</Text>
+                  <Text style={styles.tabProgressPercent}>{progressData.tabProgress.papers}%</Text>
+                </View>
+                <View style={styles.tabProgressBar}>
+                  <View
+                    style={[
+                      styles.tabProgressBarFill,
+                      {
+                        width: `${progressData.tabProgress.papers}%`,
+                        backgroundColor: '#10b981',
+                      },
+                    ]}
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        )}
+
         {/* Phases */}
-        <Text style={styles.phasesTitle}>Development Phases</Text>
+        <Text style={styles.phasesTitle}>🎯 Development Phases</Text>
 
         {loading && !progressData ? (
           <View style={styles.loadingContainer}>
@@ -279,6 +363,12 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#1e293b',
   },
+  syncDetailText: {
+    fontSize: 12,
+    color: '#64748b',
+    marginTop: 4,
+    fontWeight: '500',
+  },
   errorText: {
     fontSize: 12,
     color: '#ef4444',
@@ -306,6 +396,46 @@ const styles = StyleSheet.create({
     color: '#1e40af',
     fontWeight: '700',
     marginTop: 2,
+  },
+  tabProgressContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 24,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
+    gap: 12,
+  },
+  tabProgressItem: {
+    gap: 6,
+  },
+  tabProgressHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  tabProgressLabel: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#1e293b',
+  },
+  tabProgressPercent: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#2563eb',
+  },
+  tabProgressBar: {
+    height: 6,
+    backgroundColor: '#e2e8f0',
+    borderRadius: 3,
+    overflow: 'hidden',
+  },
+  tabProgressBarFill: {
+    height: '100%',
+    borderRadius: 3,
   },
   phasesTitle: {
     fontSize: 16,

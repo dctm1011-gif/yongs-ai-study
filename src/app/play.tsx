@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Linking, ScrollView, Image, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { cacheManager } from '../utils/CacheManager';
 
 interface TrendingItem {
   id: string;
@@ -44,13 +46,20 @@ const DEFAULT_TRENDS: TrendingItem[] = [
   },
 ];
 
+const PLAY_TRENDS_CACHE_KEY = 'play_trends_cache';
+const PLAY_CACHE_TTL = 6 * 60 * 60 * 1000; // 6 hours
+
 export default function PlayScreen() {
   const [trends, setTrends] = useState<TrendingItem[]>(DEFAULT_TRENDS);
   const [loading, setLoading] = useState(false);
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
+  const [isCached, setIsCached] = useState(false);
+  const [cacheStatus, setCacheStatus] = useState<'fresh' | 'cached' | 'offline'>('fresh');
 
   useEffect(() => {
     fetchTrends();
+    // Set TTL for Play trends cache
+    cacheManager.setTTL(PLAY_TRENDS_CACHE_KEY, PLAY_CACHE_TTL);
   }, []);
 
   const fetchTrends = async () => {
@@ -68,15 +77,50 @@ export default function PlayScreen() {
       if (data.success && data.trends && Array.isArray(data.trends)) {
         setTrends(data.trends);
         setLastUpdate(new Date());
-        console.log('[PlayScreen] Fetched trends:', data.trends.length);
+        setIsCached(false);
+        setCacheStatus('fresh');
+        // Cache the fresh data
+        await cacheManager.set(PLAY_TRENDS_CACHE_KEY, {
+          trends: data.trends,
+          timestamp: new Date().toISOString(),
+        });
+        console.log('[PlayScreen] Fetched fresh trends:', data.trends.length);
       } else {
-        setTrends(DEFAULT_TRENDS);
+        throw new Error('Invalid response format');
       }
     } catch (error) {
-      console.error('[PlayScreen] Failed to fetch trends:', error);
-      setTrends(DEFAULT_TRENDS);
+      console.error('[PlayScreen] API fetch failed:', error);
+      // Step 2: Try to load from cache
+      await loadFromCache();
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadFromCache = async () => {
+    try {
+      const cached = await cacheManager.get<{
+        trends: TrendingItem[];
+        timestamp: string;
+      }>(PLAY_TRENDS_CACHE_KEY);
+
+      if (cached && cached.trends && Array.isArray(cached.trends)) {
+        setTrends(cached.trends);
+        setLastUpdate(new Date(cached.timestamp));
+        setIsCached(true);
+        setCacheStatus('cached');
+        console.log('[PlayScreen] Loaded from cache:', cached.trends.length);
+      } else {
+        // Step 3: Use default data
+        setTrends(DEFAULT_TRENDS);
+        setCacheStatus('offline');
+        console.log('[PlayScreen] Using default data (no cache)');
+      }
+    } catch (err) {
+      console.error('[PlayScreen] Cache load failed:', err);
+      // Fallback to default
+      setTrends(DEFAULT_TRENDS);
+      setCacheStatus('offline');
     }
   };
 
@@ -146,12 +190,50 @@ export default function PlayScreen() {
           Daily updates from Instagram, YouTube, Twitter - 6:00 AM KST
         </Text>
 
+        {/* Cache Status Badge */}
         {lastUpdate && (
-          <View style={styles.lastUpdateCard}>
-            <MaterialIcons name="access-time" size={14} color="#1e40af" />
-            <Text style={styles.lastUpdateText}>
-              Last updated: {lastUpdate.toLocaleTimeString('ko-KR')}
-            </Text>
+          <View
+            style={[
+              styles.lastUpdateCard,
+              {
+                borderLeftColor:
+                  cacheStatus === 'fresh'
+                    ? '#10b981'
+                    : cacheStatus === 'cached'
+                      ? '#f59e0b'
+                      : '#ef4444',
+              },
+            ]}
+          >
+            <MaterialIcons
+              name={
+                cacheStatus === 'fresh'
+                  ? 'cloud-done'
+                  : cacheStatus === 'cached'
+                    ? 'cloud-queue'
+                    : 'cloud-off'
+              }
+              size={14}
+              color={
+                cacheStatus === 'fresh'
+                  ? '#10b981'
+                  : cacheStatus === 'cached'
+                    ? '#f59e0b'
+                    : '#ef4444'
+              }
+            />
+            <View style={{ flex: 1 }}>
+              <Text style={styles.lastUpdateText}>
+                Last updated: {lastUpdate.toLocaleTimeString('ko-KR')}
+              </Text>
+              <Text style={styles.cacheStatusText}>
+                {cacheStatus === 'fresh'
+                  ? '✓ Live Data'
+                  : cacheStatus === 'cached'
+                    ? `⚠ Cached (${Math.floor((Date.now() - lastUpdate.getTime()) / 60000)}m ago)`
+                    : '✗ Offline Mode'}
+              </Text>
+            </View>
           </View>
         )}
 
@@ -303,11 +385,18 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 16,
     gap: 8,
+    borderLeftWidth: 4,
   },
   lastUpdateText: {
     fontSize: 12,
     color: '#1e40af',
     fontWeight: '600',
+  },
+  cacheStatusText: {
+    fontSize: 11,
+    color: '#64748b',
+    fontWeight: '500',
+    marginTop: 2,
   },
   trendingsContainer: {
     gap: 12,

@@ -9,10 +9,18 @@ export interface Phase {
   description?: string;
 }
 
+export interface TabProgress {
+  english: number;
+  toefl: number;
+  papers: number;
+  investment: number;
+}
+
 export interface ProgressData {
   phases: Phase[];
   lastSync: string;
   buildTime?: string;
+  tabProgress?: TabProgress;
 }
 
 const PROGRESS_SYNC_KEY = 'yongstudy_progress';
@@ -27,6 +35,64 @@ export function useProgressSync() {
   const syncIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const retryCountRef = useRef(0);
   const MAX_RETRIES = 3;
+
+  // Fetch other tabs progress data locally
+  const fetchTabProgress = useCallback(async (): Promise<TabProgress> => {
+    try {
+      const [englishData, toeflData, papersData] = await Promise.all([
+        AsyncStorage.getItem('english_words'),
+        AsyncStorage.getItem('toefl_sections'),
+        AsyncStorage.getItem('papers_list'),
+      ]);
+
+      let english = 0;
+      let toefl = 0;
+      let papers = 0;
+      let investment = 0;
+
+      // Calculate English progress (read/total words)
+      if (englishData) {
+        try {
+          const words = JSON.parse(englishData);
+          if (Array.isArray(words)) {
+            const readCount = words.filter((w: any) => w.isRead).length;
+            english = words.length > 0 ? Math.round((readCount / words.length) * 100) : 0;
+          }
+        } catch (e) {
+          console.error('[useProgressSync] English parse error:', e);
+        }
+      }
+
+      // Calculate TOEFL progress
+      if (toeflData) {
+        try {
+          const sections = JSON.parse(toeflData);
+          if (Array.isArray(sections)) {
+            toefl = sections.length > 0 ? Math.round((sections.filter((s: any) => s.completed).length / sections.length) * 100) : 0;
+          }
+        } catch (e) {
+          console.error('[useProgressSync] TOEFL parse error:', e);
+        }
+      }
+
+      // Calculate Papers progress
+      if (papersData) {
+        try {
+          const papersList = JSON.parse(papersData);
+          if (Array.isArray(papersList)) {
+            papers = papersList.length > 0 ? Math.min(Math.round((papersList.filter((p: any) => p.read).length / Math.min(5, papersList.length)) * 100), 100) : 0;
+          }
+        } catch (e) {
+          console.error('[useProgressSync] Papers parse error:', e);
+        }
+      }
+
+      return { english, toefl, papers, investment };
+    } catch (err) {
+      console.error('[useProgressSync] Tab progress calculation error:', err);
+      return { english: 0, toefl: 0, papers: 0, investment: 0 };
+    }
+  }, []);
 
   // Fetch progress data from backend
   const fetchProgress = useCallback(async (retryCount = 0) => {
@@ -44,12 +110,19 @@ export function useProgressSync() {
       const data = await response.json();
 
       if (data.success && data.phases) {
-        setProgressData(data);
-        await AsyncStorage.setItem(PROGRESS_SYNC_KEY, JSON.stringify(data));
+        // Fetch and merge tab progress
+        const tabProgress = await fetchTabProgress();
+        const enrichedData = {
+          ...data,
+          tabProgress,
+        };
+
+        setProgressData(enrichedData);
+        await AsyncStorage.setItem(PROGRESS_SYNC_KEY, JSON.stringify(enrichedData));
         setLastSyncTime(new Date());
         retryCountRef.current = 0;
-        console.log('[useProgressSync] Successfully fetched progress data');
-        return data;
+        console.log('[useProgressSync] Successfully fetched progress data with tab progress');
+        return enrichedData;
       } else {
         throw new Error('Invalid response format');
       }
@@ -71,7 +144,7 @@ export function useProgressSync() {
         await loadFromCache();
       }
     }
-  }, []);
+  }, [fetchTabProgress]);
 
   // Load progress from cache
   const loadFromCache = useCallback(async () => {
