@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Linking, ScrollView, Image, RefreshControl } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -14,6 +14,9 @@ interface TrendingItem {
   timestamp: string;
   likes: number;
   mentions?: number;
+  popularity?: number; // 0-100 score
+  trendChange?: 'up' | 'down' | 'stable'; // Trend direction
+  previousRank?: number; // Previous rank position
 }
 
 const DEFAULT_TRENDS: TrendingItem[] = [
@@ -25,6 +28,9 @@ const DEFAULT_TRENDS: TrendingItem[] = [
     platform: 'Instagram',
     timestamp: new Date().toISOString(),
     likes: 15420,
+    popularity: 92,
+    trendChange: 'up',
+    previousRank: 2,
   },
   {
     id: '2',
@@ -34,6 +40,9 @@ const DEFAULT_TRENDS: TrendingItem[] = [
     platform: 'YouTube',
     timestamp: new Date(Date.now() - 3600000).toISOString(),
     likes: 8923,
+    popularity: 78,
+    trendChange: 'stable',
+    previousRank: 2,
   },
   {
     id: '3',
@@ -43,6 +52,9 @@ const DEFAULT_TRENDS: TrendingItem[] = [
     platform: 'Twitter',
     timestamp: new Date(Date.now() - 7200000).toISOString(),
     likes: 22150,
+    popularity: 88,
+    trendChange: 'down',
+    previousRank: 1,
   },
 ];
 
@@ -55,6 +67,7 @@ export default function PlayScreen() {
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
   const [isCached, setIsCached] = useState(false);
   const [cacheStatus, setCacheStatus] = useState<'fresh' | 'cached' | 'offline'>('fresh');
+  const [hasNewTrends, setHasNewTrends] = useState(false);
 
   useEffect(() => {
     fetchTrends();
@@ -79,6 +92,9 @@ export default function PlayScreen() {
         setLastUpdate(new Date());
         setIsCached(false);
         setCacheStatus('fresh');
+        setHasNewTrends(true); // Show new trends badge
+        // Reset badge after 3 seconds
+        setTimeout(() => setHasNewTrends(false), 3000);
         // Cache the fresh data
         await cacheManager.set(PLAY_TRENDS_CACHE_KEY, {
           trends: data.trends,
@@ -140,22 +156,40 @@ export default function PlayScreen() {
     }
   };
 
-  const openYouTube = () => {
-    Linking.openURL('https://www.youtube.com');
+  // External links removed - focus on content display only
+
+  const getCategoryColor = (category: string): string => {
+    switch (category) {
+      case '#뉴스':
+        return '#ef4444'; // Red for news
+      case '#음악':
+        return '#10b981'; // Green for music
+      case '#영상':
+        return '#3b82f6'; // Blue for videos
+      default:
+        return '#6366f1'; // Indigo for others
+    }
   };
 
-  const openYouTubePremium = () => {
-    Linking.openURL('https://www.youtube.com/premium');
+  const getTrendChangeIcon = (trend?: string): string => {
+    switch (trend) {
+      case 'up':
+        return '↑';
+      case 'down':
+        return '↓';
+      default:
+        return '≈';
+    }
   };
 
-  const openLink = (platform: string) => {
-    const urls: Record<string, string> = {
-      Instagram: 'https://www.instagram.com',
-      YouTube: 'https://www.youtube.com',
-      Twitter: 'https://www.twitter.com',
-    };
-    if (urls[platform]) {
-      Linking.openURL(urls[platform]);
+  const getTrendChangeColor = (trend?: string): string => {
+    switch (trend) {
+      case 'up':
+        return '#10b981';
+      case 'down':
+        return '#ef4444';
+      default:
+        return '#94a3b8';
     }
   };
 
@@ -166,17 +200,24 @@ export default function PlayScreen() {
           <Text style={styles.headerTitle}>🎮 Play</Text>
           <Text style={styles.subtitle}>Trending Topics & News</Text>
         </View>
-        <TouchableOpacity
-          style={styles.refreshButton}
-          onPress={fetchTrends}
-          disabled={loading}
-        >
-          <MaterialIcons
-            name={loading ? 'hourglass-empty' : 'refresh'}
-            size={20}
-            color="#fff"
-          />
-        </TouchableOpacity>
+        <View style={styles.headerActions}>
+          {hasNewTrends && (
+            <View style={styles.newTrendsBadge}>
+              <Text style={styles.newTrendsBadgeText}>✨ New</Text>
+            </View>
+          )}
+          <TouchableOpacity
+            style={styles.refreshButton}
+            onPress={fetchTrends}
+            disabled={loading}
+          >
+            <MaterialIcons
+              name={loading ? 'hourglass-empty' : 'refresh'}
+              size={20}
+              color="#fff"
+            />
+          </TouchableOpacity>
+        </View>
       </View>
       <ScrollView
         style={styles.content}
@@ -189,6 +230,16 @@ export default function PlayScreen() {
         <Text style={styles.sectionDesc}>
           Daily updates from Instagram, YouTube, Twitter - 6:00 AM KST
         </Text>
+
+        {/* Offline Mode Banner */}
+        {cacheStatus === 'offline' && (
+          <View style={styles.offlineBanner}>
+            <MaterialIcons name="cloud-off" size={16} color="#ef4444" />
+            <Text style={styles.offlineBannerText}>
+              📵 Offline Mode - Using cached data
+            </Text>
+          </View>
+        )}
 
         {/* Cache Status Badge */}
         {lastUpdate && (
@@ -224,7 +275,7 @@ export default function PlayScreen() {
             />
             <View style={{ flex: 1 }}>
               <Text style={styles.lastUpdateText}>
-                Last updated: {lastUpdate.toLocaleTimeString('ko-KR')}
+                📅 Last Updated: {lastUpdate.toLocaleTimeString('ko-KR')}
               </Text>
               <Text style={styles.cacheStatusText}>
                 {cacheStatus === 'fresh'
@@ -239,10 +290,9 @@ export default function PlayScreen() {
 
         <View style={styles.trendingsContainer}>
           {trends.map((trend, index) => (
-            <TouchableOpacity
+            <View
               key={trend.id}
               style={styles.trendCard}
-              onPress={() => openLink(trend.platform)}
             >
               <View style={styles.rankSection}>
                 <View
@@ -256,11 +306,49 @@ export default function PlayScreen() {
                 >
                   <Text style={styles.rankNumber}>#{index + 1}</Text>
                 </View>
+                {trend.trendChange && trend.trendChange !== 'stable' && (
+                  <View
+                    style={[
+                      styles.trendChangeIcon,
+                      {
+                        backgroundColor:
+                          trend.trendChange === 'up'
+                            ? 'rgba(16, 185, 129, 0.1)'
+                            : 'rgba(239, 68, 68, 0.1)',
+                      },
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        styles.trendChangeText,
+                        { color: getTrendChangeColor(trend.trendChange) },
+                      ]}
+                    >
+                      {getTrendChangeIcon(trend.trendChange)}
+                    </Text>
+                  </View>
+                )}
               </View>
 
               <View style={styles.trendInfo}>
                 <View style={styles.trendHeader}>
-                  <Text style={styles.categoryBadge}>{trend.category}</Text>
+                  <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+                    <Text
+                      style={[
+                        styles.categoryBadge,
+                        { backgroundColor: getCategoryColor(trend.category) + '20', color: getCategoryColor(trend.category) },
+                      ]}
+                    >
+                      {trend.category}
+                    </Text>
+                    {trend.popularity !== undefined && (
+                      <View style={styles.popularityBadge}>
+                        <Text style={styles.popularityText}>
+                          🔥 {trend.popularity}%
+                        </Text>
+                      </View>
+                    )}
+                  </View>
                   <Text style={styles.platform}>📱 {trend.platform}</Text>
                 </View>
 
@@ -283,30 +371,19 @@ export default function PlayScreen() {
                     <MaterialIcons name="access-time" size={14} color="#6b7280" />
                     <Text style={styles.statText}>{formatTime(trend.timestamp)}</Text>
                   </View>
+                  {trend.mentions !== undefined && (
+                    <View style={styles.statItem}>
+                      <MaterialIcons name="chat-bubble" size={14} color="#2563eb" />
+                      <Text style={styles.statText}>
+                        {(trend.mentions / 1000).toFixed(1)}K
+                      </Text>
+                    </View>
+                  )}
                 </View>
               </View>
-            </TouchableOpacity>
+            </View>
           ))}
         </View>
-
-        <Text style={styles.sectionTitle} style={{ marginTop: 32 }}>
-          Quick Links
-        </Text>
-
-        <TouchableOpacity style={styles.buttonYT} onPress={openYouTube}>
-          <MaterialIcons name="play-circle" size={20} color="#fff" />
-          <Text style={styles.buttonText}>YouTube</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.buttonIG} onPress={() => openLink('Instagram')}>
-          <MaterialIcons name="camera" size={20} color="#fff" />
-          <Text style={styles.buttonText}>Instagram</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.buttonTW} onPress={() => openLink('Twitter')}>
-          <MaterialIcons name="share" size={20} color="#fff" />
-          <Text style={styles.buttonText}>Twitter</Text>
-        </TouchableOpacity>
 
         <View style={styles.footer}>
           <MaterialIcons name="info" size={16} color="#4b5563" />
@@ -324,6 +401,23 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f8fafc',
   },
+  offlineBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fecaca',
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    borderRadius: 8,
+    marginBottom: 12,
+    gap: 8,
+    borderLeftWidth: 4,
+    borderLeftColor: '#ef4444',
+  },
+  offlineBannerText: {
+    fontSize: 13,
+    color: '#7f1d1d',
+    fontWeight: '600',
+  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -336,6 +430,24 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 3,
     elevation: 3,
+  },
+  headerActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  newTrendsBadge: {
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+  },
+  newTrendsBadgeText: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#fff',
   },
   headerContent: {
     flex: 1,
@@ -418,6 +530,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     justifyContent: 'center',
     alignItems: 'center',
+    gap: 8,
   },
   rankBadge: {
     width: 48,
@@ -430,6 +543,28 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '800',
     color: '#fff',
+  },
+  trendChangeIcon: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  trendChangeText: {
+    fontSize: 18,
+    fontWeight: '800',
+  },
+  popularityBadge: {
+    backgroundColor: '#fef08a',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 6,
+  },
+  popularityText: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#854d0e',
   },
   trendInfo: {
     flex: 1,

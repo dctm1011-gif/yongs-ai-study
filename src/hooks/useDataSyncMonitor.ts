@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert, ToastAndroid, Platform } from 'react-native';
 
 export interface SyncSource {
   name: string;
@@ -10,6 +11,8 @@ export interface SyncSource {
   checksumLocal?: string;
   checksumServer?: string;
   itemCount: number;
+  version: number;
+  lastVersionCheck?: string;
 }
 
 export interface SyncMonitorReport {
@@ -20,6 +23,15 @@ export interface SyncMonitorReport {
   failureCount: number;
   averageSyncTime: number;
   queueSize: number;
+  syncFailureCount: number;
+  versionConflicts: Array<{ source: string; serverVersion: number; localVersion: number }>;
+}
+
+interface VersionConflict {
+  source: string;
+  serverVersion: number;
+  localVersion: number;
+  timestamp: string;
 }
 
 interface SyncMetrics {
@@ -41,6 +53,7 @@ export function useDataSyncMonitor() {
   const [report, setReport] = useState<SyncMonitorReport | null>(null);
   const [isMonitoring, setIsMonitoring] = useState(false);
   const [metrics, setMetrics] = useState<SyncMetrics>({ lastCheck: '', checksumCache: {} });
+  const [failureNotificationShown, setFailureNotificationShown] = useState<Set<string>>(new Set());
 
   // Calculate simple checksum using string hashing
   const calculateChecksum = (data: any): string => {
@@ -58,19 +71,44 @@ export function useDataSyncMonitor() {
     }
   };
 
+  // Show notification for sync failure (once per source)
+  const showSyncFailureNotification = useCallback((sourceName: string, error: string) => {
+    if (failureNotificationShown.has(sourceName)) {
+      return; // Already shown, skip
+    }
+
+    const message = `${sourceName} 동기화 실패: ${error}`;
+
+    if (Platform.OS === 'android') {
+      ToastAndroid.show(message, ToastAndroid.LONG);
+    } else {
+      // iOS uses Alert
+      console.warn(`Sync Failure: ${message}`);
+    }
+
+    // Mark as shown
+    setFailureNotificationShown(prev => new Set([...prev, sourceName]));
+  }, [failureNotificationShown]);
+
   // Fetch and validate data from API endpoint
   const checkDataSource = useCallback(
     async (source: typeof SYNC_SOURCES[0]): Promise<SyncSource> => {
       const startTime = Date.now();
       const storedKey = `sync_${source.name.toLowerCase()}`;
+      const versionKey = `${storedKey}_version`;
 
       try {
         // Attempt to fetch from server
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000);
+
         const response = await fetch(`${NETLIFY_BASE_URL}${source.endpoint}`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
-          timeout: 5000,
+          signal: controller.signal,
         });
+
+        clearTimeout(timeoutId);
 
         if (!response.ok) {
           throw new Error(`HTTP ${response.status}`);
@@ -78,18 +116,45 @@ export function useDataSyncMonitor() {
 
         const serverData = await response.json();
         const checksumServer = calculateChecksum(serverData);
+        const serverVersion = serverData.version || 1;
 
         // Get local data
         const localDataStr = await AsyncStorage.getItem(storedKey);
         const localData = localDataStr ? JSON.parse(localDataStr) : null;
         const checksumLocal = localData ? calculateChecksum(localData) : 'no_local_data';
+        const localVersionStr = await AsyncStorage.getItem(versionKey);
+        const localVersion = localVersionStr ? parseInt(localVersionStr, 10) : 0;
 
-        // Compare checksums
-        const isValid = checksumLocal === checksumServer || !localData;
+        // Compare versions
+        let isValid = checksumLocal === checksumServer || !localData;
+        let versionConflict = false;
+
+        if (serverVersion > localVersion && localData) {
+          // Server has newer version: backup local and pull
+          await AsyncStorage.setItem(
+            `conflict_backup_${source.name}_${Date.now()}`,
+            JSON.stringify(localData)
+          );
+          console.log(`Version conflict for ${source.name}: backing up local v${localVersion}`);
+          versionConflict = true;
+        } else if (localVersion > serverVersion && localData) {
+          // Local has newer version: store for manual review
+          await AsyncStorage.setItem(
+            `version_conflict_${source.name}`,
+            JSON.stringify({
+              serverVersion,
+              localVersion,
+              timestamp: new Date().toISOString(),
+            })
+          );
+          isValid = false;
+          versionConflict = true;
+          console.warn(`Version conflict for ${source.name}: local v${localVersion} > server v${serverVersion}`);
+        }
 
         // Update sync record
         const lastSyncTime = new Date().toISOString();
-        const syncRecord = {
+        const syncRecord: SyncSource = {
           name: source.name,
           apiEndpoint: source.endpoint,
           lastSyncTime,
@@ -97,16 +162,40 @@ export function useDataSyncMonitor() {
           checksumLocal,
           checksumServer,
           itemCount: Array.isArray(serverData) ? serverData.length : Object.keys(serverData || {}).length,
+          version: serverVersion,
+          lastVersionCheck: lastSyncTime,
         };
 
-        // Store sync time
+        // Store sync time, checksum, and version
         await AsyncStorage.setItem(`${storedKey}_lastSync`, lastSyncTime);
         await AsyncStorage.setItem(`${storedKey}_checksum`, checksumServer);
+        await AsyncStorage.setItem(versionKey, serverVersion.toString());
+
+        // Log version conflicts
+        if (versionConflict) {
+          const existingLogStr = await AsyncStorage.getItem('version_conflict_log');
+          const existingLog = existingLogStr ? JSON.parse(existingLogStr) : {};
+
+          await AsyncStorage.setItem(
+            'version_conflict_log',
+            JSON.stringify({
+              ...existingLog,
+              [source.name]: {
+                serverVersion,
+                localVersion,
+                timestamp: lastSyncTime,
+              },
+            })
+          );
+        }
 
         return syncRecord;
       } catch (error) {
         const errorMsg = error instanceof Error ? error.message : 'Unknown error';
         const lastSync = await AsyncStorage.getItem(`${storedKey}_lastSync`);
+
+        // Show notification for failure
+        showSyncFailureNotification(source.name, errorMsg);
 
         return {
           name: source.name,
@@ -115,10 +204,12 @@ export function useDataSyncMonitor() {
           status: 'failed',
           errorMessage: errorMsg,
           itemCount: 0,
+          version: 0,
+          lastVersionCheck: new Date().toISOString(),
         };
       }
     },
-    []
+    [showSyncFailureNotification]
   );
 
   // Run sync check on all data sources
@@ -130,19 +221,35 @@ export function useDataSyncMonitor() {
       const syncResults: Record<string, SyncSource> = {};
       let successCount = 0;
       let failureCount = 0;
+      const versionConflicts: Array<{ source: string; serverVersion: number; localVersion: number }> = [];
 
       // Check all sources in parallel
       const promises = SYNC_SOURCES.map((source) => checkDataSource(source));
       const results = await Promise.all(promises);
 
-      results.forEach((result) => {
+      for (const result of results) {
         syncResults[result.name] = result;
         if (result.status === 'synced') {
           successCount++;
         } else {
           failureCount++;
         }
-      });
+
+        // Check for version conflicts
+        const versionConflictStr = await AsyncStorage.getItem(`version_conflict_${result.name}`);
+        if (versionConflictStr) {
+          try {
+            const conflict = JSON.parse(versionConflictStr);
+            versionConflicts.push({
+              source: result.name,
+              serverVersion: conflict.serverVersion,
+              localVersion: conflict.localVersion,
+            });
+          } catch (e) {
+            console.error('Error parsing version conflict:', e);
+          }
+        }
+      }
 
       // Get queue size
       const queueStr = await AsyncStorage.getItem('sync_queue');
@@ -167,6 +274,8 @@ export function useDataSyncMonitor() {
         failureCount,
         averageSyncTime,
         queueSize,
+        syncFailureCount: failureCount,
+        versionConflicts,
       };
 
       // Store report to AsyncStorage
@@ -236,5 +345,7 @@ export function useDataSyncMonitor() {
     isMonitoring,
     runSyncCheck,
     metrics,
+    syncFailureCount: report?.syncFailureCount || 0,
+    versionConflicts: report?.versionConflicts || [],
   };
 }

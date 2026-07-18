@@ -93,7 +93,7 @@ class AutoRecoveryManager {
       });
 
       if (cacheKeys.length > 0) {
-        await AsyncStorage.multiRemove(cacheKeys);
+        await Promise.all(cacheKeys.map(key => AsyncStorage.removeItem(key)));
         console.log(`[AutoRecovery] Cleared ${cacheKeys.length} cache entries`);
       }
     } catch (e) {

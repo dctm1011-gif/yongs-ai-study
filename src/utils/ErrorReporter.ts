@@ -6,6 +6,8 @@ export interface ErrorReport {
   stack?: string;
   severity: 'warning' | 'error' | 'fatal';
   metadata?: Record<string, any>;
+  recoveryAttempted?: boolean;
+  recoverySucceeded?: boolean;
 }
 
 export interface ErrorBatch {
@@ -13,6 +15,21 @@ export interface ErrorBatch {
   errors: ErrorReport[];
   createdAt: string;
   count: number;
+}
+
+/**
+ * Recovery success metrics aggregation
+ */
+export interface RecoveryMetricsAgg {
+  overallSuccessRate: number;
+  totalAttempts: number;
+  totalSuccesses: number;
+  byStrategy: Record<string, { successRate: number; attempts: number }>;
+  last24hMetrics: {
+    totalRecoveries: number;
+    successfulRecoveries: number;
+    failedRecoveries: number;
+  };
 }
 
 export class ErrorReporter {
@@ -169,7 +186,49 @@ export class ErrorReporter {
       bySeverity,
       byHour,
       topErrors: this.getTopErrors(5),
+      recovery: this.getRecoveryMetrics(),
     };
+  }
+
+  /**
+   * Get recovery metrics
+   */
+  getRecoveryMetrics(): RecoveryMetricsAgg {
+    const now = new Date();
+    const last24h = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+
+    // Errors in last 24 hours
+    const recentErrors = this.errors.filter((e) => new Date(e.timestamp) > last24h);
+
+    // Count recovery attempts and successes
+    const totalAttempts = recentErrors.filter((e) => e.recoveryAttempted).length;
+    const totalSuccesses = recentErrors.filter((e) => e.recoverySucceeded).length;
+    const totalFailed = totalAttempts - totalSuccesses;
+
+    const overallSuccessRate = totalAttempts > 0 ? (totalSuccesses / totalAttempts) * 100 : 0;
+
+    return {
+      overallSuccessRate: Math.round(overallSuccessRate * 100) / 100,
+      totalAttempts: this.errors.filter((e) => e.recoveryAttempted).length,
+      totalSuccesses: this.errors.filter((e) => e.recoverySucceeded).length,
+      byStrategy: {}, // Placeholder for strategy-specific metrics
+      last24hMetrics: {
+        totalRecoveries: totalAttempts,
+        successfulRecoveries: totalSuccesses,
+        failedRecoveries: totalFailed,
+      },
+    };
+  }
+
+  /**
+   * Record recovery attempt on an error
+   */
+  recordRecoveryAttempt(errorId: string, succeeded: boolean): void {
+    const error = this.errors.find((e) => e.id === errorId);
+    if (error) {
+      error.recoveryAttempted = true;
+      error.recoverySucceeded = succeeded;
+    }
   }
 
   private generateId(): string {

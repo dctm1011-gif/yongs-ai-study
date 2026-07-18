@@ -23,11 +23,7 @@ config.transformer = {
   },
 };
 
-// Improve caching behavior
-config.cacheStores = [
-  new (require('metro-cache').FileStore)({
-    dir: '.metro-cache',
-  }),
-];
+// Use Metro's default cache configuration
+// Removing custom cacheStores to avoid initialization issues
 
 module.exports = config;

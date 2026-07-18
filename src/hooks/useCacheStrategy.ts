@@ -154,13 +154,13 @@ export function useBatchCacheStrategy<T extends Record<string, any>>(
         try {
           const cached = await cacheManager.get(key);
           if (cached) {
-            results[key as keyof T] = cached;
+            results[key as keyof T] = cached as any;
             return;
           }
 
           const freshData = await fetcher();
           await cacheManager.set(key, freshData, ttl);
-          results[key as keyof T] = freshData;
+          results[key as keyof T] = freshData as any;
         } catch (err) {
           newErrors[key] = err instanceof Error ? err : new Error(String(err));
         }

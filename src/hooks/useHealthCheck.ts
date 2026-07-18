@@ -360,7 +360,9 @@ async function checkStorage(): Promise<HealthCheckResult> {
         errors.push('저장된 데이터 없음');
       } else {
         // 데이터 로드 가능한지 테스트
-        const allData = await AsyncStorage.multiGet(allKeys);
+        const allData = await Promise.all(
+          allKeys.map(key => AsyncStorage.getItem(key).then(value => [key, value] as const))
+        );
         console.log('[Storage] Loaded', allData.length, 'items');
 
         let loadedSize = 0;

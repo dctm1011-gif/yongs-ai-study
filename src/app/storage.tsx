@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Alert, ActivityIndicator, Modal, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDataSyncMonitor } from '../hooks/useDataSyncMonitor';
@@ -8,8 +8,17 @@ import { DataIntegrityValidator } from '../utils/DataIntegrityValidator';
 interface StorageItem {
   key: string;
   value: string;
+  parsedValue: any;
   size: number;
   type: 'object' | 'array' | 'string' | 'number' | 'boolean';
+  summary?: string;
+}
+
+interface DetailModalData {
+  key: string;
+  value: any;
+  type: string;
+  size: string;
 }
 
 export default function StorageScreen() {
@@ -19,6 +28,8 @@ export default function StorageScreen() {
   const { report: syncReport, runSyncCheck } = useDataSyncMonitor();
   const [showSyncStatus, setShowSyncStatus] = useState(false);
   const [validationResults, setValidationResults] = useState<any>(null);
+  const [selectedItem, setSelectedItem] = useState<DetailModalData | null>(null);
+  const [showDetailModal, setShowDetailModal] = useState(false);
 
   useEffect(() => {
     loadStorageData();
@@ -27,7 +38,9 @@ export default function StorageScreen() {
   const exportAllData = async () => {
     try {
       const allKeys = await AsyncStorage.getAllKeys();
-      const allData = await AsyncStorage.multiGet(allKeys);
+      const allData = await Promise.all(
+        allKeys.map(key => AsyncStorage.getItem(key).then(value => [key, value] as const))
+      );
 
       const exportData: Record<string, any> = {};
       for (const [key, value] of allData) {
@@ -118,7 +131,9 @@ export default function StorageScreen() {
       console.log('✅ 키 로드 완료:', allKeys.length, '개');
       console.log('키 목록:', allKeys);
 
-      const allData = await AsyncStorage.multiGet(allKeys);
+      const allData = await Promise.all(
+        allKeys.map(key => AsyncStorage.getItem(key).then(value => [key, value] as const))
+      );
       console.log('✅ 데이터 로드 완료:', allData);
       console.log('데이터 타입:', typeof allData, '배열?', Array.isArray(allData));
 
@@ -149,18 +164,23 @@ export default function StorageScreen() {
             try {
               const parsed = JSON.parse(value);
               const type = Array.isArray(parsed) ? 'array' : typeof parsed;
+              const summary = generateSummary(key, parsed, type);
               storageItems.push({
                 key,
                 value: JSON.stringify(parsed, null, 2),
+                parsedValue: parsed,
                 size,
                 type: type as any,
+                summary,
               });
             } catch {
               storageItems.push({
                 key,
                 value,
+                parsedValue: value,
                 size,
                 type: 'string',
+                summary: value.substring(0, 50),
               });
             }
           }
@@ -182,6 +202,66 @@ export default function StorageScreen() {
     }
   };
 
+
+  const generateSummary = (key: string, value: any, type: string): string => {
+    if (type === 'array' && Array.isArray(value)) {
+      return `${value.length}개 항목`;
+    } else if (type === 'object' && typeof value === 'object') {
+      const keys = Object.keys(value || {});
+      return `${keys.length}개 속성`;
+    } else if (typeof value === 'string') {
+      return value.substring(0, 50);
+    } else {
+      return String(value).substring(0, 50);
+    }
+  };
+
+  const formatJSONReadable = (value: any, depth = 0): string => {
+    if (value === null || value === undefined) return 'null';
+    if (typeof value === 'string') return `"${value}"`;
+    if (typeof value === 'number' || typeof value === 'boolean') return String(value);
+    if (Array.isArray(value)) return `[${value.length} items]`;
+    if (typeof value === 'object') return `{${Object.keys(value).length} keys}`;
+    return String(value);
+  };
+
+  const renderDetailContent = (value: any, type: string): React.ReactNode => {
+    if (type === 'array' && Array.isArray(value)) {
+      return (
+        <View>
+          <Text style={styles.detailSectionTitle}>배열 항목 ({value.length}개)</Text>
+          {value.map((item, idx) => (
+            <View key={idx} style={styles.detailArrayItem}>
+              <Text style={styles.detailArrayIndex}>[{idx}]</Text>
+              <Text style={styles.detailArrayValue} numberOfLines={5}>
+                {typeof item === 'string' ? item : JSON.stringify(item, null, 2)}
+              </Text>
+            </View>
+          ))}
+        </View>
+      );
+    } else if (type === 'object' && typeof value === 'object') {
+      return (
+        <View>
+          <Text style={styles.detailSectionTitle}>객체 속성</Text>
+          {Object.entries(value || {}).map(([key, val], idx) => (
+            <View key={idx} style={styles.detailObjectItem}>
+              <Text style={styles.detailObjectKey}>{key}</Text>
+              <Text style={styles.detailObjectValue} numberOfLines={3}>
+                {typeof val === 'string' ? val : JSON.stringify(val, null, 2)}
+              </Text>
+            </View>
+          ))}
+        </View>
+      );
+    } else {
+      return (
+        <Text style={styles.detailRawValue} selectable>
+          {JSON.stringify(value, null, 2)}
+        </Text>
+      );
+    }
+  };
 
   const getTypeIcon = (type: string) => {
     switch (type) {
@@ -316,31 +396,42 @@ export default function StorageScreen() {
         </View>
 
         {/* 데이터 목록 */}
+        <Text style={styles.sectionTitle}>📦 저장된 데이터 ({items.length}개)</Text>
         {items.length === 0 ? (
           <View style={styles.emptyContainer}>
             <Text style={styles.emptyText}>저장된 데이터가 없습니다</Text>
           </View>
         ) : (
           items.map((item) => (
-            <View key={item.key} style={styles.itemContainer}>
+            <TouchableOpacity
+              key={item.key}
+              style={styles.itemContainer}
+              onPress={() => {
+                setSelectedItem({
+                  key: item.key,
+                  value: item.parsedValue,
+                  type: item.type,
+                  size: formatSize(item.size),
+                });
+                setShowDetailModal(true);
+              }}
+            >
               <View style={styles.itemHeader}>
                 <View style={styles.itemTitleContainer}>
                   <Text style={styles.itemIcon}>{getTypeIcon(item.type)}</Text>
-                  <View>
+                  <View style={{flex: 1}}>
                     <Text style={styles.itemKey}>{item.key}</Text>
                     <Text style={styles.itemMeta}>
                       {item.type} • {formatSize(item.size)}
                     </Text>
+                    {item.summary && (
+                      <Text style={styles.itemSummary}>{item.summary}</Text>
+                    )}
                   </View>
                 </View>
+                <Text style={styles.clickHint}>→</Text>
               </View>
-
-              <View style={styles.itemContent}>
-                <Text style={styles.itemValue} numberOfLines={10}>
-                  {item.value.length > 500 ? item.value.substring(0, 500) + '...' : item.value}
-                </Text>
-              </View>
-            </View>
+            </TouchableOpacity>
           ))
         )}
 
@@ -349,6 +440,56 @@ export default function StorageScreen() {
           <Text style={styles.refreshButtonText}>🔄 새로고침</Text>
         </TouchableOpacity>
       </ScrollView>
+
+      {/* 상세 데이터 모달 */}
+      <Modal
+        visible={showDetailModal}
+        animationType="slide"
+        transparent={false}
+        onRequestClose={() => setShowDetailModal(false)}
+      >
+        <SafeAreaView style={styles.modalContainer}>
+          <View style={styles.modalHeader}>
+            <TouchableOpacity onPress={() => setShowDetailModal(false)}>
+              <Text style={styles.modalCloseBtn}>✕ 닫기</Text>
+            </TouchableOpacity>
+            <Text style={styles.modalTitle}>📊 상세 데이터</Text>
+            <View style={{width: 60}} />
+          </View>
+
+          <ScrollView contentContainerStyle={styles.modalContent}>
+            {selectedItem && (
+              <View>
+                {/* 헤더 정보 */}
+                <View style={styles.detailHeader}>
+                  <Text style={styles.detailHeaderIcon}>{getTypeIcon(selectedItem.type)}</Text>
+                  <View style={{flex: 1}}>
+                    <Text style={styles.detailHeaderKey}>{selectedItem.key}</Text>
+                    <Text style={styles.detailHeaderMeta}>
+                      타입: {selectedItem.type} | 크기: {selectedItem.size}
+                    </Text>
+                  </View>
+                </View>
+
+                {/* 데이터 내용 */}
+                <View style={styles.detailContentWrapper}>
+                  {renderDetailContent(selectedItem.value, selectedItem.type)}
+                </View>
+
+                {/* 전체 JSON 보기 */}
+                <View style={styles.detailFooter}>
+                  <Text style={styles.detailFooterTitle}>📋 전체 JSON</Text>
+                  <ScrollView horizontal style={styles.jsonScroll}>
+                    <Text style={styles.detailJSON} selectable>
+                      {JSON.stringify(selectedItem.value, null, 2)}
+                    </Text>
+                  </ScrollView>
+                </View>
+              </View>
+            )}
+          </ScrollView>
+        </SafeAreaView>
+      </Modal>
     </SafeAreaView>
   );
 }

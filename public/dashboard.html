@@ -321,6 +321,73 @@
       color: #666;
     }
 
+    .alert-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    .alert-badge.critical {
+      background: #fee2e2;
+      color: #dc2626;
+      border-left: 3px solid #dc2626;
+    }
+
+    .alert-badge.warning {
+      background: #fef3c7;
+      color: #d97706;
+      border-left: 3px solid #d97706;
+    }
+
+    .alert-badge-icon {
+      font-size: 16px;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .error-suggestion {
+      background: #f0f9ff;
+      border-left: 3px solid #0284c7;
+      padding: 12px;
+      border-radius: 4px;
+      margin-top: 8px;
+      font-size: 12px;
+      color: #0c4a6e;
+    }
+
+    .error-suggestion-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .error-stack {
+      font-family: monospace;
+      font-size: 10px;
+      color: #666;
+      margin-top: 8px;
+      padding: 8px;
+      background: #f9fafb;
+      border-radius: 4px;
+      max-height: 80px;
+      overflow-y: auto;
+      word-break: break-all;
+    }
+
     @media (max-width: 768px) {
       .header {
         flex-direction: column;
@@ -382,6 +449,14 @@
       </div>
 
       <div class="card">
+        <div class="card-title">Recovery Success Rate</div>
+        <div class="card-value" id="recoveryRate" style="color: #10b981;">-</div>
+        <div class="card-subtitle">
+          <span id="recoveryStats">0 successful / 0 total</span>
+        </div>
+      </div>
+
+      <div class="card">
         <div class="card-title">Severity Distribution</div>
         <div class="stat-grid">
           <div class="stat-item">
@@ -402,6 +477,11 @@
       <div class="card">
         <div class="card-title">Errors by Tab</div>
         <div id="tabStats" style="font-size: 13px; line-height: 1.8;">-</div>
+      </div>
+
+      <div class="card full-width" id="alertBadgesContainer" style="display: none;">
+        <div class="card-title">⚠️ Alert Badges</div>
+        <div id="alertBadges" style="display: flex; flex-wrap: wrap; gap: 10px;"></div>
       </div>
     </div>
 
@@ -436,16 +516,64 @@
     const API_URL = 'https://illustrious-cuchufli-7c4e58.netlify.app/.netlify/functions/get-error-stats';
     const ERRORS_API_URL = 'https://illustrious-cuchufli-7c4e58.netlify.app/.netlify/functions/log-error';
     const AUTO_REFRESH = 10000; // 10 seconds
+    const CACHE_KEY = 'dashboardCache_24h';
+    const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours
 
     let autoRefreshInterval;
+
+    /**
+     * Local cache management (24 hours)
+     */
+    function getCachedData() {
+      try {
+        const cached = localStorage.getItem(CACHE_KEY);
+        if (!cached) return null;
+
+        const { data, timestamp } = JSON.parse(cached);
+        const now = Date.now();
+
+        // Return if still valid (within 24 hours)
+        if (now - timestamp < CACHE_TTL) {
+          return data;
+        }
+
+        localStorage.removeItem(CACHE_KEY);
+        return null;
+      } catch (e) {
+        console.warn('Failed to get cached data:', e);
+        return null;
+      }
+    }
+
+    function setCachedData(data) {
+      try {
+        localStorage.setItem(CACHE_KEY, JSON.stringify({
+          data,
+          timestamp: Date.now(),
+        }));
+      } catch (e) {
+        console.warn('Failed to cache data:', e);
+      }
+    }
 
     async function fetchStats() {
       try {
         const response = await fetch(API_URL);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        return await response.json();
+        const data = await response.json();
+
+        // Cache the data for 24 hours
+        setCachedData(data);
+        return data;
       } catch (error) {
         console.error('Failed to fetch stats:', error);
+
+        // Fall back to cached data if available
+        const cached = getCachedData();
+        if (cached) {
+          console.warn('Using cached data from 24h');
+          return cached;
+        }
         return null;
       }
     }
@@ -480,6 +608,15 @@
       document.getElementById('errorCount').textContent = stats.summary?.severity?.error || 0;
       document.getElementById('warningCount').textContent = stats.summary?.severity?.warning || 0;
 
+      // Recovery success rate
+      const recovery = stats.recovery || {};
+      const recoveryRate = recovery.overallSuccessRate || 0;
+      const successful = recovery.last24hMetrics?.successfulRecoveries || 0;
+      const total_recovery = recovery.last24hMetrics?.totalRecoveries || 0;
+
+      document.getElementById('recoveryRate').textContent = recoveryRate.toFixed(1) + '%';
+      document.getElementById('recoveryStats').textContent = `${successful} successful / ${total_recovery} total`;
+
       // Tab stats
       const tabStats = stats.byTab || {};
       const tabHtml = Object.entries(tabStats)
@@ -487,6 +624,9 @@
         .map(([tab, count]) => `<div>• ${tab}: <strong>${count}</strong></div>`)
         .join('');
       document.getElementById('tabStats').innerHTML = tabHtml || '<div>-</div>';
+
+      // Render alert badges
+      renderAlertBadges(stats.alertBadges || []);
 
       // Heatmap
       renderHeatmap(tabStats);
@@ -497,8 +637,93 @@
       // Top errors
       renderTopErrors(stats.topErrors || []);
 
-      // Recent errors
+      // Recent errors with suggestions
       renderErrorsList(errors);
+    }
+
+    /**
+     * Render alert badges for repeated/FATAL errors
+     */
+    function renderAlertBadges(badges) {
+      const container = document.getElementById('alertBadgesContainer');
+      const badgesHtml = document.getElementById('alertBadges');
+
+      if (!badges || badges.length === 0) {
+        container.style.display = 'none';
+        return;
+      }
+
+      container.style.display = 'block';
+
+      const html = badges.slice(0, 5).map((badge) => {
+        const icon = badge.severity === 'critical' ? '🚨' : '⚠️';
+        return `
+          <div class="alert-badge ${badge.severity}">
+            <span class="alert-badge-icon">${icon}</span>
+            <span>${badge.message}</span>
+          </div>
+        `;
+      }).join('');
+
+      badgesHtml.innerHTML = html;
+    }
+
+    /**
+     * Generate error resolution suggestions based on error type
+     */
+    function generateErrorSuggestion(error, stack) {
+      if (error.includes('AsyncStorage')) {
+        return {
+          title: 'Storage Issue',
+          suggestions: [
+            'Clear app cache and storage',
+            'Reinstall the app',
+            'Check device storage space'
+          ]
+        };
+      }
+
+      if (error.includes('timeout') || error.includes('ETIMEDOUT')) {
+        return {
+          title: 'Network/Timeout',
+          suggestions: [
+            'Check internet connection',
+            'Increase timeout settings',
+            'Try connecting to a faster network'
+          ]
+        };
+      }
+
+      if (error.includes('memory') || error.includes('OutOfMemory')) {
+        return {
+          title: 'Memory Issue',
+          suggestions: [
+            'Close other apps',
+            'Restart device',
+            'Clear app cache'
+          ]
+        };
+      }
+
+      if (error.includes('JSON')) {
+        return {
+          title: 'Data Corruption',
+          suggestions: [
+            'Clear corrupted data',
+            'Reinstall app',
+            'Restore from backup'
+          ]
+        };
+      }
+
+      return {
+        title: 'General Error',
+        suggestions: [
+          'Restart the app',
+          'Check error logs',
+          'Contact support with error ID'
+        ]
+      };
     }
 
     function renderHeatmap(tabStats) {
@@ -569,6 +794,25 @@
         .map((err) => {
           const time = new Date(err.timestamp);
           const timeStr = time.toLocaleTimeString();
+          const suggestion = generateErrorSuggestion(err.error, err.stack);
+
+          let suggestionHtml = '';
+          if (err.severity === 'fatal' || err.severity === 'error') {
+            suggestionHtml = `
+              <div class="error-suggestion">
+                <div class="error-suggestion-title">💡 ${suggestion.title}</div>
+                <ul style="margin: 0; padding-left: 20px; font-size: 11px;">
+                  ${suggestion.suggestions.map(s => `<li>${s}</li>`).join('')}
+                </ul>
+              </div>
+            `;
+          }
+
+          let stackHtml = '';
+          if (err.stack && err.severity === 'fatal') {
+            stackHtml = `<div class="error-stack"><strong>Stack:</strong><br>${err.stack.split('\n').slice(0, 3).join('<br>')}</div>`;
+          }
+
           return `
             <div class="error-item ${err.severity}">
               <div class="error-header">
@@ -579,6 +823,8 @@
               <div style="margin-top: 6px;">
                 <span class="error-severity ${err.severity}">${err.severity}</span>
               </div>
+              ${suggestionHtml}
+              ${stackHtml}
             </div>
           `;
         })

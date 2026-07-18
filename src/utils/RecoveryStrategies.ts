@@ -8,6 +8,86 @@ export interface RecoveryAction {
 }
 
 /**
+ * Recovery strategy metrics - tracks success/failure rates
+ */
+export interface RecoveryMetrics {
+  strategyName: string;
+  tier: 1 | 2 | 3;
+  totalAttempts: number;
+  successCount: number;
+  failureCount: number;
+  lastExecutedAt?: string;
+  successRate: number; // percentage
+}
+
+/**
+ * Global recovery metrics tracker
+ */
+class RecoveryMetricsTracker {
+  private metrics: Map<string, RecoveryMetrics> = new Map();
+
+  recordSuccess(strategyName: string, tier: 1 | 2 | 3): void {
+    const key = `${strategyName}-tier${tier}`;
+    const metric = this.getOrCreateMetric(key, strategyName, tier);
+    metric.successCount++;
+    metric.totalAttempts++;
+    metric.lastExecutedAt = new Date().toISOString();
+    this.updateSuccessRate(metric);
+  }
+
+  recordFailure(strategyName: string, tier: 1 | 2 | 3): void {
+    const key = `${strategyName}-tier${tier}`;
+    const metric = this.getOrCreateMetric(key, strategyName, tier);
+    metric.failureCount++;
+    metric.totalAttempts++;
+    metric.lastExecutedAt = new Date().toISOString();
+    this.updateSuccessRate(metric);
+  }
+
+  private getOrCreateMetric(key: string, strategyName: string, tier: 1 | 2 | 3): RecoveryMetrics {
+    if (!this.metrics.has(key)) {
+      this.metrics.set(key, {
+        strategyName,
+        tier,
+        totalAttempts: 0,
+        successCount: 0,
+        failureCount: 0,
+        successRate: 0,
+      });
+    }
+    return this.metrics.get(key)!;
+  }
+
+  private updateSuccessRate(metric: RecoveryMetrics): void {
+    if (metric.totalAttempts > 0) {
+      metric.successRate = (metric.successCount / metric.totalAttempts) * 100;
+    }
+  }
+
+  getMetrics(): RecoveryMetrics[] {
+    return Array.from(this.metrics.values());
+  }
+
+  getMetricsByStrategy(strategyName: string): RecoveryMetrics[] {
+    return Array.from(this.metrics.values()).filter((m) => m.strategyName === strategyName);
+  }
+
+  getAverageSuccessRate(): number {
+    const metrics = Array.from(this.metrics.values());
+    if (metrics.length === 0) return 0;
+    const totalSuccess = metrics.reduce((sum, m) => sum + m.successCount, 0);
+    const totalAttempts = metrics.reduce((sum, m) => sum + m.totalAttempts, 0);
+    return totalAttempts > 0 ? (totalSuccess / totalAttempts) * 100 : 0;
+  }
+
+  clearMetrics(): void {
+    this.metrics.clear();
+  }
+}
+
+export const recoveryMetricsTracker = new RecoveryMetricsTracker();
+
+/**
  * Recovery strategies for different error types
  */
 export const recoveryStrategies = {
@@ -34,7 +114,7 @@ export const recoveryStrategies = {
         const cacheKeys = keys.filter((k) => k.includes('cache') || k.includes('temp'));
 
         if (cacheKeys.length > 0) {
-          await AsyncStorage.multiRemove(cacheKeys);
+          await Promise.all(cacheKeys.map(key => AsyncStorage.removeItem(key)));
           console.log(`[Recovery] Cleared ${cacheKeys.length} cache entries`);
         }
       } catch (e) {
@@ -60,7 +140,9 @@ export const recoveryStrategies = {
           papers: JSON.stringify([]),
         };
 
-        await AsyncStorage.multiSet(Object.entries(essentialData));
+        await Promise.all(
+          Object.entries(essentialData).map(([key, value]) => AsyncStorage.setItem(key, value))
+        );
         console.log('[Recovery] AsyncStorage reinitialized with essential data');
       } catch (e) {
         console.warn('[Recovery] AsyncStorage tier 3 failed:', e);
@@ -124,7 +206,7 @@ export const recoveryStrategies = {
         const tempKeys = keys.filter((k) => k.startsWith('temp_'));
 
         if (tempKeys.length > 0) {
-          await AsyncStorage.multiRemove(tempKeys);
+          await Promise.all(tempKeys.map(key => AsyncStorage.removeItem(key)));
           console.log(`[Recovery] Cleared ${tempKeys.length} temporary entries`);
         }
       } catch (e) {
@@ -141,7 +223,7 @@ export const recoveryStrategies = {
         );
 
         if (cacheKeys.length > 0) {
-          await AsyncStorage.multiRemove(cacheKeys);
+          await Promise.all(cacheKeys.map(key => AsyncStorage.removeItem(key)));
           console.log(`[Recovery] Cleared ${cacheKeys.length} cache entries`);
         }
       } catch (e) {
@@ -247,7 +329,7 @@ export function detectErrorStrategy(error: Error): keyof typeof recoveryStrategi
 }
 
 /**
- * Execute recovery strategy
+ * Execute recovery strategy with metrics tracking
  */
 export async function executeRecoveryStrategy(
   strategy: keyof typeof recoveryStrategies,
@@ -261,11 +343,19 @@ export async function executeRecoveryStrategy(
   }
 
   const tierKey = `tier${tier}` as keyof typeof strategyObj;
-  const tierFn = strategyObj[tierKey];
+  const tierFn = strategyObj[tierKey] as any;
 
-  if (!tierFn) {
+  if (!tierFn || typeof tierFn !== 'function') {
     throw new Error(`Tier ${tier} not found for strategy ${strategy}`);
   }
 
-  await tierFn(...args);
+  try {
+    await (tierFn as (...args: any[]) => Promise<void>)(...args);
+    recoveryMetricsTracker.recordSuccess(String(strategy), tier);
+    console.log(`[Recovery] Strategy ${strategy} tier ${tier} succeeded`);
+  } catch (error) {
+    recoveryMetricsTracker.recordFailure(String(strategy), tier);
+    console.warn(`[Recovery] Strategy ${strategy} tier ${tier} failed:`, error);
+    throw error;
+  }
 }

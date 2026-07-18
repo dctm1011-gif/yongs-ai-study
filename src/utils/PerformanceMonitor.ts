@@ -6,6 +6,13 @@ interface PerformanceMetric {
   timestamp: number;
   isCached: boolean;
   cacheHit?: boolean;
+  memoryUsageMB?: number;
+}
+
+interface MemoryMetric {
+  tabName: string;
+  memoryUsageMB: number;
+  timestamp: number;
 }
 
 interface PerformanceSummary {
@@ -17,14 +24,29 @@ interface PerformanceSummary {
   measurements: PerformanceMetric[];
 }
 
+interface MemorySummary {
+  tabName: string;
+  avgMemoryMB: number;
+  minMemoryMB: number;
+  maxMemoryMB: number;
+  currentMemoryMB: number;
+  totalReadings: number;
+}
+
 export class PerformanceMonitor {
   private static instance: PerformanceMonitor;
   private metrics: PerformanceMetric[] = [];
+  private memoryMetrics: MemoryMetric[] = [];
   private readonly MAX_METRICS = 1000; // Store last 1000 measurements
+  private readonly MAX_MEMORY_METRICS = 500; // Store last 500 memory readings
   private startTimes: Map<string, number> = new Map();
+  private lastMemoryCheck = 0;
+  private memoryCheckInterval = 5000; // Check memory every 5 seconds
 
   private constructor() {
     this.loadMetrics();
+    this.loadMemoryMetrics();
+    this.startMemoryMonitoring();
   }
 
   static getInstance(): PerformanceMonitor {
@@ -186,6 +208,138 @@ export class PerformanceMonitor {
       await AsyncStorage.setItem('performance_metrics', JSON.stringify(this.metrics));
     } catch (error) {
       console.error('Failed to save performance metrics:', error);
+    }
+  }
+
+  /**
+   * Record memory usage for a tab
+   */
+  recordMemoryUsage(tabName: string, memoryMB: number): MemoryMetric {
+    const metric: MemoryMetric = {
+      tabName,
+      memoryUsageMB: memoryMB,
+      timestamp: Date.now(),
+    };
+
+    this.memoryMetrics.push(metric);
+
+    // Keep only last MAX_MEMORY_METRICS
+    if (this.memoryMetrics.length > this.MAX_MEMORY_METRICS) {
+      this.memoryMetrics = this.memoryMetrics.slice(-this.MAX_MEMORY_METRICS);
+    }
+
+    this.saveMemoryMetrics();
+
+    console.log(
+      `💾 Memory: ${tabName} using ${memoryMB.toFixed(2)}MB`
+    );
+
+    return metric;
+  }
+
+  /**
+   * Get memory summary for a specific tab
+   */
+  getMemorySummary(tabName?: string): MemorySummary | Record<string, MemorySummary> {
+    if (tabName) {
+      const tabMetrics = this.memoryMetrics.filter(m => m.tabName === tabName);
+
+      if (tabMetrics.length === 0) {
+        return {
+          tabName,
+          avgMemoryMB: 0,
+          minMemoryMB: 0,
+          maxMemoryMB: 0,
+          currentMemoryMB: 0,
+          totalReadings: 0,
+        };
+      }
+
+      const memoryValues = tabMetrics.map(m => m.memoryUsageMB);
+      return {
+        tabName,
+        avgMemoryMB: memoryValues.reduce((a, b) => a + b, 0) / memoryValues.length,
+        minMemoryMB: Math.min(...memoryValues),
+        maxMemoryMB: Math.max(...memoryValues),
+        currentMemoryMB: memoryValues[memoryValues.length - 1],
+        totalReadings: tabMetrics.length,
+      };
+    }
+
+    // Return all tab summaries
+    const tabs = Array.from(new Set(this.memoryMetrics.map(m => m.tabName)));
+    const summaries: Record<string, MemorySummary> = {};
+
+    for (const tab of tabs) {
+      const tabMetrics = this.memoryMetrics.filter(m => m.tabName === tab);
+      const memoryValues = tabMetrics.map(m => m.memoryUsageMB);
+
+      summaries[tab] = {
+        tabName: tab,
+        avgMemoryMB: memoryValues.reduce((a, b) => a + b, 0) / memoryValues.length,
+        minMemoryMB: Math.min(...memoryValues),
+        maxMemoryMB: Math.max(...memoryValues),
+        currentMemoryMB: memoryValues[memoryValues.length - 1],
+        totalReadings: tabMetrics.length,
+      };
+    }
+
+    return summaries;
+  }
+
+  /**
+   * Get total memory usage across all tabs
+   */
+  getTotalMemoryUsage(): number {
+    if (this.memoryMetrics.length === 0) return 0;
+    return this.memoryMetrics[this.memoryMetrics.length - 1].memoryUsageMB;
+  }
+
+  /**
+   * Get estimated available memory
+   */
+  getAvailableMemory(totalSystemMemoryMB: number = 500): number {
+    return totalSystemMemoryMB - this.getTotalMemoryUsage();
+  }
+
+  /**
+   * Clear all memory metrics
+   */
+  clearMemoryMetrics(): void {
+    this.memoryMetrics = [];
+  }
+
+  /**
+   * Start automatic memory monitoring
+   */
+  private startMemoryMonitoring(): void {
+    // Note: React Native doesn't have built-in process.memoryUsage()
+    // This is a placeholder for when native module is available
+    console.log('📊 Memory monitoring initialized');
+  }
+
+  /**
+   * Private: Save memory metrics to storage
+   */
+  private async saveMemoryMetrics(): Promise<void> {
+    try {
+      await AsyncStorage.setItem('memory_metrics', JSON.stringify(this.memoryMetrics));
+    } catch (error) {
+      console.error('Failed to save memory metrics:', error);
+    }
+  }
+
+  /**
+   * Private: Load memory metrics from storage
+   */
+  private async loadMemoryMetrics(): Promise<void> {
+    try {
+      const stored = await AsyncStorage.getItem('memory_metrics');
+      if (stored) {
+        this.memoryMetrics = JSON.parse(stored);
+      }
+    } catch (error) {
+      console.error('Failed to load memory metrics:', error);
     }
   }
 }

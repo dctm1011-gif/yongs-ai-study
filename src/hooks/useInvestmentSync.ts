@@ -44,7 +44,7 @@ export function useInvestmentSync() {
   const [error, setError] = useState<string | null>(null);
   const [lastSyncTime, setLastSyncTime] = useState<Date | null>(null);
   const [isOnline, setIsOnline] = useState(true);
-  const syncTimeoutRef = useRef<NodeJS.Timeout>();
+  const syncTimeoutRef = useRef<any>(undefined);
   const netInfoUnsubscribeRef = useRef<(() => void) | null>(null);
 
   // Initialize preferences with defaults
@@ -237,16 +237,15 @@ export function useInvestmentSync() {
   }, [isOnline, fetchFromBackend, generateMockProperties]);
 
   // Save user preferences
-  const savePreferences = useCallback(async (newPrefs: Partial<UserInvestmentPreferences>) => {
+  const savePreferences = useCallback(async (newPrefs: Partial<UserInvestmentPreferences>): Promise<void> => {
     try {
       const current = preferences || (await initializePreferences());
       const updated = { ...current, ...newPrefs };
       await AsyncStorage.setItem(PREFERENCES_KEY, JSON.stringify(updated));
       setPreferences(updated);
-      return true;
     } catch (err) {
       console.error('[useInvestmentSync] Error saving preferences:', err);
-      return false;
+      throw err;
     }
   }, [preferences, initializePreferences]);
 
@@ -287,7 +286,7 @@ export function useInvestmentSync() {
   useEffect(() => {
     try {
       const NetInfo = require('@react-native-community/netinfo').default;
-      const unsubscribe = NetInfo.addEventListener(state => {
+      const unsubscribe = NetInfo.addEventListener((state: any) => {
         const online = state.isConnected ?? false;
         setIsOnline(online);
         console.log('[useInvestmentSync] Network status:', online ? 'online' : 'offline');

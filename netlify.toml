@@ -26,6 +26,26 @@
   name = "batch-sync-retry"
   schedule = "0 */6 * * *"
 
+# Weekly investment summary every Monday at 06:00 UTC
+[[functions]]
+  node_bundler = "esbuild"
+  name = "weekly-investment-summary"
+  schedule = "0 6 * * 1"
+
+# AI recommendations analysis daily at 07:00 UTC
+[[functions]]
+  node_bundler = "esbuild"
+  name = "ai-recommendations"
+  schedule = "0 7 * * *"
+
+# Investment API routes
+[[redirects]]
+  from = "/api/investment/*"
+  to = "/.netlify/functions/investment"
+  status = 200
+  force = true
+
+# General API routes
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"

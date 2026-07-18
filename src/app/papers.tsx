@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { performanceMonitor } from '../utils/PerformanceMonitor';
 
 interface Paper {
   id: string;
@@ -27,6 +28,20 @@ export default function PapersScreen() {
   const [stats, setStats] = useState({ total: 0, read: 0, bookmarked: 0 });
   const [loading, setLoading] = useState(true);
   const [selectedPaper, setSelectedPaper] = useState<Paper | null>(null);
+  const [isCached, setIsCached] = useState(false);
+  const [loadStartTime] = useState(Date.now());
+
+  // Performance monitoring
+  useEffect(() => {
+    performanceMonitor.startTiming('Papers');
+  }, []);
+
+  // Log performance timing
+  useEffect(() => {
+    if (!loading) {
+      performanceMonitor.recordMetric('Papers', isCached, isCached);
+    }
+  }, [loading, isCached]);
 
   useEffect(() => {
     loadData();
@@ -39,6 +54,55 @@ export default function PapersScreen() {
   const loadData = async () => {
     try {
       setLoading(true);
+
+      // Try to load from cache first (24-hour TTL)
+      const savedPapers = await AsyncStorage.getItem('papers');
+      if (savedPapers) {
+        try {
+          const parsedPapers = JSON.parse(savedPapers);
+          setPapers(parsedPapers);
+          setIsCached(true);
+          setLoading(false);
+          // Still try to fetch fresh data in background
+          fetchUserPrefs()
+            .then(userPrefs => {
+              if (userPrefs && userPrefs.liked) {
+                fetchColumnNotes().then(columnNotes => {
+                  if (columnNotes) {
+                    const likedPaperIds = userPrefs.liked || [];
+                    const savedPrefs = AsyncStorage.getItem('papers_prefs');
+                    savedPrefs.then(prefs => {
+                      const prefs_obj = prefs ? JSON.parse(prefs) : {};
+
+                      const papers_list = likedPaperIds
+                        .map((id: string) => {
+                          const notes = columnNotes[id];
+                          if (!notes) return null;
+                          return {
+                            id,
+                            title: formatTitle(id),
+                            headline: notes.headline || '',
+                            why_important: notes.why_important || '',
+                            hbm_perspective: notes.hbm_perspective || '',
+                            bookmarked: prefs_obj[id]?.bookmarked || false,
+                            read: prefs_obj[id]?.read || false,
+                          };
+                        })
+                        .filter((p: any) => p !== null) as Paper[];
+
+                      setPapers(papers_list);
+                      AsyncStorage.setItem('papers', JSON.stringify(papers_list));
+                    });
+                  }
+                });
+              }
+            })
+            .catch(err => console.log('Background refresh failed (non-fatal):', err));
+          return;
+        } catch (e) {
+          console.log('Cache parse failed, fetching fresh data');
+        }
+      }
 
       // Fetch from Netlify
       const userPrefs = await fetchUserPrefs();
@@ -68,6 +132,7 @@ export default function PapersScreen() {
 
         setPapers(papers_list);
         await AsyncStorage.setItem('papers', JSON.stringify(papers_list));
+        setIsCached(false);
       } else {
         // Fallback to local data
         const savedPapers = await AsyncStorage.getItem('papers');

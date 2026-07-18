@@ -213,12 +213,11 @@ export function getOptimizedImageUrl(
  * Utility to preload multiple images
  */
 export async function preloadImages(imageUrls: string[]): Promise<void> {
+  const { Image } = require('react-native');
   const promises = imageUrls.map(url => {
-    return new Promise<void>((resolve) => {
-      const img = new Image();
-      img.onload = () => resolve();
-      img.onerror = () => resolve(); // Still resolve even if loading fails
-      img.src = url;
+    if (!url) return Promise.resolve();
+    return Image.prefetch(url).catch(() => {
+      // Silently ignore errors
     });
   });
 

@@ -7,9 +7,24 @@ Write-Host ""
 
 $startTime = Get-Date
 
-# Step 0: Analyze changes and decide if clean is needed
-Write-Host "Step 0: Analyzing changes..." -ForegroundColor Cyan
+# Step 0: Pre-build checks
+Write-Host "Step 0: Pre-build Checks..." -ForegroundColor Cyan
 cd "C:\Users\dctm1\YongStudyApp"
+
+# Check npm dependencies
+Write-Host "  Checking npm dependencies..." -ForegroundColor Gray
+if (!(Test-Path "node_modules")) {
+  Write-Host "  ⚠️  node_modules not found, running npm install..." -ForegroundColor Yellow
+  npm install 2>&1 | Out-Null
+  if ($LASTEXITCODE -ne 0) {
+    Write-Host "  ❌ npm install failed" -ForegroundColor Red
+    exit 1
+  }
+  Write-Host "  ✅ npm install completed" -ForegroundColor Green
+}
+
+# Analyze changes and decide if clean is needed
+Write-Host "Step 0: Analyzing changes..." -ForegroundColor Cyan
 
 # Build time을 먼저 생성 (빌드에 포함되도록)
 $buildTime = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
@@ -114,6 +129,37 @@ if ($LASTEXITCODE -ne 0) {
   exit 1
 }
 Write-Host "OK - APK built" -ForegroundColor Green
+
+# Step 1.5: Verify Bundle Generation
+Write-Host ""
+Write-Host "Step 1.5: Verifying JavaScript Bundle..." -ForegroundColor Yellow
+
+$bundleFile = "C:\Users\dctm1\YongStudyApp\android\app\build\generated\assets\createBundleReleaseJsAndAssets\index.android.bundle"
+if (!(Test-Path $bundleFile)) {
+  Write-Host "❌ Bundle file not found: $bundleFile" -ForegroundColor Red
+  Write-Host "Attempting to regenerate bundle..." -ForegroundColor Yellow
+
+  # Try to generate bundle manually
+  npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output $bundleFile 2>&1 | Out-Null
+
+  if (!(Test-Path $bundleFile)) {
+    Write-Host "❌ Bundle generation failed" -ForegroundColor Red
+    exit 1
+  }
+}
+
+$bundleInfo = Get-Item $bundleFile
+$bundleSize = $bundleInfo.Length / 1MB
+$bundleAge = (Get-Date) - $bundleInfo.LastWriteTime
+$bundleAgeSeconds = $bundleAge.TotalSeconds
+
+Write-Host "✅ Bundle found: $('{0:F2}' -f $bundleSize) MB" -ForegroundColor Green
+Write-Host "   Age: $('{0:F1}' -f $bundleAge.TotalSeconds) seconds old" -ForegroundColor Gray
+
+if ($bundleAgeSeconds -gt 300) {
+  Write-Host "⚠️  WARNING: Bundle is older than 5 minutes" -ForegroundColor Yellow
+  Write-Host "   This might indicate a build caching issue" -ForegroundColor Gray
+}
 
 # Step 2: Install with verification
 Write-Host ""
@@ -285,3 +331,19 @@ Write-Host ""
 Write-Host "=========================================================" -ForegroundColor Cyan
 Write-Host "COMPLETE - Took $([Math]::Round($duration))s" -ForegroundColor Green
 Write-Host "=========================================================" -ForegroundColor Cyan
+Write-Host ""
+Write-Host "Build Recovery Quick Reference:" -ForegroundColor Gray
+Write-Host "  If 'Bundle not found' error occurs:" -ForegroundColor Gray
+Write-Host "    → Run: npm install" -ForegroundColor Gray
+Write-Host "    → Delete: .metro-cache, android/build folders" -ForegroundColor Gray
+Write-Host "    → Re-run: ./build-and-debug.ps1" -ForegroundColor Gray
+Write-Host ""
+Write-Host "  If 'Gradle build failed' occurs:" -ForegroundColor Gray
+Write-Host "    → Run: ./android/gradlew.bat -p android clean" -ForegroundColor Gray
+Write-Host "    → Check: TypeScript errors (npx tsc --noEmit)" -ForegroundColor Gray
+Write-Host "    → Verify: metro.config.js has no custom cacheStores" -ForegroundColor Gray
+Write-Host ""
+Write-Host "  If 'Unable to load script' on device:" -ForegroundColor Gray
+Write-Host "    → Check: index.android.bundle file size > 1MB" -ForegroundColor Gray
+Write-Host "    → Verify: APK installation (adb install -r <apk>)" -ForegroundColor Gray
+Write-Host "    → Clear: App data (adb shell pm clear com.dctm1011.yongstudy)" -ForegroundColor Gray

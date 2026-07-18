@@ -17,6 +17,29 @@ interface ErrorBatch {
   status: 'pending' | 'syncing' | 'sent';
 }
 
+/**
+ * Repeated error detection - track errors within 30 minutes
+ */
+interface RepeatedErrorEntry {
+  error: string;
+  count: number;
+  firstSeenAt: number;
+  lastSeenAt: number;
+  alerted: boolean;
+}
+
+/**
+ * Alert badge for repeated FATAL errors
+ */
+interface AlertBadge {
+  id: string;
+  type: 'repeated-error' | 'fatal-spike';
+  severity: 'critical' | 'warning';
+  message: string;
+  timestamp: string;
+  errorSignature: string;
+}
+
 class GlobalErrorLogger {
   private logs: ErrorLog[] = [];
   private pendingBatch: ErrorLog[] = [];
@@ -27,6 +50,10 @@ class GlobalErrorLogger {
   private debugMode = false;
   private isOnline = true;
   private syncQueue: ErrorBatch[] = [];
+  private repeatedErrors: Map<string, RepeatedErrorEntry> = new Map();
+  private alertBadges: AlertBadge[] = [];
+  private readonly REPEAT_WINDOW = 30 * 60 * 1000; // 30 minutes
+  private readonly REPEAT_THRESHOLD = 5; // Alert after 5 occurrences
 
   constructor() {
     this.initializeNetworkListener();
@@ -69,9 +96,10 @@ class GlobalErrorLogger {
 
   private setupGlobalErrorHandler() {
     // Catch global React Native errors
-    if (global.ErrorUtils) {
-      const previousHandler = global.ErrorUtils.getGlobalHandler?.();
-      global.ErrorUtils.setGlobalHandler((error: Error, isFatal: boolean) => {
+    const g = global as any;
+    if (g.ErrorUtils) {
+      const previousHandler = g.ErrorUtils.getGlobalHandler?.();
+      g.ErrorUtils.setGlobalHandler((error: Error, isFatal: boolean) => {
         this.log('Global', error, isFatal ? 'fatal' : 'error');
         if (previousHandler) {
           previousHandler(error, isFatal);
@@ -136,6 +164,14 @@ class GlobalErrorLogger {
     // Add to pending batch
     this.pendingBatch.unshift(logEntry);
 
+    // Track repeated errors
+    this.trackRepeatedError(errorMessage, severity);
+
+    // Handle FATAL errors immediately
+    if (severity === 'fatal') {
+      this.handleFatalError(logEntry);
+    }
+
     // Save to AsyncStorage
     await this.saveToStorage();
 
@@ -164,6 +200,115 @@ class GlobalErrorLogger {
       await AsyncStorage.setItem('errorLogs', JSON.stringify(this.logs));
     } catch (e) {
       console.warn('[ErrorLogger] Failed to save error logs to storage:', e);
+    }
+  }
+
+  /**
+   * Track repeated errors within a 30-minute window
+   */
+  private trackRepeatedError(errorMessage: string, severity: string): void {
+    const now = Date.now();
+    const errorKey = `${errorMessage}`;
+
+    if (this.repeatedErrors.has(errorKey)) {
+      const entry = this.repeatedErrors.get(errorKey)!;
+
+      // Clear if outside repeat window
+      if (now - entry.firstSeenAt > this.REPEAT_WINDOW) {
+        this.repeatedErrors.delete(errorKey);
+        this.trackRepeatedError(errorMessage, severity);
+        return;
+      }
+
+      entry.count++;
+      entry.lastSeenAt = now;
+
+      // Alert if threshold exceeded and not already alerted
+      if (entry.count >= this.REPEAT_THRESHOLD && !entry.alerted) {
+        this.createAlertBadge({
+          type: 'repeated-error',
+          severity: severity === 'fatal' ? 'critical' : 'warning',
+          message: `Error repeated ${entry.count} times in 30 minutes: ${errorMessage}`,
+          errorSignature: errorKey,
+        });
+        entry.alerted = true;
+      }
+    } else {
+      this.repeatedErrors.set(errorKey, {
+        error: errorMessage,
+        count: 1,
+        firstSeenAt: now,
+        lastSeenAt: now,
+        alerted: false,
+      });
+    }
+  }
+
+  /**
+   * Handle FATAL errors - save immediately to Netlify logs
+   */
+  private async handleFatalError(logEntry: ErrorLog): Promise<void> {
+    try {
+      const payload = {
+        type: 'FATAL_ERROR',
+        error: logEntry.error,
+        tab: logEntry.tab,
+        stack: logEntry.stack,
+        timestamp: logEntry.timestamp,
+      };
+
+      console.error('[ErrorLogger] FATAL ERROR DETECTED:', payload);
+
+      // Attempt immediate save to Netlify logs
+      if (this.isOnline) {
+        await fetch(
+          'https://illustrious-cuchufli-7c4e58.netlify.app/.netlify/functions/log-fatal-error',
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          }
+        ).catch((e) => console.warn('[ErrorLogger] Failed to log FATAL error to Netlify:', e));
+      }
+
+      // Create critical alert badge
+      this.createAlertBadge({
+        type: 'fatal-spike',
+        severity: 'critical',
+        message: `FATAL ERROR: ${logEntry.error}`,
+        errorSignature: logEntry.error,
+      });
+    } catch (e) {
+      console.warn('[ErrorLogger] Error handling FATAL error:', e);
+    }
+  }
+
+  /**
+   * Create alert badge for dashboard
+   */
+  private createAlertBadge(options: Omit<AlertBadge, 'id' | 'timestamp'>): void {
+    const badge: AlertBadge = {
+      id: `badge-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      timestamp: new Date().toISOString(),
+      ...options,
+    };
+
+    this.alertBadges.unshift(badge);
+
+    // Keep only last 50 badges
+    if (this.alertBadges.length > 50) {
+      this.alertBadges.pop();
+    }
+
+    // Save badges to storage
+    this.saveAlertBadges();
+  }
+
+  private async saveAlertBadges(): Promise<void> {
+    try {
+      await AsyncStorage.setItem('errorAlertBadges', JSON.stringify(this.alertBadges));
+    } catch (e) {
+      console.warn('[ErrorLogger] Failed to save alert badges:', e);
     }
   }
 
@@ -335,6 +480,14 @@ class GlobalErrorLogger {
     });
     return result;
   }
+
+  getAlertBadgesPublic(): AlertBadge[] {
+    return this.alertBadges;
+  }
+
+  getRepeatedErrorsPublic(): RepeatedErrorEntry[] {
+    return Array.from(this.repeatedErrors.values());
+  }
 }
 
 export const globalErrorLogger = new GlobalErrorLogger();
@@ -350,5 +503,32 @@ export function useErrorLogger() {
     getErrorStats: globalErrorLogger.getErrorStats.bind(globalErrorLogger),
     setDebugMode: globalErrorLogger.setDebugMode.bind(globalErrorLogger),
     getDebugMode: globalErrorLogger.getDebugMode.bind(globalErrorLogger),
+    getAlertBadges: () => globalErrorLogger.getAlertBadgesPublic(),
+    getRepeatedErrors: () => globalErrorLogger.getRepeatedErrorsPublic(),
   };
 }
+
+// Extend GlobalErrorLogger to expose internal properties for the hook
+declare global {
+  namespace NodeJS {
+    interface Global {
+      __errorLoggerDebug?: {
+        alertBadges: AlertBadge[];
+        repeatedErrors: RepeatedErrorEntry[];
+      };
+    }
+  }
+}
+
+// Make the properties accessible
+Object.defineProperty(globalErrorLogger, 'alertBadges', {
+  get() {
+    return this.alertBadges || [];
+  },
+});
+
+Object.defineProperty(globalErrorLogger, 'repeatedErrors', {
+  get() {
+    return this.repeatedErrors || new Map();
+  },
+});

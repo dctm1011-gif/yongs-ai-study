@@ -12,6 +12,7 @@ import type { HealthCheckReport } from '../hooks/useHealthCheck';
 import { LAST_BUILD_TIME } from '../constants/buildInfo';
 import { useDataSyncMonitor } from '../hooks/useDataSyncMonitor';
 import { useOfflineQueue } from '../hooks/useOfflineQueue';
+import { performanceMonitor } from '../utils/PerformanceMonitor';
 
 interface FeedbackItem {
   id: string;
@@ -35,18 +36,27 @@ export default function SettingsScreen() {
   const [runtimeErrors, setRuntimeErrors] = useState<any[]>([]);
   const [showRuntimeErrors, setShowRuntimeErrors] = useState(false);
   const [buildTime, setBuildTime] = useState<string>('');
-  const { report: syncReport, isMonitoring: isSyncMonitoring, runSyncCheck } = useDataSyncMonitor();
-  const { queueStatus, syncQueue } = useOfflineQueue();
+  const { report: syncReport, isMonitoring: isSyncMonitoring, runSyncCheck, syncFailureCount } = useDataSyncMonitor();
+  const { queueStatus, syncQueue, removeFromQueue } = useOfflineQueue();
   const [showSyncDetails, setShowSyncDetails] = useState(false);
+  const [showQueueDetails, setShowQueueDetails] = useState(false);
   const { setDebugMode, getDebugMode } = useErrorLogger();
   const [debugMode, setDebugMode_State] = useState(false);
+  const [memoryUsage, setMemoryUsage] = useState({ used: 0, available: 0, tabs: {} as any });
 
   useEffect(() => {
     loadFeedback();
     loadReminderStatus();
     loadBuildTime();
     loadDebugMode();
+    updateMemoryUsage();
+
+    // Update memory usage every 10 seconds
+    const memoryInterval = setInterval(updateMemoryUsage, 10000);
+
     syncWithNetlify(); // 앱 시작 시 Netlify에서 최신 상태 동기화
+
+    return () => clearInterval(memoryInterval);
 
     // 에러 로그 로드
     const loadErrors = async () => {
@@ -149,6 +159,22 @@ export default function SettingsScreen() {
       setDebugMode_State(mode === 'true');
     } catch (error) {
       console.error('디버그 모드 로드 실패:', error);
+    }
+  };
+
+  const updateMemoryUsage = () => {
+    try {
+      const totalUsed = performanceMonitor.getTotalMemoryUsage();
+      const available = performanceMonitor.getAvailableMemory(500);
+      const allSummaries = performanceMonitor.getMemorySummary() as any;
+
+      setMemoryUsage({
+        used: totalUsed,
+        available: available,
+        tabs: allSummaries,
+      });
+    } catch (error) {
+      console.error('메모리 사용량 업데이트 실패:', error);
     }
   };
 
@@ -395,6 +421,21 @@ export default function SettingsScreen() {
               <Text style={styles.healthItemMessage}>
                 {queueStatus.totalItems}개 항목이 동기화를 기다리고 있습니다.
               </Text>
+              <TouchableOpacity
+                style={[styles.testButton, { marginTop: 8, backgroundColor: '#f59e0b' }]}
+                onPress={() => setShowQueueDetails(true)}
+              >
+                <Text style={styles.testButtonText}>📋 대기열 상세 보기</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+
+          {syncFailureCount > 0 && (
+            <View style={[styles.healthItem, styles.healthItemError]}>
+              <Text style={styles.healthItemTitle}>🔴 동기화 실패</Text>
+              <Text style={styles.healthItemMessage}>
+                {syncFailureCount}개 데이터 소스의 동기화에 실패했습니다.
+              </Text>
             </View>
           )}
 
@@ -437,6 +478,99 @@ export default function SettingsScreen() {
             </View>
           )}
 
+          {showQueueDetails && queueStatus.totalItems > 0 && (
+            <View>
+              <TouchableOpacity onPress={() => setShowQueueDetails(false)}>
+                <Text style={styles.sectionTitle}>📋 대기열 상세</Text>
+              </TouchableOpacity>
+
+              <View style={styles.healthSummary}>
+                <Text style={styles.healthSummaryTitle}>대기열 통계</Text>
+                <View style={styles.healthSummaryRow}>
+                  <Text style={styles.healthLabel}>총 항목:</Text>
+                  <Text style={[styles.healthValue, styles.healthWarning]}>
+                    {queueStatus.totalItems}개
+                  </Text>
+                </View>
+                <View style={styles.healthSummaryRow}>
+                  <Text style={styles.healthLabel}>실패 항목:</Text>
+                  <Text style={[styles.healthValue, styles.healthError]}>
+                    {queueStatus.failedItems.length}개
+                  </Text>
+                </View>
+              </View>
+
+              <Text style={styles.sectionTitle}>대기 항목 목록</Text>
+              {queueStatus.items.map((item, idx) => (
+                <View
+                  key={item.id}
+                  style={[
+                    styles.healthItem,
+                    item.retryCount >= 3 && styles.healthItemError,
+                    item.retryCount > 0 && item.retryCount < 3 && styles.healthItemWarning,
+                    item.retryCount === 0 && styles.healthItemHealthy,
+                  ]}
+                >
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <View style={{ flex: 1 }}>
+                      <Text style={styles.healthItemTitle}>
+                        {item.type === 'feedback' && '💬'}
+                        {item.type === 'reading' && '📖'}
+                        {item.type === 'preference' && '⚙️'}
+                        {item.type === 'custom' && '🔧'}
+                        {' '}
+                        {item.action}
+                      </Text>
+                      <Text style={styles.healthItemMessage}>{item.tab || 'unknown'} 탭</Text>
+                      <Text style={{ fontSize: 11, color: '#94a3b8', marginTop: 4 }}>
+                        재시도: {item.retryCount}/3 {item.retryCount >= 3 && '❌'}
+                      </Text>
+                      {item.lastRetryTime && (
+                        <Text style={{ fontSize: 10, color: '#64748b', marginTop: 2 }}>
+                          마지막 시도: {new Date(item.lastRetryTime).toLocaleTimeString('ko-KR')}
+                        </Text>
+                      )}
+                      {item.version && (
+                        <Text style={{ fontSize: 10, color: '#64748b', marginTop: 2 }}>
+                          버전: {item.version}
+                        </Text>
+                      )}
+                    </View>
+                    <TouchableOpacity
+                      style={{ padding: 8, marginLeft: 8 }}
+                      onPress={() => {
+                        Alert.alert(
+                          '항목 제거',
+                          '이 대기 항목을 제거하시겠습니까?',
+                          [
+                            { text: '취소', style: 'cancel' },
+                            {
+                              text: '제거',
+                              style: 'destructive',
+                              onPress: async () => {
+                                await removeFromQueue(item.id);
+                                setShowQueueDetails(false);
+                              },
+                            },
+                          ]
+                        );
+                      }}
+                    >
+                      <Text style={{ fontSize: 18 }}>🗑️</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              ))}
+
+              <TouchableOpacity
+                style={[styles.testButton, { backgroundColor: '#3b82f6', marginTop: 12 }]}
+                onPress={() => syncQueue()}
+              >
+                <Text style={styles.testButtonText}>⬆️ 지금 동기화</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+
           {showSyncDetails && syncReport && (
             <View>
               <TouchableOpacity onPress={() => setShowSyncDetails(false)}>
@@ -460,6 +594,11 @@ export default function SettingsScreen() {
                     {' '}
                     {source.name}
                   </Text>
+                  {source.version && (
+                    <Text style={{ fontSize: 11, color: '#64748b', marginTop: 4 }}>
+                      버전: {source.version}
+                    </Text>
+                  )}
                   {source.lastSyncTime && (
                     <Text style={styles.healthItemMessage}>
                       마지막 동기화: {new Date(source.lastSyncTime).toLocaleString('ko-KR')}
@@ -475,6 +614,17 @@ export default function SettingsScreen() {
                   </Text>
                 </View>
               ))}
+
+              {syncReport.versionConflicts.length > 0 && (
+                <View style={styles.healthItem}>
+                  <Text style={styles.healthItemTitle}>⚠️ 버전 충돌</Text>
+                  {syncReport.versionConflicts.map((conflict, idx) => (
+                    <Text key={idx} style={{ fontSize: 12, color: '#dc2626', marginTop: 4 }}>
+                      • {conflict.source}: 서버 v{conflict.serverVersion} vs 로컬 v{conflict.localVersion}
+                    </Text>
+                  ))}
+                </View>
+              )}
 
               {queueStatus.totalItems > 0 && (
                 <TouchableOpacity
@@ -505,6 +655,67 @@ export default function SettingsScreen() {
               {debugMode ? '🟢 디버그 모드 ON' : '⚪ 디버그 모드 OFF'}
             </Text>
           </TouchableOpacity>
+        </View>
+
+        <View style={styles.divider} />
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>📊 메모리 사용량</Text>
+          <Text style={styles.feedbackDesc}>
+            각 탭의 메모리 사용 현황입니다. (목표: 500MB)
+          </Text>
+
+          <View style={styles.healthSummary}>
+            <Text style={styles.healthSummaryTitle}>전체 메모리</Text>
+            <View style={styles.healthSummaryRow}>
+              <Text style={styles.healthLabel}>사용 중:</Text>
+              <Text style={[styles.healthValue, styles.healthWarning]}>
+                {memoryUsage.used.toFixed(1)}MB
+              </Text>
+            </View>
+            <View style={styles.healthSummaryRow}>
+              <Text style={styles.healthLabel}>남은 용량:</Text>
+              <Text style={[styles.healthValue, memoryUsage.available > 100 ? styles.healthHealthy : styles.healthWarning]}>
+                {memoryUsage.available.toFixed(1)}MB
+              </Text>
+            </View>
+
+            {/* Memory bar chart */}
+            <View style={styles.memoryBarContainer}>
+              <View
+                style={[
+                  styles.memoryBar,
+                  { width: `${(memoryUsage.used / 500) * 100}%` },
+                  (memoryUsage.used / 500) > 0.8 ? { backgroundColor: '#ef4444' } : { backgroundColor: '#f59e0b' }
+                ]}
+              />
+            </View>
+          </View>
+
+          {Object.entries(memoryUsage.tabs).length > 0 && (
+            <View style={{ marginTop: 12 }}>
+              <Text style={styles.sectionTitle}>탭별 메모리</Text>
+              {Object.entries(memoryUsage.tabs).map(([tabName, summary]: any) => (
+                <View
+                  key={tabName}
+                  style={[
+                    styles.healthItem,
+                    summary.currentMemoryMB > 0 && styles.healthItemHealthy,
+                  ]}
+                >
+                  <Text style={styles.healthItemTitle}>{tabName}</Text>
+                  <View style={styles.healthSummaryRow}>
+                    <Text style={styles.healthLabel}>현재:</Text>
+                    <Text style={styles.healthValue}>{summary.currentMemoryMB.toFixed(2)}MB</Text>
+                  </View>
+                  <View style={styles.healthSummaryRow}>
+                    <Text style={styles.healthLabel}>평균:</Text>
+                    <Text style={styles.healthValue}>{summary.avgMemoryMB.toFixed(2)}MB</Text>
+                  </View>
+                </View>
+              ))}
+            </View>
+          )}
         </View>
 
         <View style={styles.divider} />
@@ -1138,5 +1349,18 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#1e40af',
     fontWeight: '600',
+  },
+  memoryBarContainer: {
+    height: 8,
+    backgroundColor: '#e5e7eb',
+    borderRadius: 4,
+    overflow: 'hidden',
+    marginTop: 8,
+    marginBottom: 8,
+  },
+  memoryBar: {
+    height: '100%',
+    backgroundColor: '#f59e0b',
+    borderRadius: 4,
   },
 });

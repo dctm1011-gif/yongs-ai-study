@@ -9,7 +9,7 @@ import {
   RefreshControl,
   FlatList,
   Dimensions,
-  Alert,
+  Alert as RNAlert,
   Modal,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -24,6 +24,129 @@ interface PropertyCardProps {
   onToggleFavorite: () => void;
   onPress: () => void;
 }
+
+interface InvestmentAlert {
+  propertyId: string;
+  severity: string;
+  name: string;
+  location: string;
+  alert: string;
+  changePercent: number;
+}
+
+interface AlertCardProps {
+  alert: InvestmentAlert;
+}
+
+const AlertCard: React.FC<AlertCardProps> = ({ alert }) => {
+  const getAlertColor = (severity: string) => {
+    switch (severity) {
+      case 'high':
+        return '#ef4444';
+      case 'medium':
+        return '#f59e0b';
+      default:
+        return '#3b82f6';
+    }
+  };
+
+  return (
+    <View style={[styles.alertCard, { borderLeftColor: getAlertColor(alert.severity) }]}>
+      <View style={styles.alertHeader}>
+        <MaterialIcons
+          name={alert.severity === 'high' ? 'trending-up' : 'info'}
+          size={20}
+          color={getAlertColor(alert.severity)}
+        />
+        <View style={styles.alertContent}>
+          <Text style={styles.alertTitle}>{alert.name}</Text>
+          <Text style={styles.alertSubtitle}>{alert.location}</Text>
+        </View>
+      </View>
+      <Text style={[styles.alertMessage, { color: getAlertColor(alert.severity) }]}>
+        {alert.alert}
+      </Text>
+    </View>
+  );
+};
+
+interface PortfolioCardProps {
+  stats: PortfolioStats;
+}
+
+const PortfolioCard: React.FC<PortfolioCardProps> = ({ stats }) => {
+  const formatPrice = (price: number) => {
+    if (price >= 1000000000) {
+      return `${(price / 1000000000).toFixed(1)}억`;
+    }
+    return `${(price / 1000000).toFixed(0)}백만`;
+  };
+
+  return (
+    <View style={styles.portfolioCard}>
+      <View style={styles.portfolioHeader}>
+        <MaterialIcons name="account-balance-wallet" size={20} color="#2563eb" />
+        <Text style={styles.portfolioTitle}>포트폴리오 추적</Text>
+      </View>
+
+      <View style={styles.portfolioStats}>
+        <View style={styles.statItem}>
+          <Text style={styles.statLabel}>보유 자산</Text>
+          <Text style={styles.statValue}>{stats.totalFavorites}개</Text>
+        </View>
+        <View style={styles.statItem}>
+          <Text style={styles.statLabel}>누적 ROI</Text>
+          <Text style={[styles.statValue, { color: '#10b981' }]}>
+            {stats.cumulativeROI.toFixed(1)}%
+          </Text>
+        </View>
+        <View style={styles.statItem}>
+          <Text style={styles.statLabel}>평균 ROI</Text>
+          <Text style={[styles.statValue, { color: '#3b82f6' }]}>
+            {stats.averageROI.toFixed(2)}%
+          </Text>
+        </View>
+      </View>
+
+      <View style={styles.portfolioBreakdown}>
+        <Text style={styles.breakdownTitle}>자산 구성</Text>
+        {stats.portfolio.map((item, index) => (
+          <View key={index} style={styles.breakdownItem}>
+            <View style={styles.breakdownLabel}>
+              <Text style={styles.breakdownType}>{item.type}</Text>
+              <Text style={styles.breakdownCount}>{item.count}개</Text>
+            </View>
+            <View style={styles.breakdownBar}>
+              <View
+                style={[
+                  styles.breakdownFill,
+                  { width: `${item.percentage}%` },
+                ]}
+              />
+            </View>
+            <Text style={styles.breakdownPercent}>{item.percentage.toFixed(0)}%</Text>
+          </View>
+        ))}
+      </View>
+
+      {stats.totalValue > 0 && (
+        <View style={styles.portfolioTotal}>
+          <Text style={styles.totalLabel}>총 자산가</Text>
+          <Text style={styles.totalValue}>{formatPrice(stats.totalValue)}</Text>
+        </View>
+      )}
+
+      {stats.portfolio.some(p => p.percentage > 70) && (
+        <View style={styles.balanceRecommendation}>
+          <MaterialIcons name="lightbulb" size={16} color="#f59e0b" />
+          <Text style={styles.recommendationText}>
+            포트폴리오 균형 조정을 권장합니다
+          </Text>
+        </View>
+      )}
+    </View>
+  );
+};
 
 const PropertyCard: React.FC<PropertyCardProps> = ({
   property,
@@ -275,10 +398,10 @@ const PreferencesModal: React.FC<PreferencesModalProps> = ({
         maxPrice: parseFloat(maxPrice) || 5000000000,
         minROI: parseFloat(minROI) || 0,
       });
-      Alert.alert('설정 저장됨', '투자 선호도가 저장되었습니다.');
+      RNAlert.alert('설정 저장됨', '투자 선호도가 저장되었습니다.');
       onClose();
     } catch (error) {
-      Alert.alert('오류', '설정 저장에 실패했습니다.');
+      RNAlert.alert('오류', '설정 저장에 실패했습니다.');
     } finally {
       setSaving(false);
     }
@@ -405,6 +528,23 @@ const PreferencesModal: React.FC<PreferencesModalProps> = ({
   );
 };
 
+interface Alert {
+  propertyId: string;
+  name: string;
+  location: string;
+  alert: string;
+  severity: 'high' | 'medium' | 'low';
+  changePercent: number;
+}
+
+interface PortfolioStats {
+  totalFavorites: number;
+  cumulativeROI: number;
+  averageROI: number;
+  portfolio: Array<{ type: string; count: number; percentage: number }>;
+  totalValue: number;
+}
+
 export default function InvestmentScreen() {
   const {
     properties,
@@ -422,6 +562,74 @@ export default function InvestmentScreen() {
   const [selectedProperty, setSelectedProperty] = useState<InvestmentProperty | null>(null);
   const [detailVisible, setDetailVisible] = useState(false);
   const [preferencesVisible, setPreferencesVisible] = useState(false);
+  const [alerts, setAlerts] = useState<InvestmentAlert[]>([]);
+  const [portfolioStats, setPortfolioStats] = useState<PortfolioStats | null>(null);
+
+  // Calculate portfolio statistics
+  const calculatePortfolioStats = (favProps: InvestmentProperty[]) => {
+    if (favProps.length === 0) {
+      return {
+        totalFavorites: 0,
+        cumulativeROI: 0,
+        averageROI: 0,
+        portfolio: [],
+        totalValue: 0,
+      };
+    }
+
+    const totalValue = favProps.reduce((sum, p) => sum + p.price, 0);
+    const cumulativeROI = favProps.reduce((sum, p) => sum + p.roi, 0);
+    const averageROI = cumulativeROI / favProps.length;
+
+    // Portfolio breakdown by type
+    const typeMap: { [key: string]: number } = {};
+    favProps.forEach(p => {
+      typeMap[p.type] = (typeMap[p.type] || 0) + 1;
+    });
+
+    const portfolio = Object.entries(typeMap).map(([type, count]) => ({
+      type: getPropertyTypeKorean(type),
+      count: count as number,
+      percentage: ((count as number) / favProps.length) * 100,
+    }));
+
+    return {
+      totalFavorites: favProps.length,
+      cumulativeROI: parseFloat(cumulativeROI.toFixed(2)),
+      averageROI: parseFloat(averageROI.toFixed(2)),
+      portfolio,
+      totalValue,
+    };
+  };
+
+  // Detect rapid ROI increases
+  const detectAlerts = (props: InvestmentProperty[]): InvestmentAlert[] => {
+    const detectedAlerts: InvestmentAlert[] = [];
+
+    props.forEach(property => {
+      if (!property.trend || property.trend.length < 2) return;
+
+      const sorted = [...property.trend].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+      const recentROI = sorted[sorted.length - 1]?.roi || 0;
+      const previousROI = sorted[sorted.length - 2]?.roi || 0;
+
+      const roiChange = recentROI - previousROI;
+      const changePercent = previousROI !== 0 ? (roiChange / previousROI) * 100 : 0;
+
+      if (changePercent > 10) {
+        detectedAlerts.push({
+          propertyId: property.id,
+          name: property.name,
+          location: property.location,
+          alert: `ROI ${changePercent.toFixed(1)}% 상승!`,
+          severity: changePercent > 20 ? 'high' : 'medium',
+          changePercent: parseFloat(changePercent.toFixed(1)),
+        });
+      }
+    });
+
+    return detectedAlerts.slice(0, 3); // Top 3 alerts
+  };
 
   const handleRefresh = async () => {
     setRefreshing(true);
@@ -444,6 +652,24 @@ export default function InvestmentScreen() {
   const isFavorite = (propertyId: string) => {
     return preferences?.favoriteIds.includes(propertyId) ?? false;
   };
+
+  // Update portfolio stats and alerts when properties or preferences change
+  useEffect(() => {
+    if (properties.length > 0 && preferences) {
+      // Get favorite properties
+      const favoriteProperties = properties.filter(p =>
+        preferences.favoriteIds.includes(p.id)
+      );
+
+      // Calculate portfolio stats
+      const stats = calculatePortfolioStats(favoriteProperties);
+      setPortfolioStats(stats);
+
+      // Detect alerts
+      const detectedAlerts = detectAlerts(properties);
+      setAlerts(detectedAlerts);
+    }
+  }, [properties, preferences]);
 
   const formatLastSync = () => {
     if (!lastSyncTime) return '동기화 안 됨';
@@ -486,6 +712,18 @@ export default function InvestmentScreen() {
         </View>
       )}
 
+      {alerts.length > 0 && (
+        <View style={styles.alertsSection}>
+          <View style={styles.alertsSectionHeader}>
+            <MaterialIcons name="notifications-active" size={18} color="#ef4444" />
+            <Text style={styles.alertsSectionTitle}>실시간 알림 ({alerts.length})</Text>
+          </View>
+          {alerts.map(alert => (
+            <AlertCard key={alert.propertyId} alert={alert} />
+          ))}
+        </View>
+      )}
+
       {loading && !properties.length ? (
         <View style={styles.centerContainer}>
           <ActivityIndicator size="large" color="#2563eb" />
@@ -507,6 +745,11 @@ export default function InvestmentScreen() {
           scrollEnabled={true}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+          }
+          ListHeaderComponent={
+            portfolioStats && portfolioStats.totalFavorites > 0 ? (
+              <PortfolioCard stats={portfolioStats} />
+            ) : null
           }
           ListFooterComponent={
             <View style={styles.footer}>
@@ -914,5 +1157,174 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: '#1f2937',
     fontWeight: '600',
+  },
+  // Alerts Section Styles
+  alertsSection: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    backgroundColor: '#fef2f2',
+    borderBottomWidth: 1,
+    borderBottomColor: '#fee2e2',
+  },
+  alertsSectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 12,
+    paddingHorizontal: 4,
+  },
+  alertsSectionTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#dc2626',
+  },
+  alertCard: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    borderLeftWidth: 4,
+    padding: 12,
+    marginVertical: 6,
+    borderWidth: 1,
+    borderColor: '#fee2e2',
+  },
+  alertHeader: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 10,
+    marginBottom: 8,
+  },
+  alertContent: {
+    flex: 1,
+  },
+  alertTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#1f2937',
+  },
+  alertSubtitle: {
+    fontSize: 12,
+    color: '#6b7280',
+    marginTop: 2,
+  },
+  alertMessage: {
+    fontSize: 13,
+    fontWeight: '600',
+    marginLeft: 30,
+  },
+  // Portfolio Card Styles
+  portfolioCard: {
+    backgroundColor: '#f0f9ff',
+    borderRadius: 12,
+    padding: 16,
+    marginVertical: 12,
+    marginHorizontal: 4,
+    borderWidth: 1,
+    borderColor: '#dbeafe',
+  },
+  portfolioHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 16,
+  },
+  portfolioTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#1f2937',
+  },
+  portfolioStats: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 16,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#bfdbfe',
+  },
+  statItem: {
+    alignItems: 'center',
+  },
+  statLabel: {
+    fontSize: 11,
+    color: '#6b7280',
+    marginBottom: 4,
+    fontWeight: '500',
+  },
+  statValue: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#1f2937',
+  },
+  portfolioBreakdown: {
+    marginBottom: 12,
+  },
+  breakdownTitle: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#1f2937',
+    marginBottom: 8,
+  },
+  breakdownItem: {
+    marginBottom: 10,
+  },
+  breakdownLabel: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 4,
+  },
+  breakdownType: {
+    fontSize: 12,
+    color: '#374151',
+    fontWeight: '500',
+  },
+  breakdownCount: {
+    fontSize: 11,
+    color: '#6b7280',
+  },
+  breakdownBar: {
+    height: 8,
+    backgroundColor: '#e5e7eb',
+    borderRadius: 4,
+    overflow: 'hidden',
+    marginBottom: 4,
+  },
+  breakdownFill: {
+    height: '100%',
+    backgroundColor: '#3b82f6',
+  },
+  breakdownPercent: {
+    fontSize: 11,
+    color: '#9ca3af',
+    textAlign: 'right',
+  },
+  portfolioTotal: {
+    paddingTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: '#bfdbfe',
+    marginBottom: 12,
+  },
+  totalLabel: {
+    fontSize: 12,
+    color: '#6b7280',
+    marginBottom: 4,
+  },
+  totalValue: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#2563eb',
+  },
+  balanceRecommendation: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    backgroundColor: '#fffbeb',
+    borderRadius: 8,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#fcd34d',
+  },
+  recommendationText: {
+    fontSize: 12,
+    color: '#78350f',
+    fontWeight: '500',
   },
 });

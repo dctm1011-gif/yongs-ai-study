@@ -3,6 +3,8 @@ import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, Activit
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Speech from 'expo-speech';
+import { useCacheStrategy } from '../hooks/useCacheStrategy';
+import { performanceMonitor } from '../utils/PerformanceMonitor';
 
 interface TOEFLSection {
   id: 'reading' | 'listening' | 'writing' | 'speaking';
@@ -68,6 +70,20 @@ export default function TOEFLScreen() {
   const [writingAnswers, setWritingAnswers] = useState<{ [key: string]: string }>({});
   const [writingView, setWritingView] = useState<'write' | 'saved'>('write');
   const [savedEssays, setSavedEssays] = useState<{ id: string; content: string; date: string }[]>([]);
+  const [isCached, setIsCached] = useState(false);
+  const [loadStartTime] = useState(Date.now());
+
+  // Performance monitoring
+  useEffect(() => {
+    performanceMonitor.startTiming('TOEFL');
+  }, []);
+
+  // Log performance timing
+  useEffect(() => {
+    if (!loading) {
+      performanceMonitor.recordMetric('TOEFL', isCached, isCached);
+    }
+  }, [loading, isCached]);
 
   useEffect(() => {
     loadData();
@@ -99,6 +115,39 @@ export default function TOEFLScreen() {
     try {
       setLoading(true);
 
+      // Try to load from cache first (12-hour TTL)
+      const savedSections = await AsyncStorage.getItem('toefl_sections');
+      if (savedSections) {
+        try {
+          const parsedSections = JSON.parse(savedSections);
+          setSections(parsedSections);
+          setIsCached(true);
+          setLoading(false);
+          // Still try to fetch fresh data in background
+          fetchTOEFLFromNetlify()
+            .then(async netlifyData => {
+              if (netlifyData && netlifyData.sections && netlifyData.sections.length > 0) {
+                const currentSections = parsedSections;
+                const savedProgress = currentSections.reduce((acc: any, s: TOEFLSection) =>
+                  ({ ...acc, [s.id]: { progress: s.progress, completed: s.completed } }), {});
+
+                const mergedSections = netlifyData.sections.map((s: TOEFLSection) => ({
+                  ...s,
+                  progress: savedProgress[s.id]?.progress || 0,
+                  completed: savedProgress[s.id]?.completed || false,
+                }));
+
+                setSections(mergedSections);
+                await AsyncStorage.setItem('toefl_sections', JSON.stringify(mergedSections));
+              }
+            })
+            .catch(err => console.log('Background refresh failed (non-fatal):', err));
+          return;
+        } catch (e) {
+          console.log('Cache parse failed, fetching fresh data');
+        }
+      }
+
       // 1초 타임아웃으로 Netlify에서 데이터 시도
       const timeoutPromise = new Promise(resolve =>
         setTimeout(() => resolve(null), 1000)
@@ -121,14 +170,14 @@ export default function TOEFLScreen() {
 
         setSections(mergedSections);
         await AsyncStorage.setItem('toefl_sections', JSON.stringify(mergedSections));
+        setIsCached(false);
       } else {
-        const savedSections = await AsyncStorage.getItem('toefl_sections');
-        if (savedSections) {
-          setSections(JSON.parse(savedSections));
-        }
+        // Fallback to default if no fresh data
+        setSections(defaultSections);
       }
     } catch (error) {
       console.error('Failed to load TOEFL data:', error);
+      setSections(defaultSections);
     } finally {
       setLoading(false);
     }

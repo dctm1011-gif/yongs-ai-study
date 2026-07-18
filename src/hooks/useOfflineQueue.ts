@@ -10,6 +10,8 @@ export interface QueueItem {
   retryCount: number;
   lastRetryTime?: number;
   tab?: string;
+  version?: number;
+  backupData?: any;
 }
 
 export interface QueueStatus {
@@ -73,17 +75,21 @@ export function useOfflineQueue() {
     }
   }, []);
 
-  // Add item to queue
+  // Add item to queue with version tracking
   const addToQueue = useCallback(
     async (
       type: QueueItem['type'],
       action: string,
       payload: any,
-      tab?: string
+      tab?: string,
+      version?: number
     ): Promise<string> => {
       try {
         const queueStr = await AsyncStorage.getItem(QUEUE_STORAGE_KEY);
         const queue = queueStr ? JSON.parse(queueStr) : [];
+
+        // Get current version if not provided
+        const itemVersion = version || (payload?.version || 1);
 
         const newItem: QueueItem = {
           id: `item_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
@@ -93,20 +99,22 @@ export function useOfflineQueue() {
           timestamp: Date.now(),
           retryCount: 0,
           tab,
+          version: itemVersion,
         };
 
         queue.push(newItem);
         await AsyncStorage.setItem(QUEUE_STORAGE_KEY, JSON.stringify(queue));
 
         // Update metrics
-        const metrics = await getMetrics();
-        metrics.totalQueued += 1;
+        const baseMetrics = await AsyncStorage.getItem(QUEUE_METRICS_KEY);
+        const metrics = baseMetrics ? JSON.parse(baseMetrics) : { totalQueued: 0, totalSynced: 0 };
+        metrics.totalQueued = (metrics.totalQueued || 0) + 1;
         await AsyncStorage.setItem(QUEUE_METRICS_KEY, JSON.stringify(metrics));
 
         // Refresh queue status
         await loadQueue();
 
-        console.log(`✅ Added to queue: ${action} (ID: ${newItem.id})`);
+        console.log(`✅ Added to queue: ${action} (v${itemVersion}, ID: ${newItem.id})`);
         return newItem.id;
       } catch (error) {
         console.error('Failed to add item to queue:', error);
@@ -116,7 +124,7 @@ export function useOfflineQueue() {
     [loadQueue]
   );
 
-  // Process sync for a single item
+  // Process sync for a single item with version management
   const syncItem = useCallback(async (item: QueueItem): Promise<SyncResult> => {
     try {
       // Determine endpoint based on type
@@ -130,23 +138,45 @@ export function useOfflineQueue() {
         endpoint = '/api/update-preferences';
       }
 
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+      // Include version info in payload for conflict resolution
+      const payload = {
+        ...item.payload,
+        _queueId: item.id,
+        _action: item.action,
+        _version: item.version || 1,
+        _timestamp: new Date(item.timestamp).toISOString(),
+      };
+
+      // If backup exists, include it for recovery
+      if (item.backupData) {
+        payload._backup = item.backupData;
+      }
+
       const response = await fetch(`${NETLIFY_BASE_URL}${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...item.payload,
-          _queueId: item.id,
-          _action: item.action,
-        }),
+        body: JSON.stringify(payload),
+        signal: controller.signal,
       });
+
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
       }
 
+      const result = await response.json();
+
+      // Log successful sync with version info
+      console.log(`✅ Synced ${item.type} (v${item.version || 1}): ${item.action}`);
+
       return { success: true, itemId: item.id };
     } catch (error) {
       const errorMsg = error instanceof Error ? error.message : 'Unknown error';
+      console.error(`❌ Sync failed for ${item.id}: ${errorMsg}`);
       return { success: false, itemId: item.id, error: errorMsg };
     }
   }, []);
@@ -237,10 +267,15 @@ export function useOfflineQueue() {
       isCheckingConnection = true;
 
       try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000);
+
         const response = await fetch(NETLIFY_BASE_URL, {
           method: 'HEAD',
-          timeout: 5000,
+          signal: controller.signal,
         });
+
+        clearTimeout(timeoutId);
         const isOnline = response.ok || response.status === 404; // 404 means server is reachable
 
         setQueueStatus((prev) => {
@@ -279,15 +314,39 @@ export function useOfflineQueue() {
     loadQueue();
   }, [loadQueue]);
 
-  // Get metrics
+  // Get detailed metrics with queue information
   const getMetrics = useCallback(async () => {
     try {
       const metricsStr = await AsyncStorage.getItem(QUEUE_METRICS_KEY);
-      return metricsStr
+      const metrics = metricsStr
         ? JSON.parse(metricsStr)
         : { totalQueued: 0, totalSynced: 0, lastSyncTime: null };
+
+      // Add queue details
+      const queueStr = await AsyncStorage.getItem(QUEUE_STORAGE_KEY);
+      const queue = queueStr ? JSON.parse(queueStr) : [];
+
+      return {
+        ...metrics,
+        queueDetails: {
+          totalItems: queue.length,
+          byType: queue.reduce((acc: Record<string, number>, item: QueueItem) => {
+            acc[item.type] = (acc[item.type] || 0) + 1;
+            return acc;
+          }, {}),
+          failedItems: queue.filter((item: QueueItem) => item.retryCount >= MAX_RETRIES).length,
+          averageRetries: queue.length > 0
+            ? Math.round(queue.reduce((sum: number, item: QueueItem) => sum + item.retryCount, 0) / queue.length)
+            : 0,
+        },
+      };
     } catch {
-      return { totalQueued: 0, totalSynced: 0, lastSyncTime: null };
+      return {
+        totalQueued: 0,
+        totalSynced: 0,
+        lastSyncTime: null,
+        queueDetails: { totalItems: 0, byType: {}, failedItems: 0, averageRetries: 0 },
+      };
     }
   }, []);
 
