@@ -143,19 +143,24 @@ export default function TOEFLScreen() {
         }
       }
 
-      // Fetch fresh data with timeout
+      // Fetch fresh data with timeout (5 seconds)
+      console.log('📥 TOEFL: Fetching from Netlify...');
       const timeoutPromise = new Promise<any>(resolve =>
-        setTimeout(() => resolve(null), 2000)
+        setTimeout(() => {
+          console.warn('⏱️  TOEFL: Fetch timeout (5s)');
+          resolve(null);
+        }, 5000)
       );
       const fetchPromise = fetchTOEFLFromNetlify();
       const netlifyData = await Promise.race([fetchPromise, timeoutPromise]);
 
-      if (netlifyData && netlifyData.reading) {
+      if (netlifyData && netlifyData.reading && netlifyData.writing && netlifyData.speaking && netlifyData.listening) {
+        console.log('✅ TOEFL: Data loaded from Netlify');
         setToeflProblems(netlifyData);
         await AsyncStorage.setItem('toefl_problems', JSON.stringify(netlifyData));
         setIsCached(false);
       } else {
-        console.warn('No fresh TOEFL problems available, using default sections');
+        console.warn('❌ TOEFL: Invalid or missing data structure', { has_reading: !!netlifyData?.reading, has_writing: !!netlifyData?.writing });
       }
 
       // Always load section progress
@@ -175,21 +180,33 @@ export default function TOEFLScreen() {
 
   const fetchTOEFLFromNetlify = async (): Promise<any | null> => {
     try {
-      // Fetch today's TOEFL problems from daily.json
-      const response = await fetch(`${NETLIFY_BASE_URL}/.netlify/functions/toefl-daily`);
+      const url = `${NETLIFY_BASE_URL}/.netlify/functions/toefl-daily`;
+      console.log(`🔗 TOEFL: Calling ${url}`);
+
+      const response = await fetch(url);
+      console.log(`📬 TOEFL: Response status ${response.status}`);
+
       if (!response.ok) {
-        console.warn(`Netlify returned ${response.status}`);
+        console.error(`❌ TOEFL: HTTP error ${response.status} - ${response.statusText}`);
         return null;
       }
+
       const data = await response.json();
-      // Validate structure (reading, writing, speaking, listening)
+      console.log(`📦 TOEFL: Received data with sections:`, {
+        reading: !!data?.reading,
+        writing: !!data?.writing,
+        speaking: !!data?.speaking,
+        listening: !!data?.listening,
+      });
+
       if (data && data.reading && data.writing && data.speaking && data.listening) {
-        console.log('✅ TOEFL problems loaded');
+        console.log('✅ TOEFL: Data valid, returning');
         return data;
       }
+      console.warn('⚠️  TOEFL: Missing sections in response');
       return null;
     } catch (error) {
-      console.error('Netlify fetch failed:', error);
+      console.error(`❌ TOEFL: Network error - ${error instanceof Error ? error.message : String(error)}`);
       return null;
     }
   };
