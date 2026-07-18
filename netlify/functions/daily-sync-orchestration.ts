@@ -153,7 +153,7 @@ async function queueFailedItems(source: SyncSource, error: string): Promise<void
   }
 }
 
-const handler: Handler = async () => {
+const handler: Handler = async (event: any) => {
   console.log('Daily sync orchestration started at', new Date().toISOString());
 
   try {

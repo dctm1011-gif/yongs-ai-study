@@ -9,6 +9,11 @@ interface SyncItem {
   lastRetryTime?: number;
 }
 
+interface NetlifyEvent {
+  httpMethod: string;
+  body?: string | null;
+}
+
 interface RetryRequest {
   items: SyncItem[];
   timestamp: string;
@@ -110,7 +115,7 @@ async function notifyUserOfFailure(item: SyncItem, errorMsg: string): Promise<vo
   }
 }
 
-const handler: Handler = async (event) => {
+const handler: Handler = async (event: any) => {
   console.log('Batch sync retry started');
 
   if (event.httpMethod !== 'POST') {
@@ -173,14 +178,14 @@ const handler: Handler = async (event) => {
             itemId: item.id,
             status: 'retry_tier_2',
             retryCount: item.retryCount + 1,
-            nextRetryTime,
+            nextRetryTime: nextRetryTime || undefined,
           };
         } else if (item.retryCount === 1) {
           retries[item.id] = {
             itemId: item.id,
             status: 'retry_tier_3',
             retryCount: item.retryCount + 1,
-            nextRetryTime,
+            nextRetryTime: nextRetryTime || undefined,
           };
         } else {
           retries[item.id] = {
@@ -194,7 +199,9 @@ const handler: Handler = async (event) => {
         }
 
         failed++;
-        console.log(`⏳ Item ${item.id} scheduled for ${tier} retry at ${new Date(nextRetryTime).toISOString()}`);
+        if (nextRetryTime) {
+          console.log(`⏳ Item ${item.id} scheduled for ${tier} retry at ${new Date(nextRetryTime).toISOString()}`);
+        }
       }
     }
 
