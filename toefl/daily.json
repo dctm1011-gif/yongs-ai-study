@@ -1,111 +1,115 @@
 {
-  "date": "2026-07-18",
+  "date": "2026-07-19",
   "reading": {
-    "title": "Bioluminescence in Deep-Sea Organisms",
-    "passage": "Bioluminescence is the production of light by living organisms, a phenomenon particularly common in deep-sea creatures. Over 90% of deep-sea animals produce light through chemical reactions within their bodies. This adaptation serves multiple purposes: attracting prey, communicating with other organisms, and evading predators. The light-producing organs, called photophores, contain specialized proteins that enable these organisms to thrive in the pitch-black environment of the ocean depths where sunlight cannot penetrate.",
+    "title": "The Impact of Urban Green Spaces",
+    "passage": "Urban green spaces such as parks and gardens play a crucial role in improving city residents' quality of life. These areas provide essential benefits including air quality improvement, temperature regulation, and mental health support. Studies have shown that people living near parks experience lower stress levels and better overall well-being. Furthermore, green spaces encourage physical activity and social interaction among community members. As cities continue to expand, protecting and developing these natural areas becomes increasingly important for sustainable urban development.",
     "questions": [
       {
-        "q": "According to the passage, what is the primary purpose of bioluminescence in deep-sea creatures?",
+        "q": "According to the passage, what are green spaces primarily beneficial for?",
         "options": [
-          "To maintain body temperature",
-          "To attract prey, communicate, and evade predators",
-          "To help organisms swim faster",
-          "To produce oxygen for respiration"
+          "A) Reducing traffic congestion",
+          "B) Improving air quality and mental health",
+          "C) Increasing property taxes",
+          "D) Creating employment opportunities"
         ],
         "answer": 1,
-        "explanation": "지문에서 '생물발광은 먹이를 끌어들이고, 다른 생물과 소통하며, 포식자를 피하기 위한 여러 목적을 수행한다'고 명시되어 있습니다."
+        "explanation": "본문에서 green spaces는 공기 질 개선, 온도 조절, 정신 건강 지원을 제공한다고 명시되어 있습니다."
       },
       {
-        "q": "What does the term 'photophores' refer to?",
+        "q": "What does the passage imply about people living near parks?",
         "options": [
-          "Deep-sea cameras",
-          "Light-producing organs",
-          "Types of fish",
-          "Chemical reactions"
+          "A) They pay higher rent",
+          "B) They exercise less frequently",
+          "C) They have better well-being",
+          "D) They avoid social interaction"
         ],
-        "answer": 1,
-        "explanation": "지문에서 'photophores'는 '생물발광을 가능하게 하는 특화된 단백질을 포함하는 빛 생성 기관'이라고 정의됩니다."
+        "answer": 2,
+        "explanation": "본문에서 '공원 근처에 사는 사람들은 더 낮은 스트레스 수준과 더 나은 전반적인 웰빙을 경험한다'고 명시되어 있습니다."
       },
       {
-        "q": "Why is bioluminescence particularly important for deep-sea organisms?",
+        "q": "Which of the following is NOT mentioned as a benefit of urban green spaces?",
         "options": [
-          "Because they need to stay warm",
-          "Because sunlight cannot penetrate the deep ocean",
-          "Because it helps them migrate",
-          "Because it speeds up their metabolism"
+          "A) Air quality improvement",
+          "B) Mental health support",
+          "C) Noise reduction",
+          "D) Encouraging physical activity"
         ],
-        "answer": 1,
-        "explanation": "지문에서 '햇빛이 침투할 수 없는 심해의 칠흑 같은 환경에서 번성하기 위해' 생물발광이 필요하다고 설명합니다."
+        "answer": 2,
+        "explanation": "소음 감소(Noise reduction)는 본문에서 언급되지 않습니다. 공기 질 개선, 정신 건강, 신체 활동 장려는 모두 명시되어 있습니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the following statement: Technology has made our lives more convenient but has reduced meaningful human interaction?",
+    "prompt": "Do you agree or disagree with the statement that cities should prioritize developing green spaces over building new infrastructure like roads and buildings?",
     "structure": {
-      "intro": "자신의 입장을 명확히 하되, 기술의 두 가지 측면을 언급하는 도입부를 작성하세요. (기술의 편의성과 사회적 영향)",
-      "body1": "기술이 생활 편의성을 높인 방식들을 구체적인 예시와 함께 설명하세요. (스마트폰, SNS, 배달 앱 등)",
-      "body2": "기술이 인간관계에 미친 부정적 영향이나 긍정적 영향을 대조하여 논의하세요. (심층적 대면 감소 vs 원거리 연결)",
-      "conclusion": "두 관점을 통합하며 자신의 입장을 재확인하고, 기술 사용의 균형 필요성을 제시하세요."
+      "intro": "자신의 입장을 명확히 제시하세요. 예: 'I agree that cities should prioritize green spaces because...' 또는 'I disagree because...'",
+      "body1": "첫 번째 이유: 녹지의 환경적/건강상 이점을 구체적인 예시와 함께 제시하세요",
+      "body2": "두 번째 이유: 기반 시설의 필요성도 인정하면서, 균형 있는 접근 방식을 제안하거나 녹지 우선의 정당성을 재강조하세요",
+      "conclusion": "전체 논의를 요약하고 입장을 재확인하며, 미래의 도시 계획에 대한 희망을 표현하세요"
     },
     "useful_phrases": [
       "In my opinion,",
-      "To begin with,",
+      "I strongly believe that",
       "Furthermore,",
-      "On the other hand,",
-      "It is undeniable that,",
+      "For instance,",
       "In conclusion,",
-      "Therefore,"
+      "It is essential that",
+      "On the other hand,",
+      "This demonstrates that"
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to study in groups. Others prefer to study alone. Which do you prefer and why?",
+    "prompt": "Some people prefer spending leisure time in outdoor natural environments like parks and forests. Others prefer indoor activities like visiting museums or watching movies. Which do you prefer and why?",
     "useful_expressions": [
-      "In my opinion, I prefer to study [alone/in groups] because...",
-      "One reason is that studying [alone/in groups] allows me to...",
-      "Another advantage is that... For example, when I..."
+      "In my opinion, I prefer...",
+      "One reason is that outdoor activities...",
+      "Additionally, nature provides...",
+      "For example,",
+      "I believe that...",
+      "This is important because..."
     ],
     "sample_points": [
-      "집단 학습: 다양한 관점을 얻을 수 있고, 복잡한 개념을 동료와 함께 토론하며 더 깊이 있게 이해할 수 있음",
-      "개인 학습: 자신의 속도에 맞추어 학습할 수 있고, 방해 없이 집중력을 유지하여 효율적으로 공부할 수 있음"
+      "자연환경에서의 신체활동은 건강을 증진시키고 스트레스를 감소시킵니다. 공원에서의 산책이나 등산은 정신 건강에 긍정적인 영향을 미칩니다.",
+      "실내활동은 날씨에 관계없이 즐길 수 있고, 문화 활동을 통해 지식을 얻을 수 있습니다. 박물관 방문은 역사와 예술을 배우는 기회를 제공합니다."
     ]
   },
   "listening": {
-    "title": "Campus Library Renovation Project",
+    "title": "Student-Professor Conversation About Research Projects",
     "type": "conversation",
-    "script": "Student: Hi, I heard the library is being renovated. What changes are being made? Librarian: Yes, we're updating the facility significantly. We're adding more study spaces, installing new computers, and creating a collaborative learning area on the third floor. We're also upgrading our book collection with digital databases. The renovation will take about four months, from August to November. During this time, we'll operate a temporary reading room in the student center. Student: That sounds great! Will the quiet study areas remain? Librarian: Absolutely. We're actually expanding the quiet zones on the second floor. We understand that some students need silence to concentrate. The new layout will have dedicated quiet areas, group study rooms, and tech-equipped spaces so everyone can find their ideal learning environment.",
+    "script": "Student: Professor Johnson, I wanted to discuss my research project on renewable energy. I'm having trouble deciding between solar and wind energy as my focus. Professor: That's a great question. Both are important, but they have different applications. Solar energy works well in sunny regions with good infrastructure, while wind energy is more efficient in coastal and elevated areas. Student: I see. Which one do you think would have a bigger impact on reducing carbon emissions? Professor: Actually, that depends on the location. In coastal areas, wind farms can generate massive amounts of electricity with minimal environmental impact. However, in desert regions, solar panels are incredibly efficient. I'd suggest you consider both options and perhaps focus on a specific geographic region. Student: That makes sense. Maybe I should research how these technologies complement each other in a hybrid system. Professor: Excellent idea! That would make your project more comprehensive and realistic.",
     "questions": [
       {
-        "q": "What is the main topic of this conversation?",
+        "q": "What is the main purpose of the conversation?",
         "options": [
-          "The history of the library",
-          "Plans for the library renovation project",
-          "How to book study rooms",
-          "The cost of updating the library"
+          "A) The professor is grading the student's research project",
+          "B) The student is seeking advice on choosing a research focus",
+          "C) The professor is explaining renewable energy to the class",
+          "D) The student is complaining about the difficulty of the project"
         ],
         "answer": 1,
-        "explanation": "도서관 리노베이션 계획이 대화의 주요 주제입니다. 학생이 변화에 대해 물어보고 사서가 구체적인 계획을 설명합니다."
+        "explanation": "학생이 교수님께 신재생 에너지 연구 주제 선택에 대해 조언을 구하는 것이 대화의 중심입니다."
       },
       {
-        "q": "How long will the library renovation take?",
+        "q": "According to the professor, which location is most suitable for wind energy?",
         "options": [
-          "Two months",
-          "Three months",
-          "Four months",
-          "Five months"
+          "A) Desert regions",
+          "B) Urban cities",
+          "C) Coastal and elevated areas",
+          "D) Underground locations"
         ],
         "answer": 2,
-        "explanation": "사서가 '8월부터 11월까지 약 4개월이 걸릴 것'이라고 명시적으로 언급했습니다."
+        "explanation": "교수님이 '풍력 에너지는 해안 지역과 고지대에서 더 효율적이라'고 명확히 설명했습니다."
       },
       {
-        "q": "According to the librarian, what will happen to quiet study areas?",
+        "q": "What does the student decide to do at the end of the conversation?",
         "options": [
-          "They will be removed",
-          "They will be expanded on the second floor",
-          "They will be moved to the third floor",
-          "They will remain unchanged"
+          "A) Choose only solar energy",
+          "B) Research how solar and wind work together in a hybrid system",
+          "C) Abandon the research project",
+          "D) Focus only on coastal regions"
         ],
         "answer": 1,
-        "explanation": "사서는 '조용한 구역을 2층에서 실제로 확대할 것'이라고 답했으며, 새로운 레이아웃에 전용 조용한 공간이 포함될 것이라고 설명했습니다."
+        "explanation": "학생이 '이 기술들이 하이브리드 시스템에서 어떻게 서로 보완하는지 연구하는 것'을 제안했고, 교수님이 이를 좋은 아이디어라고 승인했습니다."
       }
     ]
   }
