@@ -6,13 +6,6 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
-# Investment API routes
-[[redirects]]
-from = "/api/investment/*"
-to = "/.netlify/functions/investment-push"
-status = 200
-force = true
-
 # General API routes
 [[redirects]]
 from = "/api/*"
