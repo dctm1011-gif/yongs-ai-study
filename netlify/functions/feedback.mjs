@@ -55,5 +55,3 @@ export default async (req) => {
   const feedback = result.content?.[0]?.text || '피드백을 가져올 수 없습니다.';
   return Response.json({ feedback });
 };
-
-export const config = { path: '/api/feedback' };

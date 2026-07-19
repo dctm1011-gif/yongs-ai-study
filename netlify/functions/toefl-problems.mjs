@@ -179,5 +179,3 @@ function getDefaultProblems() {
     }
   };
 }
-
-export const config = { path: "/api/toefl-problems" };

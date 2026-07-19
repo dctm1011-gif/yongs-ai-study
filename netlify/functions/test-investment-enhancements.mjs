@@ -396,5 +396,3 @@ export default async (req) => {
     );
   }
 };
-
-export const config = { path: '/api/investment/test-enhancements' };
