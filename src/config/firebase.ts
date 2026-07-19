@@ -14,10 +14,26 @@ const firebaseConfig = {
 };
 
 // Firebase 초기화
-const app = initializeApp(firebaseConfig);
+let app: any = null;
+
+export function getFirebaseApp() {
+  if (!app) {
+    try {
+      const apps = require('firebase/app').getApps?.() || [];
+      if (apps.length > 0) {
+        app = apps[0];
+      } else {
+        app = initializeApp(firebaseConfig);
+      }
+    } catch (e) {
+      app = initializeApp(firebaseConfig);
+    }
+  }
+  return app;
+}
 
 // Realtime Database 참조
-export const database = getDatabase(app);
+export const database = getDatabase(getFirebaseApp());
 
 // 앱 내보내기 (필요시 사용)
-export default app;
+export default getFirebaseApp();

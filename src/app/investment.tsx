@@ -15,10 +15,32 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useInvestmentSync, InvestmentColumn } from '../hooks/useInvestmentSync';
-import { getDatabase, ref, onValue } from 'firebase/database';
-import { getFirebaseApp } from '../config/firebase';
 
 const { width } = Dimensions.get('window');
+
+const BarChart: React.FC<{ data: { label: string; value: number }[] }> = React.memo(
+  ({ data }) => {
+    const max = Math.max(...data.map(d => d.value), 1);
+    return (
+      <View style={styles.barChart}>
+        {data.map((point, idx) => (
+          <View key={idx} style={styles.barColumn}>
+            <Text style={styles.barValue}>{point.value.toLocaleString()}</Text>
+            <View style={styles.barTrack}>
+              <View
+                style={[
+                  styles.barFill,
+                  { height: `${Math.max((point.value / max) * 100, 4)}%` },
+                ]}
+              />
+            </View>
+            <Text style={styles.barLabel}>{point.label}</Text>
+          </View>
+        ))}
+      </View>
+    );
+  }
+);
 
 interface ColumnCardProps {
   column: InvestmentColumn;
@@ -226,6 +248,13 @@ const DetailModal: React.FC<DetailModalProps> = React.memo(
             <Text style={styles.detailSectionContent}>{column.summary}</Text>
           </View>
 
+          {column.chartData && column.chartData.length > 0 && (
+            <View style={styles.detailSection}>
+              <Text style={styles.detailSectionTitle}>추이</Text>
+              <BarChart data={column.chartData} />
+            </View>
+          )}
+
           <View style={styles.detailSection}>
             <Text style={styles.detailSectionTitle}>상세 분석</Text>
             <Text style={styles.detailSectionContent}>{column.content}</Text>
@@ -235,6 +264,10 @@ const DetailModal: React.FC<DetailModalProps> = React.memo(
             <Text style={styles.detailSectionTitle}>결론</Text>
             <Text style={styles.detailSectionContent}>{column.analysis}</Text>
           </View>
+
+          {column.source && (
+            <Text style={styles.detailSource}>출처: {column.source}</Text>
+          )}
         </ScrollView>
       </SafeAreaView>
     </Modal>
@@ -391,6 +424,52 @@ export default function InvestmentScreen() {
     return { realEstate, stocks };
   }, [columns]);
 
+  // These must stay unconditional (top-level) — moving them inside the
+  // conditional FlatList JSX below caused "Rendered more hooks than during
+  // the previous render" once columns loaded and the branch changed.
+  const renderItem = useCallback(
+    ({ item }: { item: InvestmentColumn }) => (
+      <ColumnCard
+        column={item}
+        isBookmarked={isBookmarked(item.id)}
+        onToggleBookmark={() => handleToggleBookmark(item)}
+        onPress={() => handleColumnPress(item)}
+      />
+    ),
+    [isBookmarked, handleToggleBookmark, handleColumnPress]
+  );
+
+  const keyExtractor = useCallback((item: InvestmentColumn) => item.id, []);
+
+  const listHeaderComponent = useMemo(
+    () => (
+      <View style={styles.statsSection}>
+        <View style={styles.statCard}>
+          <MaterialIcons name="home-work" size={24} color="#8b5cf6" />
+          <Text style={styles.statNumber}>{stats.realEstate}</Text>
+          <Text style={styles.statLabel}>부동산 분석</Text>
+        </View>
+        <View style={styles.statCard}>
+          <MaterialIcons name="trending-up" size={24} color="#06b6d4" />
+          <Text style={styles.statNumber}>{stats.stocks}</Text>
+          <Text style={styles.statLabel}>주식 분석</Text>
+        </View>
+      </View>
+    ),
+    [stats]
+  );
+
+  const listFooterComponent = useMemo(
+    () => (
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>
+          모든 정보는 {formatLastSync()} 기준입니다
+        </Text>
+      </View>
+    ),
+    [formatLastSync]
+  );
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -429,58 +508,15 @@ export default function InvestmentScreen() {
       ) : columns.length > 0 ? (
         <FlatList
           data={filteredColumns}
-          renderItem={useCallback(
-            ({ item }) => (
-              <ColumnCard
-                column={item}
-                isBookmarked={isBookmarked(item.id)}
-                onToggleBookmark={() => handleToggleBookmark(item)}
-                onPress={() => handleColumnPress(item)}
-              />
-            ),
-            [isBookmarked, handleToggleBookmark, handleColumnPress]
-          )}
-          keyExtractor={useCallback((item: InvestmentColumn) => item.id, [])}
+          renderItem={renderItem}
+          keyExtractor={keyExtractor}
           contentContainerStyle={styles.listContent}
           scrollEnabled={true}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
           }
-          ListHeaderComponent={useMemo(
-            () => (
-              <View style={styles.statsSection}>
-                <View style={styles.statCard}>
-                  <MaterialIcons
-                    name="home-work"
-                    size={24}
-                    color="#8b5cf6"
-                  />
-                  <Text style={styles.statNumber}>{stats.realEstate}</Text>
-                  <Text style={styles.statLabel}>부동산 분석</Text>
-                </View>
-                <View style={styles.statCard}>
-                  <MaterialIcons
-                    name="trending-up"
-                    size={24}
-                    color="#06b6d4"
-                  />
-                  <Text style={styles.statNumber}>{stats.stocks}</Text>
-                  <Text style={styles.statLabel}>주식 분석</Text>
-                </View>
-              </View>
-            ),
-            [stats]
-          )}
-          ListFooterComponent={useMemo(
-            () => (
-              <View style={styles.footer}>
-                <Text style={styles.footerText}>
-                  모든 정보는 {formatLastSync()} 기준입니다
-                </Text>
-              </View>
-            ),
-            [formatLastSync]
-          )}
+          ListHeaderComponent={listHeaderComponent}
+          ListFooterComponent={listFooterComponent}
         />
       ) : (
         <View style={styles.centerContainer}>
@@ -827,6 +863,46 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#4b5563',
     lineHeight: 22,
+  },
+  detailSource: {
+    fontSize: 12,
+    color: '#9ca3af',
+    marginBottom: 24,
+    fontStyle: 'italic',
+  },
+  barChart: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+    height: 140,
+    paddingTop: 8,
+  },
+  barColumn: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  barValue: {
+    fontSize: 10,
+    color: '#6b7280',
+    marginBottom: 4,
+  },
+  barTrack: {
+    width: 20,
+    height: 80,
+    justifyContent: 'flex-end',
+    backgroundColor: '#f3f4f6',
+    borderRadius: 4,
+    overflow: 'hidden',
+  },
+  barFill: {
+    width: '100%',
+    backgroundColor: '#2563eb',
+    borderRadius: 4,
+  },
+  barLabel: {
+    fontSize: 11,
+    color: '#6b7280',
+    marginTop: 6,
   },
   filterContainer: {
     flex: 1,

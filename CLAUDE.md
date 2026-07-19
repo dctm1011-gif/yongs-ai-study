@@ -2,6 +2,27 @@
 
 ---
 
+## 🔥 Netlify-Firebase 데이터 연동 결정 로그
+
+### investment-daily.mjs: 출처(source) + 그래프 데이터(chartData) 추가 (2026-07-20)
+
+**목적**: 투자 칼럼에 신뢰도(출처)와 시각적 추이(그래프)를 추가
+
+**Firebase 데이터 흐름**:
+- 저장 경로: `/investment/columns/{date}` (기존 경로 재사용, 새 경로 없음)
+- 각 칼럼 객체에 필드 2개 추가:
+  - `source: string` — 출처 텍스트 (예: "국토교통부 실거래가 공개시스템")
+  - `chartData: { label: string; value: number }[]` — 그래프용 숫자 시계열 데이터
+- 저장 방식: 기존과 동일하게 매일 06:00 KST(UTC 21:00) 스케줄 함수가 `set()`으로 전체 덮어쓰기
+
+**결정 이유**: 실제 이미지(figure) 저장은 Firebase Storage 추가 연동과 서버 측 이미지 생성이 필요해 복잡도가 큼. 현재 investment-daily.mjs가 mock 데이터 생성 방식이라, 숫자 데이터 + 앱 내 자체 렌더링(막대그래프, 외부 차트 라이브러리 없이 View로 직접 구현)이 더 단순하고 일관됨.
+
+**앱 반영**:
+- `src/hooks/useInvestmentSync.ts`: `InvestmentColumn` 타입에 `source?`, `chartData?` 추가
+- `src/app/investment.tsx`: 상세보기 모달에 `BarChart` 컴포넌트(자체 구현) + 출처 텍스트 렌더링
+
+---
+
 ## 🔒 절대 규칙 (개인정보 보호)
 
 ### ❌ 휴대폰 데이터 서버 업로드 금지

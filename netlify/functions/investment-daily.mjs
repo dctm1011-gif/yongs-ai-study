@@ -51,6 +51,14 @@ const investmentColumns = [
     analysis: '금리 인하 기대감과 도시 개발 호재가 맞물리면서 중기적 상승세가 예상됩니다.',
     outlook: 'positive',
     readTime: 5,
+    source: '국토교통부 실거래가 공개시스템',
+    chartData: [
+      { label: '3월', value: 82 },
+      { label: '4월', value: 85 },
+      { label: '5월', value: 87 },
+      { label: '6월', value: 91 },
+      { label: '7월', value: 96 },
+    ],
   },
   {
     id: 'col-daily-2',
@@ -74,6 +82,14 @@ AI 칩 시장은 10년 이상의 성장 사이클이 예상되고 있습니다.`
     analysis: 'AI 혁명의 초반부이며, 반도체 수요는 계속 증가할 것으로 전망됩니다.',
     outlook: 'positive',
     readTime: 6,
+    source: '한국거래소(KRX) 시황정보시스템',
+    chartData: [
+      { label: '3월', value: 68000 },
+      { label: '4월', value: 71500 },
+      { label: '5월', value: 75200 },
+      { label: '6월', value: 79800 },
+      { label: '7월', value: 84300 },
+    ],
   },
 ];
 
