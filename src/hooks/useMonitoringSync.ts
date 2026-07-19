@@ -24,16 +24,24 @@ export function useMonitoringSync() {
   const lastUpdateRef = useRef<number>(0);
 
   useEffect(() => {
-    try {
-      // Firebase Realtime Database에서 모니터링 데이터 구독
-      dbRefRef.current = ref(database, 'monitoring/latest');
+    let unsubscribe: (() => void) | null = null;
 
-      // 실시간 구독 설정
-      const unsubscribe = onValue(
+    try {
+      if (!database) {
+        setError('Firebase 데이터베이스가 초기화되지 않았습니다.');
+        setLoading(false);
+        return;
+      }
+
+      dbRefRef.current = ref(database, 'monitoring/latest');
+      lastUpdateRef.current = Date.now();
+
+      unsubscribe = onValue(
         dbRefRef.current,
         (snapshot) => {
-          const responseTime = Date.now() - lastUpdateRef.current;
-          lastUpdateRef.current = Date.now();
+          const now = Date.now();
+          const responseTime = now - lastUpdateRef.current;
+          lastUpdateRef.current = now;
 
           if (snapshot.exists()) {
             const responseData = snapshot.val();
@@ -45,13 +53,13 @@ export function useMonitoringSync() {
                 cpu: parseFloat(responseData.randomData?.cpu || 0),
                 memory: parseFloat(responseData.randomData?.memory || 0),
               },
-              responseTime: responseTime || 100,
+              responseTime: Math.max(responseTime, 0),
               status: 'ok',
               error: undefined,
             };
 
             setData(newData);
-            setHistory(prev => [...prev.slice(-59), newData]); // 최대 60개 유지
+            setHistory(prev => [...prev.slice(-59), newData]);
             setError(null);
             setLoading(false);
           } else {
@@ -65,19 +73,18 @@ export function useMonitoringSync() {
           setLoading(false);
         }
       );
-
-      // Cleanup: 컴포넌트 언마운트 시 구독 취소
-      return () => {
-        if (dbRefRef.current) {
-          off(dbRefRef.current);
-        }
-      };
     } catch (err) {
       const errorMsg = err instanceof Error ? err.message : 'Firebase 초기화 실패';
       console.error('Firebase 설정 오류:', err);
       setError(errorMsg);
       setLoading(false);
     }
+
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
   }, []);
 
   // 통계 계산

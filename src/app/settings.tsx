@@ -48,19 +48,17 @@ export default function SettingsScreen() {
     loadDebugMode();
     updateMemoryUsage();
 
-    // Update memory usage every 10 seconds
     const memoryInterval = setInterval(updateMemoryUsage, 10000);
 
-    syncWithNetlify(); // 앱 시작 시 Netlify에서 최신 상태 동기화
+    syncWithNetlify();
 
-    return () => clearInterval(memoryInterval);
-
-    // 에러 로그 로드
     const loadErrors = async () => {
       const logs = await getErrorLogs();
       setErrorLogs(logs);
     };
     loadErrors();
+
+    return () => clearInterval(memoryInterval);
   }, [getErrorLogs]);
 
   const loadBuildTime = async () => {
