@@ -4,14 +4,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
 import { useHealthCheck } from '../hooks/useHealthCheck';
-import { useErrorLog, type ErrorLog } from '../hooks/useErrorLog';
-import { useErrorLogger } from '../hooks/useErrorLogger';
 import type { HealthCheckReport } from '../hooks/useHealthCheck';
 import { LAST_BUILD_TIME } from '../constants/buildInfo';
-import { useDataSyncMonitor } from '../hooks/useDataSyncMonitor';
-import { useOfflineQueue } from '../hooks/useOfflineQueue';
 import { performanceMonitor } from '../utils/PerformanceMonitor';
-import MonitoringSection from '../components/MonitoringSection';
 
 interface FeedbackItem {
   id: string;

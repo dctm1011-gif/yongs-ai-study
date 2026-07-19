@@ -90,37 +90,11 @@ export function useHealthCheck() {
 
   const saveRuntimeErrorsToServer = async (results: HealthCheckResult[]) => {
     try {
-      for (const result of results) {
-        if (result.status === 'error' && result.errors.length > 0) {
-          for (const errorMsg of result.errors) {
-            await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/api/runtime-errors', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                tab: result.tab,
-                error: errorMsg,
-                severity: 'error',
-                timestamp: result.timestamp,
-              }),
-            });
-          }
-        } else if (result.status === 'warning' && result.errors.length > 0) {
-          for (const errorMsg of result.errors) {
-            await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/api/runtime-errors', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                tab: result.tab,
-                error: errorMsg,
-                severity: 'warning',
-                timestamp: result.timestamp,
-              }),
-            });
-          }
-        }
-      }
+      // Firebase에 저장하지 않고 로컬에만 기록
+      // (runtime-errors API 삭제됨, Firebase 저장 미구현)
+      console.log('Health check results saved locally:', results);
     } catch (e) {
-      console.warn('Failed to save runtime errors to server:', e);
+      console.warn('Failed to save health check results:', e);
     }
   };
 
@@ -240,41 +214,26 @@ async function checkTOEFL(): Promise<HealthCheckResult> {
 async function checkPlay(): Promise<HealthCheckResult> {
   const errors: string[] = [];
   try {
-    console.log('[Play] Testing API...');
+    console.log('[Play] Checking...');
 
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 10000); // 10초로 확대
-
+    // AsyncStorage 테스트
     try {
-      const response = await fetch(
-        'https://illustrious-cuchufli-7c4e58.netlify.app/.netlify/functions/trending-videos',
-        { method: 'GET', signal: controller.signal }
-      );
-
-      clearTimeout(timeout);
-
-      if (!response.ok) {
-        errors.push(`API 오류 ${response.status}`);
-      } else {
-        const data = await response.json();
-        if (!Array.isArray(data) || data.length === 0) {
-          errors.push('API 데이터 비어있음');
-        }
+      const testKey = 'health-check-play-' + Date.now();
+      await AsyncStorage.setItem(testKey, 'test');
+      const read = await AsyncStorage.getItem(testKey);
+      await AsyncStorage.removeItem(testKey);
+      if (read !== 'test') {
+        errors.push('저장소 읽기/쓰기 실패');
       }
     } catch (e) {
-      clearTimeout(timeout);
-      if (e instanceof Error && e.name === 'AbortError') {
-        errors.push('API 타임아웃 (10초)');
-      } else {
-        errors.push('네트워크 오류');
-      }
+      errors.push('AsyncStorage 접근 불가');
     }
 
     console.log('[Play] Done:', errors.length === 0 ? 'OK' : errors);
     return {
       tab: 'Play',
-      status: errors.length === 0 ? 'healthy' : 'error',
-      message: errors.length === 0 ? '✅ API 정상' : `❌ ${errors[0]}`,
+      status: errors.length === 0 ? 'healthy' : 'warning',
+      message: errors.length === 0 ? '✅ 정상' : `⚠️ ${errors[0]}`,
       errors,
       timestamp: new Date().toISOString(),
     };
