@@ -9,7 +9,7 @@ $startTime = Get-Date
 
 # WiFi ADB 연결 설정
 Write-Host "Connecting to device via WiFi..." -ForegroundColor Cyan
-$wifiDevice = "192.168.219.135:33321"
+$wifiDevice = "192.168.219.135:40515"
 adb connect $wifiDevice 2>&1 | Out-Null
 Start-Sleep -Seconds 2
 
