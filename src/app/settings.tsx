@@ -3,70 +3,31 @@ import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, Alert,
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
-import { useHealthCheck } from '../hooks/useHealthCheck';
-import type { HealthCheckReport } from '../hooks/useHealthCheck';
 import { LAST_BUILD_TIME } from '../constants/buildInfo';
-import { performanceMonitor } from '../utils/PerformanceMonitor';
 
 interface FeedbackItem {
   id: string;
   date: string;
   time: string;
   content: string;
-  status?: 'pending' | 'completed';
+  status?: 'completed';
 }
 
 export default function SettingsScreen() {
   const [feedback, setFeedback] = useState('');
   const [feedbackList, setFeedbackList] = useState<FeedbackItem[]>([]);
   const [remindersEnabled, setRemindersEnabled] = useState(false);
-  const { report, isChecking, runHealthCheck, progress } = useHealthCheck();
-  const [showHealthReport, setShowHealthReport] = useState(false);
-  const { getLogs: getErrorLogs, clearLogs: clearErrorLogs } = useErrorLog();
-  const [errorLogs, setErrorLogs] = useState<ErrorLog[]>([]);
-  const [showErrorLogs, setShowErrorLogs] = useState(false);
-  const [runtimeErrors, setRuntimeErrors] = useState<any[]>([]);
-  const [showRuntimeErrors, setShowRuntimeErrors] = useState(false);
   const [buildTime, setBuildTime] = useState<string>('');
-  const { report: syncReport, isMonitoring: isSyncMonitoring, runSyncCheck, syncFailureCount } = useDataSyncMonitor();
-  const { queueStatus, syncQueue, removeFromQueue } = useOfflineQueue();
-  const [showSyncDetails, setShowSyncDetails] = useState(false);
-  const [showQueueDetails, setShowQueueDetails] = useState(false);
-  const { setDebugMode, getDebugMode } = useErrorLogger();
-  const [debugMode, setDebugMode_State] = useState(false);
-  const [memoryUsage, setMemoryUsage] = useState({ used: 0, available: 0, tabs: {} as any });
 
   useEffect(() => {
     loadFeedback();
     loadReminderStatus();
     loadBuildTime();
-    loadDebugMode();
-    updateMemoryUsage();
-
-    const memoryInterval = setInterval(updateMemoryUsage, 10000);
-    syncWithNetlify();
-
-    return () => clearInterval(memoryInterval);
   }, []);
 
-  useEffect(() => {
-    const loadErrors = async () => {
-      const logs = await getErrorLogs();
-      setErrorLogs(logs);
-    };
-    loadErrors();
-  }, [getErrorLogs]);
-
   const loadBuildTime = async () => {
-    try {
-      // buildInfo.ts에서 가져온 빌드 시간 사용
-      if (LAST_BUILD_TIME) {
-        setBuildTime(LAST_BUILD_TIME);
-        // AsyncStorage에 저장 (향후 참조용)
-        await AsyncStorage.setItem('last_build_time', LAST_BUILD_TIME);
-      }
-    } catch (error) {
-      console.error('빌드 시간 로드 실패:', error);
+    if (LAST_BUILD_TIME) {
+      setBuildTime(LAST_BUILD_TIME);
     }
   };
 
@@ -93,46 +54,16 @@ export default function SettingsScreen() {
       date: today,
       time: new Date().toLocaleTimeString('ko-KR'),
       content: feedback,
-      status: 'pending',
+      status: 'completed',
     };
 
-    // 즉시 UI 업데이트 (가장 빠름)
     const newList = [feedbackEntry, ...feedbackList];
     setFeedbackList(newList);
     setFeedback('');
 
-    // 로컬 저장 (백그라운드)
-    setTimeout(() => {
-      AsyncStorage.setItem('app_feedback', JSON.stringify(newList)).catch(() => {
-        console.warn('로컬 저장 실패');
-      });
-    }, 0);
-
-    // 서버 저장 (백그라운드)
-    setTimeout(() => {
-      fetch('https://illustrious-cuchufli-7c4e58.netlify.app/api/app-feedback', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(feedbackEntry),
-      }).catch(() => {
-        console.log('서버 저장 생략');
-      });
-    }, 0);
-  };
-
-  const syncWithNetlify = async () => {
-    try {
-      const response = await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/api/app-feedback');
-      const data = await response.json();
-
-      if (data.feedbacks && Array.isArray(data.feedbacks)) {
-        await AsyncStorage.setItem('app_feedback', JSON.stringify(data.feedbacks));
-        setFeedbackList(data.feedbacks);
-        console.log('✅ Netlify에서 동기화 완료');
-      }
-    } catch (error) {
-      console.log('Netlify 동기화 실패:', error);
-    }
+    AsyncStorage.setItem('app_feedback', JSON.stringify(newList)).catch(() => {
+      console.warn('로컬 저장 실패');
+    });
   };
 
   const loadReminderStatus = async () => {
@@ -144,80 +75,9 @@ export default function SettingsScreen() {
     }
   };
 
-  const loadDebugMode = async () => {
-    try {
-      const mode = await AsyncStorage.getItem('debug_mode');
-      setDebugMode_State(mode === 'true');
-    } catch (error) {
-      console.error('디버그 모드 로드 실패:', error);
-    }
-  };
-
-  const updateMemoryUsage = () => {
-    try {
-      const totalUsed = performanceMonitor.getTotalMemoryUsage();
-      const available = performanceMonitor.getAvailableMemory(500);
-      const allSummaries = performanceMonitor.getMemorySummary() as any;
-
-      setMemoryUsage({
-        used: totalUsed,
-        available: available,
-        tabs: allSummaries,
-      });
-    } catch (error) {
-      console.error('메모리 사용량 업데이트 실패:', error);
-    }
-  };
-
-  const toggleDebugMode = async () => {
-    try {
-      const newMode = !debugMode;
-      setDebugMode_State(newMode);
-      setDebugMode(newMode);
-      await AsyncStorage.setItem('debug_mode', newMode ? 'true' : 'false');
-      Alert.alert(
-        '✅ 설정됨',
-        newMode
-          ? '디버그 모드가 활성화되었습니다. 콘솔에 로그가 표시됩니다.'
-          : '디버그 모드가 비활성화되었습니다. 백그라운드로만 로깅됩니다.'
-      );
-    } catch (error) {
-      Alert.alert('❌ 오류', '디버그 모드 설정 실패');
-      console.error('디버그 모드 토글 실패:', error);
-    }
-  };
-
-  const loadRuntimeErrors = async () => {
-    try {
-      // 로컬 에러로그에서 runtime errors 필터링
-      const allLogs = await getErrorLogs();
-      const runtimeErrs = allLogs.filter(
-        log => log.severity === 'error' || log.severity === 'warning'
-      );
-      setRuntimeErrors(runtimeErrs);
-      console.log('✅ 런타임 에러 로드:', runtimeErrs.length);
-
-      // 동시에 서버에도 저장 시도
-      try {
-        for (const err of runtimeErrs) {
-          await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/api/runtime-errors', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(err),
-          }).catch(() => {});
-        }
-      } catch (e) {
-        console.warn('서버 동기화 실패:', e);
-      }
-    } catch (error) {
-      console.error('런타임 에러 로드 실패:', error);
-    }
-  };
-
   const toggleStudyReminders = async () => {
     try {
       if (!remindersEnabled) {
-        // 알림 활성화
         const { status } = await Notifications.requestPermissionsAsync();
         if (status !== 'granted') {
           Alert.alert('권한 거부', '알림 권한을 허용해주세요.');
@@ -234,9 +94,7 @@ export default function SettingsScreen() {
           });
         }
 
-        // 하루 6번: 08:00, 10:00, 12:00, 16:00, 20:00, 22:00
         const times = [8, 10, 12, 16, 20, 22];
-
         times.forEach((hour) => {
           Notifications.scheduleNotificationAsync({
             content: {
@@ -253,7 +111,6 @@ export default function SettingsScreen() {
         setRemindersEnabled(true);
         Alert.alert('✅ 활성화됨', '매일 6번 학습 알림을 받게 됩니다!');
       } else {
-        // 알림 비활성화
         await Notifications.dismissAllNotificationsAsync();
         await AsyncStorage.setItem('reminders_enabled', 'false');
         setRemindersEnabled(false);
@@ -270,7 +127,6 @@ export default function SettingsScreen() {
       const newList = feedbackList.filter(item => item.id !== id);
       await AsyncStorage.setItem('app_feedback', JSON.stringify(newList));
       setFeedbackList(newList);
-      Alert.alert('삭제됨', '피드백이 삭제되었습니다.');
     } catch (error) {
       Alert.alert('삭제 실패', String(error));
     }
@@ -282,7 +138,6 @@ export default function SettingsScreen() {
         <Text style={styles.headerTitle}>⚙️ 설정</Text>
       </View>
       <ScrollView contentContainerStyle={styles.content}>
-        {/* 빌드 정보 */}
         {buildTime && (
           <View style={styles.buildInfoContainer}>
             <Text style={styles.buildInfoLabel}>📦 최종 빌드</Text>
@@ -308,557 +163,6 @@ export default function SettingsScreen() {
         <View style={styles.divider} />
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>🔧 헬스 체크</Text>
-          <Text style={styles.feedbackDesc}>
-            앱의 모든 기능이 정상적으로 작동하는지 확인합니다.
-          </Text>
-
-          <TouchableOpacity
-            style={[styles.testButton, isChecking && styles.testButtonDisabled]}
-            onPress={async () => {
-              await runHealthCheck();
-              await loadRuntimeErrors();
-              setShowHealthReport(true);
-            }}
-            disabled={isChecking}
-          >
-            <Text style={styles.testButtonText}>
-              {isChecking ? `⏳ 검사 중... (${progress.current}/${progress.total})` : '🏥 헬스 체크 실행'}
-            </Text>
-          </TouchableOpacity>
-
-          {isChecking && progress.current > 0 && (
-            <View style={styles.progressContainer}>
-              <View style={styles.progressBar}>
-                <View
-                  style={[
-                    styles.progressFill,
-                    { width: `${(progress.current / progress.total) * 100}%` },
-                  ]}
-                />
-              </View>
-              <Text style={styles.progressText}>
-                현재 검사: {progress.tab} ({progress.current}/{progress.total})
-              </Text>
-            </View>
-          )}
-
-          {report && !showHealthReport && (
-            <View style={styles.healthSummary}>
-              <Text style={styles.healthSummaryTitle}>최근 검사 결과</Text>
-              <View style={styles.healthSummaryRow}>
-                <Text style={styles.healthLabel}>정상:</Text>
-                <Text style={[styles.healthValue, styles.healthHealthy]}>
-                  {report.summary.healthy}/{report.summary.total}
-                </Text>
-              </View>
-              {report.summary.warnings > 0 && (
-                <View style={styles.healthSummaryRow}>
-                  <Text style={styles.healthLabel}>경고:</Text>
-                  <Text style={[styles.healthValue, styles.healthWarning]}>
-                    {report.summary.warnings}개
-                  </Text>
-                </View>
-              )}
-              {report.summary.errors > 0 && (
-                <View style={styles.healthSummaryRow}>
-                  <Text style={styles.healthLabel}>오류:</Text>
-                  <Text style={[styles.healthValue, styles.healthError]}>
-                    {report.summary.errors}개
-                  </Text>
-                </View>
-              )}
-            </View>
-          )}
-        </View>
-
-        <View style={styles.divider} />
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>📡 동기화 상태</Text>
-          <Text style={styles.feedbackDesc}>
-            모든 데이터 소스의 동기화 상태를 확인합니다.
-          </Text>
-
-          {queueStatus.totalItems > 0 && (
-            <View style={[styles.healthItem, styles.healthItemWarning]}>
-              <Text style={styles.healthItemTitle}>⏳ 오프라인 대기열</Text>
-              <Text style={styles.healthItemMessage}>
-                {queueStatus.totalItems}개 항목이 동기화를 기다리고 있습니다.
-              </Text>
-              <TouchableOpacity
-                style={[styles.testButton, { marginTop: 8, backgroundColor: '#f59e0b' }]}
-                onPress={() => setShowQueueDetails(true)}
-              >
-                <Text style={styles.testButtonText}>📋 대기열 상세 보기</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-
-          {syncFailureCount > 0 && (
-            <View style={[styles.healthItem, styles.healthItemError]}>
-              <Text style={styles.healthItemTitle}>🔴 동기화 실패</Text>
-              <Text style={styles.healthItemMessage}>
-                {syncFailureCount}개 데이터 소스의 동기화에 실패했습니다.
-              </Text>
-            </View>
-          )}
-
-          <TouchableOpacity
-            style={[styles.testButton, isSyncMonitoring && styles.testButtonDisabled]}
-            onPress={async () => {
-              await runSyncCheck();
-              setShowSyncDetails(true);
-            }}
-            disabled={isSyncMonitoring}
-          >
-            <Text style={styles.testButtonText}>
-              {isSyncMonitoring ? '⏳ 동기화 중...' : '🔄 동기화 확인'}
-            </Text>
-          </TouchableOpacity>
-
-          {syncReport && !showSyncDetails && (
-            <View style={styles.healthSummary}>
-              <Text style={styles.healthSummaryTitle}>최근 동기화 결과</Text>
-              <View style={styles.healthSummaryRow}>
-                <Text style={styles.healthLabel}>성공:</Text>
-                <Text style={[styles.healthValue, styles.healthHealthy]}>
-                  {syncReport.successCount}/{syncReport.successCount + syncReport.failureCount}
-                </Text>
-              </View>
-              {syncReport.queueSize > 0 && (
-                <View style={styles.healthSummaryRow}>
-                  <Text style={styles.healthLabel}>대기열:</Text>
-                  <Text style={[styles.healthValue, styles.healthWarning]}>
-                    {syncReport.queueSize}개 항목
-                  </Text>
-                </View>
-              )}
-              <View style={styles.healthSummaryRow}>
-                <Text style={styles.healthLabel}>평균 시간:</Text>
-                <Text style={[styles.healthValue, styles.healthValue]}>
-                  {syncReport.averageSyncTime}ms
-                </Text>
-              </View>
-            </View>
-          )}
-
-          {showQueueDetails && queueStatus.totalItems > 0 && (
-            <View>
-              <TouchableOpacity onPress={() => setShowQueueDetails(false)}>
-                <Text style={styles.sectionTitle}>📋 대기열 상세</Text>
-              </TouchableOpacity>
-
-              <View style={styles.healthSummary}>
-                <Text style={styles.healthSummaryTitle}>대기열 통계</Text>
-                <View style={styles.healthSummaryRow}>
-                  <Text style={styles.healthLabel}>총 항목:</Text>
-                  <Text style={[styles.healthValue, styles.healthWarning]}>
-                    {queueStatus.totalItems}개
-                  </Text>
-                </View>
-                <View style={styles.healthSummaryRow}>
-                  <Text style={styles.healthLabel}>실패 항목:</Text>
-                  <Text style={[styles.healthValue, styles.healthError]}>
-                    {queueStatus.failedItems.length}개
-                  </Text>
-                </View>
-              </View>
-
-              <Text style={styles.sectionTitle}>대기 항목 목록</Text>
-              {queueStatus.items.map((item, idx) => (
-                <View
-                  key={item.id}
-                  style={[
-                    styles.healthItem,
-                    item.retryCount >= 3 && styles.healthItemError,
-                    item.retryCount > 0 && item.retryCount < 3 && styles.healthItemWarning,
-                    item.retryCount === 0 && styles.healthItemHealthy,
-                  ]}
-                >
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                    <View style={{ flex: 1 }}>
-                      <Text style={styles.healthItemTitle}>
-                        {item.type === 'feedback' && '💬'}
-                        {item.type === 'reading' && '📖'}
-                        {item.type === 'preference' && '⚙️'}
-                        {item.type === 'custom' && '🔧'}
-                        {' '}
-                        {item.action}
-                      </Text>
-                      <Text style={styles.healthItemMessage}>{item.tab || 'unknown'} 탭</Text>
-                      <Text style={{ fontSize: 11, color: '#94a3b8', marginTop: 4 }}>
-                        재시도: {item.retryCount}/3 {item.retryCount >= 3 && '❌'}
-                      </Text>
-                      {item.lastRetryTime && (
-                        <Text style={{ fontSize: 10, color: '#64748b', marginTop: 2 }}>
-                          마지막 시도: {new Date(item.lastRetryTime).toLocaleTimeString('ko-KR')}
-                        </Text>
-                      )}
-                      {item.version && (
-                        <Text style={{ fontSize: 10, color: '#64748b', marginTop: 2 }}>
-                          버전: {item.version}
-                        </Text>
-                      )}
-                    </View>
-                    <TouchableOpacity
-                      style={{ padding: 8, marginLeft: 8 }}
-                      onPress={() => {
-                        Alert.alert(
-                          '항목 제거',
-                          '이 대기 항목을 제거하시겠습니까?',
-                          [
-                            { text: '취소', style: 'cancel' },
-                            {
-                              text: '제거',
-                              style: 'destructive',
-                              onPress: async () => {
-                                await removeFromQueue(item.id);
-                                setShowQueueDetails(false);
-                              },
-                            },
-                          ]
-                        );
-                      }}
-                    >
-                      <Text style={{ fontSize: 18 }}>🗑️</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              ))}
-
-              <TouchableOpacity
-                style={[styles.testButton, { backgroundColor: '#3b82f6', marginTop: 12 }]}
-                onPress={() => syncQueue()}
-              >
-                <Text style={styles.testButtonText}>⬆️ 지금 동기화</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-
-          {showSyncDetails && syncReport && (
-            <View>
-              <TouchableOpacity onPress={() => setShowSyncDetails(false)}>
-                <Text style={styles.sectionTitle}>📊 상세 동기화 상태</Text>
-              </TouchableOpacity>
-
-              {Object.entries(syncReport.sources).map(([key, source]) => (
-                <View
-                  key={key}
-                  style={[
-                    styles.healthItem,
-                    source.status === 'synced' && styles.healthItemHealthy,
-                    source.status === 'failed' && styles.healthItemError,
-                    source.status === 'syncing' && styles.healthItemWarning,
-                  ]}
-                >
-                  <Text style={styles.healthItemTitle}>
-                    {source.status === 'synced' && '🟢'}
-                    {source.status === 'syncing' && '🟡'}
-                    {source.status === 'failed' && '🔴'}
-                    {' '}
-                    {source.name}
-                  </Text>
-                  {source.version && (
-                    <Text style={{ fontSize: 11, color: '#64748b', marginTop: 4 }}>
-                      버전: {source.version}
-                    </Text>
-                  )}
-                  {source.lastSyncTime && (
-                    <Text style={styles.healthItemMessage}>
-                      마지막 동기화: {new Date(source.lastSyncTime).toLocaleString('ko-KR')}
-                    </Text>
-                  )}
-                  {source.errorMessage && (
-                    <Text style={{ fontSize: 12, color: '#dc2626', marginTop: 4 }}>
-                      오류: {source.errorMessage}
-                    </Text>
-                  )}
-                  <Text style={{ fontSize: 11, color: '#94a3b8', marginTop: 4 }}>
-                    항목: {source.itemCount}개
-                  </Text>
-                </View>
-              ))}
-
-              {syncReport.versionConflicts.length > 0 && (
-                <View style={styles.healthItem}>
-                  <Text style={styles.healthItemTitle}>⚠️ 버전 충돌</Text>
-                  {syncReport.versionConflicts.map((conflict, idx) => (
-                    <Text key={idx} style={{ fontSize: 12, color: '#dc2626', marginTop: 4 }}>
-                      • {conflict.source}: 서버 v{conflict.serverVersion} vs 로컬 v{conflict.localVersion}
-                    </Text>
-                  ))}
-                </View>
-              )}
-
-              {queueStatus.totalItems > 0 && (
-                <TouchableOpacity
-                  style={[styles.testButton, { backgroundColor: '#3b82f6', marginTop: 12 }]}
-                  onPress={() => syncQueue()}
-                >
-                  <Text style={styles.testButtonText}>⬆️ 지금 동기화</Text>
-                </TouchableOpacity>
-              )}
-            </View>
-          )}
-        </View>
-
-        <View style={styles.divider} />
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>🐛 디버그 모드</Text>
-          <Text style={styles.feedbackDesc}>
-            {debugMode
-              ? '콘솔에 모든 에러 로그가 표시됩니다.'
-              : '에러는 백그라운드에서만 기록됩니다.'}
-          </Text>
-          <TouchableOpacity
-            style={[styles.testButton, debugMode && styles.testButtonActive]}
-            onPress={toggleDebugMode}
-          >
-            <Text style={styles.testButtonText}>
-              {debugMode ? '🟢 디버그 모드 ON' : '⚪ 디버그 모드 OFF'}
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.divider} />
-
-        <View style={styles.section}>
-          <MonitoringSection />
-        </View>
-
-        <View style={styles.divider} />
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>📊 메모리 사용량</Text>
-          <Text style={styles.feedbackDesc}>
-            각 탭의 메모리 사용 현황입니다. (목표: 500MB)
-          </Text>
-
-          <View style={styles.healthSummary}>
-            <Text style={styles.healthSummaryTitle}>전체 메모리</Text>
-            <View style={styles.healthSummaryRow}>
-              <Text style={styles.healthLabel}>사용 중:</Text>
-              <Text style={[styles.healthValue, styles.healthWarning]}>
-                {memoryUsage.used.toFixed(1)}MB
-              </Text>
-            </View>
-            <View style={styles.healthSummaryRow}>
-              <Text style={styles.healthLabel}>남은 용량:</Text>
-              <Text style={[styles.healthValue, memoryUsage.available > 100 ? styles.healthHealthy : styles.healthWarning]}>
-                {memoryUsage.available.toFixed(1)}MB
-              </Text>
-            </View>
-
-            {/* Memory bar chart */}
-            <View style={styles.memoryBarContainer}>
-              <View
-                style={[
-                  styles.memoryBar,
-                  { width: `${(memoryUsage.used / 500) * 100}%` },
-                  (memoryUsage.used / 500) > 0.8 ? { backgroundColor: '#ef4444' } : { backgroundColor: '#f59e0b' }
-                ]}
-              />
-            </View>
-          </View>
-
-          {Object.entries(memoryUsage.tabs).length > 0 && (
-            <View style={{ marginTop: 12 }}>
-              <Text style={styles.sectionTitle}>탭별 메모리</Text>
-              {Object.entries(memoryUsage.tabs).map(([tabName, summary]: any) => (
-                <View
-                  key={tabName}
-                  style={[
-                    styles.healthItem,
-                    summary.currentMemoryMB > 0 && styles.healthItemHealthy,
-                  ]}
-                >
-                  <Text style={styles.healthItemTitle}>{tabName}</Text>
-                  <View style={styles.healthSummaryRow}>
-                    <Text style={styles.healthLabel}>현재:</Text>
-                    <Text style={styles.healthValue}>{summary.currentMemoryMB.toFixed(2)}MB</Text>
-                  </View>
-                  <View style={styles.healthSummaryRow}>
-                    <Text style={styles.healthLabel}>평균:</Text>
-                    <Text style={styles.healthValue}>{summary.avgMemoryMB.toFixed(2)}MB</Text>
-                  </View>
-                </View>
-              ))}
-            </View>
-          )}
-        </View>
-
-        <View style={styles.divider} />
-
-        {errorLogs.length > 0 && !showErrorLogs && (
-          <View style={styles.section}>
-            <View style={styles.announcementHeader}>
-              <Text style={styles.sectionTitle}>🔴 에러 로그</Text>
-              <View style={styles.badge}>
-                <Text style={styles.badgeText}>{errorLogs.length}</Text>
-              </View>
-            </View>
-            <Text style={styles.feedbackDesc}>
-              앱에서 발생한 에러들이 기록되었습니다.
-            </Text>
-            <TouchableOpacity
-              style={styles.testButton}
-              onPress={() => setShowErrorLogs(true)}
-            >
-              <Text style={styles.testButtonText}>
-                🔍 에러 로그 확인
-              </Text>
-            </TouchableOpacity>
-          </View>
-        )}
-
-        {showErrorLogs && errorLogs.length > 0 && (
-          <View style={styles.section}>
-            <TouchableOpacity onPress={() => setShowErrorLogs(false)}>
-              <Text style={styles.sectionTitle}>🔴 에러 로그 상세</Text>
-            </TouchableOpacity>
-
-            {errorLogs.map((log, idx) => (
-              <View
-                key={idx}
-                style={[
-                  styles.healthItem,
-                  log.severity === 'fatal' && styles.healthItemError,
-                  log.severity === 'error' && styles.healthItemError,
-                  log.severity === 'warning' && styles.healthItemWarning,
-                ]}
-              >
-                <Text style={styles.healthItemTitle}>
-                  {log.tab} - {log.severity.toUpperCase()}
-                </Text>
-                <Text style={styles.healthItemMessage}>{log.error}</Text>
-                <Text style={{ fontSize: 10, color: '#94a3b8', marginTop: 4 }}>
-                  {new Date(log.timestamp).toLocaleString('ko-KR')}
-                </Text>
-                {log.stack && (
-                  <Text style={{ fontSize: 9, color: '#64748b', marginTop: 4, fontFamily: 'monospace' }}>
-                    {log.stack.split('\n')[0]}
-                  </Text>
-                )}
-              </View>
-            ))}
-
-            <TouchableOpacity
-              style={[styles.testButton, { backgroundColor: '#ef4444', marginTop: 12 }]}
-              onPress={async () => {
-                await clearErrorLogs();
-                setErrorLogs([]);
-                setShowErrorLogs(false);
-              }}
-            >
-              <Text style={styles.testButtonText}>🗑️ 에러 로그 삭제</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-
-        {report && showHealthReport && (
-          <View style={styles.section}>
-            <TouchableOpacity onPress={() => setShowHealthReport(false)}>
-              <Text style={styles.sectionTitle}>📊 상세 결과</Text>
-            </TouchableOpacity>
-
-            {report.results.map((result, idx) => (
-              <View
-                key={idx}
-                style={[
-                  styles.healthItem,
-                  result.status === 'healthy' && styles.healthItemHealthy,
-                  result.status === 'warning' && styles.healthItemWarning,
-                  result.status === 'error' && styles.healthItemError,
-                ]}
-              >
-                <Text style={styles.healthItemTitle}>{result.tab}</Text>
-                <Text style={styles.healthItemMessage}>{result.message}</Text>
-                {result.errors.length > 0 && (
-                  <View style={styles.healthItemErrors}>
-                    {result.errors.map((err, errIdx) => (
-                      <Text key={errIdx} style={{ fontSize: 12, color: '#dc2626', marginTop: 4 }}>
-                        • {err}
-                      </Text>
-                    ))}
-                  </View>
-                )}
-              </View>
-            ))}
-          </View>
-        )}
-
-        {runtimeErrors.length > 0 && !showRuntimeErrors && (
-          <View style={styles.section}>
-            <View style={styles.announcementHeader}>
-              <Text style={styles.sectionTitle}>⚡ 런타임 에러</Text>
-              <View style={styles.badge}>
-                <Text style={styles.badgeText}>{runtimeErrors.length}</Text>
-              </View>
-            </View>
-            <Text style={styles.feedbackDesc}>
-              헬스 체크 중 발생한 런타임 에러들입니다.
-            </Text>
-            <TouchableOpacity
-              style={styles.testButton}
-              onPress={() => setShowRuntimeErrors(true)}
-            >
-              <Text style={styles.testButtonText}>
-                📋 런타임 에러 상세 ({runtimeErrors.length})
-              </Text>
-            </TouchableOpacity>
-          </View>
-        )}
-
-        {showRuntimeErrors && runtimeErrors.length > 0 && (
-          <View style={styles.section}>
-            <TouchableOpacity onPress={() => setShowRuntimeErrors(false)}>
-              <Text style={styles.sectionTitle}>⚡ 런타임 에러 상세</Text>
-            </TouchableOpacity>
-
-            {runtimeErrors.map((err, idx) => (
-              <View
-                key={idx}
-                style={[
-                  styles.healthItem,
-                  err.severity === 'error' && styles.healthItemError,
-                  err.severity === 'warning' && styles.healthItemWarning,
-                ]}
-              >
-                <Text style={styles.healthItemTitle}>
-                  {err.tab} - {err.severity.toUpperCase()}
-                </Text>
-                <Text style={styles.healthItemMessage}>{err.error}</Text>
-                <Text style={{ fontSize: 10, color: '#94a3b8', marginTop: 4 }}>
-                  {new Date(err.timestamp).toLocaleString('ko-KR')}
-                </Text>
-              </View>
-            ))}
-
-            <TouchableOpacity
-              style={[styles.testButton, { backgroundColor: '#8b5cf6', marginTop: 12 }]}
-              onPress={async () => {
-                try {
-                  await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/api/runtime-errors', {
-                    method: 'DELETE',
-                  });
-                  setRuntimeErrors([]);
-                  setShowRuntimeErrors(false);
-                  Alert.alert('삭제됨', '런타임 에러가 삭제되었습니다.');
-                } catch (error) {
-                  Alert.alert('삭제 실패', String(error));
-                }
-              }}
-            >
-              <Text style={styles.testButtonText}>🗑️ 런타임 에러 삭제</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-
-        <View style={styles.divider} />
-
-        <View style={styles.section}>
           <Text style={styles.sectionTitle}>💬 피드백</Text>
           <Text style={styles.feedbackDesc}>
             앱을 사용하면서 불편한 점이나 추가했으면 하는 기능을 알려주세요.
@@ -876,36 +180,18 @@ export default function SettingsScreen() {
             style={styles.submitButton}
             onPress={submitFeedback}
           >
-            <Text style={styles.submitButtonText}>
-              ✉️ 피드백 제출
-            </Text>
+            <Text style={styles.submitButtonText}>✉️ 피드백 제출</Text>
           </TouchableOpacity>
 
           {feedbackList.length > 0 && (
             <View style={styles.feedbackListContainer}>
               <Text style={styles.feedbackListTitle}>제출된 피드백 ({feedbackList.length})</Text>
               {feedbackList.map((item) => (
-                <View
-                  key={item.id}
-                  style={[
-                    styles.feedbackItem,
-                    item.status === 'completed' && styles.feedbackItemCompleted,
-                  ]}
-                >
+                <View key={item.id} style={styles.feedbackItem}>
                   <View style={styles.feedbackContent}>
                     <View style={styles.feedbackMeta}>
                       <Text style={styles.feedbackDate}>{item.date}</Text>
                       <Text style={styles.feedbackTime}>{item.time}</Text>
-                      {item.status === 'completed' && (
-                        <View style={styles.statusBadge}>
-                          <Text style={styles.statusBadgeText}>✅ 반영됨</Text>
-                        </View>
-                      )}
-                      {!item.status && (
-                        <View style={styles.statusBadgePending}>
-                          <Text style={styles.statusBadgeTextPending}>⏳ 검토중</Text>
-                        </View>
-                      )}
                     </View>
                     <Text style={styles.feedbackText}>{item.content}</Text>
                   </View>
@@ -936,10 +222,6 @@ export default function SettingsScreen() {
             <Text style={styles.label}>버전</Text>
             <Text style={styles.value}>1.0.1</Text>
           </View>
-          <View style={styles.item}>
-            <Text style={styles.label}>개발팀</Text>
-            <Text style={styles.value}>YongStudy Team</Text>
-          </View>
         </View>
 
         <View style={styles.section}>
@@ -953,28 +235,11 @@ export default function SettingsScreen() {
             <Text style={styles.value}>TOEFL 시험 준비</Text>
           </View>
           <View style={styles.item}>
-            <Text style={styles.label}>📄 Papers</Text>
-            <Text style={styles.value}>연구 논문 열람</Text>
-          </View>
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>사용 가능한 콘텐츠</Text>
-          <View style={styles.item}>
-            <Text style={styles.label}>🔤 단어</Text>
-            <Text style={styles.value}>9개</Text>
-          </View>
-          <View style={styles.item}>
-            <Text style={styles.label}>📝 토픽</Text>
-            <Text style={styles.value}>7개</Text>
-          </View>
-          <View style={styles.item}>
-            <Text style={styles.label}>📚 논문</Text>
-            <Text style={styles.value}>7개</Text>
+            <Text style={styles.label}>💰 Investment</Text>
+            <Text style={styles.value}>투자 분석</Text>
           </View>
         </View>
       </ScrollView>
-
     </SafeAreaView>
   );
 }
@@ -988,11 +253,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#10b981',
     paddingHorizontal: 16,
     paddingVertical: 18,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 3,
   },
   headerTitle: {
     fontSize: 22,
@@ -1027,46 +287,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 12,
     marginVertical: 8,
-    overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.08,
-    shadowRadius: 2,
-    elevation: 2,
+    padding: 16,
   },
   sectionTitle: {
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: '700',
     color: '#10b981',
-    paddingHorizontal: 16,
-    paddingTop: 14,
-    paddingBottom: 10,
-    letterSpacing: 0.5,
-  },
-  item: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f1f5f9',
-  },
-  label: {
-    fontSize: 14,
-    color: '#1e293b',
-    fontWeight: '600',
-  },
-  value: {
-    fontSize: 14,
-    color: '#64748b',
-    fontWeight: '500',
+    marginBottom: 8,
   },
   feedbackDesc: {
     fontSize: 12,
     color: '#64748b',
-    paddingHorizontal: 16,
-    paddingTop: 12,
-    paddingBottom: 8,
+    marginBottom: 12,
     lineHeight: 18,
   },
   feedbackInput: {
@@ -1075,7 +307,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 12,
     paddingVertical: 10,
-    marginHorizontal: 16,
     marginBottom: 12,
     fontSize: 13,
     color: '#1e293b',
@@ -1084,16 +315,12 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
   },
   submitButton: {
-    marginHorizontal: 16,
-    marginBottom: 14,
     paddingVertical: 12,
     paddingHorizontal: 16,
     backgroundColor: '#10b981',
     borderRadius: 8,
     alignItems: 'center',
-  },
-  submitButtonDisabled: {
-    opacity: 0.6,
+    marginBottom: 14,
   },
   submitButtonText: {
     fontSize: 14,
@@ -1110,12 +337,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '700',
     color: '#10b981',
-    paddingHorizontal: 16,
     marginBottom: 10,
   },
   feedbackItem: {
     flexDirection: 'row',
-    paddingHorizontal: 16,
     paddingVertical: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#f1f5f9',
@@ -1147,35 +372,26 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     padding: 8,
-    marginTop: -2,
   },
   deleteButtonText: {
     fontSize: 16,
   },
-  feedbackItemCompleted: {
-    backgroundColor: '#f0fdf4',
+  item: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f1f5f9',
   },
-  statusBadge: {
-    backgroundColor: '#d1fae5',
-    paddingVertical: 3,
-    paddingHorizontal: 8,
-    borderRadius: 4,
+  label: {
+    fontSize: 14,
+    color: '#1e293b',
+    fontWeight: '600',
   },
-  statusBadgeText: {
-    fontSize: 10,
-    fontWeight: '700',
-    color: '#047857',
-  },
-  statusBadgePending: {
-    backgroundColor: '#fef3c7',
-    paddingVertical: 3,
-    paddingHorizontal: 8,
-    borderRadius: 4,
-  },
-  statusBadgeTextPending: {
-    fontSize: 10,
-    fontWeight: '700',
-    color: '#b45309',
+  value: {
+    fontSize: 14,
+    color: '#64748b',
+    fontWeight: '500',
   },
   divider: {
     height: 1,
@@ -1197,135 +413,5 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 14,
     fontWeight: '600',
-  },
-  announcementHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingRight: 16,
-  },
-  badge: {
-    backgroundColor: '#ef4444',
-    borderRadius: 12,
-    width: 24,
-    height: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  badgeText: {
-    color: '#fff',
-    fontSize: 11,
-    fontWeight: '700',
-  },
-  testButtonDisabled: {
-    opacity: 0.6,
-  },
-  healthSummary: {
-    marginTop: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    backgroundColor: '#f8fafc',
-    borderRadius: 8,
-  },
-  healthSummaryTitle: {
-    fontSize: 12,
-    fontWeight: '700',
-    color: '#10b981',
-    marginBottom: 8,
-  },
-  healthSummaryRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 6,
-  },
-  healthLabel: {
-    fontSize: 12,
-    color: '#475569',
-    fontWeight: '600',
-  },
-  healthValue: {
-    fontSize: 12,
-    fontWeight: '700',
-  },
-  healthHealthy: {
-    color: '#16a34a',
-  },
-  healthWarning: {
-    color: '#ea580c',
-  },
-  healthError: {
-    color: '#dc2626',
-  },
-  healthItem: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    marginHorizontal: 0,
-    marginVertical: 8,
-    borderLeftWidth: 4,
-    borderRadius: 6,
-    backgroundColor: '#f8fafc',
-  },
-  healthItemHealthy: {
-    borderLeftColor: '#16a34a',
-    backgroundColor: '#f0fdf4',
-  },
-  healthItemWarning: {
-    borderLeftColor: '#ea580c',
-    backgroundColor: '#fffbeb',
-  },
-  healthItemError: {
-    borderLeftColor: '#dc2626',
-    backgroundColor: '#fef2f2',
-  },
-  healthItemTitle: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: '#1e293b',
-    marginBottom: 4,
-  },
-  healthItemMessage: {
-    fontSize: 12,
-    color: '#475569',
-    marginBottom: 4,
-  },
-  healthItemErrors: {
-    marginTop: 6,
-  },
-  progressContainer: {
-    marginTop: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    backgroundColor: '#f0f9ff',
-    borderRadius: 8,
-    marginHorizontal: 0,
-  },
-  progressBar: {
-    height: 6,
-    backgroundColor: '#e0e7ff',
-    borderRadius: 3,
-    overflow: 'hidden',
-    marginBottom: 8,
-  },
-  progressFill: {
-    height: '100%',
-    backgroundColor: '#3b82f6',
-  },
-  progressText: {
-    fontSize: 12,
-    color: '#1e40af',
-    fontWeight: '600',
-  },
-  memoryBarContainer: {
-    height: 8,
-    backgroundColor: '#e5e7eb',
-    borderRadius: 4,
-    overflow: 'hidden',
-    marginTop: 8,
-    marginBottom: 8,
-  },
-  memoryBar: {
-    height: '100%',
-    backgroundColor: '#f59e0b',
-    borderRadius: 4,
   },
 });

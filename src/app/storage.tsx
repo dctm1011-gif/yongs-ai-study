@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Alert, ActivityIndicator, Modal, Dimensions, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useDataSyncMonitor } from '../hooks/useDataSyncMonitor';
 import { DataIntegrityValidator } from '../utils/DataIntegrityValidator';
 import DataFormatter from '../utils/DataFormatter';
 
@@ -27,8 +26,6 @@ export default function StorageScreen() {
   const [items, setItems] = useState<StorageItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [totalSize, setTotalSize] = useState(0);
-  const { report: syncReport, runSyncCheck } = useDataSyncMonitor();
-  const [showSyncStatus, setShowSyncStatus] = useState(false);
   const [validationResults, setValidationResults] = useState<any>(null);
   const [selectedItem, setSelectedItem] = useState<DetailModalData | null>(null);
   const [showDetailModal, setShowDetailModal] = useState(false);

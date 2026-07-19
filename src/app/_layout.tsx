@@ -12,7 +12,6 @@ import SettingsScreen from './settings';
 import InvestmentScreen from './investment';
 import { useAnnouncements } from '../hooks/useAnnouncements';
 import { AnnouncementModal } from '../components/AnnouncementModal';
-import { useErrorLogger } from '../hooks/useErrorLogger';
 
 const Tab = createBottomTabNavigator();
 
@@ -24,14 +23,6 @@ export default function RootLayout() {
     loading,
     markAsRead,
   } = useAnnouncements();
-
-  // Initialize error logger on app start
-  const { setDebugMode, getDebugMode } = useErrorLogger();
-  useEffect(() => {
-    // Load debug mode from storage
-    getDebugMode();
-    console.log('[App] Error logger initialized');
-  }, []);
 
   // 읽지 않은 공지사항이 있으면 자동으로 표시
   useEffect(() => {
