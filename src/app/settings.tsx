@@ -11,6 +11,7 @@ import { LAST_BUILD_TIME } from '../constants/buildInfo';
 import { useDataSyncMonitor } from '../hooks/useDataSyncMonitor';
 import { useOfflineQueue } from '../hooks/useOfflineQueue';
 import { performanceMonitor } from '../utils/PerformanceMonitor';
+import MonitoringSection from '../components/MonitoringSection';
 
 interface FeedbackItem {
   id: string;
@@ -625,6 +626,12 @@ export default function SettingsScreen() {
               {debugMode ? '🟢 디버그 모드 ON' : '⚪ 디버그 모드 OFF'}
             </Text>
           </TouchableOpacity>
+        </View>
+
+        <View style={styles.divider} />
+
+        <View style={styles.section}>
+          <MonitoringSection />
         </View>
 
         <View style={styles.divider} />
