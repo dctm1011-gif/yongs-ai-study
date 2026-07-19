@@ -46,3 +46,8 @@ example
 
 # Local Netlify folder
 .netlify
+
+# Secrets (bot tokens etc.) used by english/generate_english.py automation
+paper_search/discord_config.json
+__pycache__/
+*.pyc

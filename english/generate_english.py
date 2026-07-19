@@ -109,18 +109,68 @@ def get_default_words(target_date: date) -> dict:
         ]
     }
 
-def generate_default_words(client: anthropic.Anthropic, target_date: date) -> dict:
-    """Claude API로 새로운 일상 영어 단어 생성"""
+def load_toefl_words(toefl_path: Path = None) -> list:
+    """TOEFL 단어 로드 (API 또는 로컬 파일)"""
+    # 1. API에서 가져오기 시도
+    try:
+        import urllib.request
+        url = "https://illustrious-cuchufli-7c4e58.netlify.app/api/get-toefl-words"
+        req = urllib.request.Request(url)
+        with urllib.request.urlopen(req, timeout=5) as response:
+            data = json.loads(response.read().decode('utf-8'))
+            words = data.get("words", [])
+            if words:
+                print(f"[+] Netlify에서 TOEFL 단어 {len(words)}개 로드됨")
+                return words
+    except Exception as e:
+        print(f"[*] Netlify API 실패: {e}")
+
+    # 2. 로컬 파일에서 가져오기
+    if toefl_path and toefl_path.exists():
+        try:
+            content = json.loads(toefl_path.read_text(encoding="utf-8-sig"))
+            words = content.get("words", [])
+            if words:
+                print(f"[+] 로컬 TOEFL 단어 {len(words)}개 로드됨")
+                return words
+        except Exception as e:
+            print(f"[!] 로컬 파일 로드 실패: {e}")
+
+    print("[*] TOEFL 단어 없음 - 기본값으로 생성")
+    return []
+
+def generate_default_words(client: anthropic.Anthropic, target_date: date, toefl_words: list = None) -> dict:
+    """Claude API로 새로운 일상 영어 단어 생성 (TOEFL 단어 기반)"""
     print("[*] Claude API로 일상 영어 단어 생성 중...")
 
-    prompt = f"""5 daily English words. Generate JSON only.
+    toefl_context = ""
+    if toefl_words and len(toefl_words) > 0:
+        # TOEFL 단어들의 주제를 추출
+        word_list = [w.get("word", "") for w in toefl_words[:8]]
+        meanings = [w.get("meaning_ko", "") for w in toefl_words[:8]]
 
-{{"date": "{target_date}", "words": [{{"word": "example", "part_of_speech": "n", "meaning_ko": "예", "explanation": "ex", "example_from_convo": "ex", "example_ko": "예", "tip": "팁", "emoji": "X"}}, ...], "quiz": [{{"type": "meaning", "word": "w", "question": "q", "options": ["a"], "answer": 0, "explanation": "e"}}]}}
+        toefl_context = f"""
+📚 학생이 최근 TOEFL 학습에서 배운 단어/개념들:
+- 단어: {', '.join(word_list)}
+- 의미/주제: {', '.join(meanings[:3])}
 
-Requirements:
-- Exactly 5 words
-- Exactly 8 quiz (type: meaning/fill_blank/situation)
-- Valid JSON only"""
+이 TOEFL 단어들과 관련된 일상 표현과 슬랭을 생성해주세요.
+"""
+
+    prompt = f"""Generate 5 daily English words and 8 quiz questions for TOEFL students.
+Return ONLY valid JSON, no other text.
+
+{toefl_context}
+
+JSON Format:
+{{"date": "{target_date}", "words": [{{"word": "example", "part_of_speech": "noun", "meaning_ko": "뜻", "explanation": "설명", "example_from_convo": "I'm lowkey happy", "example_ko": "나 은근히 행복해", "tip": "일상에서 자주 씀", "emoji": "😊"}}, ...], "quiz": [{{"type": "meaning", "word": "example", "question": "문제?", "options": ["선택1", "선택2"], "answer": 0, "explanation": "설명"}}]}}
+
+Rules:
+- Exactly 5 different words
+- Exactly 8 quiz questions
+- Mix of: 3x meaning, 3x fill_blank, 2x situation
+- Each word needs part_of_speech, meaning_ko, explanation, example_from_convo, example_ko, tip, emoji
+- Return ONLY the JSON object, nothing else"""
 
     response = client.messages.create(
         model="claude-haiku-4-5-20251001",
@@ -875,6 +925,21 @@ def update_profile_topics(conversations: list, target_date) -> None:
         print(f"[!] profile.json 업데이트 실패: {e}")
 
 
+def fetch_toefl_words_from_netlify() -> list:
+    """Netlify Blobs에서 TOEFL 어려운 단어 가져오기"""
+    try:
+        import urllib.request
+        url = "https://illustrious-cuchufli-7c4e58.netlify.app/api/toefl-words"
+        with urllib.request.urlopen(url, timeout=5) as response:
+            data = json.loads(response.read().decode())
+            toefl_words = data.get("words", [])
+            print(f"[+] Netlify에서 TOEFL 단어 {len(toefl_words)}개 가져옴")
+            return toefl_words
+    except Exception as e:
+        print(f"[!] TOEFL 단어 fetch 실패: {e}")
+        return []
+
+
 def update_words_db(words: list, target_date) -> None:
     """새 단어를 words_db.json에 추가 (이미 있는 날짜는 스킵)"""
     date_str = str(target_date)
@@ -884,36 +949,63 @@ def update_words_db(words: list, target_date) -> None:
 
     existing_ids = {w["id"] for w in existing}
     existing_dates = {w.get("date") for w in existing}
+    new_entries = []  # date_str이 이미 존재해 스킵되는 경우에도 아래에서 참조되므로 미리 초기화
 
     if date_str in existing_dates:
         print(f"[*] words_db.json에 {date_str} 이미 존재 - 스킵")
-        return
-
-    new_entries = []
-    for w in words:
-        raw_id = w.get("word", "").lower()
-        word_id = raw_id.replace(" ", "-").replace("/", "-").replace("'", "").replace("'", "")
-        if word_id in existing_ids:
-            continue
-        new_entries.append({
-            "id": word_id,
-            "word": w.get("word", ""),
-            "pos": w.get("part_of_speech", ""),
-            "date": date_str,
-            "meaning": w.get("meaning_ko", ""),
-            "example_ko": w.get("example_ko", ""),
-            "example_en": w.get("example_from_convo", ""),
-            "explanation": w.get("explanation", ""),
-            "tip": w.get("tip", ""),
-            "emoji": w.get("emoji", ""),
-        })
-
-    if new_entries:
-        existing.extend(new_entries)
-        WORDS_DB_JSON.write_text(json.dumps(existing, ensure_ascii=False, indent=2), encoding="utf-8")
-        print(f"[+] words_db.json에 {len(new_entries)}개 단어 추가 ({date_str})")
     else:
-        print(f"[*] words_db.json - 추가할 새 단어 없음")
+        new_entries = []
+        for w in words:
+            raw_id = w.get("word", "").lower()
+            word_id = raw_id.replace(" ", "-").replace("/", "-").replace("'", "").replace("'", "")
+            if word_id in existing_ids:
+                continue
+            new_entries.append({
+                "id": word_id,
+                "word": w.get("word", ""),
+                "pos": w.get("part_of_speech", ""),
+                "date": date_str,
+                "meaning": w.get("meaning_ko", ""),
+                "example_ko": w.get("example_ko", ""),
+                "example_en": w.get("example_from_convo", ""),
+                "explanation": w.get("explanation", ""),
+                "tip": w.get("tip", ""),
+                "emoji": w.get("emoji", ""),
+            })
+
+        if new_entries:
+            existing.extend(new_entries)
+            print(f"[+] words_db.json에 {len(new_entries)}개 단어 추가 ({date_str})")
+        else:
+            print(f"[*] words_db.json - Discord 단어 추가 없음")
+
+    # TOEFL 단어 병합
+    toefl_words = fetch_toefl_words_from_netlify()
+    toefl_added = 0
+    for tw in toefl_words:
+        raw_id = tw.get("word", "").lower()
+        word_id = raw_id.replace(" ", "-").replace("/", "-").replace("'", "").replace("'", "")
+        if word_id not in existing_ids:
+            existing.append({
+                "id": word_id,
+                "word": tw.get("word", ""),
+                "pos": "TOEFL",
+                "date": tw.get("added_date", date_str),
+                "meaning": tw.get("meaning_ko", ""),
+                "example_ko": tw.get("meaning_ko", ""),  # TOEFL은 example_ko 없음
+                "example_en": "",
+                "explanation": tw.get("explanation", ""),
+                "tip": f"[{tw.get('section', 'TOEFL').upper()}] {tw.get('meaning_ko', '')}",
+                "emoji": tw.get("emoji", "📚"),
+            })
+            toefl_added += 1
+            existing_ids.add(word_id)
+
+    if toefl_added > 0 or new_entries:
+        WORDS_DB_JSON.write_text(json.dumps(existing, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"[+] TOEFL 단어 {toefl_added}개 병합 완료, 총 {len(existing)}개 단어")
+    else:
+        print(f"[*] 새로운 단어 없음")
 
 
 def generate_toefl_content(client: anthropic.Anthropic, target_date) -> dict:
@@ -1705,7 +1797,7 @@ localStorage.setItem('toefl_visited_' + new Date().toISOString().slice(0,10), '1
 
 
 def deploy_to_netlify(word_count: int = 0, quiz_count: int = 0, target_date=None):
-    GIT = r"C:\Users\dctm1\AppData\Local\GitHubDesktop\app-3.6.1\resources\app\git\cmd\git.exe"
+    GIT = "git"  # PATH의 git 사용
     print("[*] GitHub Pages 배포 중...")
     subprocess.run([GIT, "pull", "--rebase", "origin", "main"], cwd=str(ROOT))
     subprocess.run([GIT, "add", "-A"], cwd=str(ROOT))
@@ -1752,11 +1844,16 @@ def main(target_date: date = None):
         sys.exit(1)
 
     client = anthropic.Anthropic(api_key=api_key)
+
+    # TOEFL 단어 로드
+    toefl_words_path = ROOT / "public" / "toefl" / "words_db.json"
+    toefl_words = load_toefl_words(toefl_words_path)
+
     conversations = load_conversations(target_date)
 
     if not conversations:
-        print(f"[*] {target_date} 대화 없음. 기본 콘텐츠 생성...")
-        data = generate_default_words(client, target_date)
+        print(f"[*] {target_date} 대화 없음. TOEFL 기반 콘텐츠 생성...")
+        data = generate_default_words(client, target_date, toefl_words)
     else:
         print(f"[+] 대화 {len(conversations)}개 로드 ({target_date})")
         convo_text = format_conversations(conversations)
@@ -1771,6 +1868,13 @@ def main(target_date: date = None):
     OUTPUT_HTML.write_text(html, encoding="utf-8")
     print(f"[+] HTML 저장: {OUTPUT_HTML}")
 
+    # netlify/functions/english-daily.mjs가 읽어서 Firebase에 올리는 파일
+    english_daily_json = ROOT / "english" / "daily.json"
+    english_daily_json.write_text(
+        json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    print(f"[+] daily.json 저장: {english_daily_json}")
+
     update_words_db(data.get("words", []), target_date)
     update_profile_topics(conversations, target_date)
 
@@ -1780,6 +1884,13 @@ def main(target_date: date = None):
         TOEFL_OUTPUT_HTML.parent.mkdir(exist_ok=True)
         TOEFL_OUTPUT_HTML.write_text(toefl_html, encoding="utf-8")
         print(f"[+] TOEFL HTML 저장: {TOEFL_OUTPUT_HTML}")
+
+        # netlify/functions/toefl-daily.mjs가 읽어서 Firebase에 올리는 파일
+        toefl_daily_json = ROOT / "toefl" / "daily.json"
+        toefl_daily_json.write_text(
+            json.dumps(toefl_data, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
+        print(f"[+] TOEFL daily.json 저장: {toefl_daily_json}")
     except Exception as e:
         print(f"[!] TOEFL 생성 실패: {e}")
         notify(f"⚠️ **TOEFL 생성 실패**: {e}")

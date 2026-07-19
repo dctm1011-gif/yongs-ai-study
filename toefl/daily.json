@@ -1,115 +1,106 @@
 {
-  "date": "2026-07-19",
+  "date": "2026-07-20",
   "reading": {
-    "title": "The Impact of Urban Green Spaces",
-    "passage": "Urban green spaces such as parks and gardens play a crucial role in improving city residents' quality of life. These areas provide essential benefits including air quality improvement, temperature regulation, and mental health support. Studies have shown that people living near parks experience lower stress levels and better overall well-being. Furthermore, green spaces encourage physical activity and social interaction among community members. As cities continue to expand, protecting and developing these natural areas becomes increasingly important for sustainable urban development.",
+    "title": "Bioluminescence in Deep-Sea Organisms",
+    "passage": "Bioluminescence, the production of light by living organisms, is a remarkable adaptation found predominantly in deep-sea creatures. In the ocean's aphotic zone where sunlight cannot penetrate, organisms like anglerfish and jellyfish generate light through chemical reactions. This adaptation serves multiple functions: attracting prey, communicating with mates, and confusing predators. Scientists estimate that approximately 90% of deep-sea organisms possess bioluminescent capabilities, making it one of nature's most successful evolutionary strategies for survival in extreme darkness.",
     "questions": [
       {
-        "q": "According to the passage, what are green spaces primarily beneficial for?",
+        "q": "According to the passage, in which ocean region is bioluminescence most commonly found?",
         "options": [
-          "A) Reducing traffic congestion",
-          "B) Improving air quality and mental health",
-          "C) Increasing property taxes",
-          "D) Creating employment opportunities"
+          "A) Shallow coastal areas",
+          "B) The aphotic zone of deep ocean",
+          "C) Tropical coral reefs",
+          "D) Kelp forests"
         ],
         "answer": 1,
-        "explanation": "본문에서 green spaces는 공기 질 개선, 온도 조절, 정신 건강 지원을 제공한다고 명시되어 있습니다."
+        "explanation": "지문에서 '깊은 바다 생물에게서 주로 발견되며, 햇빛이 투과할 수 없는 대양의 무광층(aphotic zone)에서 발생한다'고 명시되어 있습니다."
       },
       {
-        "q": "What does the passage imply about people living near parks?",
+        "q": "What can be inferred from the passage about the survival advantages of bioluminescence?",
         "options": [
-          "A) They pay higher rent",
-          "B) They exercise less frequently",
-          "C) They have better well-being",
-          "D) They avoid social interaction"
+          "A) It helps organisms migrate to warmer waters",
+          "B) It is primarily used for photosynthesis",
+          "C) It serves multiple ecological functions including hunting and communication",
+          "D) It reduces the organism's need for food"
         ],
         "answer": 2,
-        "explanation": "본문에서 '공원 근처에 사는 사람들은 더 낮은 스트레스 수준과 더 나은 전반적인 웰빙을 경험한다'고 명시되어 있습니다."
-      },
-      {
-        "q": "Which of the following is NOT mentioned as a benefit of urban green spaces?",
-        "options": [
-          "A) Air quality improvement",
-          "B) Mental health support",
-          "C) Noise reduction",
-          "D) Encouraging physical activity"
-        ],
-        "answer": 2,
-        "explanation": "소음 감소(Noise reduction)는 본문에서 언급되지 않습니다. 공기 질 개선, 정신 건강, 신체 활동 장려는 모두 명시되어 있습니다."
+        "explanation": "지문에서 '먹이 유인, 짝짓기 의사소통, 포식자 혼동' 등 여러 기능을 언급하고 있으므로, 생물 발광이 생존을 위한 다목적 적응임을 추론할 수 있습니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement that cities should prioritize developing green spaces over building new infrastructure like roads and buildings?",
+    "prompt": "Do you agree or disagree with the following statement? Technology has made human relationships less meaningful and more superficial. Use specific reasons and examples to support your answer.",
     "structure": {
-      "intro": "자신의 입장을 명확히 제시하세요. 예: 'I agree that cities should prioritize green spaces because...' 또는 'I disagree because...'",
-      "body1": "첫 번째 이유: 녹지의 환경적/건강상 이점을 구체적인 예시와 함께 제시하세요",
-      "body2": "두 번째 이유: 기반 시설의 필요성도 인정하면서, 균형 있는 접근 방식을 제안하거나 녹지 우선의 정당성을 재강조하세요",
-      "conclusion": "전체 논의를 요약하고 입장을 재확인하며, 미래의 도시 계획에 대한 희망을 표현하세요"
+      "intro": "기술과 인간관계의 본질적 변화에 대해 논쟁이 있습니다. 나는 [동의/비동의]합니다. 왜냐하면 [핵심 주장 1-2문]이기 때문입니다. 예시: '기술은 오히려 지리적 거리를 극복하여 더 깊은 연결을 가능하게 합니다' 또는 '소셜 미디어는 표면적 상호작용만 촉진합니다'",
+      "body1": "첫 번째 논거: 기술의 긍정적 영향 예시 - 장거리 연애 유지, 같은 관심사 사람들과의 연결, 시간대 극복 등. 구체적 사례: 온라인 지원 커뮤니티가 고립된 사람들을 돕는 방식",
+      "body2": "두 번째 논거: 기술 사용의 부정적 측면 - 면대면 상호작용 감소, '좋아요' 기반 관계, 깊이 있는 대화 부족 등. 예시: SNS 중독이 가족 식사 시간을 방해하는 경우",
+      "conclusion": "기술 자체가 문제가 아니라 사용 방식이 중요합니다. 의도적이고 신중한 사용이 의미 있는 관계를 유지할 수 있다는 재진술로 마무리합니다."
     },
-    "useful_phrases": [
+    "key_phrases": [
       "In my opinion,",
-      "I strongly believe that",
+      "It is undeniable that",
       "Furthermore,",
       "For instance,",
-      "In conclusion,",
-      "It is essential that",
       "On the other hand,",
-      "This demonstrates that"
+      "This suggests that",
+      "In conclusion,",
+      "The evidence shows that"
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer spending leisure time in outdoor natural environments like parks and forests. Others prefer indoor activities like visiting museums or watching movies. Which do you prefer and why?",
+    "prompt": "Some people prefer studying alone in a quiet environment. Others prefer studying in groups with classmates. Which do you prefer and why? Include specific reasons and details in your response.",
     "useful_expressions": [
-      "In my opinion, I prefer...",
-      "One reason is that outdoor activities...",
-      "Additionally, nature provides...",
+      "In my opinion, I prefer studying...",
+      "One reason is that...",
       "For example,",
-      "I believe that...",
-      "This is important because..."
+      "Additionally,",
+      "However,",
+      "To sum up,",
+      "This is why I believe..."
     ],
     "sample_points": [
-      "자연환경에서의 신체활동은 건강을 증진시키고 스트레스를 감소시킵니다. 공원에서의 산책이나 등산은 정신 건강에 긍정적인 영향을 미칩니다.",
-      "실내활동은 날씨에 관계없이 즐길 수 있고, 문화 활동을 통해 지식을 얻을 수 있습니다. 박물관 방문은 역사와 예술을 배우는 기회를 제공합니다."
+      "집중력과 개인적 학습 속도: 혼자 공부할 때는 방해 없이 자신의 속도로 진행 가능 - 수학 문제를 차근차근 풀 때 효율적",
+      "협력과 다양한 관점: 그룹 공부는 다른 학생들의 설명을 통해 새로운 이해 가능 - 어려운 개념을 친구들과 토론하며 배우기",
+      "결론: 학과목과 상황에 따라 혼합하는 것이 최적 - 이론은 혼자, 토론은 그룹으로"
     ]
   },
   "listening": {
-    "title": "Student-Professor Conversation About Research Projects",
+    "title": "Library Research Assistant Interview",
     "type": "conversation",
-    "script": "Student: Professor Johnson, I wanted to discuss my research project on renewable energy. I'm having trouble deciding between solar and wind energy as my focus. Professor: That's a great question. Both are important, but they have different applications. Solar energy works well in sunny regions with good infrastructure, while wind energy is more efficient in coastal and elevated areas. Student: I see. Which one do you think would have a bigger impact on reducing carbon emissions? Professor: Actually, that depends on the location. In coastal areas, wind farms can generate massive amounts of electricity with minimal environmental impact. However, in desert regions, solar panels are incredibly efficient. I'd suggest you consider both options and perhaps focus on a specific geographic region. Student: That makes sense. Maybe I should research how these technologies complement each other in a hybrid system. Professor: Excellent idea! That would make your project more comprehensive and realistic.",
+    "script": "Student A: Hi, I'm here for the research assistant position. I'm really interested in helping other students with their projects. Student B: Great! We're looking for someone organized and patient. Tell me about your research experience. Student A: Well, I've spent a lot of time at the library using different databases. I learned how to search effectively on Google Scholar and JSTOR. I also volunteer at a community center helping people find information. Student B: That's excellent. One challenge is that many students don't know how to evaluate source credibility. Student A: Absolutely. I could teach them to check author credentials, publication dates, and peer reviews. Student B: Perfect. We also need someone to organize our research guide materials. Student A: I'd be happy to do that. How often would the position be?",
     "questions": [
       {
-        "q": "What is the main purpose of the conversation?",
+        "q": "What is the main purpose of this conversation?",
         "options": [
-          "A) The professor is grading the student's research project",
-          "B) The student is seeking advice on choosing a research focus",
-          "C) The professor is explaining renewable energy to the class",
-          "D) The student is complaining about the difficulty of the project"
+          "A) Discussing the library's collection of books",
+          "B) Conducting a job interview for a research assistant position",
+          "C) Explaining how to use online databases",
+          "D) Planning a training program for students"
         ],
         "answer": 1,
-        "explanation": "학생이 교수님께 신재생 에너지 연구 주제 선택에 대해 조언을 구하는 것이 대화의 중심입니다."
+        "explanation": "학생 A가 연구 조교 직책을 위해 인터뷰 중이며, 학생 B가 자격 요건에 대해 질문하고 있습니다."
       },
       {
-        "q": "According to the professor, which location is most suitable for wind energy?",
+        "q": "What skill does Student B emphasize as important for the position?",
         "options": [
-          "A) Desert regions",
-          "B) Urban cities",
-          "C) Coastal and elevated areas",
-          "D) Underground locations"
-        ],
-        "answer": 2,
-        "explanation": "교수님이 '풍력 에너지는 해안 지역과 고지대에서 더 효율적이라'고 명확히 설명했습니다."
-      },
-      {
-        "q": "What does the student decide to do at the end of the conversation?",
-        "options": [
-          "A) Choose only solar energy",
-          "B) Research how solar and wind work together in a hybrid system",
-          "C) Abandon the research project",
-          "D) Focus only on coastal regions"
+          "A) Computer programming skills",
+          "B) The ability to evaluate source credibility",
+          "C) Experience in teaching languages",
+          "D) Knowledge of library architecture"
         ],
         "answer": 1,
-        "explanation": "학생이 '이 기술들이 하이브리드 시스템에서 어떻게 서로 보완하는지 연구하는 것'을 제안했고, 교수님이 이를 좋은 아이디어라고 승인했습니다."
+        "explanation": "학생 B가 '많은 학생들이 자료의 신뢰성을 평가하는 방법을 모른다'고 언급하며 이를 중요한 도전 과제로 지적했습니다."
+      },
+      {
+        "q": "Why does Student A mention volunteering at a community center?",
+        "options": [
+          "A) To explain why they need this job",
+          "B) To show they have experience helping people find information",
+          "C) To demonstrate their teaching ability in a different context",
+          "D) To explain their previous research interests"
+        ],
+        "answer": 1,
+        "explanation": "학생 A는 자신이 정보 검색을 돕는 경험이 있다는 것을 보여주기 위해 자원봉사 경험을 언급했습니다. 이는 직책에 필요한 기술과 관련이 있습니다."
       }
     ]
   }

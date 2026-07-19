@@ -50,13 +50,13 @@ const ITEMS_PER_PAGE = 15; // Pagination size for FlatList
 function mapFirebaseWords(data: any, today: string): NetlifyWord[] {
   const rawWords = Array.isArray(data.words) ? data.words : [data];
   return rawWords.map((w: any) => ({
-    id: w.id,
+    id: w.id || w.word,
     word: w.word,
     pos: w.part_of_speech || w.pos,
     date: data.date || today,
     meaning: w.meaning_ko || w.meaning,
     example_ko: w.example_ko,
-    example_en: w.example_en,
+    example_en: w.example_en || w.example_from_convo,
     explanation: w.explanation,
     emoji: w.emoji,
   }));
