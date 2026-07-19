@@ -1,5 +1,9 @@
 import { createLogger, corsHeaders } from './_utils.mjs';
 
+export const config = {
+  schedule: '0 21 * * *',
+};
+
 const log = createLogger('ai-recommendations');
 
 const BACKEND_URL = process.env.INVESTMENT_API_URL || 'http://localhost:5000';

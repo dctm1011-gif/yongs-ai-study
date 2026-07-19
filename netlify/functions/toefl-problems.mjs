@@ -1,6 +1,10 @@
 import { getStore } from "@netlify/blobs";
 import { createLogger, corsHeaders } from './_utils.mjs';
 
+export const config = {
+  schedule: '0 21 * * *',
+};
+
 const log = createLogger('toefl-problems');
 
 /**

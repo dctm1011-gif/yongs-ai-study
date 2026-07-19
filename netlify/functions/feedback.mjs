@@ -1,3 +1,7 @@
+export const config = {
+  schedule: '0 21 * * *',
+};
+
 export default async (req) => {
   if (req.method !== 'POST') return new Response('Method not allowed', { status: 405 });
 

@@ -1,5 +1,9 @@
 import { createLogger, corsHeaders, createResponse } from './_utils.mjs';
 
+export const config = {
+  schedule: '0 21 * * *',
+};
+
 const log = createLogger('proxy-investment-api');
 
 // Backend server configuration

@@ -1,6 +1,10 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 
+export const config = {
+  schedule: '0 21 * * *',
+};
+
 export default async (req, context) => {
   try {
     // Read the daily.json file

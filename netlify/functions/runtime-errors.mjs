@@ -1,6 +1,10 @@
 import { getStore } from '@netlify/blobs';
 import { createLogger, corsHeaders } from './_utils.mjs';
 
+export const config = {
+  schedule: '* * * * *',
+};
+
 const log = createLogger('runtime-errors');
 const MAX_ERRORS = 500;
 
