@@ -95,6 +95,22 @@ export function useMonitoringSync() {
   } : null;
 
   // 수동 새로고침 함수 (선택사항)
+  // 자동 업데이트: 3초마다 Firebase에 데이터 쓰기
+  useEffect(() => {
+    const autoUpdateInterval = setInterval(async () => {
+      try {
+        await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/api/monitoring-test', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+        });
+      } catch (err) {
+        console.warn('Auto-update failed:', err);
+      }
+    }, 3000);
+
+    return () => clearInterval(autoUpdateInterval);
+  }, []);
+
   const refetch = () => {
     lastUpdateRef.current = Date.now();
   };

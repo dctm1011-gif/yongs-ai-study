@@ -11,29 +11,13 @@ import {
 import { useMonitoringSync } from '../hooks/useMonitoringSync';
 
 export default function MonitoringSection() {
-  const { data, history, loading, error, stats, refetch } = useMonitoringSync();
+  const { data, history, loading, error, stats } = useMonitoringSync();
   const [refreshing, setRefreshing] = useState(false);
-  const [updating, setUpdating] = useState(false);
 
   const onRefresh = async () => {
     setRefreshing(true);
-    await refetch();
+    await new Promise(r => setTimeout(r, 500));
     setRefreshing(false);
-  };
-
-  const updateMonitoringData = async () => {
-    try {
-      setUpdating(true);
-      const response = await fetch('https://illustrious-cuchufli-7c4e58.netlify.app/api/monitoring-test', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-      });
-      if (!response.ok) console.warn('Monitoring update status:', response.status);
-    } catch (err) {
-      console.error('Monitoring update error:', err);
-    } finally {
-      setUpdating(false);
-    }
   };
 
   const getStatusColor = (status?: string) => {
@@ -68,17 +52,6 @@ export default function MonitoringSection() {
       <Text style={styles.description}>
         Netlify 함수의 응답 상태를 실시간으로 모니터링합니다. (10초 주기)
       </Text>
-
-      {/* 업데이트 버튼 */}
-      <TouchableOpacity
-        style={[styles.updateButton, updating && styles.updateButtonDisabled]}
-        onPress={updateMonitoringData}
-        disabled={updating}
-      >
-        <Text style={styles.updateButtonText}>
-          {updating ? '⏳ 업데이트 중...' : '🔄 Firebase 데이터 업데이트'}
-        </Text>
-      </TouchableOpacity>
 
       {/* 현재 상태 카드 */}
       <ScrollView
@@ -361,21 +334,5 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
     color: '#333',
-  },
-  updateButton: {
-    backgroundColor: '#3b82f6',
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    borderRadius: 8,
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  updateButtonDisabled: {
-    opacity: 0.6,
-  },
-  updateButtonText: {
-    fontSize: 13,
-    fontWeight: '600',
-    color: '#fff',
   },
 });
