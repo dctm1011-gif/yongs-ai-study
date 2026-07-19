@@ -6,40 +6,6 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
-# Fetch trending topics daily at 06:00 AM UTC
-[[functions]]
-name = "fetch-trends"
-schedule = "0 6 * * *"
-
-# Update progress daily at 06:00 AM UTC
-[[functions]]
-name = "update-progress"
-schedule = "0 6 * * *"
-
-# Daily sync orchestration at 06:00 AM UTC
-[[functions]]
-name = "daily-sync-orchestration"
-schedule = "0 6 * * *"
-
-# Batch sync retry every 6 hours
-[[functions]]
-name = "batch-sync-retry"
-schedule = "0 */6 * * *"
-
-# Weekly investment summary every Monday at 06:00 UTC
-[[functions]]
-name = "weekly-investment-summary"
-schedule = "0 6 * * 1"
-
-# AI recommendations analysis daily at 07:00 UTC
-[[functions]]
-name = "ai-recommendations"
-schedule = "0 7 * * *"
-
-# Monitoring test (real-time Firebase updates)
-[[functions]]
-name = "monitoring-test"
-
 # Investment API routes
 [[redirects]]
 from = "/api/investment/*"
