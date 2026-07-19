@@ -18,29 +18,41 @@ import { useInvestmentSync, InvestmentColumn } from '../hooks/useInvestmentSync'
 
 const { width } = Dimensions.get('window');
 
-const BarChart: React.FC<{ data: { label: string; value: number }[] }> = React.memo(
-  ({ data }) => {
-    const max = Math.max(...data.map(d => d.value), 1);
-    return (
-      <View style={styles.barChart}>
-        {data.map((point, idx) => (
-          <View key={idx} style={styles.barColumn}>
-            <Text style={styles.barValue}>{point.value.toLocaleString()}</Text>
-            <View style={styles.barTrack}>
-              <View
-                style={[
-                  styles.barFill,
-                  { height: `${Math.max((point.value / max) * 100, 4)}%` },
-                ]}
-              />
+const BarChart: React.FC<{
+  data: { label: string; value: number }[];
+  title: string;
+  unit: string;
+}> = React.memo(({ data, title, unit }) => {
+  const max = Math.max(...data.map(d => d.value), 1);
+  return (
+    <View>
+      <Text style={styles.chartTitle}>{title}</Text>
+      <View style={styles.chartBody}>
+        <View style={styles.yAxis}>
+          <Text style={styles.yAxisLabel}>{max.toLocaleString()}</Text>
+          <Text style={styles.yAxisLabel}>0</Text>
+        </View>
+        <View style={styles.barChart}>
+          {data.map((point, idx) => (
+            <View key={idx} style={styles.barColumn}>
+              <Text style={styles.barValue}>{point.value.toLocaleString()}</Text>
+              <View style={styles.barTrack}>
+                <View
+                  style={[
+                    styles.barFill,
+                    { height: `${Math.max((point.value / max) * 100, 4)}%` },
+                  ]}
+                />
+              </View>
+              <Text style={styles.barLabel}>{point.label}</Text>
             </View>
-            <Text style={styles.barLabel}>{point.label}</Text>
-          </View>
-        ))}
+          ))}
+        </View>
       </View>
-    );
-  }
-);
+      <Text style={styles.chartUnit}>{unit}</Text>
+    </View>
+  );
+});
 
 interface ColumnCardProps {
   column: InvestmentColumn;
@@ -250,8 +262,15 @@ const DetailModal: React.FC<DetailModalProps> = React.memo(
 
           {column.chartData && column.chartData.length > 0 && (
             <View style={styles.detailSection}>
-              <Text style={styles.detailSectionTitle}>추이</Text>
-              <BarChart data={column.chartData} />
+              <BarChart
+                data={column.chartData}
+                title={
+                  column.category === 'real-estate'
+                    ? '📈 가격 지수 추이 (최근 5개월)'
+                    : '📈 주가 추이 (최근 5개월)'
+                }
+                unit={column.category === 'real-estate' ? '단위: 지수' : '단위: 원'}
+              />
             </View>
           )}
 
@@ -870,12 +889,45 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     fontStyle: 'italic',
   },
+  chartTitle: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#1f2937',
+    marginBottom: 12,
+  },
+  chartBody: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
+  yAxis: {
+    justifyContent: 'space-between',
+    height: 80,
+    marginTop: 18,
+    marginRight: 8,
+    paddingRight: 6,
+    borderRightWidth: 1,
+    borderRightColor: '#d1d5db',
+  },
+  yAxisLabel: {
+    fontSize: 10,
+    color: '#9ca3af',
+    textAlign: 'right',
+  },
+  chartUnit: {
+    fontSize: 11,
+    color: '#9ca3af',
+    textAlign: 'right',
+    marginTop: 6,
+  },
   barChart: {
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
     height: 140,
     paddingTop: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#d1d5db',
   },
   barColumn: {
     flex: 1,
