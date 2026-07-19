@@ -315,6 +315,24 @@ export default async (req) => {
         alerts: result.alerts.length,
       });
 
+      // Also save to Firebase for HTTP POST
+      try {
+        const firebaseApp = getFirebaseApp();
+        const db = getDatabase(firebaseApp);
+        const today = new Date().toISOString().split('T')[0];
+
+        await set(ref(db, `investment/recommendations/${today}`), {
+          ...result,
+          timestamp: new Date().toISOString(),
+          date: today,
+        });
+
+        log.log('✅ Recommendations saved to Firebase');
+      } catch (firebaseError) {
+        log.warn('Firebase save failed (HTTP POST)', { message: firebaseError.message });
+        // Continue anyway - still return the data
+      }
+
       return Response.json(result, { headers: cors });
     }
 
