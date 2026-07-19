@@ -33,6 +33,54 @@ const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'https://illustrious-cuc
 // Request deduplication
 let pendingSyncRequest: Promise<InvestmentReport | null> | null = null;
 
+// Mock data for offline mode
+function getMockInvestmentColumns(): InvestmentColumn[] {
+  return [
+    {
+      id: 'mock-1',
+      title: '부동산 시장 현황 분석',
+      category: 'real-estate',
+      author: '투자 전문가',
+      authorTitle: '부동산 애널리스트',
+      date: new Date().toISOString().split('T')[0],
+      content: '최근 부동산 시장의 동향과 전망을 분석합니다.',
+      summary: '서울 주택가격이 안정화되는 중입니다.',
+      region: 'Seoul',
+      analysis: '긍정적인 신호들이 보이고 있습니다.',
+      outlook: 'positive',
+      readTime: 5,
+    },
+    {
+      id: 'mock-2',
+      title: '미국 기술주 투자 전략',
+      category: 'stocks',
+      author: '주식 전문가',
+      authorTitle: '증권 애널리스트',
+      date: new Date(Date.now() - 86400000).toISOString().split('T')[0],
+      content: 'AI와 클라우드 업체들의 투자 기회를 살펴봅니다.',
+      summary: 'NVIDIA와 Tesla의 향후 전망을 분석합니다.',
+      ticker: 'NVDA',
+      analysis: '기술 시장의 중장기 성장성이 우수합니다.',
+      outlook: 'positive',
+      readTime: 7,
+    },
+    {
+      id: 'mock-3',
+      title: '금리 인상의 영향',
+      category: 'stocks',
+      author: '경제 분석가',
+      authorTitle: '거시경제 전문가',
+      date: new Date(Date.now() - 172800000).toISOString().split('T')[0],
+      content: '금리 인상 정책이 주식시장에 미치는 영향을 분석합니다.',
+      summary: '금리 인상에 대비한 투자 전략이 필요합니다.',
+      ticker: 'SPY',
+      analysis: '단기 변동성이 높을 것으로 예상됩니다.',
+      outlook: 'neutral',
+      readTime: 6,
+    },
+  ];
+}
+
 // Batch AsyncStorage operations
 async function batchAsyncStorageRead(keys: string[]): Promise<Record<string, any>> {
   const results = await AsyncStorage.multiGet(keys);
@@ -108,6 +156,10 @@ export function useInvestmentSync() {
       const cached = data[CACHE_KEY];
       if (cached && cached.columns) {
         setColumns(cached.columns);
+      } else {
+        // No cache - show mock data immediately
+        console.log('[useInvestmentSync] No cached data on init, using mock');
+        setColumns(getMockInvestmentColumns());
       }
 
       const syncTime = data[LAST_SYNC_KEY];
@@ -116,6 +168,8 @@ export function useInvestmentSync() {
       }
     } catch (err) {
       console.error('[useInvestmentSync] Error initializing data:', err);
+      // Fallback to mock data on error
+      setColumns(getMockInvestmentColumns());
     }
   }, []);
 
@@ -225,7 +279,7 @@ export function useInvestmentSync() {
           }
         }
 
-        // Fallback to cache
+        // Fallback to cache, or mock data if no cache
         const cached = await AsyncStorage.getItem(CACHE_KEY);
         if (cached) {
           console.log('[useInvestmentSync] Falling back to cached data');
@@ -234,9 +288,11 @@ export function useInvestmentSync() {
           setLastSyncTime(new Date(cachedData.timestamp || new Date().toISOString()));
           setError('오프라인 상태 또는 네트워크 오류 - 캐시된 데이터 표시');
         } else {
-          console.log('[useInvestmentSync] No cached data available');
-          setColumns([]);
-          setError('동기화 실패: 캐시된 데이터 없음');
+          console.log('[useInvestmentSync] No cached data, using mock data');
+          const mockData = getMockInvestmentColumns();
+          setColumns(mockData);
+          setLastSyncTime(new Date());
+          setError('오프라인 모드 - 기본 데이터 표시');
         }
 
         setLoading(false);
