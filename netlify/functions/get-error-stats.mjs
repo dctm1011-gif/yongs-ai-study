@@ -148,4 +148,3 @@ function calculateStats(errors) {
   };
 }
 
-export const config = { path: '/api/error-stats' };
