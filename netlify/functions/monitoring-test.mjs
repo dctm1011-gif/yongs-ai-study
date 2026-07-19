@@ -1,6 +1,10 @@
 import { initializeApp, getApps } from 'firebase/app';
 import { getDatabase, ref, set } from 'firebase/database';
 
+export const config = {
+  schedule: '* * * * *',
+};
+
 function corsHeaders() {
   return {
     'Access-Control-Allow-Origin': '*',

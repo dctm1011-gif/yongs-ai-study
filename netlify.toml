@@ -6,11 +6,6 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
-# Scheduled function: Update Firebase every minute
-[[functions]]
-path = "netlify/functions/monitoring-test.mjs"
-schedule = "* * * * *"
-
 # Investment API routes
 [[redirects]]
 from = "/api/investment/*"
