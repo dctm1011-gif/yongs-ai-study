@@ -1,11 +1,23 @@
 import { getStore } from "@netlify/blobs";
 import { createLogger, corsHeaders } from './_utils.mjs';
+import { initializeApp } from 'firebase/app';
+import { getDatabase, ref, set } from 'firebase/database';
 
 export const config = {
   schedule: '0 21 * * *',
 };
 
 const log = createLogger('toefl-problems');
+
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.FIREBASE_DATABASE_URL,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+};
 
 /**
  * Serves today's TOEFL problems (Reading, Writing, Speaking, Listening)
@@ -29,6 +41,12 @@ export default async (req) => {
 
       if (cached && cached.date === getTodayDate()) {
         log.log('GET successful (cached)', { date: cached.date });
+
+        // Also save to Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        await set(ref(db, `toefl/problems/${cached.date}`), cached);
+
         return Response.json(cached, { headers: cors });
       }
 
@@ -45,6 +63,14 @@ export default async (req) => {
         // Cache the problems
         await store.set("today", JSON.stringify(problems));
 
+        // Save to Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        await set(ref(db, `toefl/problems/${problems.date}`), {
+          ...problems,
+          timestamp: new Date().toISOString(),
+        });
+
         log.log('GET successful (fresh)', { date: problems.date });
         return Response.json(problems, { headers: cors });
       } catch (error) {
@@ -60,6 +86,15 @@ export default async (req) => {
       const problems = await req.json();
       const store = getStore({ name: "toefl-problems", consistency: "strong" });
       await store.set("today", JSON.stringify(problems));
+
+      // Save to Firebase
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase(app);
+      await set(ref(db, `toefl/problems/${problems.date}`), {
+        ...problems,
+        timestamp: new Date().toISOString(),
+      });
+
       log.log('POST successful', { date: problems.date });
       return Response.json({ ok: true, timestamp: new Date().toISOString() }, { headers: cors });
     }

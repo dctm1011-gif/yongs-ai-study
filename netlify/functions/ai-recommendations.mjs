@@ -1,4 +1,6 @@
 import { createLogger, corsHeaders } from './_utils.mjs';
+import { initializeApp } from 'firebase/app';
+import { getDatabase, ref, set } from 'firebase/database';
 
 export const config = {
   schedule: '0 21 * * *',
@@ -8,6 +10,16 @@ const log = createLogger('ai-recommendations');
 
 const BACKEND_URL = process.env.INVESTMENT_API_URL || 'http://localhost:5000';
 const API_TIMEOUT = 10000;
+
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.FIREBASE_DATABASE_URL,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+};
 
 /**
  * Fetch data from backend
@@ -232,24 +244,76 @@ function transformRealEstateData(realEstateData) {
 }
 
 /**
- * Main handler function
+ * Main handler function (Scheduled or HTTP)
  */
 export default async (req) => {
-  const cors = corsHeaders();
-
-  // Handle CORS preflight
-  if (req.method === 'OPTIONS') {
-    return new Response(null, { status: 204, headers: cors });
-  }
-
   try {
+    // Scheduled function (no request)
+    if (!req || !req.url) {
+      log.log('Scheduled execution started');
+
+      // Default preferences for scheduled execution
+      const userPreferences = {
+        propertyTypes: ['apartment', 'villa'],
+        locations: [],
+        minROI: 0,
+        favoriteIds: [],
+      };
+
+      // Fetch real estate data
+      const realEstateData = await fetchFromBackend('/api/market/real-estate');
+
+      if (!realEstateData?.real_estate) {
+        log.error('Failed to fetch real estate data');
+        throw new Error('No real estate data available');
+      }
+
+      // Transform and generate recommendations
+      const properties = transformRealEstateData(realEstateData.real_estate);
+      const result = generateAIRecommendations(properties, userPreferences);
+
+      // Save to Firebase
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase(app);
+      const today = new Date().toISOString().split('T')[0];
+
+      await set(ref(db, `investment/recommendations/${today}`), {
+        ...result,
+        timestamp: new Date().toISOString(),
+        date: today,
+      });
+
+      log.log('✅ Recommendations saved to Firebase', {
+        recommendations: result.recommendations.length,
+        alerts: result.alerts.length,
+        date: today,
+      });
+
+      return new Response(
+        JSON.stringify({
+          success: true,
+          message: 'Recommendations saved to Firebase',
+          date: today,
+          count: result.recommendations.length,
+        }),
+        { status: 200 }
+      );
+    }
+
+    // HTTP request handling
+    const cors = corsHeaders();
+
+    if (req.method === 'OPTIONS') {
+      return new Response(null, { status: 204, headers: cors });
+    }
+
     const url = new URL(req.url);
     const pathname = url.pathname;
 
     log.log('AI recommendations request', { method: req.method, pathname });
 
     // POST /api/investment/ai-recommendations
-    if (pathname === '/.netlify/functions/ai-recommendations/api/investment/ai-recommendations' && req.method === 'POST') {
+    if (req.method === 'POST') {
       const body = await req.json();
       const userPreferences = body.preferences || {
         propertyTypes: [],
@@ -291,7 +355,7 @@ export default async (req) => {
     log.error('Request handler error', { error: error.message });
     return Response.json(
       { error: error.message },
-      { status: 500, headers: cors }
+      { status: 500 }
     );
   }
 };
