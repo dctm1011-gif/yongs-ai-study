@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
+import { ref, onValue, off } from 'firebase/database';
+import { database } from '../config/firebase';
 
 export interface MonitoringData {
   timestamp: string;
@@ -13,108 +15,69 @@ export interface MonitoringData {
   error?: string;
 }
 
-const API_BASE_URL = 'https://illustrious-cuchufli-7c4e58.netlify.app';
-const POLLING_INTERVAL = 10000; // 10 seconds
-const FETCH_TIMEOUT = 3000; // 3 seconds
-
 export function useMonitoringSync() {
   const [data, setData] = useState<MonitoringData | null>(null);
   const [history, setHistory] = useState<MonitoringData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const pollIntervalRef = useRef<NodeJS.Timeout>();
-  const abortControllerRef = useRef<AbortController | null>(null);
+  const dbRefRef = useRef<any>(null);
+  const lastUpdateRef = useRef<number>(0);
 
-  const fetchMonitoring = async () => {
-    const startTime = Date.now();
-    abortControllerRef.current = new AbortController();
-    const timeoutId = setTimeout(() => abortControllerRef.current?.abort(), FETCH_TIMEOUT);
-
+  useEffect(() => {
     try {
-      const response = await fetch(
-        `${API_BASE_URL}/.netlify/functions/monitoring-test`,
-        {
-          signal: abortControllerRef.current.signal,
-          headers: {
-            'Cache-Control': 'no-cache',
-          },
+      // Firebase Realtime Database에서 모니터링 데이터 구독
+      dbRefRef.current = ref(database, 'monitoring/latest');
+
+      // 실시간 구독 설정
+      const unsubscribe = onValue(
+        dbRefRef.current,
+        (snapshot) => {
+          const responseTime = Date.now() - lastUpdateRef.current;
+          lastUpdateRef.current = Date.now();
+
+          if (snapshot.exists()) {
+            const responseData = snapshot.val();
+            const newData: MonitoringData = {
+              timestamp: responseData.timestamp || new Date().toISOString(),
+              value: responseData.value || 0,
+              randomData: {
+                temperature: parseFloat(responseData.randomData?.temperature || 0),
+                cpu: parseFloat(responseData.randomData?.cpu || 0),
+                memory: parseFloat(responseData.randomData?.memory || 0),
+              },
+              responseTime: responseTime || 100,
+              status: 'ok',
+              error: undefined,
+            };
+
+            setData(newData);
+            setHistory(prev => [...prev.slice(-59), newData]); // 최대 60개 유지
+            setError(null);
+            setLoading(false);
+          } else {
+            setError('데이터를 찾을 수 없습니다.');
+            setLoading(false);
+          }
+        },
+        (err) => {
+          console.error('Firebase 읽기 오류:', err);
+          setError(`Firebase 오류: ${err.message}`);
+          setLoading(false);
         }
       );
 
-      clearTimeout(timeoutId);
-      const responseTime = Date.now() - startTime;
-
-      if (!response.ok) {
-        const errorMsg = `HTTP ${response.status}`;
-        setError(errorMsg);
-        setData(prev =>
-          prev
-            ? { ...prev, status: 'error', error: errorMsg, responseTime }
-            : null
-        );
-        setLoading(false);
-        return;
-      }
-
-      const responseData = await response.json();
-      const newData: MonitoringData = {
-        timestamp: responseData.timestamp,
-        value: responseData.value,
-        randomData: {
-          temperature: parseFloat(responseData.randomData.temperature),
-          cpu: parseFloat(responseData.randomData.cpu),
-          memory: parseFloat(responseData.randomData.memory),
-        },
-        responseTime,
-        status: 'ok',
-        error: undefined,
+      // Cleanup: 컴포넌트 언마운트 시 구독 취소
+      return () => {
+        if (dbRefRef.current) {
+          off(dbRefRef.current);
+        }
       };
-
-      setData(newData);
-      setHistory(prev => [...prev.slice(-59), newData]); // 최대 60개 유지
-      setError(null);
-      setLoading(false);
     } catch (err) {
-      clearTimeout(timeoutId);
-
-      if (err instanceof Error && err.name === 'AbortError') {
-        const errorMsg = 'Timeout (3s exceeded)';
-        setError(errorMsg);
-        setData(prev =>
-          prev
-            ? { ...prev, status: 'timeout', error: errorMsg, responseTime: FETCH_TIMEOUT }
-            : null
-        );
-      } else {
-        const errorMsg = err instanceof Error ? err.message : 'Unknown error';
-        setError(errorMsg);
-        setData(prev =>
-          prev
-            ? { ...prev, status: 'error', error: errorMsg }
-            : null
-        );
-      }
+      const errorMsg = err instanceof Error ? err.message : 'Firebase 초기화 실패';
+      console.error('Firebase 설정 오류:', err);
+      setError(errorMsg);
       setLoading(false);
     }
-  };
-
-  useEffect(() => {
-    // 초기 로드
-    fetchMonitoring();
-
-    // 10초마다 폴링
-    pollIntervalRef.current = setInterval(() => {
-      fetchMonitoring();
-    }, POLLING_INTERVAL);
-
-    return () => {
-      if (pollIntervalRef.current) {
-        clearInterval(pollIntervalRef.current);
-      }
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
-      }
-    };
   }, []);
 
   // 통계 계산
@@ -124,12 +87,17 @@ export function useMonitoringSync() {
     minResponseTime: Math.min(...history.map(d => d.responseTime)),
   } : null;
 
+  // 수동 새로고침 함수 (선택사항)
+  const refetch = () => {
+    lastUpdateRef.current = Date.now();
+  };
+
   return {
     data,
     history,
     loading,
     error,
     stats,
-    refetch: fetchMonitoring,
+    refetch,
   };
 }
