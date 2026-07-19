@@ -1,4 +1,4 @@
-import { createLogger, corsHeaders } from './_utils.mjs';
+import { createLogger } from './_utils.mjs';
 import { initializeApp, getApps } from 'firebase/app';
 import { getDatabase, ref, set } from 'firebase/database';
 
@@ -27,325 +27,90 @@ function getFirebaseApp() {
   return app;
 }
 
-/**
- * Detect rapid ROI increases
- */
-function detectRapidROIIncrease(property, threshold = 10) {
-  if (!property.trend || property.trend.length < 2) {
-    return null;
-  }
+// 투자 칼럼 데이터
+const investmentColumns = [
+  {
+    id: 'col-daily-1',
+    title: '부동산 시장, 금리 인하 기대감에 상승세',
+    category: 'real-estate',
+    author: '김부동산',
+    authorTitle: '부동산 시장 분석가',
+    date: new Date().toISOString().split('T')[0],
+    region: '서울 전역',
+    summary: '최근 금리 인하 가능성이 높아지면서 부동산 시장이 전반적인 상승세를 보이고 있습니다.',
+    content: `부동산 시장이 금리 인하 기대감에 힘입어 긍정적 신호를 보이고 있습니다.
 
-  const sorted = property.trend.sort((a, b) => new Date(a.date) - new Date(b.date));
-  const recentROI = sorted[sorted.length - 1]?.roi || 0;
-  const previousROI = sorted[sorted.length - 2]?.roi || 0;
+주요 포인트:
+- 강남, 서초 지역 가격 상승세 지속
+- 신축 아파트 분양권 수요 증가
+- 전세 시장도 안정화 추세
+- 외국인 투자 관심 증대
 
-  const roiChange = recentROI - previousROI;
-  const changePercent = previousROI !== 0 ? (roiChange / previousROI) * 100 : 0;
+시장 전망:
+앞으로 2-3개월이 부동산 투자의 중요한 타이밍이 될 것으로 예상됩니다.`,
+    analysis: '금리 인하 기대감과 도시 개발 호재가 맞물리면서 중기적 상승세가 예상됩니다.',
+    outlook: 'positive',
+    readTime: 5,
+  },
+  {
+    id: 'col-daily-2',
+    title: '반도체 주가, AI 수요 증가로 강세 지속',
+    category: 'stocks',
+    author: '손기술',
+    authorTitle: '테크 주식 전문가',
+    date: new Date().toISOString().split('T')[0],
+    ticker: '005930',
+    summary: 'AI 칩 수요 폭증으로 반도체 업계가 호황을 맞이하고 있습니다.',
+    content: `AI 시장의 급성장이 반도체 업계에 미치는 영향은 지대합니다.
 
-  if (changePercent > threshold) {
-    return {
-      type: 'rapid_increase',
-      roiChange: parseFloat(roiChange.toFixed(2)),
-      changePercent: parseFloat(changePercent.toFixed(2)),
-      severity: changePercent > 20 ? 'high' : 'medium',
-    };
-  }
+긍정 신호:
+- GPU/NPU 칩 수주량 사상 최대
+- 데이터센터 투자 급증
+- 글로벌 기술 기업들의 선투자
+- 향후 3년 동안 성장성 높음
 
-  return null;
-}
+투자 관점:
+AI 칩 시장은 10년 이상의 성장 사이클이 예상되고 있습니다.`,
+    analysis: 'AI 혁명의 초반부이며, 반도체 수요는 계속 증가할 것으로 전망됩니다.',
+    outlook: 'positive',
+    readTime: 6,
+  },
+];
 
-/**
- * Analyze ROI trend for predictions
- */
-function predictROITrend(property) {
-  if (!property.trend || property.trend.length < 3) {
-    return {
-      trend: 'insufficient_data',
-      prediction: null,
-      confidence: 0,
-    };
-  }
-
-  const sorted = property.trend.sort((a, b) => new Date(a.date) - new Date(b.date));
-  const lastThree = sorted.slice(-3);
-
-  const roi1 = lastThree[0].roi;
-  const roi2 = lastThree[1].roi;
-  const roi3 = lastThree[2].roi;
-
-  const change1 = roi2 - roi1;
-  const change2 = roi3 - roi2;
-
-  // Simple trend detection
-  let trend = 'stable';
-  let confidence = 50;
-
-  if (change1 > 0 && change2 > 0) {
-    trend = 'upward';
-    confidence = Math.min(70 + Math.abs(change2 - change1) * 10, 95);
-  } else if (change1 < 0 && change2 < 0) {
-    trend = 'downward';
-    confidence = Math.min(70 + Math.abs(change2 - change1) * 10, 95);
-  } else {
-    trend = 'volatile';
-    confidence = 40;
-  }
-
-  // Predict next ROI
-  const avgChange = (change1 + change2) / 2;
-  const predictedROI = parseFloat((roi3 + avgChange).toFixed(2));
-
-  return {
-    trend,
-    prediction: predictedROI,
-    confidence: Math.round(confidence),
-    lastROI: roi3,
-  };
-}
-
-/**
- * Generate AI recommendations
- */
-function generateAIRecommendations(properties, userPreferences) {
-  const recommendations = [];
-  const alerts = [];
-
-  if (!properties || properties.length === 0) {
-    return { recommendations: [], alerts: [] };
-  }
-
-  // Analyze each property
-  properties.forEach(property => {
-    // Check for rapid ROI increases (alert condition)
-    const rapidIncrease = detectRapidROIIncrease(property, 10);
-    if (rapidIncrease && rapidIncrease.severity === 'high') {
-      alerts.push({
-        propertyId: property.id,
-        name: property.name,
-        location: property.location,
-        alert: `ROI ${rapidIncrease.changePercent}% 상승!`,
-        alertType: 'roi_surge',
-        severity: 'high',
-        roiChange: rapidIncrease.roiChange,
-        changePercent: rapidIncrease.changePercent,
-        timestamp: new Date().toISOString(),
-      });
-    }
-
-    // Predict ROI trends
-    const prediction = predictROITrend(property);
-
-    // Generate recommendation if trending upward with high confidence
-    if (prediction.trend === 'upward' && prediction.confidence >= 70) {
-      // Check user preferences
-      const matchesPreferences =
-        (!userPreferences.propertyTypes.length || userPreferences.propertyTypes.includes(property.type)) &&
-        (!userPreferences.locations.length || userPreferences.locations.includes(property.location)) &&
-        property.roi >= userPreferences.minROI;
-
-      if (matchesPreferences) {
-        recommendations.push({
-          propertyId: property.id,
-          name: property.name,
-          location: property.location,
-          reason: '상승 추세 감지',
-          currentROI: property.roi,
-          predictedROI: prediction.prediction,
-          confidence: prediction.confidence,
-          type: property.type,
-          recommendationType: 'buy_signal',
-        });
-      }
-    }
-  });
-
-  return {
-    recommendations: recommendations.slice(0, 5), // Top 5
-    alerts: alerts.slice(0, 3), // Top 3
-    generatedAt: new Date().toISOString(),
-  };
-}
-
-/**
- * Transform real estate data
- */
-function transformRealEstateData(realEstateData) {
-  if (!realEstateData || typeof realEstateData !== 'object') {
-    return [];
-  }
-
-  const properties = [];
-  const locations = Object.keys(realEstateData);
-
-  locations.forEach((location, index) => {
-    const data = realEstateData[location];
-    if (!data || typeof data !== 'object') return;
-
-    const currentPrice = data.current_price || 0;
-    const trend = data.trend || 'neutral';
-
-    let roi = 2.0;
-    if (trend === '상승') roi = 3.0 + Math.random() * 1.5;
-    else if (trend === '보합') roi = 2.0 + Math.random() * 1.0;
-    else if (trend === '하락') roi = 1.0 + Math.random() * 1.0;
-
-    let propertyType = 'apartment';
-    if (currentPrice > 1000000000) propertyType = 'villa';
-    else if (currentPrice > 600000000) propertyType = 'villa';
-
-    // Generate trend data
-    const propertyTrend = [];
-    for (let i = 0; i < 30; i++) {
-      const roiTrend = roi * (0.8 + Math.random() * 0.4);
-      propertyTrend.push({
-        date: new Date(Date.now() - (30 - i) * 86400000).toISOString().split('T')[0],
-        roi: parseFloat(roiTrend.toFixed(2)),
-      });
-    }
-
-    properties.push({
-      id: `prop-${index}-${location}`,
-      name: `${location} ${propertyType === 'villa' ? '프리미엄' : '스탠다드'} ${propertyType === 'villa' ? '빌라' : '아파트'}`,
-      location,
-      price: currentPrice,
-      roi: parseFloat(roi.toFixed(2)),
-      type: propertyType,
-      trend: propertyTrend,
-    });
-  });
-
-  return properties;
-}
-
-/**
- * Main handler function (Scheduled or HTTP)
- */
-export default async (req) => {
+export default async (req, context) => {
   try {
-    // Scheduled function (no request)
-    if (!req || !req.url) {
-      log.log('Scheduled execution started');
+    const firebaseApp = getFirebaseApp();
+    const db = getDatabase(firebaseApp);
+    const today = new Date().toISOString().split('T')[0];
 
-      // Default preferences for scheduled execution
-      const userPreferences = {
-        propertyTypes: ['apartment', 'villa'],
-        locations: [],
-        minROI: 0,
-        favoriteIds: [],
-      };
+    // Firebase에 칼럼 데이터 저장
+    const columnData = {
+      columns: investmentColumns,
+      timestamp: new Date().toISOString(),
+      date: today,
+      count: investmentColumns.length,
+    };
 
-      // Use mock real estate data
-      const realEstateData = {
-        real_estate: {
-          '강남구': { current_price: 1250000000, trend: '상승' },
-          '서초구': { current_price: 980000000, trend: '보합' },
-          '종로구': { current_price: 850000000, trend: '하락' },
-        }
-      };
+    await set(ref(db, `investment/columns/${today}`), columnData);
 
-      // Transform and generate recommendations
-      const properties = transformRealEstateData(realEstateData.real_estate);
-      const result = generateAIRecommendations(properties, userPreferences);
+    log.log('✅ Investment columns saved to Firebase', {
+      count: investmentColumns.length,
+      date: today,
+    });
 
-      // Save to Firebase
-      const firebaseApp = getFirebaseApp();
-      const db = getDatabase(firebaseApp);
-      const today = new Date().toISOString().split('T')[0];
-
-      await set(ref(db, `investment/recommendations/${today}`), {
-        ...result,
-        timestamp: new Date().toISOString(),
+    return new Response(
+      JSON.stringify({
+        success: true,
+        message: 'Investment columns generated and saved',
+        count: investmentColumns.length,
         date: today,
-      });
-
-      log.log('✅ Recommendations saved to Firebase', {
-        recommendations: result.recommendations.length,
-        alerts: result.alerts.length,
-        date: today,
-      });
-
-      return new Response(
-        JSON.stringify({
-          success: true,
-          message: 'Recommendations saved to Firebase',
-          date: today,
-          count: result.recommendations.length,
-        }),
-        { status: 200 }
-      );
-    }
-
-    // HTTP request handling
-    const cors = corsHeaders();
-
-    if (req.method === 'OPTIONS') {
-      return new Response(null, { status: 204, headers: cors });
-    }
-
-    const url = new URL(req.url);
-    const pathname = url.pathname;
-
-    log.log('AI recommendations request', { method: req.method, pathname });
-
-    // POST /api/investment/ai-recommendations
-    if (req.method === 'POST') {
-      const body = await req.json();
-      const userPreferences = body.preferences || {
-        propertyTypes: [],
-        locations: [],
-        minROI: 0,
-        favoriteIds: [],
-      };
-
-      // Use mock real estate data
-      const realEstateData = {
-        real_estate: {
-          '강남구': { current_price: 1250000000, trend: '상승' },
-          '서초구': { current_price: 980000000, trend: '보합' },
-          '종로구': { current_price: 850000000, trend: '하락' },
-        }
-      };
-
-      // Transform and generate recommendations
-      const properties = transformRealEstateData(realEstateData.real_estate);
-      const result = generateAIRecommendations(properties, userPreferences);
-
-      log.log('Recommendations generated', {
-        recommendations: result.recommendations.length,
-        alerts: result.alerts.length,
-      });
-
-      // Also save to Firebase for HTTP POST
-      try {
-        const firebaseApp = getFirebaseApp();
-        const db = getDatabase(firebaseApp);
-        const today = new Date().toISOString().split('T')[0];
-
-        await set(ref(db, `investment/recommendations/${today}`), {
-          ...result,
-          timestamp: new Date().toISOString(),
-          date: today,
-        });
-
-        log.log('✅ Recommendations saved to Firebase');
-      } catch (firebaseError) {
-        log.warn('Firebase save failed (HTTP POST)', { message: firebaseError.message });
-        // Continue anyway - still return the data
-      }
-
-      return Response.json(result, { headers: cors });
-    }
-
-    // Unknown endpoint
-    log.error('Unknown endpoint', { pathname, method: req.method });
-    return Response.json(
-      { error: 'Endpoint not found' },
-      { status: 404, headers: cors }
+      }),
+      { status: 200 }
     );
   } catch (error) {
-    log.error('Request handler error', { error: error.message });
-    return Response.json(
-      { error: error.message },
+    log.error('Failed to generate investment columns:', error.message);
+    return new Response(
+      JSON.stringify({ error: error.message }),
       { status: 500 }
     );
   }
