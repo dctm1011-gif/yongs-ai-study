@@ -15,6 +15,8 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useInvestmentSync, InvestmentColumn } from '../hooks/useInvestmentSync';
+import { getDatabase, ref, onValue } from 'firebase/database';
+import { getFirebaseApp } from '../config/firebase';
 
 const { width } = Dimensions.get('window');
 
