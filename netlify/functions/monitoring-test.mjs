@@ -1,4 +1,4 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps } from 'firebase/app';
 import { getDatabase, ref, set } from 'firebase/database';
 
 function corsHeaders() {
@@ -9,7 +9,7 @@ function corsHeaders() {
   };
 }
 
-// Firebase 설정 (환경변수에서 가져오기)
+let app = null;
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -20,8 +20,15 @@ const firebaseConfig = {
   appId: process.env.FIREBASE_APP_ID,
 };
 
+function getFirebaseApp() {
+  if (!app) {
+    const existing = getApps();
+    app = existing.length > 0 ? existing[0] : initializeApp(firebaseConfig);
+  }
+  return app;
+}
+
 export default async (req, context) => {
-  // Handle preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, {
       status: 204,
@@ -31,11 +38,11 @@ export default async (req, context) => {
 
   try {
     const timestamp = new Date().toISOString();
-    const value = Math.floor(Math.random() * 10000); // 0-9999 랜덤
+    const value = Math.floor(Math.random() * 10000);
     const randomData = {
-      temperature: parseFloat((Math.random() * 50).toFixed(2)), // 0-50도
-      cpu: parseFloat((Math.random() * 100).toFixed(2)), // 0-100%
-      memory: parseFloat((Math.random() * 100).toFixed(2)), // 0-100%
+      temperature: parseFloat((Math.random() * 50).toFixed(2)),
+      cpu: parseFloat((Math.random() * 100).toFixed(2)),
+      memory: parseFloat((Math.random() * 100).toFixed(2)),
     };
 
     const data = {
@@ -46,12 +53,14 @@ export default async (req, context) => {
       message: 'Monitoring data updated',
     };
 
-    // Firebase에 데이터 쓰기
-    const app = initializeApp(firebaseConfig);
-    const database = getDatabase(app);
+    const firebaseApp = getFirebaseApp();
+    const database = getDatabase(firebaseApp);
     const dbRef = ref(database, 'monitoring/latest');
 
-    await set(dbRef, data);
+    await Promise.race([
+      set(dbRef, data),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('Firebase timeout')), 5000))
+    ]);
 
     return new Response(
       JSON.stringify({
@@ -68,7 +77,7 @@ export default async (req, context) => {
       }
     );
   } catch (error) {
-    console.error('Firebase write error:', error);
+    console.error('Firebase error:', error);
 
     return new Response(
       JSON.stringify({

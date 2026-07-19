@@ -49,16 +49,17 @@ export default function SettingsScreen() {
     updateMemoryUsage();
 
     const memoryInterval = setInterval(updateMemoryUsage, 10000);
-
     syncWithNetlify();
 
+    return () => clearInterval(memoryInterval);
+  }, []);
+
+  useEffect(() => {
     const loadErrors = async () => {
       const logs = await getErrorLogs();
       setErrorLogs(logs);
     };
     loadErrors();
-
-    return () => clearInterval(memoryInterval);
   }, [getErrorLogs]);
 
   const loadBuildTime = async () => {
