@@ -1,4 +1,20 @@
+function corsHeaders() {
+  return {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, DELETE',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  };
+}
+
 export default async (req, context) => {
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    return new Response(null, {
+      status: 204,
+      headers: corsHeaders(),
+    });
+  }
+
   const timestamp = new Date().toISOString();
   const value = Math.floor(Math.random() * 10000); // 0-9999 랜덤
   const randomData = {
@@ -20,6 +36,7 @@ export default async (req, context) => {
       headers: {
         'Content-Type': 'application/json',
         'Cache-Control': 'no-cache, no-store, must-revalidate',
+        ...corsHeaders(),
       },
     }
   );
