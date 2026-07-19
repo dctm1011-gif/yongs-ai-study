@@ -8,9 +8,6 @@ export const config = {
 
 const log = createLogger('investment-daily');
 
-const BACKEND_URL = process.env.INVESTMENT_API_URL || 'http://localhost:5000';
-const API_TIMEOUT = 10000;
-
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -20,38 +17,6 @@ const firebaseConfig = {
   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.FIREBASE_APP_ID,
 };
-
-/**
- * Fetch data from backend
- */
-async function fetchFromBackend(endpoint) {
-  const url = `${BACKEND_URL}${endpoint}`;
-
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), API_TIMEOUT);
-
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      signal: controller.signal,
-    });
-
-    clearTimeout(timeoutId);
-
-    if (!response.ok) {
-      log.error('Backend error', { status: response.status });
-      return null;
-    }
-
-    return await response.json();
-  } catch (error) {
-    log.error('Backend request failed', { error: error.message });
-    return null;
-  }
-}
 
 /**
  * Detect rapid ROI increases
@@ -260,19 +225,14 @@ export default async (req) => {
         favoriteIds: [],
       };
 
-      // Fetch real estate data (fallback to mock if backend unavailable)
-      let realEstateData = await fetchFromBackend('/api/market/real-estate');
-
-      if (!realEstateData?.real_estate) {
-        log.log('Backend unavailable, using mock data');
-        realEstateData = {
-          real_estate: {
-            '강남구': { current_price: 1250000000, trend: '상승' },
-            '서초구': { current_price: 980000000, trend: '보합' },
-            '종로구': { current_price: 850000000, trend: '하락' },
-          }
-        };
-      }
+      // Use mock real estate data
+      const realEstateData = {
+        real_estate: {
+          '강남구': { current_price: 1250000000, trend: '상승' },
+          '서초구': { current_price: 980000000, trend: '보합' },
+          '종로구': { current_price: 850000000, trend: '하락' },
+        }
+      };
 
       // Transform and generate recommendations
       const properties = transformRealEstateData(realEstateData.real_estate);
@@ -333,16 +293,14 @@ export default async (req) => {
         favoriteIds: [],
       };
 
-      // Fetch real estate data
-      const realEstateData = await fetchFromBackend('/api/market/real-estate');
-
-      if (!realEstateData?.real_estate) {
-        log.error('Failed to fetch real estate data');
-        return Response.json(
-          { error: 'Failed to fetch real estate data' },
-          { status: 500, headers: cors }
-        );
-      }
+      // Use mock real estate data
+      const realEstateData = {
+        real_estate: {
+          '강남구': { current_price: 1250000000, trend: '상승' },
+          '서초구': { current_price: 980000000, trend: '보합' },
+          '종로구': { current_price: 850000000, trend: '하락' },
+        }
+      };
 
       // Transform and generate recommendations
       const properties = transformRealEstateData(realEstateData.real_estate);
