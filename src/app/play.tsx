@@ -78,35 +78,14 @@ export default function PlayScreen() {
   const fetchTrends = async () => {
     try {
       setLoading(true);
-      const response = await fetch(
-        'https://illustrious-cuchufli-7c4e58.netlify.app/api/fetch-trends',
-        { method: 'GET' }
-      );
-
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-      const data = await response.json();
-
-      if (data.success && data.trends && Array.isArray(data.trends)) {
-        setTrends(data.trends);
-        setLastUpdate(new Date());
-        setIsCached(false);
-        setCacheStatus('fresh');
-        setHasNewTrends(true); // Show new trends badge
-        // Reset badge after 3 seconds
-        setTimeout(() => setHasNewTrends(false), 3000);
-        // Cache the fresh data
-        await cacheManager.set(PLAY_TRENDS_CACHE_KEY, {
-          trends: data.trends,
-          timestamp: new Date().toISOString(),
-        });
-        console.log('[PlayScreen] Fetched fresh trends:', data.trends.length);
-      } else {
-        throw new Error('Invalid response format');
-      }
+      // fetch-trends.mjs was removed - using DEFAULT_TRENDS
+      console.log('[PlayScreen] Using default trends (fetch-trends removed)');
+      setTrends(DEFAULT_TRENDS);
+      setLastUpdate(new Date());
+      setIsCached(false);
+      setCacheStatus('default');
     } catch (error) {
-      console.error('[PlayScreen] API fetch failed:', error);
-      // Step 2: Try to load from cache
+      console.error('[PlayScreen] Error setting default trends:', error);
       await loadFromCache();
     } finally {
       setLoading(false);
