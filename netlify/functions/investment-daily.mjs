@@ -27,6 +27,14 @@ function getFirebaseApp() {
   return app;
 }
 
+// Netlify Functions run in UTC; KST (UTC+9) doesn't roll to the next
+// calendar day until 09:00 UTC, so the plain UTC date lags KST by a day
+// for 9 hours each morning. Shift the clock forward before formatting.
+function getKSTDateString() {
+  const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
+  return kst.toISOString().split('T')[0];
+}
+
 // 투자 칼럼 데이터
 const investmentColumns = [
   {
@@ -35,7 +43,7 @@ const investmentColumns = [
     category: 'real-estate',
     author: '김부동산',
     authorTitle: '부동산 시장 분석가',
-    date: new Date().toISOString().split('T')[0],
+    date: getKSTDateString(),
     region: '서울 전역',
     summary: '최근 금리 인하 가능성이 높아지면서 부동산 시장이 전반적인 상승세를 보이고 있습니다.',
     content: `부동산 시장이 금리 인하 기대감에 힘입어 긍정적 신호를 보이고 있습니다.
@@ -66,7 +74,7 @@ const investmentColumns = [
     category: 'stocks',
     author: '손기술',
     authorTitle: '테크 주식 전문가',
-    date: new Date().toISOString().split('T')[0],
+    date: getKSTDateString(),
     ticker: '005930',
     summary: 'AI 칩 수요 폭증으로 반도체 업계가 호황을 맞이하고 있습니다.',
     content: `AI 시장의 급성장이 반도체 업계에 미치는 영향은 지대합니다.
@@ -97,7 +105,7 @@ export default async (req, context) => {
   try {
     const firebaseApp = getFirebaseApp();
     const db = getDatabase(firebaseApp);
-    const today = new Date().toISOString().split('T')[0];
+    const today = getKSTDateString();
 
     // Firebase에 칼럼 데이터 저장
     const columnData = {

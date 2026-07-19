@@ -26,6 +26,14 @@ function getFirebaseApp() {
   return app;
 }
 
+// Netlify Functions run in UTC; KST (UTC+9) doesn't roll to the next
+// calendar day until 09:00 UTC, so the plain UTC date lags KST by a day
+// for 9 hours each morning. Shift the clock forward before formatting.
+function getKSTDateString() {
+  const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
+  return kst.toISOString().split('T')[0];
+}
+
 export default async (req, context) => {
   try {
     // Read the daily.json file
@@ -35,13 +43,13 @@ export default async (req, context) => {
       dailyData = JSON.parse(readFileSync(dailyPath, 'utf-8'));
     } catch (e) {
       console.log('daily.json not found, using default data');
-      dailyData = { sections: [], date: new Date().toISOString().split('T')[0] };
+      dailyData = { sections: [], date: getKSTDateString() };
     }
 
     // Save to Firebase
     const firebaseApp = getFirebaseApp();
     const db = getDatabase(firebaseApp);
-    const today = new Date().toISOString().split('T')[0];
+    const today = getKSTDateString();
 
     await set(ref(db, `toefl/problems/${today}`), {
       ...dailyData,
@@ -65,7 +73,7 @@ export default async (req, context) => {
     return new Response(
       JSON.stringify({
         error: error.message || 'Failed to process TOEFL data',
-        date: new Date().toISOString().split('T')[0],
+        date: getKSTDateString(),
       }),
       {
         status: 500,

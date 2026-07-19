@@ -4,8 +4,17 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { cacheManager } from '../utils/CacheManager';
 import { performanceMonitor } from '../utils/PerformanceMonitor';
-import { getDatabase, ref, onValue } from 'firebase/database';
+import { getDatabase, ref, onValue, get } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
+
+// Firebase Functions run in UTC; KST (UTC+9) doesn't roll to the next
+// calendar day until 09:00 UTC, so a plain UTC date lags KST by a day
+// for 9 hours each morning. Shift the clock forward before formatting,
+// matching the same helper used in the netlify/functions/*-daily.mjs writers.
+function getKSTDateString(): string {
+  const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
+  return kst.toISOString().split('T')[0];
+}
 
 interface NetlifyWord {
   id: string;
@@ -36,8 +45,22 @@ interface Quiz {
 
 type ViewType = 'words' | 'quiz' | 'stats';
 
-const NETLIFY_BASE_URL = 'https://illustrious-cuchufli-7c4e58.netlify.app';
 const ITEMS_PER_PAGE = 15; // Pagination size for FlatList
+
+function mapFirebaseWords(data: any, today: string): NetlifyWord[] {
+  const rawWords = Array.isArray(data.words) ? data.words : [data];
+  return rawWords.map((w: any) => ({
+    id: w.id,
+    word: w.word,
+    pos: w.part_of_speech || w.pos,
+    date: data.date || today,
+    meaning: w.meaning_ko || w.meaning,
+    example_ko: w.example_ko,
+    example_en: w.example_en,
+    explanation: w.explanation,
+    emoji: w.emoji,
+  }));
+}
 
 export default function EnglishScreen() {
   const [view, setView] = useState<ViewType>('words');
@@ -96,83 +119,45 @@ export default function EnglishScreen() {
 
   useEffect(() => {
     loadData();
-    checkAndRefreshAtMorning();
   }, []);
 
+  // Live Firebase subscription — stays connected for as long as the screen is
+  // mounted, so today's word list updates immediately when the daily
+  // scheduled function writes new data, without needing to reopen the tab.
   useEffect(() => {
-    updateStats();
-  }, [words]);
+    const db = getDatabase(getFirebaseApp());
+    const today = getKSTDateString();
+    const wordsRef = ref(db, `english/words/${today}`);
 
-  const checkAndRefreshAtMorning = async () => {
-    const lastRefresh = await AsyncStorage.getItem('english_last_refresh');
-    const now = new Date();
-    const today = now.toISOString().split('T')[0];
-
-    if (!lastRefresh || !lastRefresh.startsWith(today)) {
-      if (now.getHours() >= 6) {
-        setTimeout(refreshFromNetlify, 1000);
-        await AsyncStorage.setItem('english_last_refresh', `${today}T06:00:00`);
-      }
-    }
-  };
-
-  const saveUpdateTime = async () => {
-    const timestamp = Date.now().toString();
-    await AsyncStorage.setItem('english_data_updated_at', timestamp);
-    setLastUpdateTime(timestamp);
-    // Reset cache time left
-    setCacheTimeLeft('24시간 남음');
-  };
-
-  const loadData = async () => {
-    try {
-      setLoading(true);
-
-      // Try to load from cache/local first (faster)
-      let savedWords = await AsyncStorage.getItem('english_words');
-      if (savedWords) {
-        const localWords = JSON.parse(savedWords);
-        setWords(localWords);
-        setIsCached(true);
-
-        const savedQuizzes = await AsyncStorage.getItem('english_quizzes');
-        if (savedQuizzes) setQuizzes(JSON.parse(savedQuizzes));
-
-        setLoading(false);
-
-        // Fetch fresh data in background
-        const netlifyData = await fetchEnglishFromNetlify();
-        if (netlifyData && netlifyData.length > 0) {
-          const newWordIds = netlifyData.map(w => w.id).sort().join(',');
-          const oldWordIds = localWords.map((w: Word) => w.id).sort().join(',');
-
-          if (newWordIds !== oldWordIds) {
-            // Data has changed, update
-            const savedReadStatus = localWords.reduce((acc: any, w: Word) => ({ ...acc, [w.id]: w.isRead }), {});
-            const mergedWords = netlifyData.map(w => ({
-              ...w,
-              isRead: savedReadStatus[w.id] || false,
-            }));
-            setWords(mergedWords);
-            await AsyncStorage.setItem('english_words', JSON.stringify(mergedWords));
-            await cacheManager.set('english_words', mergedWords, 24 * 60 * 60 * 1000);
-            await saveUpdateTime();
-
-            const generatedQuizzes = generateQuizzes(mergedWords);
-            setQuizzes(generatedQuizzes);
-            await AsyncStorage.setItem('english_quizzes', JSON.stringify(generatedQuizzes));
-          }
+    const unsubscribe = onValue(
+      wordsRef,
+      async snapshot => {
+        if (!snapshot.exists()) {
+          console.warn('No English data found in Firebase for today');
+          return;
         }
-        return;
-      }
 
-      // No local cache, try to fetch from Netlify
-      const netlifyData = await fetchEnglishFromNetlify();
+        const netlifyData = mapFirebaseWords(snapshot.val(), today);
+        if (netlifyData.length === 0) return;
 
-      if (netlifyData && netlifyData.length > 0) {
+        console.log(`📚 Loaded ${netlifyData.length} daily English phrases from Firebase`);
+
+        const savedWords = await AsyncStorage.getItem('english_words');
+        const localWords: Word[] = savedWords ? JSON.parse(savedWords) : [];
+        const newWordIds = netlifyData.map(w => w.id).sort().join(',');
+        const oldWordIds = localWords.map(w => w.id).sort().join(',');
+
+        if (newWordIds === oldWordIds && localWords.length > 0) {
+          return; // already up to date
+        }
+
+        const savedReadStatus = localWords.reduce(
+          (acc: any, w) => ({ ...acc, [w.id]: w.isRead }),
+          {}
+        );
         const mergedWords = netlifyData.map(w => ({
           ...w,
-          isRead: false,
+          isRead: savedReadStatus[w.id] || false,
         }));
 
         setWords(mergedWords);
@@ -183,12 +168,44 @@ export default function EnglishScreen() {
         const generatedQuizzes = generateQuizzes(mergedWords);
         setQuizzes(generatedQuizzes);
         await AsyncStorage.setItem('english_quizzes', JSON.stringify(generatedQuizzes));
+      },
+      error => {
+        console.error('Firebase subscription error:', error);
+      }
+    );
+
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    updateStats();
+  }, [words]);
+
+  const saveUpdateTime = async () => {
+    const timestamp = Date.now().toString();
+    await AsyncStorage.setItem('english_data_updated_at', timestamp);
+    setLastUpdateTime(timestamp);
+    // Reset cache time left
+    setCacheTimeLeft('24시간 남음');
+  };
+
+  // Shows local cache (or defaults) immediately; the live Firebase
+  // subscription above takes over from there whenever data changes.
+  const loadData = async () => {
+    try {
+      setLoading(true);
+
+      const savedWords = await AsyncStorage.getItem('english_words');
+      if (savedWords) {
+        setWords(JSON.parse(savedWords));
+        setIsCached(true);
+
+        const savedQuizzes = await AsyncStorage.getItem('english_quizzes');
+        if (savedQuizzes) setQuizzes(JSON.parse(savedQuizzes));
       } else {
-        // Fallback to default words
         const defaultWords = getDefaultWords();
         setWords(defaultWords);
-        const generatedQuizzes = generateQuizzes(defaultWords);
-        setQuizzes(generatedQuizzes);
+        setQuizzes(generateQuizzes(defaultWords));
       }
     } catch (error) {
       console.error('Failed to load English data:', error);
@@ -198,57 +215,6 @@ export default function EnglishScreen() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const fetchEnglishFromNetlify = async (): Promise<NetlifyWord[] | null> => {
-    return new Promise((resolve) => {
-      try {
-        const db = getDatabase(getFirebaseApp());
-        const today = new Date().toISOString().split('T')[0];
-        const wordsRef = ref(db, `english/words/${today}`);
-
-        const unsubscribe = onValue(
-          wordsRef,
-          (snapshot) => {
-            if (snapshot.exists()) {
-              const data = snapshot.val();
-              if (data.words && Array.isArray(data.words)) {
-                console.log(`📚 Loaded ${data.words.length} daily English phrases from Firebase`);
-                const words = data.words.map((w: any) => ({
-                  id: w.id,
-                  word: w.word,
-                  pos: w.part_of_speech || w.pos,
-                  date: data.date || today,
-                  meaning: w.meaning_ko || w.meaning,
-                  example_ko: w.example_ko,
-                  example_en: w.example_en,
-                  explanation: w.explanation,
-                  emoji: w.emoji,
-                }));
-                unsubscribe();
-                resolve(words);
-              } else if (data && typeof data === 'object') {
-                console.log('✅ English data loaded from Firebase');
-                unsubscribe();
-                resolve([data]);
-              }
-            } else {
-              console.warn('No data found in Firebase for today');
-              unsubscribe();
-              resolve(null);
-            }
-          },
-          (error) => {
-            console.error('Firebase fetch failed:', error);
-            unsubscribe();
-            resolve(null);
-          }
-        );
-      } catch (error) {
-        console.error('Firebase initialization failed:', error);
-        resolve(null);
-      }
-    });
   };
 
   const getDefaultWords = (): Word[] => [
@@ -402,34 +368,40 @@ export default function EnglishScreen() {
   const refreshFromNetlify = async () => {
     setRefreshing(true);
     try {
-      const netlifyData = await fetchEnglishFromNetlify();
-      if (netlifyData && netlifyData.length > 0) {
-        const savedWords = await AsyncStorage.getItem('english_words');
-        const oldWordIds = savedWords ? JSON.parse(savedWords).map((w: Word) => w.id).sort().join(',') : '';
-        const newWordIds = netlifyData.map(w => w.id).sort().join(',');
-        const isUpdated = oldWordIds !== newWordIds;
+      const db = getDatabase(getFirebaseApp());
+      const today = getKSTDateString();
+      const snapshot = await get(ref(db, `english/words/${today}`));
 
-        const savedReadStatus = savedWords ? JSON.parse(savedWords).reduce((acc: any, w: Word) => ({ ...acc, [w.id]: w.isRead }), {}) : {};
-
-        const mergedWords = netlifyData.map(w => ({
-          ...w,
-          isRead: savedReadStatus[w.id] || false,
-        }));
-
-        setWords(mergedWords);
-        await AsyncStorage.setItem('english_words', JSON.stringify(mergedWords));
-        await saveUpdateTime();
-
-        const generatedQuizzes = generateQuizzes(mergedWords);
-        setQuizzes(generatedQuizzes);
-        await AsyncStorage.setItem('english_quizzes', JSON.stringify(generatedQuizzes));
-
-        if (isUpdated) {
-          ToastAndroid.show('✅ 새로운 단어가 추가되었습니다!', ToastAndroid.SHORT);
-        } else {
-          ToastAndroid.show('✓ 이미 최신 상태입니다', ToastAndroid.SHORT);
-        }
+      if (!snapshot.exists()) {
+        ToastAndroid.show('❌ 오늘자 데이터가 아직 없습니다', ToastAndroid.SHORT);
+        return;
       }
+
+      const netlifyData = mapFirebaseWords(snapshot.val(), today);
+      const savedWords = await AsyncStorage.getItem('english_words');
+      const oldWordIds = savedWords ? JSON.parse(savedWords).map((w: Word) => w.id).sort().join(',') : '';
+      const newWordIds = netlifyData.map(w => w.id).sort().join(',');
+      const isUpdated = oldWordIds !== newWordIds;
+
+      const savedReadStatus = savedWords ? JSON.parse(savedWords).reduce((acc: any, w: Word) => ({ ...acc, [w.id]: w.isRead }), {}) : {};
+
+      const mergedWords = netlifyData.map(w => ({
+        ...w,
+        isRead: savedReadStatus[w.id] || false,
+      }));
+
+      setWords(mergedWords);
+      await AsyncStorage.setItem('english_words', JSON.stringify(mergedWords));
+      await saveUpdateTime();
+
+      const generatedQuizzes = generateQuizzes(mergedWords);
+      setQuizzes(generatedQuizzes);
+      await AsyncStorage.setItem('english_quizzes', JSON.stringify(generatedQuizzes));
+
+      ToastAndroid.show(
+        isUpdated ? '✅ 새로운 단어가 추가되었습니다!' : '✓ 이미 최신 상태입니다',
+        ToastAndroid.SHORT
+      );
     } catch (error) {
       console.error('Refresh failed:', error);
       ToastAndroid.show('❌ 새로고침 실패', ToastAndroid.SHORT);

@@ -7,6 +7,16 @@ import { performanceMonitor } from '../utils/PerformanceMonitor';
 import { getDatabase, ref, onValue } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
 
+// Firebase Functions run in UTC; KST (UTC+9) doesn't roll to the next
+// calendar day until 09:00 UTC, so a plain UTC date lags KST by a day
+// for 9 hours each morning (and the daily reset below would fire 9h late).
+// Shift the clock forward before formatting, matching the helper used in
+// netlify/functions/*-daily.mjs.
+function getKSTDateString(): string {
+  const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
+  return kst.toISOString().split('T')[0];
+}
+
 interface TOEFLSection {
   id: 'reading' | 'listening' | 'writing' | 'speaking';
   name: string;
@@ -81,7 +91,7 @@ export default function TOEFLScreen() {
 
     // Subscribe to Firebase TOEFL problems
     const db = getDatabase(getFirebaseApp());
-    const today = new Date().toISOString().split('T')[0];
+    const today = getKSTDateString();
     const problemsRef = ref(db, `toefl/problems/${today}`);
 
     const unsubscribe = onValue(
@@ -120,8 +130,7 @@ export default function TOEFLScreen() {
 
   const checkAndResetDaily = async () => {
     const lastReset = await AsyncStorage.getItem('toefl_last_reset');
-    const now = new Date();
-    const today = now.toISOString().split('T')[0];
+    const today = getKSTDateString();
 
     if (!lastReset || !lastReset.startsWith(today)) {
       const resetSections = sections.map(s => ({
@@ -141,7 +150,7 @@ export default function TOEFLScreen() {
 
       // Try to load cached problems first
       const cachedProblems = await AsyncStorage.getItem('toefl_problems');
-      const today = new Date().toISOString().split('T')[0];
+      const today = getKSTDateString();
 
       if (cachedProblems) {
         try {

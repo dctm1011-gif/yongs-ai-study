@@ -3,6 +3,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getDatabase, ref, onValue } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
 
+// Firebase Functions run in UTC; KST (UTC+9) doesn't roll to the next
+// calendar day until 09:00 UTC, so a plain UTC date lags KST by a day
+// for 9 hours each morning. Shift the clock forward before formatting,
+// matching the helper used in netlify/functions/*-daily.mjs.
+function getKSTDateString(): string {
+  const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
+  return kst.toISOString().split('T')[0];
+}
+
 export interface InvestmentColumn {
   id: string;
   title: string;
@@ -94,7 +103,7 @@ export function useInvestmentSync() {
   // (written daily at 06:00 KST by netlify/functions/investment-daily.mjs)
   useEffect(() => {
     const db = getDatabase(getFirebaseApp());
-    const today = new Date().toISOString().split('T')[0];
+    const today = getKSTDateString();
     const columnsRef = ref(db, `investment/columns/${today}`);
 
     const unsubscribe = onValue(
