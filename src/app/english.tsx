@@ -4,6 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { cacheManager } from '../utils/CacheManager';
 import { performanceMonitor } from '../utils/PerformanceMonitor';
+import { getDatabase, ref, onValue } from 'firebase/database';
+import { getFirebaseApp } from '../config/firebase';
 
 interface NetlifyWord {
   id: string;
@@ -199,43 +201,54 @@ export default function EnglishScreen() {
   };
 
   const fetchEnglishFromNetlify = async (): Promise<NetlifyWord[] | null> => {
-    try {
-      // Try to fetch today's 10 phrases first (new daily format)
+    return new Promise((resolve) => {
       try {
-        const dailyResponse = await fetch(`${NETLIFY_BASE_URL}/.netlify/functions/english-daily`, {
-          headers: { 'Cache-Control': 'no-cache' },
-        });
-        if (dailyResponse.ok) {
-          const dailyData = await dailyResponse.json();
-          if (dailyData.words && Array.isArray(dailyData.words)) {
-            console.log(`📚 Loaded ${dailyData.words.length} daily English phrases`);
-            // Transform to NetlifyWord format
-            return dailyData.words.map((w: any) => ({
-              id: w.id,
-              word: w.word,
-              pos: w.part_of_speech,
-              date: dailyData.date || new Date().toISOString().split('T')[0],
-              meaning: w.meaning_ko,
-              example_ko: w.example_ko,
-              example_en: w.example_en,
-              explanation: w.explanation,
-              emoji: w.emoji,
-            }));
-          }
-        }
-      } catch (e) {
-        console.warn('Daily phrases fetch failed, trying word database...');
-      }
+        const db = getDatabase(getFirebaseApp());
+        const today = new Date().toISOString().split('T')[0];
+        const wordsRef = ref(db, `english/words/${today}`);
 
-      // Fallback: fetch from words_db.json for all historical words
-      const response = await fetch(`${NETLIFY_BASE_URL}/english/words_db.json`);
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const data = await response.json();
-      return Array.isArray(data) ? data : null;
-    } catch (error) {
-      console.error('Netlify fetch failed:', error);
-      return null;
-    }
+        const unsubscribe = onValue(
+          wordsRef,
+          (snapshot) => {
+            if (snapshot.exists()) {
+              const data = snapshot.val();
+              if (data.words && Array.isArray(data.words)) {
+                console.log(`📚 Loaded ${data.words.length} daily English phrases from Firebase`);
+                const words = data.words.map((w: any) => ({
+                  id: w.id,
+                  word: w.word,
+                  pos: w.part_of_speech || w.pos,
+                  date: data.date || today,
+                  meaning: w.meaning_ko || w.meaning,
+                  example_ko: w.example_ko,
+                  example_en: w.example_en,
+                  explanation: w.explanation,
+                  emoji: w.emoji,
+                }));
+                unsubscribe();
+                resolve(words);
+              } else if (data && typeof data === 'object') {
+                console.log('✅ English data loaded from Firebase');
+                unsubscribe();
+                resolve([data]);
+              }
+            } else {
+              console.warn('No data found in Firebase for today');
+              unsubscribe();
+              resolve(null);
+            }
+          },
+          (error) => {
+            console.error('Firebase fetch failed:', error);
+            unsubscribe();
+            resolve(null);
+          }
+        );
+      } catch (error) {
+        console.error('Firebase initialization failed:', error);
+        resolve(null);
+      }
+    });
   };
 
   const getDefaultWords = (): Word[] => [
