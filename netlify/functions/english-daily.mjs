@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import { initializeApp, getApp } from 'firebase/app';
+import { initializeApp, getApps } from 'firebase/app';
 import { getDatabase, ref, set } from 'firebase/database';
 
 export const config = {
@@ -17,20 +17,30 @@ const firebaseConfig = {
   appId: process.env.FIREBASE_APP_ID,
 };
 
+let app = null;
+function getFirebaseApp() {
+  if (!app) {
+    const existing = getApps();
+    app = existing.length > 0 ? existing[0] : initializeApp(firebaseConfig);
+  }
+  return app;
+}
+
 export default async (req, context) => {
   try {
     // Read the daily.json file
     const dailyPath = resolve(process.cwd(), 'english', 'daily.json');
-    const dailyData = JSON.parse(readFileSync(dailyPath, 'utf-8'));
+    let dailyData;
+    try {
+      dailyData = JSON.parse(readFileSync(dailyPath, 'utf-8'));
+    } catch (e) {
+      console.log('daily.json not found, using default data');
+      dailyData = { words: [], date: new Date().toISOString().split('T')[0] };
+    }
 
     // Initialize Firebase and save to database
-    let app;
-    try {
-      app = initializeApp(firebaseConfig);
-    } catch (e) {
-      app = getApp();
-    }
-    const db = getDatabase(app);
+    const firebaseApp = getFirebaseApp();
+    const db = getDatabase(firebaseApp);
     const today = new Date().toISOString().split('T')[0];
 
     await set(ref(db, `english/words/${today}`), {

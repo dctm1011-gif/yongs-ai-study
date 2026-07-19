@@ -69,7 +69,12 @@ export default async (req) => {
         await store.set("today", JSON.stringify(problems));
 
         // Save to Firebase
-        const app = initializeApp(firebaseConfig);
+        let app;
+        try {
+          app = initializeApp(firebaseConfig);
+        } catch (e) {
+          app = getApp();
+        }
         const db = getDatabase(app);
         await set(ref(db, `toefl/problems/${problems.date}`), {
           ...problems,
@@ -93,7 +98,12 @@ export default async (req) => {
       await store.set("today", JSON.stringify(problems));
 
       // Save to Firebase
-      const app = initializeApp(firebaseConfig);
+      let app;
+      try {
+        app = initializeApp(firebaseConfig);
+      } catch (e) {
+        app = getApp();
+      }
       const db = getDatabase(app);
       await set(ref(db, `toefl/problems/${problems.date}`), {
         ...problems,

@@ -1,6 +1,6 @@
 import { getStore } from '@netlify/blobs';
 import { createLogger, corsHeaders } from './_utils.mjs';
-import { initializeApp, getApp } from 'firebase/app';
+import { initializeApp, getApps } from 'firebase/app';
 import { getDatabase, ref, set, push } from 'firebase/database';
 
 export const config = {
@@ -20,17 +20,21 @@ const firebaseConfig = {
   appId: process.env.FIREBASE_APP_ID,
 };
 
+let app = null;
+function getFirebaseApp() {
+  if (!app) {
+    const existing = getApps();
+    app = existing.length > 0 ? existing[0] : initializeApp(firebaseConfig);
+  }
+  return app;
+}
+
 export default async (req, context) => {
   // Scheduled execution (no request object)
   if (!req || !req.url) {
     try {
-      let app;
-      try {
-        app = initializeApp(firebaseConfig);
-      } catch (e) {
-        app = getApp();
-      }
-      const db = getDatabase(app);
+      const firebaseApp = getFirebaseApp();
+      const db = getDatabase(firebaseApp);
       const timestamp = new Date().toISOString();
 
       // Store scheduled check
