@@ -3,8 +3,9 @@ import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, Activit
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Speech from 'expo-speech';
-import { useCacheStrategy } from '../hooks/useCacheStrategy';
 import { performanceMonitor } from '../utils/PerformanceMonitor';
+import { getDatabase, ref, onValue } from 'firebase/database';
+import { getFirebaseApp } from '../config/firebase';
 
 interface TOEFLSection {
   id: 'reading' | 'listening' | 'writing' | 'speaking';
@@ -77,6 +78,28 @@ export default function TOEFLScreen() {
   // Performance monitoring
   useEffect(() => {
     performanceMonitor.startTiming('TOEFL');
+
+    // Subscribe to Firebase TOEFL problems
+    const db = getDatabase(getFirebaseApp());
+    const today = new Date().toISOString().split('T')[0];
+    const problemsRef = ref(db, `toefl/problems/${today}`);
+
+    const unsubscribe = onValue(
+      problemsRef,
+      (snapshot) => {
+        if (snapshot.exists()) {
+          setToeflProblems(snapshot.val());
+          console.log('✅ TOEFL problems loaded from Firebase');
+        }
+        setLoading(false);
+      },
+      (error) => {
+        console.error('Failed to load TOEFL problems from Firebase:', error);
+        setLoading(false);
+      }
+    );
+
+    return () => unsubscribe();
   }, []);
 
   // Log performance timing
