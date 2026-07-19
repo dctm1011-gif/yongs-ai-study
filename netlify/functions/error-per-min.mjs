@@ -1,13 +1,13 @@
 import { getStore } from '@netlify/blobs';
 import { createLogger, corsHeaders } from './_utils.mjs';
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApp } from 'firebase/app';
 import { getDatabase, ref, set } from 'firebase/database';
 
 export const config = {
   schedule: '* * * * *',
 };
 
-const log = createLogger('get-error-stats');
+const log = createLogger('error-per-min');
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -23,7 +23,12 @@ export default async (req, context) => {
   // Scheduled execution (no request object)
   if (!req || !req.url) {
     try {
-      const app = initializeApp(firebaseConfig);
+      let app;
+      try {
+        app = initializeApp(firebaseConfig);
+      } catch (e) {
+        app = getApp();
+      }
       const db = getDatabase(app);
       const timestamp = new Date().toISOString();
 

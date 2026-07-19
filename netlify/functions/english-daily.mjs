@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApp } from 'firebase/app';
 import { getDatabase, ref, set } from 'firebase/database';
 
 export const config = {
@@ -24,7 +24,12 @@ export default async (req, context) => {
     const dailyData = JSON.parse(readFileSync(dailyPath, 'utf-8'));
 
     // Initialize Firebase and save to database
-    const app = initializeApp(firebaseConfig);
+    let app;
+    try {
+      app = initializeApp(firebaseConfig);
+    } catch (e) {
+      app = getApp();
+    }
     const db = getDatabase(app);
     const today = new Date().toISOString().split('T')[0];
 

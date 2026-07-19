@@ -1,5 +1,5 @@
 import { createLogger, corsHeaders } from './_utils.mjs';
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApp } from 'firebase/app';
 import { getDatabase, ref, set } from 'firebase/database';
 
 export const config = {
@@ -273,7 +273,12 @@ export default async (req) => {
       const result = generateAIRecommendations(properties, userPreferences);
 
       // Save to Firebase
-      const app = initializeApp(firebaseConfig);
+      let app;
+      try {
+        app = initializeApp(firebaseConfig);
+      } catch (e) {
+        app = getApp();
+      }
       const db = getDatabase(app);
       const today = new Date().toISOString().split('T')[0];
 
