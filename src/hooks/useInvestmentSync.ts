@@ -27,7 +27,11 @@ export interface InvestmentColumn {
   outlook: 'positive' | 'neutral' | 'negative';
   readTime: number;
   source?: string;
-  chartData?: { label: string; value: number }[];
+  chartData?: {
+    title: string;
+    unit: string;
+    data: { label: string; value: number }[];
+  }[];
 }
 
 const BOOKMARKS_KEY = 'investment_bookmarks';

@@ -262,15 +262,14 @@ const DetailModal: React.FC<DetailModalProps> = React.memo(
 
           {column.chartData && column.chartData.length > 0 && (
             <View style={styles.detailSection}>
-              <BarChart
-                data={column.chartData}
-                title={
-                  column.category === 'real-estate'
-                    ? '📈 가격 지수 추이 (최근 5개월)'
-                    : '📈 주가 추이 (최근 5개월)'
-                }
-                unit={column.category === 'real-estate' ? '단위: 지수' : '단위: 원'}
-              />
+              {column.chartData.map((chart, idx) => (
+                <View
+                  key={idx}
+                  style={idx > 0 ? styles.chartDivider : undefined}
+                >
+                  <BarChart data={chart.data} title={chart.title} unit={chart.unit} />
+                </View>
+              ))}
             </View>
           )}
 
@@ -894,6 +893,12 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#1f2937',
     marginBottom: 12,
+  },
+  chartDivider: {
+    marginTop: 20,
+    paddingTop: 20,
+    borderTopWidth: 1,
+    borderTopColor: '#f3f4f6',
   },
   chartBody: {
     flexDirection: 'row',
