@@ -28,7 +28,8 @@ export interface InvestmentColumn {
   readTime: number;
   source?: string;
   chartData?: {
-    title: string;
+    area: string; // 칩 선택 UI에 표시할 짧은 지역명 (예: "용인")
+    title: string; // 차트 제목 (예: "용인 아파트 평균 매매가 추이")
     unit: string;
     data: { label: string; value: number }[];
   }[];

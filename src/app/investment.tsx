@@ -54,6 +54,52 @@ const BarChart: React.FC<{
   );
 });
 
+// 여러 지역/차트가 있을 때 칩으로 하나씩 골라서 보는 선택형 UI.
+// 항목이 1개뿐이면 칩 없이 그 차트만 바로 보여준다.
+const ChartSelector: React.FC<{
+  charts: NonNullable<InvestmentColumn['chartData']>;
+}> = React.memo(({ charts }) => {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  if (charts.length === 1) {
+    const chart = charts[0];
+    return <BarChart data={chart.data} title={chart.title} unit={chart.unit} />;
+  }
+
+  const selected = charts[selectedIndex];
+
+  return (
+    <View>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.chartChipRow}
+      >
+        {charts.map((chart, idx) => (
+          <TouchableOpacity
+            key={idx}
+            style={[
+              styles.chartChip,
+              idx === selectedIndex && styles.chartChipActive,
+            ]}
+            onPress={() => setSelectedIndex(idx)}
+          >
+            <Text
+              style={[
+                styles.chartChipText,
+                idx === selectedIndex && styles.chartChipTextActive,
+              ]}
+            >
+              {chart.area}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+      <BarChart data={selected.data} title={selected.title} unit={selected.unit} />
+    </View>
+  );
+});
+
 interface ColumnCardProps {
   column: InvestmentColumn;
   isBookmarked: boolean;
@@ -262,14 +308,7 @@ const DetailModal: React.FC<DetailModalProps> = React.memo(
 
           {column.chartData && column.chartData.length > 0 && (
             <View style={styles.detailSection}>
-              {column.chartData.map((chart, idx) => (
-                <View
-                  key={idx}
-                  style={idx > 0 ? styles.chartDivider : undefined}
-                >
-                  <BarChart data={chart.data} title={chart.title} unit={chart.unit} />
-                </View>
-              ))}
+              <ChartSelector charts={column.chartData} />
             </View>
           )}
 
@@ -894,11 +933,29 @@ const styles = StyleSheet.create({
     color: '#1f2937',
     marginBottom: 12,
   },
-  chartDivider: {
-    marginTop: 20,
-    paddingTop: 20,
-    borderTopWidth: 1,
-    borderTopColor: '#f3f4f6',
+  chartChipRow: {
+    gap: 8,
+    paddingBottom: 14,
+  },
+  chartChip: {
+    paddingVertical: 6,
+    paddingHorizontal: 14,
+    borderRadius: 16,
+    backgroundColor: '#f1f5f9',
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+  },
+  chartChipActive: {
+    backgroundColor: '#2563eb',
+    borderColor: '#2563eb',
+  },
+  chartChipText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#475569',
+  },
+  chartChipTextActive: {
+    color: '#fff',
   },
   chartBody: {
     flexDirection: 'row',

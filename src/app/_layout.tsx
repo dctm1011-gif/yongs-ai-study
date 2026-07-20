@@ -5,9 +5,6 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { View } from 'react-native';
 import EnglishScreen from './english';
 import TOEFLScreen from './toefl';
-import PapersScreen from './papers';
-import PlayScreen from './play';
-import StorageScreen from './storage';
 import SettingsScreen from './settings';
 import InvestmentScreen from './investment';
 import { useAnnouncements } from '../hooks/useAnnouncements';
@@ -76,36 +73,6 @@ export default function RootLayout() {
             title: 'TOEFL',
             tabBarIcon: ({ color, size }) => (
               <MaterialIcons name="school" size={24} color={color} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Papers"
-          component={PapersScreen}
-          options={{
-            title: 'Papers',
-            tabBarIcon: ({ color, size }) => (
-              <MaterialIcons name="description" size={24} color={color} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Play"
-          component={PlayScreen}
-          options={{
-            title: 'Play',
-            tabBarIcon: ({ color, size }) => (
-              <MaterialIcons name="sports-esports" size={24} color={color} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Storage"
-          component={StorageScreen}
-          options={{
-            title: 'Storage',
-            tabBarIcon: ({ color, size }) => (
-              <MaterialIcons name="storage" size={24} color={color} />
             ),
           }}
         />

@@ -66,6 +66,7 @@ function getFallbackColumns() {
       source: '국토교통부 실거래가 공개시스템',
       chartData: [
         {
+          area: '서울',
           title: '서울 아파트 가격 지수 추이',
           unit: '단위: 지수',
           data: [
@@ -103,6 +104,7 @@ AI 칩 시장은 10년 이상의 성장 사이클이 예상되고 있습니다.`
       source: '한국거래소(KRX) 시황정보시스템',
       chartData: [
         {
+          area: '삼성전자',
           title: '반도체 주가 추이',
           unit: '단위: 원',
           data: [
