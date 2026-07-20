@@ -1008,10 +1008,46 @@ def update_words_db(words: list, target_date) -> None:
         print(f"[*] 새로운 단어 없음")
 
 
+READING_TOPICS = [
+    "해양생물학", "고대 문명사", "인지심리학", "지질학", "천문학",
+    "환경과학", "경제사", "고고학", "신경과학", "식물학",
+    "기후변화", "미생물학", "건축사", "언어학", "동물행동학",
+]
+WRITING_TOPICS = [
+    "원격근무 확산", "SNS와 청소년", "대학 등록금 정책", "재생에너지 투자",
+    "인공지능 규제", "도시 대중교통 확충", "온라인 교육 확대", "이민 정책",
+    "동물실험 규제", "육식 소비 감소", "우주 개발 예산", "저출산 대응 정책",
+]
+SPEAKING_TOPICS = [
+    "혼자 공부 vs 그룹 스터디", "도시 생활 vs 시골 생활", "책 vs 영화",
+    "온라인 쇼핑 vs 매장 쇼핑", "아침형 vs 저녁형 인간", "여행 vs 저축",
+    "전공 선택 자유 vs 취업 유망 전공", "친구 vs 가족과의 시간",
+]
+LISTENING_TOPICS = [
+    "수강신청 문제로 교수 상담", "동아리 예산 관련 학생 대화", "논문 주제 관련 지도교수 미팅",
+    "기숙사 배정 문의", "생물학 강의 - 광합성", "역사학 강의 - 산업혁명",
+    "심리학 강의 - 기억의 형성", "경제학 강의 - 공급과 수요",
+]
+
+
 def generate_toefl_content(client: anthropic.Anthropic, target_date) -> dict:
     print("[*] TOEFL 콘텐츠 생성 중...")
+    # 날짜를 결정적 시드로 써서 각 섹션 주제를 실제로 강제 선택
+    # (모델에게 "날짜를 시드로 다양하게 선택하라"고만 하면 매번 비슷한 "안전한" 주제로 회귀함)
+    day_index = target_date.toordinal()
+    reading_topic = READING_TOPICS[day_index % len(READING_TOPICS)]
+    writing_topic = WRITING_TOPICS[day_index % len(WRITING_TOPICS)]
+    speaking_topic = SPEAKING_TOPICS[day_index % len(SPEAKING_TOPICS)]
+    listening_topic = LISTENING_TOPICS[day_index % len(LISTENING_TOPICS)]
+
     prompt = f"""TOEFL iBT 연습 문제를 JSON 형식으로만 생성해주세요. ({target_date})
 JSON 외 다른 텍스트는 절대 포함하지 마세요.
+
+오늘의 주제는 반드시 아래를 사용하세요 (다른 주제로 바꾸지 마세요):
+- Reading 지문 주제: {reading_topic}
+- Writing 주제: {writing_topic}
+- Speaking 주제: {speaking_topic}
+- Listening 상황: {listening_topic}
 
 {{
   "date": "{target_date}",
@@ -1048,13 +1084,7 @@ JSON 외 다른 텍스트는 절대 포함하지 마세요.
       {{"q": "Why does the speaker mention ...?", "options": ["A", "B", "C", "D"], "answer": 2, "explanation": "한국어 해설"}}
     ]
   }}
-}}
-
-날짜({target_date})를 시드로 매일 다양한 주제를 선택하세요:
-- Reading: 생물/역사/심리/지리/기술 중 하나
-- Writing: 사회/교육/기술/환경 의견 주제
-- Speaking: 일상/학업 선호도 관련 Task 1
-- Listening: 대학 캠퍼스 대화 또는 미니 강의"""
+}}"""
 
     for attempt in range(2):
         response = client.messages.create(

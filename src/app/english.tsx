@@ -196,13 +196,17 @@ export default function EnglishScreen() {
       setLoading(true);
 
       const savedWords = await AsyncStorage.getItem('english_words');
-      if (savedWords) {
-        setWords(JSON.parse(savedWords));
+      const parsedWords = savedWords ? JSON.parse(savedWords) : null;
+
+      if (Array.isArray(parsedWords)) {
+        setWords(parsedWords);
         setIsCached(true);
 
         const savedQuizzes = await AsyncStorage.getItem('english_quizzes');
-        if (savedQuizzes) setQuizzes(JSON.parse(savedQuizzes));
+        const parsedQuizzes = savedQuizzes ? JSON.parse(savedQuizzes) : null;
+        setQuizzes(Array.isArray(parsedQuizzes) ? parsedQuizzes : generateQuizzes(parsedWords));
       } else {
+        // 캐시가 없거나 예전 형식(배열이 아님)으로 남아있으면 기본값으로 폴백
         const defaultWords = getDefaultWords();
         setWords(defaultWords);
         setQuizzes(generateQuizzes(defaultWords));
@@ -337,6 +341,9 @@ export default function EnglishScreen() {
   };
 
   const updateStats = () => {
+    // words/quizzes should always be arrays, but guard against stale
+    // AsyncStorage data from an older app version being loaded as-is.
+    if (!Array.isArray(words) || !Array.isArray(quizzes)) return;
     const readCount = words.filter(w => w.isRead).length;
     const correctCount = quizzes.filter(q => q.correct_answer === true).length;
     setStats({
@@ -379,11 +386,13 @@ export default function EnglishScreen() {
 
       const netlifyData = mapFirebaseWords(snapshot.val(), today);
       const savedWords = await AsyncStorage.getItem('english_words');
-      const oldWordIds = savedWords ? JSON.parse(savedWords).map((w: Word) => w.id).sort().join(',') : '';
+      const parsedSavedWords = savedWords ? JSON.parse(savedWords) : null;
+      const localWords: Word[] = Array.isArray(parsedSavedWords) ? parsedSavedWords : [];
+      const oldWordIds = localWords.map(w => w.id).sort().join(',');
       const newWordIds = netlifyData.map(w => w.id).sort().join(',');
       const isUpdated = oldWordIds !== newWordIds;
 
-      const savedReadStatus = savedWords ? JSON.parse(savedWords).reduce((acc: any, w: Word) => ({ ...acc, [w.id]: w.isRead }), {}) : {};
+      const savedReadStatus = localWords.reduce((acc: any, w: Word) => ({ ...acc, [w.id]: w.isRead }), {});
 
       const mergedWords = netlifyData.map(w => ({
         ...w,
