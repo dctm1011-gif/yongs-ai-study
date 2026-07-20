@@ -5,51 +5,51 @@
       "word": "procrastinate",
       "part_of_speech": "verb",
       "meaning_ko": "미루다, 뒤로 미루다",
-      "explanation": "필요한 일을 나중으로 계속 미루는 습관",
-      "example_from_convo": "I keep procrastinating on my assignment",
-      "example_ko": "나는 과제를 계속 미루고 있다",
-      "tip": "학생들이 자주 사용하는 단어",
+      "explanation": "to delay or postpone something that needs to be done",
+      "example_from_convo": "I keep procrastinating on my essay",
+      "example_ko": "나는 계속 에세이를 미루고 있어",
+      "tip": "학생들이 자주 하는 행동을 설명할 때 쓰임",
       "emoji": "⏰"
     },
     {
       "word": "meticulous",
       "part_of_speech": "adjective",
-      "meaning_ko": "세심한, 꼼꼼한",
-      "explanation": "매우 주의 깊고 정확하며 세부사항에 신경 쓰는",
-      "example_from_convo": "She is meticulous about her work",
-      "example_ko": "그녀는 일에 대해 매우 꼼꼼하다",
-      "tip": "전문적인 상황에서 자주 쓰임",
-      "emoji": "🔍"
+      "meaning_ko": "꼼꼼한, 세심한",
+      "explanation": "showing great attention to detail; very careful and precise",
+      "example_from_convo": "She's meticulous about her homework",
+      "example_ko": "그녀는 숙제에 대해 매우 꼼꼼해",
+      "tip": "긍정적인 성격 묘사에 자주 사용됨",
+      "emoji": "✨"
     },
     {
       "word": "ambiguous",
       "part_of_speech": "adjective",
-      "meaning_ko": "애매한, 모호한",
-      "explanation": "명확하지 않거나 두 가지 이상의 의미로 해석될 수 있는",
-      "example_from_convo": "Your instructions are ambiguous",
-      "example_ko": "너의 지시사항이 애매하다",
-      "tip": "TOEFL에서 자주 출제되는 단어",
+      "meaning_ko": "모호한, 애매한",
+      "explanation": "open to more than one interpretation; unclear in meaning",
+      "example_from_convo": "The instructions are ambiguous",
+      "example_ko": "그 지시사항들은 모호해",
+      "tip": "시험 문제나 지시사항이 명확하지 않을 때 사용",
       "emoji": "❓"
+    },
+    {
+      "word": "coherent",
+      "part_of_speech": "adjective",
+      "meaning_ko": "논리적인, 일관성 있는",
+      "explanation": "logical and consistent; easy to understand",
+      "example_from_convo": "His argument wasn't very coherent",
+      "example_ko": "그의 주장은 논리적이지 않았어",
+      "tip": "글이나 말이 잘 정리되어 있을 때 사용",
+      "emoji": "🎯"
     },
     {
       "word": "resilient",
       "part_of_speech": "adjective",
-      "meaning_ko": "회복력이 있는, 탄력적인",
-      "explanation": "어려움에서 빠르게 회복할 수 있는 능력이 있는",
-      "example_from_convo": "He is resilient despite the setbacks",
-      "example_ko": "그는 실패에도 불구하고 회복력이 있다",
-      "tip": "긍정적인 성격 묘사에 사용",
+      "meaning_ko": "탄력있는, 회복력 있는",
+      "explanation": "able to recover quickly from difficulties; tough",
+      "example_from_convo": "You need to be resilient to handle stress",
+      "example_ko": "스트레스를 다루려면 회복력이 있어야 해",
+      "tip": "어려움을 극복하는 능력을 설명할 때 사용",
       "emoji": "💪"
-    },
-    {
-      "word": "superficial",
-      "part_of_speech": "adjective",
-      "meaning_ko": "피상적인, 표면적인",
-      "explanation": "표면만 다루고 깊이 있지 않거나 겉으로만 보이는",
-      "example_from_convo": "That was a superficial analysis",
-      "example_ko": "그것은 피상적인 분석이었다",
-      "tip": "비판적인 평가에서 자주 사용",
-      "emoji": "⛱️"
     }
   ],
   "quiz": [
@@ -58,104 +58,104 @@
       "word": "procrastinate",
       "question": "What does 'procrastinate' mean?",
       "options": [
-        "To delay or postpone tasks",
-        "To complete work quickly",
+        "To delay or postpone something",
+        "To work very quickly",
         "To plan ahead carefully",
-        "To work efficiently"
+        "To organize tasks efficiently"
       ],
       "answer": 0,
-      "explanation": "Procrastinate means to delay or postpone something that should be done."
+      "explanation": "Procrastinate means to delay or put off something that needs to be done."
     },
     {
       "type": "meaning",
       "word": "meticulous",
-      "question": "Which definition best describes 'meticulous'?",
+      "question": "Which word best describes someone who pays great attention to detail?",
       "options": [
-        "Lazy and careless",
-        "Very careful and precise about details",
-        "Quick and efficient",
-        "Bold and confident"
+        "Lazy",
+        "Meticulous",
+        "Careless",
+        "Quick"
       ],
       "answer": 1,
-      "explanation": "Meticulous means very careful and precise, paying attention to small details."
+      "explanation": "Meticulous describes someone who is very careful, precise, and pays attention to every detail."
     },
     {
       "type": "meaning",
-      "word": "resilient",
-      "question": "What does 'resilient' mean?",
-      "options": [
-        "Weak and fragile",
-        "Able to recover quickly from difficulties",
-        "Slow and hesitant",
-        "Bright and cheerful"
-      ],
-      "answer": 1,
-      "explanation": "Resilient means able to recover quickly from difficulties or adapt to change."
-    },
-    {
-      "type": "fill_blank",
       "word": "ambiguous",
-      "question": "The email was so _____ that nobody understood what the manager wanted.",
+      "question": "What does 'ambiguous' mean?",
       "options": [
-        "clear",
-        "ambiguous",
-        "specific",
-        "detailed"
+        "Very clear and obvious",
+        "Unclear or open to multiple interpretations",
+        "Completely wrong",
+        "Easy to understand"
       ],
       "answer": 1,
-      "explanation": "Ambiguous fits perfectly as it means unclear or having multiple interpretations."
+      "explanation": "Ambiguous means something is unclear or can be interpreted in more than one way."
     },
     {
       "type": "fill_blank",
-      "word": "superficial",
-      "question": "His _____ knowledge of the subject made him unqualified for the job.",
+      "word": "coherent",
+      "question": "The student's essay was well-organized and _____, making it easy for the professor to follow her argument.",
       "options": [
-        "deep",
-        "comprehensive",
-        "superficial",
-        "extensive"
+        "coherent",
+        "confused",
+        "scattered",
+        "unclear"
+      ],
+      "answer": 0,
+      "explanation": "Coherent means logical and easy to understand, which fits perfectly in describing a well-organized essay."
+    },
+    {
+      "type": "fill_blank",
+      "word": "resilient",
+      "question": "Despite facing many challenges, she remained _____ and continued to pursue her goals.",
+      "options": [
+        "weak",
+        "fragile",
+        "resilient",
+        "discouraged"
       ],
       "answer": 2,
-      "explanation": "Superficial means shallow or lacking depth, which fits the context of being unqualified."
+      "explanation": "Resilient means able to recover from difficulties and remain strong, which matches the context of overcoming challenges."
     },
     {
       "type": "fill_blank",
-      "word": "procrastinate",
-      "question": "If you _____ on your studies, you will fail the exam.",
-      "options": [
-        "focus on",
-        "procrastinate on",
-        "master",
-        "excel at"
-      ],
-      "answer": 1,
-      "explanation": "Procrastinate on means to delay, which makes sense in the warning context."
-    },
-    {
-      "type": "situation",
       "word": "meticulous",
-      "question": "A surgeon needs to be very careful with every detail during an operation. Which word describes this quality?",
+      "question": "The architect was _____ in her designs, ensuring every measurement was exact.",
       "options": [
+        "sloppy",
         "careless",
         "meticulous",
-        "hasty",
-        "negligent"
+        "rushed"
       ],
-      "answer": 1,
-      "explanation": "Meticulous is the correct word to describe someone who is very careful with details, essential for a surgeon."
+      "answer": 2,
+      "explanation": "Meticulous means very careful and precise, which describes an architect who ensures every measurement is exact."
     },
     {
       "type": "situation",
-      "word": "resilient",
-      "question": "After losing her job, Maria found a new one within a month and started her own business a year later. What quality does Maria demonstrate?",
+      "word": "procrastinate",
+      "question": "Your friend keeps delaying his project and says he works better under pressure. What is he doing?",
       "options": [
-        "fragility",
-        "weakness",
-        "resilience",
-        "pessimism"
+        "Being responsible",
+        "Procrastinating",
+        "Being efficient",
+        "Planning ahead"
+      ],
+      "answer": 1,
+      "explanation": "He is procrastinating because he is delaying his work. This is the definition of procrastination."
+    },
+    {
+      "type": "situation",
+      "word": "ambiguous",
+      "question": "Your professor gives you instructions that could mean two different things. The instructions are _____ and you're confused about what to do.",
+      "options": [
+        "clear",
+        "specific",
+        "ambiguous",
+        "detailed"
       ],
       "answer": 2,
-      "explanation": "Maria demonstrates resilience by recovering quickly from setbacks and adapting to new challenges."
+      "explanation": "When instructions can be interpreted in multiple ways and create confusion, they are ambiguous."
     }
   ]
 }
