@@ -722,5 +722,17 @@
     "explanation": "열심히 일하고 신중하게 주의를 기울이는 태도",
     "tip": "성격이나 일의 태도를 칭찬할 때 사용",
     "emoji": "📚"
+  },
+  {
+    "id": "superficial",
+    "word": "superficial",
+    "pos": "adjective",
+    "date": "2026-07-21",
+    "meaning": "피상적인, 표면적인",
+    "example_ko": "그것은 피상적인 분석이었다",
+    "example_en": "That was a superficial analysis",
+    "explanation": "표면만 다루고 깊이 있지 않거나 겉으로만 보이는",
+    "tip": "비판적인 평가에서 자주 사용",
+    "emoji": "⛱️"
   }
 ]
