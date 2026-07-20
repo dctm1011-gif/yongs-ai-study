@@ -144,156 +144,20 @@ export default function TOEFLScreen() {
     }
   };
 
+  // TOEFL 문제 자체는 위쪽의 라이브 Firebase 구독이 채워준다.
+  // 여기서는 로컬 섹션 진행도(읽음/완료 표시)만 불러온다.
   const loadData = async () => {
     try {
-      setLoading(true);
-
-      // Try to load cached problems first
-      const cachedProblems = await AsyncStorage.getItem('toefl_problems');
-      const today = getKSTDateString();
-
-      if (cachedProblems) {
-        try {
-          const parsed = JSON.parse(cachedProblems);
-          if (parsed.date === today) {
-            setToeflProblems(parsed);
-            setIsCached(true);
-            setLoading(false);
-            // Still try to fetch fresh data in background
-            fetchTOEFLFromNetlify()
-              .then(async freshData => {
-                if (freshData && freshData.date === today) {
-                  setToeflProblems(freshData);
-                  await AsyncStorage.setItem('toefl_problems', JSON.stringify(freshData));
-                }
-              })
-              .catch(err => console.log('Background refresh failed (non-fatal):', err));
-            return;
-          }
-        } catch (e) {
-          console.log('Cache parse failed, fetching fresh data');
-        }
-      }
-
-      // Fetch fresh data with timeout (5 seconds)
-      console.log('📥 TOEFL: Fetching from Netlify...');
-      const timeoutPromise = new Promise<any>(resolve =>
-        setTimeout(() => {
-          console.warn('⏱️  TOEFL: Fetch timeout (5s)');
-          resolve(null);
-        }, 5000)
-      );
-      const fetchPromise = fetchTOEFLFromNetlify();
-      const netlifyData = await Promise.race([fetchPromise, timeoutPromise]);
-
-      if (netlifyData && netlifyData.reading && netlifyData.writing && netlifyData.speaking && netlifyData.listening) {
-        console.log('✅ TOEFL: Data loaded from Netlify');
-        setToeflProblems(netlifyData);
-        await AsyncStorage.setItem('toefl_problems', JSON.stringify(netlifyData));
-        setIsCached(false);
-      } else {
-        console.warn('❌ TOEFL: Invalid or missing data structure', { has_reading: !!netlifyData?.reading, has_writing: !!netlifyData?.writing });
-      }
-
-      // Always load section progress
       const savedSections = await AsyncStorage.getItem('toefl_sections');
       if (savedSections) {
-        setSections(JSON.parse(savedSections));
+        const parsed = JSON.parse(savedSections);
+        setSections(Array.isArray(parsed) ? parsed : defaultSections);
       } else {
         setSections(defaultSections);
       }
     } catch (error) {
-      console.error('Failed to load TOEFL data:', error);
+      console.error('Failed to load TOEFL section progress:', error);
       setSections(defaultSections);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const getMockTOEFLData = () => ({
-    date: '2026-07-19',
-    reading: {
-      title: 'The Impact of Urban Green Spaces',
-      passage:
-        'Urban green spaces such as parks and gardens play a crucial role in improving city residents\' quality of life. These areas provide essential benefits including air quality improvement, temperature regulation, and mental health support. Studies have shown that people living near parks experience lower stress levels and better overall well-being. Furthermore, green spaces encourage physical activity and social interaction among community members. As cities continue to expand, protecting and developing these natural areas becomes increasingly important for sustainable urban development.',
-      questions: [
-        {
-          q: 'According to the passage, what are green spaces primarily beneficial for?',
-          options: ['A) Reducing traffic congestion', 'B) Improving air quality and mental health', 'C) Increasing property taxes', 'D) Creating employment opportunities'],
-          answer: 1,
-          explanation: '본문에서 green spaces는 공기 질 개선, 온도 조절, 정신 건강 지원을 제공한다고 명시되어 있습니다.',
-        },
-        {
-          q: 'What does the passage imply about people living near parks?',
-          options: ['A) They pay higher rent', 'B) They exercise less frequently', 'C) They have better well-being', 'D) They avoid social interaction'],
-          answer: 2,
-          explanation: '본문에서 \'공원 근처에 사는 사람들은 더 낮은 스트레스 수준과 더 나은 전반적인 웰빙을 경험한다\'고 명시되어 있습니다.',
-        },
-      ],
-    },
-    writing: {
-      prompt: 'Do you agree or disagree with the statement that cities should prioritize developing green spaces over building new infrastructure like roads and buildings?',
-      structure: {
-        intro: '자신의 입장을 명확히 제시하세요.',
-        body1: '첫 번째 이유: 녹지의 환경적/건강상 이점을 구체적인 예시와 함께 제시하세요',
-        body2: '두 번째 이유: 기반 시설의 필요성도 인정하면서, 균형 있는 접근 방식을 제안하세요',
-        conclusion: '전체 논의를 요약하고 입장을 재확인하세요',
-      },
-      useful_phrases: ['In my opinion,', 'I strongly believe that', 'Furthermore,', 'For instance,', 'In conclusion,', 'It is essential that'],
-    },
-    speaking: {
-      prompt: 'Some people prefer spending leisure time in outdoor natural environments like parks and forests. Others prefer indoor activities. Which do you prefer and why?',
-      useful_expressions: ['In my opinion, I prefer...', 'One reason is that...', 'Additionally, nature provides...', 'For example,', 'I believe that...'],
-      sample_points: ['자연환경에서의 신체활동은 건강을 증진시키고 스트레스를 감소시킵니다.', '실내활동은 날씨에 관계없이 즐길 수 있고, 문화 활동을 통해 지식을 얻을 수 있습니다.'],
-    },
-    listening: {
-      title: 'Student-Professor Conversation About Research Projects',
-      type: 'conversation',
-      script:
-        'Student: Professor Johnson, I wanted to discuss my research project on renewable energy. Professor: That\'s a great question. Both solar and wind are important, but they have different applications. Student: Which one would have bigger impact? Professor: That depends on location. In coastal areas, wind farms can generate massive electricity. In deserts, solar is efficient. Student: Maybe I should research how they work together in a hybrid system. Professor: Excellent idea!',
-      questions: [
-        {
-          q: 'What is the main purpose of the conversation?',
-          options: ['A) Grading research project', 'B) Seeking advice on research focus', 'C) Explaining renewable energy', 'D) Complaining about difficulty'],
-          answer: 1,
-          explanation: '학생이 교수님께 신재생 에너지 연구 주제 선택에 대해 조언을 구하는 것입니다.',
-        },
-      ],
-    },
-  });
-
-  const fetchTOEFLFromNetlify = async (): Promise<any | null> => {
-    try {
-      const url = `${NETLIFY_BASE_URL}/.netlify/functions/toefl-daily`;
-      console.log(`🔗 TOEFL: Calling ${url}`);
-
-      const response = await fetch(url, { timeout: 5000 });
-      console.log(`📬 TOEFL: Response status ${response.status}`);
-
-      if (!response.ok) {
-        console.error(`❌ TOEFL: HTTP error ${response.status} - ${response.statusText}`);
-        console.log('⚠️  TOEFL: Using mock data');
-        return getMockTOEFLData();
-      }
-
-      const data = await response.json();
-      console.log(`📦 TOEFL: Received data with sections:`, {
-        reading: !!data?.reading,
-        writing: !!data?.writing,
-        speaking: !!data?.speaking,
-        listening: !!data?.listening,
-      });
-
-      if (data && data.reading && data.writing && data.speaking && data.listening) {
-        console.log('✅ TOEFL: Data valid, returning');
-        return data;
-      }
-      console.warn('⚠️  TOEFL: Missing sections in response, using mock data');
-      return getMockTOEFLData();
-    } catch (error) {
-      console.error(`❌ TOEFL: Network error - ${error instanceof Error ? error.message : String(error)}`);
-      console.log('⚠️  TOEFL: Using mock data as fallback');
-      return getMockTOEFLData();
     }
   };
 

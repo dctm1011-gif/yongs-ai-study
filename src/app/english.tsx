@@ -143,7 +143,13 @@ export default function EnglishScreen() {
         console.log(`📚 Loaded ${netlifyData.length} daily English phrases from Firebase`);
 
         const savedWords = await AsyncStorage.getItem('english_words');
-        const localWords: Word[] = savedWords ? JSON.parse(savedWords) : [];
+        let parsedSavedWords: unknown = null;
+        try {
+          parsedSavedWords = savedWords ? JSON.parse(savedWords) : null;
+        } catch {
+          parsedSavedWords = null;
+        }
+        const localWords: Word[] = Array.isArray(parsedSavedWords) ? parsedSavedWords : [];
         const newWordIds = netlifyData.map(w => w.id).sort().join(',');
         const oldWordIds = localWords.map(w => w.id).sort().join(',');
 
