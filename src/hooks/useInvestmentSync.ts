@@ -19,11 +19,10 @@ export interface InvestmentColumn {
   author: string;
   authorTitle: string;
   date: string;
-  content: string;
   summary: string;
   region?: string;
   ticker?: string;
-  analysis: string;
+  sections: { heading: string; body: string }[];
   outlook: 'positive' | 'neutral' | 'negative';
   readTime: number;
   source?: string;
@@ -47,10 +46,12 @@ function getMockInvestmentColumns(): InvestmentColumn[] {
       author: '투자 전문가',
       authorTitle: '부동산 애널리스트',
       date: new Date().toISOString().split('T')[0],
-      content: '최근 부동산 시장의 동향과 전망을 분석합니다.',
       summary: '서울 주택가격이 안정화되는 중입니다.',
       region: 'Seoul',
-      analysis: '긍정적인 신호들이 보이고 있습니다.',
+      sections: [
+        { heading: '시장 동향', body: '최근 부동산 시장의 동향과 전망을 분석합니다.' },
+        { heading: '전망', body: '긍정적인 신호들이 보이고 있습니다.' },
+      ],
       outlook: 'positive',
       readTime: 5,
     },
@@ -61,10 +62,12 @@ function getMockInvestmentColumns(): InvestmentColumn[] {
       author: '주식 전문가',
       authorTitle: '증권 애널리스트',
       date: new Date(Date.now() - 86400000).toISOString().split('T')[0],
-      content: 'AI와 클라우드 업체들의 투자 기회를 살펴봅니다.',
       summary: 'NVIDIA와 Tesla의 향후 전망을 분석합니다.',
       ticker: 'NVDA',
-      analysis: '기술 시장의 중장기 성장성이 우수합니다.',
+      sections: [
+        { heading: '시장 동향', body: 'AI와 클라우드 업체들의 투자 기회를 살펴봅니다.' },
+        { heading: '전망', body: '기술 시장의 중장기 성장성이 우수합니다.' },
+      ],
       outlook: 'positive',
       readTime: 7,
     },
@@ -75,10 +78,12 @@ function getMockInvestmentColumns(): InvestmentColumn[] {
       author: '경제 분석가',
       authorTitle: '거시경제 전문가',
       date: new Date(Date.now() - 172800000).toISOString().split('T')[0],
-      content: '금리 인상 정책이 주식시장에 미치는 영향을 분석합니다.',
       summary: '금리 인상에 대비한 투자 전략이 필요합니다.',
       ticker: 'SPY',
-      analysis: '단기 변동성이 높을 것으로 예상됩니다.',
+      sections: [
+        { heading: '시장 동향', body: '금리 인상 정책이 주식시장에 미치는 영향을 분석합니다.' },
+        { heading: '전망', body: '단기 변동성이 높을 것으로 예상됩니다.' },
+      ],
       outlook: 'neutral',
       readTime: 6,
     },

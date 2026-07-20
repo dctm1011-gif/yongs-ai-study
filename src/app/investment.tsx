@@ -312,15 +312,12 @@ const DetailModal: React.FC<DetailModalProps> = React.memo(
             </View>
           )}
 
-          <View style={styles.detailSection}>
-            <Text style={styles.detailSectionTitle}>상세 분석</Text>
-            <Text style={styles.detailSectionContent}>{column.content}</Text>
-          </View>
-
-          <View style={styles.detailSection}>
-            <Text style={styles.detailSectionTitle}>결론</Text>
-            <Text style={styles.detailSectionContent}>{column.analysis}</Text>
-          </View>
+          {column.sections?.map((section, idx) => (
+            <View key={idx} style={styles.detailSection}>
+              <Text style={styles.detailSectionTitle}>{section.heading}</Text>
+              <Text style={styles.detailSectionContent}>{section.body}</Text>
+            </View>
+          ))}
 
           {column.source && (
             <Text style={styles.detailSource}>출처: {column.source}</Text>

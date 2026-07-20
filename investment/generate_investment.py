@@ -38,12 +38,15 @@ JSON 형식 (정확히 이 스키마를 따를 것):
       "authorTitle": "저자 직함",
       "date": "{today}",
       "region": "경기도",
-      "summary": "1~2문장 요약",
-      "content": "본문 (검색으로 확인한 실제 내용 기반, 3~5문단, 가격대별로 어떤 지역들을 골랐는지도 설명)",
-      "analysis": "결론/분석 1~2문장",
+      "summary": "1~2문장 요약 (목록 화면 카드 미리보기용)",
+      "sections": [
+        {{"heading": "시장 동향", "body": "3~5문장. 가격대별로 어떤 지역들을 골랐는지, 최근 시장 동향, 지역별 특징 설명"}},
+        {{"heading": "배경 분석", "body": "3~5문장. 이런 흐름이 나타나는 원인/배경"}},
+        {{"heading": "전망과 시사점", "body": "3~5문장. 향후 전망과 투자자에게 주는 시사점"}}
+      ],
       "outlook": "positive 또는 neutral 또는 negative",
       "readTime": 5,
-      "source": "실제 검색으로 확인한 출처명",
+      "source": "실제 검색으로 확인한 구체적 출처 (기관명 + 어떤 자료인지 명시. 예: 'KB부동산 리브온 월간 아파트 시세동향 (2026년 7월)', '국토교통부 실거래가 공개시스템 - 경기도 아파트 매매 실거래가')",
       "chartData": [
         {{
           "area": "판교",
@@ -69,12 +72,15 @@ JSON 형식 (정확히 이 스키마를 따를 것):
       "authorTitle": "저자 직함",
       "date": "{today}",
       "ticker": "종목코드 또는 티커",
-      "summary": "1~2문장 요약",
-      "content": "본문 (검색으로 확인한 실제 내용 기반, 3~5문단)",
-      "analysis": "결론/분석 1~2문장",
+      "summary": "1~2문장 요약 (목록 화면 카드 미리보기용)",
+      "sections": [
+        {{"heading": "시장 동향", "body": "3~5문장. 최근 실적/이슈, 업종 동향, 경쟁 구도"}},
+        {{"heading": "배경 분석", "body": "3~5문장. 이런 흐름이 나타나는 원인/배경"}},
+        {{"heading": "전망과 시사점", "body": "3~5문장. 향후 전망과 투자자에게 주는 시사점"}}
+      ],
       "outlook": "positive 또는 neutral 또는 negative",
       "readTime": 6,
-      "source": "실제 검색으로 확인한 출처명",
+      "source": "실제 검색으로 확인한 구체적 출처 (증권사명 + 어떤 자료인지 명시. 예: '신한투자증권 리서치센터 SK하이닉스 커버리지 리포트 (2026년 7월)')",
       "chartData": [
         {{
           "area": "종목명",
@@ -111,7 +117,7 @@ def generate(client: anthropic.Anthropic, target_date: date) -> dict:
     while True:
         response = client.messages.create(
             model=MODEL,
-            max_tokens=16000,
+            max_tokens=20000,
             tools=tools,
             messages=messages,
         )
