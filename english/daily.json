@@ -2,145 +2,160 @@
   "date": "2026-07-22",
   "words": [
     {
-      "word": "vibe",
-      "part_of_speech": "명사",
-      "meaning_ko": "분위기, 느낌",
-      "explanation": "누군가나 무언가가 주는 느낌이나 분위기를 나타내요.",
-      "example_from_convo": "I'm getting a good vibe from this",
-      "example_ko": "이거 좋은 느낌이 드는데",
-      "tip": "SNS와 일상 대화에서 매우 자주 쓰이는 표현이에요.",
-      "emoji": "✨"
-    },
-    {
-      "word": "chill",
-      "part_of_speech": "동사/형용사",
-      "meaning_ko": "편하게 쉬다, 차분한",
-      "explanation": "긴장을 풀고 편하게 시간을 보낼 때 쓰여요.",
-      "example_from_convo": "Let's just chill at home",
-      "example_ko": "그냥 집에서 편하게 있자",
-      "tip": "'chill out'으로도 많이 쓰여요.",
-      "emoji": "😎"
-    },
-    {
-      "word": "vibe check",
-      "part_of_speech": "명사",
-      "meaning_ko": "분위기 확인",
-      "explanation": "누군가의 기분이나 상태를 확인하는 것을 말해요.",
-      "example_from_convo": "Vibe check: how are you feeling?",
-      "example_ko": "기분은 어때? 기분 체크 해볼게.",
-      "tip": "현대 영어에서 젊은 세대가 즐겨 쓰는 표현이에요.",
-      "emoji": "📊"
-    },
-    {
-      "word": "nail it",
-      "part_of_speech": "동사",
-      "meaning_ko": "완벽하게 해내다",
-      "explanation": "어려운 일을 완벽하게 성공하는 것을 표현해요.",
-      "example_from_convo": "You really nailed that presentation",
-      "example_ko": "그 발표 완벽하게 해냈어",
-      "tip": "칭찬할 때 자주 쓰이는 긍정적인 표현이에요.",
+      "word": "pragmatic",
+      "part_of_speech": "adjective",
+      "meaning_ko": "실용적인, 현실적인",
+      "explanation": "실제적인 결과나 효과에 중점을 두는 성향",
+      "example_from_convo": "We need a pragmatic approach to solve this budget problem",
+      "example_ko": "우리는 예산 문제를 해결하기 위해 실용적인 접근이 필요해",
+      "tip": "비즈니스와 일상 회화에서 자주 사용됨",
       "emoji": "🎯"
     },
     {
-      "word": "hang out",
-      "part_of_speech": "동사",
-      "meaning_ko": "시간을 보내다, 어울리다",
-      "explanation": "친구들과 함께 시간을 보내거나 누군가와 어울리는 것을 의미해요.",
-      "example_from_convo": "Wanna hang out this weekend?",
-      "example_ko": "이번 주말에 같이 시간 보낼래?",
-      "tip": "일상 영어에서 매우 자연스럽고 자주 쓰이는 표현입니다.",
-      "emoji": "👋"
+      "word": "articulate",
+      "part_of_speech": "verb/adjective",
+      "meaning_ko": "명확하게 표현하다, 분명한",
+      "explanation": "생각이나 느낌을 명확하고 유창하게 표현하는 것",
+      "example_from_convo": "She articulated her concerns during the meeting",
+      "example_ko": "그녀는 회의 중에 자신의 우려를 명확하게 표현했다",
+      "tip": "발표나 인터뷰에서 중요한 단어",
+      "emoji": "🗣️"
+    },
+    {
+      "word": "ameliorate",
+      "part_of_speech": "verb",
+      "meaning_ko": "개선하다, 호전시키다",
+      "explanation": "어떤 상황이나 상태를 더 좋게 만드는 것",
+      "example_from_convo": "The new policy will ameliorate working conditions",
+      "example_ko": "새로운 정책이 근무 환경을 개선할 것이다",
+      "tip": "formal한 표현으로 improve보다 더 고급 단어",
+      "emoji": "📈"
+    },
+    {
+      "word": "abate",
+      "part_of_speech": "verb",
+      "meaning_ko": "줄어들다, 약해지다",
+      "explanation": "강도나 강렬함이 감소하는 것",
+      "example_from_convo": "The storm's intensity began to abate by evening",
+      "example_ko": "폭풍의 강도가 저녁이 되면서 약해지기 시작했다",
+      "tip": "법률이나 학문적 문맥에서 자주 사용",
+      "emoji": "🌤️"
+    },
+    {
+      "word": "ambition",
+      "part_of_speech": "noun",
+      "meaning_ko": "야망, 욕망",
+      "explanation": "성공하고 싶은 강한 욕구나 목표",
+      "example_from_convo": "Her ambition is to become a CEO",
+      "example_ko": "그녀의 야망은 CEO가 되는 것이다",
+      "tip": "긍정적인 의미로 자주 사용됨",
+      "emoji": "🚀"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "vibe",
-      "question": "'vibe'는 어떤 의미인가요?",
+      "word": "pragmatic",
+      "question": "Which definition best matches 'pragmatic'?",
       "options": [
-        "기계음",
-        "분위기/느낌",
-        "음악",
-        "색상"
+        "Theoretical and ideal",
+        "Practical and results-oriented",
+        "Complicated and difficult",
+        "Emotional and subjective"
       ],
       "answer": 1,
-      "explanation": "vibe는 누군가나 무언가가 주는 분위기나 느낌을 나타내요."
-    },
-    {
-      "type": "fill_blank",
-      "word": "vibe",
-      "sentence": "I'm getting a really good _____ from this place.",
-      "sentence_ko": "이 장소에서 정말 좋은 분위기가 느껴져.",
-      "answer": "vibe",
-      "hint": "분위기/느낌"
+      "explanation": "Pragmatic means focusing on practical results rather than theory"
     },
     {
       "type": "meaning",
-      "word": "chill",
-      "question": "'Let's chill'은 무엇을 의미하나요?",
+      "word": "ameliorate",
+      "question": "What does 'ameliorate' mean?",
       "options": [
-        "춤을 추자",
-        "편하게 쉬자",
-        "달리자",
-        "먹자"
-      ],
-      "answer": 1,
-      "explanation": "chill은 긴장을 풀고 편하게 시간을 보낸다는 뜻이에요."
-    },
-    {
-      "type": "fill_blank",
-      "word": "chill",
-      "sentence": "I don't want to go anywhere today, let's just _____ at home.",
-      "sentence_ko": "오늘 어디 가기 싫어, 그냥 집에서 편하게 있자.",
-      "answer": "chill",
-      "hint": "편하게 쉬다"
-    },
-    {
-      "type": "meaning",
-      "word": "nail it",
-      "question": "'nail it'의 의미는?",
-      "options": [
-        "못을 박다",
-        "실패하다",
-        "완벽하게 해내다",
-        "느리다"
+        "To worsen",
+        "To ignore",
+        "To improve or make better",
+        "To delay"
       ],
       "answer": 2,
-      "explanation": "nail it은 어려운 일을 완벽하게 성공하는 것을 의미해요."
+      "explanation": "Ameliorate is a formal verb meaning to improve or make conditions better"
+    },
+    {
+      "type": "meaning",
+      "word": "articulate",
+      "question": "Which sentence uses 'articulate' correctly?",
+      "options": [
+        "He articulate the words on paper",
+        "She articulated her ideas clearly and fluently",
+        "The articulate was broken",
+        "They articulated to the store"
+      ],
+      "answer": 1,
+      "explanation": "Articulate means to express clearly; 'articulated her ideas' is the correct usage"
+    },
+    {
+      "type": "fill_blank",
+      "word": "abate",
+      "question": "The patient's fever began to _______ after taking medicine.",
+      "options": [
+        "amplify",
+        "abate",
+        "accelerate",
+        "absorb"
+      ],
+      "answer": 1,
+      "explanation": "Abate means to decrease or diminish, fitting the context of fever reducing"
+    },
+    {
+      "type": "fill_blank",
+      "word": "pragmatic",
+      "question": "We need to take a _______ approach rather than get lost in idealism.",
+      "options": [
+        "romantic",
+        "pragmatic",
+        "dramatic",
+        "automatic"
+      ],
+      "answer": 1,
+      "explanation": "Pragmatic approach means practical and focused on real results"
+    },
+    {
+      "type": "fill_blank",
+      "word": "ambition",
+      "question": "His _______ to succeed in business drove him to work 12 hours daily.",
+      "options": [
+        "ambition",
+        "condition",
+        "addition",
+        "position"
+      ],
+      "answer": 0,
+      "explanation": "Ambition fits perfectly as it means strong desire to succeed"
     },
     {
       "type": "situation",
-      "word": "nail it",
-      "question": "친구가 어려운 시험을 잘 봤을 때 뭐라고 말할까요?",
+      "word": "articulate",
+      "question": "In a job interview, you want to show you can express your ideas well. What skill are you demonstrating?",
       "options": [
-        "You failed it",
-        "You nailed it!",
-        "You broke it",
-        "You lost it"
+        "Being able to articulate your thoughts clearly",
+        "Being able to ignore questions",
+        "Being quiet and reserved",
+        "Being able to memorize scripts"
       ],
-      "answer": 1,
-      "explanation": "누군가가 뭔가를 완벽하게 해냈을 때 'You nailed it!'이라고 칭찬해요."
+      "answer": 0,
+      "explanation": "Articulate means to express ideas clearly and fluently, which is important in interviews"
     },
     {
-      "type": "meaning",
-      "word": "hang out",
-      "question": "'hang out'은 뭘 할 때 쓰나요?",
+      "type": "situation",
+      "word": "ameliorate",
+      "question": "A company faces poor employee morale. Which action would best ameliorate this situation?",
       "options": [
-        "공부할 때",
-        "친구들과 시간을 보낼 때",
-        "일할 때",
-        "운동할 때"
+        "Cutting salaries further",
+        "Implementing better working conditions and fair wages",
+        "Ignoring employee complaints",
+        "Increasing work hours"
       ],
       "answer": 1,
-      "explanation": "hang out은 친구들과 함께 시간을 보내는 것을 의미해요."
-    },
-    {
-      "type": "fill_blank",
-      "word": "hang out",
-      "sentence": "Do you want to _____ together this weekend?",
-      "sentence_ko": "이번 주말에 함께 시간 보낼래?",
-      "answer": "hang out",
-      "hint": "시간을 보내다"
+      "explanation": "Ameliorate means to improve; better working conditions would improve the situation"
     }
   ]
 }

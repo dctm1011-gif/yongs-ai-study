@@ -192,32 +192,33 @@ Rules:
 - Each word needs part_of_speech, meaning_ko, explanation, example_from_convo, example_ko, tip, emoji
 - Return ONLY the JSON object, nothing else"""
 
-    response = client.messages.create(
-        model="claude-haiku-4-5-20251001",
-        max_tokens=2000,
-        messages=[{"role": "user", "content": prompt}]
-    )
+    for attempt in range(2):
+        response = client.messages.create(
+            model="claude-haiku-4-5-20251001",
+            max_tokens=4000,
+            messages=[{"role": "user", "content": prompt}]
+        )
 
-    text = response.content[0].text.strip()
-    start = text.find("{")
-    end = text.rfind("}") + 1
-    if start == -1 or end == 0:
-        print("[!] No JSON found, using default")
-        return get_default_words(target_date)
+        text = response.content[0].text.strip()
+        start = text.find("{")
+        end = text.rfind("}") + 1
+        if start == -1 or end == 0:
+            print(f"[!] No JSON found (시도 {attempt + 1})")
+            continue
 
-    try:
-        data = json.loads(text[start:end])
-        if len(data.get("words", [])) >= 5 and len(data.get("quiz", [])) >= 8:
-            used_lower = {w.lower() for w in used_words}
-            repeats = [w["word"] for w in data["words"] if w.get("word", "").lower() in used_lower]
-            if repeats:
-                print(f"[!] 지시에도 불구하고 중복 단어 생성됨: {repeats} (words_db.json에 이미 존재)")
-            print(f"[+] 새로운 단어 {len(data['words'])}개 생성 완료")
-            return data
-    except json.JSONDecodeError:
-        pass
+        try:
+            data = json.loads(text[start:end])
+            if len(data.get("words", [])) >= 5 and len(data.get("quiz", [])) >= 8:
+                used_lower = {w.lower() for w in used_words}
+                repeats = [w["word"] for w in data["words"] if w.get("word", "").lower() in used_lower]
+                if repeats:
+                    print(f"[!] 지시에도 불구하고 중복 단어 생성됨: {repeats} (words_db.json에 이미 존재)")
+                print(f"[+] 새로운 단어 {len(data['words'])}개 생성 완료")
+                return data
+        except json.JSONDecodeError as e:
+            print(f"[!] JSON 파싱 실패 (시도 {attempt + 1}): {e}")
 
-    print("[!] JSON parse failed, using default")
+    print("[!] 2회 시도 모두 실패, 기본값 사용")
     return get_default_words(target_date)
 
 def analyze_with_claude(convo_text: str, target_date: date, client: anthropic.Anthropic) -> dict:
