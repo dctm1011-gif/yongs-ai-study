@@ -25,6 +25,17 @@ try:
 except Exception:
     def notify(text): pass
 
+def load_used_words() -> list:
+    """words_db.json에 이미 등록된 단어 목록 (중복 생성 방지용)."""
+    if not WORDS_DB_JSON.exists():
+        return []
+    try:
+        entries = json.loads(WORDS_DB_JSON.read_text(encoding="utf-8"))
+        return sorted({e.get("word", "") for e in entries if e.get("word")})
+    except (json.JSONDecodeError, OSError):
+        return []
+
+
 def load_conversations(target_date: date) -> list:
     data_file = ENGLISH_BOT_DATA / f"{target_date}.json"
     if not data_file.exists():
@@ -157,16 +168,25 @@ def generate_default_words(client: anthropic.Anthropic, target_date: date, toefl
 이 TOEFL 단어들과 관련된 일상 표현과 슬랭을 생성해주세요.
 """
 
+    used_words = load_used_words()
+    used_words_block = ""
+    if used_words:
+        used_words_block = (
+            "\n\n⚠️ Already used before, do NOT repeat any of these words:\n"
+            + ", ".join(used_words) + "\n"
+        )
+
     prompt = f"""Generate 5 daily English words and 8 quiz questions for TOEFL students.
 Return ONLY valid JSON, no other text.
 
 {toefl_context}
+{used_words_block}
 
 JSON Format:
 {{"date": "{target_date}", "words": [{{"word": "example", "part_of_speech": "noun", "meaning_ko": "뜻", "explanation": "설명", "example_from_convo": "I'm lowkey happy", "example_ko": "나 은근히 행복해", "tip": "일상에서 자주 씀", "emoji": "😊"}}, ...], "quiz": [{{"type": "meaning", "word": "example", "question": "문제?", "options": ["선택1", "선택2"], "answer": 0, "explanation": "설명"}}]}}
 
 Rules:
-- Exactly 5 different words
+- Exactly 5 different words, none of which appear in the "already used" list above
 - Exactly 8 quiz questions
 - Mix of: 3x meaning, 3x fill_blank, 2x situation
 - Each word needs part_of_speech, meaning_ko, explanation, example_from_convo, example_ko, tip, emoji
@@ -188,6 +208,10 @@ Rules:
     try:
         data = json.loads(text[start:end])
         if len(data.get("words", [])) >= 5 and len(data.get("quiz", [])) >= 8:
+            used_lower = {w.lower() for w in used_words}
+            repeats = [w["word"] for w in data["words"] if w.get("word", "").lower() in used_lower]
+            if repeats:
+                print(f"[!] 지시에도 불구하고 중복 단어 생성됨: {repeats} (words_db.json에 이미 존재)")
             print(f"[+] 새로운 단어 {len(data['words'])}개 생성 완료")
             return data
     except json.JSONDecodeError:
@@ -198,10 +222,16 @@ Rules:
 
 def analyze_with_claude(convo_text: str, target_date: date, client: anthropic.Anthropic) -> dict:
     print("[*] Claude API 호출 중...")
+    used_words = load_used_words()
+    used_words_note = (
+        f"\n\n⚠️ 아래 단어들은 이전에 이미 다룬 단어이니, 대화에 등장하더라도 웬만하면 다른 표현을 우선 선택해주세요:\n{', '.join(used_words)}\n"
+        if used_words else ""
+    )
     prompt = f"""다음은 영어 원어민 AI Lily와의 영어 학습 대화입니다. ({target_date})
 
 대화 기록:
 {convo_text}
+{used_words_note}
 
 이 대화에서 배울 수 있는 영어 단어/표현들을 분석하고 아래 JSON 형식으로만 응답해주세요.
 JSON 외 다른 텍스트는 절대 포함하지 마세요.

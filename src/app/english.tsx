@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { cacheManager } from '../utils/CacheManager';
 import { performanceMonitor } from '../utils/PerformanceMonitor';
-import { getDatabase, ref, onValue, get } from 'firebase/database';
+import { getDatabase, ref, onValue, get, set as dbSet } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
 
 // Firebase Functions run in UTC; KST (UTC+9) doesn't roll to the next
@@ -46,6 +46,17 @@ interface Quiz {
 type ViewType = 'words' | 'quiz' | 'stats';
 
 const ITEMS_PER_PAGE = 15; // Pagination size for FlatList
+
+async function fetchReadStatusFromFirebase(today: string): Promise<Record<string, boolean>> {
+  try {
+    const db = getDatabase(getFirebaseApp());
+    const snapshot = await get(ref(db, `english/readStatus/${today}`));
+    return snapshot.exists() ? snapshot.val() : {};
+  } catch (error) {
+    console.warn('읽음 상태 Firebase 조회 실패:', error);
+    return {};
+  }
+}
 
 function mapFirebaseWords(data: any, today: string): NetlifyWord[] {
   const rawWords = Array.isArray(data.words) ? data.words : [data];
@@ -161,9 +172,10 @@ export default function EnglishScreen() {
           (acc: any, w) => ({ ...acc, [w.id]: w.isRead }),
           {}
         );
+        const remoteReadStatus = await fetchReadStatusFromFirebase(today);
         const mergedWords = netlifyData.map(w => ({
           ...w,
-          isRead: savedReadStatus[w.id] || false,
+          isRead: remoteReadStatus[w.id] ?? savedReadStatus[w.id] ?? false,
         }));
 
         setWords(mergedWords);
@@ -204,7 +216,9 @@ export default function EnglishScreen() {
       const savedWords = await AsyncStorage.getItem('english_words');
       const parsedWords = savedWords ? JSON.parse(savedWords) : null;
 
+      let loadedWords: Word[];
       if (Array.isArray(parsedWords)) {
+        loadedWords = parsedWords;
         setWords(parsedWords);
         setIsCached(true);
 
@@ -213,9 +227,20 @@ export default function EnglishScreen() {
         setQuizzes(Array.isArray(parsedQuizzes) ? parsedQuizzes : generateQuizzes(parsedWords));
       } else {
         // 캐시가 없거나 예전 형식(배열이 아님)으로 남아있으면 기본값으로 폴백
-        const defaultWords = getDefaultWords();
-        setWords(defaultWords);
-        setQuizzes(generateQuizzes(defaultWords));
+        loadedWords = getDefaultWords();
+        setWords(loadedWords);
+        setQuizzes(generateQuizzes(loadedWords));
+      }
+
+      // 다른 기기/재설치 등으로 로컬 캐시가 없어도 읽음 상태는 Firebase에서 복원
+      const remoteReadStatus = await fetchReadStatusFromFirebase(getKSTDateString());
+      if (Object.keys(remoteReadStatus).length > 0) {
+        const merged = loadedWords.map(w => ({
+          ...w,
+          isRead: remoteReadStatus[w.id] ?? w.isRead,
+        }));
+        setWords(merged);
+        await AsyncStorage.setItem('english_words', JSON.stringify(merged));
       }
     } catch (error) {
       console.error('Failed to load English data:', error);
@@ -365,6 +390,15 @@ export default function EnglishScreen() {
       w.id === wordId ? { ...w, isRead: !w.isRead } : w
     );
     saveWords(updated);
+
+    const toggled = updated.find(w => w.id === wordId);
+    if (toggled) {
+      const db = getDatabase(getFirebaseApp());
+      const today = getKSTDateString();
+      dbSet(ref(db, `english/readStatus/${today}/${wordId}`), toggled.isRead).catch(error =>
+        console.warn('읽음 상태 Firebase 저장 실패:', error)
+      );
+    }
   };
 
   const answerQuiz = (quizId: string, selectedOption: string) => {

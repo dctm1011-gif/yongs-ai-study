@@ -2,160 +2,145 @@
   "date": "2026-07-22",
   "words": [
     {
-      "word": "procrastinate",
-      "part_of_speech": "verb",
-      "meaning_ko": "미루다, 연미하다",
-      "explanation": "To delay or postpone something, often unnecessarily, especially work or decisions that need to be done",
-      "example_from_convo": "I keep procrastinating on my essay",
-      "example_ko": "나는 계속 에세이를 미루고 있어",
-      "tip": "학생들이 자주 하는 행동을 설명할 때 유용",
-      "emoji": "⏰"
+      "word": "vibe",
+      "part_of_speech": "명사",
+      "meaning_ko": "분위기, 느낌",
+      "explanation": "누군가나 무언가가 주는 느낌이나 분위기를 나타내요.",
+      "example_from_convo": "I'm getting a good vibe from this",
+      "example_ko": "이거 좋은 느낌이 드는데",
+      "tip": "SNS와 일상 대화에서 매우 자주 쓰이는 표현이에요.",
+      "emoji": "✨"
     },
     {
-      "word": "meticulous",
-      "part_of_speech": "adjective",
-      "meaning_ko": "세심한, 꼼꼼한",
-      "explanation": "Very careful and precise about details; paying close attention to every aspect",
-      "example_from_convo": "She's meticulous about organizing her notes",
-      "example_ko": "그녀는 노트 정리에 매우 꼼꼼해",
-      "tip": "긍정적인 의미의 형용사로 자주 면접에 나옴",
+      "word": "chill",
+      "part_of_speech": "동사/형용사",
+      "meaning_ko": "편하게 쉬다, 차분한",
+      "explanation": "긴장을 풀고 편하게 시간을 보낼 때 쓰여요.",
+      "example_from_convo": "Let's just chill at home",
+      "example_ko": "그냥 집에서 편하게 있자",
+      "tip": "'chill out'으로도 많이 쓰여요.",
+      "emoji": "😎"
+    },
+    {
+      "word": "vibe check",
+      "part_of_speech": "명사",
+      "meaning_ko": "분위기 확인",
+      "explanation": "누군가의 기분이나 상태를 확인하는 것을 말해요.",
+      "example_from_convo": "Vibe check: how are you feeling?",
+      "example_ko": "기분은 어때? 기분 체크 해볼게.",
+      "tip": "현대 영어에서 젊은 세대가 즐겨 쓰는 표현이에요.",
+      "emoji": "📊"
+    },
+    {
+      "word": "nail it",
+      "part_of_speech": "동사",
+      "meaning_ko": "완벽하게 해내다",
+      "explanation": "어려운 일을 완벽하게 성공하는 것을 표현해요.",
+      "example_from_convo": "You really nailed that presentation",
+      "example_ko": "그 발표 완벽하게 해냈어",
+      "tip": "칭찬할 때 자주 쓰이는 긍정적인 표현이에요.",
       "emoji": "🎯"
     },
     {
-      "word": "ambiguous",
-      "part_of_speech": "adjective",
-      "meaning_ko": "모호한, 애매한",
-      "explanation": "Open to more than one interpretation; unclear or uncertain in meaning",
-      "example_from_convo": "The instructions were ambiguous, so I wasn't sure what to do",
-      "example_ko": "그 지시사항은 애매해서 뭘 해야 할지 몰랐어",
-      "tip": "시험 문제나 설명이 명확하지 않을 때 사용",
-      "emoji": "❓"
-    },
-    {
-      "word": "resilient",
-      "part_of_speech": "adjective",
-      "meaning_ko": "회복력 있는, 탄력적인",
-      "explanation": "Able to recover quickly from difficulties; capable of adapting to change",
-      "example_from_convo": "Despite failures, he remained resilient and kept trying",
-      "example_ko": "실패에도 불구하고 그는 회복력 있게 계속 시도했어",
-      "tip": "성격이나 태도를 설명할 때 긍정적으로 사용",
-      "emoji": "💪"
-    },
-    {
-      "word": "volatile",
-      "part_of_speech": "adjective",
-      "meaning_ko": "불안정한, 변덕스러운",
-      "explanation": "Liable to change rapidly and unpredictably; unstable or prone to sudden change",
-      "example_from_convo": "The stock market has been volatile lately",
-      "example_ko": "최근 주식 시장이 불안정해",
-      "tip": "경제, 날씨, 감정 등 변화가 심한 것을 묘사할 때 사용",
-      "emoji": "📈"
+      "word": "hang out",
+      "part_of_speech": "동사",
+      "meaning_ko": "시간을 보내다, 어울리다",
+      "explanation": "친구들과 함께 시간을 보내거나 누군가와 어울리는 것을 의미해요.",
+      "example_from_convo": "Wanna hang out this weekend?",
+      "example_ko": "이번 주말에 같이 시간 보낼래?",
+      "tip": "일상 영어에서 매우 자연스럽고 자주 쓰이는 표현입니다.",
+      "emoji": "👋"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "procrastinate",
-      "question": "What does 'procrastinate' mean?",
+      "word": "vibe",
+      "question": "'vibe'는 어떤 의미인가요?",
       "options": [
-        "To plan ahead carefully",
-        "To delay or postpone something unnecessarily",
-        "To work very hard",
-        "To finish something quickly"
+        "기계음",
+        "분위기/느낌",
+        "음악",
+        "색상"
       ],
       "answer": 1,
-      "explanation": "Procrastinate means to delay or postpone something, especially when you should be doing it. It's different from planning ahead or working hard."
+      "explanation": "vibe는 누군가나 무언가가 주는 분위기나 느낌을 나타내요."
+    },
+    {
+      "type": "fill_blank",
+      "word": "vibe",
+      "sentence": "I'm getting a really good _____ from this place.",
+      "sentence_ko": "이 장소에서 정말 좋은 분위기가 느껴져.",
+      "answer": "vibe",
+      "hint": "분위기/느낌"
     },
     {
       "type": "meaning",
-      "word": "meticulous",
-      "question": "Which definition best describes 'meticulous'?",
+      "word": "chill",
+      "question": "'Let's chill'은 무엇을 의미하나요?",
       "options": [
-        "Very lazy and careless",
-        "Extremely fast and efficient",
-        "Very careful and precise about details",
-        "Loud and attention-seeking"
+        "춤을 추자",
+        "편하게 쉬자",
+        "달리자",
+        "먹자"
       ],
-      "answer": 2,
-      "explanation": "Meticulous means very careful and precise about details. Someone who is meticulous pays close attention to every aspect of their work."
+      "answer": 1,
+      "explanation": "chill은 긴장을 풀고 편하게 시간을 보낸다는 뜻이에요."
+    },
+    {
+      "type": "fill_blank",
+      "word": "chill",
+      "sentence": "I don't want to go anywhere today, let's just _____ at home.",
+      "sentence_ko": "오늘 어디 가기 싫어, 그냥 집에서 편하게 있자.",
+      "answer": "chill",
+      "hint": "편하게 쉬다"
     },
     {
       "type": "meaning",
-      "word": "resilient",
-      "question": "What is the main characteristic of a resilient person?",
+      "word": "nail it",
+      "question": "'nail it'의 의미는?",
       "options": [
-        "They never face any problems",
-        "They can recover quickly from difficulties",
-        "They avoid challenges",
-        "They give up easily"
-      ],
-      "answer": 1,
-      "explanation": "A resilient person can recover quickly from difficulties and adapt to changes. They don't avoid challenges but face them with flexibility."
-    },
-    {
-      "type": "fill_blank",
-      "word": "ambiguous",
-      "question": "The manager's instructions were so _____ that the team didn't know how to proceed.",
-      "options": [
-        "clear",
-        "ambiguous",
-        "simple",
-        "direct"
-      ],
-      "answer": 1,
-      "explanation": "Ambiguous means unclear or open to multiple interpretations. This fits the context where unclear instructions cause confusion."
-    },
-    {
-      "type": "fill_blank",
-      "word": "volatile",
-      "question": "The weather in spring is quite _____, changing from sunny to rainy within hours.",
-      "options": [
-        "stable",
-        "predictable",
-        "volatile",
-        "calm"
+        "못을 박다",
+        "실패하다",
+        "완벽하게 해내다",
+        "느리다"
       ],
       "answer": 2,
-      "explanation": "Volatile describes something that changes rapidly and unpredictably. Rapidly changing weather from sunny to rainy is a perfect example."
-    },
-    {
-      "type": "fill_blank",
-      "word": "procrastinate",
-      "question": "Many students _____ their homework assignments until the last minute.",
-      "options": [
-        "complete",
-        "procrastinate",
-        "organize",
-        "review"
-      ],
-      "answer": 1,
-      "explanation": "Procrastinate means to delay unnecessarily. Students often delay their homework until the last minute, which is procrastinating."
+      "explanation": "nail it은 어려운 일을 완벽하게 성공하는 것을 의미해요."
     },
     {
       "type": "situation",
-      "word": "meticulous",
-      "question": "Sarah spent 3 hours formatting her research paper, checking every citation and making sure every detail was perfect. How would you describe her approach?",
+      "word": "nail it",
+      "question": "친구가 어려운 시험을 잘 봤을 때 뭐라고 말할까요?",
       "options": [
-        "She was too lazy",
-        "She was meticulous",
-        "She was careless",
-        "She was rushing"
+        "You failed it",
+        "You nailed it!",
+        "You broke it",
+        "You lost it"
       ],
       "answer": 1,
-      "explanation": "Meticulous accurately describes Sarah's careful, detail-oriented approach to her work. She paid close attention to every aspect."
+      "explanation": "누군가가 뭔가를 완벽하게 해냈을 때 'You nailed it!'이라고 칭찬해요."
     },
     {
-      "type": "situation",
-      "word": "resilient",
-      "question": "After failing the TOEFL exam twice, Mark continued studying and passed on his third attempt. Which word best describes his behavior?",
+      "type": "meaning",
+      "word": "hang out",
+      "question": "'hang out'은 뭘 할 때 쓰나요?",
       "options": [
-        "Volatile",
-        "Ambiguous",
-        "Resilient",
-        "Procrastinating"
+        "공부할 때",
+        "친구들과 시간을 보낼 때",
+        "일할 때",
+        "운동할 때"
       ],
-      "answer": 2,
-      "explanation": "Resilient is the best word because Mark recovered from his failures and adapted his approach, showing his ability to bounce back from difficulties."
+      "answer": 1,
+      "explanation": "hang out은 친구들과 함께 시간을 보내는 것을 의미해요."
+    },
+    {
+      "type": "fill_blank",
+      "word": "hang out",
+      "sentence": "Do you want to _____ together this weekend?",
+      "sentence_ko": "이번 주말에 함께 시간 보낼래?",
+      "answer": "hang out",
+      "hint": "시간을 보내다"
     }
   ]
 }

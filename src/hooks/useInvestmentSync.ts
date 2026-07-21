@@ -37,6 +37,7 @@ export interface InvestmentColumn {
 
 export interface BoxPlotPoint {
   label: string;
+  avg: number;
   min: number;
   q1: number;
   median: number;

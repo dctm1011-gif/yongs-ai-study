@@ -110,7 +110,7 @@ def _percentile(sorted_values: list[float], p: float) -> float:
 
 
 def get_monthly_summary(area_config: dict, deal_ymd: str, service_key: str) -> dict | None:
-    """지역 하나의 특정 계약월 실거래가 분포(억원, 소수 2자리): min/q1/median/q3/max/count. 거래 없으면 None."""
+    """지역 하나의 특정 계약월 실거래가 분포(억원, 소수 2자리): avg/min/q1/median/q3/max/count. 거래 없으면 None."""
     all_trades: list[dict] = []
     for lawd_cd in _lawd_codes(area_config):
         all_trades.extend(fetch_trades(lawd_cd, deal_ymd, service_key))
@@ -124,6 +124,7 @@ def get_monthly_summary(area_config: dict, deal_ymd: str, service_key: str) -> d
 
     amounts = sorted(t["dealAmount"] / 10000 for t in all_trades)  # 만원 -> 억원
     return {
+        "avg": round(sum(amounts) / len(amounts), 2),
         "min": round(amounts[0], 2),
         "q1": round(_percentile(amounts, 0.25), 2),
         "median": round(_percentile(amounts, 0.5), 2),

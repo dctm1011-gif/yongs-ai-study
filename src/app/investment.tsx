@@ -77,7 +77,7 @@ const BoxPlotChart: React.FC<{
         <View style={styles.barChart}>
           {data.map((point, idx) => (
             <View key={idx} style={styles.barColumn}>
-              <Text style={styles.barValue}>{point.median.toLocaleString()}</Text>
+              <Text style={styles.barValue}>{point.avg.toLocaleString()}</Text>
               <View style={styles.boxPlotTrack}>
                 <View
                   style={[
@@ -98,13 +98,17 @@ const BoxPlotChart: React.FC<{
                   ]}
                 />
                 <View style={[styles.boxMedian, { bottom: `${pct(point.median)}%` }]} />
+                <View style={[styles.boxAvgDot, { bottom: `${pct(point.avg)}%` }]} />
               </View>
               <Text style={styles.barLabel}>{point.label}</Text>
+              <Text style={styles.boxRangeLabel}>{point.min}~{point.max}</Text>
             </View>
           ))}
         </View>
       </View>
-      <Text style={styles.chartUnit}>{unit} · 박스: 25~75%, 굵은 선: 중앙값, 수염: 최소~최대</Text>
+      <Text style={styles.chartUnit}>
+        {unit} · 막대 위 숫자: 평균값 · 아래 숫자: 최소~최대 범위 · 박스: 25~75% · 굵은 선: 중앙값 · 점: 평균 위치
+      </Text>
     </View>
   );
 });
@@ -1103,6 +1107,23 @@ const styles = StyleSheet.create({
     right: 2,
     height: 2,
     backgroundColor: '#1d4ed8',
+  },
+  boxAvgDot: {
+    position: 'absolute',
+    left: '50%',
+    marginLeft: -3,
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    marginBottom: -3,
+    backgroundColor: '#f97316',
+    borderWidth: 1,
+    borderColor: '#fff',
+  },
+  boxRangeLabel: {
+    fontSize: 9,
+    color: '#9ca3af',
+    marginTop: 2,
   },
   filterContainer: {
     flex: 1,

@@ -1,40 +1,40 @@
 {
   "date": "2026-07-22",
   "reading": {
-    "title": "The Discovery of Exoplanets",
-    "passage": "The discovery of exoplanets has revolutionized astronomy by revealing that planetary systems exist beyond our solar system. Since 1995, astronomers have identified over 5,000 exoplanets using various detection methods, including the transit method and radial velocity technique. These discoveries suggest that planets are common throughout the universe. Some exoplanets exist in habitable zones where conditions might support life. This finding fundamentally challenges our understanding of our place in the cosmos and raises profound questions about extraterrestrial life.",
+    "title": "The Discovery of Exoplanets and Stellar Systems",
+    "passage": "Astronomers have revolutionized our understanding of planetary systems through the discovery of exoplanets orbiting distant stars. Since 1995, over 5,000 exoplanets have been identified, revealing that planetary formation is far more common than previously believed. These discoveries employ sophisticated techniques such as the transit method, which detects subtle brightness fluctuations as planets pass in front of their host stars. This technological advancement suggests that life-supporting worlds may exist throughout the universe, fundamentally challenging our perspective on Earth's uniqueness.",
     "questions": [
       {
-        "q": "According to the passage, how many exoplanets have been identified since 1995?",
+        "q": "According to the passage, which method is used to detect exoplanets?",
         "options": [
-          "A. Over 1,000",
-          "B. Over 5,000",
-          "C. Over 10,000",
-          "D. Over 50,000"
+          "A) Direct telescopic observation of planetary surfaces",
+          "B) Measuring gravitational effects on nearby stars",
+          "C) Detecting brightness changes as planets cross in front of stars",
+          "D) Analyzing radio signals from distant solar systems"
         ],
-        "answer": 1,
-        "explanation": "지문에서 '1995년 이후 5,000개 이상의 외계행성이 발견되었다'고 명시되어 있습니다."
+        "answer": 2,
+        "explanation": "지문에서 'the transit method, which detects subtle brightness fluctuations as planets pass in front of their host stars'라고 명시되어 있습니다."
       },
       {
         "q": "What can be inferred from the passage about planetary systems in the universe?",
         "options": [
-          "A. They are extremely rare and unique to our galaxy",
-          "B. They only exist in habitable zones",
-          "C. They are common throughout the universe",
-          "D. They cannot support any form of life"
+          "A) Most stars do not have planetary systems",
+          "B) Planetary formation appears to be a widespread phenomenon",
+          "C) Only Earth-like planets have been discovered",
+          "D) Exoplanet discovery ended in 2010"
         ],
-        "answer": 2,
-        "explanation": "지문에서 '이러한 발견은 행성이 우주 전역에서 흔하다는 것을 제시한다'고 설명하고 있습니다."
+        "answer": 1,
+        "explanation": "지문에서 '5,000 exoplanets have been identified, revealing that planetary formation is far more common than previously believed'라고 했으므로, 행성 형성이 광범위하게 일어나는 현상임을 추론할 수 있습니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the following statement? Countries should implement stricter immigration policies to control population growth and protect local job markets. Use specific reasons and examples to support your answer.",
+    "prompt": "Do you agree or disagree with the following statement? Immigration policies should prioritize skilled workers and professionals over refugees and family reunification. Use specific reasons and examples to support your answer.",
     "structure": {
-      "intro": "도입부 작성 가이드: 이민 정책에 대한 입장을 명확히 하되, 찬성/반대 입장을 분명히 표현하세요. 예시: 'In my opinion, I believe that immigration policies should be carefully balanced rather than simply made stricter, as both immigration and local protection have merit.'",
-      "body1": "본론 1 아이디어 힌트: 인구 증가 제어의 필요성 vs 문화적 다양성의 이점. 예를 들어, '이민자는 새로운 기술과 관점을 가져오며, 인구 고령화 문제를 해결할 수 있다'는 구체적 사례 제시",
-      "body2": "본론 2 아이디어 힌트: 일자리 시장 보호 vs 경제적 성장. 구체 사례로 '캐나다는 선별적 이민 정책을 통해 경제 성장과 고용 창출의 균형을 맞추었다'는 예시 활용",
-      "conclusion": "결론 작성 가이드: 주장을 재진술하면서, '효과적인 이민 정책은 절대적 제한이 아닌 현명한 관리와 투자'임을 강조하세요."
+      "intro": "도입부 작성 가이드: 프롬프트를 다시 표현한 후, 이민 정책의 목표(경제 발전 vs 인도주의)에 대한 자신의 입장을 명확히 제시하세요. 예시: 'While skilled immigration has economic benefits, a balanced approach considering humanitarian concerns is more important.'",
+      "body1": "본론 1 아이디어: 숙련된 근로자 우선정책의 경제적 이점 논의. 구체적 예시로 캐나다의 포인트 기반 시스템이나 싱가포르의 선별적 정책 언급. 그러나 장기적 사회 안정성 측면에서의 한계도 제시하기.",
+      "body2": "본론 2 아이디어: 난민과 가족 재결합의 인도주의적 및 사회적 가치 강조. 예시: 난민 수용이 문화 다양성을 증진하고, 가족 재결합이 이민자들의 정착 성공률을 높임. 또한 역사적 관점(미국의 다양한 이민 배경)에서의 성공 사례 제시.",
+      "conclusion": "결론 작성 가이드: 자신의 입장을 재확인하면서, 이상적인 이민 정책은 경제 발전과 인도주의적 책임의 균형을 맞춰야 함을 강조하세요. 'The most effective immigration policy must balance economic needs with humanitarian values.'"
     },
     "key_phrases": [
       "In my opinion,",
@@ -44,66 +44,69 @@
       "In conclusion,",
       "It is undeniable that",
       "This suggests that",
-      "From this perspective,",
-      "To illustrate,",
-      "Nevertheless,"
+      "I strongly believe that",
+      "From an economic perspective,",
+      "However, we must consider",
+      "In light of these points,"
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to shop online for convenience and variety. Others prefer to shop in physical stores to see and touch products before buying. Which do you prefer and why? Include specific reasons and details in your response.",
+    "prompt": "Some people prefer shopping online for convenience and variety. Others prefer shopping in physical stores for the experience and immediate gratification. Which do you prefer and why? Include specific reasons and details.",
     "useful_expressions": [
       "In my opinion, I prefer...",
       "One reason is that...",
       "For example,",
       "Additionally,",
       "To sum up,",
-      "This is because...",
-      "In contrast,",
-      "I find that..."
+      "I find that...",
+      "The main advantage is...",
+      "On the other hand,",
+      "Personally,",
+      "This is important because..."
     ],
     "sample_points": [
-      "온라인 쇼핑의 편의성: 시간 절약, 배송 서비스, 가격 비교 용이 - 예시: 바쁜 직장인이 야밤에 쇼핑 가능",
-      "매장 쇼핑의 장점: 제품 직접 확인, 즉시 구매 가능, 반품 편리성 - 예시: 옷의 핏이나 색상을 직접 확인",
-      "결론: 두 방식의 균형잡힌 활용이 최선임을 제시"
+      "온라인 쇼핑의 편의성: 24/7 접근 가능, 다양한 제품 비교, 배송 서비스",
+      "매장 쇼핑의 장점: 제품을 직접 확인 가능, 즉시 구매 가능, 대면 고객 서비스, 사회적 경험",
+      "결론: 개인의 라이프스타일과 상황에 따라 두 방식을 혼합하여 사용하는 것이 최적"
     ]
   },
   "listening": {
-    "title": "Dormitory Room Assignment Request",
+    "title": "기숙사 배정 및 숙박 옵션 상담",
     "type": "conversation",
-    "script": "Student A: Hi, I'm calling about my dormitory room assignment. I submitted my housing application three weeks ago, but I haven't received confirmation yet.\n\nReceptionist: I understand your concern. Let me pull up your information. Can you provide your student ID number?\n\nStudent A: Sure, it's 20240567.\n\nReceptionist: Thank you. I see your application here. According to our records, your request was received on time. However, due to high demand this semester, room assignments are taking longer than usual. We typically send confirmations by email within five business days.\n\nStudent A: Oh, I see. Is there anything I can do to speed up the process? I'm an international student, and I need to finalize my housing before my visa interview.\n\nReceptionist: I completely understand. Let me check if I can expedite your case. Since you're an international student, you qualify for priority processing. I'll make a note here and forward your file to the housing coordinator. You should receive your assignment within 48 hours.\n\nStudent A: That's great! Thank you so much. Is there a specific email address I should check?\n\nReceptionist: You'll receive it at your university email address on file. If you don't hear from us by tomorrow evening, feel free to call back and ask for me.",
+    "script": "Student A: Hi, I'm trying to figure out my housing situation for next semester. Do you know how the dormitory assignment process works?\n\nStaff: Of course! We assign dorms based on several factors including class year, major, and housing preferences. Freshmen are typically placed in the main residence hall. \n\nStudent A: That sounds good. Are there other options available?\n\nStaff: Yes, we have several choices. There's the main dorm I mentioned, plus upper-class housing, themed housing communities, and off-campus apartments for seniors. We also offer a lottery system for popular residences.\n\nStudent A: What about accommodations? I have a mobility issue and need an accessible room.\n\nStaff: Absolutely. Our accessibility office works directly with our housing department. Just submit a request with documentation, and we prioritize accessible rooms accordingly. We have elevators, accessible bathrooms, and parking near dormitories.\n\nStudent A: That's reassuring. When should I submit my preferences?\n\nStaff: Preferences are due by April 15th. I recommend submitting early. Housing fills quickly, especially for specific accommodations. You'll receive your assignment by May 30th.",
     "questions": [
       {
         "q": "What is the main topic of the conversation?",
         "options": [
-          "A. Visa interview procedures",
-          "B. Dormitory room assignment inquiry",
-          "C. International student orientation",
-          "D. Housing application deadlines"
+          "A) The cost of campus housing",
+          "B) The dormitory assignment process and housing options",
+          "C) How to apply to the university",
+          "D) Meal plan options in the dining hall"
         ],
         "answer": 1,
-        "explanation": "학생이 기숙사 배정 확인에 대해 문의하는 것이 대화의 주요 내용입니다."
+        "explanation": "직원이 기숙사 배정 과정, 주택 옵션(메인 숙소, 상급생 주택, 테마 주택, 캠퍼스 외 아파트)에 대해 설명하고 있습니다."
       },
       {
-        "q": "Why is the student requesting expedited processing?",
+        "q": "What does the staff member suggest regarding the housing preference deadline?",
         "options": [
-          "A. He is dissatisfied with the housing options",
-          "B. He needs finalization before his visa interview",
-          "C. He submitted his application late",
-          "D. He wants to change his dormitory assignment"
-        ],
-        "answer": 1,
-        "explanation": "학생은 비자 인터뷰 전에 주택을 확정해야 하기 때문에 빠른 처리를 요청했습니다."
-      },
-      {
-        "q": "What does the receptionist suggest about the student's status?",
-        "options": [
-          "A. International students cannot receive priority processing",
-          "B. International students have delayed application deadlines",
-          "C. International students qualify for priority processing",
-          "D. International students must pay an additional fee"
+          "A) Students can submit preferences anytime during the semester",
+          "B) The deadline is not important",
+          "C) Submitting early is recommended because housing fills quickly",
+          "D) Only seniors need to submit preferences by the deadline"
         ],
         "answer": 2,
-        "explanation": "직원은 유학생 신분으로 인해 우선 처리 대상이 된다고 언급했습니다."
+        "explanation": "직원은 '4월 15일까지 제출해야 하며, 특히 특정 숙박시설을 원할 경우 서둘러 제출할 것을 권장합니다.'라고 명시했습니다."
+      },
+      {
+        "q": "Why does the staff member mention the accessibility office?",
+        "options": [
+          "A) To explain the general location of campus offices",
+          "B) To address the student's mobility accommodation needs and ensure proper housing support",
+          "C) To encourage all students to request accessible rooms",
+          "D) To discuss the staff member's personal housing experience"
+        ],
+        "answer": 1,
+        "explanation": "학생이 이동성 문제로 인한 접근 가능한 객실이 필요하다고 언급했을 때, 직원은 접근성 사무실이 주택부서와 직접 협력하여 서류를 제출하면 접근 가능한 객실의 우선순위를 정한다고 설명합니다."
       }
     ]
   }
