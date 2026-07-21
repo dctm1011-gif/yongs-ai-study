@@ -192,7 +192,9 @@ Rules:
 - Each word needs part_of_speech, meaning_ko, explanation, example_from_convo, example_ko, tip, emoji
 - Return ONLY the JSON object, nothing else"""
 
-    for attempt in range(2):
+    used_lower = {w.lower() for w in used_words}
+    max_attempts = 3
+    for attempt in range(max_attempts):
         response = client.messages.create(
             model="claude-haiku-4-5-20251001",
             max_tokens=4000,
@@ -208,18 +210,81 @@ Rules:
 
         try:
             data = json.loads(text[start:end])
-            if len(data.get("words", [])) >= 5 and len(data.get("quiz", [])) >= 8:
-                used_lower = {w.lower() for w in used_words}
-                repeats = [w["word"] for w in data["words"] if w.get("word", "").lower() in used_lower]
-                if repeats:
-                    print(f"[!] 지시에도 불구하고 중복 단어 생성됨: {repeats} (words_db.json에 이미 존재)")
-                print(f"[+] 새로운 단어 {len(data['words'])}개 생성 완료")
-                return data
         except json.JSONDecodeError as e:
             print(f"[!] JSON 파싱 실패 (시도 {attempt + 1}): {e}")
+            continue
 
-    print("[!] 2회 시도 모두 실패, 기본값 사용")
+        if len(data.get("words", [])) < 5 or len(data.get("quiz", [])) < 8:
+            continue
+
+        repeats = [w["word"] for w in data["words"] if w.get("word", "").lower() in used_lower]
+        if not repeats:
+            print(f"[+] 새로운 단어 {len(data['words'])}개 생성 완료 (중복 없음)")
+            return data
+
+        if attempt < max_attempts - 1:
+            print(f"[!] 중복 단어 생성됨 (시도 {attempt + 1}): {repeats} - 재시도")
+            continue
+
+        # 마지막 시도까지 중복이면, 중복 단어와 그 단어의 퀴즈만 제거하고 부족한 만큼 채워넣음
+        print(f"[!] {max_attempts}회 시도 후에도 중복 발생: {repeats} - 중복 단어 제외 후 부족분 보충")
+        repeat_lower = {w.lower() for w in repeats}
+        data["words"] = [w for w in data["words"] if w.get("word", "").lower() not in repeat_lower]
+        data["quiz"] = [q for q in data["quiz"] if q.get("word", "").lower() not in repeat_lower]
+
+        missing = 5 - len(data["words"])
+        if missing > 0:
+            already_picked = {w.get("word", "").lower() for w in data["words"]}
+            fill = fetch_replacement_words(client, target_date, used_lower | already_picked, missing)
+            if fill:
+                data["words"].extend(fill["words"])
+                data["quiz"].extend(fill["quiz"])
+                print(f"[+] 부족분 {missing}개 보충 완료")
+            else:
+                print(f"[!] 부족분 보충 실패 - {len(data['words'])}개로 진행")
+
+        if data["words"]:
+            return data
+
+    print(f"[!] {max_attempts}회 시도 모두 실패, 기본값 사용")
     return get_default_words(target_date)
+
+
+def fetch_replacement_words(client: anthropic.Anthropic, target_date: date, exclude_lower: set, count: int) -> dict | None:
+    """중복으로 제외된 단어를 대체할 N개를 추가로 생성 (실패하면 None)."""
+    prompt = f"""Generate exactly {count} daily English word(s) and {count * 2} quiz questions for TOEFL students.
+Return ONLY valid JSON, no other text.
+
+⚠️ Do NOT use any of these words:
+{', '.join(sorted(exclude_lower))}
+
+JSON Format:
+{{"words": [{{"word": "example", "part_of_speech": "noun", "meaning_ko": "뜻", "explanation": "설명", "example_from_convo": "I'm lowkey happy", "example_ko": "나 은근히 행복해", "tip": "일상에서 자주 씀", "emoji": "😊"}}], "quiz": [{{"type": "meaning", "word": "example", "question": "문제?", "options": ["선택1", "선택2"], "answer": 0, "explanation": "설명"}}]}}
+
+Rules:
+- Exactly {count} word(s), none from the excluded list above
+- Exactly {count * 2} quiz questions (2 per word)
+- Return ONLY the JSON object, nothing else"""
+
+    try:
+        response = client.messages.create(
+            model="claude-haiku-4-5-20251001",
+            max_tokens=2000,
+            messages=[{"role": "user", "content": prompt}]
+        )
+        text = response.content[0].text.strip()
+        start = text.find("{")
+        end = text.rfind("}") + 1
+        if start == -1 or end == 0:
+            return None
+        data = json.loads(text[start:end])
+        words = data.get("words", [])
+        # 대체 단어도 제외 목록과 겹치면 신뢰하지 않음
+        if not words or any(w.get("word", "").lower() in exclude_lower for w in words):
+            return None
+        return data
+    except (json.JSONDecodeError, anthropic.APIError):
+        return None
 
 def analyze_with_claude(convo_text: str, target_date: date, client: anthropic.Anthropic) -> dict:
     print("[*] Claude API 호출 중...")
