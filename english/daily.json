@@ -2,160 +2,160 @@
   "date": "2026-07-22",
   "words": [
     {
-      "word": "pragmatic",
-      "part_of_speech": "adjective",
-      "meaning_ko": "실용적인, 현실적인",
-      "explanation": "실제적인 결과나 효과에 중점을 두는 성향",
-      "example_from_convo": "We need a pragmatic approach to solve this budget problem",
-      "example_ko": "우리는 예산 문제를 해결하기 위해 실용적인 접근이 필요해",
-      "tip": "비즈니스와 일상 회화에서 자주 사용됨",
-      "emoji": "🎯"
+      "word": "scrutinize",
+      "part_of_speech": "verb",
+      "meaning_ko": "자세히 검토하다, 면밀히 살펴보다",
+      "explanation": "To examine something very carefully and thoroughly, often looking for problems or details",
+      "example_from_convo": "The teacher will scrutinize your essay for grammar mistakes",
+      "example_ko": "선생님이 너의 에세이를 문법 실수가 있는지 자세히 검토할 거야",
+      "tip": "학술적이고 공식적인 상황에서 자주 사용됨",
+      "emoji": "🔍"
     },
     {
       "word": "articulate",
-      "part_of_speech": "verb/adjective",
-      "meaning_ko": "명확하게 표현하다, 분명한",
-      "explanation": "생각이나 느낌을 명확하고 유창하게 표현하는 것",
-      "example_from_convo": "She articulated her concerns during the meeting",
-      "example_ko": "그녀는 회의 중에 자신의 우려를 명확하게 표현했다",
-      "tip": "발표나 인터뷰에서 중요한 단어",
+      "part_of_speech": "adjective",
+      "meaning_ko": "분명하게 표현하는, 명확한",
+      "explanation": "Able to express ideas clearly and effectively; or to express something in clear words",
+      "example_from_convo": "She gave an articulate presentation about climate change",
+      "example_ko": "그녀는 기후 변화에 대해 명확하게 설명하는 프레젠테이션을 했어",
+      "tip": "좋은 스피커나 작가를 묘사할 때 사용",
       "emoji": "🗣️"
     },
     {
-      "word": "ameliorate",
-      "part_of_speech": "verb",
-      "meaning_ko": "개선하다, 호전시키다",
-      "explanation": "어떤 상황이나 상태를 더 좋게 만드는 것",
-      "example_from_convo": "The new policy will ameliorate working conditions",
-      "example_ko": "새로운 정책이 근무 환경을 개선할 것이다",
-      "tip": "formal한 표현으로 improve보다 더 고급 단어",
-      "emoji": "📈"
-    },
-    {
-      "word": "abate",
-      "part_of_speech": "verb",
-      "meaning_ko": "줄어들다, 약해지다",
-      "explanation": "강도나 강렬함이 감소하는 것",
-      "example_from_convo": "The storm's intensity began to abate by evening",
-      "example_ko": "폭풍의 강도가 저녁이 되면서 약해지기 시작했다",
-      "tip": "법률이나 학문적 문맥에서 자주 사용",
-      "emoji": "🌤️"
-    },
-    {
-      "word": "ambition",
+      "word": "detriment",
       "part_of_speech": "noun",
-      "meaning_ko": "야망, 욕망",
-      "explanation": "성공하고 싶은 강한 욕구나 목표",
-      "example_from_convo": "Her ambition is to become a CEO",
-      "example_ko": "그녀의 야망은 CEO가 되는 것이다",
-      "tip": "긍정적인 의미로 자주 사용됨",
-      "emoji": "🚀"
+      "meaning_ko": "해, 피해, 악영향",
+      "explanation": "Harm or damage caused to someone or something; something that causes a negative effect",
+      "example_from_convo": "Lack of sleep is a detriment to your health",
+      "example_ko": "수면 부족은 건강에 해가 된다",
+      "tip": "formal한 표현으로 negative impact를 의미함",
+      "emoji": "⚠️"
+    },
+    {
+      "word": "pertinent",
+      "part_of_speech": "adjective",
+      "meaning_ko": "적절한, 관련 있는, 해당되는",
+      "explanation": "Relevant or applicable to a particular matter; directly related to the subject being discussed",
+      "example_from_convo": "That comment is not pertinent to our discussion",
+      "example_ko": "그 의견은 우리 논의와 관련이 없어",
+      "tip": "academic writing에서 자주 나타남",
+      "emoji": "🎯"
+    },
+    {
+      "word": "amenable",
+      "part_of_speech": "adjective",
+      "meaning_ko": "동의하는, 응하는, 적응 가능한",
+      "explanation": "Willing to agree or listen to suggestions; open to being changed or influenced",
+      "example_from_convo": "My boss is amenable to new ideas from the team",
+      "example_ko": "내 상사는 팀의 새로운 아이디어에 열려 있어",
+      "tip": "cooperative하거나 flexible한 사람/태도를 묘사할 때 사용",
+      "emoji": "🤝"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "pragmatic",
-      "question": "Which definition best matches 'pragmatic'?",
+      "word": "scrutinize",
+      "question": "What does 'scrutinize' mean?",
       "options": [
-        "Theoretical and ideal",
-        "Practical and results-oriented",
-        "Complicated and difficult",
-        "Emotional and subjective"
+        "To examine something very carefully and thoroughly",
+        "To ignore or overlook something",
+        "To write down detailed notes",
+        "To criticize harshly without reason"
       ],
-      "answer": 1,
-      "explanation": "Pragmatic means focusing on practical results rather than theory"
+      "answer": 0,
+      "explanation": "Scrutinize means to examine or inspect something carefully and in detail, often looking for errors or problems."
     },
     {
       "type": "meaning",
-      "word": "ameliorate",
-      "question": "What does 'ameliorate' mean?",
+      "word": "pertinent",
+      "question": "Which of the following is closest in meaning to 'pertinent'?",
       "options": [
-        "To worsen",
-        "To ignore",
-        "To improve or make better",
-        "To delay"
+        "Permanent and unchangeable",
+        "Relevant or applicable to a particular matter",
+        "Difficult to understand",
+        "Outdated or old-fashioned"
+      ],
+      "answer": 1,
+      "explanation": "Pertinent means directly relevant or applicable to the subject at hand. It describes something that is connected to or appropriate for what is being discussed."
+    },
+    {
+      "type": "meaning",
+      "word": "detriment",
+      "question": "What is a 'detriment'?",
+      "options": [
+        "A beneficial outcome or advantage",
+        "A specific skill or ability",
+        "Harm or damage that negatively affects something",
+        "An official decision or ruling"
       ],
       "answer": 2,
-      "explanation": "Ameliorate is a formal verb meaning to improve or make conditions better"
+      "explanation": "A detriment is something that causes harm, damage, or negative effects to a person or thing."
     },
     {
-      "type": "meaning",
+      "type": "fill_blank",
       "word": "articulate",
-      "question": "Which sentence uses 'articulate' correctly?",
+      "question": "The candidate gave a(n) _____ speech that clearly explained her policy positions.",
       "options": [
-        "He articulate the words on paper",
-        "She articulated her ideas clearly and fluently",
-        "The articulate was broken",
-        "They articulated to the store"
-      ],
-      "answer": 1,
-      "explanation": "Articulate means to express clearly; 'articulated her ideas' is the correct usage"
-    },
-    {
-      "type": "fill_blank",
-      "word": "abate",
-      "question": "The patient's fever began to _______ after taking medicine.",
-      "options": [
-        "amplify",
-        "abate",
-        "accelerate",
-        "absorb"
-      ],
-      "answer": 1,
-      "explanation": "Abate means to decrease or diminish, fitting the context of fever reducing"
-    },
-    {
-      "type": "fill_blank",
-      "word": "pragmatic",
-      "question": "We need to take a _______ approach rather than get lost in idealism.",
-      "options": [
-        "romantic",
-        "pragmatic",
-        "dramatic",
-        "automatic"
-      ],
-      "answer": 1,
-      "explanation": "Pragmatic approach means practical and focused on real results"
-    },
-    {
-      "type": "fill_blank",
-      "word": "ambition",
-      "question": "His _______ to succeed in business drove him to work 12 hours daily.",
-      "options": [
-        "ambition",
-        "condition",
-        "addition",
-        "position"
+        "articulate",
+        "confusing",
+        "brief",
+        "boring"
       ],
       "answer": 0,
-      "explanation": "Ambition fits perfectly as it means strong desire to succeed"
+      "explanation": "Articulate means clear and effective in expressing ideas. It fits perfectly in this context describing a well-spoken speech."
+    },
+    {
+      "type": "fill_blank",
+      "word": "amenable",
+      "question": "The committee members were _____ to postponing the meeting to accommodate everyone's schedule.",
+      "options": [
+        "resistant",
+        "amenable",
+        "indifferent",
+        "opposed"
+      ],
+      "answer": 1,
+      "explanation": "Amenable means willing to agree or accept. It indicates openness to the suggestion of postponing the meeting."
+    },
+    {
+      "type": "fill_blank",
+      "word": "scrutinize",
+      "question": "Before publishing the report, the editor will _____ every sentence for accuracy.",
+      "options": [
+        "summarize",
+        "scrutinize",
+        "illustrate",
+        "translate"
+      ],
+      "answer": 1,
+      "explanation": "Scrutinize means to examine carefully. The editor would carefully examine the sentences to ensure accuracy before publication."
     },
     {
       "type": "situation",
-      "word": "articulate",
-      "question": "In a job interview, you want to show you can express your ideas well. What skill are you demonstrating?",
+      "word": "pertinent",
+      "question": "You are writing an academic paper on renewable energy. Which topic is most 'pertinent' to your paper?",
       "options": [
-        "Being able to articulate your thoughts clearly",
-        "Being able to ignore questions",
-        "Being quiet and reserved",
-        "Being able to memorize scripts"
+        "The history of ancient Egyptian pyramids",
+        "The advantages and disadvantages of solar power technology",
+        "Famous recipes from different countries",
+        "The biography of a 19th-century novelist"
       ],
-      "answer": 0,
-      "explanation": "Articulate means to express ideas clearly and fluently, which is important in interviews"
+      "answer": 1,
+      "explanation": "Solar power technology is directly relevant to a paper on renewable energy. The other topics are not applicable to this subject matter."
     },
     {
       "type": "situation",
-      "word": "ameliorate",
-      "question": "A company faces poor employee morale. Which action would best ameliorate this situation?",
+      "word": "detriment",
+      "question": "A student skips classes regularly and doesn't study. What is this a 'detriment' to?",
       "options": [
-        "Cutting salaries further",
-        "Implementing better working conditions and fair wages",
-        "Ignoring employee complaints",
-        "Increasing work hours"
+        "Their social life",
+        "Their academic performance and future opportunities",
+        "Their hobbies",
+        "Their family's business"
       ],
       "answer": 1,
-      "explanation": "Ameliorate means to improve; better working conditions would improve the situation"
+      "explanation": "Skipping classes and not studying causes harm to the student's grades and academic success, which negatively affects their future opportunities."
     }
   ]
 }
