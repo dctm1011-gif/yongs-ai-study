@@ -3,8 +3,10 @@
 Claude가 오늘의 관심 종목(티커)을 고르면, 그 티커의 실제 최근 5개월 월평균 종가를 가져온다.
 추정 없음 - 데이터가 없는 달은 생략, 티커 자체가 유효하지 않으면 안전한 fallback 종목으로 재시도.
 """
+import json
 import re
 from datetime import date, timedelta
+from pathlib import Path
 
 import yfinance as yf
 
@@ -14,6 +16,31 @@ FALLBACK_TICKERS = [
     {"name": "SK하이닉스", "yahoo_ticker": "000660.KS"},
     {"name": "NVIDIA", "yahoo_ticker": "NVDA"},
 ]
+
+# 최근 선정 종목 기록 (다양성 강제용) - git 추적 대상 아님, 로컬 상태 파일
+HISTORY_PATH = Path(__file__).parent / "stock_history.json"
+
+
+def load_recent_picks(days: int = 5) -> list[str]:
+    """최근 며칠간 고른 종목명 리스트 (최신순 아님, 날짜순)."""
+    if not HISTORY_PATH.exists():
+        return []
+    try:
+        entries = json.loads(HISTORY_PATH.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return []
+    return [e["name"] for e in entries[-days:]]
+
+
+def record_pick(name: str, ticker: str, target_date: date, keep: int = 10) -> None:
+    entries = []
+    if HISTORY_PATH.exists():
+        try:
+            entries = json.loads(HISTORY_PATH.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            entries = []
+    entries.append({"date": target_date.isoformat(), "name": name, "ticker": ticker})
+    HISTORY_PATH.write_text(json.dumps(entries[-keep:], ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def _recent_months(target_date: date, count: int = 5) -> list[tuple[int, int]]:
@@ -69,6 +96,7 @@ def pick_and_fetch_stock(target_date: date, picked: dict | None) -> dict:
         if points:
             name = cand["name"]
             unit = _unit_for(ticker)
+            record_pick(name, ticker, target_date)
             return {
                 "name": name,
                 "ticker": ticker,

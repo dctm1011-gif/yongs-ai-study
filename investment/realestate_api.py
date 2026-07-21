@@ -2,8 +2,8 @@
 국토교통부 아파트매매 실거래상세자료 Open API
 (data.go.kr, https://www.data.go.kr/data/15126469/openapi.do)
 
-20개 경기도 지역의 최근 5개월 아파트 평균 매매가를 실제 거래 데이터로 집계한다.
-추정/보간 없음 - 해당 월에 거래가 없으면 그 데이터 포인트는 생략한다.
+20개 경기도 지역의 최근 5개월 아파트 실거래가 분포(박스플랏: 최소/1분위/중앙값/3분위/최대)를
+실제 거래 데이터로 집계한다. 추정/보간 없음 - 해당 월에 거래가 없으면 그 데이터 포인트는 생략한다.
 """
 import os
 import sys
@@ -97,8 +97,20 @@ def _lawd_codes(area_config: dict) -> list[str]:
     return lawd_cd if isinstance(lawd_cd, list) else [lawd_cd]
 
 
-def get_monthly_average(area_config: dict, deal_ymd: str, service_key: str) -> float | None:
-    """지역 하나의 특정 계약월 평균 매매가(억원, 소수 1자리). 거래 없으면 None."""
+def _percentile(sorted_values: list[float], p: float) -> float:
+    """선형보간 방식 백분위수 (0<=p<=1). sorted_values는 오름차순 정렬돼 있어야 함."""
+    n = len(sorted_values)
+    if n == 1:
+        return sorted_values[0]
+    idx = p * (n - 1)
+    lo = int(idx)
+    hi = min(lo + 1, n - 1)
+    frac = idx - lo
+    return sorted_values[lo] + (sorted_values[hi] - sorted_values[lo]) * frac
+
+
+def get_monthly_summary(area_config: dict, deal_ymd: str, service_key: str) -> dict | None:
+    """지역 하나의 특정 계약월 실거래가 분포(억원, 소수 2자리): min/q1/median/q3/max/count. 거래 없으면 None."""
     all_trades: list[dict] = []
     for lawd_cd in _lawd_codes(area_config):
         all_trades.extend(fetch_trades(lawd_cd, deal_ymd, service_key))
@@ -110,8 +122,15 @@ def get_monthly_average(area_config: dict, deal_ymd: str, service_key: str) -> f
     if not all_trades:
         return None
 
-    avg_manwon = sum(t["dealAmount"] for t in all_trades) / len(all_trades)
-    return round(avg_manwon / 10000, 1)  # 만원 -> 억원
+    amounts = sorted(t["dealAmount"] / 10000 for t in all_trades)  # 만원 -> 억원
+    return {
+        "min": round(amounts[0], 2),
+        "q1": round(_percentile(amounts, 0.25), 2),
+        "median": round(_percentile(amounts, 0.5), 2),
+        "q3": round(_percentile(amounts, 0.75), 2),
+        "max": round(amounts[-1], 2),
+        "count": len(amounts),
+    }
 
 
 def recent_deal_ymds(target_date: date, count: int = 5) -> list[str]:
@@ -137,15 +156,15 @@ def get_all_areas_chart_data(target_date: date, service_key: str) -> list[dict]:
         print(f"[*] {area} 실거래가 조회 중...")
         points = []
         for ymd in months:
-            avg = get_monthly_average(config, ymd, service_key)
-            if avg is not None:
-                points.append({"label": month_labels[ymd], "value": avg})
+            summary = get_monthly_summary(config, ymd, service_key)
+            if summary is not None:
+                points.append({"label": month_labels[ymd], **summary})
         if not points:
             print(f"[!] {area}: 5개월간 거래 데이터 없음 - 항목 생략")
             continue
         chart_data.append({
             "area": area,
-            "title": f"{area} 아파트 평균 매매가 추이",
+            "title": f"{area} 아파트 매매가 분포",
             "unit": "단위: 억원",
             "data": points,
         })

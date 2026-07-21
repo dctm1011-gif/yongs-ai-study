@@ -30,8 +30,19 @@ export interface InvestmentColumn {
     area: string; // 칩 선택 UI에 표시할 짧은 지역명 (예: "용인")
     title: string; // 차트 제목 (예: "용인 아파트 평균 매매가 추이")
     unit: string;
-    data: { label: string; value: number }[];
+    // 주식: 단순 월별 값. 부동산: 실거래 분포 박스플랏(최소/1분위/중앙값/3분위/최대).
+    data: ({ label: string; value: number } | BoxPlotPoint)[];
   }[];
+}
+
+export interface BoxPlotPoint {
+  label: string;
+  min: number;
+  q1: number;
+  median: number;
+  q3: number;
+  max: number;
+  count?: number;
 }
 
 const BOOKMARKS_KEY = 'investment_bookmarks';

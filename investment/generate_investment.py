@@ -15,7 +15,7 @@ from urllib.parse import urlparse
 import anthropic
 
 from realestate_api import get_all_areas_chart_data, get_molit_api_key
-from stock_api import pick_and_fetch_stock
+from stock_api import pick_and_fetch_stock, load_recent_picks
 
 ROOT = Path(__file__).parent.parent
 OUTPUT_JSON = ROOT / "investment" / "daily.json"
@@ -148,9 +148,13 @@ def get_api_key() -> str:
 
 
 def format_real_estate_table(chart_data: list[dict]) -> str:
+    """중앙값(대표값) 위주로 요약. 괄호 안은 그 달의 최소~최대 실거래 범위와 거래건수."""
     lines = []
     for entry in chart_data:
-        points = ", ".join(f"{p['label']}={p['value']}억" for p in entry["data"])
+        points = ", ".join(
+            f"{p['label']}={p['median']}억(범위 {p['min']}~{p['max']}억, {p['count']}건)"
+            for p in entry["data"]
+        )
         lines.append(f"- {entry['area']}: {points}")
     return "\n".join(lines)
 
@@ -174,13 +178,17 @@ STOCK_PICK_PROMPT = """오늘 날짜: {today}
 
 - 국내 코스피 종목은 종목코드 뒤에 .KS (예: 삼성전자 -> 005930.KS)
 - 국내 코스닥 종목은 .KQ (예: 에코프로 -> 086520.KQ)
-- 해외(미국) 종목은 티커 그대로 (예: NVDA, AAPL)"""
+- 해외(미국) 종목은 티커 그대로 (예: NVDA, AAPL)
+- 최근에 고른 종목: {recent_picks} - 이 중 하나를 반복 선정하지 마라. 단, 실적 발표·급등락처럼
+  오늘 특별히 다룰만한 큰 이슈가 있다면 예외적으로 반복 선정해도 된다."""
 
 
 def pick_stock(client: anthropic.Anthropic, target_date: date):
     """오늘의 관심 종목을 웹 검색으로 고름. 실패 시 (None, None) - stock_api의 fallback이 처리."""
     try:
-        messages = [{"role": "user", "content": STOCK_PICK_PROMPT.format(today=target_date)}]
+        recent_picks = load_recent_picks(5)
+        recent_text = ", ".join(recent_picks) if recent_picks else "없음"
+        messages = [{"role": "user", "content": STOCK_PICK_PROMPT.format(today=target_date, recent_picks=recent_text)}]
         tools = [{"type": "web_search_20250305", "name": "web_search", "max_uses": 3}]
         response = client.messages.create(model=MODEL, max_tokens=2000, tools=tools, messages=messages)
         text = "".join(b.text for b in response.content if b.type == "text")

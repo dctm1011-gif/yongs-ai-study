@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useInvestmentSync, InvestmentColumn } from '../hooks/useInvestmentSync';
+import { useInvestmentSync, InvestmentColumn, BoxPlotPoint } from '../hooks/useInvestmentSync';
 
 const { width } = Dimensions.get('window');
 
@@ -54,6 +54,61 @@ const BarChart: React.FC<{
   );
 });
 
+const isBoxPlotData = (
+  data: NonNullable<InvestmentColumn['chartData']>[number]['data']
+): data is BoxPlotPoint[] => data.length > 0 && 'median' in data[0];
+
+const BoxPlotChart: React.FC<{
+  data: BoxPlotPoint[];
+  title: string;
+  unit: string;
+}> = React.memo(({ data, title, unit }) => {
+  const globalMax = Math.max(...data.map(d => d.max), 1);
+  const pct = (v: number) => (v / globalMax) * 100;
+
+  return (
+    <View>
+      <Text style={styles.chartTitle}>{title}</Text>
+      <View style={styles.chartBody}>
+        <View style={styles.yAxis}>
+          <Text style={styles.yAxisLabel}>{globalMax.toLocaleString()}</Text>
+          <Text style={styles.yAxisLabel}>0</Text>
+        </View>
+        <View style={styles.barChart}>
+          {data.map((point, idx) => (
+            <View key={idx} style={styles.barColumn}>
+              <Text style={styles.barValue}>{point.median.toLocaleString()}</Text>
+              <View style={styles.boxPlotTrack}>
+                <View
+                  style={[
+                    styles.boxWhisker,
+                    {
+                      bottom: `${pct(point.min)}%`,
+                      height: `${Math.max(pct(point.max) - pct(point.min), 1)}%`,
+                    },
+                  ]}
+                />
+                <View
+                  style={[
+                    styles.boxRect,
+                    {
+                      bottom: `${pct(point.q1)}%`,
+                      height: `${Math.max(pct(point.q3) - pct(point.q1), 3)}%`,
+                    },
+                  ]}
+                />
+                <View style={[styles.boxMedian, { bottom: `${pct(point.median)}%` }]} />
+              </View>
+              <Text style={styles.barLabel}>{point.label}</Text>
+            </View>
+          ))}
+        </View>
+      </View>
+      <Text style={styles.chartUnit}>{unit} · 박스: 25~75%, 굵은 선: 중앙값, 수염: 최소~최대</Text>
+    </View>
+  );
+});
+
 // 여러 지역/차트가 있을 때 칩으로 하나씩 골라서 보는 선택형 UI.
 // 항목이 1개뿐이면 칩 없이 그 차트만 바로 보여준다.
 const ChartSelector: React.FC<{
@@ -61,9 +116,15 @@ const ChartSelector: React.FC<{
 }> = React.memo(({ charts }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
+  const renderChart = (chart: NonNullable<InvestmentColumn['chartData']>[number]) =>
+    isBoxPlotData(chart.data) ? (
+      <BoxPlotChart data={chart.data} title={chart.title} unit={chart.unit} />
+    ) : (
+      <BarChart data={chart.data as { label: string; value: number }[]} title={chart.title} unit={chart.unit} />
+    );
+
   if (charts.length === 1) {
-    const chart = charts[0];
-    return <BarChart data={chart.data} title={chart.title} unit={chart.unit} />;
+    return renderChart(charts[0]);
   }
 
   const selected = charts[selectedIndex];
@@ -95,7 +156,7 @@ const ChartSelector: React.FC<{
           </TouchableOpacity>
         ))}
       </ScrollView>
-      <BarChart data={selected.data} title={selected.title} unit={selected.unit} />
+      {renderChart(selected)}
     </View>
   );
 });
@@ -1014,6 +1075,34 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: '#6b7280',
     marginTop: 6,
+  },
+  boxPlotTrack: {
+    width: 24,
+    height: 80,
+    position: 'relative',
+  },
+  boxWhisker: {
+    position: 'absolute',
+    left: '50%',
+    marginLeft: -1,
+    width: 2,
+    backgroundColor: '#9ca3af',
+  },
+  boxRect: {
+    position: 'absolute',
+    left: 2,
+    right: 2,
+    backgroundColor: '#93c5fd',
+    borderWidth: 1,
+    borderColor: '#2563eb',
+    borderRadius: 2,
+  },
+  boxMedian: {
+    position: 'absolute',
+    left: 2,
+    right: 2,
+    height: 2,
+    backgroundColor: '#1d4ed8',
   },
   filterContainer: {
     flex: 1,

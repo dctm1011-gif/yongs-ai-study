@@ -734,5 +734,17 @@
     "explanation": "표면만 다루고 깊이 있지 않거나 겉으로만 보이는",
     "tip": "비판적인 평가에서 자주 사용",
     "emoji": "⛱️"
+  },
+  {
+    "id": "volatile",
+    "word": "volatile",
+    "pos": "adjective",
+    "date": "2026-07-22",
+    "meaning": "불안정한, 변덕스러운",
+    "example_ko": "최근 주식 시장이 불안정해",
+    "example_en": "The stock market has been volatile lately",
+    "explanation": "Liable to change rapidly and unpredictably; unstable or prone to sudden change",
+    "tip": "경제, 날씨, 감정 등 변화가 심한 것을 묘사할 때 사용",
+    "emoji": "📈"
   }
 ]
