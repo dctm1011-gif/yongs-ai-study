@@ -746,5 +746,65 @@
     "explanation": "Liable to change rapidly and unpredictably; unstable or prone to sudden change",
     "tip": "경제, 날씨, 감정 등 변화가 심한 것을 묘사할 때 사용",
     "emoji": "📈"
+  },
+  {
+    "id": "mundane",
+    "word": "mundane",
+    "pos": "adjective",
+    "date": "2026-07-23",
+    "meaning": "평범한, 따분한",
+    "example_ko": "내 일은 평범하지만 생활비는 벌어요.",
+    "example_en": "My job is pretty mundane, but it pays the bills.",
+    "explanation": "일상적이고 특별하지 않은, 지루한 것을 의미합니다.",
+    "tip": "회사나 일상 얘기할 때 자주 사용",
+    "emoji": "😑"
+  },
+  {
+    "id": "meander",
+    "word": "meander",
+    "pos": "verb",
+    "date": "2026-07-23",
+    "meaning": "구불거리며 흐르다, 목적 없이 돌아다니다",
+    "example_ko": "그냥 도시를 돌아다니면서 뭘 찾을지 보자.",
+    "example_en": "Let's just meander through the city and see what we find.",
+    "explanation": "직진하지 않고 굽이치며 가거나, 목표 없이 점점 돌아다니는 것을 뜻합니다.",
+    "tip": "강이나 길, 대화 등이 굽이칠 때 사용 가능",
+    "emoji": "🌊"
+  },
+  {
+    "id": "placid",
+    "word": "placid",
+    "pos": "adjective",
+    "date": "2026-07-23",
+    "meaning": "잔잔한, 평온한, 침착한",
+    "example_ko": "혼란 속에서도 그녀는 평온함을 유지했어.",
+    "example_en": "Despite the chaos, she remained placid and composed.",
+    "explanation": "물이 잔잔하거나 사람의 성격이 차분하고 침착한 상태를 나타냅니다.",
+    "tip": "조용하고 차분한 분위기 묘사할 때 좋음",
+    "emoji": "🧘"
+  },
+  {
+    "id": "tangible",
+    "word": "tangible",
+    "pos": "adjective",
+    "date": "2026-07-23",
+    "meaning": "만질 수 있는, 구체적인, 실질적인",
+    "example_ko": "우린 구체적인 결과가 필요해, 약속만으로는 안 돼.",
+    "example_en": "We need tangible results, not just promises.",
+    "explanation": "손으로 만질 수 있거나 눈에 보이는, 추상적이지 않은 것을 의미합니다.",
+    "tip": "추상적 vs 구체적 구분할 때 자주 사용",
+    "emoji": "✋"
+  },
+  {
+    "id": "alleviate",
+    "word": "alleviate",
+    "pos": "verb",
+    "date": "2026-07-23",
+    "meaning": "완화하다, 덜어주다",
+    "example_ko": "이 약이 당신의 두통을 완화해줄 거야.",
+    "example_en": "This medicine should alleviate your headache.",
+    "explanation": "고통, 문제, 부담 등을 줄이거나 덜어주는 것을 뜻합니다.",
+    "tip": "의료, 문제 해결 맥락에서 자주 등장",
+    "emoji": "💊"
   }
 ]

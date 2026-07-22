@@ -1,110 +1,108 @@
 {
-  "date": "2026-07-22",
+  "date": "2026-07-23",
   "reading": {
-    "title": "The Discovery of Exoplanets",
-    "passage": "The first exoplanet was discovered in 1995 orbiting a star similar to our Sun. Since then, astronomers have identified over 5,000 planets outside our solar system using various detection methods. The transit method, which observes the slight dimming of a star as a planet passes in front of it, has proven particularly effective. These discoveries have fundamentally changed our understanding of planetary formation and suggest that habitable worlds may be far more common than previously believed.",
+    "title": "Photosynthesis and Climate Change",
+    "passage": "Photosynthesis, the process by which plants convert sunlight into chemical energy, plays a crucial role in regulating atmospheric carbon dioxide levels. As CO2 concentrations increase due to human activities, plants theoretically absorb more carbon, potentially mitigating climate change. However, research suggests that this CO2 fertilization effect has limitations. Nutrient-depleted soils and water scarcity constrain plant growth, preventing forests from acting as unlimited carbon sinks. Additionally, rising temperatures may reduce photosynthetic efficiency in certain species, complicating climate predictions.",
     "questions": [
       {
-        "q": "According to the passage, when was the first exoplanet discovered?",
+        "q": "According to the passage, what is the primary function of photosynthesis in relation to climate?",
         "options": [
-          "In the 1980s",
-          "In 1995",
-          "In the 2000s",
-          "In 2010"
+          "It increases atmospheric carbon dioxide levels",
+          "It helps regulate CO2 concentrations in the atmosphere",
+          "It converts chemical energy into sunlight",
+          "It depletes soil nutrients faster"
         ],
         "answer": 1,
-        "explanation": "지문에서 명확하게 'The first exoplanet was discovered in 1995'라고 명시되어 있습니다."
+        "explanation": "지문에서 photosynthesis가 'plays a crucial role in regulating atmospheric carbon dioxide levels'라고 명시되어 있습니다."
       },
       {
-        "q": "What can be inferred from the passage about the transit method?",
+        "q": "What can be inferred from the passage about the CO2 fertilization effect?",
         "options": [
-          "It is the only way to detect exoplanets",
-          "It is particularly successful in finding exoplanets",
-          "It was discovered before 1995",
-          "It cannot detect habitable planets"
+          "It is unlimited and will solve climate change",
+          "It is not as effective as once believed due to environmental constraints",
+          "It only works in tropical regions",
+          "It increases water availability for plants"
         ],
         "answer": 1,
-        "explanation": "지문에서 'The transit method...has proven particularly effective'라고 언급하여 이 방법이 특히 효과적임을 암시합니다."
+        "explanation": "지문에서 'this CO2 fertilization effect has limitations'이라고 명시하고, 영양 부족 토양, 수자원 부족, 온도 상승 등이 그 효과를 제한한다고 설명합니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the following statement? Immigration policies should prioritize skilled workers over family reunification. Use specific reasons and examples to support your answer.",
+    "prompt": "Do you agree or disagree with the following statement? 'Animal testing should be strictly regulated or banned to protect animal welfare, even if it slows down medical research.' Use specific reasons and examples to support your answer.",
     "structure": {
-      "intro": "도입부: 이민 정책의 기준에 대한 prompt를 다시 표현하고, 당신의 입장(skilled workers vs family reunification 중 선택)을 명확히 제시하세요. 예: 'While some argue that skilled workers benefit the economy, I believe that family reunification should be equally prioritized in immigration policy.'",
-      "body1": "본론 1: 첫 번째 입장을 뒷받침하는 이유 제시. 예를 들어, 인도적 가치, 사회 통합, 또는 경제적 이점 중 하나를 선택하여 구체적 사례와 함께 설명하세요.",
-      "body2": "본론 2: 두 번째 이유 제시. 첫 번째와 다른 각도(사회적, 경제적, 정책적)에서 논증하고, 반대 입장의 약점을 간접적으로 언급할 수 있습니다.",
-      "conclusion": "결론: thesis를 재표현하고, 두 body 문단의 핵심을 요약한 후, 이민 정책의 균형잡힌 접근의 중요성으로 마무리하세요."
+      "intro": "도입부: 명제를 다시 표현하고 자신의 입장을 명확히 제시하세요. 예시) 'While some argue that animal testing is necessary for scientific advancement, I firmly believe that strict regulations or bans are ethically imperative because...'",
+      "body1": "본론 1: 동물의 도덕적 지위와 고통 문제. 예시) 동물도 인간과 유사한 신경계를 가지고 있으며 고통을 느낀다는 과학적 증거, 특정 동물실험(화장품 테스트)의 불필요성 제시",
+      "body2": "본론 2: 대체 기술의 발전 가능성. 예시) 인공 피부 조직, 컴퓨터 시뮬레이션, 인간 세포 배양 기술 등이 이미 동물실험을 대체할 수 있음을 보여주는 구체적 사례",
+      "conclusion": "결론: 윤리적 책임과 기술 발전의 균형을 강조하며, 엄격한 규제가 장기적으로 더 나은 과학을 만들 수 있음을 재확인"
     },
     "key_phrases": [
       "In my opinion,",
+      "It is undeniable that",
+      "From an ethical standpoint,",
       "Furthermore,",
       "For instance,",
+      "This demonstrates that",
       "On the other hand,",
       "In conclusion,",
-      "It is undeniable that",
-      "This suggests that",
-      "From this perspective,",
-      "To illustrate,",
-      "Admittedly,"
+      "It is crucial to recognize that"
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to shop online. Others prefer to shop in physical stores. Which do you prefer and why? Include specific reasons and details in your response.",
+    "prompt": "Some people are morning people who wake up early and are most productive in the early hours. Others are evening people who prefer to work late at night and sleep in during the morning. Which type are you, and why? Include specific reasons and details to support your choice.",
     "useful_expressions": [
-      "In my opinion, I prefer shopping...",
+      "In my opinion, I am definitely a... person",
       "One reason is that...",
       "For example,",
       "Additionally,",
+      "This means that...",
+      "Another advantage is...",
       "To sum up,",
-      "I believe that...",
-      "This is because...",
-      "On the other hand,",
-      "In conclusion,"
+      "I believe this is better because..."
     ],
     "sample_points": [
-      "배송 시간 vs 즉시 구매 편의성 중 하나 선택 후 설명",
-      "온라인은 가격 비교 용이 또는 매장은 제품 직접 확인 가능 중 하나 선택",
-      "개인의 생활 방식과 우선순위에 따른 최종 선택 이유"
+      "포인트 1: 신체 리듬과 에너지 수준 - 특정 시간대에 자신의 집중력과 체력이 최고조인 이유를 구체적으로 설명",
+      "포인트 2: 일상 활동과의 일치 - 학업, 업무, 운동, 사회 활동 등이 자신의 선호 시간대와 얼마나 잘 맞는지 예시",
+      "포인트 3: 건강과 웰빙 영향 - 자신의 타입에 맞는 생활방식이 어떻게 더 나은 수면, 정신 건강, 생산성을 가져오는지 결론"
     ]
   },
   "listening": {
-    "title": "Dormitory Room Assignment",
-    "type": "conversation",
-    "script": "Student A: Hi, I'm here to ask about my dorm room assignment for next semester. I submitted my request three weeks ago, but I haven't received any confirmation yet.\n\nHousing Officer: Let me check your file. Can you give me your student ID number?\n\nStudent A: Sure, it's 5847293.\n\nHousing Officer: Okay, I found it. According to our records, you requested a single room with a campus view. Unfortunately, single rooms are very limited this year due to increased enrollment. However, we can offer you a double room in the North Tower, which is quite close to the library.\n\nStudent A: I see. Is there any possibility of getting a single room later if one becomes available?\n\nHousing Officer: Absolutely. We maintain a waiting list. If a single room opens up, we'll contact you immediately. Many students accept the double room and then transfer once space becomes available. The North Tower is actually one of our newest buildings with excellent facilities.\n\nStudent A: That sounds reasonable. I'll take the double room then. When will I know my roommate assignment?\n\nHousing Officer: You'll receive that information by email within two weeks. Welcome to the North Tower!",
+    "title": "Biology Lecture: Photosynthesis and Energy Transfer",
+    "type": "lecture",
+    "script": "Professor: Good morning everyone. Today we're discussing photosynthesis, one of the most important biochemical processes on Earth. Essentially, photosynthesis converts light energy into chemical energy stored in glucose molecules. This happens in two main stages: the light-dependent reactions and the light-independent reactions, also called the Calvin cycle. During the light-dependent reactions, which occur in the thylakoid membranes, chlorophyll absorbs photons and electrons are excited to higher energy states. Water molecules are split, releasing oxygen as a byproduct—the oxygen we breathe comes from plants. Now, the electrons move through the electron transport chain, generating ATP and NADPH, which are energy carriers. In the light-independent reactions, these energy molecules drive the fixation of carbon dioxide into glucose. Student: Professor, what happens if a plant doesn't get enough light? Professor: Excellent question. If light availability is limited, the light-dependent reactions slow down, producing less ATP and NADPH. This limits the Calvin cycle, so glucose production decreases. Plants may also experience photoinhibition in extremely bright light, where excessive energy damages the photosystem. That's why many plants have evolved protective mechanisms like changing leaf angles or producing carotenoids.",
     "questions": [
       {
-        "q": "What is the main topic of the conversation?",
+        "q": "What is the main topic of the lecture?",
         "options": [
-          "The student is complaining about dorm fees",
-          "The student is inquiring about their dorm room assignment",
-          "The housing officer is explaining dorm rules",
-          "The student is requesting to change dormitories"
+          "The structure of chloroplasts and their functions",
+          "The two stages of photosynthesis and how they work",
+          "How plants use glucose for growth",
+          "The difference between light and dark energy"
         ],
         "answer": 1,
-        "explanation": "학생이 처음부터 'I'm here to ask about my dorm room assignment'이라고 명시하며, 기숙사 배정 상황을 확인하려고 합니다."
+        "explanation": "교수는 광합성의 두 주요 단계인 명반응(light-dependent reactions)과 암반응(Calvin cycle)에 대해 설명하고 있습니다."
       },
       {
-        "q": "What does the housing officer suggest to the student?",
+        "q": "According to the professor, what is released as a byproduct during the light-dependent reactions?",
         "options": [
-          "Wait another month for a room assignment",
-          "Accept a double room and possibly transfer to a single later",
-          "Choose a different dormitory building",
-          "Submit another housing request form"
+          "Glucose",
+          "Carbon dioxide",
+          "Oxygen",
+          "NADPH"
+        ],
+        "answer": 2,
+        "explanation": "교수가 'Water molecules are split, releasing oxygen as a byproduct—the oxygen we breathe comes from plants'라고 명시했습니다."
+      },
+      {
+        "q": "Why does the professor mention photoinhibition?",
+        "options": [
+          "To explain why plants need darkness to grow",
+          "To illustrate that excessive light can damage photosystems and plants have protective mechanisms",
+          "To show that all plants are damaged by bright light",
+          "To prove that ATP production stops in bright light"
         ],
         "answer": 1,
-        "explanation": "주택 담당자는 'Many students accept the double room and then transfer once space becomes available'라고 제안하며, 싱글 룸이 생기면 대기 명단에서 연락할 것이라고 설명합니다."
-      },
-      {
-        "q": "Why does the housing officer mention the North Tower's facilities?",
-        "options": [
-          "To convince the student to accept the double room offer",
-          "To explain why single rooms are unavailable",
-          "To inform the student about dorm policies",
-          "To encourage the student to change their preference"
-        ],
-        "answer": 0,
-        "explanation": "주택 담당자는 North Tower의 현대적 시설과 장점을 설명함으로써 학생이 더블 룸 제안을 수락하도록 설득하려는 의도를 보입니다."
+        "explanation": "학생의 질문에 대한 답변에서 교수는 과도한 빛이 광계를 손상시킬 수 있으며, 식물들이 잎의 각도 조정이나 카로티노이드 생성 등의 보호 메커니즘을 진화시켰다고 설명했습니다."
       }
     ]
   }
