@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, Alert, ToastAndroid } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Speech from 'expo-speech';
 import { cacheManager } from '../utils/CacheManager';
 import { performanceMonitor } from '../utils/PerformanceMonitor';
 import { getDatabase, ref, onValue, get, set as dbSet } from 'firebase/database';
@@ -85,6 +86,7 @@ export default function EnglishScreen() {
   const [isCached, setIsCached] = useState(false);
   const [lastUpdateTime, setLastUpdateTime] = useState<string | null>(null);
   const [cacheTimeLeft, setCacheTimeLeft] = useState<string>('캐시 정보 로딩 중...');
+  const [speakingWordId, setSpeakingWordId] = useState<string | null>(null);
 
   // Performance monitoring
   useEffect(() => {
@@ -401,6 +403,18 @@ export default function EnglishScreen() {
     }
   };
 
+  const playWordAudio = useCallback((wordId: string, text: string) => {
+    setSpeakingWordId(wordId);
+    Speech.speak(text, {
+      language: 'en',
+      rate: 0.85,
+      pitch: 1,
+      onDone: () => setSpeakingWordId(null),
+      onStopped: () => setSpeakingWordId(null),
+      onError: () => setSpeakingWordId(null),
+    });
+  }, []);
+
   const answerQuiz = (quizId: string, selectedOption: string) => {
     const updated = quizzes.map(q => {
       if (q.id === quizId) {
@@ -543,6 +557,8 @@ export default function EnglishScreen() {
           <WordsView
             words={hideReadWords ? words.filter(w => !w.isRead) : words}
             onToggleRead={toggleWordRead}
+            onPlayAudio={playWordAudio}
+            speakingWordId={speakingWordId}
           />
         </View>
       )}
@@ -564,7 +580,12 @@ function formatDate(dateStr: string): string {
 }
 
 // Memoized component to prevent unnecessary re-renders
-const WordsView = React.memo(({ words, onToggleRead }: { words: Word[], onToggleRead: (id: string) => void }) => {
+const WordsView = React.memo(({ words, onToggleRead, onPlayAudio, speakingWordId }: {
+  words: Word[],
+  onToggleRead: (id: string) => void,
+  onPlayAudio: (id: string, text: string) => void,
+  speakingWordId: string | null,
+}) => {
   return (
     <FlatList
       data={words}
@@ -576,14 +597,24 @@ const WordsView = React.memo(({ words, onToggleRead }: { words: Word[], onToggle
       removeClippedSubviews={true}
       scrollEventThrottle={16}
       renderItem={({ item }) => (
-        <WordCard word={item} onToggleRead={onToggleRead} />
+        <WordCard
+          word={item}
+          onToggleRead={onToggleRead}
+          onPlayAudio={onPlayAudio}
+          isSpeaking={speakingWordId === item.id}
+        />
       )}
     />
   );
 });
 
 // Memoized word card component
-const WordCard = React.memo(({ word, onToggleRead }: { word: Word, onToggleRead: (id: string) => void }) => (
+const WordCard = React.memo(({ word, onToggleRead, onPlayAudio, isSpeaking }: {
+  word: Word,
+  onToggleRead: (id: string) => void,
+  onPlayAudio: (id: string, text: string) => void,
+  isSpeaking: boolean,
+}) => (
   <TouchableOpacity
     style={[styles.card, word.isRead && styles.cardRead]}
     onPress={() => onToggleRead(word.id)}
@@ -595,6 +626,13 @@ const WordCard = React.memo(({ word, onToggleRead }: { word: Word, onToggleRead:
           <Text style={styles.word}>{word.word}</Text>
           <Text style={styles.pos}>{word.pos}</Text>
         </View>
+        <TouchableOpacity
+          style={styles.speakerButton}
+          onPress={() => onPlayAudio(word.id, word.word)}
+          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+        >
+          <Text style={styles.speakerIcon}>{isSpeaking ? '🔊' : '🔈'}</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.cardHeaderRight}>
         <Text style={styles.updateDate}>{formatDate(word.date)}</Text>
@@ -844,6 +882,12 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: '#94a3b8',
     marginTop: 2,
+  },
+  speakerButton: {
+    padding: 4,
+  },
+  speakerIcon: {
+    fontSize: 20,
   },
   cardHeaderRight: {
     flexDirection: 'row',
