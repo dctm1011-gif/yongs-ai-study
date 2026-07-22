@@ -7,6 +7,7 @@ import { cacheManager } from '../utils/CacheManager';
 import { performanceMonitor } from '../utils/PerformanceMonitor';
 import { getDatabase, ref, onValue, get, set as dbSet } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
+import WordMatchGame from '../components/WordMatchGame';
 
 // Firebase Functions run in UTC; KST (UTC+9) doesn't roll to the next
 // calendar day until 09:00 UTC, so a plain UTC date lags KST by a day
@@ -44,7 +45,7 @@ interface Quiz {
   correct_answer?: boolean;
 }
 
-type ViewType = 'words' | 'quiz' | 'stats';
+type ViewType = 'words' | 'quiz' | 'game' | 'stats';
 
 const ITEMS_PER_PAGE = 15; // Pagination size for FlatList
 
@@ -400,6 +401,24 @@ export default function EnglishScreen() {
       dbSet(ref(db, `english/readStatus/${today}/${wordId}`), toggled.isRead).catch(error =>
         console.warn('읽음 상태 Firebase 저장 실패:', error)
       );
+
+      // 처음 읽음 처리되는 단어만 복습 게임 대상 목록(reviewPool)에 등록.
+      // 이미 등록돼 있으면 손대지 않음 - 카운트는 오직 게임 등장으로만 증가한다.
+      if (toggled.isRead) {
+        const poolRef = ref(db, `english/reviewPool/${wordId}`);
+        get(poolRef).then(snapshot => {
+          if (!snapshot.exists()) {
+            dbSet(poolRef, {
+              word: toggled.word,
+              meaning: toggled.meaning,
+              pos: toggled.pos,
+              emoji: toggled.emoji,
+              count: 0,
+              lastReviewedDate: null,
+            }).catch(error => console.warn('복습 목록 등록 실패:', error));
+          }
+        }).catch(error => console.warn('복습 목록 조회 실패:', error));
+      }
     }
   };
 
@@ -534,6 +553,12 @@ export default function EnglishScreen() {
           <Text style={[styles.tabButtonText, view === 'quiz' && styles.tabButtonTextActive]}>퀴즈</Text>
         </TouchableOpacity>
         <TouchableOpacity
+          style={[styles.tabButton, view === 'game' && styles.tabButtonActive]}
+          onPress={() => setView('game')}
+        >
+          <Text style={[styles.tabButtonText, view === 'game' && styles.tabButtonTextActive]}>게임</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           style={[styles.tabButton, view === 'stats' && styles.tabButtonActive]}
           onPress={() => setView('stats')}
         >
@@ -563,6 +588,7 @@ export default function EnglishScreen() {
         </View>
       )}
       {view === 'quiz' && <QuizView quizzes={quizzes} words={words} onAnswer={answerQuiz} />}
+      {view === 'game' && <WordMatchGame />}
       {view === 'stats' && <StatsView stats={stats} />}
     </SafeAreaView>
   );
