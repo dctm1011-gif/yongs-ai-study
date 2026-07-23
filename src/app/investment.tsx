@@ -55,8 +55,8 @@ const BarChart: React.FC<{
 });
 
 const isBoxPlotData = (
-  data: NonNullable<InvestmentColumn['chartData']>[number]['data']
-): data is BoxPlotPoint[] => data.length > 0 && 'median' in data[0];
+  data: NonNullable<InvestmentColumn['chartData']>[number]['data'] | null | undefined
+): data is BoxPlotPoint[] => Array.isArray(data) && data.length > 0 && 'median' in data[0];
 
 const BoxPlotChart: React.FC<{
   data: BoxPlotPoint[];
@@ -145,12 +145,14 @@ const ChartSelector: React.FC<{
 }> = React.memo(({ charts }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const renderChart = (chart: NonNullable<InvestmentColumn['chartData']>[number]) =>
-    isBoxPlotData(chart.data) ? (
+  const renderChart = (chart: NonNullable<InvestmentColumn['chartData']>[number]) => {
+    if (!Array.isArray(chart.data) || chart.data.length === 0) return null;
+    return isBoxPlotData(chart.data) ? (
       <BoxPlotChart data={chart.data} yearlyData={chart.yearlyData} title={chart.title} unit={chart.unit} />
     ) : (
       <BarChart data={chart.data as { label: string; value: number }[]} title={chart.title} unit={chart.unit} />
     );
+  };
 
   if (charts.length === 1) {
     return renderChart(charts[0]);
@@ -317,8 +319,6 @@ interface DetailModalProps {
 
 const DetailModal: React.FC<DetailModalProps> = React.memo(
   ({ column, visible, onClose }) => {
-    if (!column) return null;
-
     const getCategoryLabel = useCallback((category: string) => {
       return category === 'real-estate'
         ? '부동산 분석'
@@ -344,6 +344,8 @@ const DetailModal: React.FC<DetailModalProps> = React.memo(
         day: 'numeric',
       });
     }, []);
+
+    if (!column) return null;
 
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
