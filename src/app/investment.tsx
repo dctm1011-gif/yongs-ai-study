@@ -11,9 +11,11 @@ import {
   Dimensions,
   Alert as RNAlert,
   Modal,
+  useWindowDimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
+import * as ScreenOrientation from 'expo-screen-orientation';
 import { useInvestmentSync, InvestmentColumn, BoxPlotPoint } from '../hooks/useInvestmentSync';
 
 const { width } = Dimensions.get('window');
@@ -65,15 +67,55 @@ const BoxPlotChart: React.FC<{
   unit: string;
 }> = React.memo(({ data, yearlyData, title, unit }) => {
   const [viewMode, setViewMode] = useState<'monthly' | 'yearly'>('monthly');
+  const [expanded, setExpanded] = useState(false);
+  const { width: winW, height: winH } = useWindowDimensions();
   const hasYearly = !!yearlyData && yearlyData.length > 0;
   const points = viewMode === 'yearly' && hasYearly ? yearlyData : data;
 
   const globalMax = Math.max(...points.map(d => d.max), 1);
   const pct = (v: number) => (v / globalMax) * 100;
 
+  const openFullscreen = async () => {
+    setExpanded(true);
+    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+  };
+
+  const closeFullscreen = async () => {
+    setExpanded(false);
+    await ScreenOrientation.unlockAsync();
+  };
+
+  const Y_AXIS_W = 46;
+  const fsLandscapeW = Math.max(winW, winH);
+  const fsColWidth = Math.max(30, Math.floor((fsLandscapeW - Y_AXIS_W - 40) / points.length));
+
+  const renderBoxColumns = (colW: number, trackH: number) =>
+    points.map((point, idx) => {
+      const trackW = Math.max(16, Math.floor(colW * 0.5));
+      const labelFontSize = Math.min(10, Math.floor(colW * 0.22));
+      return (
+        <View key={idx} style={{ width: colW, alignItems: 'center' }}>
+          <Text style={[styles.barValue, { fontSize: labelFontSize }]}>{point.avg.toLocaleString()}</Text>
+          <View style={{ width: trackW, height: trackH, position: 'relative' }}>
+            <View style={[styles.boxWhisker, { bottom: `${pct(point.min)}%`, height: `${Math.max(pct(point.max) - pct(point.min), 1)}%` }]} />
+            <View style={[styles.boxRect, { bottom: `${pct(point.q1)}%`, height: `${Math.max(pct(point.q3) - pct(point.q1), 3)}%` }]} />
+            <View style={[styles.boxMedian, { bottom: `${pct(point.median)}%` }]} />
+            <View style={[styles.boxAvgDot, { bottom: `${pct(point.avg)}%` }]} />
+          </View>
+          <Text style={[styles.barLabel, { fontSize: labelFontSize }]}>{point.label}</Text>
+          <Text style={[styles.boxRangeLabel, { fontSize: Math.max(7, labelFontSize - 2) }]}>{point.min}~{point.max}</Text>
+        </View>
+      );
+    });
+
   return (
     <View>
-      <Text style={styles.chartTitle}>{title}</Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
+        <Text style={[styles.chartTitle, { marginBottom: 0, flex: 1 }]}>{title}</Text>
+        <TouchableOpacity onPress={openFullscreen} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
+          <MaterialIcons name="open-in-full" size={18} color="#94a3b8" />
+        </TouchableOpacity>
+      </View>
 
       {hasYearly && (
         <View style={styles.viewModeRow}>
@@ -134,6 +176,48 @@ const BoxPlotChart: React.FC<{
       <Text style={styles.chartUnit}>
         {unit} · 막대 위 숫자: 평균값 · 아래 숫자: 최소~최대 범위 · 박스: 25~75% · 굵은 선: 중앙값 · 점: 평균 위치
       </Text>
+
+      <Modal visible={expanded} statusBarTranslucent animationType="fade" onRequestClose={closeFullscreen}>
+        <View style={styles.fsContainer}>
+          <View style={styles.fsHeader}>
+            <Text style={styles.fsTitle}>{title}</Text>
+            {hasYearly && (
+              <View style={[styles.viewModeRow, { marginBottom: 0, marginLeft: 14 }]}>
+                <TouchableOpacity
+                  style={[styles.viewModeButton, viewMode === 'monthly' && styles.viewModeButtonActive]}
+                  onPress={() => setViewMode('monthly')}
+                >
+                  <Text style={[styles.viewModeButtonText, viewMode === 'monthly' && styles.viewModeButtonTextActive]}>월별</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.viewModeButton, viewMode === 'yearly' && styles.viewModeButtonActive]}
+                  onPress={() => setViewMode('yearly')}
+                >
+                  <Text style={[styles.viewModeButtonText, viewMode === 'yearly' && styles.viewModeButtonTextActive]}>연도별</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+            <View style={{ flex: 1 }} />
+            <TouchableOpacity onPress={closeFullscreen} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
+              <MaterialIcons name="fullscreen-exit" size={24} color="#64748b" />
+            </TouchableOpacity>
+          </View>
+
+          <View style={[styles.chartBody, { flex: 1, alignItems: 'center' }]}>
+            <View style={[styles.yAxis, { height: 160, marginTop: 0, alignSelf: 'center' }]}>
+              <Text style={styles.yAxisLabel}>{globalMax.toLocaleString()}</Text>
+              <Text style={styles.yAxisLabel}>0</Text>
+            </View>
+            <View style={[styles.hBarChart, { flex: 1, height: 160, paddingTop: 0, justifyContent: 'space-around' }]}>
+              {renderBoxColumns(fsColWidth, 100)}
+            </View>
+          </View>
+
+          <Text style={[styles.chartUnit, { textAlign: 'left', paddingLeft: Y_AXIS_W + 8 }]}>
+            {unit} · 위: 평균 · 아래: 최소~최대 · 박스: 25~75% · 굵은 선: 중앙값 · 점: 평균
+          </Text>
+        </View>
+      </Modal>
     </View>
   );
 });
@@ -1021,6 +1105,22 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#1f2937',
     marginBottom: 12,
+  },
+  fsContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+  },
+  fsHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 14,
+  },
+  fsTitle: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#1f2937',
   },
   chartChipRow: {
     gap: 8,
