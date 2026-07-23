@@ -97,7 +97,7 @@ const BoxPlotChart: React.FC<{
           <Text style={styles.yAxisLabel}>{globalMax.toLocaleString()}</Text>
           <Text style={styles.yAxisLabel}>0</Text>
         </View>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.hChartScroll}>
+        <ScrollView horizontal nestedScrollEnabled showsHorizontalScrollIndicator style={styles.hChartScroll}>
           <View style={styles.hBarChart}>
             {points.map((point, idx) => (
               <View key={idx} style={styles.hBarColumn}>
@@ -1144,7 +1144,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#d1d5db',
   },
   hBarColumn: {
-    width: 60,
+    width: 48,
     alignItems: 'center',
   },
   boxPlotTrack: {
