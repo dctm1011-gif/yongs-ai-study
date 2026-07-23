@@ -78,7 +78,9 @@ export default function TOEFLScreen() {
   const [selectedSection, setSelectedSection] = useState<TOEFLSection | null>(null);
   const [selectedAnswers, setSelectedAnswers] = useState<{ [key: string]: number }>({});
   const [isPlaying, setIsPlaying] = useState(false);
+  const [speakingPlayingIdx, setSpeakingPlayingIdx] = useState<number | null>(null);
   const [writingAnswers, setWritingAnswers] = useState<{ [key: string]: string }>({});
+  const [writingLines, setWritingLines] = useState<string[]>([]);
   const [writingView, setWritingView] = useState<'write' | 'saved'>('write');
   const [savedEssays, setSavedEssays] = useState<{ id: string; content: string; date: string }[]>([]);
   const [isCached, setIsCached] = useState(false);
@@ -260,19 +262,38 @@ export default function TOEFLScreen() {
     }
   };
 
+  const playSpeakingSentence = async (idx: number, text: string) => {
+    try {
+      setSpeakingPlayingIdx(idx);
+      await Speech.speak(text, { language: 'en', rate: 0.9, pitch: 1 });
+    } catch (error) {
+      console.error('TTS Error:', error);
+    } finally {
+      setSpeakingPlayingIdx(null);
+    }
+  };
+
   const stopAudio = async () => {
     try {
       await Speech.stop();
       setIsPlaying(false);
+      setSpeakingPlayingIdx(null);
     } catch (error) {
       console.error('Stop Error:', error);
     }
   };
 
+  const updateWritingLine = (idx: number, text: string) => {
+    const updated = [...writingLines];
+    updated[idx] = text;
+    setWritingLines(updated);
+    setWritingAnswers({ ...writingAnswers, essay1: updated.join('\n') });
+  };
+
   const saveEssay = async () => {
     const content = writingAnswers['essay1']?.trim();
     if (!content) {
-      Alert.alert('알림', '에세이를 입력해주세요.');
+      Alert.alert('알림', '따라 쓴 문장을 입력해주세요.');
       return;
     }
 
@@ -288,6 +309,7 @@ export default function TOEFLScreen() {
       await AsyncStorage.setItem('writing_saved', JSON.stringify(updated));
       Alert.alert('✅ 저장됨', '에세이가 임시저장되었습니다.');
       setWritingAnswers({ essay1: '' });
+      setWritingLines([]);
     } catch (error) {
       Alert.alert('오류', '저장 실패');
     }
@@ -295,6 +317,7 @@ export default function TOEFLScreen() {
 
   const loadEssay = (essay: { id: string; content: string; date: string }) => {
     setWritingAnswers({ essay1: essay.content });
+    setWritingLines(essay.content.split('\n'));
     setWritingView('write');
   };
 
@@ -458,6 +481,18 @@ export default function TOEFLScreen() {
           {isPlaying && <Text style={styles.playingIndicator}>🔊 재생 중...</Text>}
         </View>
 
+        {listening.vocabulary && listening.vocabulary.length > 0 && (
+          <View style={styles.vocabBox}>
+            <Text style={styles.vocabLabel}>👂 들을 때 주의할 단어</Text>
+            {listening.vocabulary.map((v: any, idx: number) => (
+              <View key={idx} style={styles.vocabItem}>
+                <Text style={styles.vocabWord}>{v.word}</Text>
+                <Text style={styles.vocabMeaning}>{v.meaning_ko}</Text>
+              </View>
+            ))}
+          </View>
+        )}
+
         <View style={styles.questionsBox}>
           <Text style={styles.questionsLabel}>문제</Text>
 
@@ -529,48 +564,19 @@ export default function TOEFLScreen() {
             </Text>
           </View>
 
-          {toeflProblems?.writing?.structure && (
-            <View style={styles.writingStructureBox}>
-              <Text style={styles.writingStructureLabel}>💡 에세이 구조 가이드</Text>
-              {Object.entries(toeflProblems.writing.structure).map(([key, value], idx) => (
-                <View key={idx} style={styles.structureItem}>
-                  <Text style={styles.structureKey}>{key.toUpperCase()}</Text>
-                  <Text style={styles.structureValue}>{value}</Text>
-                </View>
-              ))}
+          <Text style={styles.writingLabel}>✏️ 한 문장씩 따라 써보세요</Text>
+          {toeflProblems?.writing?.model_sentences?.map((sentence: string, idx: number) => (
+            <View key={idx} style={styles.writingLineBlock}>
+              <Text style={styles.writingModelSentence}>{idx + 1}. {sentence}</Text>
+              <TextInput
+                style={styles.writingLineInput}
+                placeholder="위 문장을 그대로 따라 써보세요..."
+                placeholderTextColor="#94a3b8"
+                value={writingLines[idx] || ''}
+                onChangeText={(text) => updateWritingLine(idx, text)}
+              />
             </View>
-          )}
-
-          {toeflProblems?.writing?.useful_phrases && (
-            <View style={styles.phrasesBox}>
-              <Text style={styles.phrasesLabel}>📌 유용한 표현들</Text>
-              <View style={styles.phrasesList}>
-                {toeflProblems.writing.useful_phrases.map((phrase: string, idx: number) => (
-                  <TouchableOpacity
-                    key={idx}
-                    style={styles.phraseChip}
-                    onPress={() => {
-                      const current = writingAnswers['essay1'] || '';
-                      setWritingAnswers({...writingAnswers, 'essay1': current + (current ? ' ' : '') + phrase});
-                    }}
-                  >
-                    <Text style={styles.phraseText}>{phrase}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </View>
-          )}
-
-          <Text style={styles.writingLabel}>✏️ 당신의 답변 (최소 150단어)</Text>
-          <TextInput
-            style={styles.writingInput}
-            placeholder="여기에 에세이를 작성하세요..."
-            placeholderTextColor="#94a3b8"
-            multiline
-            numberOfLines={12}
-            value={writingAnswers['essay1'] || ''}
-            onChangeText={(text) => setWritingAnswers({...writingAnswers, 'essay1': text})}
-          />
+          ))}
 
           <View style={styles.buttonRow}>
             <TouchableOpacity style={styles.saveButton} onPress={saveEssay}>
@@ -579,14 +585,6 @@ export default function TOEFLScreen() {
             <TouchableOpacity style={styles.submitButton} onPress={submitEssay}>
               <Text style={styles.submitButtonText}>📤 제출</Text>
             </TouchableOpacity>
-          </View>
-
-          <View style={styles.writingHints}>
-            <Text style={styles.writingHintTitle}>💡 작성 팁:</Text>
-            <Text style={styles.writingHintText}>• 명확한 주제 문장으로 시작하세요</Text>
-            <Text style={styles.writingHintText}>• 구체적인 예시와 세부사항을 포함하세요</Text>
-            <Text style={styles.writingHintText}>• 문법과 철자를 확인하세요</Text>
-            <Text style={styles.writingHintText}>• 적어도 150단어 이상 작성하세요</Text>
           </View>
         </>
       ) : (
@@ -636,20 +634,22 @@ export default function TOEFLScreen() {
           <Text style={styles.speakingPrompt}>{speaking.prompt || 'Loading prompt...'}</Text>
         </View>
 
-        {speaking.useful_expressions && speaking.useful_expressions.length > 0 && (
-          <View style={styles.expressionsBox}>
-            <Text style={styles.expressionsLabel}>💬 유용한 표현들</Text>
-            {speaking.useful_expressions.map((expr: string, idx: number) => (
-              <Text key={idx} style={styles.expressionItem}>• {expr}</Text>
-            ))}
-          </View>
-        )}
-
-        {speaking.sample_points && speaking.sample_points.length > 0 && (
-          <View style={styles.samplePointsBox}>
-            <Text style={styles.samplePointsLabel}>💡 답변 포인트</Text>
-            {speaking.sample_points.map((point: string, idx: number) => (
-              <Text key={idx} style={styles.samplePointItem}>• {point}</Text>
+        {speaking.model_sentences && speaking.model_sentences.length > 0 && (
+          <View style={styles.speakingLinesBox}>
+            <Text style={styles.speakingLinesLabel}>🗣️ 한 문장씩 따라 말해보세요</Text>
+            {speaking.model_sentences.map((sentence: string, idx: number) => (
+              <View key={idx} style={styles.speakingLineRow}>
+                <Text style={styles.speakingLineText}>{idx + 1}. {sentence}</Text>
+                <TouchableOpacity
+                  style={styles.speakingLineButton}
+                  onPress={() => playSpeakingSentence(idx, sentence)}
+                  disabled={speakingPlayingIdx !== null}
+                >
+                  <Text style={styles.speakingLineButtonText}>
+                    {speakingPlayingIdx === idx ? '🔊' : '▶️'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
             ))}
           </View>
         )}
@@ -685,6 +685,18 @@ export default function TOEFLScreen() {
           {reading.title && <Text style={styles.passageTitle}>{reading.title}</Text>}
           <Text style={styles.passageText}>{reading.passage}</Text>
         </View>
+
+        {reading.vocabulary && reading.vocabulary.length > 0 && (
+          <View style={styles.vocabBox}>
+            <Text style={styles.vocabLabel}>📚 난이도 단어</Text>
+            {reading.vocabulary.map((v: any, idx: number) => (
+              <View key={idx} style={styles.vocabItem}>
+                <Text style={styles.vocabWord}>{v.word}</Text>
+                <Text style={styles.vocabMeaning}>{v.meaning_ko}</Text>
+              </View>
+            ))}
+          </View>
+        )}
 
         <View style={styles.questionsBox}>
           <Text style={styles.questionsLabel}>문제</Text>
@@ -1068,6 +1080,37 @@ const styles = StyleSheet.create({
     lineHeight: 36,
     fontWeight: '400',
   },
+  vocabBox: {
+    backgroundColor: '#fffbeb',
+    padding: 16,
+    borderRadius: 8,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: '#fde68a',
+  },
+  vocabLabel: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#b45309',
+    marginBottom: 10,
+  },
+  vocabItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 6,
+    borderBottomWidth: 1,
+    borderBottomColor: '#fef3c7',
+  },
+  vocabWord: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#92400e',
+  },
+  vocabMeaning: {
+    fontSize: 13,
+    color: '#78716c',
+  },
   questionsBox: {
     marginTop: 8,
   },
@@ -1238,38 +1281,25 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginBottom: 8,
   },
-  writingInput: {
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#e2e8f0',
-    padding: 12,
+  writingLineBlock: {
     marginHorizontal: 16,
-    minHeight: 200,
+    marginBottom: 14,
+  },
+  writingModelSentence: {
     fontSize: 14,
     color: '#1e293b',
-    textAlignVertical: 'top',
+    lineHeight: 20,
+    marginBottom: 6,
   },
-  writingHints: {
-    backgroundColor: '#f0f9ff',
-    borderRadius: 12,
-    padding: 14,
-    marginHorizontal: 16,
-    marginVertical: 16,
-    borderLeftWidth: 4,
-    borderLeftColor: '#0ea5e9',
-  },
-  writingHintTitle: {
-    fontSize: 12,
-    fontWeight: '700',
-    color: '#0284c7',
-    marginBottom: 8,
-  },
-  writingHintText: {
-    fontSize: 12,
-    color: '#0c4a6e',
-    marginBottom: 4,
-    lineHeight: 18,
+  writingLineInput: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    fontSize: 14,
+    color: '#1e293b',
   },
   buttonRow: {
     flexDirection: 'row',
@@ -1423,71 +1453,6 @@ const styles = StyleSheet.create({
     color: '#334155',
     fontFamily: 'System',
   },
-  writingStructureBox: {
-    backgroundColor: '#f0f9ff',
-    borderRadius: 12,
-    padding: 14,
-    marginHorizontal: 16,
-    marginVertical: 12,
-    borderLeftWidth: 4,
-    borderLeftColor: '#0284c7',
-  },
-  writingStructureLabel: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: '#0284c7',
-    marginBottom: 12,
-  },
-  structureItem: {
-    marginBottom: 10,
-    paddingBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0f2fe',
-  },
-  structureKey: {
-    fontSize: 12,
-    fontWeight: '700',
-    color: '#0c4a6e',
-    marginBottom: 4,
-  },
-  structureValue: {
-    fontSize: 12,
-    color: '#0c4a6e',
-    lineHeight: 18,
-  },
-  phrasesBox: {
-    backgroundColor: '#fef3c7',
-    borderRadius: 12,
-    padding: 14,
-    marginHorizontal: 16,
-    marginVertical: 12,
-    borderLeftWidth: 4,
-    borderLeftColor: '#f59e0b',
-  },
-  phrasesLabel: {
-    fontSize: 12,
-    fontWeight: '700',
-    color: '#b45309',
-    marginBottom: 12,
-  },
-  phrasesList: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  phraseChip: {
-    backgroundColor: '#fef08a',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: '#f59e0b',
-  },
-  phraseText: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#78350f',
-  },
   speakingPromptBox: {
     backgroundColor: '#f0fdf4',
     borderRadius: 12,
@@ -1508,47 +1473,41 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     color: '#1e293b',
   },
-  expressionsBox: {
-    backgroundColor: '#fef3c7',
+  speakingLinesBox: {
+    backgroundColor: '#f0fdf4',
     borderRadius: 12,
     padding: 14,
     marginHorizontal: 16,
     marginVertical: 12,
     borderLeftWidth: 4,
-    borderLeftColor: '#f59e0b',
+    borderLeftColor: '#22c55e',
   },
-  expressionsLabel: {
+  speakingLinesLabel: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#b45309',
+    color: '#15803d',
     marginBottom: 10,
   },
-  expressionItem: {
+  speakingLineRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#dcfce7',
+  },
+  speakingLineText: {
+    flex: 1,
     fontSize: 13,
-    color: '#78350f',
+    color: '#14532d',
     lineHeight: 20,
-    marginBottom: 6,
+    marginRight: 10,
   },
-  samplePointsBox: {
-    backgroundColor: '#f0f9ff',
-    borderRadius: 12,
-    padding: 14,
-    marginHorizontal: 16,
-    marginVertical: 12,
-    borderLeftWidth: 4,
-    borderLeftColor: '#0284c7',
+  speakingLineButton: {
+    padding: 6,
   },
-  samplePointsLabel: {
-    fontSize: 12,
-    fontWeight: '700',
-    color: '#0284c7',
-    marginBottom: 10,
-  },
-  samplePointItem: {
-    fontSize: 13,
-    color: '#0c4a6e',
-    lineHeight: 20,
-    marginBottom: 6,
+  speakingLineButtonText: {
+    fontSize: 18,
   },
   speakingTipBox: {
     backgroundColor: '#fef2f2',

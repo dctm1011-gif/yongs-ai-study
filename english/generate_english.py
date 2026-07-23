@@ -1150,6 +1150,9 @@ JSON 외 다른 텍스트는 절대 포함하지 마세요.
   "reading": {{
     "title": "지문 제목",
     "passage": "TOEFL 수준 영어 지문 80-100 단어. 1단락. 짧지만 정보 밀도 높게. 핵심 개념·사실·주장 압축.",
+    "vocabulary": [
+      {{"word": "passage에 실제로 등장하는 단어", "meaning_ko": "한국어 뜻"}}
+    ],
     "questions": [
       {{"q": "According to the passage, ...", "options": ["A", "B", "C", "D"], "answer": 0, "explanation": "한국어 해설"}},
       {{"q": "What can be inferred from the passage about ...?", "options": ["A", "B", "C", "D"], "answer": 1, "explanation": "한국어 해설"}}
@@ -1157,30 +1160,42 @@ JSON 외 다른 텍스트는 절대 포함하지 마세요.
   }},
   "writing": {{
     "prompt": "Do you agree or disagree with the following statement? [구체적인 주장]. Use specific reasons and examples to support your answer.",
-    "structure": {{
-      "intro": "도입부 작성 가이드 (Restate the prompt + thesis 예시)",
-      "body1": "본론 1 아이디어 힌트 (구체적 예시 포함)",
-      "body2": "본론 2 아이디어 힌트",
-      "conclusion": "결론 작성 가이드 (Restate thesis + summary)"
-    }},
-    "key_phrases": ["In my opinion,", "Furthermore,", "For instance,", "On the other hand,", "In conclusion,", "It is undeniable that", "This suggests that"]
+    "model_sentences": [
+      "도입 문장 (주제 제시)",
+      "본론 문장 1 (이유/근거)",
+      "예시 문장 1",
+      "본론 문장 2 (이유/근거)",
+      "예시 문장 2",
+      "결론 문장 (주제 재진술 + 요약)"
+    ]
   }},
   "speaking": {{
     "prompt": "Some people prefer X. Others prefer Y. Which do you prefer and why? Include specific reasons and details.",
-    "useful_expressions": ["In my opinion, I prefer...", "One reason is that...", "For example,", "Additionally,", "To sum up,"],
-    "sample_points": ["첫 번째 포인트 아이디어", "두 번째 포인트 아이디어", "결론 아이디어"]
+    "model_sentences": [
+      "도입 문장",
+      "이유/근거 문장",
+      "예시 문장",
+      "결론 문장"
+    ]
   }},
   "listening": {{
     "title": "대화 또는 강의 제목",
     "type": "conversation",
     "script": "영어 스크립트 180-220 단어. 두 학생 대화 OR 교수 강의. 자연스러운 구어체. 화자 표시: Student A: / Student B: 또는 Professor: / Student:",
+    "vocabulary": [
+      {{"word": "script에 실제로 등장하는, 듣기에서 헷갈리기 쉬운 단어", "meaning_ko": "한국어 뜻"}}
+    ],
     "questions": [
       {{"q": "What is the main topic of the conversation?", "options": ["A", "B", "C", "D"], "answer": 0, "explanation": "한국어 해설"}},
       {{"q": "What does the speaker suggest?", "options": ["A", "B", "C", "D"], "answer": 1, "explanation": "한국어 해설"}},
       {{"q": "Why does the speaker mention ...?", "options": ["A", "B", "C", "D"], "answer": 2, "explanation": "한국어 해설"}}
     ]
   }}
-}}"""
+}}
+
+- reading.vocabulary / listening.vocabulary: 5~8개, 반드시 해당 passage/script에 실제로 등장하는 단어만
+- writing.model_sentences: 5~7문장. 전부 이어 읽으면 도입→본론→예시→결론으로 자연스럽게 이어지는 하나의 TOEFL 에세이 문단이 되도록. 각 문장은 따라 쓰기 연습용이라 너무 길지 않게(1문장씩)
+- speaking.model_sentences: 4~6문장. 전부 이어 말하면 도입→이유→예시→결론으로 자연스럽게 이어지는 하나의 스피킹 답변이 되도록. 자연스러운 구어체로."""
 
     for attempt in range(2):
         response = client.messages.create(
