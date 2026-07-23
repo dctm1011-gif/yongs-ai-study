@@ -2,17 +2,22 @@
 국토교통부 아파트매매 실거래상세자료 Open API
 (data.go.kr, https://www.data.go.kr/data/15126469/openapi.do)
 
-20개 경기도 지역의 최근 5개월 아파트 실거래가 분포(박스플랏: 최소/1분위/중앙값/3분위/최대)를
-실제 거래 데이터로 집계한다. 추정/보간 없음 - 해당 월에 거래가 없으면 그 데이터 포인트는 생략한다.
+20개 경기도 지역의 아파트 실거래가 분포(박스플랏: 최소/1분위/중앙값/3분위/최대)를
+실제 거래 데이터로 집계한다. 최근 12개월(월별)과 과거 10년(연도별) 두 가지 시야를 만든다.
+추정/보간 없음 - 거래가 없는 달/해는 그 데이터 포인트를 생략한다.
 """
 import os
 import sys
+import time
 import xml.etree.ElementTree as ET
 from datetime import date
 
 import requests
 
 ENDPOINT = "https://apis.data.go.kr/1613000/RTMSDataSvcAptTrade/getRTMSDataSvcAptTrade"
+
+MONTHLY_WINDOW = 12   # 월별 보기: 최근 12개월
+YEARLY_WINDOW_MONTHS = 120  # 연도별 보기: 과거 10년(=120개월)치를 모아서 연 단위로 집계
 
 # area(기존 라벨) -> { lawd_cd: 5자리 법정동 시군구코드(str 또는 list[str]), umd: 법정동명 필터(list[str] 또는 None) }
 AREA_CODES = {
@@ -55,9 +60,18 @@ def _fetch_page(lawd_cd: str, deal_ymd: str, service_key: str, page_no: int) -> 
         "pageNo": page_no,
         "numOfRows": 1000,
     }
-    resp = requests.get(ENDPOINT, params=params, timeout=15)
-    resp.raise_for_status()
-    return ET.fromstring(resp.content)
+    max_attempts = 4
+    for attempt in range(max_attempts):
+        try:
+            resp = requests.get(ENDPOINT, params=params, timeout=20)
+            resp.raise_for_status()
+            return ET.fromstring(resp.content)
+        except (requests.exceptions.RequestException, ET.ParseError) as e:
+            if attempt == max_attempts - 1:
+                raise
+            wait = 2 * (attempt + 1)
+            print(f"[!] 요청 실패 (LAWD_CD={lawd_cd}, DEAL_YMD={deal_ymd}, 시도 {attempt + 1}): {e} - {wait}초 후 재시도")
+            time.sleep(wait)
 
 
 def fetch_trades(lawd_cd: str, deal_ymd: str, service_key: str) -> list[dict]:
@@ -97,6 +111,19 @@ def _lawd_codes(area_config: dict) -> list[str]:
     return lawd_cd if isinstance(lawd_cd, list) else [lawd_cd]
 
 
+def fetch_area_trades(area_config: dict, deal_ymd: str, service_key: str) -> list[dict]:
+    """지역 하나(여러 시군구코드 합산 가능) + 계약월의 실제 거래 목록 (umd 필터 적용)."""
+    all_trades: list[dict] = []
+    for lawd_cd in _lawd_codes(area_config):
+        all_trades.extend(fetch_trades(lawd_cd, deal_ymd, service_key))
+
+    umd_filter = area_config.get("umd")
+    if umd_filter:
+        all_trades = [t for t in all_trades if t["umdNm"] in umd_filter]
+
+    return all_trades
+
+
 def _percentile(sorted_values: list[float], p: float) -> float:
     """선형보간 방식 백분위수 (0<=p<=1). sorted_values는 오름차순 정렬돼 있어야 함."""
     n = len(sorted_values)
@@ -109,20 +136,11 @@ def _percentile(sorted_values: list[float], p: float) -> float:
     return sorted_values[lo] + (sorted_values[hi] - sorted_values[lo]) * frac
 
 
-def get_monthly_summary(area_config: dict, deal_ymd: str, service_key: str) -> dict | None:
-    """지역 하나의 특정 계약월 실거래가 분포(억원, 소수 2자리): avg/min/q1/median/q3/max/count. 거래 없으면 None."""
-    all_trades: list[dict] = []
-    for lawd_cd in _lawd_codes(area_config):
-        all_trades.extend(fetch_trades(lawd_cd, deal_ymd, service_key))
-
-    umd_filter = area_config.get("umd")
-    if umd_filter:
-        all_trades = [t for t in all_trades if t["umdNm"] in umd_filter]
-
-    if not all_trades:
+def summarize_trades(trades: list[dict]) -> dict | None:
+    """거래 목록(dealAmount 만원 단위) -> 박스플랏 요약(억원, 소수 2자리). 비어있으면 None."""
+    if not trades:
         return None
-
-    amounts = sorted(t["dealAmount"] / 10000 for t in all_trades)  # 만원 -> 억원
+    amounts = sorted(t["dealAmount"] / 10000 for t in trades)  # 만원 -> 억원
     return {
         "avg": round(sum(amounts) / len(amounts), 2),
         "min": round(amounts[0], 2),
@@ -134,12 +152,12 @@ def get_monthly_summary(area_config: dict, deal_ymd: str, service_key: str) -> d
     }
 
 
-def recent_deal_ymds(target_date: date, count: int = 5) -> list[str]:
-    """target_date 기준 최근 count개월의 DEAL_YMD(YYYYMM) 리스트, 과거->최신 순."""
+def recent_year_months(target_date: date, count: int) -> list[tuple[int, int]]:
+    """target_date 기준 최근 count개월의 (year, month) 리스트, 과거->최신 순."""
     result = []
     y, m = target_date.year, target_date.month
     for _ in range(count):
-        result.append(f"{y}{m:02d}")
+        result.append((y, m))
         m -= 1
         if m == 0:
             m = 12
@@ -147,28 +165,58 @@ def recent_deal_ymds(target_date: date, count: int = 5) -> list[str]:
     return list(reversed(result))
 
 
-def get_all_areas_chart_data(target_date: date, service_key: str) -> list[dict]:
-    """20개 지역 전체의 chartData 배열 (앱 스키마: area/title/unit/data)."""
-    months = recent_deal_ymds(target_date, 5)
-    month_labels = {ymd: f"{int(ymd[4:6])}월" for ymd in months}
+def get_area_chart_data(area: str, config: dict, target_date: date, service_key: str) -> dict | None:
+    """지역 하나의 chartData 항목: 월별(최근 12개월) + 연도별(과거 10년) 박스플랏."""
+    all_months = recent_year_months(target_date, YEARLY_WINDOW_MONTHS)
 
+    trades_by_month: dict[tuple[int, int], list[dict]] = {}
+    for (y, m) in all_months:
+        deal_ymd = f"{y}{m:02d}"
+        trades_by_month[(y, m)] = fetch_area_trades(config, deal_ymd, service_key)
+
+    # 월별: 최근 12개월
+    monthly_points = []
+    for (y, m) in all_months[-MONTHLY_WINDOW:]:
+        summary = summarize_trades(trades_by_month[(y, m)])
+        if summary is not None:
+            monthly_points.append({"label": f"{m}월", **summary})
+
+    # 연도별: 과거 10년, 그 해 1~12월 거래를 전부 모아 집계 (거래 없는 해는 생략)
+    years = sorted({y for (y, m) in all_months})
+    yearly_points = []
+    for y in years:
+        year_trades = [t for (yy, mm), ts in trades_by_month.items() if yy == y for t in ts]
+        summary = summarize_trades(year_trades)
+        if summary is not None:
+            yearly_points.append({"label": f"{y}년", **summary})
+
+    if not monthly_points and not yearly_points:
+        return None
+
+    return {
+        "area": area,
+        "title": f"{area} 아파트 매매가 분포",
+        "unit": "단위: 억원",
+        "data": monthly_points,
+        "yearlyData": yearly_points,
+    }
+
+
+def get_all_areas_chart_data(target_date: date, service_key: str) -> list[dict]:
+    """20개 지역 전체의 chartData 배열 (앱 스키마: area/title/unit/data/yearlyData)."""
     chart_data = []
     for area, config in AREA_CODES.items():
-        print(f"[*] {area} 실거래가 조회 중...")
-        points = []
-        for ymd in months:
-            summary = get_monthly_summary(config, ymd, service_key)
-            if summary is not None:
-                points.append({"label": month_labels[ymd], **summary})
-        if not points:
-            print(f"[!] {area}: 5개월간 거래 데이터 없음 - 항목 생략")
+        print(f"[*] {area} 실거래가 조회 중 (12개월 + 과거 10년)...")
+        try:
+            entry = get_area_chart_data(area, config, target_date, service_key)
+        except Exception as e:
+            # 한 지역에서 재시도까지 다 실패해도 나머지 19개 지역 결과는 살린다
+            print(f"[!] {area}: 조회 실패 (재시도 소진) - 항목 생략: {e}")
             continue
-        chart_data.append({
-            "area": area,
-            "title": f"{area} 아파트 매매가 분포",
-            "unit": "단위: 억원",
-            "data": points,
-        })
+        if entry is None:
+            print(f"[!] {area}: 거래 데이터 없음 - 항목 생략")
+            continue
+        chart_data.append(entry)
 
     return chart_data
 
@@ -177,4 +225,5 @@ if __name__ == "__main__":
     key = get_molit_api_key()
     data = get_all_areas_chart_data(date.today(), key)
     for entry in data:
-        print(entry["area"], entry["data"])
+        print(entry["area"], "월별:", entry["data"])
+        print(entry["area"], "연도별:", entry["yearlyData"])

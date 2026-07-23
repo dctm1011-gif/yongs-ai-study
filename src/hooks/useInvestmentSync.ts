@@ -32,6 +32,8 @@ export interface InvestmentColumn {
     unit: string;
     // 주식: 단순 월별 값. 부동산: 실거래 분포 박스플랏(최소/1분위/중앙값/3분위/최대).
     data: ({ label: string; value: number } | BoxPlotPoint)[];
+    // 부동산 전용: 과거 10년치를 연 단위로 집계한 박스플랏 (있는 해만, 주식은 없음)
+    yearlyData?: BoxPlotPoint[];
   }[];
 }
 

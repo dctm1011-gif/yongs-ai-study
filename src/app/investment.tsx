@@ -60,51 +60,76 @@ const isBoxPlotData = (
 
 const BoxPlotChart: React.FC<{
   data: BoxPlotPoint[];
+  yearlyData?: BoxPlotPoint[];
   title: string;
   unit: string;
-}> = React.memo(({ data, title, unit }) => {
-  const globalMax = Math.max(...data.map(d => d.max), 1);
+}> = React.memo(({ data, yearlyData, title, unit }) => {
+  const [viewMode, setViewMode] = useState<'monthly' | 'yearly'>('monthly');
+  const hasYearly = !!yearlyData && yearlyData.length > 0;
+  const points = viewMode === 'yearly' && hasYearly ? yearlyData : data;
+
+  const globalMax = Math.max(...points.map(d => d.max), 1);
   const pct = (v: number) => (v / globalMax) * 100;
 
   return (
     <View>
       <Text style={styles.chartTitle}>{title}</Text>
+
+      {hasYearly && (
+        <View style={styles.viewModeRow}>
+          <TouchableOpacity
+            style={[styles.viewModeButton, viewMode === 'monthly' && styles.viewModeButtonActive]}
+            onPress={() => setViewMode('monthly')}
+          >
+            <Text style={[styles.viewModeButtonText, viewMode === 'monthly' && styles.viewModeButtonTextActive]}>월별</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.viewModeButton, viewMode === 'yearly' && styles.viewModeButtonActive]}
+            onPress={() => setViewMode('yearly')}
+          >
+            <Text style={[styles.viewModeButtonText, viewMode === 'yearly' && styles.viewModeButtonTextActive]}>연도별</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
       <View style={styles.chartBody}>
         <View style={styles.yAxis}>
           <Text style={styles.yAxisLabel}>{globalMax.toLocaleString()}</Text>
           <Text style={styles.yAxisLabel}>0</Text>
         </View>
-        <View style={styles.barChart}>
-          {data.map((point, idx) => (
-            <View key={idx} style={styles.barColumn}>
-              <Text style={styles.barValue}>{point.avg.toLocaleString()}</Text>
-              <View style={styles.boxPlotTrack}>
-                <View
-                  style={[
-                    styles.boxWhisker,
-                    {
-                      bottom: `${pct(point.min)}%`,
-                      height: `${Math.max(pct(point.max) - pct(point.min), 1)}%`,
-                    },
-                  ]}
-                />
-                <View
-                  style={[
-                    styles.boxRect,
-                    {
-                      bottom: `${pct(point.q1)}%`,
-                      height: `${Math.max(pct(point.q3) - pct(point.q1), 3)}%`,
-                    },
-                  ]}
-                />
-                <View style={[styles.boxMedian, { bottom: `${pct(point.median)}%` }]} />
-                <View style={[styles.boxAvgDot, { bottom: `${pct(point.avg)}%` }]} />
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.hChartScroll}>
+          <View style={styles.hBarChart}>
+            {points.map((point, idx) => (
+              <View key={idx} style={styles.hBarColumn}>
+                <Text style={styles.barValue}>{point.avg.toLocaleString()}</Text>
+                <View style={styles.boxPlotTrack}>
+                  <View
+                    style={[
+                      styles.boxWhisker,
+                      {
+                        bottom: `${pct(point.min)}%`,
+                        height: `${Math.max(pct(point.max) - pct(point.min), 1)}%`,
+                      },
+                    ]}
+                  />
+                  <View
+                    style={[
+                      styles.boxRect,
+                      {
+                        bottom: `${pct(point.q1)}%`,
+                        height: `${Math.max(pct(point.q3) - pct(point.q1), 3)}%`,
+                      },
+                    ]}
+                  />
+                  <View style={[styles.boxMedian, { bottom: `${pct(point.median)}%` }]} />
+                  <View style={[styles.boxAvgDot, { bottom: `${pct(point.avg)}%` }]} />
+                </View>
+                <Text style={styles.barLabel}>{point.label}</Text>
+                <Text style={styles.boxRangeLabel}>{point.min}~{point.max}</Text>
               </View>
-              <Text style={styles.barLabel}>{point.label}</Text>
-              <Text style={styles.boxRangeLabel}>{point.min}~{point.max}</Text>
-            </View>
-          ))}
-        </View>
+            ))}
+          </View>
+        </ScrollView>
       </View>
       <Text style={styles.chartUnit}>
         {unit} · 막대 위 숫자: 평균값 · 아래 숫자: 최소~최대 범위 · 박스: 25~75% · 굵은 선: 중앙값 · 점: 평균 위치
@@ -122,7 +147,7 @@ const ChartSelector: React.FC<{
 
   const renderChart = (chart: NonNullable<InvestmentColumn['chartData']>[number]) =>
     isBoxPlotData(chart.data) ? (
-      <BoxPlotChart data={chart.data} title={chart.title} unit={chart.unit} />
+      <BoxPlotChart data={chart.data} yearlyData={chart.yearlyData} title={chart.title} unit={chart.unit} />
     ) : (
       <BarChart data={chart.data as { label: string; value: number }[]} title={chart.title} unit={chart.unit} />
     );
@@ -1079,6 +1104,46 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: '#6b7280',
     marginTop: 6,
+  },
+  viewModeRow: {
+    flexDirection: 'row',
+    gap: 8,
+    marginBottom: 10,
+  },
+  viewModeButton: {
+    paddingVertical: 5,
+    paddingHorizontal: 14,
+    borderRadius: 14,
+    backgroundColor: '#f1f5f9',
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+  },
+  viewModeButtonActive: {
+    backgroundColor: '#dbeafe',
+    borderColor: '#2563eb',
+  },
+  viewModeButtonText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#64748b',
+  },
+  viewModeButtonTextActive: {
+    color: '#2563eb',
+  },
+  hChartScroll: {
+    flex: 1,
+  },
+  hBarChart: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    height: 140,
+    paddingTop: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#d1d5db',
+  },
+  hBarColumn: {
+    width: 60,
+    alignItems: 'center',
   },
   boxPlotTrack: {
     width: 24,
