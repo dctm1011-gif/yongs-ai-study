@@ -1,6 +1,6 @@
 """
 주식 실제 가격 데이터 - yfinance 기반
-Claude가 오늘의 관심 종목(티커)을 고르면, 그 티커의 실제 최근 5개월 월평균 종가를 가져온다.
+Claude가 오늘의 관심 종목(티커)을 고르면, 그 티커의 실제 최근 12개월 월평균 종가를 가져온다.
 추정 없음 - 데이터가 없는 달은 생략, 티커 자체가 유효하지 않으면 안전한 fallback 종목으로 재시도.
 """
 import json
@@ -43,7 +43,7 @@ def record_pick(name: str, ticker: str, target_date: date, keep: int = 10) -> No
     HISTORY_PATH.write_text(json.dumps(entries[-keep:], ensure_ascii=False, indent=2), encoding="utf-8")
 
 
-def _recent_months(target_date: date, count: int = 5) -> list[tuple[int, int]]:
+def _recent_months(target_date: date, count: int = 12) -> list[tuple[int, int]]:
     months = []
     y, m = target_date.year, target_date.month
     for _ in range(count):
@@ -59,7 +59,7 @@ def _unit_for(ticker: str) -> str:
     return "단위: 원" if re.search(r"\.(KS|KQ)$", ticker) else "단위: 달러"
 
 
-def fetch_monthly_avg_prices(ticker: str, target_date: date, months: int = 5) -> list[dict]:
+def fetch_monthly_avg_prices(ticker: str, target_date: date, months: int = 12) -> list[dict]:
     """야후 파이낸스에서 실제 일별 종가를 받아 월평균으로 집계. 실패/데이터없음 시 빈 리스트."""
     month_list = _recent_months(target_date, months)
     start = date(month_list[0][0], month_list[0][1], 1)

@@ -80,7 +80,7 @@ PROMPT = """오늘 날짜: {today}
 {real_estate_table}
 
 [주식 실제 데이터] 오늘의 관심 종목으로 이미 선정된 {stock_name}({stock_ticker})의
-야후 파이낸스 실제 최근 5개월 월평균 종가:
+야후 파이낸스 실제 최근 12개월 월평균 종가:
 
 {stock_table}
 
