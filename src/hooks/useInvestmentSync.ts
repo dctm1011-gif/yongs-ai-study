@@ -40,11 +40,12 @@ export interface InvestmentColumn {
 export interface BoxPlotPoint {
   label: string;
   avg: number;
-  min: number;
+  min: number;   // IQR 기반 whisker 하단 (fence 안 최솟값)
   q1: number;
   median: number;
   q3: number;
-  max: number;
+  max: number;   // IQR 기반 whisker 상단 (fence 안 최댓값)
+  outliers?: number[];  // Q1-1.5*IQR 미만 또는 Q3+1.5*IQR 초과 값들
   count?: number;
 }
 

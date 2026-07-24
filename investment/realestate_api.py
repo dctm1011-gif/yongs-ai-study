@@ -137,17 +137,30 @@ def _percentile(sorted_values: list[float], p: float) -> float:
 
 
 def summarize_trades(trades: list[dict]) -> dict | None:
-    """거래 목록(dealAmount 만원 단위) -> 박스플랏 요약(억원, 소수 2자리). 비어있으면 None."""
+    """거래 목록(dealAmount 만원 단위) -> 박스플랏 요약(억원, 소수 2자리). 비어있으면 None.
+
+    whisker는 IQR 기반(Q1-1.5*IQR ~ Q3+1.5*IQR)으로 계산하고,
+    그 범위를 벗어나는 값은 outliers 배열로 별도 반환.
+    min/max는 절대 최솟값이 아닌 whisker 안의 실제 최솟값/최댓값.
+    """
     if not trades:
         return None
     amounts = sorted(t["dealAmount"] / 10000 for t in trades)  # 만원 -> 억원
+    q1 = _percentile(amounts, 0.25)
+    q3 = _percentile(amounts, 0.75)
+    iqr = q3 - q1
+    fence_low = q1 - 1.5 * iqr
+    fence_high = q3 + 1.5 * iqr
+    inner = [v for v in amounts if fence_low <= v <= fence_high]
+    outliers = [round(v, 2) for v in amounts if v < fence_low or v > fence_high]
     return {
         "avg": round(sum(amounts) / len(amounts), 2),
-        "min": round(amounts[0], 2),
-        "q1": round(_percentile(amounts, 0.25), 2),
+        "min": round(inner[0], 2) if inner else round(amounts[0], 2),
+        "q1": round(q1, 2),
         "median": round(_percentile(amounts, 0.5), 2),
-        "q3": round(_percentile(amounts, 0.75), 2),
-        "max": round(amounts[-1], 2),
+        "q3": round(q3, 2),
+        "max": round(inner[-1], 2) if inner else round(amounts[-1], 2),
+        "outliers": outliers,
         "count": len(amounts),
     }
 

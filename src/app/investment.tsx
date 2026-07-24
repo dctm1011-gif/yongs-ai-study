@@ -72,8 +72,9 @@ const BoxPlotChart: React.FC<{
   const hasYearly = !!yearlyData && yearlyData.length > 0;
   const points = viewMode === 'yearly' && hasYearly ? yearlyData : data;
 
-  const globalMax = Math.max(...points.map(d => d.max), 1);
-  const pct = (v: number) => (v / globalMax) * 100;
+  const allOutliers = points.flatMap(p => p.outliers ?? []);
+  const globalMax = Math.max(...points.map(d => d.max), ...allOutliers, 1);
+  const pct = (v: number) => Math.min(100, Math.max(0, (v / globalMax) * 100));
 
   const openFullscreen = async () => {
     setExpanded(true);
@@ -101,6 +102,9 @@ const BoxPlotChart: React.FC<{
             <View style={[styles.boxRect, { bottom: `${pct(point.q1)}%`, height: `${Math.max(pct(point.q3) - pct(point.q1), 3)}%` }]} />
             <View style={[styles.boxMedian, { bottom: `${pct(point.median)}%` }]} />
             <View style={[styles.boxAvgDot, { bottom: `${pct(point.avg)}%` }]} />
+            {(point.outliers ?? []).map((val, oi) => (
+              <View key={`o${oi}`} style={[styles.boxOutlierDot, { bottom: `${pct(val)}%` }]} />
+            ))}
           </View>
           <Text style={[styles.barLabel, { fontSize: labelFontSize }]}>{point.label}</Text>
           <Text style={[styles.boxRangeLabel, { fontSize: Math.max(7, labelFontSize - 2) }]}>{point.min}~{point.max}</Text>
@@ -165,6 +169,9 @@ const BoxPlotChart: React.FC<{
                   />
                   <View style={[styles.boxMedian, { bottom: `${pct(point.median)}%` }]} />
                   <View style={[styles.boxAvgDot, { bottom: `${pct(point.avg)}%` }]} />
+                  {(point.outliers ?? []).map((val, oi) => (
+                    <View key={`o${oi}`} style={[styles.boxOutlierDot, { bottom: `${pct(val)}%` }]} />
+                  ))}
                 </View>
                 <Text style={styles.barLabel}>{point.label}</Text>
                 <Text style={styles.boxRangeLabel}>{point.min}~{point.max}</Text>
@@ -1284,6 +1291,18 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     marginBottom: -3,
     backgroundColor: '#f97316',
+    borderWidth: 1,
+    borderColor: '#fff',
+  },
+  boxOutlierDot: {
+    position: 'absolute',
+    left: '50%',
+    marginLeft: -3,
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    marginBottom: -3,
+    backgroundColor: '#ef4444',
     borderWidth: 1,
     borderColor: '#fff',
   },
