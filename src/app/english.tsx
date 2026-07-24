@@ -7,6 +7,7 @@ import { cacheManager } from '../utils/CacheManager';
 import { performanceMonitor } from '../utils/PerformanceMonitor';
 import { getDatabase, ref, onValue, get, set as dbSet } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
+import { writeCompletion } from '../utils/writeCompletion';
 import WordMatchGame from '../components/WordMatchGame';
 
 // Firebase Functions run in UTC; KST (UTC+9) doesn't roll to the next
@@ -443,6 +444,10 @@ export default function EnglishScreen() {
       return q;
     });
     saveQuizzes(updated);
+    if (updated.every(q => q.answered)) {
+      const correct = updated.filter(q => q.correct_answer).length;
+      writeCompletion('english_word', `영어단어 퀴즈 완료 (${correct}/${updated.length})`);
+    }
   };
 
   const refreshFromNetlify = async () => {

@@ -6,6 +6,7 @@ import * as Speech from 'expo-speech';
 import { performanceMonitor } from '../utils/PerformanceMonitor';
 import { getDatabase, ref, onValue } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
+import { writeCompletion } from '../utils/writeCompletion';
 
 // Firebase Functions run in UTC; KST (UTC+9) doesn't roll to the next
 // calendar day until 09:00 UTC, so a plain UTC date lags KST by a day
@@ -232,12 +233,24 @@ export default function TOEFLScreen() {
   };
 
   const toggleCompletion = (sectionId: string) => {
+    const current = sections.find(s => s.id === sectionId);
+    const nowCompleting = current && !current.completed;
     const updated = sections.map(s =>
       s.id === sectionId
         ? { ...s, completed: !s.completed, progress: !s.completed ? 100 : 0 }
         : s
     );
     saveSections(updated);
+    if (nowCompleting) {
+      const typeMap: Record<string, Parameters<typeof writeCompletion>[0]> = {
+        reading: 'toefl_reading',
+        listening: 'toefl_listening',
+        writing: 'toefl_writing',
+        speaking: 'toefl_speaking',
+      };
+      const type = typeMap[sectionId];
+      if (type) writeCompletion(type);
+    }
   };
 
   const selectAnswer = (questionId: string, optionIndex: number) => {

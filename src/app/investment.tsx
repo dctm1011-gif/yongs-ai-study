@@ -17,6 +17,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useInvestmentSync, InvestmentColumn, BoxPlotPoint } from '../hooks/useInvestmentSync';
+import { writeCompletion } from '../utils/writeCompletion';
 
 const { width } = Dimensions.get('window');
 
@@ -505,6 +506,17 @@ const DetailModal: React.FC<DetailModalProps> = React.memo(
           {column.source && (
             <Text style={styles.detailSource}>출처: {column.source}</Text>
           )}
+
+          <TouchableOpacity
+            style={styles.readCompleteButton}
+            onPress={() => {
+              writeCompletion('investment_column', `${column.title} 읽기 완료`);
+              onClose();
+            }}
+          >
+            <MaterialIcons name="check-circle" size={18} color="#fff" />
+            <Text style={styles.readCompleteButtonText}>읽기 완료</Text>
+          </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>
     </Modal>
@@ -1104,8 +1116,23 @@ const styles = StyleSheet.create({
   detailSource: {
     fontSize: 12,
     color: '#9ca3af',
-    marginBottom: 24,
+    marginBottom: 16,
     fontStyle: 'italic',
+  },
+  readCompleteButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    backgroundColor: '#16a34a',
+    borderRadius: 12,
+    paddingVertical: 14,
+    marginBottom: 32,
+  },
+  readCompleteButtonText: {
+    color: '#fff',
+    fontSize: 15,
+    fontWeight: '700',
   },
   chartTitle: {
     fontSize: 14,
