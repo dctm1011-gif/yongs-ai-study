@@ -1,161 +1,161 @@
 {
-  "date": "2026-07-24",
+  "date": "2026-07-25",
   "words": [
     {
-      "word": "meager",
-      "part_of_speech": "adjective",
-      "meaning_ko": "빈약한, 부족한",
-      "explanation": "양이나 양질이 충분하지 않음을 나타내는 형용사",
-      "example_from_convo": "The salary they offered was meager for such a demanding job",
-      "example_ko": "그렇게 힘든 일치고는 제시된 급여가 너무 빈약했어",
-      "tip": "급여, 식사량, 자료 등 부족함을 표현할 때 자주 씀",
-      "emoji": "😞"
-    },
-    {
-      "word": "ingenious",
-      "part_of_speech": "adjective",
-      "meaning_ko": "독창적인, 창의적인",
-      "explanation": "영리하고 창의적이며 혁신적인 아이디어나 방법을 나타냄",
-      "example_from_convo": "Her solution to the problem was absolutely ingenious",
-      "example_ko": "그녀의 문제 해결 방법은 정말 창의적이었어",
-      "tip": "칭찬할 때 intelligent보다 더 인상적인 표현",
-      "emoji": "💡"
-    },
-    {
-      "word": "pristine",
-      "part_of_speech": "adjective",
-      "meaning_ko": "깨끗한, 원래 상태의",
-      "explanation": "완벽하게 깨끗하거나 손상되지 않은 상태를 묘사함",
-      "example_from_convo": "The beach at sunrise looked pristine and untouched",
-      "example_ko": "해돋이 때 해변은 깨끗하고 손길이 닿지 않은 것처럼 보였어",
-      "tip": "자연이나 깨끗한 물건을 설명할 때 좋은 표현",
-      "emoji": "✨"
-    },
-    {
-      "word": "circumvent",
+      "word": "expedite",
       "part_of_speech": "verb",
-      "meaning_ko": "우회하다, 피하다",
-      "explanation": "규칙이나 문제를 직접 대면하지 않고 우회하는 방법으로 해결하다",
-      "example_from_convo": "He tried to circumvent the rules by finding a loophole",
-      "example_ko": "그는 빈틈을 찾아서 규칙을 우회하려고 했어",
-      "tip": "부정적인 의미로 자주 사용되며, 법적/윤리적 문제와 관련",
-      "emoji": "🔄"
+      "meaning_ko": "가속화하다, 빨리 처리하다",
+      "explanation": "To make something happen faster or to speed up a process",
+      "example_from_convo": "Can you expedite the delivery? I need it by tomorrow.",
+      "example_ko": "배송을 빨리 처리해줄 수 있나요? 내일까지 필요해요.",
+      "tip": "비즈니스 상황에서 자주 사용되는 정중한 표현",
+      "emoji": "⚡"
     },
     {
-      "word": "acclimate",
+      "word": "lucrative",
+      "part_of_speech": "adjective",
+      "meaning_ko": "수익성 있는, 돈이 되는",
+      "explanation": "Producing a great deal of profit; financially rewarding",
+      "example_from_convo": "That startup became really lucrative after the investment.",
+      "example_ko": "그 스타트업은 투자 후에 정말 돈이 잘 되었어.",
+      "tip": "사업이나 일자리가 얼마나 수익성이 좋은지 설명할 때 사용",
+      "emoji": "💰"
+    },
+    {
+      "word": "mitigate",
       "part_of_speech": "verb",
-      "meaning_ko": "적응하다, 순응하다",
-      "explanation": "새로운 환경이나 상황에 익숙해지고 적응하는 과정",
-      "example_from_convo": "It took me a month to acclimate to the new time zone",
-      "example_ko": "새로운 시간대에 적응하는 데 1개월이 걸렸어",
-      "tip": "새로운 환경에 적응하는 것을 설명할 때 사용",
-      "emoji": "🌍"
+      "meaning_ko": "완화하다, 줄이다",
+      "explanation": "To make something less severe or serious; to reduce the impact or intensity",
+      "example_from_convo": "We need to mitigate the environmental damage from the project.",
+      "example_ko": "우리는 프로젝트로 인한 환경 피해를 완화해야 해.",
+      "tip": "학술적인 글쓰기나 정책 논의에서 자주 등장",
+      "emoji": "🛡️"
+    },
+    {
+      "word": "empirical",
+      "part_of_speech": "adjective",
+      "meaning_ko": "경험적인, 실증적인",
+      "explanation": "Based on observation, experience, or experiment rather than theory alone",
+      "example_from_convo": "The study used empirical data to support their hypothesis.",
+      "example_ko": "그 연구는 가설을 뒷받침하기 위해 경험적 데이터를 사용했어.",
+      "tip": "과학, 연구, 학문 분야에서 자주 사용되는 학술 용어",
+      "emoji": "🔬"
+    },
+    {
+      "word": "inquisitive",
+      "part_of_speech": "adjective",
+      "meaning_ko": "호기심이 많은, 궁금해하는",
+      "explanation": "Having or showing a keen interest in learning things; curious",
+      "example_from_convo": "Children are naturally inquisitive about how things work.",
+      "example_ko": "아이들은 자연스럽게 사물이 어떻게 작동하는지 궁금해해.",
+      "tip": "긍정적인 의미의 호기심을 나타낼 때 사용",
+      "emoji": "🤔"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "meager",
-      "question": "다음 문장에서 'meager'의 뜻은?",
+      "word": "expedite",
+      "question": "What does 'expedite' mean?",
       "options": [
-        "양이나 질이 충분하지 않은, 빈약한",
-        "매우 맛있는, 풍부한",
-        "어렵고 복잡한",
-        "명확하고 분명한"
+        "To slow down a process",
+        "To make something happen faster or speed up a process",
+        "To cancel an order",
+        "To extend a deadline"
       ],
-      "answer": 0,
-      "explanation": "meager는 '빈약한, 부족한'이라는 뜻입니다. abundant(풍부한)의 반대말입니다."
+      "answer": 1,
+      "explanation": "'Expedite' means to make something happen faster or to speed up a process."
     },
     {
       "type": "meaning",
-      "word": "ingenious",
-      "question": "'ingenious' 단어가 가장 잘 설명하는 것은?",
+      "word": "lucrative",
+      "question": "Which of the following best describes something 'lucrative'?",
       "options": [
-        "순진하고 천진난만한",
-        "독창적이고 영리한",
-        "수줍어하는",
-        "겸손한"
+        "Something that is difficult to understand",
+        "Something that produces a great deal of profit",
+        "Something that is illegal or forbidden",
+        "Something that is very old and rare"
       ],
       "answer": 1,
-      "explanation": "ingenious는 '창의적이고 독창적인'이라는 뜻으로, 특히 뛰어난 아이디어나 솔루션을 설명할 때 사용합니다."
+      "explanation": "'Lucrative' means producing a great deal of profit or being financially rewarding."
     },
     {
       "type": "meaning",
-      "word": "circumvent",
-      "question": "다음 중 'circumvent'와 가장 가까운 뜻은?",
+      "word": "empirical",
+      "question": "What does 'empirical' research rely on?",
       "options": [
-        "정면으로 대응하다",
-        "우회하여 피하다",
-        "완전히 차단하다",
-        "명확히 설명하다"
+        "Only theoretical ideas without any testing",
+        "Observation, experience, or experiment",
+        "Personal opinions and beliefs",
+        "Historical documents alone"
       ],
       "answer": 1,
-      "explanation": "circumvent는 '문제나 규칙을 우회하여 피하다'라는 뜻입니다. 종종 부정적인 맥락에서 사용됩니다."
+      "explanation": "'Empirical' research is based on observation, experience, or actual experiments rather than theory alone."
     },
     {
       "type": "fill_blank",
-      "word": "pristine",
-      "question": "빈칸을 채우세요: 'After the renovation, the old house looked _______ again.'",
+      "word": "mitigate",
+      "question": "The government implemented new policies to _______ the effects of climate change.",
       "options": [
-        "meager",
-        "ingenious",
-        "pristine",
-        "acclimate"
-      ],
-      "answer": 2,
-      "explanation": "pristine(깨끗한, 새것 같은)이 리모델링 후 낡은 집이 다시 새것처럼 보인다는 맥락에 적합합니다."
-    },
-    {
-      "type": "fill_blank",
-      "word": "acclimate",
-      "question": "빈칸을 채우세요: 'New students usually need a few weeks to _______ to university life.'",
-      "options": [
-        "circumvent",
-        "acclimate",
-        "meager",
-        "pristine"
+        "accelerate",
+        "mitigate",
+        "ignore",
+        "increase"
       ],
       "answer": 1,
-      "explanation": "acclimate(적응하다)은 새로운 환경에 익숙해지는 과정을 나타냅니다."
+      "explanation": "'Mitigate' means to make something less severe, so it fits perfectly in describing reducing climate change effects."
     },
     {
       "type": "fill_blank",
-      "word": "ingenious",
-      "question": "빈칸을 채우세요: 'The engineer came up with an _______ design that solved the problem.'",
+      "word": "inquisitive",
+      "question": "Her _______ nature led her to ask many questions during the presentation.",
       "options": [
-        "meager",
-        "pristine",
-        "ingenious",
-        "acclimate"
+        "lazy",
+        "inquisitive",
+        "aggressive",
+        "indifferent"
+      ],
+      "answer": 1,
+      "explanation": "'Inquisitive' means curious and interested in learning, which matches someone who asks many questions."
+    },
+    {
+      "type": "fill_blank",
+      "word": "lucrative",
+      "question": "The tech industry has become increasingly _______ for investors in recent years.",
+      "options": [
+        "complicated",
+        "dangerous",
+        "lucrative",
+        "boring"
       ],
       "answer": 2,
-      "explanation": "ingenious(창의적인)는 창의적이고 뛰어난 설계를 설명하는데 적합합니다."
+      "explanation": "'Lucrative' means profitable and rewarding financially, which describes why investors are interested in the tech industry."
     },
     {
       "type": "situation",
-      "word": "circumvent",
-      "question": "직원이 회사 정책을 따르지 않고 다른 방법으로 그것을 피하려고 할 때, 이것을 설명하는 단어는?",
+      "word": "expedite",
+      "question": "You're waiting for important documents from your company for a job application deadline tomorrow. What should you do?",
       "options": [
-        "circumvent the rules",
-        "acclimate to the rules",
-        "pristine rules",
-        "meager rules"
+        "Wait passively and hope they arrive",
+        "Contact your manager and ask them to expedite the document delivery",
+        "Give up on the application",
+        "Ask a friend to forge the documents"
       ],
-      "answer": 0,
-      "explanation": "circumvent the rules는 '규칙을 우회하여 피하다'라는 뜻으로, 정책을 따르지 않고 다른 방법을 찾으려는 상황을 설명합니다."
+      "answer": 1,
+      "explanation": "You should ask your manager to 'expedite' the delivery, meaning to speed up the process to meet your deadline."
     },
     {
       "type": "situation",
-      "word": "meager",
-      "question": "학생이 수학 수업에 충분한 자료가 없어서 어려움을 겪고 있다. 이를 어떻게 설명할까?",
+      "word": "empirical",
+      "question": "A pharmaceutical company wants to prove their new medicine works. What type of evidence would be most valuable?",
       "options": [
-        "The student had ingenious resources",
-        "The student had meager resources",
-        "The student had pristine resources",
-        "The student had circumvented resources"
+        "What the CEO believes to be true",
+        "Historical advertisements from competitors",
+        "Empirical data from clinical trials and experiments",
+        "Customer testimonials only without any testing"
       ],
-      "answer": 1,
-      "explanation": "meager resources는 '부족한 자료'를 의미하며, 학생이 충분한 학습 자료를 갖지 못한 상황을 정확히 설명합니다."
+      "answer": 2,
+      "explanation": "'Empirical' evidence from actual clinical trials and experiments would be the most valuable and scientifically credible proof."
     }
   ]
 }

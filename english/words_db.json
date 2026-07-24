@@ -866,5 +866,65 @@
     "explanation": "새로운 환경이나 상황에 익숙해지고 적응하는 과정",
     "tip": "새로운 환경에 적응하는 것을 설명할 때 사용",
     "emoji": "🌍"
+  },
+  {
+    "id": "expedite",
+    "word": "expedite",
+    "pos": "verb",
+    "date": "2026-07-25",
+    "meaning": "가속화하다, 빨리 처리하다",
+    "example_ko": "배송을 빨리 처리해줄 수 있나요? 내일까지 필요해요.",
+    "example_en": "Can you expedite the delivery? I need it by tomorrow.",
+    "explanation": "To make something happen faster or to speed up a process",
+    "tip": "비즈니스 상황에서 자주 사용되는 정중한 표현",
+    "emoji": "⚡"
+  },
+  {
+    "id": "lucrative",
+    "word": "lucrative",
+    "pos": "adjective",
+    "date": "2026-07-25",
+    "meaning": "수익성 있는, 돈이 되는",
+    "example_ko": "그 스타트업은 투자 후에 정말 돈이 잘 되었어.",
+    "example_en": "That startup became really lucrative after the investment.",
+    "explanation": "Producing a great deal of profit; financially rewarding",
+    "tip": "사업이나 일자리가 얼마나 수익성이 좋은지 설명할 때 사용",
+    "emoji": "💰"
+  },
+  {
+    "id": "mitigate",
+    "word": "mitigate",
+    "pos": "verb",
+    "date": "2026-07-25",
+    "meaning": "완화하다, 줄이다",
+    "example_ko": "우리는 프로젝트로 인한 환경 피해를 완화해야 해.",
+    "example_en": "We need to mitigate the environmental damage from the project.",
+    "explanation": "To make something less severe or serious; to reduce the impact or intensity",
+    "tip": "학술적인 글쓰기나 정책 논의에서 자주 등장",
+    "emoji": "🛡️"
+  },
+  {
+    "id": "empirical",
+    "word": "empirical",
+    "pos": "adjective",
+    "date": "2026-07-25",
+    "meaning": "경험적인, 실증적인",
+    "example_ko": "그 연구는 가설을 뒷받침하기 위해 경험적 데이터를 사용했어.",
+    "example_en": "The study used empirical data to support their hypothesis.",
+    "explanation": "Based on observation, experience, or experiment rather than theory alone",
+    "tip": "과학, 연구, 학문 분야에서 자주 사용되는 학술 용어",
+    "emoji": "🔬"
+  },
+  {
+    "id": "inquisitive",
+    "word": "inquisitive",
+    "pos": "adjective",
+    "date": "2026-07-25",
+    "meaning": "호기심이 많은, 궁금해하는",
+    "example_ko": "아이들은 자연스럽게 사물이 어떻게 작동하는지 궁금해해.",
+    "example_en": "Children are naturally inquisitive about how things work.",
+    "explanation": "Having or showing a keen interest in learning things; curious",
+    "tip": "긍정적인 의미의 호기심을 나타낼 때 사용",
+    "emoji": "🤔"
   }
 ]
