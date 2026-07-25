@@ -8,7 +8,7 @@ import { performanceMonitor } from '../utils/PerformanceMonitor';
 import { getDatabase, ref, onValue, get, set as dbSet } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
 import { writeCompletion } from '../utils/writeCompletion';
-import WordMatchGame from '../components/WordMatchGame';
+import GameHub from '../components/GameHub';
 
 // Firebase Functions run in UTC; KST (UTC+9) doesn't roll to the next
 // calendar day until 09:00 UTC, so a plain UTC date lags KST by a day
@@ -593,7 +593,7 @@ export default function EnglishScreen() {
         </View>
       )}
       {view === 'quiz' && <QuizView quizzes={quizzes} words={words} onAnswer={answerQuiz} />}
-      {view === 'game' && <WordMatchGame />}
+      {view === 'game' && <GameHub />}
       {view === 'stats' && <StatsView stats={stats} />}
     </SafeAreaView>
   );

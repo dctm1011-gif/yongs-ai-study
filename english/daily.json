@@ -1,161 +1,161 @@
 {
-  "date": "2026-07-25",
+  "date": "2026-07-26",
   "words": [
     {
-      "word": "expedite",
+      "word": "juxtapose",
       "part_of_speech": "verb",
-      "meaning_ko": "가속화하다, 빨리 처리하다",
-      "explanation": "To make something happen faster or to speed up a process",
-      "example_from_convo": "Can you expedite the delivery? I need it by tomorrow.",
-      "example_ko": "배송을 빨리 처리해줄 수 있나요? 내일까지 필요해요.",
-      "tip": "비즈니스 상황에서 자주 사용되는 정중한 표현",
-      "emoji": "⚡"
+      "meaning_ko": "대조하다, 나란히 놓다",
+      "explanation": "두 개의 서로 다른 것을 비교하거나 대비하기 위해 나란히 놓는 것",
+      "example_from_convo": "The artist juxtaposed modern and classical styles in her painting.",
+      "example_ko": "그 예술가는 그녀의 그림에서 현대와 고전 스타일을 대조했다.",
+      "tip": "미술, 문학, 비교 분석할 때 자주 사용됨",
+      "emoji": "🎨"
     },
     {
-      "word": "lucrative",
+      "word": "benevolent",
       "part_of_speech": "adjective",
-      "meaning_ko": "수익성 있는, 돈이 되는",
-      "explanation": "Producing a great deal of profit; financially rewarding",
-      "example_from_convo": "That startup became really lucrative after the investment.",
-      "example_ko": "그 스타트업은 투자 후에 정말 돈이 잘 되었어.",
-      "tip": "사업이나 일자리가 얼마나 수익성이 좋은지 설명할 때 사용",
-      "emoji": "💰"
+      "meaning_ko": "자비로운, 친절한",
+      "explanation": "다른 사람을 돕고자 하는 선한 의도를 가진 상태",
+      "example_from_convo": "The benevolent donor gave millions to the charity.",
+      "example_ko": "그 자비로운 기부자는 자선단체에 수백만 달러를 기부했다.",
+      "tip": "선행과 자선 활동을 설명할 때 사용",
+      "emoji": "🤝"
     },
     {
-      "word": "mitigate",
+      "word": "scrutiny",
+      "part_of_speech": "noun",
+      "meaning_ko": "면밀한 조사, 정밀한 검토",
+      "explanation": "세밀하게 자세히 살펴보고 검사하는 행위",
+      "example_from_convo": "The financial records came under close scrutiny from auditors.",
+      "example_ko": "재무 기록은 감사자들의 면밀한 조사 대상이 되었다.",
+      "tip": "검토, 조사, 점검 상황에서 사용",
+      "emoji": "🔍"
+    },
+    {
+      "word": "fortuitous",
+      "part_of_speech": "adjective",
+      "meaning_ko": "우연의, 행운의",
+      "explanation": "계획되지 않았지만 운이 좋게 일어난 일",
+      "example_from_convo": "Meeting my business partner was a fortuitous encounter at the conference.",
+      "example_ko": "컨퍼런스에서 내 비즈니스 파트너를 만난 것은 우연의 만남이었다.",
+      "tip": "예상치 못한 행운을 설명할 때 유용",
+      "emoji": "🍀"
+    },
+    {
+      "word": "ameliorate",
       "part_of_speech": "verb",
-      "meaning_ko": "완화하다, 줄이다",
-      "explanation": "To make something less severe or serious; to reduce the impact or intensity",
-      "example_from_convo": "We need to mitigate the environmental damage from the project.",
-      "example_ko": "우리는 프로젝트로 인한 환경 피해를 완화해야 해.",
-      "tip": "학술적인 글쓰기나 정책 논의에서 자주 등장",
-      "emoji": "🛡️"
-    },
-    {
-      "word": "empirical",
-      "part_of_speech": "adjective",
-      "meaning_ko": "경험적인, 실증적인",
-      "explanation": "Based on observation, experience, or experiment rather than theory alone",
-      "example_from_convo": "The study used empirical data to support their hypothesis.",
-      "example_ko": "그 연구는 가설을 뒷받침하기 위해 경험적 데이터를 사용했어.",
-      "tip": "과학, 연구, 학문 분야에서 자주 사용되는 학술 용어",
-      "emoji": "🔬"
-    },
-    {
-      "word": "inquisitive",
-      "part_of_speech": "adjective",
-      "meaning_ko": "호기심이 많은, 궁금해하는",
-      "explanation": "Having or showing a keen interest in learning things; curious",
-      "example_from_convo": "Children are naturally inquisitive about how things work.",
-      "example_ko": "아이들은 자연스럽게 사물이 어떻게 작동하는지 궁금해해.",
-      "tip": "긍정적인 의미의 호기심을 나타낼 때 사용",
-      "emoji": "🤔"
+      "meaning_ko": "개선하다, 나아지게 하다",
+      "explanation": "상황을 더 좋게 또는 더 나쁘지 않게 만드는 것",
+      "example_from_convo": "The new policies will ameliorate working conditions for employees.",
+      "example_ko": "새로운 정책은 직원들의 근무 조건을 개선할 것이다.",
+      "tip": "개혁, 개선, 향상의 맥락에서 사용",
+      "emoji": "📈"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "expedite",
-      "question": "What does 'expedite' mean?",
+      "word": "juxtapose",
+      "question": "What does 'juxtapose' mean?",
       "options": [
-        "To slow down a process",
-        "To make something happen faster or speed up a process",
-        "To cancel an order",
-        "To extend a deadline"
+        "To place two things side by side for comparison",
+        "To separate completely",
+        "To hide something",
+        "To make something smaller"
       ],
-      "answer": 1,
-      "explanation": "'Expedite' means to make something happen faster or to speed up a process."
+      "answer": 0,
+      "explanation": "Juxtapose means to place two different things next to each other to highlight their differences or create contrast."
     },
     {
       "type": "meaning",
-      "word": "lucrative",
-      "question": "Which of the following best describes something 'lucrative'?",
+      "word": "benevolent",
+      "question": "Which word best describes a 'benevolent' person?",
       "options": [
-        "Something that is difficult to understand",
-        "Something that produces a great deal of profit",
-        "Something that is illegal or forbidden",
-        "Something that is very old and rare"
+        "Selfish and greedy",
+        "Kind and charitable",
+        "Angry and violent",
+        "Lazy and unmotivated"
       ],
       "answer": 1,
-      "explanation": "'Lucrative' means producing a great deal of profit or being financially rewarding."
+      "explanation": "Benevolent describes someone who is kind, generous, and motivated by goodwill toward others."
     },
     {
       "type": "meaning",
-      "word": "empirical",
-      "question": "What does 'empirical' research rely on?",
+      "word": "fortuitous",
+      "question": "What is a 'fortuitous' event?",
       "options": [
-        "Only theoretical ideas without any testing",
-        "Observation, experience, or experiment",
-        "Personal opinions and beliefs",
-        "Historical documents alone"
+        "A planned and expected occurrence",
+        "A negative event that was predicted",
+        "A lucky coincidence that wasn't planned",
+        "A dangerous situation"
       ],
-      "answer": 1,
-      "explanation": "'Empirical' research is based on observation, experience, or actual experiments rather than theory alone."
+      "answer": 2,
+      "explanation": "Fortuitous refers to something lucky or beneficial that happens by chance, without being planned."
     },
     {
       "type": "fill_blank",
-      "word": "mitigate",
-      "question": "The government implemented new policies to _______ the effects of climate change.",
+      "word": "scrutiny",
+      "question": "The bank's practices came under _____ after the financial scandal.",
       "options": [
-        "accelerate",
-        "mitigate",
+        "celebration",
+        "scrutiny",
+        "promotion",
+        "ignorance"
+      ],
+      "answer": 1,
+      "explanation": "Scrutiny means careful examination. The bank's practices were carefully examined after the scandal."
+    },
+    {
+      "type": "fill_blank",
+      "word": "ameliorate",
+      "question": "The government implemented new programs to _____ poverty in rural areas.",
+      "options": [
+        "worsen",
         "ignore",
-        "increase"
+        "ameliorate",
+        "discuss"
       ],
-      "answer": 1,
-      "explanation": "'Mitigate' means to make something less severe, so it fits perfectly in describing reducing climate change effects."
+      "answer": 2,
+      "explanation": "Ameliorate means to improve or make better. The programs were designed to improve the poverty situation."
     },
     {
       "type": "fill_blank",
-      "word": "inquisitive",
-      "question": "Her _______ nature led her to ask many questions during the presentation.",
+      "word": "benevolent",
+      "question": "The _____ millionaire donated his entire fortune to education initiatives.",
       "options": [
-        "lazy",
-        "inquisitive",
-        "aggressive",
-        "indifferent"
+        "stingy",
+        "benevolent",
+        "corrupt",
+        "lazy"
       ],
       "answer": 1,
-      "explanation": "'Inquisitive' means curious and interested in learning, which matches someone who asks many questions."
-    },
-    {
-      "type": "fill_blank",
-      "word": "lucrative",
-      "question": "The tech industry has become increasingly _______ for investors in recent years.",
-      "options": [
-        "complicated",
-        "dangerous",
-        "lucrative",
-        "boring"
-      ],
-      "answer": 2,
-      "explanation": "'Lucrative' means profitable and rewarding financially, which describes why investors are interested in the tech industry."
+      "explanation": "Benevolent fits perfectly as it describes someone kind and generous who gives to charitable causes."
     },
     {
       "type": "situation",
-      "word": "expedite",
-      "question": "You're waiting for important documents from your company for a job application deadline tomorrow. What should you do?",
+      "word": "juxtapose",
+      "question": "In a literature class, a teacher wants students to understand the contrast between two characters. What activity would best help them?",
       "options": [
-        "Wait passively and hope they arrive",
-        "Contact your manager and ask them to expedite the document delivery",
-        "Give up on the application",
-        "Ask a friend to forge the documents"
+        "Read only one character's perspective",
+        "Juxtapose the two characters by comparing their behaviors side by side",
+        "Ignore the differences between them",
+        "Write about them separately without comparison"
       ],
       "answer": 1,
-      "explanation": "You should ask your manager to 'expedite' the delivery, meaning to speed up the process to meet your deadline."
+      "explanation": "Juxtaposing the characters allows students to place them side by side and clearly see their contrasting traits and behaviors."
     },
     {
       "type": "situation",
-      "word": "empirical",
-      "question": "A pharmaceutical company wants to prove their new medicine works. What type of evidence would be most valuable?",
+      "word": "fortuitous",
+      "question": "You didn't prepare for a job interview, but the interviewer happens to be your uncle's friend and he gives you the job. What would you call this?",
       "options": [
-        "What the CEO believes to be true",
-        "Historical advertisements from competitors",
-        "Empirical data from clinical trials and experiments",
-        "Customer testimonials only without any testing"
+        "A planned success",
+        "An expected outcome",
+        "A fortuitous turn of events",
+        "A deserved achievement"
       ],
       "answer": 2,
-      "explanation": "'Empirical' evidence from actual clinical trials and experiments would be the most valuable and scientifically credible proof."
+      "explanation": "This is a fortuitous event because you got the job through an unexpected lucky connection rather than through preparation."
     }
   ]
 }

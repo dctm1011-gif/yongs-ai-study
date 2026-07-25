@@ -926,5 +926,65 @@
     "explanation": "Having or showing a keen interest in learning things; curious",
     "tip": "긍정적인 의미의 호기심을 나타낼 때 사용",
     "emoji": "🤔"
+  },
+  {
+    "id": "juxtapose",
+    "word": "juxtapose",
+    "pos": "verb",
+    "date": "2026-07-26",
+    "meaning": "대조하다, 나란히 놓다",
+    "example_ko": "그 예술가는 그녀의 그림에서 현대와 고전 스타일을 대조했다.",
+    "example_en": "The artist juxtaposed modern and classical styles in her painting.",
+    "explanation": "두 개의 서로 다른 것을 비교하거나 대비하기 위해 나란히 놓는 것",
+    "tip": "미술, 문학, 비교 분석할 때 자주 사용됨",
+    "emoji": "🎨"
+  },
+  {
+    "id": "benevolent",
+    "word": "benevolent",
+    "pos": "adjective",
+    "date": "2026-07-26",
+    "meaning": "자비로운, 친절한",
+    "example_ko": "그 자비로운 기부자는 자선단체에 수백만 달러를 기부했다.",
+    "example_en": "The benevolent donor gave millions to the charity.",
+    "explanation": "다른 사람을 돕고자 하는 선한 의도를 가진 상태",
+    "tip": "선행과 자선 활동을 설명할 때 사용",
+    "emoji": "🤝"
+  },
+  {
+    "id": "scrutiny",
+    "word": "scrutiny",
+    "pos": "noun",
+    "date": "2026-07-26",
+    "meaning": "면밀한 조사, 정밀한 검토",
+    "example_ko": "재무 기록은 감사자들의 면밀한 조사 대상이 되었다.",
+    "example_en": "The financial records came under close scrutiny from auditors.",
+    "explanation": "세밀하게 자세히 살펴보고 검사하는 행위",
+    "tip": "검토, 조사, 점검 상황에서 사용",
+    "emoji": "🔍"
+  },
+  {
+    "id": "fortuitous",
+    "word": "fortuitous",
+    "pos": "adjective",
+    "date": "2026-07-26",
+    "meaning": "우연의, 행운의",
+    "example_ko": "컨퍼런스에서 내 비즈니스 파트너를 만난 것은 우연의 만남이었다.",
+    "example_en": "Meeting my business partner was a fortuitous encounter at the conference.",
+    "explanation": "계획되지 않았지만 운이 좋게 일어난 일",
+    "tip": "예상치 못한 행운을 설명할 때 유용",
+    "emoji": "🍀"
+  },
+  {
+    "id": "ameliorate",
+    "word": "ameliorate",
+    "pos": "verb",
+    "date": "2026-07-26",
+    "meaning": "개선하다, 나아지게 하다",
+    "example_ko": "새로운 정책은 직원들의 근무 조건을 개선할 것이다.",
+    "example_en": "The new policies will ameliorate working conditions for employees.",
+    "explanation": "상황을 더 좋게 또는 더 나쁘지 않게 만드는 것",
+    "tip": "개혁, 개선, 향상의 맥락에서 사용",
+    "emoji": "📈"
   }
 ]
