@@ -137,10 +137,14 @@ export default async (req, context) => {
     // investment/generate_investment.py가 생성한 파일을 우선 사용,
     // 없거나 파싱 실패하면 하드코딩된 fallback 칼럼 사용
     let investmentColumns;
+    let termOfDay = null;
+    let newsArticles = [];
     try {
       const dailyPath = resolve(process.cwd(), 'investment', 'daily.json');
       const parsed = JSON.parse(readFileSync(dailyPath, 'utf-8'));
       investmentColumns = parsed.columns;
+      termOfDay = parsed.termOfDay || null;
+      newsArticles = parsed.newsArticles || [];
       log.log('✅ investment/daily.json 사용');
     } catch (e) {
       log.log('investment/daily.json 없음/파싱 실패, fallback 사용:', e.message);
@@ -150,9 +154,11 @@ export default async (req, context) => {
     const firebaseApp = getFirebaseApp();
     const db = getDatabase(firebaseApp);
 
-    // Firebase에 칼럼 데이터 저장
+    // Firebase에 칼럼 + 용어 + 뉴스 저장
     const columnData = {
       columns: investmentColumns,
+      termOfDay,
+      newsArticles,
       timestamp: new Date().toISOString(),
       date: today,
       count: investmentColumns.length,

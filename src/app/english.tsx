@@ -447,6 +447,9 @@ export default function EnglishScreen() {
     if (updated.every(q => q.answered)) {
       const correct = updated.filter(q => q.correct_answer).length;
       writeCompletion('english_word', `영어단어 퀴즈 완료 (${correct}/${updated.length})`);
+      const today = getKSTDateString();
+      const db = getDatabase(getFirebaseApp());
+      dbSet(ref(db, `completion/english/${today}`), true).catch(() => {});
     }
   };
 

@@ -1,8 +1,12 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Speech from 'expo-speech';
-import { getDatabase, ref, get, update } from 'firebase/database';
+import { getDatabase, ref, get, update, set as dbSet } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
+
+const DAILY_PLAY_KEY = 'wordmatch_last_played';
+const DAILY_STATS_KEY = 'wordmatch_last_stats';
 
 // Netlify Functions run in UTC; KST (UTC+9) doesn't roll to the next
 // calendar day until 09:00 UTC, so a plain UTC date lags KST by a day
@@ -13,8 +17,8 @@ function getKSTDateString(): string {
   return kst.toISOString().split('T')[0];
 }
 
-const ROUND_SIZE = 6; // 최대 6쌍(12장) 출제
-const GRADUATE_AT = 5; // 리뷰 5회 완료 시 게임 출제 대상에서 제외
+const ROUND_SIZE = 10; // 최대 10쌍(20장) 출제
+const GRADUATE_AT = 10; // 리뷰 10회 완료 시 게임 출제 대상에서 제외
 const MISMATCH_DELAY_MS = 600;
 
 interface ReviewWord {
@@ -51,6 +55,7 @@ export default function WordMatchGame() {
   const [busy, setBusy] = useState(false); // 두 장 비교 중일 때 추가 입력 막기
   const [mistakes, setMistakes] = useState(0);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
+  const [synced, setSynced] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const stopTimer = useCallback(() => {
@@ -67,6 +72,24 @@ export default function WordMatchGame() {
     setElapsedSeconds(0);
     setFlippedIds([]);
     setBusy(false);
+
+    // 오늘 이미 플레이한 경우 완료 상태 복원
+    try {
+      const today = getKSTDateString();
+      const lastPlayed = await AsyncStorage.getItem(DAILY_PLAY_KEY);
+      if (lastPlayed === today) {
+        const saved = await AsyncStorage.getItem(DAILY_STATS_KEY);
+        if (saved) {
+          const { cards: savedCards, elapsed, mistakes: mis, synced: syn } = JSON.parse(saved);
+          setCards(savedCards);
+          setElapsedSeconds(elapsed);
+          setMistakes(mis);
+          setSynced(syn ?? false);
+          setGameState('complete');
+          return;
+        }
+      }
+    } catch {}
 
     try {
       const db = getDatabase(getFirebaseApp());
@@ -160,6 +183,15 @@ export default function WordMatchGame() {
       if (updatedCards.every(c => c.matched)) {
         stopTimer();
         setGameState('complete');
+        // 오늘 날짜 + 결과 저장 (하루 1회 제한)
+        const today = getKSTDateString();
+        AsyncStorage.setItem(DAILY_PLAY_KEY, today).catch(() => {});
+        AsyncStorage.setItem(DAILY_STATS_KEY, JSON.stringify({
+          cards: updatedCards,
+          elapsed: elapsedSeconds,
+          mistakes,
+          synced: false,
+        })).catch(() => {});
       }
     } else {
       setMistakes(m => m + 1);
@@ -169,6 +201,24 @@ export default function WordMatchGame() {
       }, MISMATCH_DELAY_MS);
     }
   };
+
+  const handleComplete = useCallback(async () => {
+    if (synced) return;
+    try {
+      const today = getKSTDateString();
+      const db = getDatabase(getFirebaseApp());
+      await dbSet(ref(db, `completion/english_word_match/${today}`), true);
+      setSynced(true);
+      const saved = await AsyncStorage.getItem(DAILY_STATS_KEY);
+      if (saved) {
+        const data = JSON.parse(saved);
+        data.synced = true;
+        await AsyncStorage.setItem(DAILY_STATS_KEY, JSON.stringify(data));
+      }
+    } catch (e) {
+      console.warn('완료 기록 실패:', e);
+    }
+  }, [synced]);
 
   if (gameState === 'loading') {
     return (
@@ -188,51 +238,57 @@ export default function WordMatchGame() {
     );
   }
 
-  if (gameState === 'complete') {
-    return (
-      <View style={styles.centered}>
-        <Text style={styles.emptyEmoji}>🎉</Text>
-        <Text style={styles.emptyText}>완료!</Text>
-        <Text style={styles.emptySubtext}>{elapsedSeconds}초 · 틀린 시도 {mistakes}번</Text>
-        <TouchableOpacity style={styles.retryButton} onPress={startRound}>
-          <Text style={styles.retryButtonText}>다시하기</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-
   return (
     <View style={styles.container}>
       <View style={styles.statusBar}>
         <Text style={styles.statusText}>⏱ {elapsedSeconds}초</Text>
         <Text style={styles.statusText}>✗ {mistakes}번</Text>
       </View>
-      <View style={styles.grid}>
-        {cards.map(card => {
-          const isFlipped = flippedIds.includes(card.cardId) || card.matched;
-          return (
-            <TouchableOpacity
-              key={card.cardId}
-              style={[
-                styles.card,
-                isFlipped && styles.cardFlipped,
-                card.matched && styles.cardMatched,
-              ]}
-              onPress={() => onCardPress(card)}
-              disabled={isFlipped}
-            >
-              <Text
+      <View style={styles.gridWrapper}>
+        <View style={styles.grid}>
+          {cards.map(card => {
+            const isFlipped = flippedIds.includes(card.cardId) || card.matched;
+            return (
+              <TouchableOpacity
+                key={card.cardId}
                 style={[
-                  isFlipped ? styles.cardText : styles.cardBackText,
-                  isFlipped && card.type === 'word' && styles.cardWordText,
+                  styles.card,
+                  isFlipped && styles.cardFlipped,
+                  card.matched && styles.cardMatched,
                 ]}
-                numberOfLines={3}
+                onPress={() => onCardPress(card)}
+                disabled={gameState === 'complete' || isFlipped}
               >
-                {isFlipped ? card.text : '?'}
+                <Text
+                  style={[
+                    isFlipped ? styles.cardText : styles.cardBackText,
+                    isFlipped && card.type === 'word' && styles.cardWordText,
+                  ]}
+                  numberOfLines={3}
+                >
+                  {isFlipped ? card.text : '?'}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+        {gameState === 'complete' && (
+          <View style={styles.completeOverlay}>
+            <Text style={styles.completeEmoji}>🎉</Text>
+            <Text style={styles.completeTitle}>완료!</Text>
+            <Text style={styles.completeSub}>{elapsedSeconds}초 · 틀린 시도 {mistakes}번</Text>
+            <TouchableOpacity
+              style={[styles.completeBtn, synced && styles.completeBtnDone]}
+              onPress={handleComplete}
+              disabled={synced}
+            >
+              <Text style={styles.completeBtnText}>
+                {synced ? '✓ Google Tasks 기록됨' : '완료'}
               </Text>
             </TouchableOpacity>
-          );
-        })}
+            <Text style={styles.completeDailyNote}>내일 다시 도전하세요</Text>
+          </View>
+        )}
       </View>
     </View>
   );
@@ -266,18 +322,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 20,
   },
-  retryButton: {
-    marginTop: 20,
-    backgroundColor: '#2563eb',
-    paddingVertical: 12,
-    paddingHorizontal: 28,
-    borderRadius: 10,
-  },
-  retryButtonText: {
-    color: '#fff',
-    fontWeight: '700',
-    fontSize: 15,
-  },
   statusBar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -290,15 +334,42 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#1e293b',
   },
+  gridWrapper: {
+    flex: 1,
+    position: 'relative',
+  },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
   },
+  completeOverlay: {
+    position: 'absolute',
+    top: 0, left: 0, right: 0, bottom: 0,
+    backgroundColor: 'rgba(248, 250, 252, 0.88)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  completeEmoji: { fontSize: 52, marginBottom: 10 },
+  completeTitle: { fontSize: 26, fontWeight: '800', color: '#1e293b', marginBottom: 6 },
+  completeSub: { fontSize: 14, color: '#64748b', marginBottom: 14 },
+  completeBtn: {
+    backgroundColor: '#2563eb',
+    paddingVertical: 12, paddingHorizontal: 36,
+    borderRadius: 12, marginBottom: 12,
+  },
+  completeBtnDone: { backgroundColor: '#10b981' },
+  completeBtnText: { color: '#fff', fontWeight: '700', fontSize: 16 },
+  completeDailyNote: {
+    fontSize: 12, color: '#64748b',
+    backgroundColor: '#e2e8f0',
+    paddingHorizontal: 14, paddingVertical: 6,
+    borderRadius: 20,
+  },
   card: {
-    width: '31%',
+    width: '23%',
     aspectRatio: 0.85,
-    marginBottom: 10,
+    marginBottom: 8,
     borderRadius: 10,
     backgroundColor: '#2563eb',
     justifyContent: 'center',
@@ -315,20 +386,20 @@ const styles = StyleSheet.create({
     borderColor: '#10b981',
   },
   cardText: {
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: '600',
     color: '#1e293b',
     textAlign: 'center',
   },
   cardBackText: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: '800',
     color: '#dbeafe',
     textAlign: 'center',
   },
   cardWordText: {
     color: '#2563eb',
-    fontSize: 13,
+    fontSize: 11,
     fontWeight: '700',
   },
 });

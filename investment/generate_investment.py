@@ -182,6 +182,102 @@ STOCK_PICK_PROMPT = """오늘 날짜: {today}
 - 최근에 고른 종목: {recent_picks} - 이 중 하나를 반복 선정하지 마라. 단, 실적 발표·급등락처럼
   오늘 특별히 다룰만한 큰 이슈가 있다면 예외적으로 반복 선정해도 된다."""
 
+TERM_PROMPT = """오늘 날짜: {today}
+
+웹 검색으로 요즘 한국 부동산 시장에서 자주 등장하는 정책·용어 중 하나를 골라줘.
+최근 뉴스나 정책 변화와 연관된 용어를 우선으로 해줘.
+JSON만 출력. JSON 외 텍스트 포함 금지.
+
+{{
+  "term": "용어명 (짧고 명확하게)",
+  "fullName": "풀 이름 (영문 약자면 한국어 전체 이름 병기, 예: LTV → 주택담보대출비율)",
+  "definition": "2~3문장. 무엇인지, 어떻게 쓰이는지 설명",
+  "example": "실생활 예시 1문장 (구체적 수치나 상황 포함)",
+  "relatedPolicy": "관련 정책·규정 1~2문장",
+  "category": "금융정책 또는 부동산세제 또는 청약제도 또는 대출규제 또는 시장분석 중 하나",
+  "tip": "실수요자·투자자 핵심 팁 1문장"
+}}"""
+
+NEWS_PROMPT = """오늘 날짜: {today}
+
+웹 검색으로 최근 한국 부동산·주식·경제 관련 뉴스 기사 3개를 찾아줘.
+제목과 출처는 실제 검색 결과 그대로 가져와라. JSON만 출력. JSON 외 텍스트 포함 금지.
+
+{{
+  "articles": [
+    {{
+      "title": "실제 기사 제목",
+      "source": "출처 이름 (한국경제/매일경제/조선비즈/연합뉴스/뉴스1/한겨레 등)",
+      "summary": "기사 핵심 2~3문장 요약. 투자자 관점 시사점 포함",
+      "category": "real-estate 또는 stocks 또는 economy 중 하나",
+      "publishedAt": "{today}"
+    }}
+  ]
+}}
+
+선택 기준:
+- 오늘 또는 최근 2~3일 기사 우선
+- 투자자에게 실질적으로 도움이 되는 내용
+- 부동산 1~2개, 주식·경제 1~2개 균형 있게 구성"""
+
+
+def generate_term(client: anthropic.Anthropic, target_date: date) -> dict:
+    """오늘의 부동산 용어를 웹 검색으로 생성. 실패 시 기본 용어 반환."""
+    try:
+        messages = [{"role": "user", "content": TERM_PROMPT.format(today=target_date)}]
+        tools = [{"type": "web_search_20250305", "name": "web_search", "max_uses": 3}]
+        while True:
+            response = client.messages.create(model=MODEL, max_tokens=2000, tools=tools, messages=messages)
+            if response.stop_reason == "pause_turn":
+                messages.append({"role": "assistant", "content": response.content})
+                continue
+            break
+        text = "".join(b.text for b in response.content if b.type == "text")
+        start, end = text.find("{"), text.rfind("}") + 1
+        if start == -1 or end == 0:
+            raise ValueError("JSON not found in response")
+        term = json.loads(text[start:end])
+        term["date"] = str(target_date)
+        return term
+    except Exception as e:
+        print(f"[!] 용어 생성 실패, fallback 사용: {e}")
+        return {
+            "term": "LTV",
+            "fullName": "주택담보대출비율 (Loan-to-Value Ratio)",
+            "definition": "주택 담보 가치 대비 대출 가능한 최대 비율. 금융당국이 지역·상품별로 상한선을 규정한다.",
+            "example": "5억짜리 아파트에 LTV 70% 적용 시 최대 3.5억까지 대출 가능.",
+            "relatedPolicy": "투기과열지구 LTV 40%, 조정대상지역 50%, 비규제지역 70% 상한 적용.",
+            "category": "대출규제",
+            "tip": "LTV 한도 안에서도 DSR(총부채원리금상환비율) 기준을 함께 충족해야 실제 대출이 실행된다.",
+            "date": str(target_date),
+        }
+
+
+def generate_news(client: anthropic.Anthropic, target_date: date) -> list[dict]:
+    """최근 투자 관련 뉴스 기사 3개를 웹 검색으로 찾아 반환. 실패 시 빈 리스트."""
+    try:
+        messages = [{"role": "user", "content": NEWS_PROMPT.format(today=target_date)}]
+        tools = [{"type": "web_search_20250305", "name": "web_search", "max_uses": 5}]
+        while True:
+            response = client.messages.create(model=MODEL, max_tokens=3000, tools=tools, messages=messages)
+            if response.stop_reason == "pause_turn":
+                messages.append({"role": "assistant", "content": response.content})
+                continue
+            break
+        text = "".join(b.text for b in response.content if b.type == "text")
+        start, end = text.find("{"), text.rfind("}") + 1
+        if start == -1 or end == 0:
+            raise ValueError("JSON not found in response")
+        data = json.loads(text[start:end])
+        articles = data.get("articles", [])
+        for i, a in enumerate(articles):
+            a["id"] = f"news-{i + 1}-{target_date}"
+            a.setdefault("publishedAt", str(target_date))
+        return articles
+    except Exception as e:
+        print(f"[!] 뉴스 생성 실패, fallback 사용: {e}")
+        return []
+
 
 def pick_stock(client: anthropic.Anthropic, target_date: date):
     """오늘의 관심 종목을 웹 검색으로 고름. 실패 시 (None, None) - stock_api의 fallback이 처리."""
@@ -295,6 +391,16 @@ def main(target_date: date = None):
 
     column_count = len(data.get("columns", []))
     print(f"[+] 칼럼 {column_count}개 생성 완료")
+
+    print(f"[*] {target_date} 오늘의 부동산 용어 생성 중...")
+    term = generate_term(client, target_date)
+    print(f"[+] 용어: {term.get('term')}")
+    data["termOfDay"] = term
+
+    print(f"[*] {target_date} 뉴스 큐레이션 중 (웹 검색)...")
+    news_articles = generate_news(client, target_date)
+    print(f"[+] 뉴스 기사: {len(news_articles)}개")
+    data["newsArticles"] = news_articles
 
     OUTPUT_JSON.parent.mkdir(exist_ok=True)
     OUTPUT_JSON.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")

@@ -12,6 +12,26 @@ function getKSTDateString(): string {
   return kst.toISOString().split('T')[0];
 }
 
+export interface DailyTerm {
+  term: string;
+  fullName: string;
+  definition: string;
+  example: string;
+  relatedPolicy: string;
+  category: string;
+  tip: string;
+  date: string;
+}
+
+export interface NewsArticle {
+  id: string;
+  title: string;
+  source: string;
+  summary: string;
+  category: 'real-estate' | 'stocks' | 'economy';
+  publishedAt: string;
+}
+
 export interface InvestmentColumn {
   id: string;
   title: string;
@@ -107,6 +127,8 @@ function getMockInvestmentColumns(): InvestmentColumn[] {
 
 export function useInvestmentSync() {
   const [columns, setColumns] = useState<InvestmentColumn[]>([]);
+  const [termOfDay, setTermOfDay] = useState<DailyTerm | null>(null);
+  const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
   const [bookmarks, setBookmarks] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -138,6 +160,8 @@ export function useInvestmentSync() {
           const data = snapshot.val();
           if (data.columns && Array.isArray(data.columns)) {
             setColumns(data.columns);
+            setTermOfDay(data.termOfDay || null);
+            setNewsArticles(data.newsArticles || []);
             setLastSyncTime(new Date(data.timestamp || Date.now()));
             setError(null);
           }
@@ -187,6 +211,8 @@ export function useInvestmentSync() {
 
   return {
     columns,
+    termOfDay,
+    newsArticles,
     bookmarks,
     loading,
     error,

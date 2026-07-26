@@ -16,7 +16,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as ScreenOrientation from 'expo-screen-orientation';
-import { useInvestmentSync, InvestmentColumn, BoxPlotPoint } from '../hooks/useInvestmentSync';
+import { useInvestmentSync, InvestmentColumn, BoxPlotPoint, DailyTerm, NewsArticle } from '../hooks/useInvestmentSync';
 import { writeCompletion } from '../utils/writeCompletion';
 
 const { width } = Dimensions.get('window');
@@ -182,8 +182,35 @@ const BoxPlotChart: React.FC<{
         </ScrollView>
       </View>
       <Text style={styles.chartUnit}>
-        {unit} · 막대 위 숫자: 평균값 · 아래 숫자: 최소~최대 범위 · 박스: 25~75% · 굵은 선: 중앙값 · 점: 평균 위치
+        {unit} · 박스: 25~75% · 굵은 선: 중앙값 · 점: 평균
       </Text>
+
+      <ScrollView horizontal nestedScrollEnabled showsHorizontalScrollIndicator={false} style={{ marginTop: 10 }}>
+        <View style={{ borderWidth: 1, borderColor: '#e2e8f0', borderRadius: 8, overflow: 'hidden' }}>
+          {/* 헤더 */}
+          <View style={[styles.bpTableRow, { backgroundColor: '#f1f5f9' }]}>
+            <View style={styles.bpTableLabelCell}><Text style={styles.bpTableHeader}>기간</Text></View>
+            <View style={styles.bpTableCell}><Text style={styles.bpTableHeader}>최소</Text></View>
+            <View style={styles.bpTableCell}><Text style={[styles.bpTableHeader, { color: '#3b82f6' }]}>Q1</Text></View>
+            <View style={styles.bpTableCell}><Text style={[styles.bpTableHeader, { color: '#1d4ed8' }]}>중앙값</Text></View>
+            <View style={styles.bpTableCell}><Text style={[styles.bpTableHeader, { color: '#f97316' }]}>평균</Text></View>
+            <View style={styles.bpTableCell}><Text style={[styles.bpTableHeader, { color: '#3b82f6' }]}>Q3</Text></View>
+            <View style={styles.bpTableCell}><Text style={styles.bpTableHeader}>최대</Text></View>
+          </View>
+          {/* 데이터 행 */}
+          {points.map((p, idx) => (
+            <View key={idx} style={[styles.bpTableRow, idx % 2 === 1 && styles.bpTableRowAlt]}>
+              <View style={styles.bpTableLabelCell}><Text style={styles.bpTableLabelText}>{p.label}</Text></View>
+              <View style={styles.bpTableCell}><Text style={styles.bpTableText}>{p.min.toLocaleString()}</Text></View>
+              <View style={styles.bpTableCell}><Text style={[styles.bpTableText, { color: '#2563eb' }]}>{p.q1.toLocaleString()}</Text></View>
+              <View style={styles.bpTableCell}><Text style={[styles.bpTableText, { fontWeight: '700', color: '#1d4ed8' }]}>{p.median.toLocaleString()}</Text></View>
+              <View style={styles.bpTableCell}><Text style={[styles.bpTableText, { color: '#f97316' }]}>{p.avg.toLocaleString()}</Text></View>
+              <View style={styles.bpTableCell}><Text style={[styles.bpTableText, { color: '#2563eb' }]}>{p.q3.toLocaleString()}</Text></View>
+              <View style={styles.bpTableCell}><Text style={styles.bpTableText}>{p.max.toLocaleString()}</Text></View>
+            </View>
+          ))}
+        </View>
+      </ScrollView>
 
       <Modal visible={expanded} statusBarTranslucent animationType="fade" onRequestClose={closeFullscreen}>
         <View style={styles.fsContainer}>
@@ -226,6 +253,118 @@ const BoxPlotChart: React.FC<{
           </Text>
         </View>
       </Modal>
+    </View>
+  );
+});
+
+const TERM_CATEGORY_COLORS: Record<string, string> = {
+  금융정책: '#2563eb',
+  부동산세제: '#7c3aed',
+  청약제도: '#059669',
+  대출규제: '#dc2626',
+  시장분석: '#d97706',
+};
+
+const TermOfDayCard: React.FC<{ term: DailyTerm }> = React.memo(({ term }) => {
+  const [expanded, setExpanded] = useState(false);
+  const tagColor = TERM_CATEGORY_COLORS[term.category] ?? '#64748b';
+
+  return (
+    <TouchableOpacity
+      style={styles.termCard}
+      onPress={() => setExpanded(v => !v)}
+      activeOpacity={0.85}
+    >
+      <View style={styles.termHeader}>
+        <View style={styles.termHeaderLeft}>
+          <MaterialIcons name="menu-book" size={18} color="#7c3aed" />
+          <Text style={styles.termSectionLabel}>오늘의 부동산 용어</Text>
+        </View>
+        <MaterialIcons
+          name={expanded ? 'keyboard-arrow-up' : 'keyboard-arrow-down'}
+          size={20}
+          color="#94a3b8"
+        />
+      </View>
+
+      <View style={styles.termTitleRow}>
+        <Text style={styles.termName}>{term.term}</Text>
+        <View style={[styles.termCategoryBadge, { backgroundColor: tagColor }]}>
+          <Text style={styles.termCategoryText}>{term.category}</Text>
+        </View>
+      </View>
+
+      {term.fullName !== term.term && (
+        <Text style={styles.termFullName}>{term.fullName}</Text>
+      )}
+
+      <Text style={styles.termDefinition} numberOfLines={expanded ? undefined : 2}>
+        {term.definition}
+      </Text>
+
+      {expanded && (
+        <>
+          <View style={styles.termDetailRow}>
+            <MaterialIcons name="lightbulb-outline" size={14} color="#f59e0b" />
+            <Text style={styles.termDetailLabel}>예시</Text>
+          </View>
+          <Text style={styles.termDetailText}>{term.example}</Text>
+
+          <View style={styles.termDetailRow}>
+            <MaterialIcons name="account-balance" size={14} color="#2563eb" />
+            <Text style={styles.termDetailLabel}>관련 정책</Text>
+          </View>
+          <Text style={styles.termDetailText}>{term.relatedPolicy}</Text>
+
+          <View style={[styles.termTipBox]}>
+            <MaterialIcons name="stars" size={14} color="#7c3aed" />
+            <Text style={styles.termTipText}>{term.tip}</Text>
+          </View>
+        </>
+      )}
+    </TouchableOpacity>
+  );
+});
+
+const NEWS_CATEGORY_LABELS: Record<string, string> = {
+  'real-estate': '부동산',
+  stocks: '주식',
+  economy: '경제',
+};
+const NEWS_CATEGORY_COLORS: Record<string, string> = {
+  'real-estate': '#8b5cf6',
+  stocks: '#06b6d4',
+  economy: '#f59e0b',
+};
+
+const NewsCard: React.FC<{ articles: NewsArticle[] }> = React.memo(({ articles }) => {
+  if (!articles.length) return null;
+
+  return (
+    <View style={styles.newsSection}>
+      <View style={styles.newsSectionHeader}>
+        <MaterialIcons name="newspaper" size={18} color="#0f766e" />
+        <Text style={styles.newsSectionLabel}>뉴스 큐레이션</Text>
+      </View>
+      {articles.map(article => (
+        <View key={article.id} style={styles.newsArticleCard}>
+          <View style={styles.newsArticleHeader}>
+            <View
+              style={[
+                styles.newsCategoryBadge,
+                { backgroundColor: NEWS_CATEGORY_COLORS[article.category] ?? '#64748b' },
+              ]}
+            >
+              <Text style={styles.newsCategoryText}>
+                {NEWS_CATEGORY_LABELS[article.category] ?? article.category}
+              </Text>
+            </View>
+            <Text style={styles.newsSourceText}>{article.source}</Text>
+          </View>
+          <Text style={styles.newsTitle}>{article.title}</Text>
+          <Text style={styles.newsSummary}>{article.summary}</Text>
+        </View>
+      ))}
     </View>
   );
 });
@@ -601,6 +740,8 @@ const FilterModal: React.FC<FilterModalProps> = React.memo(
 export default function InvestmentScreen() {
   const {
     columns,
+    termOfDay,
+    newsArticles,
     bookmarks,
     loading,
     error,
@@ -692,20 +833,24 @@ export default function InvestmentScreen() {
 
   const listHeaderComponent = useMemo(
     () => (
-      <View style={styles.statsSection}>
-        <View style={styles.statCard}>
-          <MaterialIcons name="home-work" size={24} color="#8b5cf6" />
-          <Text style={styles.statNumber}>{stats.realEstate}</Text>
-          <Text style={styles.statLabel}>부동산 분석</Text>
-        </View>
-        <View style={styles.statCard}>
-          <MaterialIcons name="trending-up" size={24} color="#06b6d4" />
-          <Text style={styles.statNumber}>{stats.stocks}</Text>
-          <Text style={styles.statLabel}>주식 분석</Text>
+      <View>
+        {termOfDay && <TermOfDayCard term={termOfDay} />}
+        <NewsCard articles={newsArticles} />
+        <View style={styles.statsSection}>
+          <View style={styles.statCard}>
+            <MaterialIcons name="home-work" size={24} color="#8b5cf6" />
+            <Text style={styles.statNumber}>{stats.realEstate}</Text>
+            <Text style={styles.statLabel}>부동산 분석</Text>
+          </View>
+          <View style={styles.statCard}>
+            <MaterialIcons name="trending-up" size={24} color="#06b6d4" />
+            <Text style={styles.statNumber}>{stats.stocks}</Text>
+            <Text style={styles.statLabel}>주식 분석</Text>
+          </View>
         </View>
       </View>
     ),
-    [stats]
+    [stats, termOfDay, newsArticles]
   );
 
   const listFooterComponent = useMemo(
@@ -1399,5 +1544,200 @@ const styles = StyleSheet.create({
   filterOptionTextActive: {
     color: '#2563eb',
     fontWeight: '600',
+  },
+
+  // BoxPlot 통계 테이블
+  bpTableRow: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#f1f5f9',
+  },
+  bpTableRowAlt: {
+    backgroundColor: '#f8fafc',
+  },
+  bpTableLabelCell: {
+    width: 44,
+    paddingVertical: 5,
+    paddingHorizontal: 4,
+    justifyContent: 'center',
+    borderRightWidth: 1,
+    borderRightColor: '#e2e8f0',
+  },
+  bpTableCell: {
+    width: 52,
+    paddingVertical: 5,
+    paddingHorizontal: 4,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+  },
+  bpTableHeader: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#64748b',
+  },
+  bpTableLabelText: {
+    fontSize: 10,
+    color: '#374151',
+    fontWeight: '600',
+  },
+  bpTableText: {
+    fontSize: 10,
+    color: '#374151',
+  },
+
+  // TermOfDayCard
+  termCard: {
+    backgroundColor: '#faf5ff',
+    borderRadius: 12,
+    marginBottom: 12,
+    marginHorizontal: 4,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: '#e9d5ff',
+  },
+  termHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  termHeaderLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  termSectionLabel: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#7c3aed',
+    letterSpacing: 0.3,
+  },
+  termTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 4,
+  },
+  termName: {
+    fontSize: 20,
+    fontWeight: '800',
+    color: '#1f2937',
+  },
+  termCategoryBadge: {
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 6,
+  },
+  termCategoryText: {
+    fontSize: 11,
+    color: '#fff',
+    fontWeight: '600',
+  },
+  termFullName: {
+    fontSize: 12,
+    color: '#7c3aed',
+    marginBottom: 8,
+    fontStyle: 'italic',
+  },
+  termDefinition: {
+    fontSize: 14,
+    color: '#374151',
+    lineHeight: 20,
+    marginBottom: 6,
+  },
+  termDetailRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    marginTop: 12,
+    marginBottom: 4,
+  },
+  termDetailLabel: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#4b5563',
+  },
+  termDetailText: {
+    fontSize: 13,
+    color: '#4b5563',
+    lineHeight: 19,
+  },
+  termTipBox: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 6,
+    backgroundColor: '#ede9fe',
+    borderRadius: 8,
+    padding: 10,
+    marginTop: 12,
+  },
+  termTipText: {
+    flex: 1,
+    fontSize: 13,
+    color: '#5b21b6',
+    lineHeight: 18,
+    fontWeight: '500',
+  },
+
+  // NewsCard
+  newsSection: {
+    marginBottom: 12,
+    marginHorizontal: 4,
+  },
+  newsSectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: 8,
+    paddingHorizontal: 2,
+  },
+  newsSectionLabel: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#0f766e',
+    letterSpacing: 0.3,
+  },
+  newsArticleCard: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 14,
+    marginBottom: 8,
+    borderWidth: 1,
+    borderColor: '#e5e7eb',
+    borderLeftWidth: 3,
+    borderLeftColor: '#0d9488',
+  },
+  newsArticleHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 6,
+  },
+  newsCategoryBadge: {
+    paddingHorizontal: 7,
+    paddingVertical: 2,
+    borderRadius: 5,
+  },
+  newsCategoryText: {
+    fontSize: 11,
+    color: '#fff',
+    fontWeight: '600',
+  },
+  newsSourceText: {
+    fontSize: 12,
+    color: '#6b7280',
+    fontWeight: '500',
+  },
+  newsTitle: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#111827',
+    lineHeight: 20,
+    marginBottom: 6,
+  },
+  newsSummary: {
+    fontSize: 13,
+    color: '#4b5563',
+    lineHeight: 19,
   },
 });

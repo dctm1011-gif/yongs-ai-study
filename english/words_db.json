@@ -986,5 +986,65 @@
     "explanation": "상황을 더 좋게 또는 더 나쁘지 않게 만드는 것",
     "tip": "개혁, 개선, 향상의 맥락에서 사용",
     "emoji": "📈"
+  },
+  {
+    "id": "converge",
+    "word": "converge",
+    "pos": "verb",
+    "date": "2026-07-27",
+    "meaning": "수렴하다, 모이다",
+    "example_ko": "모든 도로가 도시 중심부에서 만난다",
+    "example_en": "All the roads converge at the city center",
+    "explanation": "여러 것이 한 점으로 모이거나 같아지는 것",
+    "tip": "수학, 경제, 물리학에서 자주 사용됨",
+    "emoji": "🔄"
+  },
+  {
+    "id": "arbitrary",
+    "word": "arbitrary",
+    "pos": "adjective",
+    "date": "2026-07-27",
+    "meaning": "자의적인, 자의로 정한",
+    "example_ko": "선생님의 성적 평가가 몇몇 학생들에게는 자의적으로 보였다",
+    "example_en": "The teacher's grading seemed arbitrary to some students",
+    "explanation": "합리적인 이유 없이 개인의 선택에 따라 결정되는",
+    "tip": "공정하지 않은 결정을 설명할 때 사용",
+    "emoji": "🎲"
+  },
+  {
+    "id": "defer",
+    "word": "defer",
+    "pos": "verb",
+    "date": "2026-07-27",
+    "meaning": "연기하다, 미루다",
+    "example_ko": "이 결정을 다음 주까지 미루자",
+    "example_en": "Let's defer this decision until next week",
+    "explanation": "어떤 일을 나중으로 미루거나 연기하는 것",
+    "tip": "비즈니스나 학문적 맥락에서 자주 나타남",
+    "emoji": "⏰"
+  },
+  {
+    "id": "ardent",
+    "word": "ardent",
+    "pos": "adjective",
+    "date": "2026-07-27",
+    "meaning": "열정적인, 열렬한",
+    "example_ko": "그녀는 기후 행동의 열렬한 지지자다",
+    "example_en": "She's an ardent supporter of climate action",
+    "explanation": "깊고 강렬한 감정이나 열정을 가진",
+    "tip": "긍정적인 감정과 열정을 표현할 때 사용",
+    "emoji": "🔥"
+  },
+  {
+    "id": "frivolous",
+    "word": "frivolous",
+    "pos": "adjective",
+    "date": "2026-07-27",
+    "meaning": "경솔한, 심각하지 않은",
+    "example_ko": "사소한 일에 시간을 낭비하지 마",
+    "example_en": "Don't waste time on frivolous matters",
+    "explanation": "심각성이나 중요성이 부족하고 가벼운",
+    "tip": "비판적인 맥락에서 자주 사용됨",
+    "emoji": "🪶"
   }
 ]

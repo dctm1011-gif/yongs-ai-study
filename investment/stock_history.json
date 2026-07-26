@@ -38,5 +38,10 @@
     "date": "2026-07-25",
     "name": "마이크론 테크놀로지",
     "ticker": "MU"
+  },
+  {
+    "date": "2026-07-26",
+    "name": "Broadcom",
+    "ticker": "AVGO"
   }
 ]
