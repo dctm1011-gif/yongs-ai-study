@@ -330,6 +330,31 @@ def generate(client: anthropic.Anthropic, target_date: date, real_estate_table: 
     return json.loads(text[start:end]), response
 
 
+NETLIFY_INVESTMENT_URL = "https://illustrious-cuchufli-7c4e58.netlify.app/.netlify/functions/investment-daily"
+
+
+def _trigger_netlify_investment(target_date: date, wait_sec: int = 120) -> None:
+    """git push 후 Netlify 빌드 완료를 기다렸다가 investment-daily 함수를 직접 트리거.
+
+    Netlify 스케줄(06:00 KST)이 daily.json 생성(06:52 KST)보다 먼저 실행되는
+    타이밍 문제를 막기 위해, 스크립트 실행 직후 Firebase에 덮어씀.
+    """
+    import time
+    import urllib.request as _ur
+
+    print(f"[*] Netlify 빌드 완료 대기 중 ({wait_sec}초)...")
+    time.sleep(wait_sec)
+
+    try:
+        req = _ur.Request(NETLIFY_INVESTMENT_URL, data=b"{}", method="POST")
+        req.add_header("Content-Type", "application/json")
+        with _ur.urlopen(req, timeout=60) as resp:
+            body = resp.read().decode()
+            print(f"[+] investment-daily 트리거 완료 ({resp.status}): {body}")
+    except Exception as e:
+        print(f"[!] investment-daily 트리거 실패: {e}")
+
+
 def deploy(target_date: date) -> None:
     print("[*] GitHub 배포 중...")
     subprocess.run(["git", "pull", "--rebase", "origin", "main"], cwd=str(ROOT))
@@ -412,6 +437,7 @@ def main(target_date: date = None):
     print(f"[+] daily.json 저장: {OUTPUT_JSON}")
 
     deploy(target_date)
+    _trigger_netlify_investment(target_date)
 
 
 if __name__ == "__main__":
