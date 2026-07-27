@@ -69,6 +69,13 @@ export interface BoxPlotPoint {
   count?: number;
 }
 
+export interface DongChartEntry {
+  area: string;       // "수지" | "동탄"
+  title: string;
+  unit: string;
+  data: BoxPlotPoint[]; // label = 동 이름
+}
+
 const BOOKMARKS_KEY = 'investment_bookmarks';
 
 // Fallback data shown when Firebase has no data yet for today
@@ -129,6 +136,7 @@ export function useInvestmentSync() {
   const [columns, setColumns] = useState<InvestmentColumn[]>([]);
   const [termOfDay, setTermOfDay] = useState<DailyTerm | null>(null);
   const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
+  const [dongCharts, setDongCharts] = useState<DongChartEntry[]>([]);
   const [bookmarks, setBookmarks] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -162,6 +170,7 @@ export function useInvestmentSync() {
             setColumns(data.columns);
             setTermOfDay(data.termOfDay || null);
             setNewsArticles(data.newsArticles || []);
+            setDongCharts(data.dongCharts || []);
             setLastSyncTime(new Date(data.timestamp || Date.now()));
             setError(null);
           }
@@ -213,6 +222,7 @@ export function useInvestmentSync() {
     columns,
     termOfDay,
     newsArticles,
+    dongCharts,
     bookmarks,
     loading,
     error,

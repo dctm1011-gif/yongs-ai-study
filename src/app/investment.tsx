@@ -16,7 +16,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as ScreenOrientation from 'expo-screen-orientation';
-import { useInvestmentSync, InvestmentColumn, BoxPlotPoint, DailyTerm, NewsArticle } from '../hooks/useInvestmentSync';
+import { useInvestmentSync, InvestmentColumn, BoxPlotPoint, DongChartEntry, DailyTerm, NewsArticle } from '../hooks/useInvestmentSync';
 import { writeCompletion } from '../utils/writeCompletion';
 
 const { width } = Dimensions.get('window');
@@ -373,8 +373,14 @@ const NewsCard: React.FC<{ articles: NewsArticle[] }> = React.memo(({ articles }
 // 항목이 1개뿐이면 칩 없이 그 차트만 바로 보여준다.
 const ChartSelector: React.FC<{
   charts: NonNullable<InvestmentColumn['chartData']>;
-}> = React.memo(({ charts }) => {
+  onAreaChange?: (area: string) => void;
+}> = React.memo(({ charts, onAreaChange }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const selectedArea = charts[charts.length === 1 ? 0 : selectedIndex]?.area;
+
+  useEffect(() => {
+    onAreaChange?.(selectedArea);
+  }, [selectedArea, onAreaChange]);
 
   const renderChart = (chart: NonNullable<InvestmentColumn['chartData']>[number]) => {
     if (!Array.isArray(chart.data) || chart.data.length === 0) return null;
@@ -546,10 +552,17 @@ interface DetailModalProps {
   column: InvestmentColumn | null;
   visible: boolean;
   onClose: () => void;
+  dongCharts: DongChartEntry[];
 }
 
 const DetailModal: React.FC<DetailModalProps> = React.memo(
-  ({ column, visible, onClose }) => {
+  ({ column, visible, onClose, dongCharts }) => {
+    const [selectedRegionArea, setSelectedRegionArea] = useState<string | undefined>(undefined);
+    const dongEntry = useMemo(
+      () => dongCharts.find((d) => d.area === selectedRegionArea),
+      [dongCharts, selectedRegionArea]
+    );
+
     const getCategoryLabel = useCallback((category: string) => {
       return category === 'real-estate'
         ? '부동산 분석'
@@ -631,7 +644,13 @@ const DetailModal: React.FC<DetailModalProps> = React.memo(
 
           {column.chartData && column.chartData.length > 0 && (
             <View style={styles.detailSection}>
-              <ChartSelector charts={column.chartData} />
+              <ChartSelector key={column.id} charts={column.chartData} onAreaChange={setSelectedRegionArea} />
+            </View>
+          )}
+
+          {dongEntry && (
+            <View style={styles.detailSection}>
+              <BoxPlotChart data={dongEntry.data} title={dongEntry.title} unit={dongEntry.unit} />
             </View>
           )}
 
@@ -742,6 +761,7 @@ export default function InvestmentScreen() {
     columns,
     termOfDay,
     newsArticles,
+    dongCharts,
     bookmarks,
     loading,
     error,
@@ -919,7 +939,7 @@ export default function InvestmentScreen() {
         </View>
       )}
 
-      <DetailModal column={selectedColumn} visible={detailVisible} onClose={() => setDetailVisible(false)} />
+      <DetailModal column={selectedColumn} visible={detailVisible} onClose={() => setDetailVisible(false)} dongCharts={dongCharts} />
       <FilterModal
         visible={filterVisible}
         selectedCategory={selectedCategory}

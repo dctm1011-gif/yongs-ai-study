@@ -1937,6 +1937,24 @@ localStorage.setItem('toefl_visited_' + new Date().toISOString().slice(0,10), '1
 """
 
 
+def _trigger_firebase_functions(date_str: str):
+    import urllib.request as _ur
+    endpoints = [
+        "https://illustrious-cuchufli-7c4e58.netlify.app/.netlify/functions/english-daily",
+        "https://illustrious-cuchufli-7c4e58.netlify.app/.netlify/functions/toefl-daily",
+    ]
+    for url in endpoints:
+        try:
+            req = _ur.Request(url, data=b'{}', method='POST')
+            req.add_header('Content-Type', 'application/json')
+            with _ur.urlopen(req, timeout=30) as r:
+                body = r.read().decode()
+                print(f"[+] 함수 트리거 완료 ({url.split('/')[-1]}): {body}")
+        except Exception as e:
+            print(f"[!] 함수 트리거 실패 ({url.split('/')[-1]}): {e}")
+            notify(f"⚠️ Firebase 함수 트리거 실패 ({date_str}): {e}")
+
+
 def deploy_to_netlify(word_count: int = 0, quiz_count: int = 0, target_date=None):
     GIT = "git"  # PATH의 git 사용
     print("[*] GitHub Pages 배포 중...")
@@ -1959,6 +1977,18 @@ def deploy_to_netlify(word_count: int = 0, quiz_count: int = 0, target_date=None
     else:
         print("[!] GitHub 배포 실패 (returncode:", result.returncode, ")")
         notify("❌ **영어공부 배포 실패.** git push 오류 확인 필요.")
+
+    # Netlify CLI로 직접 배포 (CI 실패 우회) 후 Firebase 함수 즉시 트리거
+    print("[*] Netlify 직접 배포 중...")
+    nr = subprocess.run(
+        ["netlify", "deploy", "--prod", "--message", f"auto: {date_str}"],
+        cwd=str(ROOT),
+    )
+    if nr.returncode == 0:
+        print("[+] Netlify 배포 성공, Firebase 함수 트리거 중...")
+        _trigger_firebase_functions(date_str)
+    else:
+        print("[!] Netlify 배포 실패 — Firebase 트리거 건너뜀")
 
 
 def get_api_key() -> str:

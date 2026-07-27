@@ -1,5 +1,5 @@
 [build]
-  command = "echo 'Build complete'"
+  command = "node -e \"process.exit(0)\""
   publish = "."
 
 [functions]

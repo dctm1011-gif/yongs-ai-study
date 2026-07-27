@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { initializeApp, getApps } from 'firebase/app';
-import { getDatabase, ref, set } from 'firebase/database';
+import { getDatabase, ref, set, get, remove } from 'firebase/database';
 
 export const config = {
   schedule: '0 21 * * *',
@@ -58,6 +58,14 @@ export default async (req, context) => {
     });
 
     console.log('✅ TOEFL problems saved to Firebase');
+
+    // 오늘 날짜 외 이전 데이터 삭제
+    const snap = await get(ref(db, 'toefl/problems'));
+    if (snap.exists()) {
+      const oldKeys = Object.keys(snap.val()).filter(k => k !== today);
+      await Promise.all(oldKeys.map(k => remove(ref(db, `toefl/problems/${k}`))));
+      if (oldKeys.length > 0) console.log(`🗑️ Removed old TOEFL entries: ${oldKeys.join(', ')}`);
+    }
 
     return new Response(JSON.stringify({
       success: true,

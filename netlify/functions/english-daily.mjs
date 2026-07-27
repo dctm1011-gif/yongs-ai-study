@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { initializeApp, getApps } from 'firebase/app';
-import { getDatabase, ref, set } from 'firebase/database';
+import { getDatabase, ref, set, get, remove } from 'firebase/database';
 
 export const config = {
   schedule: '0 21 * * *',
@@ -58,6 +58,20 @@ export default async (req, context) => {
     });
 
     console.log(`✅ English data saved to Firebase for ${today}`);
+
+    // 오늘 날짜 외 이전 데이터 삭제
+    const wordsSnap = await get(ref(db, 'english/words'));
+    if (wordsSnap.exists()) {
+      const oldKeys = Object.keys(wordsSnap.val()).filter(k => k !== today);
+      await Promise.all(oldKeys.map(k => remove(ref(db, `english/words/${k}`))));
+      if (oldKeys.length > 0) console.log(`🗑️ Removed old English entries: ${oldKeys.join(', ')}`);
+    }
+
+    const readSnap = await get(ref(db, 'english/readStatus'));
+    if (readSnap.exists()) {
+      const oldKeys = Object.keys(readSnap.val()).filter(k => k !== today);
+      await Promise.all(oldKeys.map(k => remove(ref(db, `english/readStatus/${k}`))));
+    }
 
     return new Response(
       JSON.stringify({
