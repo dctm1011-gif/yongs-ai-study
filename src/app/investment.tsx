@@ -373,14 +373,8 @@ const NewsCard: React.FC<{ articles: NewsArticle[] }> = React.memo(({ articles }
 // 항목이 1개뿐이면 칩 없이 그 차트만 바로 보여준다.
 const ChartSelector: React.FC<{
   charts: NonNullable<InvestmentColumn['chartData']>;
-  onAreaChange?: (area: string) => void;
-}> = React.memo(({ charts, onAreaChange }) => {
+}> = React.memo(({ charts }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const selectedArea = charts[charts.length === 1 ? 0 : selectedIndex]?.area;
-
-  useEffect(() => {
-    onAreaChange?.(selectedArea);
-  }, [selectedArea, onAreaChange]);
 
   const renderChart = (chart: NonNullable<InvestmentColumn['chartData']>[number]) => {
     if (!Array.isArray(chart.data) || chart.data.length === 0) return null;
@@ -557,12 +551,6 @@ interface DetailModalProps {
 
 const DetailModal: React.FC<DetailModalProps> = React.memo(
   ({ column, visible, onClose, dongCharts }) => {
-    const [selectedRegionArea, setSelectedRegionArea] = useState<string | undefined>(undefined);
-    const dongEntry = useMemo(
-      () => dongCharts.find((d) => d.area === selectedRegionArea),
-      [dongCharts, selectedRegionArea]
-    );
-
     const getCategoryLabel = useCallback((category: string) => {
       return category === 'real-estate'
         ? '부동산 분석'
@@ -644,19 +632,15 @@ const DetailModal: React.FC<DetailModalProps> = React.memo(
 
           {column.chartData && column.chartData.length > 0 && (
             <View style={styles.detailSection}>
-              <ChartSelector key={column.id} charts={column.chartData} onAreaChange={setSelectedRegionArea} />
+              <ChartSelector key={column.id} charts={column.chartData} />
             </View>
           )}
 
-          {selectedRegionArea && (
-            <View style={styles.detailSection}>
-              {dongEntry ? (
-                <BoxPlotChart data={dongEntry.data} title={dongEntry.title} unit={dongEntry.unit} />
-              ) : (
-                <Text style={styles.detailSectionContent}>동 단위 데이터가 없습니다.</Text>
-              )}
+          {dongCharts.length > 0 && column.category === 'real-estate' && dongCharts.map((dongEntry, idx) => (
+            <View key={idx} style={styles.detailSection}>
+              <BoxPlotChart data={dongEntry.data} title={dongEntry.title} unit={dongEntry.unit} />
             </View>
-          )}
+          ))}
 
           {column.sections?.map((section, idx) => (
             <View key={idx} style={styles.detailSection}>
