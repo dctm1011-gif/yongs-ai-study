@@ -73,7 +73,8 @@ export interface DongChartEntry {
   area: string;       // "수지" | "동탄"
   title: string;
   unit: string;
-  data: BoxPlotPoint[]; // label = 동 이름
+  data: BoxPlotPoint[];        // label = 동 이름 (최근 6개월 집계)
+  yearlyData?: BoxPlotPoint[]; // label = 동 이름 (10년 전체 집계)
 }
 
 const BOOKMARKS_KEY = 'investment_bookmarks';

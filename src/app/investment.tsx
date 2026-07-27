@@ -638,7 +638,7 @@ const DetailModal: React.FC<DetailModalProps> = React.memo(
 
           {dongCharts.length > 0 && column.category === 'real-estate' && dongCharts.map((dongEntry, idx) => (
             <View key={idx} style={styles.detailSection}>
-              <BoxPlotChart data={dongEntry.data} title={dongEntry.title} unit={dongEntry.unit} />
+              <BoxPlotChart data={dongEntry.data} yearlyData={dongEntry.yearlyData} title={dongEntry.title} unit={dongEntry.unit} />
             </View>
           ))}
 

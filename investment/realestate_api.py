@@ -243,60 +243,77 @@ def get_all_areas_chart_data(target_date: date, service_key: str) -> list[dict]:
 
 
 def get_dong_comparison_data(target_date: date, service_key: str) -> list[dict]:
-    """DONG_FOCUS 지역의 동별 박스플랏 집계 (최근 6개월 합산).
+    """DONG_FOCUS 지역의 동별 박스플랏 집계.
 
-    지역 전체 거래를 모아 Q1/평균을 구하고, 그 지역 안에서 동 평균가가
-    Q1~평균 구간(실거주 가능한 가격대라고 보는 범위) 안에 드는 동만 골라
-    각 동의 박스플랏을 반환한다. 거래가 DONG_MIN_TRADES건 미만인 동은
-    노이즈로 보고 제외한다.
+    120개월 전체 거래를 수집한 뒤:
+    - data: 최근 6개월 집계, 지역 Q1~평균 구간 동만 포함
+    - yearlyData: 10년(120개월) 전체 집계, 동일한 동 목록
 
-    반환 형식:
-    [
-      { "area": "수지", "title": "수지 동별 실거래가 분포 (Q1~평균 범위)", "unit": "...",
-        "data": [ { "label": "죽전동", avg, min, q1, median, q3, max, outliers, count }, ... ] },
-      ...
-    ]
+    거래가 DONG_MIN_TRADES건 미만인 동은 노이즈로 제외.
     """
     WINDOW = 6
-    months = recent_year_months(target_date, WINDOW)
+    all_months = recent_year_months(target_date, YEARLY_WINDOW_MONTHS)  # 120개월
+    recent_set = {(y, m) for (y, m) in recent_year_months(target_date, WINDOW)}
     result = []
 
     for area, cfg in DONG_FOCUS.items():
         lawd_cd = cfg["lawd_cd"]
 
-        # 최근 6개월 거래 전부 수집 (지역 전체, 모든 동)
-        all_trades: list[dict] = []
-        for (y, m) in months:
-            deal_ymd = f"{y}{m:02d}"
-            all_trades.extend(fetch_trades(lawd_cd, deal_ymd, service_key))
+        # 120개월 전체 수집 (6개월은 여기서 추출)
+        trades_6m: list[dict] = []
+        trades_10y: list[dict] = []
+        for (y, m) in all_months:
+            month_trades = fetch_trades(lawd_cd, f"{y}{m:02d}", service_key)
+            trades_10y.extend(month_trades)
+            if (y, m) in recent_set:
+                trades_6m.extend(month_trades)
 
-        overall = summarize_trades(all_trades)
+        # 포함할 동 목록은 6개월 기준으로 결정
+        overall = summarize_trades(trades_6m)
         if overall is None:
             continue
         lo, hi = sorted((overall["q1"], overall["avg"]))
 
-        by_dong: dict[str, list[dict]] = {}
-        for t in all_trades:
-            by_dong.setdefault(t.get("umdNm", ""), []).append(t)
+        by_dong_6m: dict[str, list[dict]] = {}
+        for t in trades_6m:
+            by_dong_6m.setdefault(t.get("umdNm", ""), []).append(t)
 
-        points = []
-        for dong, trades in by_dong.items():
+        valid_dongs: set[str] = set()
+        points_6m = []
+        for dong, trades in by_dong_6m.items():
             if len(trades) < DONG_MIN_TRADES:
                 continue
             summary = summarize_trades(trades)
             if summary is None or not (lo <= summary["avg"] <= hi):
                 continue
-            points.append({"label": dong, **summary})
+            valid_dongs.add(dong)
+            points_6m.append({"label": dong, **summary})
 
-        if not points:
+        if not points_6m:
             continue
-        points.sort(key=lambda p: p["avg"])
+        points_6m.sort(key=lambda p: p["avg"])
+
+        # 10년 집계 (같은 동 목록)
+        by_dong_10y: dict[str, list[dict]] = {}
+        for t in trades_10y:
+            dong = t.get("umdNm", "")
+            if dong in valid_dongs:
+                by_dong_10y.setdefault(dong, []).append(t)
+
+        points_10y = []
+        for dong in valid_dongs:
+            summary = summarize_trades(by_dong_10y.get(dong, []))
+            if summary is None:
+                continue
+            points_10y.append({"label": dong, **summary})
+        points_10y.sort(key=lambda p: p["avg"])
 
         result.append({
             "area": area,
             "title": f"{area} 동별 실거래가 분포 (Q1~평균 범위)",
-            "unit": "단위: 억원 (최근 6개월 합산, 동 평균이 지역 Q1~평균 사이인 동만)",
-            "data": points,
+            "unit": "단위: 억원",
+            "data": points_6m,
+            "yearlyData": points_10y,
         })
 
     return result
