@@ -84,6 +84,7 @@ export default function TOEFLScreen() {
   const [writingLines, setWritingLines] = useState<string[]>([]);
   const [writingView, setWritingView] = useState<'write' | 'saved'>('write');
   const [savedEssays, setSavedEssays] = useState<{ id: string; content: string; date: string }[]>([]);
+  const [revealedParaphrases, setRevealedParaphrases] = useState<boolean[]>([]);
   const [isCached, setIsCached] = useState(false);
   const [loadStartTime] = useState(Date.now());
   const [toeflProblems, setToeflProblems] = useState<any>(null);
@@ -549,83 +550,69 @@ export default function TOEFLScreen() {
     );
   };
 
-  const renderWritingContent = () => (
-    <ScrollView style={styles.contentScroll}>
-      <Text style={styles.contentTitle}>✍️ Essay Writing</Text>
+  const renderWritingContent = () => {
+    const sentences: { original: string; paraphrase: string; tip: string }[] =
+      toeflProblems?.writing?.sentences || [];
 
-      <View style={styles.writingTabs}>
-        <TouchableOpacity
-          style={[styles.writingTab, writingView === 'write' && styles.writingTabActive]}
-          onPress={() => setWritingView('write')}
-        >
-          <Text style={[styles.writingTabText, writingView === 'write' && styles.writingTabTextActive]}>✏️ 작성</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.writingTab, writingView === 'saved' && styles.writingTabActive]}
-          onPress={() => setWritingView('saved')}
-        >
-          <Text style={[styles.writingTabText, writingView === 'saved' && styles.writingTabTextActive]}>💾 임시저장 ({savedEssays.length})</Text>
-        </TouchableOpacity>
-      </View>
+    const toggleReveal = (idx: number) => {
+      setRevealedParaphrases(prev => {
+        const next = [...prev];
+        next[idx] = !next[idx];
+        return next;
+      });
+    };
 
-      {writingView === 'write' ? (
-        <>
-          <View style={styles.writingPromptBox}>
-            <Text style={styles.writingPromptLabel}>📝 에세이 주제</Text>
-            <Text style={styles.writingPrompt}>
-              {toeflProblems?.writing?.prompt || "Loading writing prompt..."}
-            </Text>
-          </View>
+    return (
+      <ScrollView style={styles.contentScroll}>
+        <Text style={styles.contentTitle}>✍️ Paraphrasing</Text>
+        <Text style={styles.writingLabel}>
+          리딩 지문의 핵심 문장을 같은 의미로 다르게 표현해보세요.
+        </Text>
 
-          <Text style={styles.writingLabel}>✏️ 한 문장씩 따라 써보세요</Text>
-          {toeflProblems?.writing?.model_sentences?.map((sentence: string, idx: number) => (
+        {sentences.length === 0 ? (
+          <Text style={styles.loadingText}>Loading writing problems...</Text>
+        ) : (
+          sentences.map((item, idx) => (
             <View key={idx} style={styles.writingLineBlock}>
-              <Text style={styles.writingModelSentence}>{idx + 1}. {sentence}</Text>
+              <Text style={styles.writingPromptLabel}>원문 {idx + 1}</Text>
+              <Text style={styles.writingModelSentence}>{item.original}</Text>
+
               <TextInput
                 style={styles.writingLineInput}
-                placeholder="위 문장을 그대로 따라 써보세요..."
+                placeholder="패러프레이즈를 입력해보세요..."
                 placeholderTextColor="#94a3b8"
                 value={writingLines[idx] || ''}
                 onChangeText={(text) => updateWritingLine(idx, text)}
+                multiline
               />
-            </View>
-          ))}
 
-          <View style={styles.buttonRow}>
-            <TouchableOpacity style={styles.saveButton} onPress={saveEssay}>
-              <Text style={styles.saveButtonText}>💾 임시저장</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.submitButton} onPress={submitEssay}>
-              <Text style={styles.submitButtonText}>📤 제출</Text>
-            </TouchableOpacity>
-          </View>
-        </>
-      ) : (
-        <View style={styles.savedEssaysContainer}>
-          {savedEssays.length === 0 ? (
-            <Text style={styles.noSavedText}>임시저장된 에세이가 없습니다.</Text>
-          ) : (
-            savedEssays.map((essay) => (
-              <View key={essay.id} style={styles.savedEssayItem}>
-                <View style={styles.essayHeader}>
-                  <Text style={styles.essayDate}>{essay.date}</Text>
-                  <View style={styles.essayButtons}>
-                    <TouchableOpacity style={styles.loadBtn} onPress={() => loadEssay(essay)}>
-                      <Text style={styles.btnText}>📖 불러오기</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.deleteBtn} onPress={() => deleteEssay(essay.id)}>
-                      <Text style={styles.btnText}>🗑️</Text>
-                    </TouchableOpacity>
-                  </View>
+              <TouchableOpacity
+                style={styles.saveButton}
+                onPress={() => toggleReveal(idx)}
+              >
+                <Text style={styles.saveButtonText}>
+                  {revealedParaphrases[idx] ? '🙈 정답 숨기기' : '💡 정답 보기'}
+                </Text>
+              </TouchableOpacity>
+
+              {revealedParaphrases[idx] && (
+                <View style={styles.writingPromptBox}>
+                  <Text style={styles.writingPromptLabel}>모범 패러프레이즈</Text>
+                  <Text style={styles.writingPrompt}>{item.paraphrase}</Text>
+                  {item.tip ? (
+                    <>
+                      <Text style={[styles.writingPromptLabel, { marginTop: 8 }]}>💡 기법</Text>
+                      <Text style={styles.writingPrompt}>{item.tip}</Text>
+                    </>
+                  ) : null}
                 </View>
-                <Text style={styles.essayPreview} numberOfLines={3}>{essay.content}</Text>
-              </View>
-            ))
-          )}
-        </View>
-      )}
-    </ScrollView>
-  );
+              )}
+            </View>
+          ))
+        )}
+      </ScrollView>
+    );
+  };
 
   const renderSpeakingContent = () => {
     if (!toeflProblems?.speaking) {

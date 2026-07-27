@@ -1046,5 +1046,65 @@
     "explanation": "심각성이나 중요성이 부족하고 가벼운",
     "tip": "비판적인 맥락에서 자주 사용됨",
     "emoji": "🪶"
+  },
+  {
+    "id": "candor",
+    "word": "candor",
+    "pos": "noun",
+    "date": "2026-07-28",
+    "meaning": "솔직함, 솔직한 태도",
+    "example_ko": "프로젝트의 실패에 대한 당신의 솔직함을 감사합니다",
+    "example_en": "I appreciate your candor about the project's failures",
+    "explanation": "The quality of being honest, frank, and straightforward in speech or writing without hiding anything",
+    "tip": "Business and formal settings에서 자주 사용됨",
+    "emoji": "🎯"
+  },
+  {
+    "id": "enigmatic",
+    "word": "enigmatic",
+    "pos": "adjective",
+    "date": "2026-07-28",
+    "meaning": "수수께끼 같은, 신비로운",
+    "example_ko": "그녀의 신비로운 미소가 모두를 궁금하게 만들었다",
+    "example_en": "Her enigmatic smile made everyone wonder what she was thinking",
+    "explanation": "Mysterious and difficult to understand or interpret; having a puzzling quality",
+    "tip": "Character description이나 mysterious situations을 설명할 때 유용",
+    "emoji": "🔮"
+  },
+  {
+    "id": "degrade",
+    "word": "degrade",
+    "pos": "verb",
+    "date": "2026-07-28",
+    "meaning": "낮추다, 모욕하다, 악화시키다",
+    "example_ko": "소문을 퍼뜨리는 것은 당신의 평판을 떨어뜨릴 뿐이다",
+    "example_en": "Spreading rumors will only degrade your reputation",
+    "explanation": "To treat someone with disrespect or reduce their rank/status; or to reduce in quality or value",
+    "tip": "두 가지 의미가 있음: 사람을 모욕하거나 품질을 악화시킬 때",
+    "emoji": "📉"
+  },
+  {
+    "id": "prodigious",
+    "word": "prodigious",
+    "pos": "adjective",
+    "date": "2026-07-28",
+    "meaning": "엄청난, 대단한, 경이로운",
+    "example_ko": "그 학생은 어린 나이에 수학에서 대단한 재능을 보였다",
+    "example_en": "The student showed prodigious talent in mathematics at such a young age",
+    "explanation": "Impressively great in extent, amount, or degree; remarkable and extraordinary in size or quality",
+    "tip": "Talent, effort, 또는 ability의 크기가 놀랄 정도로 클 때 사용",
+    "emoji": "⭐"
+  },
+  {
+    "id": "languish",
+    "word": "languish",
+    "pos": "verb",
+    "date": "2026-07-28",
+    "meaning": "쇠약해지다, 고생하다, 무기력해지다",
+    "example_ko": "식물들은 충분한 햇빛 없이 쇠약해지기 시작했다",
+    "example_en": "The plants began to languish without proper sunlight",
+    "explanation": "To lose or lack vitality, strength, or animation; to suffer from being neglected or deprived of something needed",
+    "tip": "Living things이 천천히 악화되거나 약해질 때 자주 사용",
+    "emoji": "🌱"
   }
 ]

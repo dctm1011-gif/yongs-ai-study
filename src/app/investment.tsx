@@ -648,9 +648,13 @@ const DetailModal: React.FC<DetailModalProps> = React.memo(
             </View>
           )}
 
-          {dongEntry && (
+          {selectedRegionArea && (
             <View style={styles.detailSection}>
-              <BoxPlotChart data={dongEntry.data} title={dongEntry.title} unit={dongEntry.unit} />
+              {dongEntry ? (
+                <BoxPlotChart data={dongEntry.data} title={dongEntry.title} unit={dongEntry.unit} />
+              ) : (
+                <Text style={styles.detailSectionContent}>동 단위 데이터가 없습니다.</Text>
+              )}
             </View>
           )}
 

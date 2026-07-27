@@ -14,7 +14,7 @@ from urllib.parse import urlparse
 
 import anthropic
 
-from realestate_api import get_all_areas_chart_data, get_molit_api_key
+from realestate_api import get_all_areas_chart_data, get_dong_comparison_data, get_molit_api_key
 from stock_api import pick_and_fetch_stock, load_recent_picks
 
 ROOT = Path(__file__).parent.parent
@@ -357,6 +357,10 @@ def main(target_date: date = None):
         raise RuntimeError("국토교통부 API에서 실거래 데이터를 하나도 가져오지 못했습니다")
     print(f"[+] 실거래 데이터 확보: {len(real_estate_chart_data)}개 지역")
 
+    print(f"[*] {target_date} 수지/동탄 동별 실거래가 조회 중...")
+    dong_charts = get_dong_comparison_data(target_date, molit_key)
+    print(f"[+] 동별 데이터 확보: {len(dong_charts)}개 지역")
+
     client = anthropic.Anthropic(api_key=get_api_key())
 
     print(f"[*] {target_date} 오늘의 관심 종목 선정 중 (웹 검색)...")
@@ -401,6 +405,7 @@ def main(target_date: date = None):
     news_articles = generate_news(client, target_date)
     print(f"[+] 뉴스 기사: {len(news_articles)}개")
     data["newsArticles"] = news_articles
+    data["dongCharts"] = dong_charts
 
     OUTPUT_JSON.parent.mkdir(exist_ok=True)
     OUTPUT_JSON.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")

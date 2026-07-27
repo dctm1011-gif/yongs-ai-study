@@ -1149,24 +1149,34 @@ JSON 외 다른 텍스트는 절대 포함하지 마세요.
   "date": "{target_date}",
   "reading": {{
     "title": "지문 제목",
-    "passage": "TOEFL 수준 영어 지문 80-100 단어. 1단락. 짧지만 정보 밀도 높게. 핵심 개념·사실·주장 압축.",
+    "passage": "TOEFL iBT Academic 수준 영어 지문. 200-250 단어. 2-3단락. 학술적·전문적 어휘 사용(고급 어휘, 복잡한 문장 구조). 각 단락은 주제문으로 시작하며 구체적 근거·예시·수치 포함. 단락 간 논리적 흐름 유지. 난이도: TOEFL iBT Reading 실전 수준.",
     "vocabulary": [
       {{"word": "passage에 실제로 등장하는 단어", "meaning_ko": "한국어 뜻"}}
     ],
     "questions": [
       {{"q": "According to the passage, ...", "options": ["A", "B", "C", "D"], "answer": 0, "explanation": "한국어 해설"}},
-      {{"q": "What can be inferred from the passage about ...?", "options": ["A", "B", "C", "D"], "answer": 1, "explanation": "한국어 해설"}}
+      {{"q": "What can be inferred from the passage about ...?", "options": ["A", "B", "C", "D"], "answer": 1, "explanation": "한국어 해설"}},
+      {{"q": "The word '...' in paragraph X is closest in meaning to ...", "options": ["A", "B", "C", "D"], "answer": 2, "explanation": "한국어 해설"}},
+      {{"q": "Why does the author mention ...?", "options": ["A", "B", "C", "D"], "answer": 3, "explanation": "한국어 해설"}}
     ]
   }},
   "writing": {{
-    "prompt": "Do you agree or disagree with the following statement? [구체적인 주장]. Use specific reasons and examples to support your answer.",
-    "model_sentences": [
-      "도입 문장 (주제 제시)",
-      "본론 문장 1 (이유/근거)",
-      "예시 문장 1",
-      "본론 문장 2 (이유/근거)",
-      "예시 문장 2",
-      "결론 문장 (주제 재진술 + 요약)"
+    "sentences": [
+      {{
+        "original": "reading.passage에서 그대로 가져온 핵심 문장 (복잡한 구조 또는 고급 어휘 포함)",
+        "paraphrase": "동의어 치환·구조 변환·능동↔수동 등을 활용한 모범 패러프레이즈 (의미 동일, 표현 다르게)",
+        "tip": "사용한 기법 한 줄 설명 (예: 능동→수동 변환, 명사구→동사구, synonyms 사용 등)"
+      }},
+      {{
+        "original": "reading.passage에서 그대로 가져온 다른 핵심 문장",
+        "paraphrase": "모범 패러프레이즈",
+        "tip": "기법 설명"
+      }},
+      {{
+        "original": "reading.passage에서 그대로 가져온 또 다른 핵심 문장",
+        "paraphrase": "모범 패러프레이즈",
+        "tip": "기법 설명"
+      }}
     ]
   }},
   "speaking": {{

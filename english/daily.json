@@ -1,161 +1,161 @@
 {
-  "date": "2026-07-27",
+  "date": "2026-07-28",
   "words": [
     {
-      "word": "converge",
+      "word": "candor",
+      "part_of_speech": "noun",
+      "meaning_ko": "솔직함, 솔직한 태도",
+      "explanation": "The quality of being honest, frank, and straightforward in speech or writing without hiding anything",
+      "example_from_convo": "I appreciate your candor about the project's failures",
+      "example_ko": "프로젝트의 실패에 대한 당신의 솔직함을 감사합니다",
+      "tip": "Business and formal settings에서 자주 사용됨",
+      "emoji": "🎯"
+    },
+    {
+      "word": "enigmatic",
+      "part_of_speech": "adjective",
+      "meaning_ko": "수수께끼 같은, 신비로운",
+      "explanation": "Mysterious and difficult to understand or interpret; having a puzzling quality",
+      "example_from_convo": "Her enigmatic smile made everyone wonder what she was thinking",
+      "example_ko": "그녀의 신비로운 미소가 모두를 궁금하게 만들었다",
+      "tip": "Character description이나 mysterious situations을 설명할 때 유용",
+      "emoji": "🔮"
+    },
+    {
+      "word": "degrade",
       "part_of_speech": "verb",
-      "meaning_ko": "수렴하다, 모이다",
-      "explanation": "여러 것이 한 점으로 모이거나 같아지는 것",
-      "example_from_convo": "All the roads converge at the city center",
-      "example_ko": "모든 도로가 도시 중심부에서 만난다",
-      "tip": "수학, 경제, 물리학에서 자주 사용됨",
-      "emoji": "🔄"
+      "meaning_ko": "낮추다, 모욕하다, 악화시키다",
+      "explanation": "To treat someone with disrespect or reduce their rank/status; or to reduce in quality or value",
+      "example_from_convo": "Spreading rumors will only degrade your reputation",
+      "example_ko": "소문을 퍼뜨리는 것은 당신의 평판을 떨어뜨릴 뿐이다",
+      "tip": "두 가지 의미가 있음: 사람을 모욕하거나 품질을 악화시킬 때",
+      "emoji": "📉"
     },
     {
-      "word": "arbitrary",
+      "word": "prodigious",
       "part_of_speech": "adjective",
-      "meaning_ko": "자의적인, 자의로 정한",
-      "explanation": "합리적인 이유 없이 개인의 선택에 따라 결정되는",
-      "example_from_convo": "The teacher's grading seemed arbitrary to some students",
-      "example_ko": "선생님의 성적 평가가 몇몇 학생들에게는 자의적으로 보였다",
-      "tip": "공정하지 않은 결정을 설명할 때 사용",
-      "emoji": "🎲"
+      "meaning_ko": "엄청난, 대단한, 경이로운",
+      "explanation": "Impressively great in extent, amount, or degree; remarkable and extraordinary in size or quality",
+      "example_from_convo": "The student showed prodigious talent in mathematics at such a young age",
+      "example_ko": "그 학생은 어린 나이에 수학에서 대단한 재능을 보였다",
+      "tip": "Talent, effort, 또는 ability의 크기가 놀랄 정도로 클 때 사용",
+      "emoji": "⭐"
     },
     {
-      "word": "defer",
+      "word": "languish",
       "part_of_speech": "verb",
-      "meaning_ko": "연기하다, 미루다",
-      "explanation": "어떤 일을 나중으로 미루거나 연기하는 것",
-      "example_from_convo": "Let's defer this decision until next week",
-      "example_ko": "이 결정을 다음 주까지 미루자",
-      "tip": "비즈니스나 학문적 맥락에서 자주 나타남",
-      "emoji": "⏰"
-    },
-    {
-      "word": "ardent",
-      "part_of_speech": "adjective",
-      "meaning_ko": "열정적인, 열렬한",
-      "explanation": "깊고 강렬한 감정이나 열정을 가진",
-      "example_from_convo": "She's an ardent supporter of climate action",
-      "example_ko": "그녀는 기후 행동의 열렬한 지지자다",
-      "tip": "긍정적인 감정과 열정을 표현할 때 사용",
-      "emoji": "🔥"
-    },
-    {
-      "word": "frivolous",
-      "part_of_speech": "adjective",
-      "meaning_ko": "경솔한, 심각하지 않은",
-      "explanation": "심각성이나 중요성이 부족하고 가벼운",
-      "example_from_convo": "Don't waste time on frivolous matters",
-      "example_ko": "사소한 일에 시간을 낭비하지 마",
-      "tip": "비판적인 맥락에서 자주 사용됨",
-      "emoji": "🪶"
+      "meaning_ko": "쇠약해지다, 고생하다, 무기력해지다",
+      "explanation": "To lose or lack vitality, strength, or animation; to suffer from being neglected or deprived of something needed",
+      "example_from_convo": "The plants began to languish without proper sunlight",
+      "example_ko": "식물들은 충분한 햇빛 없이 쇠약해지기 시작했다",
+      "tip": "Living things이 천천히 악화되거나 약해질 때 자주 사용",
+      "emoji": "🌱"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "converge",
-      "question": "What does 'converge' mean?",
+      "word": "candor",
+      "question": "What does 'candor' mean in the context of a business meeting?",
       "options": [
-        "To come together at a point",
-        "To move in opposite directions",
-        "To separate gradually",
-        "To change direction suddenly"
+        "The ability to make quick decisions",
+        "Honest and frank expression without hiding anything",
+        "The skill to negotiate effectively",
+        "Confidence in presenting ideas"
       ],
-      "answer": 0,
-      "explanation": "'Converge' means to move toward or meet at a common point or to become similar."
+      "answer": 1,
+      "explanation": "Candor refers to honesty and frankness, especially in communication. In business meetings, it means being straightforward about issues and opinions."
     },
     {
       "type": "meaning",
-      "word": "ardent",
-      "question": "Which definition best matches 'ardent'?",
+      "word": "prodigious",
+      "question": "Which situation best demonstrates something 'prodigious'?",
       "options": [
-        "Lacking enthusiasm",
-        "Showing passionate devotion",
-        "Moderately interested",
-        "Indifferent or detached"
+        "A student studies for 2 hours daily",
+        "A child solves complex calculus problems at age 8",
+        "An employee arrives to work on time",
+        "A person exercises moderately every week"
       ],
       "answer": 1,
-      "explanation": "'Ardent' describes someone or something showing strong feeling or enthusiasm."
+      "explanation": "'Prodigious' means extraordinarily impressive or remarkable. A child solving complex calculus at age 8 demonstrates prodigious talent."
     },
     {
       "type": "meaning",
-      "word": "frivolous",
-      "question": "What does 'frivolous' mean?",
+      "word": "enigmatic",
+      "question": "What is the main characteristic of something described as 'enigmatic'?",
       "options": [
-        "Serious and important",
-        "Not serious; lacking in importance",
-        "Expensive and luxurious",
-        "Popular and widely accepted"
+        "It is easy to understand and clear",
+        "It is mysterious and difficult to interpret",
+        "It is ordinary and common",
+        "It is boring and uninteresting"
       ],
       "answer": 1,
-      "explanation": "'Frivolous' means not having any serious purpose or value; trivial."
+      "explanation": "'Enigmatic' describes something mysterious, puzzling, or difficult to understand. It suggests something that doesn't have an obvious meaning."
     },
     {
       "type": "fill_blank",
-      "word": "arbitrary",
-      "question": "The judge made an _______ decision without proper evidence to support it.",
+      "word": "languish",
+      "question": "Complete the sentence: 'Without proper care and attention, the community garden began to _______.'",
       "options": [
-        "arbitrary",
-        "ardent",
-        "frivolous",
-        "convergent"
+        "flourish",
+        "languish",
+        "prosper",
+        "thrive"
       ],
-      "answer": 0,
-      "explanation": "'Arbitrary' fits because the decision was made without rational justification."
+      "answer": 1,
+      "explanation": "'Languish' means to weaken or decline. Without proper care, a garden would languish (deteriorate), not flourish or thrive."
     },
     {
       "type": "fill_blank",
-      "word": "defer",
-      "question": "We decided to _______ the meeting to allow more time for preparation.",
+      "word": "degrade",
+      "question": "Fill in the blank: 'Constant negative feedback can _______ someone's self-esteem and confidence.'",
       "options": [
-        "converge",
-        "defer",
-        "assume",
-        "endorse"
-      ],
-      "answer": 1,
-      "explanation": "'Defer' means to postpone or put off until a later time."
-    },
-    {
-      "type": "fill_blank",
-      "word": "converge",
-      "question": "Multiple factors _______ to create the perfect storm of economic crisis.",
-      "options": [
-        "dispersed",
-        "converged",
-        "deferred",
-        "fragmented"
-      ],
-      "answer": 1,
-      "explanation": "'Converged' is correct because multiple factors came together to cause the crisis."
-    },
-    {
-      "type": "situation",
-      "word": "defer",
-      "question": "You're in a meeting where a controversial topic comes up. You're not ready to discuss it yet. What would you say?",
-      "options": [
-        "I think we should defer this discussion to next meeting",
-        "I arbitrarily reject this idea",
-        "I'm ardent about solving this now",
-        "This is a frivolous topic"
-      ],
-      "answer": 0,
-      "explanation": "'Defer' is the appropriate choice because it means to postpone the discussion appropriately."
-    },
-    {
-      "type": "situation",
-      "word": "arbitrary",
-      "question": "Your friend chose a restaurant based only on the color of its sign, without considering food quality or reviews. You could describe this choice as:",
-      "options": [
-        "An ardent decision",
-        "A convergent choice",
-        "An arbitrary selection",
-        "A deferred option"
+        "enhance",
+        "elevate",
+        "degrade",
+        "promote"
       ],
       "answer": 2,
-      "explanation": "'Arbitrary' is correct because the choice was made without rational or logical reasoning."
+      "explanation": "'Degrade' means to lower in rank, status, or quality. Negative feedback degrades (reduces/harms) self-esteem."
+    },
+    {
+      "type": "fill_blank",
+      "word": "candor",
+      "question": "The CEO's _______ about the company's financial problems earned him the respect of his employees.",
+      "options": [
+        "deception",
+        "ambiguity",
+        "candor",
+        "evasiveness"
+      ],
+      "answer": 2,
+      "explanation": "'Candor' means honesty and frankness. Being candid about problems earns respect, unlike deception or evasiveness."
+    },
+    {
+      "type": "situation",
+      "word": "enigmatic",
+      "question": "Your professor rarely explains her grading criteria and gives feedback that is hard to understand. Her behavior could be described as:",
+      "options": [
+        "clear and transparent",
+        "helpful and supportive",
+        "enigmatic and mysterious",
+        "friendly and approachable"
+      ],
+      "answer": 2,
+      "explanation": "The professor's behavior is enigmatic because her grading criteria and feedback are difficult to understand and interpret clearly."
+    },
+    {
+      "type": "situation",
+      "word": "languish",
+      "question": "A refugee spent 10 years in a camp with limited resources, little hope, and no opportunities. During those years, he:",
+      "options": [
+        "developed prodigious skills",
+        "maintained perfect health",
+        "began to languish physically and mentally",
+        "became very wealthy"
+      ],
+      "answer": 2,
+      "explanation": "In such difficult conditions with limited resources and no hope, a person would languish—experiencing physical and emotional decline due to hardship and lack of proper care."
     }
   ]
 }

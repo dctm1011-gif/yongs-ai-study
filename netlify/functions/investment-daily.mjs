@@ -139,12 +139,14 @@ export default async (req, context) => {
     let investmentColumns;
     let termOfDay = null;
     let newsArticles = [];
+    let dongCharts = [];
     try {
       const dailyPath = resolve(process.cwd(), 'investment', 'daily.json');
       const parsed = JSON.parse(readFileSync(dailyPath, 'utf-8'));
       investmentColumns = parsed.columns;
       termOfDay = parsed.termOfDay || null;
       newsArticles = parsed.newsArticles || [];
+      dongCharts = parsed.dongCharts || [];
       log.log('✅ investment/daily.json 사용');
     } catch (e) {
       log.log('investment/daily.json 없음/파싱 실패, fallback 사용:', e.message);
@@ -159,6 +161,7 @@ export default async (req, context) => {
       columns: investmentColumns,
       termOfDay,
       newsArticles,
+      dongCharts,
       timestamp: new Date().toISOString(),
       date: today,
       count: investmentColumns.length,

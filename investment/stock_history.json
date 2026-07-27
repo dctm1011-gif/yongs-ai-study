@@ -43,5 +43,10 @@
     "date": "2026-07-26",
     "name": "Broadcom",
     "ticker": "AVGO"
+  },
+  {
+    "date": "2026-07-27",
+    "name": "Meta",
+    "ticker": "META"
   }
 ]
