@@ -116,6 +116,33 @@ Return ONLY the JSON object, nothing else."""
         return False
 
 
+def git_commit_and_push(date_str: str) -> bool:
+    """Generate 후 git pull → add → commit → push."""
+    import subprocess
+    ROOT = Path(__file__).parent.parent
+    GIT = "git"
+
+    subprocess.run([GIT, "pull", "--rebase", "origin", "main"], cwd=str(ROOT))
+    subprocess.run([GIT, "add", "toefl/daily.json"], cwd=str(ROOT))
+
+    msg = f"auto: update toefl {date_str}"
+    r = subprocess.run([GIT, "commit", "-m", msg], cwd=str(ROOT))
+    if r.returncode != 0:
+        print("[!] Nothing to commit or commit failed")
+        return False
+
+    result = subprocess.run([GIT, "push"], cwd=str(ROOT))
+    if result.returncode == 0:
+        print(f"[+] Pushed: {msg}")
+        return True
+    else:
+        print("[!] git push failed")
+        return False
+
+
 if __name__ == "__main__":
     success = generate_daily_toefl()
+    if success:
+        from datetime import date
+        git_commit_and_push(str(date.today()))
     sys.exit(0 if success else 1)
