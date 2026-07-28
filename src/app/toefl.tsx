@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, TextInput, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Speech from 'expo-speech';
+import { Audio } from 'expo-av';
 import { performanceMonitor } from '../utils/PerformanceMonitor';
 import { getDatabase, ref, onValue } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
@@ -88,6 +89,10 @@ export default function TOEFLScreen() {
   const [isCached, setIsCached] = useState(false);
   const [loadStartTime] = useState(Date.now());
   const [toeflProblems, setToeflProblems] = useState<any>(null);
+  const [currentSpeaker, setCurrentSpeaker] = useState<string | null>(null);
+  const [audioTurns, setAudioTurns] = useState<{ speaker: string; url: string }[]>([]);
+  const isStoppedRef = useRef(false);
+  const currentSoundRef = useRef<Audio.Sound | null>(null);
 
   // Performance monitoring
   useEffect(() => {
@@ -131,6 +136,12 @@ export default function TOEFLScreen() {
   useEffect(() => {
     updateStats();
   }, [sections]);
+
+  useEffect(() => {
+    if (selectedSection?.id === 'listening' && toeflProblems?.listening?.script) {
+      setAudioTurns(buildAudioTurns(toeflProblems.listening.script));
+    }
+  }, [selectedSection, toeflProblems]);
 
   const checkAndResetDaily = async () => {
     const lastReset = await AsyncStorage.getItem('toefl_last_reset');
@@ -261,14 +272,74 @@ export default function TOEFLScreen() {
     }));
   };
 
+  const VOICE_MAP: Record<string, string> = {
+    'Student A': 'nova',
+    'Student B': 'echo',
+    'Professor': 'onyx',
+    'Narrator': 'alloy',
+    'Man': 'echo',
+    'Woman': 'nova',
+  };
+
+  function parseScriptToTurns(script: string): { speaker: string; text: string }[] {
+    const speakerNames = Object.keys(VOICE_MAP).join('|');
+    const pattern = new RegExp(`(?=(?:${speakerNames})\\s*:)`, 'g');
+    return script
+      .split(pattern)
+      .filter(s => s.trim())
+      .map(segment => {
+        const match = segment.match(/^([^:]+?)\s*:\s*([\s\S]*)/);
+        return match ? { speaker: match[1].trim(), text: match[2].trim() } : null;
+      })
+      .filter((t): t is { speaker: string; text: string } => t !== null && VOICE_MAP[t.speaker] !== undefined);
+  }
+
+  const buildAudioTurns = (script: string) => {
+    const turns = parseScriptToTurns(script);
+    return turns.map(({ speaker, text }) => ({
+      speaker,
+      url: `${NETLIFY_BASE_URL}/api/toefl-tts?speaker=${encodeURIComponent(speaker)}&text=${encodeURIComponent(text)}`,
+    }));
+  };
+
+  const playListeningAudio = async (turns: { speaker: string; url: string }[]) => {
+    isStoppedRef.current = false;
+    setIsPlaying(true);
+    setCurrentSpeaker(null);
+
+    try {
+      await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
+    } catch {}
+
+    for (const { speaker, url } of turns) {
+      if (isStoppedRef.current) break;
+      setCurrentSpeaker(speaker);
+      try {
+        const { sound } = await Audio.Sound.createAsync({ uri: url }, { shouldPlay: true });
+        currentSoundRef.current = sound;
+        await new Promise<void>(resolve => {
+          sound.setOnPlaybackStatusUpdate(status => {
+            if (status.isLoaded && (status.didJustFinish || isStoppedRef.current)) {
+              sound.unloadAsync().catch(() => {});
+              resolve();
+            }
+          });
+        });
+      } catch (err) {
+        console.error('Audio play error:', err);
+      }
+    }
+
+    currentSoundRef.current = null;
+    setIsPlaying(false);
+    setCurrentSpeaker(null);
+  };
+
+  // Fallback to expo-speech when audioTurns not available
   const playAudio = async (text: string) => {
     try {
       setIsPlaying(true);
-      await Speech.speak(text, {
-        language: 'en',
-        rate: 0.9,
-        pitch: 1,
-      });
+      await Speech.speak(text, { language: 'en', rate: 0.9, pitch: 1 });
     } catch (error) {
       console.error('TTS Error:', error);
     } finally {
@@ -288,13 +359,16 @@ export default function TOEFLScreen() {
   };
 
   const stopAudio = async () => {
-    try {
-      await Speech.stop();
-      setIsPlaying(false);
-      setSpeakingPlayingIdx(null);
-    } catch (error) {
-      console.error('Stop Error:', error);
+    isStoppedRef.current = true;
+    if (currentSoundRef.current) {
+      await currentSoundRef.current.stopAsync().catch(() => {});
+      await currentSoundRef.current.unloadAsync().catch(() => {});
+      currentSoundRef.current = null;
     }
+    await Speech.stop().catch(() => {});
+    setIsPlaying(false);
+    setCurrentSpeaker(null);
+    setSpeakingPlayingIdx(null);
   };
 
   const updateWritingLine = (idx: number, text: string) => {
@@ -466,10 +540,13 @@ export default function TOEFLScreen() {
 
         <View style={styles.audioBox}>
           <Text style={styles.audioLabel}>🎧 대화 스크립트</Text>
+          {currentSpeaker && (
+            <Text style={styles.currentSpeakerText}>🗣️ {currentSpeaker}</Text>
+          )}
           <View style={styles.audioControls}>
             <TouchableOpacity
               style={[styles.audioButton, isPlaying && styles.audioButtonActive]}
-              onPress={() => playAudio(scriptText)}
+              onPress={() => audioTurns.length > 0 ? playListeningAudio(audioTurns) : playAudio(scriptText)}
               disabled={isPlaying}
             >
               <Text style={styles.audioButtonText}>▶️ 재생</Text>
@@ -484,15 +561,15 @@ export default function TOEFLScreen() {
 
             <TouchableOpacity
               style={styles.audioButton}
-              onPress={() => {
-                stopAudio();
-                setTimeout(() => playAudio(scriptText), 200);
+              onPress={async () => {
+                await stopAudio();
+                setTimeout(() => audioTurns.length > 0 ? playListeningAudio(audioTurns) : playAudio(scriptText), 200);
               }}
             >
               <Text style={styles.audioButtonText}>🔄 처음부터</Text>
             </TouchableOpacity>
           </View>
-          {isPlaying && <Text style={styles.playingIndicator}>🔊 재생 중...</Text>}
+          {isPlaying && !currentSpeaker && <Text style={styles.playingIndicator}>🔊 재생 중...</Text>}
         </View>
 
         {listening.vocabulary && listening.vocabulary.length > 0 && (
@@ -1245,6 +1322,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
     color: '#fff',
+  },
+  currentSpeakerText: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#4f46e5',
+    marginBottom: 8,
+    textAlign: 'center',
   },
   playingIndicator: {
     marginTop: 10,
