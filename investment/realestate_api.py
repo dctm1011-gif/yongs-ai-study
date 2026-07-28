@@ -243,32 +243,38 @@ def get_all_areas_chart_data(target_date: date, service_key: str) -> list[dict]:
 
 
 def get_dong_comparison_data(target_date: date, service_key: str) -> list[dict]:
-    """DONG_FOCUS 지역의 동별 박스플랏 집계.
+    """DONG_FOCUS 지역의 동별 시계열 박스플랏 집계.
 
-    120개월 전체 거래를 수집한 뒤:
-    - data: 최근 6개월 집계, 지역 Q1~평균 구간 동만 포함
-    - yearlyData: 10년(120개월) 전체 집계, 동일한 동 목록
+    120개월 전체 거래를 수집한 뒤, 6개월 집계 기준으로 유효 동을 결정하고
+    각 동마다 지역 차트와 동일한 형식으로 data(최근 12개월)/yearlyData(10년)를 생성.
 
-    거래가 DONG_MIN_TRADES건 미만인 동은 노이즈로 제외.
+    반환 형식:
+    [
+      { "area": "수지", "title": "...", "unit": "...",
+        "dongs": [
+          { "name": "죽전동",
+            "data": [{"label": "1월", ...stats}, ...],      # 최근 12개월
+            "yearlyData": [{"label": "2016년", ...stats}, ...] },  # 10년
+          ...
+        ]
+      },
+      ...
+    ]
     """
-    WINDOW = 6
     all_months = recent_year_months(target_date, YEARLY_WINDOW_MONTHS)  # 120개월
-    recent_set = {(y, m) for (y, m) in recent_year_months(target_date, WINDOW)}
+    recent_6_set = {(y, m) for (y, m) in recent_year_months(target_date, 6)}
     result = []
 
     for area, cfg in DONG_FOCUS.items():
         lawd_cd = cfg["lawd_cd"]
 
-        # 120개월 전체 수집 (6개월은 여기서 추출)
-        trades_6m: list[dict] = []
-        trades_10y: list[dict] = []
+        # 120개월 전체 수집
+        trades_by_month: dict[tuple[int, int], list[dict]] = {}
         for (y, m) in all_months:
-            month_trades = fetch_trades(lawd_cd, f"{y}{m:02d}", service_key)
-            trades_10y.extend(month_trades)
-            if (y, m) in recent_set:
-                trades_6m.extend(month_trades)
+            trades_by_month[(y, m)] = fetch_trades(lawd_cd, f"{y}{m:02d}", service_key)
 
-        # 포함할 동 목록은 6개월 기준으로 결정
+        # 6개월 집계로 유효 동 결정 (Q1~평균 범위 필터)
+        trades_6m = [t for (y, m), ts in trades_by_month.items() if (y, m) in recent_6_set for t in ts]
         overall = summarize_trades(trades_6m)
         if overall is None:
             continue
@@ -279,41 +285,49 @@ def get_dong_comparison_data(target_date: date, service_key: str) -> list[dict]:
             by_dong_6m.setdefault(t.get("umdNm", ""), []).append(t)
 
         valid_dongs: set[str] = set()
-        points_6m = []
+        dong_avg_6m: dict[str, float] = {}
         for dong, trades in by_dong_6m.items():
             if len(trades) < DONG_MIN_TRADES:
                 continue
             summary = summarize_trades(trades)
-            if summary is None or not (lo <= summary["avg"] <= hi):
-                continue
-            valid_dongs.add(dong)
-            points_6m.append({"label": dong, **summary})
+            if summary and (lo <= summary["avg"] <= hi):
+                valid_dongs.add(dong)
+                dong_avg_6m[dong] = summary["avg"]
 
-        if not points_6m:
+        if not valid_dongs:
             continue
-        points_6m.sort(key=lambda p: p["avg"])
 
-        # 10년 집계 (같은 동 목록)
-        by_dong_10y: dict[str, list[dict]] = {}
-        for t in trades_10y:
-            dong = t.get("umdNm", "")
-            if dong in valid_dongs:
-                by_dong_10y.setdefault(dong, []).append(t)
+        # 동별 월별/연도별 시계열 생성
+        dongs_data = []
+        for dong in sorted(valid_dongs, key=lambda d: dong_avg_6m.get(d, 0)):
+            # 월별: 최근 12개월
+            monthly: list[dict] = []
+            for (y, m) in all_months[-MONTHLY_WINDOW:]:
+                dong_trades = [t for t in trades_by_month[(y, m)] if t.get("umdNm") == dong]
+                summary = summarize_trades(dong_trades)
+                if summary is not None:
+                    monthly.append({"label": f"{m}월", **summary})
 
-        points_10y = []
-        for dong in valid_dongs:
-            summary = summarize_trades(by_dong_10y.get(dong, []))
-            if summary is None:
-                continue
-            points_10y.append({"label": dong, **summary})
-        points_10y.sort(key=lambda p: p["avg"])
+            # 연도별: 10년
+            years = sorted({y for (y, m) in all_months})
+            yearly: list[dict] = []
+            for y in years:
+                dong_trades = [t for (yy, mm), ts in trades_by_month.items() if yy == y for t in ts if t.get("umdNm") == dong]
+                summary = summarize_trades(dong_trades)
+                if summary is not None:
+                    yearly.append({"label": f"{y}년", **summary})
+
+            if monthly or yearly:
+                dongs_data.append({"name": dong, "data": monthly, "yearlyData": yearly})
+
+        if not dongs_data:
+            continue
 
         result.append({
             "area": area,
-            "title": f"{area} 동별 실거래가 분포 (Q1~평균 범위)",
+            "title": f"{area} 동별 실거래가 추이",
             "unit": "단위: 억원",
-            "data": points_6m,
-            "yearlyData": points_10y,
+            "dongs": dongs_data,
         })
 
     return result

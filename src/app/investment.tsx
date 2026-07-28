@@ -16,7 +16,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as ScreenOrientation from 'expo-screen-orientation';
-import { useInvestmentSync, InvestmentColumn, BoxPlotPoint, DongChartEntry, DailyTerm, NewsArticle } from '../hooks/useInvestmentSync';
+import { useInvestmentSync, InvestmentColumn, BoxPlotPoint, DongChartEntry, DongEntry, DailyTerm, NewsArticle } from '../hooks/useInvestmentSync';
 import { writeCompletion } from '../utils/writeCompletion';
 
 const { width } = Dimensions.get('window');
@@ -423,6 +423,41 @@ const ChartSelector: React.FC<{
   );
 });
 
+const DongChartViewer: React.FC<{ entry: DongChartEntry }> = React.memo(({ entry }) => {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const selected: DongEntry = entry.dongs[selectedIndex];
+
+  if (!selected) return null;
+
+  return (
+    <View>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.chartChipRow}
+      >
+        {entry.dongs.map((dong, idx) => (
+          <TouchableOpacity
+            key={idx}
+            style={[styles.chartChip, idx === selectedIndex && styles.chartChipActive]}
+            onPress={() => setSelectedIndex(idx)}
+          >
+            <Text style={[styles.chartChipText, idx === selectedIndex && styles.chartChipTextActive]}>
+              {dong.name}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+      <BoxPlotChart
+        data={selected.data}
+        yearlyData={selected.yearlyData}
+        title={`${entry.title.split(' ')[0]} ${selected.name} 실거래가`}
+        unit={entry.unit}
+      />
+    </View>
+  );
+});
+
 interface ColumnCardProps {
   column: InvestmentColumn;
   isBookmarked: boolean;
@@ -638,7 +673,7 @@ const DetailModal: React.FC<DetailModalProps> = React.memo(
 
           {dongCharts.length > 0 && column.category === 'real-estate' && dongCharts.map((dongEntry, idx) => (
             <View key={idx} style={styles.detailSection}>
-              <BoxPlotChart data={dongEntry.data} yearlyData={dongEntry.yearlyData} title={dongEntry.title} unit={dongEntry.unit} />
+              <DongChartViewer entry={dongEntry} />
             </View>
           ))}
 

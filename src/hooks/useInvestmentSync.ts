@@ -69,12 +69,17 @@ export interface BoxPlotPoint {
   count?: number;
 }
 
+export interface DongEntry {
+  name: string;
+  data: BoxPlotPoint[];       // 최근 12개월 시계열 (label = "1월" 등)
+  yearlyData: BoxPlotPoint[]; // 10년 시계열 (label = "2016년" 등)
+}
+
 export interface DongChartEntry {
-  area: string;       // "수지" | "동탄"
+  area: string;   // "수지" | "동탄"
   title: string;
   unit: string;
-  data: BoxPlotPoint[];        // label = 동 이름 (최근 6개월 집계)
-  yearlyData?: BoxPlotPoint[]; // label = 동 이름 (10년 전체 집계)
+  dongs: DongEntry[];
 }
 
 const BOOKMARKS_KEY = 'investment_bookmarks';
