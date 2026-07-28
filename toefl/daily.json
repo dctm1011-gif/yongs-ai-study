@@ -1,181 +1,110 @@
 {
   "date": "2026-07-29",
   "reading": {
-    "title": "Microbial Biofilms and Their Industrial Applications",
-    "passage": "Biofilms are complex communities of microorganisms that adhere to surfaces and exist as a collective unit, surrounded by a protective matrix of extracellular polymeric substances. Unlike planktonic cells that float freely in liquid environments, biofilm-residing microorganisms demonstrate significantly enhanced resistance to antibiotics and environmental stressors, a phenomenon attributed to the physical barrier and chemical complexity of their matrix structure. Recent research has identified biofilms in diverse industrial contexts, from water treatment facilities to pharmaceutical manufacturing plants, where they present both challenges and opportunities. Scientists have discovered that certain biofilms can be engineered to degrade pollutants more efficiently than conventional treatment methods. For instance, biofilms composed of specific bacterial strains have successfully reduced heavy metal concentrations in contaminated water by up to 85% within controlled laboratory settings. Furthermore, the pharmaceutical industry has begun harnessing biofilm properties to develop antimicrobial coatings for medical devices, reducing post-surgical infections by approximately 40%. Understanding the mechanisms of biofilm formation and maintenance is therefore crucial for optimizing industrial processes and improving public health outcomes.",
-    "vocabulary": [
-      {
-        "word": "adhere",
-        "meaning_ko": "~에 붙다, 달라붙다"
-      },
-      {
-        "word": "extracellular polymeric substances",
-        "meaning_ko": "세포외 고분자 물질"
-      },
-      {
-        "word": "planktonic",
-        "meaning_ko": "부유성의, 떠다니는"
-      },
-      {
-        "word": "attribute",
-        "meaning_ko": "~의 원인이다, 귀인하다"
-      },
-      {
-        "word": "degrade",
-        "meaning_ko": "분해하다, 저하시키다"
-      },
-      {
-        "word": "harnessing",
-        "meaning_ko": "활용하다, 이용하다"
-      },
-      {
-        "word": "mechanisms",
-        "meaning_ko": "메커니즘, 작동 원리"
-      }
-    ],
+    "title": "The Impact of Artificial Intelligence on Employment",
+    "passage": "Artificial intelligence has revolutionized various industries by automating routine tasks and improving efficiency. While some worry that AI will eliminate jobs, evidence suggests that new positions are created in AI development, maintenance, and oversight. Throughout history, technological advances have initially disrupted labor markets but ultimately generated more employment opportunities. Workers must adapt by developing skills in areas where human creativity and emotional intelligence remain irreplaceable. Companies investing in AI should simultaneously invest in workforce retraining programs to ensure smooth transitions.",
     "questions": [
       {
-        "q": "According to the passage, what is the primary difference between biofilm cells and planktonic cells?",
+        "q": "What does the passage suggest about the relationship between AI and employment?",
         "options": [
-          "Planktonic cells are more resistant to antibiotics than biofilm cells.",
-          "Biofilm cells demonstrate greater resistance to antibiotics and environmental stressors due to their protective matrix.",
-          "Planktonic cells exist in complex communities while biofilm cells float freely.",
-          "Biofilm cells are found only in pharmaceutical settings."
+          "AI will completely eliminate all jobs",
+          "AI creates both challenges and new opportunities",
+          "AI has no significant impact on the job market",
+          "Only routine workers will be affected"
         ],
         "answer": 1,
-        "explanation": "지문의 두 번째 문장에서 명시적으로 biofilm 거주 미생물이 보호 매트릭스와 화학적 복잡성으로 인해 항생제와 환경 스트레스에 대한 저항성이 훨씬 더 강하다고 설명합니다."
+        "explanation": "문단에서 AI가 일자리를 없애는 것은 아니며 새로운 직업이 창출된다고 제시하고 있습니다."
       },
       {
-        "q": "What can be inferred from the passage about the future applications of biofilms in industry?",
+        "q": "According to the passage, what skills should workers develop?",
         "options": [
-          "Biofilms will completely replace conventional water treatment methods.",
-          "Biofilms are unlikely to be used in medical device manufacturing.",
-          "Biofilms have significant potential for both pollution control and medical device protection.",
-          "Industrial biofilm applications are currently impossible due to technical limitations."
+          "Only technical AI skills",
+          "Programming and coding exclusively",
+          "Human creativity and emotional intelligence",
+          "Traditional manufacturing techniques"
         ],
         "answer": 2,
-        "explanation": "지문은 수질 정화와 의료 기기 항균 코팅 등 여러 산업 분야에서 바이오필름의 활용을 언급하며, 이러한 사례들로부터 미래의 광범위한 적용 가능성을 추론할 수 있습니다."
+        "explanation": "문단의 마지막 부분에서 인간의 창의성과 감정 지능이 중요하다고 명시되어 있습니다."
       },
       {
-        "q": "The word 'harness' in the second paragraph is closest in meaning to:",
+        "q": "What action does the passage recommend for companies?",
         "options": [
-          "Control or restrict",
-          "Utilize or exploit for beneficial purposes",
-          "Study or observe",
-          "Prevent or inhibit"
+          "Eliminate all human workers",
+          "Invest in retraining programs alongside AI",
+          "Avoid using artificial intelligence",
+          "Focus only on cost reduction"
         ],
         "answer": 1,
-        "explanation": "'Harnessing biofilm properties'는 바이오필름의 특성을 의도적으로 활용하여 이득을 얻는다는 의미입니다. 'harness'는 '활용하다, 이용하다'라는 의미의 동사입니다."
-      },
-      {
-        "q": "Why does the author mention the 85% reduction in heavy metal concentrations?",
-        "options": [
-          "To explain why biofilms are dangerous to the environment",
-          "To demonstrate the effectiveness of engineered biofilms in practical applications",
-          "To argue that pharmaceutical coatings are unnecessary",
-          "To show that laboratory research is always accurate"
-        ],
-        "answer": 1,
-        "explanation": "저자는 특정 박테리아 균주로 구성된 바이오필름이 오염된 물의 중금속 농도를 크게 감소시킬 수 있음을 보여줌으로써 엔지니어링된 바이오필름의 실제 적용 효과를 입증하고 있습니다."
+        "explanation": "마지막 문장에서 기업이 AI 투자와 함께 직원 재교육 프로그램에 투자해야 한다고 권장하고 있습니다."
       }
     ]
   },
   "writing": {
-    "paraphrase_sentences": [
-      {
-        "original": "Biofilms are complex communities of microorganisms that adhere to surfaces and exist as a collective unit, surrounded by a protective matrix of extracellular polymeric substances.",
-        "paraphrase": "A protective layer of extracellular polymeric substances envelops microorganism communities known as biofilms, which form cohesive groups attached to various surfaces.",
-        "tip": "원래 구조를 단순화하고 능동태에서 수동태로 변환. 'adhere to surfaces'를 'attached to various surfaces'로 명사형으로 변환"
-      },
-      {
-        "original": "Unlike planktonic cells that float freely in liquid environments, biofilm-residing microorganisms demonstrate significantly enhanced resistance to antibiotics and environmental stressors.",
-        "paraphrase": "While planktonic microorganisms drift in liquid settings, those inhabiting biofilms show substantially greater resilience against both antibiotics and stress factors.",
-        "tip": "Contrast 구조 유지하며 'float freely' → 'drift', 'demonstrate resistance' → 'show resilience'로 동의어 치환. 'environmental stressors' → 'stress factors'로 표현 단순화"
-      },
-      {
-        "original": "Scientists have discovered that certain biofilms can be engineered to degrade pollutants more efficiently than conventional treatment methods.",
-        "paraphrase": "The potential of engineered biofilms to decompose contaminants at superior rates compared to traditional approaches has been revealed through scientific investigation.",
-        "tip": "능동태를 과거분사 구조로 변환. 'degrade' → 'decompose', 'conventional treatment methods' → 'traditional approaches'로 동의어 사용"
-      }
+    "prompt": "Do you agree or disagree with the statement: Remote work is more productive than working in a traditional office?",
+    "structure": {
+      "intro": "명확한 입장 제시 (동의 또는 반대). 이유를 간단히 언급하며 에세이 방향 제시",
+      "body1": "첫 번째 주요 이유 설명. 구체적인 예시나 증거 제시로 주장 강화",
+      "body2": "두 번째 주요 이유 설명. 반대 의견을 인정하면서도 자신의 입장 재강조",
+      "conclusion": "주요 포인트 요약. 최종 의견 재확인 및 미래 전망 제시"
+    },
+    "useful_phrases": [
+      "In my opinion, remote work offers significant advantages such as",
+      "Furthermore, the flexibility of working from home allows employees to",
+      "Some people argue that office collaboration is essential; however,",
+      "In conclusion, the benefits of remote work outweigh the drawbacks because",
+      "One major advantage is that remote workers can avoid commuting time"
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer reading books to understand stories and gain knowledge. Others prefer watching movies for the same purpose. Which do you prefer and why? Include specific reasons and details in your response.",
-    "model_sentences": [
-      "I personally prefer reading books over watching movies because books allow me to engage my imagination and develop my own visualization of characters and settings.",
-      "For instance, when I read a fantasy novel, I can create unique mental images that match my personal interpretation, whereas films impose a single visual perspective that may not align with my initial understanding.",
-      "Additionally, books typically provide deeper insights into characters' thoughts and motivations through detailed internal monologues, which movies often simplify due to time constraints.",
-      "Furthermore, reading enhances vocabulary and critical thinking skills more effectively than passive movie watching.",
-      "In conclusion, although movies offer convenience and entertainment value, books provide a more intellectually enriching and personalized experience that I find more valuable for both learning and enjoyment."
+    "prompt": "Some people prefer learning new skills through online courses. Others prefer traditional classroom education. Which do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer online courses because they offer flexibility",
+      "One reason is that online learning allows me to study at my own pace",
+      "Another advantage is that I can access various resources and expert instructors from around the world",
+      "Although some people believe classroom learning is more effective, I think online education provides better accessibility"
+    ],
+    "sample_points": [
+      "온라인 코스의 유연성: 자신의 일정에 맞춰 학습할 수 있으며 반복 학습 가능",
+      "비용 효율성: 전통 교실보다 저렴하고 이동 시간이 없어 효율적인 학습 환경 제공"
     ]
   },
   "listening": {
-    "title": "Meeting with Professor About Research Paper Topic",
+    "title": "Sustainable Urban Planning",
     "type": "conversation",
-    "script": "Student: Professor Chen, thanks for meeting with me. I wanted to discuss my final paper topic. I'm thinking about focusing on how antibiotic resistance develops in biofilm communities. Professor: That's an excellent choice. Biofilms are particularly relevant in medical contexts. What specific angle are you considering? Student: Well, I read that biofilms create this protective matrix that shields bacteria from antibiotics. I want to explore the mechanisms behind this resistance and maybe propose some treatment alternatives. Professor: I like that direction. However, you should narrow your scope. Instead of covering all treatment alternatives, why not focus specifically on enzymatic degradation of biofilm matrix components? That's more manageable for a semester-long project. Student: Oh, that's a great suggestion. So you're saying I should concentrate on how enzymes break down the extracellular polymeric substances? Professor: Exactly. And there's recent literature on this topic published within the last two years. Check journals like Applied Microbiology and Environmental Science & Technology. Also, consider visiting the university library for advanced database access. Student: Thank you. That's very helpful. Should I include any laboratory methodology sections? Professor: Not necessarily for this course, but do incorporate current research findings and cite them properly. Aim for about 6,000 words and submit an outline by next week.",
-    "vocabulary": [
-      {
-        "word": "antibiotic resistance",
-        "meaning_ko": "항생제 내성"
-      },
-      {
-        "word": "mechanisms",
-        "meaning_ko": "메커니즘, 작동 원리"
-      },
-      {
-        "word": "enzymatic degradation",
-        "meaning_ko": "효소적 분해"
-      },
-      {
-        "word": "extracellular polymeric substances",
-        "meaning_ko": "세포외 고분자 물질"
-      },
-      {
-        "word": "scope",
-        "meaning_ko": "범위, 정도"
-      },
-      {
-        "word": "literature",
-        "meaning_ko": "학술 문헌, 자료"
-      },
-      {
-        "word": "incorporate",
-        "meaning_ko": "포함하다, 통합하다"
-      }
-    ],
+    "script": "Professor: Today we'll discuss sustainable urban planning. Modern cities face challenges like traffic congestion and pollution. Urban planners now focus on creating green spaces, improving public transportation, and designing walkable neighborhoods. In Copenhagen, the government invested in bicycle infrastructure, reducing car dependency significantly. Similarly, Singapore integrated parks into residential areas, improving air quality and residents' well-being. These strategies require initial investment but generate long-term benefits including lower healthcare costs and increased property values. Successful sustainable cities balance economic growth with environmental protection through innovative design and community engagement. When residents feel involved in planning decisions, they're more likely to support and maintain these green initiatives. The future of urban development depends on such forward-thinking approaches.",
     "questions": [
       {
-        "q": "What is the main purpose of the conversation?",
+        "q": "What is the professor's main focus in this discussion?",
         "options": [
-          "To discuss the professor's recent research on antibiotic resistance",
-          "To help the student refine and narrow the scope of her research paper topic",
-          "To teach the student about biofilm matrix composition",
-          "To assign the student a mandatory laboratory project"
+          "The history of city development",
+          "Sustainable urban planning strategies and examples",
+          "The disadvantages of public transportation",
+          "How to reduce property values"
         ],
         "answer": 1,
-        "explanation": "교수는 학생의 초기 주제(항생제 내성의 광범위한 측면)를 더 구체적으로 좁혀서 효소적 분해에 초점을 맞추도록 조언하고 있습니다. 이것이 대화의 주요 목적입니다."
+        "explanation": "교수는 지속 가능한 도시 계획의 전략과 코펜하겐, 싱가포르의 구체적인 사례를 설명하고 있습니다."
       },
       {
-        "q": "What does the professor suggest the student focus on instead of covering all treatment alternatives?",
+        "q": "According to the passage, what was the effect of Copenhagen's bicycle infrastructure investment?",
         "options": [
-          "The protective matrix shield of bacteria",
-          "Antibiotic resistance mechanisms in general",
-          "Enzymatic degradation of biofilm matrix components",
-          "Laboratory methodology and experimental design"
+          "Increased traffic congestion",
+          "Reduced car dependency",
+          "Higher pollution levels",
+          "Decreased property values"
+        ],
+        "answer": 1,
+        "explanation": "강의에서 코펜하겐의 자전거 인프라 투자가 자동차 의존성을 크게 줄였다고 명시되어 있습니다."
+      },
+      {
+        "q": "Why does the professor mention community engagement?",
+        "options": [
+          "To explain financial costs",
+          "To show that residents oppose green initiatives",
+          "To demonstrate that community involvement increases support for sustainable projects",
+          "To discuss historical urban planning"
         ],
         "answer": 2,
-        "explanation": "교수는 모든 치료 대안을 다루는 것보다는 '효소적 분해에 특히 초점을 맞추도록' 제안합니다. 이것이 더 관리 가능한 주제라고 설명합니다."
-      },
-      {
-        "q": "What resources does the professor recommend for the student's research?",
-        "options": [
-          "Only textbooks from the university bookstore",
-          "Recent journals and the university library's advanced database access",
-          "Laboratory equipment and experimental materials",
-          "Interviews with local hospital staff"
-        ],
-        "answer": 1,
-        "explanation": "교수는 지난 2년 이내에 출판된 저널(Applied Microbiology, Environmental Science & Technology)을 확인하고 대학 도서관의 고급 데이터베이스에 접근하도록 권장합니다."
+        "explanation": "주민이 계획 과정에 참여하면 이러한 녹색 계획을 더 지지하고 유지할 가능성이 높다고 설명하고 있습니다."
       }
     ]
   }
