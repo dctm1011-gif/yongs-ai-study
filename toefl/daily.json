@@ -1,182 +1,181 @@
 {
-  "date": "2026-07-28",
+  "date": "2026-07-29",
   "reading": {
-    "title": "Climate Change and Ocean Acidification",
-    "passage": "The process of ocean acidification, triggered by anthropogenic carbon dioxide emissions, represents one of the most pressing environmental challenges of our time. When atmospheric CO2 dissolves in seawater, it forms carbonic acid, which lowers the pH of the ocean and decreases the concentration of carbonate ions essential for marine organisms. Over the past century, ocean pH has declined by approximately 0.1 units, representing a 30% increase in acidity. This seemingly modest change has profound implications for calcifying organisms such as corals, mollusks, and echinoderms, which depend on carbonate ions to construct their shells and skeletons. Research indicates that species living in polar regions face particularly acute risks, as cold water absorbs more CO2 and is naturally more acidic than tropical waters. The economic ramifications extend beyond marine ecosystems; commercial fisheries, which generate billions of dollars annually and support millions of livelihoods worldwide, face substantial threats from declining fish populations and disrupted food webs. Mitigation strategies must focus on reducing global carbon emissions through renewable energy adoption and enhanced carbon sequestration technologies.",
+    "title": "Microbial Biofilms and Their Industrial Applications",
+    "passage": "Biofilms are complex communities of microorganisms that adhere to surfaces and exist as a collective unit, surrounded by a protective matrix of extracellular polymeric substances. Unlike planktonic cells that float freely in liquid environments, biofilm-residing microorganisms demonstrate significantly enhanced resistance to antibiotics and environmental stressors, a phenomenon attributed to the physical barrier and chemical complexity of their matrix structure. Recent research has identified biofilms in diverse industrial contexts, from water treatment facilities to pharmaceutical manufacturing plants, where they present both challenges and opportunities. Scientists have discovered that certain biofilms can be engineered to degrade pollutants more efficiently than conventional treatment methods. For instance, biofilms composed of specific bacterial strains have successfully reduced heavy metal concentrations in contaminated water by up to 85% within controlled laboratory settings. Furthermore, the pharmaceutical industry has begun harnessing biofilm properties to develop antimicrobial coatings for medical devices, reducing post-surgical infections by approximately 40%. Understanding the mechanisms of biofilm formation and maintenance is therefore crucial for optimizing industrial processes and improving public health outcomes.",
     "vocabulary": [
       {
-        "word": "anthropogenic",
-        "meaning_ko": "인간이 야기한, 인위적인"
+        "word": "adhere",
+        "meaning_ko": "~에 붙다, 달라붙다"
       },
       {
-        "word": "carbonate ions",
-        "meaning_ko": "탄산염 이온"
+        "word": "extracellular polymeric substances",
+        "meaning_ko": "세포외 고분자 물질"
       },
       {
-        "word": "calcifying",
-        "meaning_ko": "석회질을 형성하는"
+        "word": "planktonic",
+        "meaning_ko": "부유성의, 떠다니는"
       },
       {
-        "word": "echinoderms",
-        "meaning_ko": "극피동물"
+        "word": "attribute",
+        "meaning_ko": "~의 원인이다, 귀인하다"
       },
       {
-        "word": "ramifications",
-        "meaning_ko": "영향, 결과"
+        "word": "degrade",
+        "meaning_ko": "분해하다, 저하시키다"
       },
       {
-        "word": "sequestration",
-        "meaning_ko": "격리, 포집"
+        "word": "harnessing",
+        "meaning_ko": "활용하다, 이용하다"
       },
       {
-        "word": "mitigation",
-        "meaning_ko": "완화, 경감"
+        "word": "mechanisms",
+        "meaning_ko": "메커니즘, 작동 원리"
       }
     ],
     "questions": [
       {
-        "q": "According to the passage, what happens when atmospheric CO2 dissolves in seawater?",
+        "q": "According to the passage, what is the primary difference between biofilm cells and planktonic cells?",
         "options": [
-          "It increases the concentration of carbonate ions",
-          "It forms carbonic acid and lowers ocean pH",
-          "It raises water temperature in tropical regions",
-          "It strengthens the shells of marine organisms"
+          "Planktonic cells are more resistant to antibiotics than biofilm cells.",
+          "Biofilm cells demonstrate greater resistance to antibiotics and environmental stressors due to their protective matrix.",
+          "Planktonic cells exist in complex communities while biofilm cells float freely.",
+          "Biofilm cells are found only in pharmaceutical settings."
         ],
         "answer": 1,
-        "explanation": "지문에서 'When atmospheric CO2 dissolves in seawater, it forms carbonic acid, which lowers the pH of the ocean'이라고 명시되어 있습니다."
+        "explanation": "지문의 두 번째 문장에서 명시적으로 biofilm 거주 미생물이 보호 매트릭스와 화학적 복잡성으로 인해 항생제와 환경 스트레스에 대한 저항성이 훨씬 더 강하다고 설명합니다."
       },
       {
-        "q": "What can be inferred from the passage about marine organisms in polar regions?",
+        "q": "What can be inferred from the passage about the future applications of biofilms in industry?",
         "options": [
-          "They are more resistant to acidification than tropical species",
-          "They produce more carbonate ions to adapt to changes",
-          "They face greater risks from ocean acidification due to environmental conditions",
-          "They have already migrated to warmer waters"
+          "Biofilms will completely replace conventional water treatment methods.",
+          "Biofilms are unlikely to be used in medical device manufacturing.",
+          "Biofilms have significant potential for both pollution control and medical device protection.",
+          "Industrial biofilm applications are currently impossible due to technical limitations."
         ],
         "answer": 2,
-        "explanation": "지문에서 '극지역에 사는 종들이 특히 심각한 위험에 직면하는데, 찬 물이 더 많은 CO2를 흡수하고 열대 해수보다 자연적으로 더 산성이기 때문'이라고 설명합니다."
+        "explanation": "지문은 수질 정화와 의료 기기 항균 코팅 등 여러 산업 분야에서 바이오필름의 활용을 언급하며, 이러한 사례들로부터 미래의 광범위한 적용 가능성을 추론할 수 있습니다."
       },
       {
-        "q": "The word 'acute' in paragraph 1 is closest in meaning to",
+        "q": "The word 'harness' in the second paragraph is closest in meaning to:",
         "options": [
-          "chronic and long-lasting",
-          "mild and manageable",
-          "severe and intense",
-          "gradual and predictable"
-        ],
-        "answer": 2,
-        "explanation": "'acute risks'는 '심각한 위험'을 의미하며, severe and intense가 가장 적절한 동의어입니다."
-      },
-      {
-        "q": "Why does the author mention commercial fisheries in the passage?",
-        "options": [
-          "To explain the primary cause of ocean acidification",
-          "To illustrate the economic importance of marine ecosystems and their vulnerability",
-          "To argue that fishing should be banned entirely",
-          "To demonstrate that acidification only affects shallow waters"
+          "Control or restrict",
+          "Utilize or exploit for beneficial purposes",
+          "Study or observe",
+          "Prevent or inhibit"
         ],
         "answer": 1,
-        "explanation": "저자는 상업어업이 경제적으로 중요하면서도 해양생태계 변화로 인해 위협받고 있다는 점을 통해 해양산성화의 광범위한 영향을 보여주려 합니다."
+        "explanation": "'Harnessing biofilm properties'는 바이오필름의 특성을 의도적으로 활용하여 이득을 얻는다는 의미입니다. 'harness'는 '활용하다, 이용하다'라는 의미의 동사입니다."
+      },
+      {
+        "q": "Why does the author mention the 85% reduction in heavy metal concentrations?",
+        "options": [
+          "To explain why biofilms are dangerous to the environment",
+          "To demonstrate the effectiveness of engineered biofilms in practical applications",
+          "To argue that pharmaceutical coatings are unnecessary",
+          "To show that laboratory research is always accurate"
+        ],
+        "answer": 1,
+        "explanation": "저자는 특정 박테리아 균주로 구성된 바이오필름이 오염된 물의 중금속 농도를 크게 감소시킬 수 있음을 보여줌으로써 엔지니어링된 바이오필름의 실제 적용 효과를 입증하고 있습니다."
       }
     ]
   },
   "writing": {
-    "sentences": [
+    "paraphrase_sentences": [
       {
-        "original": "Ocean acidification, triggered by anthropogenic carbon dioxide emissions, represents one of the most pressing environmental challenges of our time.",
-        "paraphrase": "Human-caused greenhouse gas releases have created ocean acidification, which is widely regarded as a critical environmental issue that demands immediate global attention.",
-        "tip": "능동형→수동형 변환, anthropogenic을 human-caused로 치환, pressing을 critical로 동의어 사용"
+        "original": "Biofilms are complex communities of microorganisms that adhere to surfaces and exist as a collective unit, surrounded by a protective matrix of extracellular polymeric substances.",
+        "paraphrase": "A protective layer of extracellular polymeric substances envelops microorganism communities known as biofilms, which form cohesive groups attached to various surfaces.",
+        "tip": "원래 구조를 단순화하고 능동태에서 수동태로 변환. 'adhere to surfaces'를 'attached to various surfaces'로 명사형으로 변환"
       },
       {
-        "original": "When atmospheric CO2 dissolves in seawater, it forms carbonic acid, which lowers the pH of the ocean and decreases the concentration of carbonate ions essential for marine organisms.",
-        "paraphrase": "The dissolution of atmospheric CO2 in ocean water produces carbonic acid, thereby reducing pH levels and diminishing carbonate ion availability that marine species require.",
-        "tip": "절을 명사구로 변환(When→The dissolution), 복합문을 단순화하면서 의미 유지"
+        "original": "Unlike planktonic cells that float freely in liquid environments, biofilm-residing microorganisms demonstrate significantly enhanced resistance to antibiotics and environmental stressors.",
+        "paraphrase": "While planktonic microorganisms drift in liquid settings, those inhabiting biofilms show substantially greater resilience against both antibiotics and stress factors.",
+        "tip": "Contrast 구조 유지하며 'float freely' → 'drift', 'demonstrate resistance' → 'show resilience'로 동의어 치환. 'environmental stressors' → 'stress factors'로 표현 단순화"
       },
       {
-        "original": "Species living in polar regions face particularly acute risks, as cold water absorbs more CO2 and is naturally more acidic than tropical waters.",
-        "paraphrase": "Polar marine populations encounter heightened vulnerability because frigid oceanic conditions facilitate greater carbon dioxide absorption and possess inherently lower pH compared to equatorial seas.",
-        "tip": "구체적 위치명사 극지→polar marine populations로 확장, acute risks→heightened vulnerability로 동의어 사용"
-      },
-      {
-        "original": "Commercial fisheries, which generate billions of dollars annually and support millions of livelihoods worldwide, face substantial threats from declining fish populations and disrupted food webs.",
-        "paraphrase": "The fishing industry, a multibillion-dollar sector providing employment to millions globally, confronts severe challenges stemming from depleted fish stocks and destabilized marine ecosystems.",
-        "tip": "병렬구조 단순화, generate billions→multibillion-dollar, substantial threats→severe challenges로 유의어 치환"
+        "original": "Scientists have discovered that certain biofilms can be engineered to degrade pollutants more efficiently than conventional treatment methods.",
+        "paraphrase": "The potential of engineered biofilms to decompose contaminants at superior rates compared to traditional approaches has been revealed through scientific investigation.",
+        "tip": "능동태를 과거분사 구조로 변환. 'degrade' → 'decompose', 'conventional treatment methods' → 'traditional approaches'로 동의어 사용"
       }
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to live in a bustling city with modern conveniences and diverse opportunities. Others prefer to live in a quiet countryside with nature and simplicity. Which do you prefer and why? Include specific reasons and details in your response.",
+    "prompt": "Some people prefer reading books to understand stories and gain knowledge. Others prefer watching movies for the same purpose. Which do you prefer and why? Include specific reasons and details in your response.",
     "model_sentences": [
-      "Personally, I prefer living in the countryside because it offers a more peaceful and healthy lifestyle compared to crowded urban areas.",
-      "First, rural environments provide cleaner air and less pollution, which is essential for physical well-being and reducing stress-related illnesses.",
-      "For example, I grew up in a small town surrounded by forests and farmland, where I could exercise outdoors freely and enjoy natural surroundings without worrying about traffic congestion or noise.",
-      "Additionally, the countryside typically has lower living costs and stronger community connections, allowing people to build meaningful relationships with neighbors.",
-      "In conclusion, although cities offer convenience, the countryside's natural environment, affordability, and sense of community make it a superior choice for maintaining long-term health and happiness."
+      "I personally prefer reading books over watching movies because books allow me to engage my imagination and develop my own visualization of characters and settings.",
+      "For instance, when I read a fantasy novel, I can create unique mental images that match my personal interpretation, whereas films impose a single visual perspective that may not align with my initial understanding.",
+      "Additionally, books typically provide deeper insights into characters' thoughts and motivations through detailed internal monologues, which movies often simplify due to time constraints.",
+      "Furthermore, reading enhances vocabulary and critical thinking skills more effectively than passive movie watching.",
+      "In conclusion, although movies offer convenience and entertainment value, books provide a more intellectually enriching and personalized experience that I find more valuable for both learning and enjoyment."
     ]
   },
   "listening": {
-    "title": "Student Club Budget Discussion",
+    "title": "Meeting with Professor About Research Paper Topic",
     "type": "conversation",
-    "script": "Student A: Hey, did you check the email about our club's budget allocation for next semester? Student B: Yeah, I saw it. We received $1,500, but that's actually less than what we requested. It's pretty disappointing because we wanted to organize a field trip and purchase new equipment. Student A: I know. The funding committee said the university's overall budget was cut. But I think we should prioritize what's most important. Student B: Exactly. What if we focus on the field trip first since that benefits all members? We could scale back the equipment purchase and maybe do a fundraiser to cover the remaining costs. Student A: That's a great idea. A bake sale or car wash could generate maybe $300 to $500 extra. And if we're strategic, we might apply for a departmental grant as well. Student B: Perfect. Let me draft a revised budget proposal by Friday, and we can present it to the club officers next week. Student A: Sounds good. This way we'll address most of our goals while being realistic about our constraints.",
+    "script": "Student: Professor Chen, thanks for meeting with me. I wanted to discuss my final paper topic. I'm thinking about focusing on how antibiotic resistance develops in biofilm communities. Professor: That's an excellent choice. Biofilms are particularly relevant in medical contexts. What specific angle are you considering? Student: Well, I read that biofilms create this protective matrix that shields bacteria from antibiotics. I want to explore the mechanisms behind this resistance and maybe propose some treatment alternatives. Professor: I like that direction. However, you should narrow your scope. Instead of covering all treatment alternatives, why not focus specifically on enzymatic degradation of biofilm matrix components? That's more manageable for a semester-long project. Student: Oh, that's a great suggestion. So you're saying I should concentrate on how enzymes break down the extracellular polymeric substances? Professor: Exactly. And there's recent literature on this topic published within the last two years. Check journals like Applied Microbiology and Environmental Science & Technology. Also, consider visiting the university library for advanced database access. Student: Thank you. That's very helpful. Should I include any laboratory methodology sections? Professor: Not necessarily for this course, but do incorporate current research findings and cite them properly. Aim for about 6,000 words and submit an outline by next week.",
     "vocabulary": [
       {
-        "word": "budget allocation",
-        "meaning_ko": "예산 배분"
+        "word": "antibiotic resistance",
+        "meaning_ko": "항생제 내성"
       },
       {
-        "word": "prioritize",
-        "meaning_ko": "우선순위를 정하다"
+        "word": "mechanisms",
+        "meaning_ko": "메커니즘, 작동 원리"
       },
       {
-        "word": "fundraiser",
-        "meaning_ko": "모금 행사"
+        "word": "enzymatic degradation",
+        "meaning_ko": "효소적 분해"
       },
       {
-        "word": "constraints",
-        "meaning_ko": "제약 조건"
+        "word": "extracellular polymeric substances",
+        "meaning_ko": "세포외 고분자 물질"
       },
       {
-        "word": "departmental grant",
-        "meaning_ko": "학과 지원금"
+        "word": "scope",
+        "meaning_ko": "범위, 정도"
       },
       {
-        "word": "scale back",
-        "meaning_ko": "축소하다"
+        "word": "literature",
+        "meaning_ko": "학술 문헌, 자료"
+      },
+      {
+        "word": "incorporate",
+        "meaning_ko": "포함하다, 통합하다"
       }
     ],
     "questions": [
       {
-        "q": "What is the main topic of the conversation?",
+        "q": "What is the main purpose of the conversation?",
         "options": [
-          "Planning a field trip itinerary",
-          "Discussing how to manage a reduced club budget",
-          "Applying for a university departmental grant",
-          "Organizing a bake sale fundraiser"
+          "To discuss the professor's recent research on antibiotic resistance",
+          "To help the student refine and narrow the scope of her research paper topic",
+          "To teach the student about biofilm matrix composition",
+          "To assign the student a mandatory laboratory project"
         ],
         "answer": 1,
-        "explanation": "두 학생이 클럽 예산이 감소했고, 이를 어떻게 효과적으로 배분할지에 대해 논의하고 있습니다."
+        "explanation": "교수는 학생의 초기 주제(항생제 내성의 광범위한 측면)를 더 구체적으로 좁혀서 효소적 분해에 초점을 맞추도록 조언하고 있습니다. 이것이 대화의 주요 목적입니다."
       },
       {
-        "q": "What does Student B suggest as a solution?",
+        "q": "What does the professor suggest the student focus on instead of covering all treatment alternatives?",
         "options": [
-          "Request more funding from the university immediately",
-          "Cancel the equipment purchase entirely",
-          "Focus on the field trip and organize a fundraiser for additional funds",
-          "Reduce membership fees to increase the budget"
+          "The protective matrix shield of bacteria",
+          "Antibiotic resistance mechanisms in general",
+          "Enzymatic degradation of biofilm matrix components",
+          "Laboratory methodology and experimental design"
         ],
         "answer": 2,
-        "explanation": "Student B는 필드 트립을 우선순위로 하고, 장비 구매를 줄인 후, 펀드레이저로 추가 자금을 조달할 것을 제안합니다."
+        "explanation": "교수는 모든 치료 대안을 다루는 것보다는 '효소적 분해에 특히 초점을 맞추도록' 제안합니다. 이것이 더 관리 가능한 주제라고 설명합니다."
       },
       {
-        "q": "Why does Student A mention applying for a departmental grant?",
+        "q": "What resources does the professor recommend for the student's research?",
         "options": [
-          "To replace the university's budget allocation entirely",
-          "To provide an additional funding source to supplement their current budget",
-          "To prove the funding committee made a mistake",
-          "To extend the deadline for their budget proposal"
+          "Only textbooks from the university bookstore",
+          "Recent journals and the university library's advanced database access",
+          "Laboratory equipment and experimental materials",
+          "Interviews with local hospital staff"
         ],
         "answer": 1,
-        "explanation": "Student A는 현재 제약이 있는 상황에서 학과 지원금 신청을 통해 추가 자금 확보 방법을 제시하고 있습니다."
+        "explanation": "교수는 지난 2년 이내에 출판된 저널(Applied Microbiology, Environmental Science & Technology)을 확인하고 대학 도서관의 고급 데이터베이스에 접근하도록 권장합니다."
       }
     ]
   }
