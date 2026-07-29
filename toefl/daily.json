@@ -1,177 +1,115 @@
 {
   "date": "2026-07-30",
   "reading": {
-    "title": "The Evolution of Sustainable Architecture in Modern Cities",
-    "passage": "Sustainable architecture has emerged as a fundamental response to environmental challenges in contemporary urban development. Architects worldwide are increasingly incorporating green building technologies to reduce carbon emissions and minimize resource consumption. Notable examples include the integration of photovoltaic panels, rainwater harvesting systems, and passive heating mechanisms that significantly diminish energy dependency. These innovations not only decrease operational costs but also enhance occupant well-being through improved air quality and natural lighting.\n\nThe implementation of sustainable design principles extends beyond individual structures to influence entire urban ecosystems. Singapore's vertical gardens and Copenhagen's district heating networks demonstrate how comprehensive planning can transform cities into models of environmental stewardship. Furthermore, regulatory frameworks in Europe mandate that new constructions meet stringent sustainability standards, thereby accelerating the adoption of eco-friendly materials and renewable energy sources. This paradigm shift represents a critical evolution in architectural practice, reflecting society's commitment to long-term environmental preservation and climate action.",
-    "vocabulary": [
-      {
-        "word": "sustainable",
-        "meaning_ko": "지속 가능한; 장기간 유지할 수 있는"
-      },
-      {
-        "word": "photovoltaic",
-        "meaning_ko": "태양광의; 태양 에너지를 전기로 변환하는"
-      },
-      {
-        "word": "diminish",
-        "meaning_ko": "감소시키다; 줄이다"
-      },
-      {
-        "word": "stewardship",
-        "meaning_ko": "관리; 책임 있는 관리"
-      },
-      {
-        "word": "paradigm shift",
-        "meaning_ko": "패러다임 전환; 근본적인 사고 체계의 변화"
-      },
-      {
-        "word": "mandate",
-        "meaning_ko": "명령하다; 요구하다"
-      },
-      {
-        "word": "accelerate",
-        "meaning_ko": "가속화하다; 빠르게 진행하게 하다"
-      }
-    ],
+    "title": "Bioluminescence in Deep-Sea Organisms",
+    "passage": "Bioluminescence is the production of light by living organisms through chemical reactions. In deep-sea environments where sunlight cannot penetrate, many creatures have evolved this remarkable ability. Fish, squid, and jellyfish use bioluminescence for various purposes including attracting prey, communicating with potential mates, and confusing predators. Scientists estimate that nearly 90% of deep-sea organisms produce light. This adaptation represents millions of years of evolution in one of Earth's most extreme habitats, enabling survival in complete darkness.",
     "questions": [
       {
-        "q": "According to the passage, which of the following is mentioned as a benefit of sustainable architecture?",
+        "q": "According to the passage, what is the primary purpose of bioluminescence in deep-sea organisms?",
         "options": [
-          "Increased labor costs for construction workers",
-          "Reduced operational costs and improved occupant well-being",
-          "Elimination of all traditional building materials",
-          "Complete independence from municipal water systems"
+          "To warm their bodies in cold water",
+          "To attract prey, communicate, and confuse predators",
+          "To navigate using magnetic fields",
+          "To increase their swimming speed"
         ],
         "answer": 1,
-        "explanation": "지문 첫 번째 단락에서 'These innovations not only decrease operational costs but also enhance occupant well-being through improved air quality and natural lighting'이라고 명확히 명시되어 있습니다. 정답은 B입니다."
+        "explanation": "지문에서 '어류, 오징어, 해파리는 생물발광을 먹이를 끌어당기고, 짝짓기 대상과 소통하고, 포식자를 혼동하기 위해 사용한다'고 명시되어 있습니다."
       },
       {
-        "q": "What can be inferred from the passage about European cities?",
+        "q": "Why do deep-sea organisms need bioluminescence?",
         "options": [
-          "They have abandoned traditional architecture entirely",
-          "They are subject to regulatory requirements for sustainable construction",
-          "They do not use renewable energy sources",
-          "They prioritize cost reduction over environmental concerns"
+          "Because sunlight penetrates deep into the ocean",
+          "Because they are all predators",
+          "Because sunlight cannot penetrate deep-sea environments",
+          "Because it helps them move faster"
         ],
-        "answer": 1,
-        "explanation": "지문의 'regulatory frameworks in Europe mandate that new constructions meet stringent sustainability standards'라는 문장으로부터, 유럽 도시들이 지속 가능한 건축에 관한 규제를 따라야 한다는 것을 추론할 수 있습니다. 정답은 B입니다."
+        "answer": 2,
+        "explanation": "지문의 첫 번째 문장 이후에 '햇빛이 도달할 수 없는 깊은 바다 환경에서 많은 생물들이 이 놀라운 능력을 진화시켰다'고 설명하고 있습니다."
       },
       {
-        "q": "The word 'accelerating' in the second paragraph is closest in meaning to",
+        "q": "What does the passage suggest about the prevalence of bioluminescence?",
         "options": [
-          "Slowing down the process",
-          "Speeding up the adoption process",
-          "Temporarily halting progress",
-          "Maintaining the current rate"
+          "It is rare among deep-sea creatures",
+          "Nearly 90% of deep-sea organisms produce light",
+          "Only fish have this ability",
+          "It was recently discovered"
         ],
         "answer": 1,
-        "explanation": "'accelerate'는 '가속화하다' 또는 '더 빠르게 진행하게 하다'는 의미입니다. 'speeding up'이 가장 가까운 의미의 표현입니다. 정답은 B입니다."
-      },
-      {
-        "q": "Why does the author mention Singapore's vertical gardens and Copenhagen's district heating networks?",
-        "options": [
-          "To criticize their architectural design",
-          "To show examples of cities implementing comprehensive sustainable planning",
-          "To argue that these solutions are too expensive",
-          "To demonstrate that only wealthy cities can afford sustainability"
-        ],
-        "answer": 1,
-        "explanation": "저자는 이 사례들을 '종합적인 계획이 도시를 환경 관리의 모델로 어떻게 변환할 수 있는지' 보여주기 위해 언급했습니다. 지문: 'demonstrate how comprehensive planning can transform cities into models of environmental stewardship.' 정답은 B입니다."
+        "explanation": "지문에서 '과학자들은 거의 90%의 심해 생물이 빛을 생산한다고 추정한다'고 직접 언급하고 있습니다."
       }
     ]
   },
   "writing": {
-    "sentences": [
-      {
-        "original": "Sustainable architecture has emerged as a fundamental response to environmental challenges in contemporary urban development.",
-        "paraphrase": "The rise of eco-friendly building design represents a crucial approach to addressing the environmental crises facing modern cities today.",
-        "tip": "동의어 치환(emerged→rise, fundamental→crucial, sustainable→eco-friendly, challenges→crises) 및 구조 재배열로 자연스럽게 패러프레이즈"
-      },
-      {
-        "original": "These innovations not only decrease operational costs but also enhance occupant well-being through improved air quality and natural lighting.",
-        "paraphrase": "By reducing energy consumption, these technologies provide dual benefits: lower maintenance expenses and better living conditions for residents who enjoy cleaner air and more daylight.",
-        "tip": "명사 형태(innovations)를 동사 형태(technologies)로 변환하고, 'both A and B' 구조를 'dual benefits: A and B' 형태로 재구성"
-      },
-      {
-        "original": "Regulatory frameworks in Europe mandate that new constructions meet stringent sustainability standards.",
-        "paraphrase": "European governments enforce strict regulations requiring all newly built structures to adhere to demanding environmental performance criteria.",
-        "tip": "능동태(mandate that) → 수동태(enforce... requiring) 변환 및 동의어 활용(stringent→demanding, standards→criteria)"
-      }
+    "prompt": "Do you agree or disagree with the following statement: Technology has improved human relationships rather than damaged them? Use specific reasons and examples to support your answer.",
+    "structure": {
+      "intro": "명확한 입장 표현 (동의 또는 불동의)과 2-3개의 핵심 이유 미리 제시. 예: 'Technology has significantly improved human relationships because it enables long-distance communication, allows us to maintain connections, and helps people with common interests find each other.'",
+      "body1": "첫 번째 이유와 구체적 예시 제시. 예를 들어, 원거리 가족 간 비디오 통화의 중요성을 설명.",
+      "body2": "두 번째 이유로 상반된 관점 인정하면서도 강화. 예: 소셜 미디어의 부정적 측면을 언급하되, 어떻게 긍정적 측면이 더 크다고 주장할 것인지 설명.",
+      "conclusion": "입장 재확인 및 사회적 함의 언급. 기술 자체가 아닌 사용 방식이 중요함을 제시."
+    },
+    "useful_phrases": [
+      "In my opinion,",
+      "I strongly agree/disagree that",
+      "One significant reason is that",
+      "Furthermore,",
+      "For example,",
+      "This demonstrates that",
+      "On the other hand,",
+      "Nevertheless,",
+      "In conclusion,"
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer shopping online. Others prefer shopping in physical stores. Which do you prefer and why? Include specific reasons and details in your response.",
-    "model_sentences": [
-      "Personally, I prefer shopping in physical stores rather than online because I value the hands-on experience and immediate gratification.",
-      "First, when I shop in stores, I can see and touch the products directly, which helps me make better decisions about quality and fit.",
-      "For example, when I buy clothes, I can try them on right away to ensure they fit properly, whereas online shopping requires me to wait days for delivery and deal with potential returns.",
-      "Additionally, in-store shopping allows me to interact with knowledgeable staff who can provide personalized recommendations and answer my questions instantly.",
-      "Overall, although online shopping offers convenience, I believe the ability to inspect products immediately and receive expert guidance makes physical store shopping a better option for me."
+    "prompt": "Some people prefer to work in a large company with many employees. Others prefer to work in a small company or start their own business. Which do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer working in a small company because",
+      "One reason is that small companies offer more opportunities for",
+      "Another advantage is that employees in small organizations can",
+      "For example,",
+      "This is important to me because"
+    ],
+    "sample_points": [
+      "소규모 회사에서는 개인의 기여가 더 눈에 띄고 인정받으며, 더 빠른 승진과 성장 기회가 있습니다. 예시: 자신의 아이디어가 직접 경영진에게 전달되고 빠르게 실행될 수 있습니다.",
+      "대규모 회사의 안정성은 좋지만 창의성과 자율성이 제한될 수 있습니다. 소규모 회사에서는 다양한 부서 일을 경험하며 폭넓은 기술을 배울 수 있습니다."
     ]
   },
   "listening": {
-    "title": "Student Inquiry About Dormitory Assignment",
+    "title": "Campus Library Discussion",
     "type": "conversation",
-    "script": "Student A: Good afternoon! I'm here to ask about my dormitory assignment for next semester. I haven't received any notification yet, and I'm getting concerned about housing.\n\nAdministrator: Hello! Let me check your file. Can you provide your student ID number?\n\nStudent A: Sure, it's 2024-87563.\n\nAdministrator: Thank you. I see your application here. Actually, assignments are typically sent by email about two weeks before the semester begins. Since registration period just closed last week, you should expect your notification shortly.\n\nStudent A: Oh, I see. So there's no issue with my application?\n\nAdministrator: No, everything appears to be in order. However, I noticed you requested a single room. Unfortunately, our single-room availability is very limited this year due to increased enrollment. There's a possibility you might be assigned to a double room instead.\n\nStudent A: Hmm, I was really hoping for a single. Is there anything I can do about that?\n\nAdministrator: You can submit a formal appeal with specific justification. Medical conditions or documented circumstances are considered more favorably. The appeal deadline is August 15th.",
-    "vocabulary": [
-      {
-        "word": "dormitory assignment",
-        "meaning_ko": "기숙사 배정"
-      },
-      {
-        "word": "notification",
-        "meaning_ko": "통지; 알림"
-      },
-      {
-        "word": "registration",
-        "meaning_ko": "등록; 신청"
-      },
-      {
-        "word": "availability",
-        "meaning_ko": "이용 가능성; 공실 상황"
-      },
-      {
-        "word": "enrollment",
-        "meaning_ko": "입학; 등록"
-      },
-      {
-        "word": "appeal",
-        "meaning_ko": "호소하다; 재신청하다"
-      }
-    ],
+    "script": "Student: Hi, I'm looking for information about the new study rooms in the library. Librarian: Oh yes, we just opened them last week. They're designed for group projects and have whiteboards, computers, and comfortable seating. Student: That sounds great! How do I reserve one? Librarian: You can reserve them online through the library website or come to the front desk. Each room can be booked for up to three hours. Student: Perfect! Are there any restrictions? Librarian: Yes, you need to be quiet and keep the rooms clean. Also, food and drinks are allowed except for beverages that might spill easily. We want to maintain a professional study environment. Student: Got it. This is really helpful. I think my study group will love these new facilities. Librarian: Great! Feel free to ask if you have any other questions.",
     "questions": [
       {
-        "q": "What is the main purpose of the conversation?",
+        "q": "What is the main purpose of the new study rooms?",
         "options": [
-          "To discuss the cost of dormitory accommodation",
-          "To inquire about the status of a dormitory assignment",
-          "To complain about the quality of student housing",
-          "To request a transfer to a different university residence hall"
+          "To provide a place for individual quiet study",
+          "To allow students to eat meals together",
+          "To serve as group project spaces with technology",
+          "To replace the existing library computers"
         ],
-        "answer": 1,
-        "explanation": "학생이 '기숙사 배정에 대한 통지를 받지 못했고 걱정하고 있다'고 말하며 이에 대해 문의합니다. 대화의 주요 목적은 기숙사 배정 상태를 확인하는 것입니다. 정답은 B입니다."
+        "answer": 2,
+        "explanation": "도서관 사서가 '그룹 프로젝트를 위해 설계되었으며 화이트보드, 컴퓨터, 편안한 좌석이 있다'고 명확히 설명했습니다."
       },
       {
-        "q": "According to the administrator, when will the student typically receive the dormitory assignment notification?",
+        "q": "How long can each room be reserved for at a time?",
         "options": [
-          "Immediately after submitting the application",
-          "About two weeks before the semester begins",
-          "On the first day of class",
-          "After the appeal deadline"
+          "One hour",
+          "Two hours",
+          "Three hours",
+          "Unlimited time"
         ],
-        "answer": 1,
-        "explanation": "관리자가 'assignments are typically sent by email about two weeks before the semester begins'라고 명확히 설명합니다. 정답은 B입니다."
+        "answer": 2,
+        "explanation": "사서가 '각 방은 최대 3시간까지 예약할 수 있다'고 직접 언급했습니다."
       },
       {
-        "q": "Why does the administrator mention that a double room might be assigned instead of a single room?",
+        "q": "What type of drinks are NOT allowed in the study rooms?",
         "options": [
-          "To punish students who request single rooms",
-          "To explain that single-room availability is limited due to increased enrollment",
-          "To increase dormitory revenue",
-          "To encourage students to share rooms"
+          "All beverages are forbidden",
+          "Only hot drinks are prohibited",
+          "Beverages that might spill easily",
+          "Soft drinks and juice"
         ],
-        "answer": 1,
-        "explanation": "관리자는 'our single-room availability is very limited this year due to increased enrollment'라고 설명하며, 이것이 이중실 배정 가능성의 이유임을 분명히 합니다. 정답은 B입니다."
+        "answer": 2,
+        "explanation": "사서가 '음료 중에서 쏟아질 수 있는 음료는 허용되지 않는다'고 구체적으로 설명했습니다."
       }
     ]
   }
