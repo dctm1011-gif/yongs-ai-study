@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, Alert, FlatList, Platform } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, Alert, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Notifications from 'expo-notifications';
 import { LAST_BUILD_TIME } from '../constants/buildInfo';
+import { enableStudyNotifications, disableStudyNotifications } from '../utils/studyNotifications';
 
 interface FeedbackItem {
   id: string;
@@ -78,41 +78,15 @@ export default function SettingsScreen() {
   const toggleStudyReminders = async () => {
     try {
       if (!remindersEnabled) {
-        const { status } = await Notifications.requestPermissionsAsync();
-        if (status !== 'granted') {
+        const ok = await enableStudyNotifications();
+        if (!ok) {
           Alert.alert('권한 거부', '알림 권한을 허용해주세요.');
           return;
         }
-
-        if (Platform.OS === 'android') {
-          await Notifications.setNotificationChannelAsync('study-reminder', {
-            name: 'study-reminder',
-            importance: Notifications.AndroidImportance.HIGH,
-            vibrationPattern: [0, 250, 250, 250],
-            lightColor: '#2563eb',
-            sound: 'default',
-          });
-        }
-
-        const times = [8, 10, 12, 16, 20, 22];
-        times.forEach((hour) => {
-          Notifications.scheduleNotificationAsync({
-            content: {
-              title: '📚 학습할 시간이에요!',
-              body: '오늘도 열심히 학습해보세요. 계속 성장하고 있습니다! 💪',
-              data: { type: 'study-reminder' },
-              sound: 'default',
-            },
-            trigger: { type: 'daily', hour, minute: 0 } as any,
-          });
-        });
-
-        await AsyncStorage.setItem('reminders_enabled', 'true');
         setRemindersEnabled(true);
         Alert.alert('✅ 활성화됨', '매일 6번 학습 알림을 받게 됩니다!');
       } else {
-        await Notifications.dismissAllNotificationsAsync();
-        await AsyncStorage.setItem('reminders_enabled', 'false');
+        await disableStudyNotifications();
         setRemindersEnabled(false);
         Alert.alert('❌ 비활성화됨', '학습 알림이 꺼졌습니다.');
       }

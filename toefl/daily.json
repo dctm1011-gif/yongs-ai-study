@@ -1,110 +1,177 @@
 {
-  "date": "2026-07-29",
+  "date": "2026-07-30",
   "reading": {
-    "title": "The Impact of Artificial Intelligence on Employment",
-    "passage": "Artificial intelligence has revolutionized various industries by automating routine tasks and improving efficiency. While some worry that AI will eliminate jobs, evidence suggests that new positions are created in AI development, maintenance, and oversight. Throughout history, technological advances have initially disrupted labor markets but ultimately generated more employment opportunities. Workers must adapt by developing skills in areas where human creativity and emotional intelligence remain irreplaceable. Companies investing in AI should simultaneously invest in workforce retraining programs to ensure smooth transitions.",
+    "title": "The Evolution of Sustainable Architecture in Modern Cities",
+    "passage": "Sustainable architecture has emerged as a fundamental response to environmental challenges in contemporary urban development. Architects worldwide are increasingly incorporating green building technologies to reduce carbon emissions and minimize resource consumption. Notable examples include the integration of photovoltaic panels, rainwater harvesting systems, and passive heating mechanisms that significantly diminish energy dependency. These innovations not only decrease operational costs but also enhance occupant well-being through improved air quality and natural lighting.\n\nThe implementation of sustainable design principles extends beyond individual structures to influence entire urban ecosystems. Singapore's vertical gardens and Copenhagen's district heating networks demonstrate how comprehensive planning can transform cities into models of environmental stewardship. Furthermore, regulatory frameworks in Europe mandate that new constructions meet stringent sustainability standards, thereby accelerating the adoption of eco-friendly materials and renewable energy sources. This paradigm shift represents a critical evolution in architectural practice, reflecting society's commitment to long-term environmental preservation and climate action.",
+    "vocabulary": [
+      {
+        "word": "sustainable",
+        "meaning_ko": "지속 가능한; 장기간 유지할 수 있는"
+      },
+      {
+        "word": "photovoltaic",
+        "meaning_ko": "태양광의; 태양 에너지를 전기로 변환하는"
+      },
+      {
+        "word": "diminish",
+        "meaning_ko": "감소시키다; 줄이다"
+      },
+      {
+        "word": "stewardship",
+        "meaning_ko": "관리; 책임 있는 관리"
+      },
+      {
+        "word": "paradigm shift",
+        "meaning_ko": "패러다임 전환; 근본적인 사고 체계의 변화"
+      },
+      {
+        "word": "mandate",
+        "meaning_ko": "명령하다; 요구하다"
+      },
+      {
+        "word": "accelerate",
+        "meaning_ko": "가속화하다; 빠르게 진행하게 하다"
+      }
+    ],
     "questions": [
       {
-        "q": "What does the passage suggest about the relationship between AI and employment?",
+        "q": "According to the passage, which of the following is mentioned as a benefit of sustainable architecture?",
         "options": [
-          "AI will completely eliminate all jobs",
-          "AI creates both challenges and new opportunities",
-          "AI has no significant impact on the job market",
-          "Only routine workers will be affected"
+          "Increased labor costs for construction workers",
+          "Reduced operational costs and improved occupant well-being",
+          "Elimination of all traditional building materials",
+          "Complete independence from municipal water systems"
         ],
         "answer": 1,
-        "explanation": "문단에서 AI가 일자리를 없애는 것은 아니며 새로운 직업이 창출된다고 제시하고 있습니다."
+        "explanation": "지문 첫 번째 단락에서 'These innovations not only decrease operational costs but also enhance occupant well-being through improved air quality and natural lighting'이라고 명확히 명시되어 있습니다. 정답은 B입니다."
       },
       {
-        "q": "According to the passage, what skills should workers develop?",
+        "q": "What can be inferred from the passage about European cities?",
         "options": [
-          "Only technical AI skills",
-          "Programming and coding exclusively",
-          "Human creativity and emotional intelligence",
-          "Traditional manufacturing techniques"
-        ],
-        "answer": 2,
-        "explanation": "문단의 마지막 부분에서 인간의 창의성과 감정 지능이 중요하다고 명시되어 있습니다."
-      },
-      {
-        "q": "What action does the passage recommend for companies?",
-        "options": [
-          "Eliminate all human workers",
-          "Invest in retraining programs alongside AI",
-          "Avoid using artificial intelligence",
-          "Focus only on cost reduction"
+          "They have abandoned traditional architecture entirely",
+          "They are subject to regulatory requirements for sustainable construction",
+          "They do not use renewable energy sources",
+          "They prioritize cost reduction over environmental concerns"
         ],
         "answer": 1,
-        "explanation": "마지막 문장에서 기업이 AI 투자와 함께 직원 재교육 프로그램에 투자해야 한다고 권장하고 있습니다."
+        "explanation": "지문의 'regulatory frameworks in Europe mandate that new constructions meet stringent sustainability standards'라는 문장으로부터, 유럽 도시들이 지속 가능한 건축에 관한 규제를 따라야 한다는 것을 추론할 수 있습니다. 정답은 B입니다."
+      },
+      {
+        "q": "The word 'accelerating' in the second paragraph is closest in meaning to",
+        "options": [
+          "Slowing down the process",
+          "Speeding up the adoption process",
+          "Temporarily halting progress",
+          "Maintaining the current rate"
+        ],
+        "answer": 1,
+        "explanation": "'accelerate'는 '가속화하다' 또는 '더 빠르게 진행하게 하다'는 의미입니다. 'speeding up'이 가장 가까운 의미의 표현입니다. 정답은 B입니다."
+      },
+      {
+        "q": "Why does the author mention Singapore's vertical gardens and Copenhagen's district heating networks?",
+        "options": [
+          "To criticize their architectural design",
+          "To show examples of cities implementing comprehensive sustainable planning",
+          "To argue that these solutions are too expensive",
+          "To demonstrate that only wealthy cities can afford sustainability"
+        ],
+        "answer": 1,
+        "explanation": "저자는 이 사례들을 '종합적인 계획이 도시를 환경 관리의 모델로 어떻게 변환할 수 있는지' 보여주기 위해 언급했습니다. 지문: 'demonstrate how comprehensive planning can transform cities into models of environmental stewardship.' 정답은 B입니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: Remote work is more productive than working in a traditional office?",
-    "structure": {
-      "intro": "명확한 입장 제시 (동의 또는 반대). 이유를 간단히 언급하며 에세이 방향 제시",
-      "body1": "첫 번째 주요 이유 설명. 구체적인 예시나 증거 제시로 주장 강화",
-      "body2": "두 번째 주요 이유 설명. 반대 의견을 인정하면서도 자신의 입장 재강조",
-      "conclusion": "주요 포인트 요약. 최종 의견 재확인 및 미래 전망 제시"
-    },
-    "useful_phrases": [
-      "In my opinion, remote work offers significant advantages such as",
-      "Furthermore, the flexibility of working from home allows employees to",
-      "Some people argue that office collaboration is essential; however,",
-      "In conclusion, the benefits of remote work outweigh the drawbacks because",
-      "One major advantage is that remote workers can avoid commuting time"
+    "sentences": [
+      {
+        "original": "Sustainable architecture has emerged as a fundamental response to environmental challenges in contemporary urban development.",
+        "paraphrase": "The rise of eco-friendly building design represents a crucial approach to addressing the environmental crises facing modern cities today.",
+        "tip": "동의어 치환(emerged→rise, fundamental→crucial, sustainable→eco-friendly, challenges→crises) 및 구조 재배열로 자연스럽게 패러프레이즈"
+      },
+      {
+        "original": "These innovations not only decrease operational costs but also enhance occupant well-being through improved air quality and natural lighting.",
+        "paraphrase": "By reducing energy consumption, these technologies provide dual benefits: lower maintenance expenses and better living conditions for residents who enjoy cleaner air and more daylight.",
+        "tip": "명사 형태(innovations)를 동사 형태(technologies)로 변환하고, 'both A and B' 구조를 'dual benefits: A and B' 형태로 재구성"
+      },
+      {
+        "original": "Regulatory frameworks in Europe mandate that new constructions meet stringent sustainability standards.",
+        "paraphrase": "European governments enforce strict regulations requiring all newly built structures to adhere to demanding environmental performance criteria.",
+        "tip": "능동태(mandate that) → 수동태(enforce... requiring) 변환 및 동의어 활용(stringent→demanding, standards→criteria)"
+      }
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer learning new skills through online courses. Others prefer traditional classroom education. Which do you prefer and why?",
-    "useful_expressions": [
-      "In my opinion, I prefer online courses because they offer flexibility",
-      "One reason is that online learning allows me to study at my own pace",
-      "Another advantage is that I can access various resources and expert instructors from around the world",
-      "Although some people believe classroom learning is more effective, I think online education provides better accessibility"
-    ],
-    "sample_points": [
-      "온라인 코스의 유연성: 자신의 일정에 맞춰 학습할 수 있으며 반복 학습 가능",
-      "비용 효율성: 전통 교실보다 저렴하고 이동 시간이 없어 효율적인 학습 환경 제공"
+    "prompt": "Some people prefer shopping online. Others prefer shopping in physical stores. Which do you prefer and why? Include specific reasons and details in your response.",
+    "model_sentences": [
+      "Personally, I prefer shopping in physical stores rather than online because I value the hands-on experience and immediate gratification.",
+      "First, when I shop in stores, I can see and touch the products directly, which helps me make better decisions about quality and fit.",
+      "For example, when I buy clothes, I can try them on right away to ensure they fit properly, whereas online shopping requires me to wait days for delivery and deal with potential returns.",
+      "Additionally, in-store shopping allows me to interact with knowledgeable staff who can provide personalized recommendations and answer my questions instantly.",
+      "Overall, although online shopping offers convenience, I believe the ability to inspect products immediately and receive expert guidance makes physical store shopping a better option for me."
     ]
   },
   "listening": {
-    "title": "Sustainable Urban Planning",
+    "title": "Student Inquiry About Dormitory Assignment",
     "type": "conversation",
-    "script": "Professor: Today we'll discuss sustainable urban planning. Modern cities face challenges like traffic congestion and pollution. Urban planners now focus on creating green spaces, improving public transportation, and designing walkable neighborhoods. In Copenhagen, the government invested in bicycle infrastructure, reducing car dependency significantly. Similarly, Singapore integrated parks into residential areas, improving air quality and residents' well-being. These strategies require initial investment but generate long-term benefits including lower healthcare costs and increased property values. Successful sustainable cities balance economic growth with environmental protection through innovative design and community engagement. When residents feel involved in planning decisions, they're more likely to support and maintain these green initiatives. The future of urban development depends on such forward-thinking approaches.",
+    "script": "Student A: Good afternoon! I'm here to ask about my dormitory assignment for next semester. I haven't received any notification yet, and I'm getting concerned about housing.\n\nAdministrator: Hello! Let me check your file. Can you provide your student ID number?\n\nStudent A: Sure, it's 2024-87563.\n\nAdministrator: Thank you. I see your application here. Actually, assignments are typically sent by email about two weeks before the semester begins. Since registration period just closed last week, you should expect your notification shortly.\n\nStudent A: Oh, I see. So there's no issue with my application?\n\nAdministrator: No, everything appears to be in order. However, I noticed you requested a single room. Unfortunately, our single-room availability is very limited this year due to increased enrollment. There's a possibility you might be assigned to a double room instead.\n\nStudent A: Hmm, I was really hoping for a single. Is there anything I can do about that?\n\nAdministrator: You can submit a formal appeal with specific justification. Medical conditions or documented circumstances are considered more favorably. The appeal deadline is August 15th.",
+    "vocabulary": [
+      {
+        "word": "dormitory assignment",
+        "meaning_ko": "기숙사 배정"
+      },
+      {
+        "word": "notification",
+        "meaning_ko": "통지; 알림"
+      },
+      {
+        "word": "registration",
+        "meaning_ko": "등록; 신청"
+      },
+      {
+        "word": "availability",
+        "meaning_ko": "이용 가능성; 공실 상황"
+      },
+      {
+        "word": "enrollment",
+        "meaning_ko": "입학; 등록"
+      },
+      {
+        "word": "appeal",
+        "meaning_ko": "호소하다; 재신청하다"
+      }
+    ],
     "questions": [
       {
-        "q": "What is the professor's main focus in this discussion?",
+        "q": "What is the main purpose of the conversation?",
         "options": [
-          "The history of city development",
-          "Sustainable urban planning strategies and examples",
-          "The disadvantages of public transportation",
-          "How to reduce property values"
+          "To discuss the cost of dormitory accommodation",
+          "To inquire about the status of a dormitory assignment",
+          "To complain about the quality of student housing",
+          "To request a transfer to a different university residence hall"
         ],
         "answer": 1,
-        "explanation": "교수는 지속 가능한 도시 계획의 전략과 코펜하겐, 싱가포르의 구체적인 사례를 설명하고 있습니다."
+        "explanation": "학생이 '기숙사 배정에 대한 통지를 받지 못했고 걱정하고 있다'고 말하며 이에 대해 문의합니다. 대화의 주요 목적은 기숙사 배정 상태를 확인하는 것입니다. 정답은 B입니다."
       },
       {
-        "q": "According to the passage, what was the effect of Copenhagen's bicycle infrastructure investment?",
+        "q": "According to the administrator, when will the student typically receive the dormitory assignment notification?",
         "options": [
-          "Increased traffic congestion",
-          "Reduced car dependency",
-          "Higher pollution levels",
-          "Decreased property values"
+          "Immediately after submitting the application",
+          "About two weeks before the semester begins",
+          "On the first day of class",
+          "After the appeal deadline"
         ],
         "answer": 1,
-        "explanation": "강의에서 코펜하겐의 자전거 인프라 투자가 자동차 의존성을 크게 줄였다고 명시되어 있습니다."
+        "explanation": "관리자가 'assignments are typically sent by email about two weeks before the semester begins'라고 명확히 설명합니다. 정답은 B입니다."
       },
       {
-        "q": "Why does the professor mention community engagement?",
+        "q": "Why does the administrator mention that a double room might be assigned instead of a single room?",
         "options": [
-          "To explain financial costs",
-          "To show that residents oppose green initiatives",
-          "To demonstrate that community involvement increases support for sustainable projects",
-          "To discuss historical urban planning"
+          "To punish students who request single rooms",
+          "To explain that single-room availability is limited due to increased enrollment",
+          "To increase dormitory revenue",
+          "To encourage students to share rooms"
         ],
-        "answer": 2,
-        "explanation": "주민이 계획 과정에 참여하면 이러한 녹색 계획을 더 지지하고 유지할 가능성이 높다고 설명하고 있습니다."
+        "answer": 1,
+        "explanation": "관리자는 'our single-room availability is very limited this year due to increased enrollment'라고 설명하며, 이것이 이중실 배정 가능성의 이유임을 분명히 합니다. 정답은 B입니다."
       }
     ]
   }

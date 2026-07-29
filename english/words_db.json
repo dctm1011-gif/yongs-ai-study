@@ -1166,5 +1166,65 @@
     "explanation": "To exclude someone from a group or society as a punishment or rejection; to deliberately ignore or isolate someone socially.",
     "tip": "사회적 배제나 집단 따돌림을 표현할 때 사용되는 학문적 표현",
     "emoji": "🚫"
+  },
+  {
+    "id": "candescent",
+    "word": "candescent",
+    "pos": "adjective",
+    "date": "2026-07-30",
+    "meaning": "빛나는, 백열의",
+    "example_ko": "오래된 램프에서 나오는 백열의 빛이 방을 가득 채웠다",
+    "example_en": "The candescent light from the old lamp filled the room",
+    "explanation": "glowing or shining brightly, especially when heated to incandescence",
+    "tip": "candescent bulb(백열전구)라는 표현으로도 자주 사용됨",
+    "emoji": "💡"
+  },
+  {
+    "id": "paucity",
+    "word": "paucity",
+    "pos": "noun",
+    "date": "2026-07-30",
+    "meaning": "부족, 결핍",
+    "example_ko": "도시에 저렴한 주택이 부족하다",
+    "example_en": "There's a paucity of affordable housing in the city",
+    "explanation": "the state of being scarce or in short supply; a small or insufficient quantity",
+    "tip": "formal한 표현으로 학문적 글쓰기에서 자주 나타남",
+    "emoji": "📉"
+  },
+  {
+    "id": "ebullient",
+    "word": "ebullient",
+    "pos": "adjective",
+    "date": "2026-07-30",
+    "meaning": "열정적인, 흥분된",
+    "example_ko": "그녀는 청중 모두를 영감으로 가득 채운 열정적인 연설을 했다",
+    "example_en": "She gave an ebullient speech that inspired everyone in the audience",
+    "explanation": "cheerful, enthusiastic, and full of energy; effusively excited",
+    "tip": "긍정적인 감정을 표현할 때 사용하며, 단순한 happy보다 훨씬 강력함",
+    "emoji": "🎉"
+  },
+  {
+    "id": "assuage",
+    "word": "assuage",
+    "pos": "verb",
+    "date": "2026-07-30",
+    "meaning": "진정시키다, 완화시키다",
+    "example_ko": "따뜻한 차 한 잔이 시험에 대한 불안감을 진정시켰다",
+    "example_en": "A warm cup of tea assuaged her anxiety about the exam",
+    "explanation": "to calm or pacify someone; to make something less severe or intense",
+    "tip": "soothe나 calm보다 더 formal하며, 고통이나 걱정을 덜어줄 때 사용",
+    "emoji": "🧘"
+  },
+  {
+    "id": "perspicacious",
+    "word": "perspicacious",
+    "pos": "adjective",
+    "date": "2026-07-30",
+    "meaning": "통찰력 있는, 예리한",
+    "example_ko": "그녀의 예리한 분석은 다른 사람들이 눈치채지 못한 문제들을 드러냈다",
+    "example_en": "Her perspicacious analysis revealed problems no one else noticed",
+    "explanation": "having keen insight, discernment, or understanding; mentally sharp and penetrating",
+    "tip": "지능적이고 통찰력 있는 사람이나 관찰을 칭찬할 때 사용하는 sophisticated word",
+    "emoji": "🧠"
   }
 ]

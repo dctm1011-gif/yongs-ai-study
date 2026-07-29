@@ -1,161 +1,161 @@
 {
-  "date": "2026-07-29",
+  "date": "2026-07-31",
   "words": [
     {
-      "word": "aesthetic",
+      "word": "candescent",
       "part_of_speech": "adjective",
-      "meaning_ko": "미적인, 미학적인",
-      "explanation": "Something that is pleasing to look at or related to beauty and art. Often used to describe a visual style or design approach.",
-      "example_from_convo": "The minimalist aesthetic of her apartment is so calming",
-      "example_ko": "그녀의 아파트의 미니멀리스트 미학이 정말 차분해",
-      "tip": "Social media와 디자인에서 매우 자주 사용되는 현대적인 표현",
-      "emoji": "🎨"
+      "meaning_ko": "빛나는, 백열의",
+      "explanation": "glowing or shining brightly, especially when heated to incandescence",
+      "example_from_convo": "The candescent light from the old lamp filled the room",
+      "example_ko": "오래된 램프에서 나오는 백열의 빛이 방을 가득 채웠다",
+      "tip": "candescent bulb(백열전구)라는 표현으로도 자주 사용됨",
+      "emoji": "💡"
     },
     {
-      "word": "complacent",
-      "part_of_speech": "adjective",
-      "meaning_ko": "자만하는, 만족하는",
-      "explanation": "Being satisfied with yourself or your situation in a way that prevents improvement; self-satisfied without awareness of potential dangers or problems.",
-      "example_from_convo": "Don't become complacent after one success; keep pushing forward",
-      "example_ko": "한 번의 성공 후에 자만하지 말고 계속 나아가",
-      "tip": "부정적인 뉘앙스를 가지고 있으므로 주의해서 사용할 것",
-      "emoji": "😏"
-    },
-    {
-      "word": "deluge",
+      "word": "paucity",
       "part_of_speech": "noun",
-      "meaning_ko": "폭주, 대량, 홍수",
-      "explanation": "A large amount of something that comes suddenly or continuously; can refer to literal flooding or figurative overwhelming amounts of information, messages, etc.",
-      "example_from_convo": "I received a deluge of emails after the announcement",
-      "example_ko": "공지 후에 대량의 이메일을 받았어",
-      "tip": "물리적인 홍수뿐만 아니라 정보나 메시지의 과다함을 표현할 때도 사용",
-      "emoji": "🌊"
+      "meaning_ko": "부족, 결핍",
+      "explanation": "the state of being scarce or in short supply; a small or insufficient quantity",
+      "example_from_convo": "There's a paucity of affordable housing in the city",
+      "example_ko": "도시에 저렴한 주택이 부족하다",
+      "tip": "formal한 표현으로 학문적 글쓰기에서 자주 나타남",
+      "emoji": "📉"
     },
     {
-      "word": "indigenous",
+      "word": "ebullient",
       "part_of_speech": "adjective",
-      "meaning_ko": "토착의, 원주민의",
-      "explanation": "Originating or occurring naturally in a particular place; native. Often used to describe plants, animals, or peoples that are native to a region.",
-      "example_from_convo": "The indigenous peoples of Australia have a rich cultural heritage",
-      "example_ko": "호주의 토착민들은 풍부한 문화 유산을 가지고 있다",
-      "tip": "역사, 문화, 생물학 등 다양한 분야의 학문에서 중요한 용어",
-      "emoji": "🌿"
+      "meaning_ko": "열정적인, 흥분된",
+      "explanation": "cheerful, enthusiastic, and full of energy; effusively excited",
+      "example_from_convo": "She gave an ebullient speech that inspired everyone in the audience",
+      "example_ko": "그녀는 청중 모두를 영감으로 가득 채운 열정적인 연설을 했다",
+      "tip": "긍정적인 감정을 표현할 때 사용하며, 단순한 happy보다 훨씬 강력함",
+      "emoji": "🎉"
     },
     {
-      "word": "ostracize",
+      "word": "assuage",
       "part_of_speech": "verb",
-      "meaning_ko": "따돌리다, 추방하다",
-      "explanation": "To exclude someone from a group or society as a punishment or rejection; to deliberately ignore or isolate someone socially.",
-      "example_from_convo": "The group began to ostracize him after he broke their trust",
-      "example_ko": "그가 신뢰를 배반한 후 그 그룹은 그를 따돌리기 시작했다",
-      "tip": "사회적 배제나 집단 따돌림을 표현할 때 사용되는 학문적 표현",
-      "emoji": "🚫"
+      "meaning_ko": "진정시키다, 완화시키다",
+      "explanation": "to calm or pacify someone; to make something less severe or intense",
+      "example_from_convo": "A warm cup of tea assuaged her anxiety about the exam",
+      "example_ko": "따뜻한 차 한 잔이 시험에 대한 불안감을 진정시켰다",
+      "tip": "soothe나 calm보다 더 formal하며, 고통이나 걱정을 덜어줄 때 사용",
+      "emoji": "🧘"
+    },
+    {
+      "word": "perspicacious",
+      "part_of_speech": "adjective",
+      "meaning_ko": "통찰력 있는, 예리한",
+      "explanation": "having keen insight, discernment, or understanding; mentally sharp and penetrating",
+      "example_from_convo": "Her perspicacious analysis revealed problems no one else noticed",
+      "example_ko": "그녀의 예리한 분석은 다른 사람들이 눈치채지 못한 문제들을 드러냈다",
+      "tip": "지능적이고 통찰력 있는 사람이나 관찰을 칭찬할 때 사용하는 sophisticated word",
+      "emoji": "🧠"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "aesthetic",
-      "question": "What does 'aesthetic' primarily refer to?",
+      "word": "paucity",
+      "question": "What does 'paucity' mean?",
       "options": [
-        "Related to beauty, art, or visual design",
-        "Related to science and mathematics",
-        "Related to physical strength",
-        "Related to financial matters"
+        "An abundance or large quantity of something",
+        "A scarcity or insufficiency of something",
+        "A mixture of different elements",
+        "A period of rapid growth"
       ],
-      "answer": 0,
-      "explanation": "Aesthetic pertains to beauty, art, and visual design. It describes something that is pleasing to look at or related to artistic expression."
+      "answer": 1,
+      "explanation": "'Paucity' means scarcity or insufficiency—when there is not enough of something."
     },
     {
       "type": "meaning",
-      "word": "deluge",
-      "question": "Which of the following best describes a 'deluge'?",
+      "word": "ebullient",
+      "question": "Which of the following best describes an 'ebullient' person?",
       "options": [
-        "A small, controlled amount",
-        "A large, overwhelming amount of something",
-        "A temporary pause",
-        "A careful selection"
+        "Someone who is shy and withdrawn",
+        "Someone who is cheerful, enthusiastic, and full of energy",
+        "Someone who is skeptical and doubtful",
+        "Someone who is calm and reserved"
       ],
       "answer": 1,
-      "explanation": "A deluge refers to a large amount of something that comes suddenly or continuously, overwhelming the recipient."
+      "explanation": "Ebullient describes someone who is enthusiastic, energetic, and bursting with excitement."
     },
     {
       "type": "meaning",
-      "word": "ostracize",
-      "question": "To ostracize someone means to:",
+      "word": "perspicacious",
+      "question": "What is a synonym for 'perspicacious'?",
       "options": [
-        "Promote someone to a higher position",
-        "Help someone integrate into a group",
-        "Exclude or isolate someone from a group",
-        "Educate someone about social norms"
-      ],
-      "answer": 2,
-      "explanation": "To ostracize means to deliberately exclude, ignore, or isolate someone from a group as punishment or rejection."
-    },
-    {
-      "type": "fill_blank",
-      "word": "complacent",
-      "question": "After winning the championship, the team became _____ and didn't train as hard.",
-      "options": [
-        "complacent",
-        "diligent",
-        "inquisitive",
-        "meticulous"
+        "Insightful and sharp-minded",
+        "Physically strong",
+        "Highly emotional",
+        "Completely transparent"
       ],
       "answer": 0,
-      "explanation": "Complacent fits perfectly here, meaning the team became self-satisfied and stopped putting in effort after their success."
+      "explanation": "Perspicacious means having keen insight and sharp understanding; it describes someone with excellent perception."
     },
     {
       "type": "fill_blank",
-      "word": "indigenous",
-      "question": "The _____ plants of this rainforest have been used for centuries in traditional medicine.",
+      "word": "assuage",
+      "question": "The mother tried to _______ her child's fears about the first day of school with comforting words.",
       "options": [
-        "imported",
-        "foreign",
-        "indigenous",
-        "rare"
+        "assuage",
+        "amplify",
+        "ignore",
+        "exacerbate"
       ],
-      "answer": 2,
-      "explanation": "Indigenous means native to a particular place, so indigenous plants are those naturally occurring in the rainforest."
+      "answer": 0,
+      "explanation": "To assuage means to calm or pacify, which is exactly what the mother is doing to reduce her child's fears."
     },
     {
       "type": "fill_blank",
-      "word": "deluge",
-      "question": "The company was hit with a _____ of complaints after the product recall announcement.",
+      "word": "candescent",
+      "question": "The _______ glow of the streetlights created a warm atmosphere on the winter evening.",
       "options": [
-        "shortage",
-        "deluge",
-        "trickle",
-        "silence"
+        "dim",
+        "candescent",
+        "invisible",
+        "harsh"
       ],
       "answer": 1,
-      "explanation": "Deluge is the correct choice, referring to the large, overwhelming number of complaints the company received."
+      "explanation": "Candescent refers to a bright, glowing light, which fits perfectly for describing streetlights creating a warm atmosphere."
+    },
+    {
+      "type": "fill_blank",
+      "word": "paucity",
+      "question": "Due to the _______ of evidence, the defendant could not be convicted.",
+      "options": [
+        "abundance",
+        "paucity",
+        "complexity",
+        "presentation"
+      ],
+      "answer": 1,
+      "explanation": "Paucity means scarcity or insufficient amount, which makes sense in a legal context where lack of evidence is crucial."
     },
     {
       "type": "situation",
-      "word": "complacent",
-      "question": "A student gets a 95% on their first exam and stops studying for the rest of the semester. Their friend warns them not to become _____. What word should fill the blank?",
+      "word": "ebullient",
+      "question": "Your friend just got accepted to their dream university and can't stop jumping and celebrating. How would you describe their mood?",
       "options": [
-        "motivated",
-        "complacent",
-        "ambitious",
-        "dedicated"
+        "She seems cautious and reserved",
+        "She is being ebullient about the news",
+        "She appears disappointed but hiding it",
+        "She is showing mixed feelings"
       ],
       "answer": 1,
-      "explanation": "Complacent is the correct answer. The student has become self-satisfied with one good result and is no longer making effort, which is exactly what complacency means."
+      "explanation": "An ebullient mood means someone is extremely cheerful and enthusiastic, which perfectly describes someone celebrating getting into their dream school."
     },
     {
       "type": "situation",
-      "word": "ostracize",
-      "question": "In a workplace, a colleague who reported unethical behavior finds that no one talks to them, invites them to meetings, or includes them in group activities. What is happening to this person?",
+      "word": "perspicacious",
+      "question": "During a business meeting, a colleague notices a subtle flaw in the marketing strategy that everyone else missed, and their observation turns out to be crucial. What quality is this colleague demonstrating?",
       "options": [
-        "They are being promoted",
-        "They are being mentored",
-        "They are being ostracized",
-        "They are being trained"
+        "Blind luck",
+        "Perspicacious insight",
+        "Random guessing",
+        "Basic common sense"
       ],
-      "answer": 2,
-      "explanation": "The colleague is being ostracized—deliberately excluded and isolated from the group as social punishment, even though their actions were ethical."
+      "answer": 1,
+      "explanation": "Perspicacious means having keen insight and sharp discernment—the colleague demonstrated this by noticing something subtle that others overlooked."
     }
   ]
 }

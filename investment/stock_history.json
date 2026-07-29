@@ -1,11 +1,6 @@
 [
   {
     "date": "2026-07-22",
-    "name": "Alphabet",
-    "ticker": "GOOGL"
-  },
-  {
-    "date": "2026-07-22",
     "name": "Tesla",
     "ticker": "TSLA"
   },
@@ -48,5 +43,10 @@
     "date": "2026-07-28",
     "name": "한화솔루션",
     "ticker": "009830.KS"
+  },
+  {
+    "date": "2026-07-29",
+    "name": "NVIDIA",
+    "ticker": "NVDA"
   }
 ]
