@@ -1989,10 +1989,14 @@ def deploy_to_netlify(word_count: int = 0, quiz_count: int = 0, target_date=None
         notify("❌ **영어공부 배포 실패.** git push 오류 확인 필요.")
 
     # Netlify CLI로 직접 배포 (CI 실패 우회) 후 Firebase 함수 즉시 트리거
+    # 절대 경로 사용: Task Scheduler 환경에서 PATH에 npm global이 없을 수 있음
+    NETLIFY_CMD = Path(r"C:\Users\dctm1\AppData\Roaming\npm\netlify.cmd")
+    netlify_exe = str(NETLIFY_CMD) if NETLIFY_CMD.exists() else "netlify"
     print("[*] Netlify 직접 배포 중...")
     nr = subprocess.run(
-        ["netlify", "deploy", "--prod", "--message", f"auto: {date_str}"],
+        [netlify_exe, "deploy", "--prod", "--no-build", "--message", f"auto: {date_str}"],
         cwd=str(ROOT),
+        shell=False,
     )
     if nr.returncode == 0:
         print("[+] Netlify 배포 성공, Firebase 함수 트리거 중...")
