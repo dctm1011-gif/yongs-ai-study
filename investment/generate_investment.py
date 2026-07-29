@@ -333,7 +333,7 @@ def generate(client: anthropic.Anthropic, target_date: date, real_estate_table: 
 NETLIFY_INVESTMENT_URL = "https://illustrious-cuchufli-7c4e58.netlify.app/.netlify/functions/investment-daily"
 
 
-def _trigger_netlify_investment(target_date: date, wait_sec: int = 120) -> None:
+def _trigger_netlify_investment(target_date: date, wait_sec: int = 300) -> None:
     """git push 후 Netlify 빌드 완료를 기다렸다가 investment-daily 함수를 직접 트리거.
 
     Netlify 스케줄(06:00 KST)이 daily.json 생성(06:52 KST)보다 먼저 실행되는

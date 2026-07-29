@@ -1996,9 +1996,11 @@ def deploy_to_netlify(word_count: int = 0, quiz_count: int = 0, target_date=None
     )
     if nr.returncode == 0:
         print("[+] Netlify 배포 성공, Firebase 함수 트리거 중...")
-        _trigger_firebase_functions(date_str)
     else:
-        print("[!] Netlify 배포 실패 — Firebase 트리거 건너뜀")
+        print("[!] Netlify 배포 실패 — GitHub auto-deploy 완료 대기 후 트리거 시도...")
+        import time
+        time.sleep(180)
+    _trigger_firebase_functions(date_str)
 
 
 def get_api_key() -> str:
