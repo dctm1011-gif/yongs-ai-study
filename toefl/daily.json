@@ -1,192 +1,119 @@
 {
   "date": "2026-07-31",
   "reading": {
-    "title": "Linguistic Relativity and Cognitive Processing",
-    "passage": "The Sapir-Whorf hypothesis, proposed in the early twentieth century, posits that language fundamentally shapes cognitive processes and perception. This theoretical framework suggests that speakers of different languages categorize and interpret the world distinctly based on the lexical and grammatical structures of their native language. For instance, research demonstrates that languages with multiple color terms facilitate more nuanced color discrimination among speakers, while languages with fewer color distinctions show corresponding limitations in perceptual acuity. The Hopi language's unique temporal system, which lacks clear past-future distinctions, exemplifies how grammatical structures influence conceptual frameworks. Contemporary linguistic research, however, presents a more nuanced perspective. While language undoubtedly influences thought patterns, subsequent empirical studies suggest this relationship is bidirectional rather than strictly deterministic. Cognitive scientists now acknowledge that although language constrains and facilitates certain types of thinking, it does not absolutely determine thought. Neuroimaging studies reveal that multilingual individuals exhibit enhanced cognitive flexibility, suggesting that exposure to multiple linguistic systems expands rather than restricts conceptual possibilities.",
-    "vocabulary": [
-      {
-        "word": "posits",
-        "meaning_ko": "주장하다, 가정하다"
-      },
-      {
-        "word": "lexical",
-        "meaning_ko": "어휘의, 어휘에 관한"
-      },
-      {
-        "word": "acuity",
-        "meaning_ko": "예리함, 민첩함"
-      },
-      {
-        "word": "deterministic",
-        "meaning_ko": "결정론적인, 필연적인"
-      },
-      {
-        "word": "bidirectional",
-        "meaning_ko": "쌍방향의"
-      },
-      {
-        "word": "facilitates",
-        "meaning_ko": "촉진하다, 용이하게 하다"
-      },
-      {
-        "word": "conceptual",
-        "meaning_ko": "개념적인"
-      }
-    ],
+    "title": "The Impact of Artificial Intelligence on Education",
+    "passage": "Artificial intelligence is revolutionizing education by personalizing learning experiences for students. AI-powered systems can analyze individual learning patterns and adapt teaching methods accordingly. Teachers can use AI tools to automate administrative tasks, allowing them to focus more on student engagement and critical thinking development. However, concerns about data privacy and over-reliance on technology remain significant challenges that educators must address carefully.",
     "questions": [
       {
-        "q": "According to the passage, what does the Sapir-Whorf hypothesis claim about language and cognition?",
+        "q": "According to the passage, what is one benefit of AI in education?",
         "options": [
-          "Language has no effect on how people think or perceive the world",
-          "Language fundamentally shapes how people categorize and interpret the world",
-          "All languages have identical color discrimination capabilities",
-          "Cognitive flexibility is unrelated to linguistic diversity"
+          "A) It eliminates the need for teachers",
+          "B) It can personalize learning experiences",
+          "C) It reduces student anxiety completely",
+          "D) It makes exams easier to pass"
         ],
         "answer": 1,
-        "explanation": "첫 번째 문장에서 'language fundamentally shapes cognitive processes and perception'이라고 명시되어 있습니다."
+        "explanation": "지문에서 AI는 개인의 학습 패턴을 분석하여 교육 방법을 맞춤화할 수 있다고 명시되어 있습니다."
       },
       {
-        "q": "What can be inferred from the passage about the relationship between color terms and perception?",
+        "q": "What concern is mentioned about AI in education?",
         "options": [
-          "Languages with fewer color terms are more advanced",
-          "Color perception is entirely independent of language structure",
-          "Having more color terms in a language correlates with better color discrimination abilities",
-          "All humans perceive color identically regardless of language"
+          "A) It is too expensive for schools",
+          "B) It will make teachers obsolete",
+          "C) Data privacy and over-reliance on technology",
+          "D) Students will not accept AI systems"
         ],
         "answer": 2,
-        "explanation": "본문에서 'languages with multiple color terms facilitate more nuanced color discrimination among speakers, while languages with fewer color distinctions show corresponding limitations'라고 설명합니다."
+        "explanation": "지문의 마지막 문장에서 데이터 프라이버시와 기술에 대한 과도한 의존이 주요 우려사항이라고 명시되어 있습니다."
       },
       {
-        "q": "The word 'constrains' in the final sentence is closest in meaning to:",
+        "q": "How can teachers use AI according to the passage?",
         "options": [
-          "expands",
-          "limits or restricts",
-          "eliminates",
-          "enhances"
+          "A) To replace student learning",
+          "B) To automate administrative tasks and focus on engagement",
+          "C) To create harder exams",
+          "D) To eliminate classroom discussions"
         ],
         "answer": 1,
-        "explanation": "'constrains'는 '제약을 가하다, 제한하다'는 의미이며, 이 문장에서 'facilitates'의 대조되는 개념으로 사용되었습니다."
-      },
-      {
-        "q": "Why does the author mention neuroimaging studies of multilingual individuals?",
-        "options": [
-          "To prove the Sapir-Whorf hypothesis is completely correct",
-          "To show that language absolutely determines all cognitive processes",
-          "To support the idea that exposure to multiple languages expands cognitive possibilities",
-          "To demonstrate that monolingual speakers are superior"
-        ],
-        "answer": 2,
-        "explanation": "저자는 다언어 사용자의 신경영상 연구를 언급하여 현대적 관점에서 언어가 사고를 제한하기보다는 확장한다는 점을 뒷받침합니다."
+        "explanation": "지문에서 교사들이 AI 도구를 사용하여 행정 업무를 자동화하고 학생 참여에 더 집중할 수 있다고 설명합니다."
       }
     ]
   },
   "writing": {
-    "sentences": [
-      {
-        "original": "The Sapir-Whorf hypothesis, proposed in the early twentieth century, posits that language fundamentally shapes cognitive processes and perception.",
-        "paraphrase": "According to the early twentieth-century Sapir-Whorf hypothesis, how people think and perceive the world is fundamentally influenced by the language they speak.",
-        "tip": "주절을 주어-동사로 단순화하고, 주요 정보를 접속사 'According to'로 도입하여 구조 변환"
-      },
-      {
-        "original": "Languages with multiple color terms facilitate more nuanced color discrimination among speakers, while languages with fewer color distinctions show corresponding limitations in perceptual acuity.",
-        "paraphrase": "The ability to distinguish colors with precision is enhanced when a language contains numerous color vocabulary, whereas speakers of languages with limited color terms experience reduced perceptual abilities.",
-        "tip": "능동태 'facilitate'를 'enhanced'로 변환하고, 'limitations'을 'reduced abilities'로 동의어 치환"
-      },
-      {
-        "original": "Contemporary linguistic research, however, presents a more nuanced perspective.",
-        "paraphrase": "Recent studies in linguistics, by contrast, offer a more sophisticated and complex understanding of this phenomenon.",
-        "tip": "시간 표현 'Contemporary'를 'Recent'로 치환하고, 'nuanced'를 'sophisticated and complex'로 확장"
-      },
-      {
-        "original": "While language undoubtedly influences thought patterns, subsequent empirical studies suggest this relationship is bidirectional rather than strictly deterministic.",
-        "paraphrase": "Although language clearly affects how people think, newer research indicates that thought and language mutually influence each other instead of language being the sole determining factor.",
-        "tip": "양보절은 유지하고, 'bidirectional'을 'mutually influence'로 풀어서 설명, 'deterministic'을 구체적으로 표현"
-      },
-      {
-        "original": "Neuroimaging studies reveal that multilingual individuals exhibit enhanced cognitive flexibility, suggesting that exposure to multiple linguistic systems expands rather than restricts conceptual possibilities.",
-        "paraphrase": "Brain imaging research shows multilingual speakers possess greater mental adaptability, implying that learning multiple languages broadens rather than narrows the range of ideas people can conceptualize.",
-        "tip": "'Neuroimaging'을 'Brain imaging'으로 단순화, 'exhibit'을 'possess'로 치환, 'conceptual possibilities'를 'the range of ideas people can conceptualize'로 풀이"
-      }
+    "prompt": "Do you agree or disagree with the following statement: Remote work is more productive than working in a traditional office environment. Use specific reasons and examples to support your answer.",
+    "structure": {
+      "intro": "명확한 입장 표현: 'I strongly agree/disagree that...' 형식으로 시작하고, 본 에세이에서 논의할 주요 아이디어 2-3개를 간략히 제시합니다.",
+      "body1": "첫 번째 이유: 원격 근무의 장점(집중력 향상, 통근 시간 절약 등) 또는 사무실 근무의 장점(협업, 팀 문화)을 구체적인 예시와 함께 설명합니다.",
+      "body2": "두 번째 이유: 다른 관점에서의 생산성 차이(개인차, 업무 특성에 따른 영향, 기술 요구사항)를 상세히 논의하고 적절한 사례를 제공합니다.",
+      "conclusion": "주요 주장을 재강조하며 'In conclusion, remote work/traditional office is more productive because...'로 마무리하고 제한사항이나 미래 전망을 간단히 언급합니다."
+    },
+    "useful_phrases": [
+      "In my opinion,",
+      "I strongly believe that...",
+      "Furthermore,",
+      "For example,",
+      "In addition,",
+      "One significant advantage is that...",
+      "On the other hand,",
+      "To illustrate this point,",
+      "As a result,",
+      "In conclusion,"
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to wake up early in the morning. Others prefer to stay up late at night. Which do you prefer and why? Include specific reasons and details.",
-    "model_sentences": [
-      "Personally, I prefer being a morning person because I find that starting my day early gives me more time to accomplish my goals.",
-      "First, when I wake up early, my mind is fresh and alert, so I can concentrate better on important tasks like studying or working on projects.",
-      "For example, if I wake up at 6 AM, I can spend two hours on focused work before classes begin, whereas if I sleep late, I waste that productive time.",
-      "Second, exercising in the morning provides me with energy throughout the day and improves my overall health.",
-      "In contrast, staying up late at night disrupts my sleep schedule and makes me feel tired and unfocused the next day.",
-      "Therefore, I believe that being an early riser is more beneficial for productivity, health, and academic success."
+    "prompt": "Some people prefer to learn new skills through online courses. Others prefer to learn through in-person classes with instructors. Which do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer... because...",
+      "One reason is that...",
+      "Another advantage of... is that...",
+      "For example,",
+      "Furthermore,",
+      "From my perspective,",
+      "I believe that...",
+      "This is because..."
+    ],
+    "sample_points": [
+      "온라인 강좌의 유연성: 자신의 속도와 시간에 맞춰 학습할 수 있으며, 지역적 제약이 없고 다양한 강좌에 접근 가능합니다.",
+      "직접 강의의 상호작용: 강사와의 실시간 피드백, 동료 학생들과의 협력, 즉각적인 질문과 답변이 가능하여 더 깊은 이해를 도울 수 있습니다."
     ]
   },
   "listening": {
-    "title": "Photosynthesis and Light Reactions",
-    "type": "lecture",
-    "script": "Professor: Today we're going to examine the mechanisms of photosynthesis, specifically the light-dependent reactions that occur in the thylakoid membranes of chloroplasts. Student: Professor, can you explain how exactly light energy gets converted into chemical energy? Professor: Great question. When photons strike the chlorophyll molecules, they excite electrons to higher energy states. These energized electrons then move through an electron transport chain, which pumps protons across the thylakoid membrane. This creates a proton gradient, similar to a battery. Student: So the proton gradient is like the potential energy? Professor: Exactly. The accumulated protons flow back through ATP synthase, an enzyme that catalyzes the phosphorylation of ADP to form ATP. Additionally, water molecules are split at the oxygen-evolving complex, releasing electrons that replenish those lost from chlorophyll. The whole process generates both ATP and NADPH, which are essential electron donors for the Calvin cycle. Student: So without light, none of this happens? Professor: Precisely. The Calvin cycle can proceed briefly in darkness using stored ATP and NADPH, but sustained photosynthesis absolutely requires light energy.",
-    "vocabulary": [
-      {
-        "word": "thylakoid",
-        "meaning_ko": "틸라코이드 (광합성의 명반응이 일어나는 엽록체 내 구조)"
-      },
-      {
-        "word": "chlorophyll",
-        "meaning_ko": "엽록소 (빛 에너지를 흡수하는 색소)"
-      },
-      {
-        "word": "phosphorylation",
-        "meaning_ko": "인산화 (인산기를 추가하는 화학 반응)"
-      },
-      {
-        "word": "catalyzes",
-        "meaning_ko": "촉매작용하다"
-      },
-      {
-        "word": "electron transport chain",
-        "meaning_ko": "전자전달계 (에너지를 방출하며 전자를 이동시키는 단백질 복합체)"
-      },
-      {
-        "word": "Calvin cycle",
-        "meaning_ko": "캘빈 사이클 (광합성의 암반응, CO2 고정 과정)"
-      },
-      {
-        "word": "replenish",
-        "meaning_ko": "보충하다, 채우다"
-      }
-    ],
+    "title": "Conversation: Selecting a Research Topic",
+    "type": "conversation",
+    "script": "Student: Professor, I'm having trouble choosing a topic for my research paper. I have so many ideas, but I'm not sure which one is feasible.\n\nProfessor: That's a common challenge. Let me suggest a systematic approach. First, consider your interests and expertise. What subjects do you feel passionate about?\n\nStudent: Well, I'm interested in renewable energy and climate change, but also in sustainable agriculture.\n\nProfessor: Good. Both are important topics. Now, think about available resources. Can you access sufficient research materials and data? Also consider the scope—ensure your topic isn't too broad. Climate change is vast, but sustainable agriculture in your region could be more manageable.\n\nStudent: That's helpful. So I should focus on something specific and local?\n\nProfessor: Exactly. A narrower focus makes your research more original and achievable within your timeframe. Additionally, consider practical implications. How might your research contribute to solving real problems?",
     "questions": [
       {
-        "q": "What is the main topic of the lecture?",
+        "q": "What is the main purpose of this conversation?",
         "options": [
-          "The dark reactions of photosynthesis",
-          "The structure of chloroplasts and their organelles",
-          "The light-dependent reactions and energy conversion in photosynthesis",
-          "The history of photosynthesis research"
+          "A) To discuss climate change solutions",
+          "B) To help the student select an appropriate research topic",
+          "C) To explain renewable energy sources",
+          "D) To review completed research papers"
+        ],
+        "answer": 1,
+        "explanation": "대화의 주된 목적은 교수가 학생이 연구 주제를 선택하도록 돕는 것입니다. 교수는 체계적인 접근 방식을 제시하고 주제 선택의 기준을 설명합니다."
+      },
+      {
+        "q": "According to the professor, what should students consider when choosing a research topic?",
+        "options": [
+          "A) Only their personal interests",
+          "B) Only the availability of books in the library",
+          "C) Interest, available resources, scope, and practical implications",
+          "D) The professor's personal preferences"
         ],
         "answer": 2,
-        "explanation": "교수는 광합성의 메커니즘, 특히 엽록체의 틸라코이드 막에서 일어나는 명반응(light-dependent reactions)에 초점을 맞춥니다."
+        "explanation": "교수는 관심사, 이용 가능한 자료, 주제의 범위, 그리고 실질적 함의를 모두 고려해야 한다고 언급합니다."
       },
       {
-        "q": "According to the professor, what role does the proton gradient play?",
+        "q": "Why does the professor suggest focusing on sustainable agriculture in the student's region?",
         "options": [
-          "It directly absorbs photon energy from light",
-          "It acts as stored energy that drives ATP synthesis",
-          "It splits water molecules into oxygen and electrons",
-          "It transports electrons through the Calvin cycle"
+          "A) It is easier than renewable energy",
+          "B) It is more specific and manageable than broad topics like climate change",
+          "C) The student has already completed research on it",
+          "D) It requires fewer resources"
         ],
         "answer": 1,
-        "explanation": "교수는 프로톤 그래디언트가 배터리처럼 작용하며, 축적된 프로톤이 ATP 합성효소를 통해 흐르면서 ATP가 생성된다고 설명합니다."
-      },
-      {
-        "q": "Why does the professor mention the splitting of water molecules?",
-        "options": [
-          "To explain how oxygen is released into the atmosphere",
-          "To show how electrons are replenished to replace those lost from chlorophyll",
-          "To describe the location of the Calvin cycle",
-          "To illustrate why photosynthesis requires darkness"
-        ],
-        "answer": 1,
-        "explanation": "교수는 물이 산소-생성 복합체에서 분해되어 전자를 방출하며, 이 전자가 엽록소로부터 손실된 전자를 보충한다고 설명합니다."
+        "explanation": "교수는 지역의 지속 가능한 농업이 광범위한 주제인 기후 변화보다 더 구체적이고 관리 가능하다고 설명합니다. 이는 학생의 시간 제약 내에서 원본성 있는 연구를 가능하게 합니다."
       }
     ]
   }
