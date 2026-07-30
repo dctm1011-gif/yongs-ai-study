@@ -1226,5 +1226,65 @@
     "explanation": "having keen insight, discernment, or understanding; mentally sharp and penetrating",
     "tip": "지능적이고 통찰력 있는 사람이나 관찰을 칭찬할 때 사용하는 sophisticated word",
     "emoji": "🧠"
+  },
+  {
+    "id": "tenacious",
+    "word": "tenacious",
+    "pos": "adjective",
+    "date": "2026-07-31",
+    "meaning": "끈질긴, 집요한",
+    "example_ko": "그녀는 장애물이 있어도 자신의 목표를 달성하기 위해 집요하다.",
+    "example_en": "She's tenacious about achieving her goals no matter the obstacles.",
+    "explanation": "매우 결연하고 포기하지 않는 성질; 어려움에도 불구하고 계속 노력하는",
+    "tip": "업계에서 성공한 사람들을 묘사할 때 자주 사용됨",
+    "emoji": "💪"
+  },
+  {
+    "id": "incisive",
+    "word": "incisive",
+    "pos": "adjective",
+    "date": "2026-07-31",
+    "meaning": "신랄한, 통찰력 있는",
+    "example_ko": "교수는 학생의 에세이에 대해 신랄한 비평을 했다.",
+    "example_en": "The professor gave an incisive critique of the student's essay.",
+    "explanation": "날카로운 지능이나 분석력을 가진; 명확하고 직설적인",
+    "tip": "학술적 논의나 비평에서 많이 쓰임",
+    "emoji": "🎯"
+  },
+  {
+    "id": "plausible",
+    "word": "plausible",
+    "pos": "adjective",
+    "date": "2026-07-31",
+    "meaning": "그럴듯한, 믿을 수 있는",
+    "example_ko": "그의 설명은 그럴듯해 보이지만 더 많은 증거가 필요해.",
+    "example_en": "His explanation sounds plausible, but I need more evidence.",
+    "explanation": "가능성이 있어 보이거나 받아들일 수 있는 것 같은; 합리적으로 보이는",
+    "tip": "의심스러운 상황에서 가능성을 판단할 때 사용",
+    "emoji": "🤔"
+  },
+  {
+    "id": "repercussion",
+    "word": "repercussion",
+    "pos": "noun",
+    "date": "2026-07-31",
+    "meaning": "반향, 결과, 영향",
+    "example_ko": "시험에 떨어지는 것은 내 GPA에 심각한 영향을 미칠 것이다.",
+    "example_en": "Failing the exam will have serious repercussions on my GPA.",
+    "explanation": "어떤 행동이나 사건의 부정적인 결과나 영향; 예상치 못한 결과",
+    "tip": "부정적인 결과를 강조할 때 사용; 보통 복수형으로 쓰임",
+    "emoji": "⚠️"
+  },
+  {
+    "id": "germane",
+    "word": "germane",
+    "pos": "adjective",
+    "date": "2026-07-31",
+    "meaning": "관련 있는, 적절한",
+    "example_ko": "그 의견은 우리가 논의하고 있는 주제와 관련이 없다.",
+    "example_en": "That comment isn't germane to the topic we're discussing.",
+    "explanation": "어떤 주제나 논의에 직접 관련되고 적절한; 연관성 있는",
+    "tip": "학술적 토론에서 관련성을 판단할 때 자주 사용",
+    "emoji": "📌"
   }
 ]

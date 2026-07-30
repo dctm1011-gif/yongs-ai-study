@@ -1,115 +1,192 @@
 {
-  "date": "2026-07-30",
+  "date": "2026-07-31",
   "reading": {
-    "title": "Bioluminescence in Deep-Sea Organisms",
-    "passage": "Bioluminescence is the production of light by living organisms through chemical reactions. In deep-sea environments where sunlight cannot penetrate, many creatures have evolved this remarkable ability. Fish, squid, and jellyfish use bioluminescence for various purposes including attracting prey, communicating with potential mates, and confusing predators. Scientists estimate that nearly 90% of deep-sea organisms produce light. This adaptation represents millions of years of evolution in one of Earth's most extreme habitats, enabling survival in complete darkness.",
+    "title": "Linguistic Relativity and Cognitive Processing",
+    "passage": "The Sapir-Whorf hypothesis, proposed in the early twentieth century, posits that language fundamentally shapes cognitive processes and perception. This theoretical framework suggests that speakers of different languages categorize and interpret the world distinctly based on the lexical and grammatical structures of their native language. For instance, research demonstrates that languages with multiple color terms facilitate more nuanced color discrimination among speakers, while languages with fewer color distinctions show corresponding limitations in perceptual acuity. The Hopi language's unique temporal system, which lacks clear past-future distinctions, exemplifies how grammatical structures influence conceptual frameworks. Contemporary linguistic research, however, presents a more nuanced perspective. While language undoubtedly influences thought patterns, subsequent empirical studies suggest this relationship is bidirectional rather than strictly deterministic. Cognitive scientists now acknowledge that although language constrains and facilitates certain types of thinking, it does not absolutely determine thought. Neuroimaging studies reveal that multilingual individuals exhibit enhanced cognitive flexibility, suggesting that exposure to multiple linguistic systems expands rather than restricts conceptual possibilities.",
+    "vocabulary": [
+      {
+        "word": "posits",
+        "meaning_ko": "주장하다, 가정하다"
+      },
+      {
+        "word": "lexical",
+        "meaning_ko": "어휘의, 어휘에 관한"
+      },
+      {
+        "word": "acuity",
+        "meaning_ko": "예리함, 민첩함"
+      },
+      {
+        "word": "deterministic",
+        "meaning_ko": "결정론적인, 필연적인"
+      },
+      {
+        "word": "bidirectional",
+        "meaning_ko": "쌍방향의"
+      },
+      {
+        "word": "facilitates",
+        "meaning_ko": "촉진하다, 용이하게 하다"
+      },
+      {
+        "word": "conceptual",
+        "meaning_ko": "개념적인"
+      }
+    ],
     "questions": [
       {
-        "q": "According to the passage, what is the primary purpose of bioluminescence in deep-sea organisms?",
+        "q": "According to the passage, what does the Sapir-Whorf hypothesis claim about language and cognition?",
         "options": [
-          "To warm their bodies in cold water",
-          "To attract prey, communicate, and confuse predators",
-          "To navigate using magnetic fields",
-          "To increase their swimming speed"
+          "Language has no effect on how people think or perceive the world",
+          "Language fundamentally shapes how people categorize and interpret the world",
+          "All languages have identical color discrimination capabilities",
+          "Cognitive flexibility is unrelated to linguistic diversity"
         ],
         "answer": 1,
-        "explanation": "지문에서 '어류, 오징어, 해파리는 생물발광을 먹이를 끌어당기고, 짝짓기 대상과 소통하고, 포식자를 혼동하기 위해 사용한다'고 명시되어 있습니다."
+        "explanation": "첫 번째 문장에서 'language fundamentally shapes cognitive processes and perception'이라고 명시되어 있습니다."
       },
       {
-        "q": "Why do deep-sea organisms need bioluminescence?",
+        "q": "What can be inferred from the passage about the relationship between color terms and perception?",
         "options": [
-          "Because sunlight penetrates deep into the ocean",
-          "Because they are all predators",
-          "Because sunlight cannot penetrate deep-sea environments",
-          "Because it helps them move faster"
+          "Languages with fewer color terms are more advanced",
+          "Color perception is entirely independent of language structure",
+          "Having more color terms in a language correlates with better color discrimination abilities",
+          "All humans perceive color identically regardless of language"
         ],
         "answer": 2,
-        "explanation": "지문의 첫 번째 문장 이후에 '햇빛이 도달할 수 없는 깊은 바다 환경에서 많은 생물들이 이 놀라운 능력을 진화시켰다'고 설명하고 있습니다."
+        "explanation": "본문에서 'languages with multiple color terms facilitate more nuanced color discrimination among speakers, while languages with fewer color distinctions show corresponding limitations'라고 설명합니다."
       },
       {
-        "q": "What does the passage suggest about the prevalence of bioluminescence?",
+        "q": "The word 'constrains' in the final sentence is closest in meaning to:",
         "options": [
-          "It is rare among deep-sea creatures",
-          "Nearly 90% of deep-sea organisms produce light",
-          "Only fish have this ability",
-          "It was recently discovered"
+          "expands",
+          "limits or restricts",
+          "eliminates",
+          "enhances"
         ],
         "answer": 1,
-        "explanation": "지문에서 '과학자들은 거의 90%의 심해 생물이 빛을 생산한다고 추정한다'고 직접 언급하고 있습니다."
+        "explanation": "'constrains'는 '제약을 가하다, 제한하다'는 의미이며, 이 문장에서 'facilitates'의 대조되는 개념으로 사용되었습니다."
+      },
+      {
+        "q": "Why does the author mention neuroimaging studies of multilingual individuals?",
+        "options": [
+          "To prove the Sapir-Whorf hypothesis is completely correct",
+          "To show that language absolutely determines all cognitive processes",
+          "To support the idea that exposure to multiple languages expands cognitive possibilities",
+          "To demonstrate that monolingual speakers are superior"
+        ],
+        "answer": 2,
+        "explanation": "저자는 다언어 사용자의 신경영상 연구를 언급하여 현대적 관점에서 언어가 사고를 제한하기보다는 확장한다는 점을 뒷받침합니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the following statement: Technology has improved human relationships rather than damaged them? Use specific reasons and examples to support your answer.",
-    "structure": {
-      "intro": "명확한 입장 표현 (동의 또는 불동의)과 2-3개의 핵심 이유 미리 제시. 예: 'Technology has significantly improved human relationships because it enables long-distance communication, allows us to maintain connections, and helps people with common interests find each other.'",
-      "body1": "첫 번째 이유와 구체적 예시 제시. 예를 들어, 원거리 가족 간 비디오 통화의 중요성을 설명.",
-      "body2": "두 번째 이유로 상반된 관점 인정하면서도 강화. 예: 소셜 미디어의 부정적 측면을 언급하되, 어떻게 긍정적 측면이 더 크다고 주장할 것인지 설명.",
-      "conclusion": "입장 재확인 및 사회적 함의 언급. 기술 자체가 아닌 사용 방식이 중요함을 제시."
-    },
-    "useful_phrases": [
-      "In my opinion,",
-      "I strongly agree/disagree that",
-      "One significant reason is that",
-      "Furthermore,",
-      "For example,",
-      "This demonstrates that",
-      "On the other hand,",
-      "Nevertheless,",
-      "In conclusion,"
+    "sentences": [
+      {
+        "original": "The Sapir-Whorf hypothesis, proposed in the early twentieth century, posits that language fundamentally shapes cognitive processes and perception.",
+        "paraphrase": "According to the early twentieth-century Sapir-Whorf hypothesis, how people think and perceive the world is fundamentally influenced by the language they speak.",
+        "tip": "주절을 주어-동사로 단순화하고, 주요 정보를 접속사 'According to'로 도입하여 구조 변환"
+      },
+      {
+        "original": "Languages with multiple color terms facilitate more nuanced color discrimination among speakers, while languages with fewer color distinctions show corresponding limitations in perceptual acuity.",
+        "paraphrase": "The ability to distinguish colors with precision is enhanced when a language contains numerous color vocabulary, whereas speakers of languages with limited color terms experience reduced perceptual abilities.",
+        "tip": "능동태 'facilitate'를 'enhanced'로 변환하고, 'limitations'을 'reduced abilities'로 동의어 치환"
+      },
+      {
+        "original": "Contemporary linguistic research, however, presents a more nuanced perspective.",
+        "paraphrase": "Recent studies in linguistics, by contrast, offer a more sophisticated and complex understanding of this phenomenon.",
+        "tip": "시간 표현 'Contemporary'를 'Recent'로 치환하고, 'nuanced'를 'sophisticated and complex'로 확장"
+      },
+      {
+        "original": "While language undoubtedly influences thought patterns, subsequent empirical studies suggest this relationship is bidirectional rather than strictly deterministic.",
+        "paraphrase": "Although language clearly affects how people think, newer research indicates that thought and language mutually influence each other instead of language being the sole determining factor.",
+        "tip": "양보절은 유지하고, 'bidirectional'을 'mutually influence'로 풀어서 설명, 'deterministic'을 구체적으로 표현"
+      },
+      {
+        "original": "Neuroimaging studies reveal that multilingual individuals exhibit enhanced cognitive flexibility, suggesting that exposure to multiple linguistic systems expands rather than restricts conceptual possibilities.",
+        "paraphrase": "Brain imaging research shows multilingual speakers possess greater mental adaptability, implying that learning multiple languages broadens rather than narrows the range of ideas people can conceptualize.",
+        "tip": "'Neuroimaging'을 'Brain imaging'으로 단순화, 'exhibit'을 'possess'로 치환, 'conceptual possibilities'를 'the range of ideas people can conceptualize'로 풀이"
+      }
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to work in a large company with many employees. Others prefer to work in a small company or start their own business. Which do you prefer and why?",
-    "useful_expressions": [
-      "In my opinion, I prefer working in a small company because",
-      "One reason is that small companies offer more opportunities for",
-      "Another advantage is that employees in small organizations can",
-      "For example,",
-      "This is important to me because"
-    ],
-    "sample_points": [
-      "소규모 회사에서는 개인의 기여가 더 눈에 띄고 인정받으며, 더 빠른 승진과 성장 기회가 있습니다. 예시: 자신의 아이디어가 직접 경영진에게 전달되고 빠르게 실행될 수 있습니다.",
-      "대규모 회사의 안정성은 좋지만 창의성과 자율성이 제한될 수 있습니다. 소규모 회사에서는 다양한 부서 일을 경험하며 폭넓은 기술을 배울 수 있습니다."
+    "prompt": "Some people prefer to wake up early in the morning. Others prefer to stay up late at night. Which do you prefer and why? Include specific reasons and details.",
+    "model_sentences": [
+      "Personally, I prefer being a morning person because I find that starting my day early gives me more time to accomplish my goals.",
+      "First, when I wake up early, my mind is fresh and alert, so I can concentrate better on important tasks like studying or working on projects.",
+      "For example, if I wake up at 6 AM, I can spend two hours on focused work before classes begin, whereas if I sleep late, I waste that productive time.",
+      "Second, exercising in the morning provides me with energy throughout the day and improves my overall health.",
+      "In contrast, staying up late at night disrupts my sleep schedule and makes me feel tired and unfocused the next day.",
+      "Therefore, I believe that being an early riser is more beneficial for productivity, health, and academic success."
     ]
   },
   "listening": {
-    "title": "Campus Library Discussion",
-    "type": "conversation",
-    "script": "Student: Hi, I'm looking for information about the new study rooms in the library. Librarian: Oh yes, we just opened them last week. They're designed for group projects and have whiteboards, computers, and comfortable seating. Student: That sounds great! How do I reserve one? Librarian: You can reserve them online through the library website or come to the front desk. Each room can be booked for up to three hours. Student: Perfect! Are there any restrictions? Librarian: Yes, you need to be quiet and keep the rooms clean. Also, food and drinks are allowed except for beverages that might spill easily. We want to maintain a professional study environment. Student: Got it. This is really helpful. I think my study group will love these new facilities. Librarian: Great! Feel free to ask if you have any other questions.",
+    "title": "Photosynthesis and Light Reactions",
+    "type": "lecture",
+    "script": "Professor: Today we're going to examine the mechanisms of photosynthesis, specifically the light-dependent reactions that occur in the thylakoid membranes of chloroplasts. Student: Professor, can you explain how exactly light energy gets converted into chemical energy? Professor: Great question. When photons strike the chlorophyll molecules, they excite electrons to higher energy states. These energized electrons then move through an electron transport chain, which pumps protons across the thylakoid membrane. This creates a proton gradient, similar to a battery. Student: So the proton gradient is like the potential energy? Professor: Exactly. The accumulated protons flow back through ATP synthase, an enzyme that catalyzes the phosphorylation of ADP to form ATP. Additionally, water molecules are split at the oxygen-evolving complex, releasing electrons that replenish those lost from chlorophyll. The whole process generates both ATP and NADPH, which are essential electron donors for the Calvin cycle. Student: So without light, none of this happens? Professor: Precisely. The Calvin cycle can proceed briefly in darkness using stored ATP and NADPH, but sustained photosynthesis absolutely requires light energy.",
+    "vocabulary": [
+      {
+        "word": "thylakoid",
+        "meaning_ko": "틸라코이드 (광합성의 명반응이 일어나는 엽록체 내 구조)"
+      },
+      {
+        "word": "chlorophyll",
+        "meaning_ko": "엽록소 (빛 에너지를 흡수하는 색소)"
+      },
+      {
+        "word": "phosphorylation",
+        "meaning_ko": "인산화 (인산기를 추가하는 화학 반응)"
+      },
+      {
+        "word": "catalyzes",
+        "meaning_ko": "촉매작용하다"
+      },
+      {
+        "word": "electron transport chain",
+        "meaning_ko": "전자전달계 (에너지를 방출하며 전자를 이동시키는 단백질 복합체)"
+      },
+      {
+        "word": "Calvin cycle",
+        "meaning_ko": "캘빈 사이클 (광합성의 암반응, CO2 고정 과정)"
+      },
+      {
+        "word": "replenish",
+        "meaning_ko": "보충하다, 채우다"
+      }
+    ],
     "questions": [
       {
-        "q": "What is the main purpose of the new study rooms?",
+        "q": "What is the main topic of the lecture?",
         "options": [
-          "To provide a place for individual quiet study",
-          "To allow students to eat meals together",
-          "To serve as group project spaces with technology",
-          "To replace the existing library computers"
+          "The dark reactions of photosynthesis",
+          "The structure of chloroplasts and their organelles",
+          "The light-dependent reactions and energy conversion in photosynthesis",
+          "The history of photosynthesis research"
         ],
         "answer": 2,
-        "explanation": "도서관 사서가 '그룹 프로젝트를 위해 설계되었으며 화이트보드, 컴퓨터, 편안한 좌석이 있다'고 명확히 설명했습니다."
+        "explanation": "교수는 광합성의 메커니즘, 특히 엽록체의 틸라코이드 막에서 일어나는 명반응(light-dependent reactions)에 초점을 맞춥니다."
       },
       {
-        "q": "How long can each room be reserved for at a time?",
+        "q": "According to the professor, what role does the proton gradient play?",
         "options": [
-          "One hour",
-          "Two hours",
-          "Three hours",
-          "Unlimited time"
+          "It directly absorbs photon energy from light",
+          "It acts as stored energy that drives ATP synthesis",
+          "It splits water molecules into oxygen and electrons",
+          "It transports electrons through the Calvin cycle"
         ],
-        "answer": 2,
-        "explanation": "사서가 '각 방은 최대 3시간까지 예약할 수 있다'고 직접 언급했습니다."
+        "answer": 1,
+        "explanation": "교수는 프로톤 그래디언트가 배터리처럼 작용하며, 축적된 프로톤이 ATP 합성효소를 통해 흐르면서 ATP가 생성된다고 설명합니다."
       },
       {
-        "q": "What type of drinks are NOT allowed in the study rooms?",
+        "q": "Why does the professor mention the splitting of water molecules?",
         "options": [
-          "All beverages are forbidden",
-          "Only hot drinks are prohibited",
-          "Beverages that might spill easily",
-          "Soft drinks and juice"
+          "To explain how oxygen is released into the atmosphere",
+          "To show how electrons are replenished to replace those lost from chlorophyll",
+          "To describe the location of the Calvin cycle",
+          "To illustrate why photosynthesis requires darkness"
         ],
-        "answer": 2,
-        "explanation": "사서가 '음료 중에서 쏟아질 수 있는 음료는 허용되지 않는다'고 구체적으로 설명했습니다."
+        "answer": 1,
+        "explanation": "교수는 물이 산소-생성 복합체에서 분해되어 전자를 방출하며, 이 전자가 엽록소로부터 손실된 전자를 보충한다고 설명합니다."
       }
     ]
   }

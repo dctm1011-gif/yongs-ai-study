@@ -5,11 +5,6 @@
     "ticker": "TSLA"
   },
   {
-    "date": "2026-07-22",
-    "name": "Tesla",
-    "ticker": "TSLA"
-  },
-  {
     "date": "2026-07-23",
     "name": "Intel",
     "ticker": "INTC"
@@ -48,5 +43,10 @@
     "date": "2026-07-29",
     "name": "NVIDIA",
     "ticker": "NVDA"
+  },
+  {
+    "date": "2026-07-30",
+    "name": "Bloom Energy",
+    "ticker": "BE"
   }
 ]
