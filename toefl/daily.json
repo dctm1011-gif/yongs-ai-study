@@ -1,181 +1,109 @@
 {
   "date": "2026-08-01",
   "reading": {
-    "title": "Animal Behavior and Hierarchical Social Structures",
-    "passage": "Animal behaviorists have long recognized that social hierarchies play a crucial role in regulating group dynamics and resource allocation within many species. Dominance hierarchies, often established through physical confrontations or ritualized displays, determine access to food, mates, and shelter. For instance, wolves in a pack maintain a strict linear hierarchy where the alpha pair controls hunting strategies and breeding rights. Research demonstrates that subordinate members actually benefit from this structure, as it reduces overall conflict and provides stability. In primates, similar hierarchical systems have evolved through complex social negotiations and alliance formations. Studies show that high-ranking chimpanzees secure superior nutrition and reproductive success, while lower-ranking individuals accept their position to maintain group cohesion. Interestingly, some species exhibit fluid hierarchies where dominance relationships shift seasonally or based on environmental conditions. This behavioral flexibility allows populations to adapt efficiently to changing resource availability. Understanding these mechanisms has profound implications for conservation efforts and predicting population dynamics in wildlife management.",
-    "vocabulary": [
-      {
-        "word": "hierarchy",
-        "meaning_ko": "계층 구조, 위계질서"
-      },
-      {
-        "word": "dominance",
-        "meaning_ko": "우월성, 지배력"
-      },
-      {
-        "word": "ritualized",
-        "meaning_ko": "의식화된, 형식적인"
-      },
-      {
-        "word": "subordinate",
-        "meaning_ko": "하위의, 종속적인"
-      },
-      {
-        "word": "cohesion",
-        "meaning_ko": "결합, 응집력"
-      },
-      {
-        "word": "fluid",
-        "meaning_ko": "유동적인, 변화하기 쉬운"
-      },
-      {
-        "word": "conservation",
-        "meaning_ko": "보존, 보호"
-      }
-    ],
+    "title": "The Impact of Remote Work on Urban Development",
+    "passage": "The rise of remote work has fundamentally transformed urban planning strategies worldwide. As companies embrace flexible work arrangements, fewer employees commute to city centers daily, reducing traffic congestion and pollution. This shift has prompted city planners to reimagine downtown spaces, converting office buildings into residential apartments and recreational facilities. However, this transition creates challenges for local businesses that rely on foot traffic from office workers. Cities must balance economic sustainability with improved quality of life by developing mixed-use communities that attract residents and visitors regardless of traditional work patterns.",
     "questions": [
       {
-        "q": "According to the passage, what is one primary function of dominance hierarchies in animal groups?",
+        "q": "According to the passage, what is one positive effect of remote work on cities?",
         "options": [
-          "To eliminate all forms of physical competition",
-          "To determine access to food, mates, and shelter",
-          "To increase the total population size",
-          "To reduce the cognitive abilities of subordinate members"
+          "Increased office construction",
+          "Reduced traffic congestion and pollution",
+          "More commute time for workers",
+          "Higher foot traffic in downtown areas"
         ],
         "answer": 1,
-        "explanation": "지문에서 'dominance hierarchies... determine access to food, mates, and shelter'라고 명시되어 있습니다."
+        "explanation": "본문에서 '더 적은 직원들이 매일 도심으로 출근하면서 교통 혼잡과 오염이 줄어든다'고 명시되어 있습니다."
       },
       {
-        "q": "What can be inferred from the passage about subordinate animals in a hierarchy?",
+        "q": "What challenge is mentioned regarding remote work's impact on cities?",
         "options": [
-          "They actively resist the social structure",
-          "They receive no benefits from the hierarchy",
-          "They accept their position to maintain group stability",
-          "They eventually become alpha members"
+          "Increased pollution in suburbs",
+          "Loss of local businesses due to reduced foot traffic",
+          "Shortage of residential apartments",
+          "Higher transportation costs"
+        ],
+        "answer": 1,
+        "explanation": "본문의 'local businesses that rely on foot traffic from office workers'에서 오피스 근로자의 발길이 줄어들어 지역 사업체가 도전에 직면한다고 설명합니다."
+      },
+      {
+        "q": "What solution does the passage suggest for cities?",
+        "options": [
+          "Ban remote work completely",
+          "Increase office building construction",
+          "Develop mixed-use communities",
+          "Reduce residential apartments"
         ],
         "answer": 2,
-        "explanation": "지문에서 'subordinate members actually benefit from this structure... and provides stability'와 '...lower-ranking individuals accept their position to maintain group cohesion'에서 유추할 수 있습니다."
-      },
-      {
-        "q": "The word 'fluid' in the third paragraph is closest in meaning to",
-        "options": [
-          "Rigid and unchanging",
-          "Capable of flowing or changing",
-          "Transparent and clear",
-          "Quick and efficient"
-        ],
-        "answer": 1,
-        "explanation": "'Fluid'는 '유동적인, 변화하기 쉬운'을 의미하며, 지문에서 '계절마다 또는 환경 조건에 따라 변할 수 있는'이라는 문맥에서 사용됩니다."
-      },
-      {
-        "q": "Why does the author mention wolves and chimpanzees?",
-        "options": [
-          "To explain why these species are endangered",
-          "To provide specific examples of how hierarchies function in different animal species",
-          "To argue that hierarchies are only found in mammals",
-          "To show that wolves are more dominant than chimpanzees"
-        ],
-        "answer": 1,
-        "explanation": "저자는 서로 다른 동물 종에서 계층 구조가 어떻게 작동하는지를 보여주기 위해 구체적 예시로 늑대와 침팬지를 제시합니다."
+        "explanation": "본문 마지막 부분에서 도시들이 '일과 거주지가 결합된 커뮤니티를 개발'하여 균형을 유지해야 한다고 제시합니다."
       }
     ]
   },
   "writing": {
-    "sentences": [
-      {
-        "original": "Dominance hierarchies, often established through physical confrontations or ritualized displays, determine access to food, mates, and shelter.",
-        "paraphrase": "Physical confrontations and ritualized displays typically serve as the mechanisms through which social hierarchies are created, thereby controlling which animals gain access to essential resources such as food, mates, and shelter.",
-        "tip": "복잡한 구조를 더 체계적으로 풀어쓰고, 명사구를 동사구로 변환하여 관계를 명확히 함"
-      },
-      {
-        "original": "Research demonstrates that subordinate members actually benefit from this structure, as it reduces overall conflict and provides stability.",
-        "paraphrase": "Studies show that lower-ranking members gain advantages from hierarchical systems because such structures minimize aggression and create a stable social environment.",
-        "tip": "동의어 치환(research→studies, demonstrates→show, reduces→minimize, provides→create)을 통해 표현 다양화"
-      },
-      {
-        "original": "In primates, similar hierarchical systems have evolved through complex social negotiations and alliance formations.",
-        "paraphrase": "Primates have developed comparable hierarchical arrangements by engaging in intricate social negotiations and creating strategic alliances.",
-        "tip": "수동 완료형을 능동 단순형으로 변환하고, 동사 형태를 다양화(evolved→developed)"
-      }
+    "prompt": "Do you agree or disagree with the statement that remote work will eventually replace traditional office environments entirely?",
+    "structure": {
+      "intro": "자신의 입장을 명확히 제시하되, 'I agree/disagree that...' 형태로 작성. 동시에 원인이나 이유를 간단히 언급하여 에세이의 방향성 제시",
+      "body1": "첫 번째 주요 근거 제시: 원격근무의 장점 (비용 절감, 유연성, 글로벌 인재 접근) 또는 단점 (협업 어려움, 팀 문화 약화) 중 선택하여 구체적인 예시와 함께 설명",
+      "body2": "두 번째 주요 근거 제시: 산업별 차이, 일자리 특성, 또는 인간관계의 중요성 등 반대 입장을 고려한 균형잡힌 관점 제시",
+      "conclusion": "에세이의 주요 입장을 재강조하고, '완전한 대체'보다는 '하이브리드 모델'과 같은 현실적 결론으로 마무리"
+    },
+    "useful_phrases": [
+      "In my opinion, remote work will not entirely replace traditional offices because...",
+      "Furthermore, certain industries such as healthcare and manufacturing require on-site presence...",
+      "One significant advantage of remote work is the reduction in overhead costs...",
+      "On the other hand, face-to-face interaction remains crucial for...",
+      "In conclusion, a hybrid approach seems to be the most realistic solution..."
     ]
   },
-  "writing_task": {
-    "prompt": "Do you agree or disagree with the following statement: 'Cities should invest more in expanding public transportation systems rather than improving road infrastructure for private cars.' Use specific reasons and examples to support your answer.",
-    "notes": "약 300단어의 학술적 에세이 작성. 명확한 입장 제시, 2-3개의 논거 제시, 구체적 예시 포함, 결론 포함"
-  },
   "speaking": {
-    "prompt": "Some people believe that traveling to new places is the best way to spend money and time. Others believe that saving money for the future is more important. Which perspective do you prefer, and why? Include specific reasons and examples in your response.",
-    "model_sentences": [
-      "Personally, I believe that traveling is more valuable than saving money because it provides unforgettable experiences and personal growth that money cannot later replace.",
-      "First, traveling exposes you to different cultures, cuisines, and perspectives that fundamentally broaden your worldview in ways that no classroom education can achieve.",
-      "For example, when I visited Japan last year, I learned about their unique traditions and how their society values discipline and respect, which actually changed how I approach my own daily life.",
-      "Additionally, travel creates meaningful memories with friends and family that become increasingly precious as we grow older, whereas saved money only sits in a bank account.",
-      "Therefore, I believe that prioritizing travel experiences over pure financial savings leads to a richer and more fulfilling life."
+    "prompt": "Some people prefer to work in a traditional office environment where they interact face-to-face with colleagues. Others prefer remote work that offers flexibility and independence. Which do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer [office/remote work] because...",
+      "One reason is that working [in an office/remotely] allows me to...",
+      "Another important aspect is that [face-to-face collaboration/flexible scheduling] helps me..."
+    ],
+    "sample_points": [
+      "사무실 근무 선호: 팀원들과의 직접적인 상호작용이 창의적 문제 해결을 촉진하고, 회사 문화 형성에 도움이 되며, 멘토링 및 커리어 발전에 유리함",
+      "원격 근무 선호: 통근 시간 절약으로 개인 시간 확보, 방해 없는 집중 작업 환경, 일과 삶의 균형 개선, 그리고 지리적 제약 없이 최적의 업무 환경 구성 가능"
     ]
   },
   "listening": {
-    "title": "History Lecture: The Industrial Revolution and Economic Transformation",
-    "type": "lecture",
-    "script": "Professor: Today we're examining the Industrial Revolution, which fundamentally transformed human civilization. Starting in Britain around 1760, mechanization revolutionized textile production. The power loom, invented by Edmund Cartwright, dramatically increased cloth manufacturing capacity. Student: So machines completely replaced human workers? Professor: Not entirely. While mechanization displaced many artisans, it created new job categories. Factories required engineers, supervisors, and maintenance workers. However, working conditions were often deplorable—children labored 12 hours daily in dangerous environments. This eventually sparked labor reform movements. The steam engine, perfected by James Watt, became the catalyst for industrial expansion beyond textiles. Factories relocated to coalfields for fuel efficiency. This created entirely new urban centers like Manchester and Birmingham. Student: Did everyone benefit from industrialization? Professor: That's complex. Factory owners accumulated immense wealth, but working-class families initially struggled. Real wages remained stagnant despite increased productivity. Nevertheless, long-term technological advancement eventually raised living standards. The Industrial Revolution established the foundation for modern economic systems we see today.",
-    "vocabulary": [
-      {
-        "word": "mechanization",
-        "meaning_ko": "기계화"
-      },
-      {
-        "word": "revolutionized",
-        "meaning_ko": "혁명을 일으키다, 근본적으로 변화시키다"
-      },
-      {
-        "word": "deplorable",
-        "meaning_ko": "비참한, 끔찍한"
-      },
-      {
-        "word": "catalyst",
-        "meaning_ko": "촉매, 변화의 계기"
-      },
-      {
-        "word": "stagnant",
-        "meaning_ko": "정체된, 침체된"
-      },
-      {
-        "word": "accumulate",
-        "meaning_ko": "축적하다, 모으다"
-      }
-    ],
+    "title": "Campus Career Services Discussion",
+    "type": "conversation",
+    "script": "Student: Hi, I'm interested in internships for next summer, but I'm not sure where to start. Career Advisor: Great question! Our office has partnerships with over 200 companies in various fields. First, I recommend updating your resume and LinkedIn profile to match the positions you're targeting. Then, attend our internship fair in October where recruiters from major companies will be present. Student: Will they hire based on just meeting them at the fair? Career Advisor: Not necessarily from one meeting, but it's an excellent opportunity to make initial connections and learn about different roles. Follow up with personalized emails within a week. We also offer mock interviews to help you prepare. Most students who participate in our workshops secure internships. Student: That sounds helpful. When do the workshops start? Career Advisor: They begin next month. I'll send you the schedule. Also, consider joining our professional development club to network with upperclassmen who've completed internships.",
     "questions": [
       {
-        "q": "What is the main topic of the lecture?",
+        "q": "What is the main purpose of the internship fair mentioned in the conversation?",
         "options": [
-          "The invention of the power loom and its alternatives",
-          "How the Industrial Revolution transformed society and economy",
-          "The biography of James Watt and Edmund Cartwright",
-          "Child labor laws in 18th-century Britain"
+          "To hire students directly for permanent positions",
+          "To provide an opportunity for students to meet recruiters and make initial connections",
+          "To teach students how to write cover letters",
+          "To determine which students are qualified for internships"
         ],
         "answer": 1,
-        "explanation": "교수는 산업혁명이 인류 문명을 근본적으로 변화시켰다고 설명하며, 기계화, 도시 발전, 경제 변화 등을 다룹니다."
+        "explanation": "커리어 어드바이저가 'It's an excellent opportunity to make initial connections and learn about different roles'라고 설명하며, 인턴십 페어의 목적이 채용보다는 초기 연결 형성임을 명시합니다."
       },
       {
-        "q": "According to the professor, what was one negative consequence of early industrialization?",
+        "q": "According to the advisor, what should students do after meeting recruiters at the fair?",
         "options": [
-          "The complete elimination of all traditional jobs",
-          "Deplorable working conditions, including child labor",
-          "The invention of new machinery",
-          "The relocation of all factories to coalfields"
-        ],
-        "answer": 1,
-        "explanation": "교수가 명시적으로 '아이들이 위험한 환경에서 매일 12시간 일했다(children labored 12 hours daily in dangerous environments)'고 언급합니다."
-      },
-      {
-        "q": "Why does the professor mention the steam engine perfected by James Watt?",
-        "options": [
-          "To explain why workers rejected new technology",
-          "To show that Watt invented the power loom",
-          "To illustrate how technological innovations became catalysts for broader industrial expansion beyond textiles",
-          "To prove that Britain had better engineers than other countries"
+          "Attend mock interview workshops immediately",
+          "Join the professional development club",
+          "Send personalized follow-up emails within a week",
+          "Update their LinkedIn profiles"
         ],
         "answer": 2,
-        "explanation": "교수는 증기 엔진이 '직물을 넘어 산업 확장의 촉매가 되었다(became the catalyst for industrial expansion beyond textiles)'고 설명합니다."
+        "explanation": "어드바이저가 'Follow up with personalized emails within a week'라고 명확히 조언합니다. 이것이 채용 가능성을 높이는 중요한 단계입니다."
+      },
+      {
+        "q": "What does the advisor suggest for additional networking opportunities?",
+        "options": [
+          "Attend the internship fair multiple times",
+          "Work with a private career coach",
+          "Join the professional development club to network with upperclassmen",
+          "Participate in online webinars only"
+        ],
+        "answer": 2,
+        "explanation": "대화 마지막 부분에서 어드바이저가 'consider joining our professional development club to network with upperclassmen who've completed internships'라고 추천합니다."
       }
     ]
   }
