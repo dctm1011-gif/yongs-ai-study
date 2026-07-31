@@ -293,6 +293,22 @@ export default function CrosswordGame() {
     }
   }, [grid, selectedWordId, cursorCell, gameState]);
 
+  const handleShowAnswer = useCallback(async () => {
+    if (!selectedWord || gameState !== 'playing') return;
+    const cells = wordCells(selectedWord);
+    const updates: Record<string, string> = {};
+    cells.forEach((cell, i) => {
+      updates[ck(cell.row, cell.col)] = selectedWord.word[i];
+    });
+    setUserInputs(prev => ({ ...prev, ...updates }));
+    try {
+      const db = getDatabase(getFirebaseApp());
+      await dbSet(ref(db, `english/reviewPool/${selectedWord.wordId}/count`), 0);
+    } catch (e) {
+      console.warn('리뷰 카운트 초기화 실패:', e);
+    }
+  }, [selectedWord, gameState, wordCells]);
+
   const handleKey = useCallback((key: string) => {
     if (!selectedWord || !cursorCell || gameState !== 'playing') return;
     const cells = wordCells(selectedWord);
@@ -456,6 +472,9 @@ export default function CrosswordGame() {
             <Text style={s.clueText} numberOfLines={2}>
               {selectedWord?.meaning ?? '단어를 선택하세요'}
             </Text>
+            <TouchableOpacity style={s.answerBtn} onPress={handleShowAnswer} activeOpacity={0.7}>
+              <Text style={s.answerBtnText}>정답보기</Text>
+            </TouchableOpacity>
           </View>
           <View style={s.keyboard}>
             {KEYBOARD_ROWS.map((row, ri) => (
@@ -535,6 +554,12 @@ const s = StyleSheet.create({
   },
   clueLabel: { fontSize: 14, fontWeight: '800', color: '#2563eb', marginRight: 10, minWidth: 32 },
   clueText: { flex: 1, fontSize: 13, color: '#1e293b', lineHeight: 19 },
+  answerBtn: {
+    marginLeft: 8, paddingVertical: 6, paddingHorizontal: 10,
+    backgroundColor: '#fef3c7', borderWidth: 1, borderColor: '#f59e0b',
+    borderRadius: 8,
+  },
+  answerBtnText: { fontSize: 12, fontWeight: '700', color: '#b45309' },
 
   keyboard: { backgroundColor: '#d1d5db', paddingVertical: 6, paddingHorizontal: 4 },
   keyRow: { flexDirection: 'row', justifyContent: 'center', marginVertical: 2 },

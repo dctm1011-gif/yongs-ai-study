@@ -1,119 +1,181 @@
 {
-  "date": "2026-07-31",
+  "date": "2026-08-01",
   "reading": {
-    "title": "The Impact of Artificial Intelligence on Education",
-    "passage": "Artificial intelligence is revolutionizing education by personalizing learning experiences for students. AI-powered systems can analyze individual learning patterns and adapt teaching methods accordingly. Teachers can use AI tools to automate administrative tasks, allowing them to focus more on student engagement and critical thinking development. However, concerns about data privacy and over-reliance on technology remain significant challenges that educators must address carefully.",
+    "title": "Animal Behavior and Hierarchical Social Structures",
+    "passage": "Animal behaviorists have long recognized that social hierarchies play a crucial role in regulating group dynamics and resource allocation within many species. Dominance hierarchies, often established through physical confrontations or ritualized displays, determine access to food, mates, and shelter. For instance, wolves in a pack maintain a strict linear hierarchy where the alpha pair controls hunting strategies and breeding rights. Research demonstrates that subordinate members actually benefit from this structure, as it reduces overall conflict and provides stability. In primates, similar hierarchical systems have evolved through complex social negotiations and alliance formations. Studies show that high-ranking chimpanzees secure superior nutrition and reproductive success, while lower-ranking individuals accept their position to maintain group cohesion. Interestingly, some species exhibit fluid hierarchies where dominance relationships shift seasonally or based on environmental conditions. This behavioral flexibility allows populations to adapt efficiently to changing resource availability. Understanding these mechanisms has profound implications for conservation efforts and predicting population dynamics in wildlife management.",
+    "vocabulary": [
+      {
+        "word": "hierarchy",
+        "meaning_ko": "계층 구조, 위계질서"
+      },
+      {
+        "word": "dominance",
+        "meaning_ko": "우월성, 지배력"
+      },
+      {
+        "word": "ritualized",
+        "meaning_ko": "의식화된, 형식적인"
+      },
+      {
+        "word": "subordinate",
+        "meaning_ko": "하위의, 종속적인"
+      },
+      {
+        "word": "cohesion",
+        "meaning_ko": "결합, 응집력"
+      },
+      {
+        "word": "fluid",
+        "meaning_ko": "유동적인, 변화하기 쉬운"
+      },
+      {
+        "word": "conservation",
+        "meaning_ko": "보존, 보호"
+      }
+    ],
     "questions": [
       {
-        "q": "According to the passage, what is one benefit of AI in education?",
+        "q": "According to the passage, what is one primary function of dominance hierarchies in animal groups?",
         "options": [
-          "A) It eliminates the need for teachers",
-          "B) It can personalize learning experiences",
-          "C) It reduces student anxiety completely",
-          "D) It makes exams easier to pass"
+          "To eliminate all forms of physical competition",
+          "To determine access to food, mates, and shelter",
+          "To increase the total population size",
+          "To reduce the cognitive abilities of subordinate members"
         ],
         "answer": 1,
-        "explanation": "지문에서 AI는 개인의 학습 패턴을 분석하여 교육 방법을 맞춤화할 수 있다고 명시되어 있습니다."
+        "explanation": "지문에서 'dominance hierarchies... determine access to food, mates, and shelter'라고 명시되어 있습니다."
       },
       {
-        "q": "What concern is mentioned about AI in education?",
+        "q": "What can be inferred from the passage about subordinate animals in a hierarchy?",
         "options": [
-          "A) It is too expensive for schools",
-          "B) It will make teachers obsolete",
-          "C) Data privacy and over-reliance on technology",
-          "D) Students will not accept AI systems"
+          "They actively resist the social structure",
+          "They receive no benefits from the hierarchy",
+          "They accept their position to maintain group stability",
+          "They eventually become alpha members"
         ],
         "answer": 2,
-        "explanation": "지문의 마지막 문장에서 데이터 프라이버시와 기술에 대한 과도한 의존이 주요 우려사항이라고 명시되어 있습니다."
+        "explanation": "지문에서 'subordinate members actually benefit from this structure... and provides stability'와 '...lower-ranking individuals accept their position to maintain group cohesion'에서 유추할 수 있습니다."
       },
       {
-        "q": "How can teachers use AI according to the passage?",
+        "q": "The word 'fluid' in the third paragraph is closest in meaning to",
         "options": [
-          "A) To replace student learning",
-          "B) To automate administrative tasks and focus on engagement",
-          "C) To create harder exams",
-          "D) To eliminate classroom discussions"
+          "Rigid and unchanging",
+          "Capable of flowing or changing",
+          "Transparent and clear",
+          "Quick and efficient"
         ],
         "answer": 1,
-        "explanation": "지문에서 교사들이 AI 도구를 사용하여 행정 업무를 자동화하고 학생 참여에 더 집중할 수 있다고 설명합니다."
+        "explanation": "'Fluid'는 '유동적인, 변화하기 쉬운'을 의미하며, 지문에서 '계절마다 또는 환경 조건에 따라 변할 수 있는'이라는 문맥에서 사용됩니다."
+      },
+      {
+        "q": "Why does the author mention wolves and chimpanzees?",
+        "options": [
+          "To explain why these species are endangered",
+          "To provide specific examples of how hierarchies function in different animal species",
+          "To argue that hierarchies are only found in mammals",
+          "To show that wolves are more dominant than chimpanzees"
+        ],
+        "answer": 1,
+        "explanation": "저자는 서로 다른 동물 종에서 계층 구조가 어떻게 작동하는지를 보여주기 위해 구체적 예시로 늑대와 침팬지를 제시합니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the following statement: Remote work is more productive than working in a traditional office environment. Use specific reasons and examples to support your answer.",
-    "structure": {
-      "intro": "명확한 입장 표현: 'I strongly agree/disagree that...' 형식으로 시작하고, 본 에세이에서 논의할 주요 아이디어 2-3개를 간략히 제시합니다.",
-      "body1": "첫 번째 이유: 원격 근무의 장점(집중력 향상, 통근 시간 절약 등) 또는 사무실 근무의 장점(협업, 팀 문화)을 구체적인 예시와 함께 설명합니다.",
-      "body2": "두 번째 이유: 다른 관점에서의 생산성 차이(개인차, 업무 특성에 따른 영향, 기술 요구사항)를 상세히 논의하고 적절한 사례를 제공합니다.",
-      "conclusion": "주요 주장을 재강조하며 'In conclusion, remote work/traditional office is more productive because...'로 마무리하고 제한사항이나 미래 전망을 간단히 언급합니다."
-    },
-    "useful_phrases": [
-      "In my opinion,",
-      "I strongly believe that...",
-      "Furthermore,",
-      "For example,",
-      "In addition,",
-      "One significant advantage is that...",
-      "On the other hand,",
-      "To illustrate this point,",
-      "As a result,",
-      "In conclusion,"
+    "sentences": [
+      {
+        "original": "Dominance hierarchies, often established through physical confrontations or ritualized displays, determine access to food, mates, and shelter.",
+        "paraphrase": "Physical confrontations and ritualized displays typically serve as the mechanisms through which social hierarchies are created, thereby controlling which animals gain access to essential resources such as food, mates, and shelter.",
+        "tip": "복잡한 구조를 더 체계적으로 풀어쓰고, 명사구를 동사구로 변환하여 관계를 명확히 함"
+      },
+      {
+        "original": "Research demonstrates that subordinate members actually benefit from this structure, as it reduces overall conflict and provides stability.",
+        "paraphrase": "Studies show that lower-ranking members gain advantages from hierarchical systems because such structures minimize aggression and create a stable social environment.",
+        "tip": "동의어 치환(research→studies, demonstrates→show, reduces→minimize, provides→create)을 통해 표현 다양화"
+      },
+      {
+        "original": "In primates, similar hierarchical systems have evolved through complex social negotiations and alliance formations.",
+        "paraphrase": "Primates have developed comparable hierarchical arrangements by engaging in intricate social negotiations and creating strategic alliances.",
+        "tip": "수동 완료형을 능동 단순형으로 변환하고, 동사 형태를 다양화(evolved→developed)"
+      }
     ]
   },
+  "writing_task": {
+    "prompt": "Do you agree or disagree with the following statement: 'Cities should invest more in expanding public transportation systems rather than improving road infrastructure for private cars.' Use specific reasons and examples to support your answer.",
+    "notes": "약 300단어의 학술적 에세이 작성. 명확한 입장 제시, 2-3개의 논거 제시, 구체적 예시 포함, 결론 포함"
+  },
   "speaking": {
-    "prompt": "Some people prefer to learn new skills through online courses. Others prefer to learn through in-person classes with instructors. Which do you prefer and why?",
-    "useful_expressions": [
-      "In my opinion, I prefer... because...",
-      "One reason is that...",
-      "Another advantage of... is that...",
-      "For example,",
-      "Furthermore,",
-      "From my perspective,",
-      "I believe that...",
-      "This is because..."
-    ],
-    "sample_points": [
-      "온라인 강좌의 유연성: 자신의 속도와 시간에 맞춰 학습할 수 있으며, 지역적 제약이 없고 다양한 강좌에 접근 가능합니다.",
-      "직접 강의의 상호작용: 강사와의 실시간 피드백, 동료 학생들과의 협력, 즉각적인 질문과 답변이 가능하여 더 깊은 이해를 도울 수 있습니다."
+    "prompt": "Some people believe that traveling to new places is the best way to spend money and time. Others believe that saving money for the future is more important. Which perspective do you prefer, and why? Include specific reasons and examples in your response.",
+    "model_sentences": [
+      "Personally, I believe that traveling is more valuable than saving money because it provides unforgettable experiences and personal growth that money cannot later replace.",
+      "First, traveling exposes you to different cultures, cuisines, and perspectives that fundamentally broaden your worldview in ways that no classroom education can achieve.",
+      "For example, when I visited Japan last year, I learned about their unique traditions and how their society values discipline and respect, which actually changed how I approach my own daily life.",
+      "Additionally, travel creates meaningful memories with friends and family that become increasingly precious as we grow older, whereas saved money only sits in a bank account.",
+      "Therefore, I believe that prioritizing travel experiences over pure financial savings leads to a richer and more fulfilling life."
     ]
   },
   "listening": {
-    "title": "Conversation: Selecting a Research Topic",
-    "type": "conversation",
-    "script": "Student: Professor, I'm having trouble choosing a topic for my research paper. I have so many ideas, but I'm not sure which one is feasible.\n\nProfessor: That's a common challenge. Let me suggest a systematic approach. First, consider your interests and expertise. What subjects do you feel passionate about?\n\nStudent: Well, I'm interested in renewable energy and climate change, but also in sustainable agriculture.\n\nProfessor: Good. Both are important topics. Now, think about available resources. Can you access sufficient research materials and data? Also consider the scope—ensure your topic isn't too broad. Climate change is vast, but sustainable agriculture in your region could be more manageable.\n\nStudent: That's helpful. So I should focus on something specific and local?\n\nProfessor: Exactly. A narrower focus makes your research more original and achievable within your timeframe. Additionally, consider practical implications. How might your research contribute to solving real problems?",
+    "title": "History Lecture: The Industrial Revolution and Economic Transformation",
+    "type": "lecture",
+    "script": "Professor: Today we're examining the Industrial Revolution, which fundamentally transformed human civilization. Starting in Britain around 1760, mechanization revolutionized textile production. The power loom, invented by Edmund Cartwright, dramatically increased cloth manufacturing capacity. Student: So machines completely replaced human workers? Professor: Not entirely. While mechanization displaced many artisans, it created new job categories. Factories required engineers, supervisors, and maintenance workers. However, working conditions were often deplorable—children labored 12 hours daily in dangerous environments. This eventually sparked labor reform movements. The steam engine, perfected by James Watt, became the catalyst for industrial expansion beyond textiles. Factories relocated to coalfields for fuel efficiency. This created entirely new urban centers like Manchester and Birmingham. Student: Did everyone benefit from industrialization? Professor: That's complex. Factory owners accumulated immense wealth, but working-class families initially struggled. Real wages remained stagnant despite increased productivity. Nevertheless, long-term technological advancement eventually raised living standards. The Industrial Revolution established the foundation for modern economic systems we see today.",
+    "vocabulary": [
+      {
+        "word": "mechanization",
+        "meaning_ko": "기계화"
+      },
+      {
+        "word": "revolutionized",
+        "meaning_ko": "혁명을 일으키다, 근본적으로 변화시키다"
+      },
+      {
+        "word": "deplorable",
+        "meaning_ko": "비참한, 끔찍한"
+      },
+      {
+        "word": "catalyst",
+        "meaning_ko": "촉매, 변화의 계기"
+      },
+      {
+        "word": "stagnant",
+        "meaning_ko": "정체된, 침체된"
+      },
+      {
+        "word": "accumulate",
+        "meaning_ko": "축적하다, 모으다"
+      }
+    ],
     "questions": [
       {
-        "q": "What is the main purpose of this conversation?",
+        "q": "What is the main topic of the lecture?",
         "options": [
-          "A) To discuss climate change solutions",
-          "B) To help the student select an appropriate research topic",
-          "C) To explain renewable energy sources",
-          "D) To review completed research papers"
+          "The invention of the power loom and its alternatives",
+          "How the Industrial Revolution transformed society and economy",
+          "The biography of James Watt and Edmund Cartwright",
+          "Child labor laws in 18th-century Britain"
         ],
         "answer": 1,
-        "explanation": "대화의 주된 목적은 교수가 학생이 연구 주제를 선택하도록 돕는 것입니다. 교수는 체계적인 접근 방식을 제시하고 주제 선택의 기준을 설명합니다."
+        "explanation": "교수는 산업혁명이 인류 문명을 근본적으로 변화시켰다고 설명하며, 기계화, 도시 발전, 경제 변화 등을 다룹니다."
       },
       {
-        "q": "According to the professor, what should students consider when choosing a research topic?",
+        "q": "According to the professor, what was one negative consequence of early industrialization?",
         "options": [
-          "A) Only their personal interests",
-          "B) Only the availability of books in the library",
-          "C) Interest, available resources, scope, and practical implications",
-          "D) The professor's personal preferences"
+          "The complete elimination of all traditional jobs",
+          "Deplorable working conditions, including child labor",
+          "The invention of new machinery",
+          "The relocation of all factories to coalfields"
+        ],
+        "answer": 1,
+        "explanation": "교수가 명시적으로 '아이들이 위험한 환경에서 매일 12시간 일했다(children labored 12 hours daily in dangerous environments)'고 언급합니다."
+      },
+      {
+        "q": "Why does the professor mention the steam engine perfected by James Watt?",
+        "options": [
+          "To explain why workers rejected new technology",
+          "To show that Watt invented the power loom",
+          "To illustrate how technological innovations became catalysts for broader industrial expansion beyond textiles",
+          "To prove that Britain had better engineers than other countries"
         ],
         "answer": 2,
-        "explanation": "교수는 관심사, 이용 가능한 자료, 주제의 범위, 그리고 실질적 함의를 모두 고려해야 한다고 언급합니다."
-      },
-      {
-        "q": "Why does the professor suggest focusing on sustainable agriculture in the student's region?",
-        "options": [
-          "A) It is easier than renewable energy",
-          "B) It is more specific and manageable than broad topics like climate change",
-          "C) The student has already completed research on it",
-          "D) It requires fewer resources"
-        ],
-        "answer": 1,
-        "explanation": "교수는 지역의 지속 가능한 농업이 광범위한 주제인 기후 변화보다 더 구체적이고 관리 가능하다고 설명합니다. 이는 학생의 시간 제약 내에서 원본성 있는 연구를 가능하게 합니다."
+        "explanation": "교수는 증기 엔진이 '직물을 넘어 산업 확장의 촉매가 되었다(became the catalyst for industrial expansion beyond textiles)'고 설명합니다."
       }
     ]
   }

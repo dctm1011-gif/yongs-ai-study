@@ -1286,5 +1286,65 @@
     "explanation": "어떤 주제나 논의에 직접 관련되고 적절한; 연관성 있는",
     "tip": "학술적 토론에서 관련성을 판단할 때 자주 사용",
     "emoji": "📌"
+  },
+  {
+    "id": "pensive",
+    "word": "pensive",
+    "pos": "adjective",
+    "date": "2026-08-01",
+    "meaning": "생각에 잠긴, 사려 깊은",
+    "example_ko": "그녀는 창밖을 바라보며 생각에 잠겨 있었다",
+    "example_en": "She looked pensive while staring out the window",
+    "explanation": "Engaged in deep or serious thought; thoughtful and reflective",
+    "tip": "보통 조용하고 진지한 상황에서 사용",
+    "emoji": "🤔"
+  },
+  {
+    "id": "lucid",
+    "word": "lucid",
+    "pos": "adjective",
+    "date": "2026-08-01",
+    "meaning": "명확한, 이해하기 쉬운",
+    "example_ko": "교수님은 복잡한 이론을 명확하게 설명해주셨다",
+    "example_en": "The professor gave a lucid explanation of the complex theory",
+    "explanation": "Clear and easy to understand; expressed clearly and logically",
+    "tip": "글쓰기나 설명이 얼마나 명확한지 설명할 때 좋음",
+    "emoji": "💡"
+  },
+  {
+    "id": "deter",
+    "word": "deter",
+    "pos": "verb",
+    "date": "2026-08-01",
+    "meaning": "저지하다, 막다",
+    "example_ko": "높은 가격은 많은 고객들이 제품을 사는 것을 막았다",
+    "example_en": "High prices deterred many customers from buying the product",
+    "explanation": "To discourage or prevent someone from doing something through fear or doubt",
+    "tip": "negative한 결과로 무언가를 하지 못하게 할 때 사용",
+    "emoji": "🚫"
+  },
+  {
+    "id": "aberrant",
+    "word": "aberrant",
+    "pos": "adjective",
+    "date": "2026-08-01",
+    "meaning": "이상한, 정상에서 벗어난",
+    "example_ko": "그의 이상한 행동은 회의에서 모두를 놀라게 했다",
+    "example_en": "His aberrant behavior surprised everyone at the meeting",
+    "explanation": "Deviating from what is normal, expected, or standard; abnormal",
+    "tip": "unusual하고 비정상적인 상황을 formal하게 표현할 때",
+    "emoji": "⚠️"
+  },
+  {
+    "id": "sanguine",
+    "word": "sanguine",
+    "pos": "adjective",
+    "date": "2026-08-01",
+    "meaning": "낙관적인, 긍정적인",
+    "example_ko": "어려움에도 불구하고 그녀는 프로젝트의 성공에 대해 낙관적이었다",
+    "example_en": "Despite the challenges, she remained sanguine about the project's success",
+    "explanation": "Optimistic or positive, especially in a confident way; expecting favorable outcomes",
+    "tip": "긍정적이고 희망찬 태도를 formal하게 표현할 때",
+    "emoji": "😊"
   }
 ]
