@@ -355,6 +355,64 @@ def _trigger_netlify_investment(target_date: date, wait_sec: int = 300) -> None:
         print(f"[!] investment-daily 트리거 실패: {e}")
 
 
+def _load_env_vars() -> dict:
+    """프로젝트 루트 .env 파일에서 Firebase 환경변수 로드."""
+    env = {}
+    env_file = ROOT / ".env"
+    if env_file.exists():
+        for line in env_file.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if line and not line.startswith("#") and "=" in line:
+                k, v = line.split("=", 1)
+                env[k.strip()] = v.strip()
+    return env
+
+
+def _push_to_firebase_direct(target_date: date) -> None:
+    """daily.json을 Firebase Realtime Database에 직접 업로드.
+    Netlify 빌드 타이밍에 의존하지 않고 즉시 반영.
+    """
+    env = _load_env_vars()
+    script = f"""
+const {{ initializeApp, getApps }} = require('firebase/app');
+const {{ getDatabase, ref, set }} = require('firebase/database');
+const fs = require('fs');
+const config = {{
+  apiKey: '{env.get("EXPO_PUBLIC_FIREBASE_API_KEY", os.environ.get("EXPO_PUBLIC_FIREBASE_API_KEY", ""))}',
+  authDomain: '{env.get("EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN", os.environ.get("EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN", ""))}',
+  databaseURL: '{env.get("EXPO_PUBLIC_FIREBASE_DATABASE_URL", os.environ.get("EXPO_PUBLIC_FIREBASE_DATABASE_URL", ""))}',
+  projectId: '{env.get("EXPO_PUBLIC_FIREBASE_PROJECT_ID", os.environ.get("EXPO_PUBLIC_FIREBASE_PROJECT_ID", ""))}',
+}};
+const app = getApps().length ? getApps()[0] : initializeApp(config);
+const db = getDatabase(app);
+const daily = JSON.parse(fs.readFileSync('{str(OUTPUT_JSON).replace(chr(92), "/")}', 'utf-8'));
+const data = {{
+  columns: daily.columns,
+  termOfDay: daily.termOfDay || null,
+  newsArticles: daily.newsArticles || [],
+  dongCharts: daily.dongCharts || [],
+  timestamp: new Date().toISOString(),
+  date: '{target_date}',
+  count: daily.columns.length,
+}};
+set(ref(db, 'investment/columns/{target_date}'), data)
+  .then(() => {{ console.log('[+] Firebase 직접 업로드 완료 - term:', daily.termOfDay?.term); process.exit(0); }})
+  .catch(e => {{ console.error('[!] Firebase 업로드 실패:', e.message); process.exit(1); }});
+"""
+    try:
+        result = subprocess.run(
+            ["node", "-e", script],
+            cwd=str(ROOT),
+            capture_output=True, text=True, timeout=30
+        )
+        if result.returncode == 0:
+            print(result.stdout.strip())
+        else:
+            print(f"[!] Firebase 직접 업로드 실패: {result.stderr.strip()}")
+    except Exception as e:
+        print(f"[!] Firebase 직접 업로드 예외: {e}")
+
+
 def deploy(target_date: date) -> None:
     print("[*] GitHub 배포 중...")
     subprocess.run(["git", "pull", "--rebase", "origin", "main"], cwd=str(ROOT))
@@ -437,6 +495,7 @@ def main(target_date: date = None):
     print(f"[+] daily.json 저장: {OUTPUT_JSON}")
 
     deploy(target_date)
+    _push_to_firebase_direct(target_date)  # Netlify 빌드 타이밍과 무관하게 즉시 반영
     _trigger_netlify_investment(target_date)
 
 
