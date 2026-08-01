@@ -42,6 +42,9 @@ interface Quiz {
   question: string;
   options: string[];
   correct: string;
+  correctMeaning?: string; // 정답 후 옵션 옆에 표시할 뜻
+  explanation?: string;
+  option_explanations?: (string | null)[];
   answered?: boolean;
   correct_answer?: boolean;
 }
@@ -74,6 +77,28 @@ function mapFirebaseWords(data: any, today: string): NetlifyWord[] {
     explanation: w.explanation,
     emoji: w.emoji,
   }));
+}
+
+function mapFirebaseQuizzes(data: any): Quiz[] {
+  const rawQuizzes = Array.isArray(data.quiz) ? data.quiz : [];
+  if (rawQuizzes.length === 0) return [];
+  return rawQuizzes.map((q: any, idx: number) => {
+    const wordId = (q.word || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+    const type: Quiz['type'] = q.type === 'fill_blank' ? 'blanks' : (q.type === 'situation' ? 'situation' : 'meaning');
+    const options: string[] = Array.isArray(q.options) ? q.options : [];
+    const correct = typeof q.answer === 'number' ? (options[q.answer] ?? '') : (q.answer ?? '');
+    return {
+      id: `fb_${idx}_${wordId}`,
+      wordId,
+      type,
+      question: q.question || q.sentence || '',
+      options,
+      correct,
+      explanation: q.explanation || undefined,
+      option_explanations: Array.isArray(q.option_explanations) ? q.option_explanations : undefined,
+      correctMeaning: type === 'blanks' ? (q.meaning || q.meaning_ko || undefined) : (q.word || undefined),
+    };
+  });
 }
 
 export default function EnglishScreen() {
@@ -187,9 +212,10 @@ export default function EnglishScreen() {
         await cacheManager.set('english_words', mergedWords, 24 * 60 * 60 * 1000);
         await saveUpdateTime();
 
-        const generatedQuizzes = generateQuizzes(mergedWords);
-        setQuizzes(generatedQuizzes);
-        await AsyncStorage.setItem('english_quizzes', JSON.stringify(generatedQuizzes));
+        const fbQuizzes = mapFirebaseQuizzes(snapshot.val());
+        const newQuizzes = fbQuizzes.length > 0 ? fbQuizzes : generateQuizzes(mergedWords);
+        setQuizzes(newQuizzes);
+        await AsyncStorage.setItem('english_quizzes', JSON.stringify(newQuizzes));
       },
       error => {
         console.error('Firebase subscription error:', error);
@@ -227,8 +253,12 @@ export default function EnglishScreen() {
         setIsCached(true);
 
         const savedQuizzes = await AsyncStorage.getItem('english_quizzes');
-        const parsedQuizzes = savedQuizzes ? JSON.parse(savedQuizzes) : null;
-        setQuizzes(Array.isArray(parsedQuizzes) ? parsedQuizzes : generateQuizzes(parsedWords));
+        let parsedQuizzes: any = null;
+        try { parsedQuizzes = savedQuizzes ? JSON.parse(savedQuizzes) : null; } catch { parsedQuizzes = null; }
+        // If cached quizzes lack the new explanation fields, fall back to local generation
+        // (Firebase subscription will overwrite with proper data shortly)
+        const hasNewFormat = Array.isArray(parsedQuizzes) && parsedQuizzes[0]?.id?.startsWith('fb_');
+        setQuizzes(hasNewFormat ? parsedQuizzes : generateQuizzes(parsedWords));
       } else {
         // 캐시가 없거나 예전 형식(배열이 아님)으로 남아있으면 기본값으로 폴백
         loadedWords = getDefaultWords();
@@ -330,36 +360,37 @@ export default function EnglishScreen() {
 
   const generateQuizzes = (wordsData: Word[]): Quiz[] => {
     const quizzes: Quiz[] = [];
+    const allMeanings = wordsData.map(w => w.meaning);
+    const allWords = wordsData.map(w => w.word);
 
     wordsData.slice(0, 5).forEach((word, idx) => {
-      // Meaning quiz
+      // 의미 퀴즈 — 오답: 다른 단어들의 실제 의미 3개
+      const wrongMeanings = shuffleArray(allMeanings.filter(m => m !== word.meaning)).slice(0, 3);
       quizzes.push({
         id: `m${idx}`,
         wordId: word.id,
         type: 'meaning',
         question: `"${word.word}"의 의미는?`,
-        options: shuffleArray([word.meaning, '정반대 의미', '비슷한 품사', '다른 언어']),
+        options: shuffleArray([word.meaning, ...wrongMeanings]),
         correct: word.meaning,
+        correctMeaning: word.word,
       });
 
-      // Blanks quiz - 더 어려운 선택지 생성
+      // 빈칸 퀴즈 — 오답: 다른 단어들의 실제 단어 3개
       if (word.example_en) {
-        // 같은 품사의 비슷한 단어들을 선택지로 사용
-        const distractors = ['absolutely', 'quite', 'somewhat', 'fairly', 'really', 'very', 'somewhat', 'kind of'];
-        const filteredDisractors = distractors.filter((d, i) => i < 3).slice(0, 3);
-        const blankOptions = shuffleArray([word.word, ...filteredDisractors]);
+        const wrongWords = shuffleArray(allWords.filter(w => w !== word.word)).slice(0, 3);
         quizzes.push({
           id: `b${idx}`,
           wordId: word.id,
           type: 'blanks',
-          question: `${word.example_en.replace(word.word, '_______')}`,
-          options: blankOptions,
+          question: word.example_en.replace(word.word, '_______'),
+          options: shuffleArray([word.word, ...wrongWords]),
           correct: word.word,
+          correctMeaning: word.meaning,
         });
       }
     });
 
-    // 같은 단어의 문제가 연달아 나오지 않도록 섞기
     return shuffleArray(quizzes);
   };
 
@@ -484,9 +515,10 @@ export default function EnglishScreen() {
       await AsyncStorage.setItem('english_words', JSON.stringify(mergedWords));
       await saveUpdateTime();
 
-      const generatedQuizzes = generateQuizzes(mergedWords);
-      setQuizzes(generatedQuizzes);
-      await AsyncStorage.setItem('english_quizzes', JSON.stringify(generatedQuizzes));
+      const fbQuizzes = mapFirebaseQuizzes(snapshot.val());
+      const refreshedQuizzes = fbQuizzes.length > 0 ? fbQuizzes : generateQuizzes(mergedWords);
+      setQuizzes(refreshedQuizzes);
+      await AsyncStorage.setItem('english_quizzes', JSON.stringify(refreshedQuizzes));
 
       ToastAndroid.show(
         isUpdated ? '✅ 새로운 단어가 추가되었습니다!' : '✓ 이미 최신 상태입니다',
@@ -595,7 +627,19 @@ export default function EnglishScreen() {
           />
         </View>
       )}
-      {view === 'quiz' && <QuizView quizzes={quizzes} words={words} onAnswer={answerQuiz} />}
+      {view === 'quiz' && <QuizView quizzes={quizzes} words={words} onAnswer={answerQuiz} onComplete={() => {
+        const today = getKSTDateString();
+        const correct = quizzes.filter(q => q.correct_answer).length;
+        const db = getDatabase(getFirebaseApp());
+        dbSet(ref(db, `completion/english/${today}`), {
+          done: true,
+          correct,
+          total: quizzes.length,
+          ts: Date.now(),
+        }).catch(() => {});
+        writeCompletion('english_word', `영어단어 퀴즈 완료 (${correct}/${quizzes.length})`);
+        ToastAndroid.show(`완료! ${correct}/${quizzes.length} 정답 저장됨`, ToastAndroid.SHORT);
+      }} />}
       {view === 'game' && <GameHub />}
       {view === 'stats' && <StatsView stats={stats} />}
     </SafeAreaView>
@@ -680,8 +724,26 @@ const WordCard = React.memo(({ word, onToggleRead, onPlayAudio, isSpeaking }: {
 ));
 
 // Memoized quiz view
-const QuizView = React.memo(({ quizzes, words, onAnswer }: { quizzes: Quiz[], words: Word[], onAnswer: (id: string, selected: string) => void }) => {
+const QuizView = React.memo(({ quizzes, words, onAnswer, onComplete }: {
+  quizzes: Quiz[];
+  words: Word[];
+  onAnswer: (id: string, selected: string) => void;
+  onComplete: () => void;
+}) => {
   const getWordName = useCallback((wordId: string) => words.find(w => w.id === wordId)?.word || '', [words]);
+  const allAnswered = quizzes.length > 0 && quizzes.every(q => q.answered);
+  const correctCount = quizzes.filter(q => q.correct_answer).length;
+
+  const footer = (
+    <TouchableOpacity
+      style={[styles.completeButton, !allAnswered && styles.completeButtonDim]}
+      onPress={onComplete}
+    >
+      <Text style={styles.completeButtonText}>
+        {allAnswered ? `✅ 완료 (${correctCount}/${quizzes.length} 정답)` : '완료'}
+      </Text>
+    </TouchableOpacity>
+  );
 
   return (
     <FlatList
@@ -696,38 +758,87 @@ const QuizView = React.memo(({ quizzes, words, onAnswer }: { quizzes: Quiz[], wo
       renderItem={({ item }) => (
         <QuizCard quiz={item} wordName={getWordName(item.wordId)} onAnswer={onAnswer} />
       )}
+      ListFooterComponent={footer}
     />
   );
 });
 
 // Memoized quiz card
-const QuizCard = React.memo(({ quiz, wordName, onAnswer }: { quiz: Quiz, wordName: string, onAnswer: (id: string, selected: string) => void }) => (
-  <View style={styles.quizCard}>
-    {quiz.type !== 'blanks' && <Text style={styles.quizWord}>{wordName}</Text>}
-    <Text style={styles.quizQuestion}>{quiz.question}</Text>
-    <View style={styles.optionsContainer}>
-      {quiz.options.map((option, idx) => (
-        <TouchableOpacity
-          key={idx}
-          style={[
-            styles.optionButton,
-            quiz.answered && option === quiz.correct && styles.optionCorrect,
-            quiz.answered && option !== quiz.correct && quiz.correct_answer === false && styles.optionIncorrect,
-          ]}
-          onPress={() => !quiz.answered && onAnswer(quiz.id, option)}
-          disabled={quiz.answered}
-        >
-          <Text style={styles.optionText}>{option}</Text>
-        </TouchableOpacity>
-      ))}
+const QuizCard = React.memo(({ quiz, wordName, onAnswer }: { quiz: Quiz, wordName: string, onAnswer: (id: string, selected: string) => void }) => {
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+
+  const handlePress = (option: string) => {
+    if (quiz.answered) return;
+    setSelectedOption(option);
+    onAnswer(quiz.id, option);
+  };
+
+  const wasWrong = quiz.answered && quiz.correct_answer === false;
+
+  return (
+    <View style={styles.quizCard}>
+      {quiz.type !== 'blanks' && <Text style={styles.quizWord}>{wordName}</Text>}
+      <Text style={styles.quizQuestion}>{quiz.question}</Text>
+      <View style={styles.optionsContainer}>
+        {quiz.options.map((option, idx) => {
+          const isCorrectOpt = option === quiz.correct;
+          const isSelectedWrong = quiz.answered && !isCorrectOpt && (selectedOption === option || (wasWrong && option === selectedOption));
+          return (
+            <TouchableOpacity
+              key={idx}
+              style={[
+                styles.optionButton,
+                quiz.answered && isCorrectOpt && styles.optionCorrect,
+                quiz.answered && !isCorrectOpt && selectedOption === option && styles.optionIncorrect,
+              ]}
+              onPress={() => handlePress(option)}
+              disabled={quiz.answered}
+            >
+              <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' }}>
+                <Text style={[
+                  styles.optionText,
+                  quiz.answered && isCorrectOpt && styles.optionTextCorrect,
+                  quiz.answered && !isCorrectOpt && selectedOption === option && styles.optionTextIncorrect,
+                ]}>{option}</Text>
+                {quiz.answered && isCorrectOpt && quiz.correct_answer && quiz.correctMeaning && (
+                  <Text style={styles.optionMeaning}> — {quiz.correctMeaning}</Text>
+                )}
+              </View>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+      {quiz.answered && (
+        <>
+          <Text style={[styles.answerFeedback, quiz.correct_answer ? styles.correct : styles.incorrect]}>
+            {quiz.correct_answer ? '✓ 정답!' : '✗ 오답 — 정답: ' + quiz.correct}
+          </Text>
+          {quiz.explanation && (
+            <View style={styles.explanationBox}>
+              <Text style={styles.explanationLabel}>💬 해설</Text>
+              <Text style={styles.explanationText}>{quiz.explanation}</Text>
+            </View>
+          )}
+          {quiz.option_explanations && quiz.option_explanations.some(e => e !== null) && (
+            <View style={styles.wrongExplBox}>
+              <Text style={styles.wrongExplTitle}>📖 오답 해설</Text>
+              {quiz.options.map((option, idx) => {
+                const expl = quiz.option_explanations?.[idx];
+                if (!expl) return null;
+                return (
+                  <View key={idx} style={styles.wrongExplItem}>
+                    <Text style={styles.wrongExplOption}>• {String.fromCharCode(65 + idx)}. {option}</Text>
+                    <Text style={styles.wrongExplText}>{expl}</Text>
+                  </View>
+                );
+              })}
+            </View>
+          )}
+        </>
+      )}
     </View>
-    {quiz.answered && (
-      <Text style={[styles.answerFeedback, quiz.correct_answer ? styles.correct : styles.incorrect]}>
-        {quiz.correct_answer ? '✓ 정답!' : '✗ 오답'}
-      </Text>
-    )}
-  </View>
-));
+  );
+});
 
 // Memoized stats view
 const StatsView = React.memo(({ stats }: { stats: any }) => (
@@ -1002,6 +1113,35 @@ const styles = StyleSheet.create({
     color: '#1e293b',
     fontWeight: '500',
   },
+  optionTextCorrect: {
+    color: '#065f46',
+    fontWeight: '700',
+  },
+  optionTextIncorrect: {
+    color: '#991b1b',
+  },
+  optionMeaning: {
+    fontSize: 12,
+    color: '#065f46',
+    fontWeight: '500',
+    opacity: 0.85,
+  },
+  completeButton: {
+    margin: 16,
+    marginTop: 8,
+    paddingVertical: 14,
+    borderRadius: 12,
+    backgroundColor: '#2563eb',
+    alignItems: 'center',
+  },
+  completeButtonDim: {
+    backgroundColor: '#94a3b8',
+  },
+  completeButtonText: {
+    color: '#fff',
+    fontSize: 15,
+    fontWeight: '700',
+  },
   answerFeedback: {
     marginTop: 10,
     textAlign: 'center',
@@ -1013,6 +1153,54 @@ const styles = StyleSheet.create({
   },
   incorrect: {
     color: '#ef4444',
+  },
+  explanationBox: {
+    marginTop: 10,
+    backgroundColor: '#eff6ff',
+    borderRadius: 8,
+    padding: 12,
+    borderLeftWidth: 3,
+    borderLeftColor: '#2563eb',
+  },
+  explanationLabel: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#2563eb',
+    marginBottom: 4,
+  },
+  explanationText: {
+    fontSize: 13,
+    color: '#1e293b',
+    lineHeight: 20,
+  },
+  wrongExplBox: {
+    marginTop: 8,
+    backgroundColor: '#fafafa',
+    borderRadius: 8,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+  },
+  wrongExplTitle: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#64748b',
+    marginBottom: 8,
+  },
+  wrongExplItem: {
+    marginBottom: 8,
+  },
+  wrongExplOption: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#475569',
+    marginBottom: 2,
+  },
+  wrongExplText: {
+    fontSize: 12,
+    color: '#64748b',
+    lineHeight: 18,
+    paddingLeft: 10,
   },
   statsContent: {
     padding: 16,

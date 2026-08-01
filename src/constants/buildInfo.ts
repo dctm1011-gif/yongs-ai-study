@@ -1,1 +1,1 @@
-﻿export const LAST_BUILD_TIME = '2026-07-21 08:53:00';
+export const LAST_BUILD_TIME = '2026-08-02 00:07 KST';

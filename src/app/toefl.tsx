@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, TextInput, Alert } from 'react-native';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, TextInput, Alert, Modal, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Speech from 'expo-speech';
@@ -14,6 +14,109 @@ import { writeCompletion } from '../utils/writeCompletion';
 // for 9 hours each morning (and the daily reset below would fire 9h late).
 // Shift the clock forward before formatting, matching the helper used in
 // netlify/functions/*-daily.mjs.
+const SCREEN_W = Dimensions.get('window').width;
+
+// 지문 내 단어 꾹 누르기 → 사전 API 조회 → 단어 바로 아래 팝업
+const PassageWithLookup = React.memo(({ text, vocabulary, textStyle }: {
+  text: string;
+  vocabulary?: Array<{ word: string; meaning_ko: string }>;
+  textStyle?: any;
+}) => {
+  const [tooltip, setTooltip] = useState<{
+    word: string; x: number; y: number;
+    loading: boolean; definition: string | null; phonetic?: string;
+  } | null>(null);
+
+  const vocabMap = useMemo(() => {
+    const m: Record<string, string> = {};
+    vocabulary?.forEach(v => { m[v.word.toLowerCase()] = v.meaning_ko; });
+    return m;
+  }, [vocabulary]);
+
+  const tokens = useMemo(() => text.split(/(\s+)/), [text]);
+
+  const dismiss = useCallback(() => setTooltip(null), []);
+
+  const lookupWord = useCallback(async (raw: string, px: number, py: number) => {
+    const word = raw.replace(/[^a-zA-Z]/g, '');
+    if (!word || word.length < 2) return;
+
+    setTooltip({ word, x: px, y: py, loading: true, definition: null });
+
+    // 지문 vocabulary 먼저 확인
+    const vocabDef = vocabMap[word.toLowerCase()];
+    if (vocabDef) {
+      setTooltip({ word, x: px, y: py, loading: false, definition: vocabDef });
+      return;
+    }
+
+    try {
+      const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word.toLowerCase()}`);
+      if (!res.ok) throw new Error('not found');
+      const data = await res.json();
+      const entry = data[0];
+      const phonetic = entry?.phonetic ?? entry?.phonetics?.[0]?.text ?? '';
+      const meanings: string[] = [];
+      (entry?.meanings ?? []).slice(0, 2).forEach((m: any) => {
+        const pos = m.partOfSpeech ?? '';
+        const def = m.definitions?.[0]?.definition ?? '';
+        if (def) meanings.push(pos ? `[${pos}] ${def}` : def);
+      });
+      setTooltip({
+        word, x: px, y: py, loading: false,
+        definition: meanings.length > 0 ? meanings.join('\n') : null,
+        phonetic: phonetic || undefined,
+      });
+    } catch {
+      setTooltip({ word, x: px, y: py, loading: false, definition: null });
+    }
+  }, [vocabMap]);
+
+  return (
+    <>
+      <TouchableOpacity activeOpacity={1} onPress={dismiss}>
+        <Text style={textStyle}>
+          {tokens.map((token, idx) => {
+            if (/^\s+$/.test(token)) return token;
+            const clean = token.replace(/[^a-zA-Z]/g, '').toLowerCase();
+            const isVocab = !!vocabMap[clean];
+            return (
+              <Text
+                key={idx}
+                onLongPress={(e) => lookupWord(token, e.nativeEvent.pageX, e.nativeEvent.pageY)}
+                style={isVocab ? styles.passageVocabHighlight : undefined}
+              >
+                {token}
+              </Text>
+            );
+          })}
+        </Text>
+      </TouchableOpacity>
+
+      {tooltip && (
+        <Modal transparent animationType="none" onRequestClose={dismiss}>
+          <TouchableOpacity style={{ flex: 1 }} activeOpacity={1} onPress={dismiss}>
+            <View style={[styles.wordTooltip, {
+              top: tooltip.y + 14,
+              left: Math.min(Math.max(tooltip.x - 60, 8), SCREEN_W - 220),
+            }]}>
+              <Text style={styles.wordTooltipWord}>
+                {tooltip.word}{tooltip.phonetic ? `  ${tooltip.phonetic}` : ''}
+              </Text>
+              {tooltip.loading
+                ? <ActivityIndicator size="small" color="#94a3b8" style={{ marginTop: 4 }} />
+                : tooltip.definition
+                  ? <Text style={styles.wordTooltipMeaning}>{tooltip.definition}</Text>
+                  : <Text style={styles.wordTooltipNone}>사전에 없음</Text>
+              }
+            </View>
+          </TouchableOpacity>
+        </Modal>
+      )}
+    </>
+  );
+});
+
 function getKSTDateString(): string {
   const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
   return kst.toISOString().split('T')[0];
@@ -760,7 +863,11 @@ export default function TOEFLScreen() {
         <View style={styles.passageBox}>
           <Text style={styles.passageLabel}>지문</Text>
           {reading.title && <Text style={styles.passageTitle}>{reading.title}</Text>}
-          <Text style={styles.passageText}>{reading.passage}</Text>
+          <PassageWithLookup
+            text={reading.passage}
+            vocabulary={reading.vocabulary}
+            textStyle={styles.passageText}
+          />
         </View>
 
         {reading.vocabulary && reading.vocabulary.length > 0 && (
@@ -1156,6 +1263,40 @@ const styles = StyleSheet.create({
     color: '#334155',
     lineHeight: 36,
     fontWeight: '400',
+  },
+  passageVocabHighlight: {
+    color: '#1d4ed8',
+    textDecorationLine: 'underline',
+  },
+  wordTooltip: {
+    position: 'absolute',
+    backgroundColor: '#1e293b',
+    borderRadius: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    minWidth: 120,
+    maxWidth: 210,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 8,
+  },
+  wordTooltipWord: {
+    color: '#f0f9ff',
+    fontSize: 15,
+    fontWeight: '700',
+    marginBottom: 2,
+  },
+  wordTooltipMeaning: {
+    color: '#7dd3fc',
+    fontSize: 13,
+    fontWeight: '500',
+  },
+  wordTooltipNone: {
+    color: '#94a3b8',
+    fontSize: 12,
+    fontStyle: 'italic',
   },
   vocabBox: {
     backgroundColor: '#fffbeb',

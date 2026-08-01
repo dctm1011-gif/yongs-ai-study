@@ -1346,5 +1346,65 @@
     "explanation": "Optimistic or positive, especially in a confident way; expecting favorable outcomes",
     "tip": "긍정적이고 희망찬 태도를 formal하게 표현할 때",
     "emoji": "😊"
+  },
+  {
+    "id": "auspicious",
+    "word": "auspicious",
+    "pos": "adjective",
+    "date": "2026-08-02",
+    "meaning": "길한, 좋은 징조의",
+    "example_ko": "길한 날에 사업을 시작하면 운이 좋다",
+    "example_en": "Starting a business on an auspicious day brings good luck",
+    "explanation": "Giving or showing signs that suggest that something good will happen in the future; favorable or promising",
+    "tip": "Synonyms: propitious(더 formal), favorable / Antonyms: inauspicious, ominous(악조를 나타내는) / Often used in contexts of beginnings, omens, or fortune",
+    "emoji": "🌟"
+  },
+  {
+    "id": "burgeon",
+    "word": "burgeon",
+    "pos": "verb",
+    "date": "2026-08-02",
+    "meaning": "번성하다, 급속히 성장하다",
+    "example_ko": "바이럴 마케팅 캠페인 이후로 그 스타트업의 사용자 수가 급속히 증가했다",
+    "example_en": "The startup's user base has burgeoned since the viral marketing campaign",
+    "explanation": "To grow, expand, or flourish rapidly; to begin to grow or increase",
+    "tip": "Synonyms: flourish, thrive, bloom / Antonyms: wither, decline, stagnate / More poetic/literary than 'grow'; implies organic, natural expansion",
+    "emoji": "🌱"
+  },
+  {
+    "id": "candent",
+    "word": "candent",
+    "pos": "adjective",
+    "date": "2026-08-02",
+    "meaning": "빛나는, 작열하는",
+    "example_ko": "용광로의 작열하는 금속이 거의 눈을 멀게 할 정도였다",
+    "example_en": "The candent metal in the furnace was almost blinding",
+    "explanation": "Glowing with heat or light; shining brightly; incandescent",
+    "tip": "Synonyms: incandescent, luminous, glowing / Antonyms: dim, dark, obscure / Rare but elegant word; often used in literary or scientific contexts",
+    "emoji": "🔥"
+  },
+  {
+    "id": "coalesce",
+    "word": "coalesce",
+    "pos": "verb",
+    "date": "2026-08-02",
+    "meaning": "합쳐지다, 통합되다",
+    "example_ko": "다양한 시위 운동들이 하나의 강력한 힘으로 합쳐졌다",
+    "example_en": "The various protest movements coalesced into a single powerful force",
+    "explanation": "To come together and form one whole; to combine or unite into one",
+    "tip": "Synonyms: merge, unite, fuse / Antonyms: separate, fragment, divide / Implies natural coming together of distinct parts; more purposeful than 'merge'",
+    "emoji": "🤝"
+  },
+  {
+    "id": "coruscate",
+    "word": "coruscate",
+    "pos": "verb",
+    "date": "2026-08-02",
+    "meaning": "반짝이다, 번뜩이다",
+    "example_ko": "저녁빛에서 다이아몬드가 반짝였다",
+    "example_en": "The diamonds coruscated in the evening light",
+    "explanation": "To sparkle or flash with light; to shine brightly with a sudden gleam",
+    "tip": "Synonyms: sparkle, glitter, twinkle, shimmer / Antonyms: dull, fade, dim / Literary and formal; suggests intermittent flashing rather than steady light",
+    "emoji": "✨"
   }
 ]

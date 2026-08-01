@@ -183,13 +183,20 @@ Return ONLY valid JSON, no other text.
 {used_words_block}
 
 JSON Format:
-{{"date": "{target_date}", "words": [{{"word": "example", "part_of_speech": "noun", "meaning_ko": "뜻", "explanation": "설명", "example_from_convo": "I'm lowkey happy", "example_ko": "나 은근히 행복해", "tip": "일상에서 자주 씀", "emoji": "😊"}}, ...], "quiz": [{{"type": "meaning", "word": "example", "question": "문제?", "options": ["선택1", "선택2"], "answer": 0, "explanation": "설명"}}]}}
+{{"date": "{target_date}", "words": [{{"word": "example", "part_of_speech": "noun", "meaning_ko": "뜻", "explanation": "영어 설명", "example_from_convo": "I'm lowkey happy", "example_ko": "나 은근히 행복해", "tip": "동의어/반의어 등 뉘앙스 포함한 학습 팁", "emoji": "😊"}}], "quiz": [{{"type": "meaning", "word": "example", "question": "What does 'example' mean?", "options": ["correct definition", "near-synonym with subtle difference", "related word different connotation", "antonym"], "answer": 0, "explanation": "Korean explanation", "option_explanations": [null, "synonym(동의어): 뉘앙스 차이 설명", "related word: 왜 틀렸는지 설명", "antonym(반의어): 반대 의미 설명"]}}]}}
 
 Rules:
 - Exactly 5 different words, none of which appear in the "already used" list above
 - Exactly 8 quiz questions
 - Mix of: 3x meaning, 3x fill_blank, 2x situation
 - Each word needs part_of_speech, meaning_ko, explanation, example_from_convo, example_ko, tip, emoji
+- IMPORTANT for quiz options: use SYNONYMS and ANTONYMS as wrong choices, NOT random distractors
+  * meaning quiz: [correct def, near-synonym(nuance differs), related word, antonym]
+  * fill_blank quiz: [correct word, antonym, near-synonym(doesn't fit context), related word]
+  * situation quiz: [correct word, antonym, plausible-but-wrong word, unrelated word]
+- ALWAYS include "option_explanations" array (same length as options, null for correct option)
+  * Korean explanation for each wrong option: WHY it's wrong and what makes it different (nuance/connotation/usage)
+- tip field: mention key synonyms/antonyms and usage nuances
 - Return ONLY the JSON object, nothing else"""
 
     used_lower = {w.lower() for w in used_words}

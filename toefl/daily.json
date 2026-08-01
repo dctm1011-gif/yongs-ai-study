@@ -1,109 +1,177 @@
 {
-  "date": "2026-08-01",
+  "date": "2026-08-02",
   "reading": {
-    "title": "The Impact of Remote Work on Urban Development",
-    "passage": "The rise of remote work has fundamentally transformed urban planning strategies worldwide. As companies embrace flexible work arrangements, fewer employees commute to city centers daily, reducing traffic congestion and pollution. This shift has prompted city planners to reimagine downtown spaces, converting office buildings into residential apartments and recreational facilities. However, this transition creates challenges for local businesses that rely on foot traffic from office workers. Cities must balance economic sustainability with improved quality of life by developing mixed-use communities that attract residents and visitors regardless of traditional work patterns.",
+    "title": "Bioluminescence in Deep-Sea Organisms",
+    "passage": "Bioluminescence, the production of light by living organisms, represents one of the most fascinating adaptations in marine biology. Approximately 90 percent of deep-sea creatures exhibit some form of bioluminescence, utilizing this capability for diverse purposes including predation, communication, and defense. The chemical reaction occurs when a protein called luciferin reacts with oxygen in specialized cells known as photophores, resulting in the emission of light with minimal energy loss. In the perpetually dark abyssal zone where sunlight cannot penetrate, this mechanism has evolved as an indispensable survival strategy. For instance, the anglerfish employs a bioluminescent lure to attract prey, while certain jellyfish species utilize light emission as a warning signal to potential predators. Recent research has revealed that approximately 80 percent of bioluminescent organisms produce blue or green light, wavelengths that transmit most efficiently through seawater. This biochemical phenomenon not only demonstrates the remarkable adaptability of life in extreme environments but also provides valuable insights into enzyme function and marine ecosystem dynamics that scientists continue to investigate.",
+    "vocabulary": [
+      {
+        "word": "bioluminescence",
+        "meaning_ko": "생명체가 빛을 내는 현상"
+      },
+      {
+        "word": "luciferin",
+        "meaning_ko": "빛을 발생시키는 화학 물질"
+      },
+      {
+        "word": "photophores",
+        "meaning_ko": "빛을 생성하는 특화된 세포"
+      },
+      {
+        "word": "abyssal zone",
+        "meaning_ko": "가장 깊은 대양 지역"
+      },
+      {
+        "word": "indispensable",
+        "meaning_ko": "필수불가결한"
+      },
+      {
+        "word": "penetrate",
+        "meaning_ko": "관통하다"
+      },
+      {
+        "word": "wavelengths",
+        "meaning_ko": "파장"
+      }
+    ],
     "questions": [
       {
-        "q": "According to the passage, what is one positive effect of remote work on cities?",
+        "q": "According to the passage, approximately what percentage of deep-sea creatures use bioluminescence?",
         "options": [
-          "Increased office construction",
-          "Reduced traffic congestion and pollution",
-          "More commute time for workers",
-          "Higher foot traffic in downtown areas"
-        ],
-        "answer": 1,
-        "explanation": "본문에서 '더 적은 직원들이 매일 도심으로 출근하면서 교통 혼잡과 오염이 줄어든다'고 명시되어 있습니다."
-      },
-      {
-        "q": "What challenge is mentioned regarding remote work's impact on cities?",
-        "options": [
-          "Increased pollution in suburbs",
-          "Loss of local businesses due to reduced foot traffic",
-          "Shortage of residential apartments",
-          "Higher transportation costs"
-        ],
-        "answer": 1,
-        "explanation": "본문의 'local businesses that rely on foot traffic from office workers'에서 오피스 근로자의 발길이 줄어들어 지역 사업체가 도전에 직면한다고 설명합니다."
-      },
-      {
-        "q": "What solution does the passage suggest for cities?",
-        "options": [
-          "Ban remote work completely",
-          "Increase office building construction",
-          "Develop mixed-use communities",
-          "Reduce residential apartments"
+          "60 percent",
+          "80 percent",
+          "90 percent",
+          "95 percent"
         ],
         "answer": 2,
-        "explanation": "본문 마지막 부분에서 도시들이 '일과 거주지가 결합된 커뮤니티를 개발'하여 균형을 유지해야 한다고 제시합니다."
+        "explanation": "지문의 첫 번째 문장에서 '약 90%의 심해 생물들이 생물발광의 어떤 형태를 드러낸다'고 명시되어 있습니다."
+      },
+      {
+        "q": "What can be inferred from the passage about the efficiency of blue and green light in seawater?",
+        "options": [
+          "They are the only colors that can be produced by organisms",
+          "They transmit through seawater better than other wavelengths",
+          "They require less energy to produce than other colors",
+          "They are primarily used for long-distance communication"
+        ],
+        "answer": 1,
+        "explanation": "지문에서 '약 80%의 생물발광 생물이 파란색 또는 녹색 빛을 생성한다'는 것은 '이 파장이 해수를 통해 가장 효율적으로 전송된다'는 이유로 설명됩니다."
+      },
+      {
+        "q": "The word 'indispensable' in the passage is closest in meaning to",
+        "options": [
+          "common",
+          "essential",
+          "temporary",
+          "unusual"
+        ],
+        "answer": 1,
+        "explanation": "'indispensable'은 '필수불가결한', '꼭 필요한'이라는 의미로 'essential'과 동의어입니다."
+      },
+      {
+        "q": "Why does the author mention the anglerfish as an example?",
+        "options": [
+          "To explain why deep-sea creatures cannot see natural light",
+          "To show how bioluminescence is used for different purposes in marine life",
+          "To describe the most common type of bioluminescent organism",
+          "To argue that bioluminescence is more important than other adaptations"
+        ],
+        "answer": 1,
+        "explanation": "저자는 생물발광이 포식, 의사소통, 방어 등 다양한 목적으로 사용된다고 설명하며, 아귀의 예시는 생물발광이 포식을 위해 어떻게 사용되는지 보여줍니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement that remote work will eventually replace traditional office environments entirely?",
-    "structure": {
-      "intro": "자신의 입장을 명확히 제시하되, 'I agree/disagree that...' 형태로 작성. 동시에 원인이나 이유를 간단히 언급하여 에세이의 방향성 제시",
-      "body1": "첫 번째 주요 근거 제시: 원격근무의 장점 (비용 절감, 유연성, 글로벌 인재 접근) 또는 단점 (협업 어려움, 팀 문화 약화) 중 선택하여 구체적인 예시와 함께 설명",
-      "body2": "두 번째 주요 근거 제시: 산업별 차이, 일자리 특성, 또는 인간관계의 중요성 등 반대 입장을 고려한 균형잡힌 관점 제시",
-      "conclusion": "에세이의 주요 입장을 재강조하고, '완전한 대체'보다는 '하이브리드 모델'과 같은 현실적 결론으로 마무리"
-    },
-    "useful_phrases": [
-      "In my opinion, remote work will not entirely replace traditional offices because...",
-      "Furthermore, certain industries such as healthcare and manufacturing require on-site presence...",
-      "One significant advantage of remote work is the reduction in overhead costs...",
-      "On the other hand, face-to-face interaction remains crucial for...",
-      "In conclusion, a hybrid approach seems to be the most realistic solution..."
+    "sentences": [
+      {
+        "original": "Bioluminescence, the production of light by living organisms, represents one of the most fascinating adaptations in marine biology.",
+        "paraphrase": "One of the most intriguing adaptations observed in marine biology is bioluminescence, which is the ability of living organisms to generate light.",
+        "tip": "주요 정보 유지 + 구조 재배열: 명사구를 주어로 변경하고 정의 구조를 관계절로 변환"
+      },
+      {
+        "original": "In the perpetually dark abyssal zone where sunlight cannot penetrate, this mechanism has evolved as an indispensable survival strategy.",
+        "paraphrase": "This bioluminescent mechanism has become essential for survival because the abyssal zone remains constantly dark and lacks natural light.",
+        "tip": "능동→수동 역변환 + 전치사구→종속절로 변환하여 복잡성 감소"
+      },
+      {
+        "original": "Recent research has revealed that approximately 80 percent of bioluminescent organisms produce blue or green light, wavelengths that transmit most efficiently through seawater.",
+        "paraphrase": "Studies have shown that the majority of bioluminescent creatures emit either blue or green light because these colors travel through ocean water with maximum efficiency.",
+        "tip": "수동→능동 변환 + 동위 구조(wavelengths that...)→이유절로 재구성"
+      }
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to work in a traditional office environment where they interact face-to-face with colleagues. Others prefer remote work that offers flexibility and independence. Which do you prefer and why?",
-    "useful_expressions": [
-      "In my opinion, I prefer [office/remote work] because...",
-      "One reason is that working [in an office/remotely] allows me to...",
-      "Another important aspect is that [face-to-face collaboration/flexible scheduling] helps me..."
-    ],
-    "sample_points": [
-      "사무실 근무 선호: 팀원들과의 직접적인 상호작용이 창의적 문제 해결을 촉진하고, 회사 문화 형성에 도움이 되며, 멘토링 및 커리어 발전에 유리함",
-      "원격 근무 선호: 통근 시간 절약으로 개인 시간 확보, 방해 없는 집중 작업 환경, 일과 삶의 균형 개선, 그리고 지리적 제약 없이 최적의 업무 환경 구성 가능"
+    "prompt": "Some people believe students should freely choose their major based on personal interest. Others think students should choose majors that have better job prospects. Which approach do you prefer and why? Include specific reasons and examples.",
+    "model_sentences": [
+      "I believe students should have the freedom to choose their major based on their personal interests rather than focusing solely on job prospects.",
+      "First, when students study subjects they are passionate about, they are more motivated and likely to perform better academically, which ultimately benefits their careers.",
+      "For example, if a student loves biology and becomes a marine biologist, their genuine enthusiasm helps them conduct better research and contribute meaningfully to their field.",
+      "Additionally, pursuing your passion leads to greater job satisfaction and reduces the likelihood of career burnout in the long run.",
+      "Therefore, while job prospects are important, personal interest should be the primary factor in choosing a major."
     ]
   },
   "listening": {
-    "title": "Campus Career Services Discussion",
-    "type": "conversation",
-    "script": "Student: Hi, I'm interested in internships for next summer, but I'm not sure where to start. Career Advisor: Great question! Our office has partnerships with over 200 companies in various fields. First, I recommend updating your resume and LinkedIn profile to match the positions you're targeting. Then, attend our internship fair in October where recruiters from major companies will be present. Student: Will they hire based on just meeting them at the fair? Career Advisor: Not necessarily from one meeting, but it's an excellent opportunity to make initial connections and learn about different roles. Follow up with personalized emails within a week. We also offer mock interviews to help you prepare. Most students who participate in our workshops secure internships. Student: That sounds helpful. When do the workshops start? Career Advisor: They begin next month. I'll send you the schedule. Also, consider joining our professional development club to network with upperclassmen who've completed internships.",
+    "title": "Psychology Lecture: The Formation of Memory",
+    "type": "lecture",
+    "script": "Professor: Good morning, everyone. Today we're going to discuss one of the most fundamental processes in psychology—memory formation. So, how does memory actually work? Well, memory formation involves three main stages: encoding, consolidation, and retrieval. During encoding, sensory information is processed and converted into a form that the brain can store. The second stage, consolidation, is when this information is actually transferred from short-term memory to long-term memory. This process typically requires sleep, which is why studying before an exam might be less effective than studying several days before. Finally, retrieval is when we access stored information. Now, I want to emphasize something important: memories are not fixed records like video recordings. Instead, they're reconstructive. Every time you remember something, you're actually rebuilding that memory based on scattered neural traces. This reconstruction process can introduce errors, which is why eyewitness testimony isn't always reliable. What questions do you have about these stages?",
+    "vocabulary": [
+      {
+        "word": "consolidation",
+        "meaning_ko": "공고히 함, (기억의) 장기보존화"
+      },
+      {
+        "word": "encoding",
+        "meaning_ko": "정보를 저장 가능한 형태로 변환하는 과정"
+      },
+      {
+        "word": "retrieval",
+        "meaning_ko": "저장된 정보를 다시 불러내기"
+      },
+      {
+        "word": "reconstructive",
+        "meaning_ko": "재구성되는"
+      },
+      {
+        "word": "neural traces",
+        "meaning_ko": "신경 흔적, 뇌 속의 기억 흔적"
+      },
+      {
+        "word": "eyewitness testimony",
+        "meaning_ko": "목격자 증언"
+      }
+    ],
     "questions": [
       {
-        "q": "What is the main purpose of the internship fair mentioned in the conversation?",
+        "q": "What is the main topic of the lecture?",
         "options": [
-          "To hire students directly for permanent positions",
-          "To provide an opportunity for students to meet recruiters and make initial connections",
-          "To teach students how to write cover letters",
-          "To determine which students are qualified for internships"
+          "The differences between short-term and long-term memory",
+          "The three stages of memory formation and how memory works",
+          "Why sleep is important for studying before exams",
+          "The history of memory research in psychology"
         ],
         "answer": 1,
-        "explanation": "커리어 어드바이저가 'It's an excellent opportunity to make initial connections and learn about different roles'라고 설명하며, 인턴십 페어의 목적이 채용보다는 초기 연결 형성임을 명시합니다."
+        "explanation": "교수가 기억 형성의 세 단계(인코딩, 공고화, 인출)를 설명하고 기억의 재구성적 특성을 강조하므로 기억 형성과 그 작동 원리가 강의의 주요 주제입니다."
       },
       {
-        "q": "According to the advisor, what should students do after meeting recruiters at the fair?",
+        "q": "According to the professor, why might studying the night before an exam be less effective than studying days earlier?",
         "options": [
-          "Attend mock interview workshops immediately",
-          "Join the professional development club",
-          "Send personalized follow-up emails within a week",
-          "Update their LinkedIn profiles"
+          "Because you will be too tired to focus",
+          "Because consolidation requires sleep to transfer information to long-term memory",
+          "Because short-term memory can hold less information at night",
+          "Because the brain forgets information faster in the evening"
         ],
-        "answer": 2,
-        "explanation": "어드바이저가 'Follow up with personalized emails within a week'라고 명확히 조언합니다. 이것이 채용 가능성을 높이는 중요한 단계입니다."
+        "answer": 1,
+        "explanation": "교수는 공고화 단계에서 정보가 단기 기억에서 장기 기억으로 옮겨지는 데 보통 수면이 필요하다고 설명하므로, 시험 전날 밤에 공부하는 것이 며칠 전에 공부하는 것보다 효과가 떨어질 수 있습니다."
       },
       {
-        "q": "What does the advisor suggest for additional networking opportunities?",
+        "q": "Why does the professor mention that memories are reconstructive rather than fixed recordings?",
         "options": [
-          "Attend the internship fair multiple times",
-          "Work with a private career coach",
-          "Join the professional development club to network with upperclassmen",
-          "Participate in online webinars only"
+          "To explain why memory encoding requires more effort than other processes",
+          "To illustrate that memories can contain errors and inaccuracies when retrieved",
+          "To demonstrate why consolidation is the most important stage of memory formation",
+          "To show that long-term memory is more reliable than short-term memory"
         ],
-        "answer": 2,
-        "explanation": "대화 마지막 부분에서 어드바이저가 'consider joining our professional development club to network with upperclassmen who've completed internships'라고 추천합니다."
+        "answer": 1,
+        "explanation": "교수는 기억이 재구성되며 매번 기억할 때마다 신경 흔적을 기반으로 재구축되므로 오류가 발생할 수 있다고 설명하며, 목격자 증언이 항상 신뢰할 수 없는 이유를 제시합니다."
       }
     ]
   }

@@ -1,161 +1,207 @@
 {
-  "date": "2026-08-01",
+  "date": "2026-08-02",
   "words": [
     {
-      "word": "pensive",
+      "word": "auspicious",
       "part_of_speech": "adjective",
-      "meaning_ko": "생각에 잠긴, 사려 깊은",
-      "explanation": "Engaged in deep or serious thought; thoughtful and reflective",
-      "example_from_convo": "She looked pensive while staring out the window",
-      "example_ko": "그녀는 창밖을 바라보며 생각에 잠겨 있었다",
-      "tip": "보통 조용하고 진지한 상황에서 사용",
-      "emoji": "🤔"
+      "meaning_ko": "길한, 좋은 징조의",
+      "explanation": "Giving or showing signs that suggest that something good will happen in the future; favorable or promising",
+      "example_from_convo": "Starting a business on an auspicious day brings good luck",
+      "example_ko": "길한 날에 사업을 시작하면 운이 좋다",
+      "tip": "Synonyms: propitious(더 formal), favorable / Antonyms: inauspicious, ominous(악조를 나타내는) / Often used in contexts of beginnings, omens, or fortune",
+      "emoji": "🌟"
     },
     {
-      "word": "lucid",
-      "part_of_speech": "adjective",
-      "meaning_ko": "명확한, 이해하기 쉬운",
-      "explanation": "Clear and easy to understand; expressed clearly and logically",
-      "example_from_convo": "The professor gave a lucid explanation of the complex theory",
-      "example_ko": "교수님은 복잡한 이론을 명확하게 설명해주셨다",
-      "tip": "글쓰기나 설명이 얼마나 명확한지 설명할 때 좋음",
-      "emoji": "💡"
-    },
-    {
-      "word": "deter",
+      "word": "burgeon",
       "part_of_speech": "verb",
-      "meaning_ko": "저지하다, 막다",
-      "explanation": "To discourage or prevent someone from doing something through fear or doubt",
-      "example_from_convo": "High prices deterred many customers from buying the product",
-      "example_ko": "높은 가격은 많은 고객들이 제품을 사는 것을 막았다",
-      "tip": "negative한 결과로 무언가를 하지 못하게 할 때 사용",
-      "emoji": "🚫"
+      "meaning_ko": "번성하다, 급속히 성장하다",
+      "explanation": "To grow, expand, or flourish rapidly; to begin to grow or increase",
+      "example_from_convo": "The startup's user base has burgeoned since the viral marketing campaign",
+      "example_ko": "바이럴 마케팅 캠페인 이후로 그 스타트업의 사용자 수가 급속히 증가했다",
+      "tip": "Synonyms: flourish, thrive, bloom / Antonyms: wither, decline, stagnate / More poetic/literary than 'grow'; implies organic, natural expansion",
+      "emoji": "🌱"
     },
     {
-      "word": "aberrant",
+      "word": "candent",
       "part_of_speech": "adjective",
-      "meaning_ko": "이상한, 정상에서 벗어난",
-      "explanation": "Deviating from what is normal, expected, or standard; abnormal",
-      "example_from_convo": "His aberrant behavior surprised everyone at the meeting",
-      "example_ko": "그의 이상한 행동은 회의에서 모두를 놀라게 했다",
-      "tip": "unusual하고 비정상적인 상황을 formal하게 표현할 때",
-      "emoji": "⚠️"
+      "meaning_ko": "빛나는, 작열하는",
+      "explanation": "Glowing with heat or light; shining brightly; incandescent",
+      "example_from_convo": "The candent metal in the furnace was almost blinding",
+      "example_ko": "용광로의 작열하는 금속이 거의 눈을 멀게 할 정도였다",
+      "tip": "Synonyms: incandescent, luminous, glowing / Antonyms: dim, dark, obscure / Rare but elegant word; often used in literary or scientific contexts",
+      "emoji": "🔥"
     },
     {
-      "word": "sanguine",
-      "part_of_speech": "adjective",
-      "meaning_ko": "낙관적인, 긍정적인",
-      "explanation": "Optimistic or positive, especially in a confident way; expecting favorable outcomes",
-      "example_from_convo": "Despite the challenges, she remained sanguine about the project's success",
-      "example_ko": "어려움에도 불구하고 그녀는 프로젝트의 성공에 대해 낙관적이었다",
-      "tip": "긍정적이고 희망찬 태도를 formal하게 표현할 때",
-      "emoji": "😊"
+      "word": "coalesce",
+      "part_of_speech": "verb",
+      "meaning_ko": "합쳐지다, 통합되다",
+      "explanation": "To come together and form one whole; to combine or unite into one",
+      "example_from_convo": "The various protest movements coalesced into a single powerful force",
+      "example_ko": "다양한 시위 운동들이 하나의 강력한 힘으로 합쳐졌다",
+      "tip": "Synonyms: merge, unite, fuse / Antonyms: separate, fragment, divide / Implies natural coming together of distinct parts; more purposeful than 'merge'",
+      "emoji": "🤝"
+    },
+    {
+      "word": "coruscate",
+      "part_of_speech": "verb",
+      "meaning_ko": "반짝이다, 번뜩이다",
+      "explanation": "To sparkle or flash with light; to shine brightly with a sudden gleam",
+      "example_from_convo": "The diamonds coruscated in the evening light",
+      "example_ko": "저녁빛에서 다이아몬드가 반짝였다",
+      "tip": "Synonyms: sparkle, glitter, twinkle, shimmer / Antonyms: dull, fade, dim / Literary and formal; suggests intermittent flashing rather than steady light",
+      "emoji": "✨"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "pensive",
-      "question": "What does 'pensive' mean?",
+      "word": "auspicious",
+      "question": "What does 'auspicious' most likely mean?",
       "options": [
-        "Engaged in deep or serious thought",
-        "Very angry and upset",
-        "Physically tired and exhausted",
-        "Overly excited and enthusiastic"
+        "Showing signs that something good will happen",
+        "Famous or well-known",
+        "Difficult to understand",
+        "Ominous or threatening"
       ],
       "answer": 0,
-      "explanation": "Pensive means thoughtful and reflective, often describing someone lost in thought"
+      "explanation": "'Auspicious'는 긍정적인 징조를 나타낸다",
+      "option_explanations": [
+        null,
+        "related word: 'famous'는 auspicious와 관련이 없으며, auspicious는 미래의 좋은 일을 암시하는 것과는 다름",
+        "related word: 'obscure'(불분명한)와는 전혀 다른 의미로, auspicious는 명확한 긍정적 징조를 말함",
+        "antonym(반의어): 'ominous'는 auspicious의 정반대로 악조를 나타냄"
+      ]
     },
     {
       "type": "meaning",
-      "word": "lucid",
-      "question": "Which definition best describes 'lucid'?",
+      "word": "burgeon",
+      "question": "Which definition best captures 'burgeon'?",
       "options": [
-        "Shiny and reflective in appearance",
-        "Clear, easy to understand, and logically expressed",
-        "Dark and difficult to see through",
-        "Temporary and lasting only a short time"
+        "To grow, expand, or flourish rapidly",
+        "To remain unchanged",
+        "To bloom delicately",
+        "To decrease in size"
       ],
-      "answer": 1,
-      "explanation": "Lucid describes something that is clear, understandable, and expressed in a logical manner"
+      "answer": 0,
+      "explanation": "'Burgeon'은 급속한 성장과 번성을 의미한다",
+      "option_explanations": [
+        null,
+        "antonym(반의어): 'remain unchanged'는 burgeon의 정반대 의미로 성장이 없음을 나타냄",
+        "near-synonym but wrong context: 'bloom delicately'는 burgeon보다 섬세하고 제한적이며, burgeon은 더 광범위하고 빠른 성장을 암시함",
+        "antonym(반의어): 'decrease'는 burgeon의 정반대 방향을 나타냄"
+      ]
     },
     {
       "type": "meaning",
-      "word": "aberrant",
-      "question": "What is the meaning of 'aberrant'?",
+      "word": "coalesce",
+      "question": "What does 'coalesce' mean in the sentence: 'The ideas coalesced into a comprehensive plan'?",
       "options": [
-        "Following the rules perfectly",
-        "Deviating from what is normal or expected",
-        "Moving in a straight line",
-        "Becoming more organized and efficient"
+        "Come together and form one whole",
+        "Scatter in different directions",
+        "Conflict with each other",
+        "Remain completely separate"
       ],
-      "answer": 1,
-      "explanation": "Aberrant means abnormal or deviating from the standard or expected behavior"
+      "answer": 0,
+      "explanation": "'Coalesce'는 여러 개의 것이 하나로 합쳐지는 것을 의미한다",
+      "option_explanations": [
+        null,
+        "antonym(반의어): 'scatter'는 coalesce의 정반대로 흩어짐을 나타냄",
+        "related word but wrong connotation: 'conflict'는 합쳐지는 것이 아니라 충돌을 의미하므로 잘못된 의미",
+        "antonym(반의어): 'remain separate'는 coalesce의 정반대 의미"
+      ]
     },
     {
       "type": "fill_blank",
-      "word": "deter",
-      "question": "The strict security measures were designed to ________ potential thieves from entering the building.",
+      "word": "candent",
+      "question": "The _____ lava flowed down the volcano, illuminating the night sky.",
       "options": [
-        "encourage",
-        "deter",
-        "assist",
-        "guide"
+        "candent",
+        "dark",
+        "dim",
+        "cool"
       ],
-      "answer": 1,
-      "explanation": "Deter means to discourage or prevent someone from doing something, which fits perfectly in this context about preventing theft"
+      "answer": 0,
+      "explanation": "'Candent'(작열하는)는 밝고 뜨거운 것을 표현하므로 용암을 설명하기에 가장 적절하다",
+      "option_explanations": [
+        null,
+        "antonym(반의어): 'dark'는 candent의 정반대로 밝기가 없음을 나타냄",
+        "antonym(반의어): 'dim'은 candent의 대립 개념으로 약하고 희미한 빛을 의미함",
+        "antonym(반의어): 'cool'은 candent(작열하는)의 정반대로 차가움을 의미함"
+      ]
     },
     {
       "type": "fill_blank",
-      "word": "sanguine",
-      "question": "Although the situation seemed hopeless, the team remained ________ about their chances of winning the championship.",
+      "word": "burgeon",
+      "question": "As the economy improved, small businesses began to _____ throughout the region.",
       "options": [
-        "pessimistic",
-        "worried",
-        "sanguine",
-        "doubtful"
+        "burgeon",
+        "decline",
+        "wither",
+        "stagnate"
       ],
-      "answer": 2,
-      "explanation": "Sanguine means optimistic and positive, showing confidence in a favorable outcome despite difficulties"
+      "answer": 0,
+      "explanation": "'Burgeon'(번성하다)는 경제 개선 후 사업이 성장하는 상황에 완벽하게 맞음",
+      "option_explanations": [
+        null,
+        "antonym(반의어): 'decline'은 burgeon의 정반대로 감소를 의미함",
+        "antonym(반의어): 'wither'은 쇠약해지고 시들어짐을 나타내며 burgeon과 반대 의미",
+        "antonym(반의어): 'stagnate'는 성장이 멈추는 것을 의미하여 burgeon의 정반대"
+      ]
     },
     {
       "type": "fill_blank",
-      "word": "lucid",
-      "question": "The author's ________ writing style made it easy for readers to understand the complicated scientific concepts.",
+      "word": "coalesce",
+      "question": "Different political parties _____ around a common goal of reform.",
       "options": [
-        "confusing",
-        "lucid",
-        "vague",
-        "obscure"
+        "coalesced",
+        "fragmented",
+        "disbanded",
+        "separated"
       ],
-      "answer": 1,
-      "explanation": "Lucid means clear and easy to understand, which describes a writing style that makes complex ideas accessible"
+      "answer": 0,
+      "explanation": "'Coalesced'(합쳐졌다)는 정당들이 공동 목표를 중심으로 모여드는 것을 나타냄",
+      "option_explanations": [
+        null,
+        "antonym(반의어): 'fragmented'는 coalesce의 정반대로 분열과 조각남을 의미함",
+        "antonym(반의어): 'disbanded'는 해산을 의미하므로 함께 모여드는 것의 정반대",
+        "antonym(반의어): 'separated'는 coalesce의 정반대로 분리됨을 나타냄"
+      ]
     },
     {
       "type": "situation",
-      "word": "pensive",
-      "question": "Maria sits alone by the lake, gazing at the water without saying anything. She appears lost in thought. Which word best describes her mood?",
+      "question": "A student wants to describe a newly graduated class in a commencement ceremony. Which word would best fit: 'It was an _____ moment as the graduates stepped forward into their futures'?",
       "options": [
-        "jubilant",
-        "pensive",
-        "furious",
-        "indifferent"
+        "auspicious",
+        "ominous",
+        "unfortunate",
+        "mundane"
       ],
-      "answer": 1,
-      "explanation": "Pensive perfectly describes someone who is quiet, thoughtful, and deeply engaged in reflection or contemplation"
+      "answer": 0,
+      "explanation": "'Auspicious'(길한)는 대학 졸업이라는 새로운 시작의 긍정적 순간을 나타내기에 가장 적절함",
+      "option_explanations": [
+        null,
+        "antonym(반의어): 'ominous'는 auspicious의 정반대로 부정적 징조를 나타냄",
+        "antonym(반의어): 'unfortunate'는 행운이 없는 상황을 의미하여 졸업식의 긍정적 분위기에 맞지 않음",
+        "related word but wrong connotation: 'mundane'(평범한)은 졸업식의 특별함과 의미 있는 순간을 담지 못함"
+      ]
     },
     {
       "type": "situation",
-      "word": "deter",
-      "question": "A store owner installs expensive security cameras and alarm systems in his shop. What is he trying to do?",
+      "question": "A scientist observes diamonds under light and writes: 'The gems _____ beautifully when exposed to ultraviolet radiation.' Which word completes this best?",
       "options": [
-        "Attract more customers",
-        "Deter criminals from stealing",
-        "Make the store look modern",
-        "Improve the lighting inside"
+        "coruscate",
+        "dull",
+        "fade",
+        "absorb"
       ],
-      "answer": 1,
-      "explanation": "Security measures are installed specifically to deter or discourage criminal activity by making theft risky or difficult"
+      "answer": 0,
+      "explanation": "'Coruscate'(반짝이다)는 자외선 아래에서 다이아몬드가 빛나고 번뜩이는 광학적 현상을 정확하게 표현함",
+      "option_explanations": [
+        null,
+        "antonym(반의어): 'dull'은 coruscate의 정반대로 광택이 없고 희미함을 의미함",
+        "antonym(반의어): 'fade'는 빛이 약해짐을 의미하여 coruscate의 정반대 개념",
+        "related word but wrong connotation: 'absorb'는 빛을 반사하는 것이 아니라 흡수하는 것을 의미하므로 반짝임과 무관함"
+      ]
     }
   ]
 }

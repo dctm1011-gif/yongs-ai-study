@@ -3,20 +3,28 @@ import { ref, get } from 'firebase/database';
 import { database } from '../config/firebase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const NOTIFICATION_HOURS = [8, 10, 12, 16, 20, 22];
-const FALLBACK_BODY = '오늘도 열심히 학습해보세요. 계속 성장하고 있습니다! 💪';
-const LAST_REFRESH_KEY = 'notif_last_refresh_date';
+// 8시부터 22시까지 매시간 1개
+const START_HOUR = 8;
+const END_HOUR = 22;
+const LAST_REFRESH_KEY = 'notif_last_refresh_v2'; // v2: source=reviewPool
 
 function getKSTDateString(): string {
   const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
   return kst.toISOString().split('T')[0];
 }
 
+function shuffled<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 /**
- * Firebase에서 오늘의 응원메시지를 읽어 로컬 알림을 재스케줄링한다.
- * - 알림이 꺼져있으면 아무것도 안 함
- * - 오늘 이미 갱신했으면 스킵 (앱을 여러 번 열어도 중복 갱신 없음)
- * - Firebase 데이터 없으면 기본 메시지로 폴백
+ * Firebase english/reviewPool에서 단어를 가져와 8~22시 매시간 알림 스케줄링.
+ * 오래 복습하지 않은 단어를 우선 배치하고, 하루에 한 번만 갱신한다.
  */
 export async function refreshStudyNotifications(): Promise<void> {
   try {
@@ -27,23 +35,36 @@ export async function refreshStudyNotifications(): Promise<void> {
     const lastRefresh = await AsyncStorage.getItem(LAST_REFRESH_KEY);
     if (lastRefresh === today) return;
 
-    const snap = await get(ref(database, `notifications/daily/${today}`));
-    const data = snap.exists() ? snap.val() : null;
+    const snap = await get(ref(database, 'english/reviewPool'));
+    const raw = snap.exists() ? snap.val() : null;
+    const poolList: any[] = raw ? Object.values(raw) : [];
+
+    // 마지막 복습일 오름차순 (null → 가장 오래됨)
+    const words = poolList.sort((a, b) => {
+      const da = a.lastReviewedDate ?? '0000-00-00';
+      const db2 = b.lastReviewedDate ?? '0000-00-00';
+      return da < db2 ? -1 : da > db2 ? 1 : 0;
+    });
+
+    const hours = Array.from({ length: END_HOUR - START_HOUR + 1 }, (_, i) => START_HOUR + i);
 
     await Notifications.cancelAllScheduledNotificationsAsync();
 
-    for (const hour of NOTIFICATION_HOURS) {
-      const slot = data?.[hour];
-      const title = slot?.word
-        ? `📚 ${slot.word} (${slot.meaning})`
+    for (let i = 0; i < hours.length; i++) {
+      const hour = hours[i];
+      const w = words.length > 0 ? words[i % words.length] : null;
+      const title = w
+        ? `${w.emoji ?? '📚'} ${w.word} (${w.meaning})`
         : '📚 학습할 시간이에요!';
-      const body = slot?.message || FALLBACK_BODY;
+      const body = w
+        ? `복습할 시간이에요! ${w.word}의 뜻은 무엇일까요?`
+        : '오늘도 꾸준히! 계속 성장하고 있어요 💪';
 
       await Notifications.scheduleNotificationAsync({
         content: {
           title,
           body,
-          data: { type: 'study-reminder', word: slot?.word || '' },
+          data: { type: 'study-reminder', word: w?.word ?? '' },
           sound: 'default',
         },
         trigger: { type: 'daily', hour, minute: 0 } as any,
@@ -51,7 +72,7 @@ export async function refreshStudyNotifications(): Promise<void> {
     }
 
     await AsyncStorage.setItem(LAST_REFRESH_KEY, today);
-    console.log(`[notif] 알림 갱신 완료: ${today}`, data ? '(동적)' : '(기본)');
+    console.log(`[notif] 알림 갱신 완료: ${today} 리뷰풀 ${words.length}개 → ${hours.length}슬롯`);
   } catch (e) {
     console.warn('[notif] 알림 갱신 실패:', e);
   }

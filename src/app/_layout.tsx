@@ -28,20 +28,7 @@ export default function RootLayout() {
     refreshStudyNotifications();
   }, []);
 
-  // TODO: 테스트용 — 확인 후 삭제
-  useEffect(() => {
-    Notifications.scheduleNotificationAsync({
-      content: {
-        title: '📚 languish (시들다)',
-        body: '힘들어도 languish하지 말고 자신을 믿고 나아가! 당신은 할 수 있어! 💪',
-        data: { type: 'study-reminder', word: 'languish' },
-        sound: 'default',
-      },
-      trigger: { type: 'timeInterval', seconds: 10, repeats: false } as any,
-    });
-  }, []);
-
-  // 읽지 않은 공지사항이 있으면 자동으로 표시
+// 읽지 않은 공지사항이 있으면 자동으로 표시
   useEffect(() => {
     if (!loading && unreadCount > 0) {
       setShowAnnouncements(true);

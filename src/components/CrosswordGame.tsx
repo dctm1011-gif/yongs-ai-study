@@ -15,8 +15,8 @@ const KEYBOARD_ROWS = [
   ['A','S','D','F','G','H','J','K','L'],
   ['Z','X','C','V','B','N','M','⌫'],
 ];
-const DAILY_PLAY_KEY = 'crossword_last_played';
-const DAILY_STATS_KEY = 'crossword_last_stats';
+const DAILY_PLAY_KEY = 'crossword2_last_played';
+const DAILY_STATS_KEY = 'crossword2_last_stats';
 
 // --- Types ---
 
@@ -202,6 +202,7 @@ export default function CrosswordGame() {
   const [cursorCell, setCursorCell] = useState<{ row: number; col: number } | null>(null);
   const [bounds, setBounds] = useState({ minR: 0, maxR: 0, minC: 0, maxC: 0 });
   const [synced, setSynced] = useState(false);
+  const [revealedWordIds, setRevealedWordIds] = useState<Set<string>>(new Set());
 
   const loadGame = useCallback(async () => {
     setGameState('loading');
@@ -301,6 +302,7 @@ export default function CrosswordGame() {
       updates[ck(cell.row, cell.col)] = selectedWord.word[i];
     });
     setUserInputs(prev => ({ ...prev, ...updates }));
+    setRevealedWordIds(prev => new Set([...prev, selectedWord.wordId]));
     try {
       const db = getDatabase(getFirebaseApp());
       await dbSet(ref(db, `english/reviewPool/${selectedWord.wordId}/count`), 0);
@@ -444,7 +446,7 @@ export default function CrosswordGame() {
 
         {/* 완료 오버레이 */}
         {gameState === 'complete' && (
-          <View style={s.completeOverlay}>
+          <ScrollView style={s.completeOverlay} contentContainerStyle={s.completeContent}>
             <Text style={s.bigEmoji}>🎉</Text>
             <Text style={s.completeTitle}>완성!</Text>
             <Text style={s.completeSub}>모든 단어를 맞췄어요</Text>
@@ -457,8 +459,21 @@ export default function CrosswordGame() {
                 {synced ? '✓ Google Tasks 기록됨' : '완료'}
               </Text>
             </TouchableOpacity>
+            {revealedWordIds.size > 0 && (
+              <View style={s.reviewSection}>
+                <Text style={s.reviewTitle}>📖 복습할 단어</Text>
+                {placedWords
+                  .filter(pw => revealedWordIds.has(pw.wordId))
+                  .map(pw => (
+                    <View key={pw.wordId} style={s.reviewItem}>
+                      <Text style={s.reviewWord}>{pw.word}</Text>
+                      <Text style={s.reviewMeaning}>{pw.meaning}</Text>
+                    </View>
+                  ))}
+              </View>
+            )}
             <Text style={s.completeDailyNote}>내일 다시 도전하세요</Text>
-          </View>
+          </ScrollView>
         )}
       </View>
 
@@ -529,8 +544,10 @@ const s = StyleSheet.create({
 
   completeOverlay: {
     position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-    backgroundColor: 'rgba(248, 250, 252, 0.92)',
-    justifyContent: 'center', alignItems: 'center',
+    backgroundColor: 'rgba(248, 250, 252, 0.95)',
+  },
+  completeContent: {
+    flexGrow: 1, justifyContent: 'center', alignItems: 'center', padding: 24,
   },
   completeTitle: { fontSize: 26, fontWeight: '800', color: '#1e293b', marginBottom: 6 },
   completeSub: { fontSize: 14, color: '#64748b', marginBottom: 20 },
@@ -541,6 +558,22 @@ const s = StyleSheet.create({
   },
   completeBtnDone: { backgroundColor: '#10b981' },
   completeBtnText: { color: '#fff', fontWeight: '700', fontSize: 16 },
+  reviewSection: {
+    width: '100%', marginTop: 12, marginBottom: 12,
+    backgroundColor: '#fff', borderRadius: 12,
+    borderWidth: 1, borderColor: '#e2e8f0', overflow: 'hidden',
+  },
+  reviewTitle: {
+    fontSize: 13, fontWeight: '700', color: '#475569',
+    paddingHorizontal: 16, paddingVertical: 10,
+    backgroundColor: '#f8fafc', borderBottomWidth: 1, borderBottomColor: '#e2e8f0',
+  },
+  reviewItem: {
+    paddingHorizontal: 16, paddingVertical: 10,
+    borderBottomWidth: 1, borderBottomColor: '#f1f5f9',
+  },
+  reviewWord: { fontSize: 15, fontWeight: '700', color: '#1e293b', marginBottom: 2 },
+  reviewMeaning: { fontSize: 13, color: '#64748b' },
   completeDailyNote: {
     fontSize: 12, color: '#64748b',
     backgroundColor: '#e2e8f0',

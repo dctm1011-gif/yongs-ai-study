@@ -1,11 +1,6 @@
 [
   {
     "date": "2026-07-23",
-    "name": "Intel",
-    "ticker": "INTC"
-  },
-  {
-    "date": "2026-07-23",
     "name": "삼성전자",
     "ticker": "005930.KS"
   },
@@ -48,5 +43,10 @@
     "date": "2026-07-31",
     "name": "AMD",
     "ticker": "AMD"
+  },
+  {
+    "date": "2026-08-01",
+    "name": "Intel",
+    "ticker": "INTC"
   }
 ]

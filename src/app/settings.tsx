@@ -84,7 +84,7 @@ export default function SettingsScreen() {
           return;
         }
         setRemindersEnabled(true);
-        Alert.alert('✅ 활성화됨', '매일 6번 학습 알림을 받게 됩니다!');
+        Alert.alert('✅ 활성화됨', '8시~22시 매시간 복습 단어 알림을 받게 됩니다!');
       } else {
         await disableStudyNotifications();
         setRemindersEnabled(false);
