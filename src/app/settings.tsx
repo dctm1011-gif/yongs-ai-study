@@ -122,7 +122,7 @@ export default function SettingsScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>🔔 알림 설정</Text>
           <Text style={styles.feedbackDesc}>
-            08:00, 10:00, 12:00, 16:00, 20:00, 22:00에 학습 알림을 받습니다.
+            08:00~22:00, 매시간 학습 알림을 받습니다.
           </Text>
           <TouchableOpacity
             style={[styles.testButton, remindersEnabled && styles.testButtonActive]}

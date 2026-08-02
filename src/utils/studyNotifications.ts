@@ -9,7 +9,7 @@ import { Alert, Linking, Platform } from 'react-native';
 // 8시부터 22시까지 매시간 1개
 const START_HOUR = 8;
 const END_HOUR = 22;
-const LAST_REFRESH_KEY = 'notif_last_refresh_v2'; // v2: source=reviewPool
+const LAST_REFRESH_KEY = 'notif_last_refresh_v3'; // v3: 8~22시 매시간
 
 function getKSTDateString(): string {
   const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);

@@ -1406,5 +1406,65 @@
     "explanation": "To sparkle or flash with light; to shine brightly with a sudden gleam",
     "tip": "Synonyms: sparkle, glitter, twinkle, shimmer / Antonyms: dull, fade, dim / Literary and formal; suggests intermittent flashing rather than steady light",
     "emoji": "✨"
+  },
+  {
+    "id": "taciturn",
+    "word": "taciturn",
+    "pos": "adjective",
+    "date": "2026-08-03",
+    "meaning": "과묵한, 말이 적은",
+    "example_ko": "그는 과묵해서 대화에서 많이 기대하지 마",
+    "example_en": "He's pretty taciturn, so don't expect much from him in conversations",
+    "explanation": "Habitually reserved or uncommunicative in speech; not talkative or prone to sharing thoughts openly",
+    "tip": "반의어: verbose(말이 많은), garrulous(수다스러운). 동의어: reticent(말을 아끼는)와 유사하지만, taciturn은 더 personality trait에 가깝고 reticent는 상황에서 말을 아끼는 것",
+    "emoji": "🤐"
+  },
+  {
+    "id": "aggregate",
+    "word": "aggregate",
+    "pos": "verb/noun",
+    "date": "2026-08-03",
+    "meaning": "모으다, 합계; 모인 것, 총합",
+    "example_ko": "우리는 각 지역의 판매 데이터를 모두 모아야 해",
+    "example_en": "We need to aggregate all the sales data from each region",
+    "explanation": "To collect or combine things into a single sum or mass; the total formed by combining separate items",
+    "tip": "동의어: accumulate(축적하다), compile(편집하다). aggregate는 더 formal하고 데이터/수치 관련해서 자주 사용. 반의어: disperse(흩어지다), distribute(분배하다)",
+    "emoji": "📊"
+  },
+  {
+    "id": "malevolent",
+    "word": "malevolent",
+    "pos": "adjective",
+    "date": "2026-08-03",
+    "meaning": "악의 있는, 해로운",
+    "example_ko": "악당의 악의 있는 미소가 모두를 불편하게 했어",
+    "example_en": "The villain's malevolent grin made everyone uncomfortable",
+    "explanation": "Wishing or intending evil toward others; having or showing deep-seated resentment and desire to harm",
+    "tip": "반의어: benevolent(선의 있는) - benevolent와 함께 외우면 좋음. 동의어: sinister(불길한), evil(악한). malevolent는 의도적인 악의를 강조",
+    "emoji": "😈"
+  },
+  {
+    "id": "enumerate",
+    "word": "enumerate",
+    "pos": "verb",
+    "date": "2026-08-03",
+    "meaning": "열거하다, 나열하다",
+    "example_ko": "그 보고서는 지난 분기에 우리가 직면한 모든 문제들을 열거했어",
+    "example_en": "The report enumerates all the problems we encountered last quarter",
+    "explanation": "To mention things one by one; to list or count off items in detail, often in a systematic way",
+    "tip": "동의어: list(목록), itemize(항목별로 나열하기), catalog(분류하기). enumerate는 ordered list나 systematic approach를 강조. 명사형: enumeration",
+    "emoji": "📝"
+  },
+  {
+    "id": "equanimity",
+    "word": "equanimity",
+    "pos": "noun",
+    "date": "2026-08-03",
+    "meaning": "침착함, 평정심",
+    "example_ko": "혼란에도 불구하고 그녀는 놀라운 침착함으로 위기를 대처했어",
+    "example_en": "Despite the chaos, she handled the crisis with remarkable equanimity",
+    "explanation": "Mental calmness, composure, and evenness of temper especially in a difficult or stressful situation",
+    "tip": "동의어: composure(침착), serenity(고요함), tranquility(평온함). equanimity는 어려운 상황에서도 유지되는 정신적 평정을 강조. 반의어: agitation(동요), turmoil(혼란)",
+    "emoji": "😌"
   }
 ]
