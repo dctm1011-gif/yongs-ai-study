@@ -2,6 +2,9 @@
   command = "node -e \"process.exit(0)\""
   publish = "."
 
+[build.environment]
+  SECRETS_SCAN_OMIT_PATHS = ".claude,english/push_daily_to_firebase.py"
+
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
