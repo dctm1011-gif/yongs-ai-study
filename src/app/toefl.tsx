@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, TextInput, Alert, Modal, Dimensions } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, TextInput, Alert, Modal, Dimensions, Linking } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Speech from 'expo-speech';
 import { Audio } from 'expo-av';
 import { performanceMonitor } from '../utils/PerformanceMonitor';
-import { getDatabase, ref, onValue } from 'firebase/database';
+import { getDatabase, ref, onValue, set as dbSet } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
-import { writeCompletion } from '../utils/writeCompletion';
+import { useAuth } from '../context/AuthContext';
+import { userRef } from '../utils/userDb';
 
 // Firebase Functions run in UTC; KST (UTC+9) doesn't roll to the next
 // calendar day until 09:00 UTC, so a plain UTC date lags KST by a day
@@ -24,7 +25,7 @@ const PassageWithLookup = React.memo(({ text, vocabulary, textStyle }: {
 }) => {
   const [tooltip, setTooltip] = useState<{
     word: string; x: number; y: number;
-    loading: boolean; definition: string | null; phonetic?: string;
+    loading: boolean; definition: string | null;
   } | null>(null);
 
   const vocabMap = useMemo(() => {
@@ -55,7 +56,6 @@ const PassageWithLookup = React.memo(({ text, vocabulary, textStyle }: {
       if (!res.ok) throw new Error('not found');
       const data = await res.json();
       const entry = data[0];
-      const phonetic = entry?.phonetic ?? entry?.phonetics?.[0]?.text ?? '';
       const meanings: string[] = [];
       (entry?.meanings ?? []).slice(0, 2).forEach((m: any) => {
         const pos = m.partOfSpeech ?? '';
@@ -65,7 +65,6 @@ const PassageWithLookup = React.memo(({ text, vocabulary, textStyle }: {
       setTooltip({
         word, x: px, y: py, loading: false,
         definition: meanings.length > 0 ? meanings.join('\n') : null,
-        phonetic: phonetic || undefined,
       });
     } catch {
       setTooltip({ word, x: px, y: py, loading: false, definition: null });
@@ -100,15 +99,19 @@ const PassageWithLookup = React.memo(({ text, vocabulary, textStyle }: {
               top: tooltip.y + 14,
               left: Math.min(Math.max(tooltip.x - 60, 8), SCREEN_W - 220),
             }]}>
-              <Text style={styles.wordTooltipWord}>
-                {tooltip.word}{tooltip.phonetic ? `  ${tooltip.phonetic}` : ''}
-              </Text>
+              <Text style={styles.wordTooltipWord}>{tooltip.word}</Text>
               {tooltip.loading
                 ? <ActivityIndicator size="small" color="#94a3b8" style={{ marginTop: 4 }} />
                 : tooltip.definition
                   ? <Text style={styles.wordTooltipMeaning}>{tooltip.definition}</Text>
                   : <Text style={styles.wordTooltipNone}>사전에 없음</Text>
               }
+              <TouchableOpacity
+                onPress={() => Linking.openURL(`https://www.google.com/search?q=${encodeURIComponent(tooltip.word + ' 뜻')}&hl=ko&gl=KR&lr=lang_ko`)}
+                style={styles.wordTooltipGoogleBtn}
+              >
+                <Text style={styles.wordTooltipGoogleText}>🔍 구글 검색</Text>
+              </TouchableOpacity>
             </View>
           </TouchableOpacity>
         </Modal>
@@ -136,7 +139,45 @@ type ViewType = 'sections' | 'stats';
 
 const NETLIFY_BASE_URL = 'https://illustrious-cuchufli-7c4e58.netlify.app';
 
+const PARAPHRASE_SENTENCES = [
+  "The rapid advancement of technology has fundamentally transformed the way people communicate and share information across the globe.",
+  "Despite significant progress in renewable energy, fossil fuels continue to dominate the global energy supply due to their reliability and low cost.",
+  "Urban expansion has led to the destruction of natural habitats, threatening biodiversity and disrupting local ecosystems.",
+  "Research suggests that regular physical exercise not only improves physical health but also enhances cognitive function and mental well-being.",
+  "The increasing interconnectedness of global economies means that financial crises in one country can quickly spread to others.",
+  "Access to quality education remains unequal across different socioeconomic groups, perpetuating cycles of poverty and limiting social mobility.",
+  "Climate change poses one of the greatest existential threats to humanity, requiring immediate and coordinated international action.",
+  "The rise of artificial intelligence is reshaping labor markets, automating routine tasks while creating new categories of skilled employment.",
+  "Cultural exchange through travel and media has fostered greater cross-cultural understanding, though it has also raised concerns about cultural homogenization.",
+  "The depletion of freshwater resources is becoming a critical global challenge, driven by population growth, agricultural demand, and climate change.",
+  "Scientific innovation in the medical field has dramatically increased human life expectancy over the past century.",
+  "Social media platforms have given ordinary citizens a powerful voice in public discourse, but also facilitated the spread of misinformation.",
+  "Governments around the world are grappling with how to regulate powerful technology companies that control vast amounts of personal data.",
+  "The overconsumption of natural resources by wealthy nations places a disproportionate burden on developing countries and future generations.",
+  "Advances in genetic engineering offer promising solutions to hereditary diseases, while simultaneously raising profound ethical questions.",
+  "Economic inequality within societies has been growing steadily, with wealth increasingly concentrated among a small proportion of the population.",
+  "The shift toward remote work has blurred the boundaries between professional and personal life, with both positive and negative consequences.",
+  "Deforestation in tropical regions contributes significantly to greenhouse gas emissions and accelerates the pace of global warming.",
+  "Public investment in infrastructure is essential for sustaining economic growth and ensuring equal access to opportunities across regions.",
+  "Language plays a central role in shaping cultural identity and preserving the heritage of communities over generations.",
+  "The global food system is under increasing pressure to produce more food sustainably while reducing its environmental footprint.",
+  "Migration driven by conflict, poverty, and climate change is testing the capacity of nations to integrate large numbers of newcomers.",
+  "The privatization of public services has been both praised for increasing efficiency and criticized for exacerbating social inequality.",
+  "Children who grow up in bilingual environments often demonstrate superior cognitive flexibility and problem-solving abilities.",
+  "Space exploration has yielded technological innovations with widespread applications in medicine, communications, and materials science.",
+  "The erosion of biodiversity in marine ecosystems is largely driven by overfishing, pollution, and ocean acidification.",
+  "Mental health disorders affect a significant portion of the global population, yet access to effective treatment remains limited in many regions.",
+  "The proliferation of nuclear weapons represents a persistent and serious threat to global security and international stability.",
+];
+
+function getDailySentence(): string {
+  const dayOfYear = Math.floor((Date.now() + 9 * 3600000) / 86400000);
+  return PARAPHRASE_SENTENCES[dayOfYear % PARAPHRASE_SENTENCES.length];
+}
+
 export default function TOEFLScreen() {
+  const { user } = useAuth();
+  const uid = user!.uid;
   const defaultSections = [
     {
       id: 'reading' as const,
@@ -184,11 +225,16 @@ export default function TOEFLScreen() {
   const [selectedAnswers, setSelectedAnswers] = useState<{ [key: string]: number }>({});
   const [isPlaying, setIsPlaying] = useState(false);
   const [speakingPlayingIdx, setSpeakingPlayingIdx] = useState<number | null>(null);
-  const [writingAnswers, setWritingAnswers] = useState<{ [key: string]: string }>({});
-  const [writingLines, setWritingLines] = useState<string[]>([]);
-  const [writingView, setWritingView] = useState<'write' | 'saved'>('write');
-  const [savedEssays, setSavedEssays] = useState<{ id: string; content: string; date: string }[]>([]);
-  const [revealedParaphrases, setRevealedParaphrases] = useState<boolean[]>([]);
+  const [writingInput, setWritingInput] = useState('');
+  const [paraphraseFeedback, setParaphraseFeedback] = useState<{
+    score: number;
+    meaning: string;
+    vocabulary: string;
+    grammar: string;
+    suggestion: string;
+    rewrite: string;
+  } | null>(null);
+  const [feedbackLoading, setFeedbackLoading] = useState(false);
   const [isCached, setIsCached] = useState(false);
   const [loadStartTime] = useState(Date.now());
   const [toeflProblems, setToeflProblems] = useState<any>(null);
@@ -357,14 +403,18 @@ export default function TOEFLScreen() {
     );
     saveSections(updated);
     if (nowCompleting) {
-      const typeMap: Record<string, Parameters<typeof writeCompletion>[0]> = {
+      const keyMap: Record<string, string> = {
         reading: 'toefl_reading',
         listening: 'toefl_listening',
         writing: 'toefl_writing',
         speaking: 'toefl_speaking',
       };
-      const type = typeMap[sectionId];
-      if (type) writeCompletion(type);
+      const fbKey = keyMap[sectionId];
+      if (fbKey) {
+        const today = getKSTDateString();
+        const db = getDatabase(getFirebaseApp());
+        dbSet(userRef(uid, `completion/${fbKey}/${today}`), true).catch(() => {});
+      }
     }
   };
 
@@ -474,133 +524,29 @@ export default function TOEFLScreen() {
     setSpeakingPlayingIdx(null);
   };
 
-  const updateWritingLine = (idx: number, text: string) => {
-    const updated = [...writingLines];
-    updated[idx] = text;
-    setWritingLines(updated);
-    setWritingAnswers({ ...writingAnswers, essay1: updated.join('\n') });
-  };
-
-  const saveEssay = async () => {
-    const content = writingAnswers['essay1']?.trim();
-    if (!content) {
-      Alert.alert('알림', '따라 쓴 문장을 입력해주세요.');
+  const requestParaphraseFeedback = async (original: string) => {
+    const answer = writingInput.trim();
+    if (!answer) {
+      Alert.alert('알림', '패러프레이즈를 입력해주세요.');
       return;
     }
-
+    setFeedbackLoading(true);
+    setParaphraseFeedback(null);
     try {
-      const essay = {
-        id: Date.now().toString(),
-        content,
-        date: new Date().toLocaleDateString('ko-KR'),
-      };
-
-      const updated = [essay, ...savedEssays];
-      setSavedEssays(updated);
-      await AsyncStorage.setItem('writing_saved', JSON.stringify(updated));
-      Alert.alert('✅ 저장됨', '에세이가 임시저장되었습니다.');
-      setWritingAnswers({ essay1: '' });
-      setWritingLines([]);
-    } catch (error) {
-      Alert.alert('오류', '저장 실패');
-    }
-  };
-
-  const loadEssay = (essay: { id: string; content: string; date: string }) => {
-    setWritingAnswers({ essay1: essay.content });
-    setWritingLines(essay.content.split('\n'));
-    setWritingView('write');
-  };
-
-  const deleteEssay = async (id: string) => {
-    const updated = savedEssays.filter(e => e.id !== id);
-    setSavedEssays(updated);
-    await AsyncStorage.setItem('writing_saved', JSON.stringify(updated));
-  };
-
-  const submitEssay = async () => {
-    const content = writingAnswers['essay1']?.trim();
-    if (!content) {
-      Alert.alert('알림', '에세이를 입력해주세요.');
-      return;
-    }
-
-    if (content.split(/\s+/).length < 150) {
-      Alert.alert('알림', '최소 150단어 이상 작성해주세요.');
-      return;
-    }
-
-    try {
-      const submission = {
-        id: Date.now().toString(),
-        content,
-        submitDate: new Date().toLocaleString('ko-KR'),
-        wordCount: content.split(/\s+/).length,
-      };
-
-      const existingSubmissions = await AsyncStorage.getItem('writing_submitted');
-      const submissions = existingSubmissions ? JSON.parse(existingSubmissions) : [];
-      submissions.push(submission);
-
-      await AsyncStorage.setItem('writing_submitted', JSON.stringify(submissions));
-      await reflectToEnglishLearning(content);
-
-      Alert.alert('✅ 제출 완료', `제출되었습니다! (${submission.wordCount}단어)`);
-      setWritingAnswers({ essay1: '' });
-    } catch (error) {
-      Alert.alert('오류', '제출 실패');
-    }
-  };
-
-  const reflectToEnglishLearning = async (essayContent: string) => {
-    try {
-      const words = essayContent
-        .split(/\s+/)
-        .map(w => w.replace(/[^a-zA-Z]/g, '').toLowerCase())
-        .filter(w => w.length >= 3);
-
-      const wordFreq: { [key: string]: number } = {};
-      words.forEach(w => {
-        wordFreq[w] = (wordFreq[w] || 0) + 1;
+      const res = await fetch(`${NETLIFY_BASE_URL}/api/paraphrase-feedback`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ original, userAnswer: answer }),
       });
-
-      const frequentWords = Object.entries(wordFreq)
-        .filter(([_, freq]) => freq >= 2)
-        .map(([word]) => word)
-        .slice(0, 10);
-
-      if (frequentWords.length > 0) {
-        const englishData = await AsyncStorage.getItem('english_words');
-        const words_list = englishData ? JSON.parse(englishData) : [];
-
-        const newWords = frequentWords.map(word => ({
-          id: `writing_${Date.now()}_${word}`,
-          word,
-          from: 'TOEFL Writing',
-          learned: false,
-          priority: 'high',
-        }));
-
-        const updated = [...newWords, ...words_list];
-        await AsyncStorage.setItem('english_words', JSON.stringify(updated));
-        console.log('Writing 단어들이 English 학습에 추가됨:', frequentWords);
-      }
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      setParaphraseFeedback(data);
     } catch (error) {
-      console.warn('English 반영 실패:', error);
+      Alert.alert('오류', 'AI 피드백 요청 실패. 인터넷 연결을 확인해주세요.');
+    } finally {
+      setFeedbackLoading(false);
     }
   };
-
-  useEffect(() => {
-    const loadSavedEssays = async () => {
-      try {
-        const saved = await AsyncStorage.getItem('writing_saved');
-        if (saved) setSavedEssays(JSON.parse(saved));
-      } catch (error) {
-        console.error('임시저장 로드 실패:', error);
-      }
-    };
-    loadSavedEssays();
-  }, []);
 
   const saveVocabularyToNetlify = async (word: string, meaning: string, emoji: string, section: string) => {
     try {
@@ -731,65 +677,89 @@ export default function TOEFLScreen() {
   };
 
   const renderWritingContent = () => {
-    const sentences: { original: string; paraphrase: string; tip: string }[] =
-      toeflProblems?.writing?.sentences || [];
-
-    const toggleReveal = (idx: number) => {
-      setRevealedParaphrases(prev => {
-        const next = [...prev];
-        next[idx] = !next[idx];
-        return next;
-      });
-    };
+    const sentence = getDailySentence();
+    const scoreColor = paraphraseFeedback
+      ? paraphraseFeedback.score >= 8 ? '#10b981'
+        : paraphraseFeedback.score >= 5 ? '#f59e0b'
+        : '#ef4444'
+      : '#2563eb';
 
     return (
-      <ScrollView style={styles.contentScroll}>
+      <ScrollView style={styles.contentScroll} keyboardShouldPersistTaps="handled">
         <Text style={styles.contentTitle}>✍️ Paraphrasing</Text>
+
+        {/* 오늘의 문장 */}
+        <View style={styles.writingPromptBox}>
+          <Text style={styles.writingPromptLabel}>📌 오늘의 문장</Text>
+          <Text style={styles.writingModelSentence}>{sentence}</Text>
+        </View>
+
         <Text style={styles.writingLabel}>
-          리딩 지문의 핵심 문장을 같은 의미로 다르게 표현해보세요.
+          같은 의미를 다른 단어와 문장 구조로 표현해보세요.
         </Text>
 
-        {sentences.length === 0 ? (
-          <Text style={styles.loadingText}>Loading writing problems...</Text>
-        ) : (
-          sentences.map((item, idx) => (
-            <View key={idx} style={styles.writingLineBlock}>
-              <Text style={styles.writingPromptLabel}>원문 {idx + 1}</Text>
-              <Text style={styles.writingModelSentence}>{item.original}</Text>
+        {/* 입력 */}
+        <TextInput
+          style={styles.writingLineInput}
+          placeholder="여기에 패러프레이즈를 입력하세요..."
+          placeholderTextColor="#94a3b8"
+          value={writingInput}
+          onChangeText={text => {
+            setWritingInput(text);
+            if (paraphraseFeedback) setParaphraseFeedback(null);
+          }}
+          multiline
+          textAlignVertical="top"
+        />
 
-              <TextInput
-                style={styles.writingLineInput}
-                placeholder="패러프레이즈를 입력해보세요..."
-                placeholderTextColor="#94a3b8"
-                value={writingLines[idx] || ''}
-                onChangeText={(text) => updateWritingLine(idx, text)}
-                multiline
-              />
+        {/* 피드백 버튼 */}
+        <TouchableOpacity
+          style={[styles.feedbackBtn, feedbackLoading && { opacity: 0.6 }]}
+          onPress={() => requestParaphraseFeedback(sentence)}
+          disabled={feedbackLoading}
+        >
+          {feedbackLoading
+            ? <ActivityIndicator color="#fff" size="small" />
+            : <Text style={styles.feedbackBtnText}>🤖 AI 피드백 받기</Text>
+          }
+        </TouchableOpacity>
 
-              <TouchableOpacity
-                style={styles.saveButton}
-                onPress={() => toggleReveal(idx)}
-              >
-                <Text style={styles.saveButtonText}>
-                  {revealedParaphrases[idx] ? '🙈 정답 숨기기' : '💡 정답 보기'}
-                </Text>
-              </TouchableOpacity>
-
-              {revealedParaphrases[idx] && (
-                <View style={styles.writingPromptBox}>
-                  <Text style={styles.writingPromptLabel}>모범 패러프레이즈</Text>
-                  <Text style={styles.writingPrompt}>{item.paraphrase}</Text>
-                  {item.tip ? (
-                    <>
-                      <Text style={[styles.writingPromptLabel, { marginTop: 8 }]}>💡 기법</Text>
-                      <Text style={styles.writingPrompt}>{item.tip}</Text>
-                    </>
-                  ) : null}
-                </View>
-              )}
+        {/* 피드백 결과 */}
+        {paraphraseFeedback && (
+          <View style={styles.feedbackPanel}>
+            {/* 점수 */}
+            <View style={[styles.scoreRow, { borderLeftColor: scoreColor }]}>
+              <Text style={[styles.scoreNum, { color: scoreColor }]}>
+                {paraphraseFeedback.score}
+                <Text style={styles.scoreDenom}>/10</Text>
+              </Text>
+              <Text style={styles.scoreLabel}>종합 점수</Text>
             </View>
-          ))
+
+            <FeedbackItem label="💬 의미 보존" text={paraphraseFeedback.meaning} />
+            <FeedbackItem label="📖 어휘 다양성" text={paraphraseFeedback.vocabulary} />
+            <FeedbackItem label="✏️ 문법" text={paraphraseFeedback.grammar} />
+            <FeedbackItem label="💡 개선 방향" text={paraphraseFeedback.suggestion} highlight />
+
+            {/* 개선된 예시 */}
+            <View style={styles.rewriteBox}>
+              <Text style={styles.rewriteLabel}>✨ 개선 예시</Text>
+              <Text style={styles.rewriteText}>{paraphraseFeedback.rewrite}</Text>
+            </View>
+
+            <TouchableOpacity
+              style={styles.retryBtn}
+              onPress={() => {
+                setWritingInput('');
+                setParaphraseFeedback(null);
+              }}
+            >
+              <Text style={styles.retryBtnText}>다시 써보기</Text>
+            </TouchableOpacity>
+          </View>
         )}
+
+        <View style={{ height: 60 }} />
       </ScrollView>
     );
   };
@@ -1031,6 +1001,15 @@ export default function TOEFLScreen() {
         </ScrollView>
       )}
     </SafeAreaView>
+  );
+}
+
+function FeedbackItem({ label, text, highlight = false }: { label: string; text: string; highlight?: boolean }) {
+  return (
+    <View style={highlight ? styles.feedbackItemHighlight : styles.feedbackItem}>
+      <Text style={styles.feedbackItemLabel}>{label}</Text>
+      <Text style={styles.feedbackItemText}>{text}</Text>
+    </View>
   );
 }
 
@@ -1298,6 +1277,18 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontStyle: 'italic',
   },
+  wordTooltipGoogleBtn: {
+    marginTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255,255,255,0.15)',
+    paddingTop: 7,
+    alignItems: 'center',
+  },
+  wordTooltipGoogleText: {
+    color: '#60a5fa',
+    fontSize: 12,
+    fontWeight: '600',
+  },
   vocabBox: {
     backgroundColor: '#fffbeb',
     padding: 16,
@@ -1519,12 +1510,117 @@ const styles = StyleSheet.create({
   writingLineInput: {
     backgroundColor: '#fff',
     borderRadius: 10,
+    borderWidth: 1.5,
+    borderColor: '#cbd5e1',
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    fontSize: 15,
+    color: '#1e293b',
+    minHeight: 120,
+    marginHorizontal: 16,
+    marginTop: 4,
+    lineHeight: 22,
+  },
+  feedbackBtn: {
+    marginHorizontal: 16,
+    marginTop: 12,
+    backgroundColor: '#ec4899',
+    borderRadius: 10,
+    paddingVertical: 14,
+    alignItems: 'center',
+  },
+  feedbackBtnText: {
+    color: '#fff',
+    fontSize: 15,
+    fontWeight: '700',
+  },
+  feedbackPanel: {
+    marginHorizontal: 16,
+    marginTop: 20,
+    backgroundColor: '#fff',
+    borderRadius: 14,
     borderWidth: 1,
     borderColor: '#e2e8f0',
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    padding: 16,
+    gap: 12,
+  },
+  scoreRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    paddingLeft: 12,
+    borderLeftWidth: 4,
+    borderLeftColor: '#2563eb',
+    marginBottom: 4,
+  },
+  scoreNum: {
+    fontSize: 36,
+    fontWeight: '800',
+    color: '#2563eb',
+  },
+  scoreDenom: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#94a3b8',
+  },
+  scoreLabel: {
+    fontSize: 14,
+    color: '#64748b',
+    fontWeight: '600',
+  },
+  feedbackItem: {
+    backgroundColor: '#f8fafc',
+    borderRadius: 8,
+    padding: 12,
+  },
+  feedbackItemLabel: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#64748b',
+    marginBottom: 4,
+  },
+  feedbackItemText: {
     fontSize: 14,
     color: '#1e293b',
+    lineHeight: 20,
+  },
+  feedbackItemHighlight: {
+    backgroundColor: '#fef3c7',
+    borderRadius: 8,
+    padding: 12,
+  },
+  rewriteBox: {
+    backgroundColor: '#eff6ff',
+    borderRadius: 10,
+    padding: 14,
+    borderLeftWidth: 3,
+    borderLeftColor: '#2563eb',
+  },
+  rewriteLabel: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#2563eb',
+    marginBottom: 6,
+  },
+  rewriteText: {
+    fontSize: 14,
+    color: '#1e293b',
+    lineHeight: 22,
+    fontStyle: 'italic',
+  },
+  retryBtn: {
+    alignSelf: 'center',
+    marginTop: 4,
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#cbd5e1',
+  },
+  retryBtnText: {
+    fontSize: 13,
+    color: '#64748b',
+    fontWeight: '600',
   },
   buttonRow: {
     flexDirection: 'row',
