@@ -1,13 +1,13 @@
 // API utility for fetching data from Netlify
 const NETLIFY_BASE_URL = 'https://illustrious-cuchufli-7c4e58.netlify.app';
 
-export async function fetchEnglishData() {
+export async function fetchVocaData() {
   try {
     const response = await fetch(`${NETLIFY_BASE_URL}/english/words_db.json`);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return await response.json();
   } catch (error) {
-    console.error('Failed to fetch English data:', error);
+    console.error('Failed to fetch Voca data:', error);
     return null;
   }
 }

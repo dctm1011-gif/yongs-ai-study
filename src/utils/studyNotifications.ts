@@ -1,7 +1,10 @@
 import * as Notifications from 'expo-notifications';
+import { SchedulableTriggerInputTypes } from 'expo-notifications';
 import { ref, get } from 'firebase/database';
 import { database } from '../config/firebase';
+import { userRef } from './userDb';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert, Linking, Platform } from 'react-native';
 
 // 8시부터 22시까지 매시간 1개
 const START_HOUR = 8;
@@ -26,7 +29,7 @@ function shuffled<T>(arr: T[]): T[] {
  * Firebase english/reviewPool에서 단어를 가져와 8~22시 매시간 알림 스케줄링.
  * 오래 복습하지 않은 단어를 우선 배치하고, 하루에 한 번만 갱신한다.
  */
-export async function refreshStudyNotifications(): Promise<void> {
+export async function refreshStudyNotifications(uid?: string): Promise<void> {
   try {
     const enabled = await AsyncStorage.getItem('reminders_enabled');
     if (enabled !== 'true') return;
@@ -35,7 +38,7 @@ export async function refreshStudyNotifications(): Promise<void> {
     const lastRefresh = await AsyncStorage.getItem(LAST_REFRESH_KEY);
     if (lastRefresh === today) return;
 
-    const snap = await get(ref(database, 'english/reviewPool'));
+    const snap = await get(uid ? userRef(uid, 'english/reviewPool') : ref(database, 'english/reviewPool'));
     const raw = snap.exists() ? snap.val() : null;
     const poolList: any[] = raw ? Object.values(raw) : [];
 
@@ -67,7 +70,12 @@ export async function refreshStudyNotifications(): Promise<void> {
           data: { type: 'study-reminder', word: w?.word ?? '' },
           sound: 'default',
         },
-        trigger: { type: 'daily', hour, minute: 0 } as any,
+        trigger: {
+          type: SchedulableTriggerInputTypes.DAILY,
+          hour,
+          minute: 0,
+          channelId: 'study-reminder',
+        },
       });
     }
 
@@ -99,6 +107,23 @@ export async function enableStudyNotifications(): Promise<boolean> {
   await AsyncStorage.setItem('reminders_enabled', 'true');
   await AsyncStorage.removeItem(LAST_REFRESH_KEY); // 강제 갱신
   await refreshStudyNotifications();
+
+  // Android: 배터리 최적화 제외 안내 (앱이 백그라운드에서도 알림을 받으려면 필요)
+  if (Platform.OS === 'android') {
+    Alert.alert(
+      '⚠️ 백그라운드 알림 설정',
+      '앱이 닫혀있을 때도 알림을 받으려면:\n\n' +
+      '1. 설정 → 앱 → YongStudy\n' +
+      '2. 배터리 → 제한 없음 선택\n' +
+      '3. 알람 및 리마인더 → 허용\n\n' +
+      '지금 설정으로 이동할까요?',
+      [
+        { text: '나중에', style: 'cancel' },
+        { text: '설정 열기', onPress: () => Linking.openSettings() },
+      ]
+    );
+  }
+
   return true;
 }
 

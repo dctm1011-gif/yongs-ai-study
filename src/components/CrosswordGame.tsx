@@ -5,6 +5,8 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getDatabase, ref, get, set as dbSet } from 'firebase/database';
+import { useAuth } from '../context/AuthContext';
+import { userRef } from '../utils/userDb';
 import { getFirebaseApp } from '../config/firebase';
 
 const GRID_SIZE = 15;
@@ -194,6 +196,8 @@ function getKSTDateString(): string {
 type GameState = 'loading' | 'empty' | 'playing' | 'complete';
 
 export default function CrosswordGame() {
+  const { user } = useAuth();
+  const uid = user!.uid;
   const [gameState, setGameState] = useState<GameState>('loading');
   const [placedWords, setPlacedWords] = useState<PlacedWord[]>([]);
   const [grid, setGrid] = useState<RawGrid>([]);
@@ -227,7 +231,7 @@ export default function CrosswordGame() {
       }
 
       const db = getDatabase(getFirebaseApp());
-      const snapshot = await get(ref(db, 'english/reviewPool'));
+      const snapshot = await get(userRef(uid, 'english/reviewPool'));
       if (!snapshot.exists()) { setGameState('empty'); return; }
 
       const pool = snapshot.val() as Record<string, any>;
@@ -305,7 +309,7 @@ export default function CrosswordGame() {
     setRevealedWordIds(prev => new Set([...prev, selectedWord.wordId]));
     try {
       const db = getDatabase(getFirebaseApp());
-      await dbSet(ref(db, `english/reviewPool/${selectedWord.wordId}/count`), 0);
+      await dbSet(userRef(uid, `english/reviewPool/${selectedWord.wordId}/count`), 0);
     } catch (e) {
       console.warn('리뷰 카운트 초기화 실패:', e);
     }
@@ -357,7 +361,7 @@ export default function CrosswordGame() {
     try {
       const today = getKSTDateString();
       const db = getDatabase(getFirebaseApp());
-      await dbSet(ref(db, `completion/english_crossword/${today}`), true);
+      await dbSet(userRef(uid, `completion/english_crossword/${today}`), true);
       setSynced(true);
       const saved = await AsyncStorage.getItem(DAILY_STATS_KEY);
       if (saved) {

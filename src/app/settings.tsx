@@ -201,7 +201,7 @@ export default function SettingsScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>주요 기능</Text>
           <View style={styles.item}>
-            <Text style={styles.label}>📚 English</Text>
+            <Text style={styles.label}>📚 Voca</Text>
             <Text style={styles.value}>영어 단어 학습</Text>
           </View>
           <View style={styles.item}>

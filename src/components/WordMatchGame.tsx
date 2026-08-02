@@ -2,7 +2,9 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Speech from 'expo-speech';
-import { getDatabase, ref, get, update, set as dbSet } from 'firebase/database';
+import { getDatabase, get, update, set as dbSet } from 'firebase/database';
+import { useAuth } from '../context/AuthContext';
+import { userRef } from '../utils/userDb';
 import { getFirebaseApp } from '../config/firebase';
 
 const DAILY_PLAY_KEY = 'wordmatch_last_played';
@@ -49,6 +51,8 @@ const shuffle = <T,>(arr: T[]): T[] => {
 };
 
 export default function WordMatchGame() {
+  const { user } = useAuth();
+  const uid = user!.uid;
   const [gameState, setGameState] = useState<GameState>('loading');
   const [cards, setCards] = useState<Card[]>([]);
   const [flippedIds, setFlippedIds] = useState<string[]>([]);
@@ -93,7 +97,7 @@ export default function WordMatchGame() {
 
     try {
       const db = getDatabase(getFirebaseApp());
-      const snapshot = await get(ref(db, 'english/reviewPool'));
+      const snapshot = await get(userRef(uid, 'english/reviewPool'));
       if (!snapshot.exists()) {
         setGameState('empty');
         return;
@@ -121,17 +125,13 @@ export default function WordMatchGame() {
 
       // "오늘 처음 출제"인 단어만 카운트 반영 (등장 자체가 리뷰, 하루 1회 캡)
       const today = getKSTDateString();
-      const updates: Record<string, any> = {};
       for (const w of selected) {
         if (w.lastReviewedDate !== today) {
-          updates[`english/reviewPool/${w.wordId}/count`] = w.count + 1;
-          updates[`english/reviewPool/${w.wordId}/lastReviewedDate`] = today;
+          update(userRef(uid, `english/reviewPool/${w.wordId}`), {
+            count: w.count + 1,
+            lastReviewedDate: today,
+          }).catch(error => console.warn('리뷰 카운트 반영 실패:', error));
         }
-      }
-      if (Object.keys(updates).length > 0) {
-        update(ref(db), updates).catch(error =>
-          console.warn('리뷰 카운트 반영 실패:', error)
-        );
       }
 
       const newCards: Card[] = shuffle(
@@ -207,7 +207,7 @@ export default function WordMatchGame() {
     try {
       const today = getKSTDateString();
       const db = getDatabase(getFirebaseApp());
-      await dbSet(ref(db, `completion/english_word_match/${today}`), true);
+      await dbSet(userRef(uid, `completion/english_word_match/${today}`), true);
       setSynced(true);
       const saved = await AsyncStorage.getItem(DAILY_STATS_KEY);
       if (saved) {

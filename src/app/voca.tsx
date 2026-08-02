@@ -1,13 +1,17 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, Alert, ToastAndroid } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, Alert, ToastAndroid, Linking, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Speech from 'expo-speech';
 import { cacheManager } from '../utils/CacheManager';
 import { performanceMonitor } from '../utils/PerformanceMonitor';
 import { getDatabase, ref, onValue, get, set as dbSet } from 'firebase/database';
+import * as Notifications from 'expo-notifications';
+import { SchedulableTriggerInputTypes } from 'expo-notifications';
+import { NOTIF_LOG_KEY } from './_layout';
 import { getFirebaseApp } from '../config/firebase';
-import { writeCompletion } from '../utils/writeCompletion';
+import { useAuth } from '../context/AuthContext';
+import { userRef } from '../utils/userDb';
 import GameHub from '../components/GameHub';
 
 // Firebase Functions run in UTC; KST (UTC+9) doesn't roll to the next
@@ -49,14 +53,13 @@ interface Quiz {
   correct_answer?: boolean;
 }
 
-type ViewType = 'words' | 'quiz' | 'game' | 'stats';
+type ViewType = 'words' | 'quiz' | 'game';
 
 const ITEMS_PER_PAGE = 15; // Pagination size for FlatList
 
-async function fetchReadStatusFromFirebase(today: string): Promise<Record<string, boolean>> {
+async function fetchReadStatusFromFirebase(uid: string, today: string): Promise<Record<string, boolean>> {
   try {
-    const db = getDatabase(getFirebaseApp());
-    const snapshot = await get(ref(db, `english/readStatus/${today}`));
+    const snapshot = await get(userRef(uid, `english/readStatus/${today}`));
     return snapshot.exists() ? snapshot.val() : {};
   } catch (error) {
     console.warn('읽음 상태 Firebase 조회 실패:', error);
@@ -79,14 +82,24 @@ function mapFirebaseWords(data: any, today: string): NetlifyWord[] {
   }));
 }
 
+function shuffleArrayStatic<T>(array: T[]): T[] {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
 function mapFirebaseQuizzes(data: any): Quiz[] {
   const rawQuizzes = Array.isArray(data.quiz) ? data.quiz : [];
   if (rawQuizzes.length === 0) return [];
   return rawQuizzes.map((q: any, idx: number) => {
     const wordId = (q.word || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
     const type: Quiz['type'] = q.type === 'fill_blank' ? 'blanks' : (q.type === 'situation' ? 'situation' : 'meaning');
-    const options: string[] = Array.isArray(q.options) ? q.options : [];
-    const correct = typeof q.answer === 'number' ? (options[q.answer] ?? '') : (q.answer ?? '');
+    const rawOptions: string[] = Array.isArray(q.options) ? q.options : [];
+    const correct = typeof q.answer === 'number' ? (rawOptions[q.answer] ?? '') : (q.answer ?? '');
+    const options = shuffleArrayStatic(rawOptions);
     return {
       id: `fb_${idx}_${wordId}`,
       wordId,
@@ -101,7 +114,9 @@ function mapFirebaseQuizzes(data: any): Quiz[] {
   });
 }
 
-export default function EnglishScreen() {
+export default function VocaScreen() {
+  const { user } = useAuth();
+  const uid = user!.uid;
   const [view, setView] = useState<ViewType>('words');
   const [words, setWords] = useState<Word[]>([]);
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
@@ -111,21 +126,25 @@ export default function EnglishScreen() {
   const [refreshing, setRefreshing] = useState(false);
   const [loadStartTime] = useState(Date.now());
   const [isCached, setIsCached] = useState(false);
+  const [showDebug, setShowDebug] = useState(false);
+  const [debugScheduled, setDebugScheduled] = useState<any[]>([]);
+  const [debugLog, setDebugLog] = useState<string[]>([]);
+  const [debugRemindersEnabled, setDebugRemindersEnabled] = useState<string | null>(null);
   const [lastUpdateTime, setLastUpdateTime] = useState<string | null>(null);
   const [cacheTimeLeft, setCacheTimeLeft] = useState<string>('캐시 정보 로딩 중...');
   const [speakingWordId, setSpeakingWordId] = useState<string | null>(null);
 
   // Performance monitoring
   useEffect(() => {
-    performanceMonitor.startTiming('English');
+    performanceMonitor.startTiming('Voca');
   }, []);
 
   // Log performance timing
   useEffect(() => {
     if (!loading) {
       const loadTime = Date.now() - loadStartTime;
-      performanceMonitor.recordMetric('English', isCached, isCached);
-      console.log(`📊 English tab loaded in ${loadTime}ms (cached: ${isCached})`);
+      performanceMonitor.recordMetric('Voca', isCached, isCached);
+      console.log(`📚 Voca tab loaded in ${loadTime}ms (cached: ${isCached})`);
     }
   }, [loading, isCached, loadStartTime]);
 
@@ -173,14 +192,14 @@ export default function EnglishScreen() {
       wordsRef,
       async snapshot => {
         if (!snapshot.exists()) {
-          console.warn('No English data found in Firebase for today');
+          console.warn('No Voca data found in Firebase for today');
           return;
         }
 
         const netlifyData = mapFirebaseWords(snapshot.val(), today);
         if (netlifyData.length === 0) return;
 
-        console.log(`📚 Loaded ${netlifyData.length} daily English phrases from Firebase`);
+        console.log(`📚 Loaded ${netlifyData.length} daily Voca phrases from Firebase`);
 
         const savedWords = await AsyncStorage.getItem('english_words');
         let parsedSavedWords: unknown = null;
@@ -201,7 +220,7 @@ export default function EnglishScreen() {
           (acc: any, w) => ({ ...acc, [w.id]: w.isRead }),
           {}
         );
-        const remoteReadStatus = await fetchReadStatusFromFirebase(today);
+        const remoteReadStatus = await fetchReadStatusFromFirebase(uid, today);
         const mergedWords = netlifyData.map(w => ({
           ...w,
           isRead: remoteReadStatus[w.id] ?? savedReadStatus[w.id] ?? false,
@@ -267,7 +286,7 @@ export default function EnglishScreen() {
       }
 
       // 다른 기기/재설치 등으로 로컬 캐시가 없어도 읽음 상태는 Firebase에서 복원
-      const remoteReadStatus = await fetchReadStatusFromFirebase(getKSTDateString());
+      const remoteReadStatus = await fetchReadStatusFromFirebase(uid, getKSTDateString());
       if (Object.keys(remoteReadStatus).length > 0) {
         const merged = loadedWords.map(w => ({
           ...w,
@@ -277,7 +296,7 @@ export default function EnglishScreen() {
         await AsyncStorage.setItem('english_words', JSON.stringify(merged));
       }
     } catch (error) {
-      console.error('Failed to load English data:', error);
+      console.error('Failed to load Voca data:', error);
       const defaultWords = getDefaultWords();
       setWords(defaultWords);
       setQuizzes(generateQuizzes(defaultWords));
@@ -430,14 +449,14 @@ export default function EnglishScreen() {
     if (toggled) {
       const db = getDatabase(getFirebaseApp());
       const today = getKSTDateString();
-      dbSet(ref(db, `english/readStatus/${today}/${wordId}`), toggled.isRead).catch(error =>
+      dbSet(userRef(uid, `english/readStatus/${today}/${wordId}`), toggled.isRead).catch(error =>
         console.warn('읽음 상태 Firebase 저장 실패:', error)
       );
 
       // 처음 읽음 처리되는 단어만 복습 게임 대상 목록(reviewPool)에 등록.
       // 이미 등록돼 있으면 손대지 않음 - 카운트는 오직 게임 등장으로만 증가한다.
       if (toggled.isRead) {
-        const poolRef = ref(db, `english/reviewPool/${wordId}`);
+        const poolRef = userRef(uid, `english/reviewPool/${wordId}`);
         get(poolRef).then(snapshot => {
           if (!snapshot.exists()) {
             dbSet(poolRef, {
@@ -477,11 +496,39 @@ export default function EnglishScreen() {
     saveQuizzes(updated);
     if (updated.every(q => q.answered)) {
       const correct = updated.filter(q => q.correct_answer).length;
-      writeCompletion('english_word', `영어단어 퀴즈 완료 (${correct}/${updated.length})`);
       const today = getKSTDateString();
       const db = getDatabase(getFirebaseApp());
-      dbSet(ref(db, `completion/english/${today}`), true).catch(() => {});
+      dbSet(userRef(uid, `completion/english/${today}`), true).catch(() => {});
     }
+  };
+
+  const openDebug = async () => {
+    const scheduled = await Notifications.getAllScheduledNotificationsAsync();
+    const raw = await AsyncStorage.getItem(NOTIF_LOG_KEY);
+    const log: string[] = raw ? JSON.parse(raw) : [];
+    const enabled = await AsyncStorage.getItem('reminders_enabled');
+    setDebugScheduled(scheduled);
+    setDebugLog(log);
+    setDebugRemindersEnabled(enabled);
+    setShowDebug(true);
+  };
+
+  const sendTestNotification = async () => {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: '🧪 테스트 알림',
+        body: '이 알림이 보이면 백그라운드 알림이 정상 동작합니다!',
+        sound: 'default',
+        channelId: 'study-reminder',
+      },
+      trigger: { type: SchedulableTriggerInputTypes.TIME_INTERVAL, seconds: 5, repeats: false },
+    });
+    Alert.alert('✅ 테스트 알림 예약', '5초 후 알림이 옵니다. 앱을 홈으로 내리고 기다려보세요.');
+  };
+
+  const clearDebugLog = async () => {
+    await AsyncStorage.removeItem(NOTIF_LOG_KEY);
+    setDebugLog([]);
   };
 
   const refreshFromNetlify = async () => {
@@ -536,7 +583,7 @@ export default function EnglishScreen() {
     return (
       <SafeAreaView style={styles.screen}>
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>📚 영어 단어</Text>
+          <Text style={styles.headerTitle}>📚 Voca</Text>
         </View>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#2563eb" />
@@ -565,12 +612,12 @@ export default function EnglishScreen() {
       <View style={styles.header}>
         <View style={styles.headerTop}>
           <View>
-            <Text style={styles.headerTitle}>📚 영어 단어</Text>
+            <Text style={styles.headerTitle}>📚 Voca</Text>
             <Text style={styles.headerSubtitle}>Netlify 실시간 동기화</Text>
           </View>
-          <TouchableOpacity onPress={refreshFromNetlify} disabled={refreshing} style={styles.refreshButton}>
-            <Text style={styles.refreshIcon}>{refreshing ? '⏳' : '🔄'}</Text>
-          </TouchableOpacity>
+          <TouchableOpacity onPress={openDebug} style={styles.refreshButton}>
+              <Text style={styles.refreshIcon}>🔔</Text>
+            </TouchableOpacity>
         </View>
         <View style={styles.headerInfo}>
           <Text style={styles.headerInfoText}>⏰ 마지막 업데이트: {formatLastUpdateTime(lastUpdateTime)}</Text>
@@ -598,12 +645,7 @@ export default function EnglishScreen() {
         >
           <Text style={[styles.tabButtonText, view === 'game' && styles.tabButtonTextActive]}>게임</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.tabButton, view === 'stats' && styles.tabButtonActive]}
-          onPress={() => setView('stats')}
-        >
-          <Text style={[styles.tabButtonText, view === 'stats' && styles.tabButtonTextActive]}>통계</Text>
-        </TouchableOpacity>
+
       </View>
 
       {/* Content */}
@@ -631,17 +673,63 @@ export default function EnglishScreen() {
         const today = getKSTDateString();
         const correct = quizzes.filter(q => q.correct_answer).length;
         const db = getDatabase(getFirebaseApp());
-        dbSet(ref(db, `completion/english/${today}`), {
+        dbSet(userRef(uid, `completion/english/${today}`), {
           done: true,
           correct,
           total: quizzes.length,
           ts: Date.now(),
         }).catch(() => {});
-        writeCompletion('english_word', `영어단어 퀴즈 완료 (${correct}/${quizzes.length})`);
         ToastAndroid.show(`완료! ${correct}/${quizzes.length} 정답 저장됨`, ToastAndroid.SHORT);
       }} />}
       {view === 'game' && <GameHub />}
-      {view === 'stats' && <StatsView stats={stats} />}
+
+      {/* 알림 디버그 모달 */}
+      <Modal visible={showDebug} transparent animationType="slide" onRequestClose={() => setShowDebug(false)}>
+        <View style={styles.debugOverlay}>
+          <View style={styles.debugModal}>
+            <View style={styles.debugHeader}>
+              <Text style={styles.debugTitle}>🔔 알림 디버그</Text>
+              <TouchableOpacity onPress={() => setShowDebug(false)}>
+                <Text style={styles.debugClose}>✕</Text>
+              </TouchableOpacity>
+            </View>
+
+            <ScrollView style={styles.debugScroll}>
+              {/* 상태 */}
+              <Text style={styles.debugSection}>📌 상태</Text>
+              <Text style={styles.debugRow}>reminders_enabled: <Text style={styles.debugVal}>{debugRemindersEnabled ?? 'null'}</Text></Text>
+              <Text style={styles.debugRow}>예약된 알림 수: <Text style={styles.debugVal}>{debugScheduled.length}개</Text></Text>
+
+              {/* 예약 목록 */}
+              <Text style={styles.debugSection}>📅 예약된 알림</Text>
+              {debugScheduled.length === 0
+                ? <Text style={styles.debugEmpty}>없음</Text>
+                : debugScheduled.map((n, i) => {
+                    const trigger = n.trigger as any;
+                    const hour = trigger?.dateComponents?.hour ?? trigger?.hour ?? '?';
+                    const title = n.content?.title ?? '';
+                    return <Text key={i} style={styles.debugRow}>{`${String(hour).padStart(2,'0')}:00 — ${title}`}</Text>;
+                  })
+              }
+
+              {/* 수신 로그 */}
+              <Text style={styles.debugSection}>📬 수신 기록</Text>
+              {debugLog.length === 0
+                ? <Text style={styles.debugEmpty}>아직 수신 없음</Text>
+                : debugLog.map((entry, i) => <Text key={i} style={styles.debugRow}>{entry}</Text>)
+              }
+            </ScrollView>
+
+            {/* 버튼 */}
+            <TouchableOpacity style={styles.debugTestBtn} onPress={sendTestNotification}>
+              <Text style={styles.debugTestBtnText}>🧪 5초 후 테스트 알림 발송</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.debugClearBtn} onPress={clearDebugLog}>
+              <Text style={styles.debugClearBtnText}>🗑 수신 기록 초기화</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -720,6 +808,12 @@ const WordCard = React.memo(({ word, onToggleRead, onPlayAudio, isSpeaking }: {
     <Text style={styles.meaning}>{word.meaning}</Text>
     <Text style={styles.explanation}>{word.explanation}</Text>
     <Text style={styles.example}>예: {word.example_en}</Text>
+    <TouchableOpacity
+      style={styles.googleSearchBtn}
+      onPress={() => Linking.openURL(`https://www.google.com/search?q=${encodeURIComponent(word.word + ' 뜻')}&hl=ko&gl=KR&lr=lang_ko`)}
+    >
+      <Text style={styles.googleSearchBtnText}>🔍 구글 검색</Text>
+    </TouchableOpacity>
   </TouchableOpacity>
 ));
 
@@ -1063,6 +1157,95 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#94a3b8',
     fontStyle: 'italic',
+  },
+  googleSearchBtn: {
+    marginTop: 10,
+    alignSelf: 'flex-start',
+    paddingVertical: 5,
+    paddingHorizontal: 12,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: '#bfdbfe',
+    backgroundColor: '#eff6ff',
+  },
+  googleSearchBtnText: {
+    fontSize: 12,
+    color: '#2563eb',
+    fontWeight: '600',
+  },
+  debugOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'flex-end',
+  },
+  debugModal: {
+    backgroundColor: '#1e293b',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 16,
+    maxHeight: '85%',
+  },
+  debugHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  debugTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#f1f5f9',
+  },
+  debugClose: {
+    fontSize: 18,
+    color: '#94a3b8',
+    padding: 4,
+  },
+  debugScroll: {
+    maxHeight: 400,
+  },
+  debugSection: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#60a5fa',
+    marginTop: 12,
+    marginBottom: 4,
+  },
+  debugRow: {
+    fontSize: 12,
+    color: '#cbd5e1',
+    paddingVertical: 2,
+    fontFamily: 'monospace',
+  },
+  debugVal: {
+    color: '#4ade80',
+    fontWeight: '700',
+  },
+  debugEmpty: {
+    fontSize: 12,
+    color: '#64748b',
+    fontStyle: 'italic',
+  },
+  debugTestBtn: {
+    marginTop: 14,
+    backgroundColor: '#2563eb',
+    borderRadius: 10,
+    paddingVertical: 12,
+    alignItems: 'center',
+  },
+  debugTestBtnText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  debugClearBtn: {
+    marginTop: 8,
+    paddingVertical: 10,
+    alignItems: 'center',
+  },
+  debugClearBtnText: {
+    color: '#ef4444',
+    fontSize: 13,
   },
   quizCard: {
     backgroundColor: '#fff',

@@ -12,12 +12,17 @@ import {
   Alert as RNAlert,
   Modal,
   useWindowDimensions,
+  ToastAndroid,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useInvestmentSync, InvestmentColumn, BoxPlotPoint, DongChartEntry, DongEntry, DailyTerm, NewsArticle } from '../hooks/useInvestmentSync';
-import { writeCompletion } from '../utils/writeCompletion';
+import { getDatabase, ref, set as dbSet } from 'firebase/database';
+import { getFirebaseApp } from '../config/firebase';
+import { useAuth } from '../context/AuthContext';
+import { userRef } from '../utils/userDb';
 
 const { width } = Dimensions.get('window');
 
@@ -267,7 +272,24 @@ const TERM_CATEGORY_COLORS: Record<string, string> = {
 
 const TermOfDayCard: React.FC<{ term: DailyTerm }> = React.memo(({ term }) => {
   const [expanded, setExpanded] = useState(false);
+  const [done, setDone] = useState(false);
   const tagColor = TERM_CATEGORY_COLORS[term.category] ?? '#64748b';
+
+  const today = new Date(Date.now() + 9 * 3600000).toISOString().split('T')[0];
+  const storageKey = `term_done_${today}`;
+
+  useEffect(() => {
+    AsyncStorage.getItem(storageKey).then(v => { if (v === 'true') setDone(true); });
+  }, [storageKey]);
+
+  const handleComplete = async () => {
+    if (done) return;
+    setDone(true);
+    await AsyncStorage.setItem(storageKey, 'true');
+    const today = new Date(Date.now() + 9 * 3600000).toISOString().split('T')[0];
+    dbSet(userRef(uid, `completion/investment/${today}`), true).catch(() => {});
+    ToastAndroid.show('✅ 용어 학습 완료!', ToastAndroid.SHORT);
+  };
 
   return (
     <TouchableOpacity
@@ -322,6 +344,16 @@ const TermOfDayCard: React.FC<{ term: DailyTerm }> = React.memo(({ term }) => {
           </View>
         </>
       )}
+
+      <TouchableOpacity
+        style={[styles.termCompleteBtn, done && styles.termCompleteBtnDone]}
+        onPress={(e) => { e.stopPropagation?.(); handleComplete(); }}
+        activeOpacity={0.8}
+      >
+        <Text style={[styles.termCompleteBtnText, done && styles.termCompleteBtnTextDone]}>
+          {done ? '✅ 학습 완료' : '완료'}
+        </Text>
+      </TouchableOpacity>
     </TouchableOpacity>
   );
 });
@@ -691,7 +723,8 @@ const DetailModal: React.FC<DetailModalProps> = React.memo(
           <TouchableOpacity
             style={styles.readCompleteButton}
             onPress={() => {
-              writeCompletion('investment_column', `${column.title} 읽기 완료`);
+              const today = new Date(Date.now() + 9 * 3600000).toISOString().split('T')[0];
+              dbSet(userRef(uid, `completion/investment/${today}`), true).catch(() => {});
               onClose();
             }}
           >
@@ -780,6 +813,8 @@ const FilterModal: React.FC<FilterModalProps> = React.memo(
 );
 
 export default function InvestmentScreen() {
+  const { user } = useAuth();
+  const uid = user!.uid;
   const {
     columns,
     termOfDay,
@@ -1720,6 +1755,24 @@ const styles = StyleSheet.create({
     color: '#5b21b6',
     lineHeight: 18,
     fontWeight: '500',
+  },
+  termCompleteBtn: {
+    marginTop: 14,
+    paddingVertical: 10,
+    borderRadius: 10,
+    backgroundColor: '#7c3aed',
+    alignItems: 'center',
+  },
+  termCompleteBtnDone: {
+    backgroundColor: '#d1fae5',
+  },
+  termCompleteBtnText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  termCompleteBtnTextDone: {
+    color: '#065f46',
   },
 
   // NewsCard

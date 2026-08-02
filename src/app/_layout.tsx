@@ -2,19 +2,46 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
-import { View } from 'react-native';
-import EnglishScreen from './english';
+import { View, ActivityIndicator } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import VocaScreen from './voca';
 import TOEFLScreen from './toefl';
-import SettingsScreen from './settings';
 import InvestmentScreen from './investment';
+
+const APP_VARIANT = process.env.EXPO_PUBLIC_APP_VARIANT ?? 'full';
+import LoginScreen from './login';
 import { useAnnouncements } from '../hooks/useAnnouncements';
 import { AnnouncementModal } from '../components/AnnouncementModal';
 import { refreshStudyNotifications } from '../utils/studyNotifications';
 import * as Notifications from 'expo-notifications';
+import { AuthProvider, useAuth } from '../context/AuthContext';
+
+export const NOTIF_LOG_KEY = 'debug_notif_received_log';
 
 const Tab = createBottomTabNavigator();
 
+function AppContent() {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}><ActivityIndicator size="large" /></View>;
+  }
+  if (!user) {
+    return <LoginScreen />;
+  }
+  return <MainTabs />;
+}
+
 export default function RootLayout() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
+  );
+}
+
+function MainTabs() {
+  const { user } = useAuth();
   const [showAnnouncements, setShowAnnouncements] = useState(false);
   const {
     announcements,
@@ -25,7 +52,21 @@ export default function RootLayout() {
 
   // 앱 시작 시 오늘치 학습 알림 갱신 (하루 1회만 실행)
   useEffect(() => {
-    refreshStudyNotifications();
+    refreshStudyNotifications(user?.uid);
+  }, []);
+
+  // 알림 수신 시 로그 기록 (디버그용)
+  useEffect(() => {
+    const sub = Notifications.addNotificationReceivedListener(async (notification) => {
+      const now = new Date(Date.now() + 9 * 3600000).toISOString().replace('T', ' ').slice(0, 19);
+      const title = notification.request.content.title ?? '';
+      const entry = `[${now}] ${title}`;
+      const raw = await AsyncStorage.getItem(NOTIF_LOG_KEY);
+      const log: string[] = raw ? JSON.parse(raw) : [];
+      log.unshift(entry);
+      await AsyncStorage.setItem(NOTIF_LOG_KEY, JSON.stringify(log.slice(0, 50)));
+    });
+    return () => sub.remove();
   }, []);
 
 // 읽지 않은 공지사항이 있으면 자동으로 표시
@@ -37,7 +78,7 @@ export default function RootLayout() {
 
   return (
     <View style={{ flex: 1 }}>
-      <NavigationContainer>
+      <NavigationContainer independent={true}>
         <Tab.Navigator
         screenOptions={{
           headerShown: false,
@@ -64,11 +105,11 @@ export default function RootLayout() {
         }}
       >
         <Tab.Screen
-          name="English"
-          component={EnglishScreen}
+          name="Voca"
+          component={VocaScreen}
           options={{
-            title: 'English',
-            tabBarIcon: ({ color, size }) => (
+            title: 'Voca',
+            tabBarIcon: ({ color }) => (
               <MaterialIcons name="language" size={24} color={color} />
             ),
           }}
@@ -78,31 +119,23 @@ export default function RootLayout() {
           component={TOEFLScreen}
           options={{
             title: 'TOEFL',
-            tabBarIcon: ({ color, size }) => (
+            tabBarIcon: ({ color }) => (
               <MaterialIcons name="school" size={24} color={color} />
             ),
           }}
         />
-        <Tab.Screen
-          name="Settings"
-          component={SettingsScreen}
-          options={{
-            title: 'Settings',
-            tabBarIcon: ({ color, size }) => (
-              <MaterialIcons name="settings" size={24} color={color} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Investment"
-          component={InvestmentScreen}
-          options={{
-            title: 'Investment',
-            tabBarIcon: ({ color, size }) => (
-              <MaterialIcons name="trending-up" size={24} color={color} />
-            ),
-          }}
-        />
+        {APP_VARIANT === 'full' && (
+          <Tab.Screen
+            name="Investment"
+            component={InvestmentScreen}
+            options={{
+              title: 'Investment',
+              tabBarIcon: ({ color }) => (
+                <MaterialIcons name="trending-up" size={24} color={color} />
+              ),
+            }}
+          />
+        )}
       </Tab.Navigator>
       </NavigationContainer>
 

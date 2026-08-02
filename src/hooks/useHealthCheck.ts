@@ -29,14 +29,14 @@ export function useHealthCheck() {
 
   const runHealthCheck = async () => {
     setIsChecking(true);
-    const tabs = ['English', 'TOEFL', 'Play', 'Papers', 'Storage', 'Settings'];
+    const tabs = ['Voca', 'TOEFL', 'Play', 'Papers', 'Storage', 'Settings'];
     const results: HealthCheckResult[] = [];
 
     const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
     try {
-      setProgress({ current: 1, total: tabs.length, tab: 'English' });
-      results.push(await checkEnglish());
+      setProgress({ current: 1, total: tabs.length, tab: 'Voca' });
+      results.push(await checkVoca());
       await delay(300);
 
       setProgress({ current: 2, total: tabs.length, tab: 'TOEFL' });
@@ -105,10 +105,10 @@ export function useHealthCheck() {
   return { report, isChecking, runHealthCheck, progress };
 }
 
-async function checkEnglish(): Promise<HealthCheckResult> {
+async function checkVoca(): Promise<HealthCheckResult> {
   const errors: string[] = [];
   try {
-    console.log('[English] Checking...');
+    console.log('[Voca] Checking...');
 
     // 저장소 테스트
     try {
@@ -118,12 +118,12 @@ async function checkEnglish(): Promise<HealthCheckResult> {
       await AsyncStorage.removeItem(testKey);
       if (read !== 'test') {
         errors.push('저장소 읽기/쓰기 실패');
-        await errorLogger.log('English', 'AsyncStorage read/write failed', 'error');
+        await errorLogger.log('Voca', 'AsyncStorage read/write failed', 'error');
       }
     } catch (e) {
       const msg = 'AsyncStorage 접근 불가';
       errors.push(msg);
-      await errorLogger.log('English', e as Error, 'error');
+      await errorLogger.log('Voca', e as Error, 'error');
     }
 
     // 데이터 확인
@@ -141,9 +141,9 @@ async function checkEnglish(): Promise<HealthCheckResult> {
       }
     }
 
-    console.log('[English] Done:', errors.length === 0 ? 'OK' : errors);
+    console.log('[Voca] Done:', errors.length === 0 ? 'OK' : errors);
     return {
-      tab: 'English',
+      tab: 'Voca',
       status: errors.length === 0 ? 'healthy' : errors.length === 1 ? 'warning' : 'error',
       message: errors.length === 0 ? '✅ 정상' : `⚠️ ${errors.length}개 문제`,
       errors,
@@ -151,7 +151,7 @@ async function checkEnglish(): Promise<HealthCheckResult> {
     };
   } catch (error) {
     return {
-      tab: 'English',
+      tab: 'Voca',
       status: 'error',
       message: `❌ 오류`,
       errors: [String(error)],

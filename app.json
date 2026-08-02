@@ -1,73 +1,77 @@
 {
-    "expo":  {
-                 "name":  "Yong Study",
-                 "slug":  "yong-study",
-                 "version":  "1.0.1",
-                 "orientation":  "portrait",
-                 "icon":  "./assets/images/icon.png",
-                 "scheme":  "yongstudy",
-                 "userInterfaceStyle":  "automatic",
-                 "description":  "AI-powered learning platform for English, TOEFL, and research papers",
-                 "ios":  {
-                             "icon":  "./assets/expo.icon",
-                             "useFrameworks":  "static"
-                         },
-                 "android":  {
-                                 "adaptiveIcon":  {
-                                                      "backgroundColor":  "#E6F4FE",
-                                                      "foregroundImage":  "./assets/images/android-icon-foreground.png",
-                                                      "backgroundImage":  "./assets/images/android-icon-background.png",
-                                                      "monochromeImage":  "./assets/images/android-icon-monochrome.png"
-                                                  },
-                                 "predictiveBackGestureEnabled":  false,
-                                 "package":  "com.dctm1011.yongstudy",
-                                 "runtimeVersion":  "1.0.0",
-                                 "navigationBar":  {
-                                                     "barStyle":  "dark-content",
-                                                     "backgroundColor":  "#00000000"
-                                                 },
-                                 "enableScreenshotPreventionAndroid":  false,
-                                 "softwareKeyboardLayoutMode":  "pan"
-                             },
-                 "web":  {
-                             "output":  "single",
-                             "favicon":  "./assets/images/favicon.png",
-                             "bundler":  "metro"
-                         },
-                 "plugins":  [
-                             [
-                               "expo-build-properties",
-                               {
-                                 "android": {
-                                   "enableHermes": true,
-                                   "debuggable": false,
-                                   "newArchEnabled": false
-                                 },
-                                 "ios": {
-                                   "enableHermes": true,
-                                   "newArchEnabled": false
-                                 }
-                               }
-                             ],
-                             [
-                               "expo-notifications",
-                               {
-                                 "icon": "./assets/images/icon.png",
-                                 "color": "#2563eb",
-                                 "sounds": ["default"]
-                               }
-                             ]
-                             ],
-                 "cli":  {
-                             "appVersionSource":  "local"
-                         },
-                 "extra":  {
-                               "router":  {
-
-                                          },
-                               "eas":  {
-                                           "projectId":  "391a8441-ff72-45ea-846f-ceccae07bd15"
-                                       }
-                           }
-             }
+  "expo": {
+    "name": "Yong Study",
+    "slug": "yong-study",
+    "version": "1.0.1",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "yongstudy",
+    "userInterfaceStyle": "automatic",
+    "description": "AI-powered learning platform for English, TOEFL, and research papers",
+    "ios": {
+      "icon": "./assets/expo.icon",
+      "useFrameworks": "static"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "backgroundImage": "./assets/images/android-icon-background.png",
+        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "com.dctm1011.yongstudy",
+      "runtimeVersion": "1.0.0",
+      "navigationBar": {
+        "barStyle": "dark-content",
+        "backgroundColor": "#00000000"
+      },
+      "enableScreenshotPreventionAndroid": false,
+      "softwareKeyboardLayoutMode": "pan",
+      "versionCode": 1
+    },
+    "web": {
+      "output": "single",
+      "favicon": "./assets/images/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableHermes": true,
+            "debuggable": false,
+            "newArchEnabled": false
+          },
+          "ios": {
+            "enableHermes": true,
+            "newArchEnabled": false
+          }
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/icon.png",
+          "color": "#2563eb",
+          "sounds": [
+            "default"
+          ]
+        }
+      ],
+      [
+        "@react-native-google-signin/google-signin"
+      ]
+    ],
+    "cli": {
+      "appVersionSource": "local"
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "391a8441-ff72-45ea-846f-ceccae07bd15"
+      }
+    }
+  }
 }

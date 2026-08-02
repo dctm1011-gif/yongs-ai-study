@@ -34,8 +34,21 @@
     },
     "production": {
       "android": {
-        "buildType": "apk",
+        "buildType": "app-bundle",
+        "credentialsSource": "local",
         "env": {
+          "EXPO_PUBLIC_APP_VARIANT": "full",
+          "EXPO_USE_HERMES": "0",
+          "EXPO_DISABLE_HERMES": "1"
+        }
+      }
+    },
+    "voca-only": {
+      "android": {
+        "buildType": "app-bundle",
+        "credentialsSource": "local",
+        "env": {
+          "EXPO_PUBLIC_APP_VARIANT": "voca",
           "EXPO_USE_HERMES": "0",
           "EXPO_DISABLE_HERMES": "1"
         }
