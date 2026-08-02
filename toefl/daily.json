@@ -1,178 +1,111 @@
 {
   "date": "2026-08-03",
   "reading": {
-    "title": "The Rise and Fall of the Mesopotamian Civilization",
-    "passage": "Mesopotamia, often called the cradle of civilization, emerged between the Tigris and Euphrates rivers around 3500 BCE as one of humanity's first complex societies. The Sumerians, who inhabited the southern region, developed sophisticated irrigation systems that transformed arid land into fertile agricultural zones, enabling population growth and the emergence of city-states like Uruk and Lagash. This agricultural surplus generated economic specialization, allowing citizens to pursue roles beyond farming—scribes, priests, and craftsmen. The invention of cuneiform writing around 3200 BCE revolutionized record-keeping and administrative efficiency, facilitating trade networks that extended to the Indus Valley and Egypt. However, despite these remarkable achievements, Mesopotamian civilization faced mounting pressures. Constant warfare between city-states over water rights and territorial disputes depleted resources and destabilized social order. Furthermore, climatic fluctuations and soil salinization gradually diminished agricultural productivity, undermining the economic foundation that had sustained civilization for millennia. By 1600 BCE, the once-dominant Mesopotamian city-states had lost political supremacy to neighboring empires, marking the end of a transformative era in human history.",
-    "vocabulary": [
-      {
-        "word": "arid",
-        "meaning_ko": "건조한, 메마른"
-      },
-      {
-        "word": "surplus",
-        "meaning_ko": "잉여, 과잉"
-      },
-      {
-        "word": "cuneiform",
-        "meaning_ko": "쐐기 문자"
-      },
-      {
-        "word": "salinization",
-        "meaning_ko": "염분화, 소금기 증가"
-      },
-      {
-        "word": "depleted",
-        "meaning_ko": "고갈된, 소진된"
-      },
-      {
-        "word": "fluctuations",
-        "meaning_ko": "변동, 등락"
-      },
-      {
-        "word": "supremacy",
-        "meaning_ko": "우월성, 패권"
-      }
-    ],
+    "title": "The Impact of Artificial Intelligence on Education",
+    "passage": "Artificial intelligence is transforming modern education by personalizing learning experiences for students. AI-powered systems can analyze individual learning patterns and adapt content accordingly, helping students progress at their own pace. Teachers benefit from automated grading and data analytics, allowing them to focus more on mentoring and classroom instruction. However, concerns about privacy and the digital divide remain significant challenges. Educational institutions must balance technological innovation with equitable access to ensure all students benefit from these advances.",
     "questions": [
       {
-        "q": "According to the passage, what was the primary advantage that allowed Sumerians to develop complex society?",
+        "q": "According to the passage, what is one benefit of AI in education?",
         "options": [
-          "A. Their advanced military technology",
-          "B. Their sophisticated irrigation systems for agriculture",
-          "C. Their extensive trade with distant empires",
-          "D. Their development of written language before other civilizations"
+          "A) It eliminates the need for teachers",
+          "B) It personalizes learning experiences for students",
+          "C) It reduces the cost of textbooks",
+          "D) It prevents students from making mistakes"
         ],
         "answer": 1,
-        "explanation": "지문에서 'sophisticated irrigation systems that transformed arid land into fertile agricultural zones, enabling population growth'라고 명시되어 있습니다. 관개 체계가 인구 성장과 복잡한 사회 발전을 가능하게 했습니다."
+        "explanation": "본문에서 'AI-powered systems can analyze individual learning patterns and adapt content accordingly'라고 명시되어 있어 개인화된 학습 경험이 AI의 이점임을 알 수 있습니다."
       },
       {
-        "q": "What can be inferred from the passage about the relationship between agricultural surplus and social development?",
+        "q": "What concern is mentioned about AI implementation in education?",
         "options": [
-          "A. Agricultural surplus was not important for Mesopotamian society",
-          "B. Agricultural surplus allowed for economic specialization and diverse occupations",
-          "C. Agricultural surplus only benefited farming communities",
-          "D. Agricultural surplus led to immediate military conflicts"
+          "A) Teachers will refuse to use technology",
+          "B) Students will become too dependent on AI",
+          "C) Privacy and digital divide are significant challenges",
+          "D) AI is too expensive for schools"
         ],
-        "answer": 1,
-        "explanation": "'This agricultural surplus generated economic specialization, allowing citizens to pursue roles beyond farming'라는 문장으로부터, 농업 잉여가 경제 전문화와 다양한 직업 발생을 가능하게 했음을 알 수 있습니다."
+        "answer": 2,
+        "explanation": "'Educational institutions must balance technological innovation with equitable access'라는 문장에서 개인정보 보호와 디지털 격차가 주요 과제임을 알 수 있습니다."
       },
       {
-        "q": "The word 'depleted' in the second paragraph is closest in meaning to",
+        "q": "How does AI help teachers according to the passage?",
         "options": [
-          "A. accumulated",
-          "B. exhausted",
-          "C. distributed",
-          "D. preserved"
+          "A) It replaces the need for teacher training",
+          "B) It provides automated grading and data analytics",
+          "C) It eliminates classroom instruction entirely",
+          "D) It reduces student enrollment"
         ],
         "answer": 1,
-        "explanation": "'depleted'는 '고갈된' 또는 '소진된'이라는 뜻으로, 'exhausted(고갈된)'와 가장 가까운 의미입니다. 맥락상 전쟁으로 인해 자원이 고갈되었다는 의미입니다."
-      },
-      {
-        "q": "Why does the author mention climatic fluctuations and soil salinization?",
-        "options": [
-          "A. To explain the geographical advantages of Mesopotamia",
-          "B. To illustrate how natural factors contributed to civilization's decline",
-          "C. To describe the agricultural techniques of the Sumerians",
-          "D. To compare Mesopotamia with other ancient civilizations"
-        ],
-        "answer": 1,
-        "explanation": "저자는 이들 요소를 문명 쇠퇴의 원인으로 제시하고 있습니다. 'climatic fluctuations and soil salinization gradually diminished agricultural productivity, undermining the economic foundation'이라는 문장에서 자연적 요인이 문명 붕괴에 어떻게 기여했는지 설명하고 있습니다."
+        "explanation": "본문에서 'Teachers benefit from automated grading and data analytics, allowing them to focus more on mentoring'이라고 명시되어 있습니다."
       }
     ]
   },
   "writing": {
-    "topic": "Immigration Policy",
-    "sentences": [
-      {
-        "original": "Constant warfare between city-states over water rights and territorial disputes depleted resources and destabilized social order.",
-        "paraphrase": "Resources were depleted and social order became destabilized as a result of continuous conflicts between city-states that were fought over water rights and territorial boundaries.",
-        "tip": "능동태→수동태 전환 및 전치사 재배치를 통해 문장 구조 변형"
-      },
-      {
-        "original": "The invention of cuneiform writing around 3200 BCE revolutionized record-keeping and administrative efficiency, facilitating trade networks that extended to the Indus Valley and Egypt.",
-        "paraphrase": "By enabling more effective record-keeping and administration, the emergence of cuneiform writing in approximately 3200 BCE made possible extensive trade networks stretching across the Indus Valley and Egypt.",
-        "tip": "동명사(facilitating)를 관계절(by enabling)로 변환하고 단어 순서 재배치"
-      },
-      {
-        "original": "This agricultural surplus generated economic specialization, allowing citizens to pursue roles beyond farming.",
-        "paraphrase": "The abundance of agricultural production created opportunities for citizens to specialize in occupations other than farming, thereby fostering economic diversification.",
-        "tip": "동의어 치환(surplus→abundance, generated→created) 및 능동구조 유지하면서 어휘 고도화"
-      }
+    "prompt": "Do you agree or disagree with the statement that artificial intelligence will eventually replace most human jobs? Use specific reasons and examples to support your position.",
+    "structure": {
+      "intro": "자신의 입장을 명확히 하는 thesis statement로 시작하세요. 예: 'I partly agree that AI will replace some jobs, but new opportunities will emerge' 또는 'I disagree because humans will always be needed for creative and emotional work.'",
+      "body1": "첫 번째 주요 이유를 제시하고 구체적인 예시를 포함하세요. 예를 들어, 제조업, 데이터 분석 등의 반복적인 일자리는 자동화될 가능성이 높다는 점을 설명하세요.",
+      "body2": "두 번째 이유로 인간만이 수행할 수 있는 역할을 강조하세요. 창의성, 감정 지능, 윤리적 판단 등의 분야에서 인간의 가치를 설명하세요.",
+      "conclusion": "자신의 주장을 재정리하고 AI와 인간이 함께 일하는 미래에 대한 희망적인 메시지로 마무리하세요."
+    },
+    "useful_phrases": [
+      "In my opinion, AI will...",
+      "To illustrate this point...",
+      "Furthermore, it is important to consider...",
+      "On the other hand...",
+      "In conclusion, I believe that..."
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer spending their time with close friends. Others prefer spending their time with family members. Which do you prefer and why? Include specific reasons and examples in your response.",
-    "model_sentences": [
-      "I personally prefer spending time with my family members rather than with friends because family relationships provide a deeper sense of belonging and support.",
-      "The reason is that family has known me throughout my entire life and understands my personality, values, and long-term goals in a way that friends typically cannot.",
-      "For example, when I faced academic difficulties in high school, my parents not only helped me study but also encouraged me emotionally, whereas friends might have simply sympathized without taking action.",
-      "Additionally, family time creates lasting memories and traditions that strengthen our bonds across generations.",
-      "In conclusion, while friendships are certainly valuable, I believe that investing time with family members is more important for building a stable and meaningful life."
+    "prompt": "Some people prefer learning through technology and online courses. Others prefer traditional classroom learning. Which do you prefer and why? Include specific reasons and examples in your response.",
+    "useful_expressions": [
+      "In my opinion, I prefer... because...",
+      "One important reason is that...",
+      "For example, when I...",
+      "In addition to that...",
+      "To summarize my thoughts..."
+    ],
+    "sample_points": [
+      "온라인 학습은 유연성과 자유로운 시간 관리가 가능하며, 자신의 속도에 맞춰 학습할 수 있다는 장점이 있습니다.",
+      "전통적인 교실 학습은 대면 상호작용, 즉각적인 피드백, 그리고 강사와의 직접적인 관계 형성이 가능하다는 이점이 있습니다."
     ]
   },
   "listening": {
-    "title": "Economics Lecture: Supply and Demand",
-    "type": "lecture",
-    "script": "Professor: Today we're going to discuss one of the most fundamental concepts in economics—supply and demand. Basically, supply refers to the quantity of goods that producers are willing to offer at various prices, while demand represents the quantity that consumers want to buy. Now, here's the interesting part: when demand increases but supply remains constant, prices typically rise. Conversely, when supply increases without a corresponding increase in demand, prices tend to fall. Let me give you a practical example. Consider the smartphone market. When the latest iPhone model is released, demand surges dramatically because everyone wants the new technology. If Apple cannot produce enough units quickly—that is, if supply is limited—prices stay high and products sell out. However, six months later, when Apple has manufactured more units and the initial excitement fades, supply exceeds demand. Consequently, retailers offer discounts to sell their inventory. This equilibrium point, where supply and demand intersect, determines the market price. Understanding this mechanism helps explain price fluctuations in virtually every market, from agricultural commodities to real estate.",
-    "vocabulary": [
-      {
-        "word": "equilibrium",
-        "meaning_ko": "균형점, 평형"
-      },
-      {
-        "word": "commodity",
-        "meaning_ko": "상품, 원자재"
-      },
-      {
-        "word": "inventory",
-        "meaning_ko": "재고, 저장품"
-      },
-      {
-        "word": "surge",
-        "meaning_ko": "급증하다, 솟구쳐 오르다"
-      },
-      {
-        "word": "fluctuations",
-        "meaning_ko": "변동, 등락"
-      },
-      {
-        "word": "corresponds",
-        "meaning_ko": "일치하다, 조응하다"
-      }
-    ],
+    "title": "Career Counseling Office Discussion",
+    "type": "conversation",
+    "script": "Student: Hi, I'm looking for advice on which major to choose. I'm interested in both engineering and business. Counselor: That's great that you're considering your options carefully. Tell me, what aspects of engineering appeal to you? Student: Well, I enjoy solving complex problems and working with technology. Counselor: And what about business interests you? Student: I like the idea of starting my own company someday. I think understanding business operations and management would help me achieve that goal. Counselor: Those are two different paths. Have you considered engineering management? It combines technical expertise with business knowledge. Many engineers move into management positions. Student: That sounds interesting! Could you tell me more about that path? Counselor: Of course. Many companies need leaders who understand both technology and business. It's an excellent career option with strong job prospects and good earning potential.",
     "questions": [
       {
-        "q": "What is the main topic of the lecture?",
+        "q": "What is the student's main concern in this conversation?",
         "options": [
-          "A. The history of iPhone production and sales",
-          "B. The fundamental concept of supply and demand in economics",
-          "C. Why retailers offer discounts on products",
-          "D. How to predict market prices in the real estate industry"
+          "A) Finding a part-time job",
+          "B) Choosing between engineering and business majors",
+          "C) Learning about technology companies",
+          "D) Understanding business operations"
         ],
         "answer": 1,
-        "explanation": "교수가 강의를 'Today we're going to discuss one of the most fundamental concepts in economics—supply and demand'로 시작하며, 전체 내용이 공급과 수요의 기본 개념과 그들의 상호작용을 설명하고 있습니다."
+        "explanation": "학생은 상담자에게 '어떤 전공을 선택할지 조언을 구하고 싶다'고 말합니다. 학생이 공학과 경영 사이에서 고민하고 있으며 이것이 대화의 주제입니다."
       },
       {
-        "q": "According to the professor, what happens when demand increases but supply remains constant?",
+        "q": "What does the counselor suggest as an alternative path?",
         "options": [
-          "A. Prices fall due to reduced consumer interest",
-          "B. Supply automatically increases to meet demand",
-          "C. Prices rise because supply cannot meet the increased demand",
-          "D. Market equilibrium is immediately achieved"
+          "A) Business management only",
+          "B) Technology entrepreneurship",
+          "C) Engineering management",
+          "D) Starting a tech company immediately"
         ],
         "answer": 2,
-        "explanation": "교수는 명확히 'when demand increases but supply remains constant, prices typically rise'라고 말했습니다. 이는 수요 증가에 공급이 따라가지 못할 때 가격이 상승한다는 의미입니다."
+        "explanation": "상담자는 학생에게 '공학 관리(engineering management)'를 고려해볼 것을 제안합니다. 이것은 기술 전문성과 경영 지식을 결합한 경로입니다."
       },
       {
-        "q": "Why does the professor use the iPhone example?",
+        "q": "According to the counselor, why is engineering management a good career choice?",
         "options": [
-          "A. To explain why Apple is the most successful company",
-          "B. To demonstrate how supply and demand principles work in a real market situation",
-          "C. To argue that technology products are more expensive than other goods",
-          "D. To show that price discounts are always available for older models"
+          "A) It's easier than traditional engineering",
+          "B) Companies need leaders with both technical and business knowledge",
+          "C) It guarantees a job in any company",
+          "D) It requires less education"
         ],
         "answer": 1,
-        "explanation": "교수는 'Let me give you a practical example'라고 말하며 iPhone의 사례를 통해 공급과 수요 원리가 실제 시장에서 어떻게 작동하는지 구체적으로 설명합니다. 신제품 출시 초기의 높은 수요와 제한된 공급으로 인한 가격 상승, 그 이후의 공급 증가와 가격 하락을 예시로 들고 있습니다."
+        "explanation": "상담자는 '많은 회사들은 기술과 경영을 모두 이해하는 리더가 필요하다'고 설명하며, 이것이 강력한 구직 전망과 좋은 수입 가능성을 가진 우수한 커리어 선택지라고 말합니다."
       }
     ]
   }
