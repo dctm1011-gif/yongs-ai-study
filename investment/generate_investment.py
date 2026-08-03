@@ -186,6 +186,7 @@ TERM_PROMPT = """오늘 날짜: {today}
 
 웹 검색으로 요즘 한국 부동산 시장에서 자주 등장하는 정책·용어 중 하나를 골라줘.
 최근 뉴스나 정책 변화와 연관된 용어를 우선으로 해줘.
+아래 용어들은 이미 다뤘으니 절대 선택하지 마: {used_terms}
 JSON만 출력. JSON 외 텍스트 포함 금지.
 
 {{
@@ -221,10 +222,34 @@ NEWS_PROMPT = """오늘 날짜: {today}
 - 부동산 1~2개, 주식·경제 1~2개 균형 있게 구성"""
 
 
+def _fetch_used_terms() -> list[str]:
+    """Firebase에서 최근 30일간 사용된 용어 목록을 가져온다."""
+    try:
+        import urllib.request as _req
+        DB_URL = "https://yongstudy-1f242-default-rtdb.asia-southeast1.firebasedatabase.app"
+        url = DB_URL + "/investment/columns.json?shallow=true"
+        with _req.urlopen(url, timeout=8) as r:
+            dates = list(json.loads(r.read().decode()).keys())
+        terms = []
+        for d in sorted(dates)[-30:]:
+            url2 = DB_URL + f"/investment/columns/{d}/termOfDay/term.json"
+            with _req.urlopen(url2, timeout=8) as r:
+                t = json.loads(r.read().decode())
+            if t and isinstance(t, str):
+                terms.append(t)
+        return list(dict.fromkeys(terms))  # 순서 유지 중복 제거
+    except Exception as e:
+        print(f"[!] 이전 용어 조회 실패 (무시): {e}")
+        return []
+
+
 def generate_term(client: anthropic.Anthropic, target_date: date) -> dict:
     """오늘의 부동산 용어를 웹 검색으로 생성. 실패 시 기본 용어 반환."""
+    used_terms = _fetch_used_terms()
+    used_str = ", ".join(used_terms) if used_terms else "없음"
+    print(f"[*] 이전 용어 {len(used_terms)}개 제외: {used_str}")
     try:
-        messages = [{"role": "user", "content": TERM_PROMPT.format(today=target_date)}]
+        messages = [{"role": "user", "content": TERM_PROMPT.format(today=target_date, used_terms=used_str)}]
         tools = [{"type": "web_search_20250305", "name": "web_search", "max_uses": 3}]
         while True:
             response = client.messages.create(model=MODEL, max_tokens=2000, tools=tools, messages=messages)
