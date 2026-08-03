@@ -26,6 +26,197 @@ import { userRef } from '../utils/userDb';
 
 const { width } = Dimensions.get('window');
 
+// ─── 양도세율 정적 데이터 ───────────────────────────────────────────────────
+const TAX_RATE_SERIES = [
+  {
+    label: '단기(1년 미만)',
+    color: '#ef4444',
+    data: [
+      { year: 2015, value: 40 }, { year: 2016, value: 40 }, { year: 2017, value: 40 },
+      { year: 2018, value: 40 }, { year: 2019, value: 40 }, { year: 2020, value: 50 },
+      { year: 2021, value: 70 }, { year: 2022, value: 70 }, { year: 2023, value: 70 },
+      { year: 2024, value: 70 }, { year: 2025, value: 70 },
+    ],
+  },
+  {
+    label: '다주택 중과',
+    color: '#f97316',
+    data: [
+      { year: 2015, value: 0 }, { year: 2016, value: 0 }, { year: 2017, value: 0 },
+      { year: 2018, value: 10 }, { year: 2019, value: 10 }, { year: 2020, value: 10 },
+      { year: 2021, value: 20 }, { year: 2022, value: 0 }, { year: 2023, value: 0 },
+      { year: 2024, value: 0 }, { year: 2025, value: 0 },
+    ],
+  },
+  {
+    label: '1주택 최고세율',
+    color: '#3b82f6',
+    data: [
+      { year: 2015, value: 38 }, { year: 2016, value: 38 }, { year: 2017, value: 40 },
+      { year: 2018, value: 42 }, { year: 2019, value: 42 }, { year: 2020, value: 42 },
+      { year: 2021, value: 45 }, { year: 2022, value: 45 }, { year: 2023, value: 45 },
+      { year: 2024, value: 45 }, { year: 2025, value: 45 },
+    ],
+  },
+] as const;
+
+const TAX_HISTORY = [
+  { year: '2017', event: '8.2 대책', detail: '다주택자 양도세 중과 예고, 투기과열지구 지정 확대' },
+  { year: '2018', event: '다주택 중과 시행', detail: '조정지역 2주택 +10%p, 3주택+ +20%p 중과 시행' },
+  { year: '2020', event: '7.10 대책', detail: '다주택 중과 강화 예고: 2주택 +20%p, 3주택+ +30%p (2021.6.1 시행)' },
+  { year: '2021', event: '단기세율 강화', detail: '1년 미만 70%, 1~2년 60%로 상향. 다주택 중과 +20/+30%p 시행' },
+  { year: '2021', event: '소득세 최고세율 인상', detail: '과세표준 10억 초과 구간 신설, 최고세율 42%→45%' },
+  { year: '2022', event: '다주택 중과 배제', detail: '2022.5.10부터 다주택자 중과세 한시 배제 (1년)' },
+  { year: '2023', event: '중과 배제 연장', detail: '다주택자 한시 배제 1년 추가 연장 (2024.5까지)' },
+  { year: '2024', event: '중과 배제 재연장', detail: '한시 배제 재차 연장, 세제 개편 방향 논의 중' },
+] as const;
+
+const TaxLineChart: React.FC = React.memo(() => {
+  const LEFT_AXIS = 34;
+  const CHART_H = 160;
+  const CHART_W = width - 64 - LEFT_AXIS; // card padding(32) + scroll(0) + axis
+  const Y_MAX = 80;
+  const years = TAX_RATE_SERIES[0].data.map(d => d.year);
+  const n = years.length;
+
+  const getX = (i: number) => (i / (n - 1)) * CHART_W;
+  const getY = (v: number) => CHART_H - (v / Y_MAX) * CHART_H;
+  const yTicks = [0, 20, 40, 60, 80];
+
+  return (
+    <View>
+      <View style={{ flexDirection: 'row' }}>
+        {/* Y-axis labels */}
+        <View style={{ width: LEFT_AXIS, height: CHART_H }}>
+          {yTicks.map(tick => (
+            <Text
+              key={tick}
+              style={{ position: 'absolute', top: getY(tick) - 7, right: 4, fontSize: 9, color: '#9ca3af' }}
+            >
+              {tick}%
+            </Text>
+          ))}
+        </View>
+        {/* Chart canvas */}
+        <View style={{ width: CHART_W, height: CHART_H }}>
+          {/* Grid lines */}
+          {yTicks.map(tick => (
+            <View
+              key={tick}
+              style={{
+                position: 'absolute', top: getY(tick), left: 0, right: 0, height: 1,
+                backgroundColor: tick === 0 ? '#94a3b8' : '#e2e8f0',
+              }}
+            />
+          ))}
+          {/* Series lines + dots */}
+          {TAX_RATE_SERIES.map(series => {
+            const pts = series.data.map((d, i) => ({ x: getX(i), y: getY(d.value) }));
+            return (
+              <View key={series.label} style={{ position: 'absolute', width: CHART_W, height: CHART_H }}>
+                {pts.slice(0, -1).map((p, i) => {
+                  const q = pts[i + 1];
+                  const dx = q.x - p.x;
+                  const dy = q.y - p.y;
+                  const len = Math.sqrt(dx * dx + dy * dy);
+                  const angle = Math.atan2(dy, dx);
+                  return (
+                    <View
+                      key={i}
+                      style={{
+                        position: 'absolute',
+                        width: len, height: 2,
+                        left: (p.x + q.x) / 2 - len / 2,
+                        top: (p.y + q.y) / 2 - 1,
+                        backgroundColor: series.color,
+                        transform: [{ rotate: `${angle}rad` }],
+                      }}
+                    />
+                  );
+                })}
+                {pts.map((p, i) => (
+                  <View
+                    key={i}
+                    style={{
+                      position: 'absolute', width: 6, height: 6, borderRadius: 3,
+                      backgroundColor: series.color, left: p.x - 3, top: p.y - 3,
+                    }}
+                  />
+                ))}
+              </View>
+            );
+          })}
+          {/* X-axis year labels */}
+          {years.map((year, i) => (
+            <Text
+              key={year}
+              style={{
+                position: 'absolute', top: CHART_H + 4,
+                left: getX(i) - 12, width: 24, textAlign: 'center',
+                fontSize: 8, color: '#6b7280',
+              }}
+            >
+              {`'${String(year).slice(2)}`}
+            </Text>
+          ))}
+        </View>
+      </View>
+      {/* Extra height for x labels */}
+      <View style={{ height: 20 }} />
+      {/* Legend */}
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12, marginTop: 4 }}>
+        {TAX_RATE_SERIES.map(s => (
+          <View key={s.label} style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+            <View style={{ width: 16, height: 2.5, backgroundColor: s.color, borderRadius: 1 }} />
+            <Text style={{ fontSize: 11, color: '#6b7280' }}>{s.label}</Text>
+          </View>
+        ))}
+      </View>
+    </View>
+  );
+});
+
+const TaxHistoryTable: React.FC = React.memo(() => (
+  <View style={{ borderWidth: 1, borderColor: '#e2e8f0', borderRadius: 8, overflow: 'hidden', marginTop: 12 }}>
+    <View style={{ flexDirection: 'row', backgroundColor: '#f1f5f9', paddingVertical: 7, paddingHorizontal: 10 }}>
+      <Text style={{ width: 38, fontSize: 11, fontWeight: '700', color: '#475569' }}>연도</Text>
+      <Text style={{ width: 88, fontSize: 11, fontWeight: '700', color: '#475569' }}>정책/변화</Text>
+      <Text style={{ flex: 1, fontSize: 11, fontWeight: '700', color: '#475569' }}>내용</Text>
+    </View>
+    {TAX_HISTORY.map((row, idx) => (
+      <View
+        key={idx}
+        style={{
+          flexDirection: 'row', paddingVertical: 7, paddingHorizontal: 10,
+          backgroundColor: idx % 2 === 1 ? '#f8fafc' : '#fff',
+          borderTopWidth: 1, borderTopColor: '#f1f5f9',
+        }}
+      >
+        <Text style={{ width: 38, fontSize: 11, fontWeight: '600', color: '#64748b' }}>{row.year}</Text>
+        <Text style={{ width: 88, fontSize: 11, fontWeight: '600', color: '#334155' }}>{row.event}</Text>
+        <Text style={{ flex: 1, fontSize: 11, color: '#475569', lineHeight: 16 }}>{row.detail}</Text>
+      </View>
+    ))}
+  </View>
+));
+
+const CapitalGainsTaxSection: React.FC = React.memo(() => (
+  <View style={[styles.detailSection]}>
+    <Text style={styles.detailSectionTitle}>연도별 양도세율 추이 (2015~2025)</Text>
+    <TaxLineChart />
+    <Text style={[styles.chartUnit, { textAlign: 'left', marginTop: 2 }]}>
+      단기: 조정지역 기준 · 다주택: 2주택 조정지역 추가세율 · 1주택: 소득세 최고세율
+    </Text>
+    <Text style={[styles.detailSectionTitle, { marginTop: 20, paddingTop: 0, borderBottomWidth: 0, marginBottom: 0 }]}>
+      주요 세제 변화 이력
+    </Text>
+    <TaxHistoryTable />
+    <Text style={[styles.chartUnit, { marginTop: 6 }]}>
+      ※ 현행 다주택 중과(2022.5~)는 한시 배제 중 · 세율은 지방세 별도
+    </Text>
+  </View>
+));
+
 const BarChart: React.FC<{
   data: { label: string; value: number }[];
   title: string;
@@ -708,6 +899,8 @@ const DetailModal: React.FC<DetailModalProps> = React.memo(
               <DongChartViewer entry={dongEntry} />
             </View>
           ))}
+
+          {column.category === 'real-estate' && <CapitalGainsTaxSection />}
 
           {column.sections?.map((section, idx) => (
             <View key={idx} style={styles.detailSection}>

@@ -130,6 +130,7 @@ export default function VocaScreen() {
   const [debugScheduled, setDebugScheduled] = useState<any[]>([]);
   const [debugLog, setDebugLog] = useState<string[]>([]);
   const [debugRemindersEnabled, setDebugRemindersEnabled] = useState<string | null>(null);
+  const [debugPoolStats, setDebugPoolStats] = useState<{ total: number; graduated: number; playDays: number } | null>(null);
   const [lastUpdateTime, setLastUpdateTime] = useState<string | null>(null);
   const [cacheTimeLeft, setCacheTimeLeft] = useState<string>('캐시 정보 로딩 중...');
   const [speakingWordId, setSpeakingWordId] = useState<string | null>(null);
@@ -510,6 +511,23 @@ export default function VocaScreen() {
     setDebugScheduled(scheduled);
     setDebugLog(log);
     setDebugRemindersEnabled(enabled);
+
+    // reviewPool 통계 + 플레이 일수 조회
+    try {
+      const db = getDatabase(getFirebaseApp());
+      const [poolSnap, playSnap] = await Promise.all([
+        get(userRef(uid, 'english/reviewPool')),
+        get(userRef(uid, 'completion/english_word_match')),
+      ]);
+      const poolVals: any[] = poolSnap.exists() ? Object.values(poolSnap.val()) : [];
+      const total = poolVals.length;
+      const graduated = poolVals.filter(w => (w.count ?? 0) >= 10).length;
+      const playDays = playSnap.exists() ? Object.keys(playSnap.val()).length : 0;
+      setDebugPoolStats({ total, graduated, playDays });
+    } catch {
+      setDebugPoolStats(null);
+    }
+
     setShowDebug(true);
   };
 
@@ -695,6 +713,18 @@ export default function VocaScreen() {
             </View>
 
             <ScrollView style={styles.debugScroll}>
+              {/* 리뷰풀 통계 */}
+              <Text style={styles.debugSection}>📊 리뷰풀 통계</Text>
+              {debugPoolStats === null
+                ? <Text style={styles.debugEmpty}>조회 중...</Text>
+                : <>
+                    <Text style={styles.debugRow}>전체 단어: <Text style={styles.debugVal}>{debugPoolStats.total}개</Text></Text>
+                    <Text style={styles.debugRow}>졸업(count≥10): <Text style={styles.debugVal}>{debugPoolStats.graduated}개</Text></Text>
+                    <Text style={styles.debugRow}>활성 단어: <Text style={styles.debugVal}>{debugPoolStats.total - debugPoolStats.graduated}개</Text></Text>
+                    <Text style={styles.debugRow}>게임 플레이일수: <Text style={styles.debugVal}>{debugPoolStats.playDays}일</Text></Text>
+                  </>
+              }
+
               {/* 상태 */}
               <Text style={styles.debugSection}>📌 상태</Text>
               <Text style={styles.debugRow}>reminders_enabled: <Text style={styles.debugVal}>{debugRemindersEnabled ?? 'null'}</Text></Text>
@@ -894,7 +924,7 @@ const QuizCard = React.memo(({ quiz, wordName, onAnswer }: { quiz: Quiz, wordNam
                   quiz.answered && isCorrectOpt && styles.optionTextCorrect,
                   quiz.answered && !isCorrectOpt && selectedOption === option && styles.optionTextIncorrect,
                 ]}>{option}</Text>
-                {quiz.answered && isCorrectOpt && quiz.correct_answer && quiz.correctMeaning && (
+                {quiz.answered && isCorrectOpt && quiz.correct_answer && quiz.correctMeaning && quiz.correctMeaning !== option && (
                   <Text style={styles.optionMeaning}> — {quiz.correctMeaning}</Text>
                 )}
               </View>

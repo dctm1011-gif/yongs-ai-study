@@ -1466,5 +1466,65 @@
     "explanation": "Mental calmness, composure, and evenness of temper especially in a difficult or stressful situation",
     "tip": "동의어: composure(침착), serenity(고요함), tranquility(평온함). equanimity는 어려운 상황에서도 유지되는 정신적 평정을 강조. 반의어: agitation(동요), turmoil(혼란)",
     "emoji": "😌"
+  },
+  {
+    "id": "pellucid",
+    "word": "pellucid",
+    "pos": "adjective",
+    "date": "2026-08-04",
+    "meaning": "명확한, 투명한, 이해하기 쉬운",
+    "example_ko": "그 교수의 명확한 설명은 복잡한 이론을 이해하기 쉽게 만들었다",
+    "example_en": "The professor's pellucid explanation made the complex theory easy to grasp",
+    "explanation": "Translucently clear in style or meaning; easy to understand or see through; characterized by clarity and transparency",
+    "tip": "Synonym: lucid (명확한)—both mean clear, but pellucid emphasizes transparency and directness while lucid emphasizes clarity of thought. Antonym: opaque (불투명한), obscure (모호한)",
+    "emoji": "🔍"
+  },
+  {
+    "id": "desultory",
+    "word": "desultory",
+    "pos": "adjective",
+    "date": "2026-08-04",
+    "meaning": "산만한, 일관성 없는, 성의 없는",
+    "example_ko": "그의 산만한 공부 방식은 시험 준비에 도움이 되지 않았다",
+    "example_en": "His desultory approach to studying didn't help him prepare for the exam",
+    "explanation": "Lacking a plan, purpose, or enthusiasm; jumping from one thing to another without method or purpose",
+    "tip": "Synonym: haphazard (무작위적인)—both suggest lack of order, but desultory implies lack of interest/effort. Antonym: methodical (체계적인), systematic (체계적인), diligent (부지런한)",
+    "emoji": "🌪️"
+  },
+  {
+    "id": "contention",
+    "word": "contention",
+    "pos": "noun",
+    "date": "2026-08-04",
+    "meaning": "주장, 논쟁, 분쟁",
+    "example_ko": "두 연구자 사이의 주요 쟁점은 데이터가 가설을 뒷받침하는지 여부이다",
+    "example_en": "The main contention between the two researchers is whether the data supports the hypothesis",
+    "explanation": "A heated argument or disagreement; a point or assertion that someone argues for or claims to be true",
+    "tip": "Synonym: assertion (주장)—both present claims, but contention implies disagreement/debate while assertion is neutral. Related: dispute (분쟁), controversy (논쟁). Antonym: agreement (동의)",
+    "emoji": "⚔️"
+  },
+  {
+    "id": "fecund",
+    "word": "fecund",
+    "pos": "adjective",
+    "date": "2026-08-04",
+    "meaning": "비옥한, 다산의, 창의적인",
+    "example_ko": "그녀의 풍부한 상상력은 프로젝트를 위한 셀 수 없는 창의적인 아이디어를 만들어냈다",
+    "example_en": "Her fecund imagination produced countless creative ideas for the project",
+    "explanation": "Producing much fruit or foliage or many seeds; intellectually productive and inventive; fertile",
+    "tip": "Synonym: fertile (비옥한)—both indicate productivity, but fecund often implies abundance and creativity while fertile is more general. Antonym: barren (불모의), sterile (불임의), infertile (불임의)",
+    "emoji": "🌾"
+  },
+  {
+    "id": "prescient",
+    "word": "prescient",
+    "pos": "adjective",
+    "date": "2026-08-04",
+    "meaning": "선견지명이 있는, 미리 아는",
+    "example_ko": "시장 붕괴에 대한 그녀의 선견지명 있는 경고는 수개월 후 정확하다는 것이 증명되었다",
+    "example_en": "Her prescient warnings about the market crash were proven right months later",
+    "explanation": "Having knowledge of events before they take place; showing foresight; able to predict the future",
+    "tip": "Synonym: prophetic (예언적인)—both predict future, but prescient emphasizes knowledge while prophetic emphasizes divine or mystical insight. Antonym: unaware (무의식적인), oblivious (무지한)",
+    "emoji": "🔮"
   }
 ]

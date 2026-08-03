@@ -27,7 +27,7 @@ function shuffled<T>(arr: T[]): T[] {
 
 /**
  * Firebase english/reviewPool에서 단어를 가져와 8~22시 매시간 알림 스케줄링.
- * 오래 복습하지 않은 단어를 우선 배치하고, 하루에 한 번만 갱신한다.
+ * 복습 횟수(count)가 적은 단어를 우선 배치하고, 하루에 한 번만 갱신한다.
  */
 export async function refreshStudyNotifications(uid?: string): Promise<void> {
   try {
@@ -38,12 +38,17 @@ export async function refreshStudyNotifications(uid?: string): Promise<void> {
     const lastRefresh = await AsyncStorage.getItem(LAST_REFRESH_KEY);
     if (lastRefresh === today) return;
 
-    const snap = await get(uid ? userRef(uid, 'english/reviewPool') : ref(database, 'english/reviewPool'));
+    if (!uid) return; // uid 없으면 스케줄 불가 (로그인 후 재시도)
+
+    const snap = await get(userRef(uid, 'english/reviewPool'));
     const raw = snap.exists() ? snap.val() : null;
     const poolList: any[] = raw ? Object.values(raw) : [];
 
-    // 마지막 복습일 오름차순 (null → 가장 오래됨)
+    // 복습 횟수(count) 오름차순 → 동률이면 마지막 복습일 오래된 순
     const words = poolList.sort((a, b) => {
+      const ca = a.count ?? 0;
+      const cb = b.count ?? 0;
+      if (ca !== cb) return ca - cb;
       const da = a.lastReviewedDate ?? '0000-00-00';
       const db2 = b.lastReviewedDate ?? '0000-00-00';
       return da < db2 ? -1 : da > db2 ? 1 : 0;
@@ -90,7 +95,7 @@ export async function refreshStudyNotifications(uid?: string): Promise<void> {
  * 알림을 처음 활성화할 때 호출. 권한·채널 설정 후 스케줄링.
  * lastRefreshDate를 리셋해서 오늘치 갱신을 강제 실행한다.
  */
-export async function enableStudyNotifications(): Promise<boolean> {
+export async function enableStudyNotifications(uid?: string): Promise<boolean> {
   const { status } = await Notifications.requestPermissionsAsync();
   if (status !== 'granted') return false;
 
@@ -106,7 +111,7 @@ export async function enableStudyNotifications(): Promise<boolean> {
 
   await AsyncStorage.setItem('reminders_enabled', 'true');
   await AsyncStorage.removeItem(LAST_REFRESH_KEY); // 강제 갱신
-  await refreshStudyNotifications();
+  await refreshStudyNotifications(uid);
 
   // Android: 배터리 최적화 제외 안내 (앱이 백그라운드에서도 알림을 받으려면 필요)
   if (Platform.OS === 'android') {

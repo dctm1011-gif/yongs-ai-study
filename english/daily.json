@@ -1,208 +1,208 @@
 {
-  "date": "2026-08-03",
+  "date": "2026-08-04",
   "words": [
     {
-      "word": "taciturn",
+      "word": "pellucid",
       "part_of_speech": "adjective",
-      "meaning_ko": "과묵한, 말이 적은",
-      "explanation": "Habitually reserved or uncommunicative in speech; not talkative or prone to sharing thoughts openly",
-      "example_from_convo": "He's pretty taciturn, so don't expect much from him in conversations",
-      "example_ko": "그는 과묵해서 대화에서 많이 기대하지 마",
-      "tip": "반의어: verbose(말이 많은), garrulous(수다스러운). 동의어: reticent(말을 아끼는)와 유사하지만, taciturn은 더 personality trait에 가깝고 reticent는 상황에서 말을 아끼는 것",
-      "emoji": "🤐"
+      "meaning_ko": "명확한, 투명한, 이해하기 쉬운",
+      "explanation": "Translucently clear in style or meaning; easy to understand or see through; characterized by clarity and transparency",
+      "example_from_convo": "The professor's pellucid explanation made the complex theory easy to grasp",
+      "example_ko": "그 교수의 명확한 설명은 복잡한 이론을 이해하기 쉽게 만들었다",
+      "tip": "Synonym: lucid (명확한)—both mean clear, but pellucid emphasizes transparency and directness while lucid emphasizes clarity of thought. Antonym: opaque (불투명한), obscure (모호한)",
+      "emoji": "🔍"
     },
     {
-      "word": "aggregate",
-      "part_of_speech": "verb/noun",
-      "meaning_ko": "모으다, 합계; 모인 것, 총합",
-      "explanation": "To collect or combine things into a single sum or mass; the total formed by combining separate items",
-      "example_from_convo": "We need to aggregate all the sales data from each region",
-      "example_ko": "우리는 각 지역의 판매 데이터를 모두 모아야 해",
-      "tip": "동의어: accumulate(축적하다), compile(편집하다). aggregate는 더 formal하고 데이터/수치 관련해서 자주 사용. 반의어: disperse(흩어지다), distribute(분배하다)",
-      "emoji": "📊"
-    },
-    {
-      "word": "malevolent",
+      "word": "desultory",
       "part_of_speech": "adjective",
-      "meaning_ko": "악의 있는, 해로운",
-      "explanation": "Wishing or intending evil toward others; having or showing deep-seated resentment and desire to harm",
-      "example_from_convo": "The villain's malevolent grin made everyone uncomfortable",
-      "example_ko": "악당의 악의 있는 미소가 모두를 불편하게 했어",
-      "tip": "반의어: benevolent(선의 있는) - benevolent와 함께 외우면 좋음. 동의어: sinister(불길한), evil(악한). malevolent는 의도적인 악의를 강조",
-      "emoji": "😈"
+      "meaning_ko": "산만한, 일관성 없는, 성의 없는",
+      "explanation": "Lacking a plan, purpose, or enthusiasm; jumping from one thing to another without method or purpose",
+      "example_from_convo": "His desultory approach to studying didn't help him prepare for the exam",
+      "example_ko": "그의 산만한 공부 방식은 시험 준비에 도움이 되지 않았다",
+      "tip": "Synonym: haphazard (무작위적인)—both suggest lack of order, but desultory implies lack of interest/effort. Antonym: methodical (체계적인), systematic (체계적인), diligent (부지런한)",
+      "emoji": "🌪️"
     },
     {
-      "word": "enumerate",
-      "part_of_speech": "verb",
-      "meaning_ko": "열거하다, 나열하다",
-      "explanation": "To mention things one by one; to list or count off items in detail, often in a systematic way",
-      "example_from_convo": "The report enumerates all the problems we encountered last quarter",
-      "example_ko": "그 보고서는 지난 분기에 우리가 직면한 모든 문제들을 열거했어",
-      "tip": "동의어: list(목록), itemize(항목별로 나열하기), catalog(분류하기). enumerate는 ordered list나 systematic approach를 강조. 명사형: enumeration",
-      "emoji": "📝"
-    },
-    {
-      "word": "equanimity",
+      "word": "contention",
       "part_of_speech": "noun",
-      "meaning_ko": "침착함, 평정심",
-      "explanation": "Mental calmness, composure, and evenness of temper especially in a difficult or stressful situation",
-      "example_from_convo": "Despite the chaos, she handled the crisis with remarkable equanimity",
-      "example_ko": "혼란에도 불구하고 그녀는 놀라운 침착함으로 위기를 대처했어",
-      "tip": "동의어: composure(침착), serenity(고요함), tranquility(평온함). equanimity는 어려운 상황에서도 유지되는 정신적 평정을 강조. 반의어: agitation(동요), turmoil(혼란)",
-      "emoji": "😌"
+      "meaning_ko": "주장, 논쟁, 분쟁",
+      "explanation": "A heated argument or disagreement; a point or assertion that someone argues for or claims to be true",
+      "example_from_convo": "The main contention between the two researchers is whether the data supports the hypothesis",
+      "example_ko": "두 연구자 사이의 주요 쟁점은 데이터가 가설을 뒷받침하는지 여부이다",
+      "tip": "Synonym: assertion (주장)—both present claims, but contention implies disagreement/debate while assertion is neutral. Related: dispute (분쟁), controversy (논쟁). Antonym: agreement (동의)",
+      "emoji": "⚔️"
+    },
+    {
+      "word": "fecund",
+      "part_of_speech": "adjective",
+      "meaning_ko": "비옥한, 다산의, 창의적인",
+      "explanation": "Producing much fruit or foliage or many seeds; intellectually productive and inventive; fertile",
+      "example_from_convo": "Her fecund imagination produced countless creative ideas for the project",
+      "example_ko": "그녀의 풍부한 상상력은 프로젝트를 위한 셀 수 없는 창의적인 아이디어를 만들어냈다",
+      "tip": "Synonym: fertile (비옥한)—both indicate productivity, but fecund often implies abundance and creativity while fertile is more general. Antonym: barren (불모의), sterile (불임의), infertile (불임의)",
+      "emoji": "🌾"
+    },
+    {
+      "word": "prescient",
+      "part_of_speech": "adjective",
+      "meaning_ko": "선견지명이 있는, 미리 아는",
+      "explanation": "Having knowledge of events before they take place; showing foresight; able to predict the future",
+      "example_from_convo": "Her prescient warnings about the market crash were proven right months later",
+      "example_ko": "시장 붕괴에 대한 그녀의 선견지명 있는 경고는 수개월 후 정확하다는 것이 증명되었다",
+      "tip": "Synonym: prophetic (예언적인)—both predict future, but prescient emphasizes knowledge while prophetic emphasizes divine or mystical insight. Antonym: unaware (무의식적인), oblivious (무지한)",
+      "emoji": "🔮"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "taciturn",
-      "question": "What does 'taciturn' mean?",
+      "word": "pellucid",
+      "question": "What does 'pellucid' mean?",
       "options": [
-        "Habitually reserved or uncommunicative in speech",
-        "Speaking in a confused or unclear manner",
-        "Reluctant to reveal information in specific situations",
-        "Talkative and outgoing with others"
+        "Clear and easy to understand; transparent",
+        "Logically sound and rational",
+        "Calm and peaceful",
+        "Confusing and unclear"
       ],
       "answer": 0,
-      "explanation": "Taciturn은 말이 적은 성격 특성을 나타내며, 지속적으로 수다스럽지 않은 사람을 묘사합니다.",
+      "explanation": "Pellucid means translucently clear and easy to understand.",
       "option_explanations": [
         null,
-        "inarticulate(부명확한)의 의미이며, taciturn과 달리 '말을 못한다'의 의미",
-        "reticent(말을 아끼는)는 상황에 따라 말을 아끼는 것이고, taciturn은 성향 자체를 의미",
-        "verbose(말이 많은)는 정반대 의미"
+        "Synonym(동의어): lucid는 pellucid와 유사하지만 '명확한 생각'에 더 초점을 맞춘다",
+        "Related word(관련어): placid는 '고요한, 차분한'이라는 뜻으로 clarity와 무관하다",
+        "Antonym(반의어): obscure는 '불명확한, 모호한'이라는 뜻으로 반대 의미다"
       ]
     },
     {
       "type": "meaning",
-      "word": "malevolent",
-      "question": "What does 'malevolent' mean?",
+      "word": "desultory",
+      "question": "What is the best definition of 'desultory'?",
       "options": [
-        "Wishing or intending evil toward others",
-        "Showing concern and care for others' wellbeing",
-        "Appearing threatening or ominous in nature",
-        "Lacking any particular interest or emotion"
+        "Lacking plan, purpose, or enthusiasm; jumping randomly from one thing to another",
+        "Passionate and deeply committed",
+        "Careful and methodical",
+        "Brief and superficial"
       ],
       "answer": 0,
-      "explanation": "Malevolent은 악의적인 의도와 남을 해치려는 욕망을 표현합니다.",
+      "explanation": "Desultory describes something done without method, plan, or interest.",
       "option_explanations": [
         null,
-        "benevolent(선의 있는)는 정반대로 남을 돕고자 하는 의도를 의미",
-        "sinister(불길한)는 위협적인 '외형'을 강조하지만, malevolent는 내재된 악의적 '의도'를 강조",
-        "apathetic(무관심한)는 감정이 없는 상태로, 악의와는 다른 개념"
+        "Antonym(반의어): ardent/passionate는 desultory의 정반대로, 강한 열정과 헌신을 의미한다",
+        "Antonym(반의어): meticulous/methodical은 계획적이고 신중함을 뜻하므로 정반대다",
+        "Related word(관련어): superficial은 깊이가 없다는 점에서 관련되지만 무계획성을 직접 나타내지 않는다"
       ]
     },
     {
       "type": "meaning",
-      "word": "equanimity",
-      "question": "What does 'equanimity' mean?",
+      "word": "prescient",
+      "question": "What does 'prescient' mean?",
       "options": [
-        "Mental calmness and composure in difficult situations",
-        "The state of having equal rights and opportunities",
-        "Equal distribution of resources among people",
-        "Quick and energetic response to challenges"
+        "Having knowledge of events before they happen; showing foresight",
+        "Being present at a particular event",
+        "Following established rules and customs",
+        "Lacking awareness or knowledge"
       ],
       "answer": 0,
-      "explanation": "Equanimity는 어려운 상황에서도 유지되는 정신적 평정과 침착함을 의미합니다.",
+      "explanation": "Prescient means having the ability to know or predict future events.",
       "option_explanations": [
         null,
-        "equality(평등)는 사회적·법적 동등함을 의미하며, equanimity와는 다른 개념",
-        "equity(형평성)는 자원 분배의 공정함을 의미하며 정신 상태와는 무관",
-        "agility(민첩함)는 빠른 반응을 의미하며, equanimity의 침착함과는 반대"
+        "Related word(관련어): present는 '현재에 있다'는 뜻으로, prescient의 '미래를 아는' 의미와 무관하다",
+        "Related word(관련어): prescriptive는 '처방적인'이라는 뜻으로 prescient과 음성이 유사하지만 뜻이 완전히 다르다",
+        "Antonym(반의어): oblivious는 '무지한, 인식하지 못하는'이라는 뜻으로 정반대다"
       ]
     },
     {
       "type": "fill_blank",
-      "word": "aggregate",
-      "question": "The research team needs to _____ data from multiple sources to draw meaningful conclusions.",
+      "word": "contention",
+      "question": "The main _______ between climate scientists is not whether global warming exists, but how quickly it will accelerate.",
       "options": [
-        "aggregate",
-        "disperse",
-        "accumulate",
-        "fragment"
+        "contention",
+        "harmony",
+        "assertion",
+        "topic"
       ],
       "answer": 0,
-      "explanation": "Aggregate는 데이터를 '모아서' 분석하는 맥락에 적절합니다.",
+      "explanation": "Contention fits perfectly here as it refers to a point of disagreement or debate.",
       "option_explanations": [
         null,
-        "disperse(흩어지다)는 반의어이며 데이터를 분산시키는 의미로 문맥에 맞지 않음",
-        "accumulate(축적하다)는 유사하지만, aggregate는 이미 흩어진 것을 '결합'하는 뉘앙스가 더 강함",
-        "fragment(조각내다)는 데이터를 나누는 의미로 문맥에 맞지 않음"
+        "Antonym(반의어): harmony는 '조화, 일치'라는 뜻으로 '의견 불일치'를 나타내는 contention의 정반대다",
+        "Near-synonym(유사어): assertion은 '주장'이라는 뜻이지만 disagreement의 뉘앙스가 약하고, 문맥에서는 contention이 더 적절하다",
+        "Related word(관련어): topic은 '주제'라는 뜻으로 이들이 뭔가를 논의하고 있다는 것만 나타낼 뿐, 의견 충돌을 전달하지 못한다"
       ]
     },
     {
       "type": "fill_blank",
-      "word": "enumerate",
-      "question": "The instruction manual _____ each step you need to follow to assemble the furniture.",
+      "word": "fecund",
+      "question": "The artist's _______ mind continuously generated innovative concepts that impressed gallery curators.",
       "options": [
-        "enumerates",
-        "obscures",
-        "lists",
-        "conceals"
+        "fecund",
+        "barren",
+        "meager",
+        "sluggish"
       ],
       "answer": 0,
-      "explanation": "Enumerate는 단계별로 '세밀하게 나열하는' 의미에 적절합니다.",
+      "explanation": "Fecund means productive and creative, perfectly describing an artist's innovative mind.",
       "option_explanations": [
         null,
-        "obscures(불명확하게 만들다)는 반의어이며 설명을 명확하지 않게 하는 의미",
-        "lists(나열하다)는 동의어이지만 enumerate는 'ordered/systematic' 나열을 더 강조",
-        "conceals(숨기다)는 반의어이며 단계를 드러내지 않는 의미로 문맥 상 틀림"
+        "Antonym(반의어): barren은 '불모의, 생산성이 없는'이라는 뜻으로 정반대의 의미다",
+        "Antonym(반의어): meager는 '부족한, 적은'이라는 뜻으로 풍부한 창의성을 나타낼 수 없다",
+        "Related word(관련어): sluggish는 '둔한, 느린'이라는 뜻으로 창의성의 부족을 나타내지만, fecund의 의미인 '풍부한 생산성'을 전달하지 못한다"
       ]
     },
     {
       "type": "fill_blank",
-      "word": "taciturn",
-      "question": "Unlike his verbose brother, Mark is quite _____ and prefers to listen rather than speak.",
+      "word": "pellucid",
+      "question": "The instruction manual's _______ writing style helped even novices understand the complex software.",
       "options": [
-        "taciturn",
-        "garrulous",
-        "talkative",
-        "eloquent"
+        "pellucid",
+        "opaque",
+        "ambiguous",
+        "cryptic"
       ],
       "answer": 0,
-      "explanation": "문맥에서 'verbose brother'와 대조되므로, taciturn(말이 적은)이 맞습니다.",
+      "explanation": "Pellucid means clear and easy to understand, which fits the context of a helpful instruction manual.",
       "option_explanations": [
         null,
-        "garrulous(수다스러운)는 반의어이며 'verbose brother'와 비슷한 의미로 대조가 아님",
-        "talkative(말이 많은)는 반의어이며 형과 같은 특성을 나타냄",
-        "eloquent(웅변가의)는 말을 잘하는 능력을 의미하며, taciturn과는 다른 차원의 개념"
+        "Antonym(반의어): opaque는 '불투명한, 불명확한'이라는 뜻으로 정반대다",
+        "Antonym(반의어): ambiguous는 '모호한'이라는 뜻으로 clear의 정반대 개념이다",
+        "Antonym(반의어): cryptic은 '수수께끼의, 난해한'이라는 뜻으로 명확성과 정반대다"
       ]
     },
     {
       "type": "situation",
-      "word": "malevolent",
-      "question": "In the horror movie, the _____ spirit haunted the mansion with the intention of harming anyone who entered.",
+      "word": "desultory",
+      "question": "A student attends lectures sporadically, takes notes without focus, and studies different topics each day without a structured plan. How would you best describe this approach?",
       "options": [
-        "malevolent",
-        "benevolent",
-        "mischievous",
-        "indifferent"
+        "A desultory approach to education",
+        "A diligent approach to education",
+        "A pragmatic approach to education",
+        "A competitive approach to education"
       ],
       "answer": 0,
-      "explanation": "'해를 끼치려는 의도'라는 명시적 표현이 있으므로 malevolent(악의 있는)가 적절합니다.",
+      "explanation": "Desultory perfectly describes studying without method, purpose, or consistency.",
       "option_explanations": [
         null,
-        "benevolent(선의 있는)는 정반대이며 'intending to help'를 의미",
-        "mischievous(장난스러운)는 '해를 끼칠 의도'보다 '즐거움'을 추구하는 의미로 덜 심각함",
-        "indifferent(무관심한)는 영혼이 상관없다는 의미로, 'harming anyone'과 모순"
+        "Antonym(반의어): diligent는 '부지런한, 성실한'이라는 뜻으로, 이 학생의 산만함과 정반대다",
+        "Plausible-but-wrong(그럴듯하지만 틀린): pragmatic은 '실용적인'이라는 뜻인데, 이 학생의 접근은 실용적이지 않고 무계획적이다",
+        "Unrelated(관련 없음): competitive는 '경쟁적인'이라는 뜻으로 무계획적 학습과 무관하다"
       ]
     },
     {
       "type": "situation",
-      "word": "equanimity",
-      "question": "When the stock market crashed unexpectedly, experienced investors handled the situation with _____, while novices panicked.",
+      "word": "fecund",
+      "question": "An author publishes five novels in three years, each exploring different themes and receiving critical acclaim for originality. What characteristic does this demonstrate?",
       "options": [
-        "equanimity",
-        "agitation",
-        "volatility",
-        "confusion"
+        "A fecund creative talent",
+        "A sterile approach to writing",
+        "A mundane writing style",
+        "A procrastinating author"
       ],
       "answer": 0,
-      "explanation": "경험 많은 투자자가 침착함을 유지했다는 대조가 있으므로, equanimity(평정심)가 맞습니다.",
+      "explanation": "Fecund describes the author's highly productive and creative output.",
       "option_explanations": [
         null,
-        "agitation(동요)은 반의어이며 novices처럼 불안정한 상태를 의미",
-        "volatility(변동성)는 '심리 상태'가 아닌 시장의 '가격 변동'을 의미",
-        "confusion(혼란)는 정신 상태이지만, equanimity의 침착함과 대조되는 부정적 상태"
+        "Antonym(반의어): sterile은 '불임의, 생산성 없는'이라는 뜻으로, 다작의 창의적 작가와 정반대다",
+        "Plausible-but-wrong(그럴듯하지만 틀린): mundane은 '평범한, 일상적인'이라는 뜻인데, 비평가들의 극찬을 받은 원문과 맞지 않는다",
+        "Unrelated(관련 없음): procrastinating은 '미루는'이라는 뜻으로, 다작과 정반대의 개념이다"
       ]
     }
   ]

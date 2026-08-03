@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, TextInput, Alert, Modal, Dimensions, Linking } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, TextInput, Alert, Modal, Dimensions, Linking, PanResponder, GestureResponderEvent } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Speech from 'expo-speech';
@@ -224,6 +224,17 @@ export default function TOEFLScreen() {
   const [selectedSection, setSelectedSection] = useState<TOEFLSection | null>(null);
   const [selectedAnswers, setSelectedAnswers] = useState<{ [key: string]: number }>({});
   const [isPlaying, setIsPlaying] = useState(false);
+  const [volume, setVolume] = useState(1.0);
+  const volumeRef = useRef(1.0);
+  const trackWidthRef = useRef(100);
+  const volumePan = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponder: () => true,
+      onPanResponderGrant: (e: GestureResponderEvent) => applyVolume(e.nativeEvent.locationX),
+      onPanResponderMove: (e: GestureResponderEvent) => applyVolume(e.nativeEvent.locationX),
+    })
+  ).current;
   const [speakingPlayingIdx, setSpeakingPlayingIdx] = useState<number | null>(null);
   const [writingInput, setWritingInput] = useState('');
   const [paraphraseFeedback, setParaphraseFeedback] = useState<{
@@ -455,6 +466,13 @@ export default function TOEFLScreen() {
     }));
   };
 
+  const applyVolume = (locationX: number) => {
+    const v = Math.max(0, Math.min(1, locationX / trackWidthRef.current));
+    volumeRef.current = v;
+    setVolume(v);
+    currentSoundRef.current?.setVolumeAsync(v).catch(() => {});
+  };
+
   const playListeningAudio = async (turns: { speaker: string; url: string }[]) => {
     isStoppedRef.current = false;
     setIsPlaying(true);
@@ -468,7 +486,7 @@ export default function TOEFLScreen() {
       if (isStoppedRef.current) break;
       setCurrentSpeaker(speaker);
       try {
-        const { sound } = await Audio.Sound.createAsync({ uri: url }, { shouldPlay: true });
+        const { sound } = await Audio.Sound.createAsync({ uri: url }, { shouldPlay: true, volume: volumeRef.current });
         currentSoundRef.current = sound;
         await new Promise<void>(resolve => {
           sound.setOnPlaybackStatusUpdate(status => {
@@ -592,6 +610,19 @@ export default function TOEFLScreen() {
           {currentSpeaker && (
             <Text style={styles.currentSpeakerText}>🗣️ {currentSpeaker}</Text>
           )}
+          <View style={styles.volumeRow}>
+            <Text style={styles.volumeIcon}>🔈</Text>
+            <View
+              style={styles.volumeTrack}
+              onLayout={(e) => { trackWidthRef.current = e.nativeEvent.layout.width; }}
+              {...volumePan.panHandlers}
+            >
+              <View style={[styles.volumeFill, { width: `${volume * 100}%` as any }]} />
+              <View style={[styles.volumeThumb, { left: `${volume * 100}%` as any }]} />
+            </View>
+            <Text style={styles.volumeIcon}>🔊</Text>
+          </View>
+
           <View style={styles.audioControls}>
             <TouchableOpacity
               style={[styles.audioButton, isPlaying && styles.audioButtonActive]}
@@ -1427,10 +1458,47 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     textTransform: 'uppercase',
   },
+  volumeRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginTop: 10,
+    marginBottom: 4,
+  },
+  volumeIcon: {
+    fontSize: 14,
+  },
+  volumeTrack: {
+    flex: 1,
+    height: 20,
+    backgroundColor: '#e2e8f0',
+    borderRadius: 10,
+    overflow: 'hidden',
+    justifyContent: 'center',
+  },
+  volumeFill: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    bottom: 0,
+    backgroundColor: '#6366f1',
+    borderRadius: 10,
+  },
+  volumeThumb: {
+    position: 'absolute',
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    backgroundColor: '#fff',
+    borderWidth: 2,
+    borderColor: '#6366f1',
+    top: 2,
+    marginLeft: -8,
+  },
   audioControls: {
     flexDirection: 'row',
     gap: 8,
-    marginTop: 10,
+    marginTop: 6,
   },
   audioButton: {
     flex: 1,

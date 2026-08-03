@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LAST_BUILD_TIME } from '../constants/buildInfo';
 import { enableStudyNotifications, disableStudyNotifications } from '../utils/studyNotifications';
+import { useAuth } from '../context/AuthContext';
 
 interface FeedbackItem {
   id: string;
@@ -14,6 +15,7 @@ interface FeedbackItem {
 }
 
 export default function SettingsScreen() {
+  const { user } = useAuth();
   const [feedback, setFeedback] = useState('');
   const [feedbackList, setFeedbackList] = useState<FeedbackItem[]>([]);
   const [remindersEnabled, setRemindersEnabled] = useState(false);
@@ -78,7 +80,7 @@ export default function SettingsScreen() {
   const toggleStudyReminders = async () => {
     try {
       if (!remindersEnabled) {
-        const ok = await enableStudyNotifications();
+        const ok = await enableStudyNotifications(user?.uid);
         if (!ok) {
           Alert.alert('권한 거부', '알림 권한을 허용해주세요.');
           return;
