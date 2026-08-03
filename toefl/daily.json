@@ -1,182 +1,111 @@
 {
   "date": "2026-08-04",
   "reading": {
-    "title": "Cognitive Psychology and Memory Formation",
-    "passage": "Cognitive psychology has fundamentally transformed our understanding of how the human mind processes, stores, and retrieves information. Central to this field is the study of memory, which researchers have divided into distinct stages: encoding, storage, and retrieval. During encoding, sensory information is converted into a form that can be processed by the brain, while storage refers to the maintenance of this information over time. Retrieval, the final stage, involves accessing stored information when needed. Recent neuroimaging studies have revealed that different types of memory—such as declarative and procedural memory—activate distinct neural pathways in the brain. Declarative memory, which encompasses facts and events, relies heavily on the hippocampus and prefrontal cortex, whereas procedural memory, involving skills and habits, engages the cerebellum and striatum. Understanding these mechanisms has profound implications for education, clinical treatment of memory disorders, and cognitive enhancement strategies. Furthermore, researchers have discovered that memory consolidation, the process of stabilizing memories, occurs primarily during sleep, emphasizing the critical role of rest in learning and retention.",
-    "vocabulary": [
-      {
-        "word": "encoding",
-        "meaning_ko": "부호화, 감각 정보를 뇌가 처리할 수 있는 형태로 전환하는 과정"
-      },
-      {
-        "word": "retrieval",
-        "meaning_ko": "인출, 저장된 정보에 접근하여 꺼내는 과정"
-      },
-      {
-        "word": "neuroimaging",
-        "meaning_ko": "신경영상화, 뇌의 활동을 시각화하는 의료 기술"
-      },
-      {
-        "word": "declarative memory",
-        "meaning_ko": "선언적 기억, 사실과 사건에 관한 의식적 기억"
-      },
-      {
-        "word": "procedural memory",
-        "meaning_ko": "절차적 기억, 기술과 습관에 관한 암묵적 기억"
-      },
-      {
-        "word": "consolidation",
-        "meaning_ko": "통합, 기억을 안정화시키는 과정"
-      },
-      {
-        "word": "hippocampus",
-        "meaning_ko": "해마, 학습과 기억에 관여하는 뇌 구조"
-      }
-    ],
+    "title": "The Impact of Artificial Intelligence on Employment",
+    "passage": "Artificial intelligence is rapidly transforming the job market. While AI automation will eliminate some traditional roles, it simultaneously creates new opportunities in tech, maintenance, and human oversight sectors. Experts predict that workers who adapt and develop digital skills will thrive. Companies investing in employee retraining programs report higher productivity and employee satisfaction. The transition requires collaborative efforts between government, educational institutions, and businesses to ensure equitable job creation and sustainable economic growth.",
     "questions": [
       {
-        "q": "According to the passage, what are the three stages of memory?",
+        "q": "According to the passage, what is one positive outcome of AI in the job market?",
         "options": [
-          "Attention, focus, and concentration",
-          "Encoding, storage, and retrieval",
-          "Thinking, reasoning, and problem-solving",
-          "Perception, interpretation, and response"
+          "All traditional jobs will disappear",
+          "New opportunities are created in tech and maintenance sectors",
+          "Only technology companies will benefit",
+          "Digital skills are no longer necessary"
         ],
         "answer": 1,
-        "explanation": "본문 첫 번째 문단에서 명시적으로 'memory has been divided into distinct stages: encoding, storage, and retrieval'라고 설명하고 있습니다."
+        "explanation": "본문에서 'it simultaneously creates new opportunities in tech, maintenance, and human oversight sectors'라고 명시되어 있습니다. AI가 일부 직업을 없애지만 새로운 기회를 만든다는 균형잡힌 관점을 보여줍니다."
       },
       {
-        "q": "What can be inferred from the passage about the role of sleep in learning?",
+        "q": "What do companies with retraining programs experience?",
         "options": [
-          "Sleep prevents memory consolidation",
-          "Sleep is essential for stabilizing memories during consolidation",
-          "Sleep only affects procedural memory, not declarative memory",
-          "Sleep is less important than active studying"
-        ],
-        "answer": 1,
-        "explanation": "마지막 문장에서 'memory consolidation...occurs primarily during sleep, emphasizing the critical role of rest in learning and retention'이라고 명확히 제시되어 있습니다."
-      },
-      {
-        "q": "The word 'engagement' in the passage is closest in meaning to 'involvement in the neural pathways.' Which of the following best describes how the cerebellum and striatum are engaged?",
-        "options": [
-          "They are inactive during procedural memory tasks",
-          "They activate and participate in procedural memory processing",
-          "They prevent the formation of new memories",
-          "They are only responsible for declarative memories"
-        ],
-        "answer": 1,
-        "explanation": "'engages'는 '참여하다, 관여하다'는 의미로, 소뇌와 선조체가 절차적 기억 형성에 적극적으로 참여함을 나타냅니다."
-      },
-      {
-        "q": "Why does the author mention neuroimaging studies in the passage?",
-        "options": [
-          "To criticize outdated theories of memory",
-          "To explain why memory disorders cannot be treated",
-          "To provide evidence that different memory types use different brain regions",
-          "To argue that sleep is unnecessary for learning"
+          "Lower employee satisfaction",
+          "Decreased productivity",
+          "Higher productivity and employee satisfaction",
+          "Increased operational costs only"
         ],
         "answer": 2,
-        "explanation": "저자는 신경영상화 연구를 언급함으로써 선언적 기억과 절차적 기억이 뇌의 다른 부위를 활성화시킨다는 과학적 증거를 제시하고 있습니다."
+        "explanation": "'Companies investing in employee retraining programs report higher productivity and employee satisfaction'라는 문장에서 직접 답을 찾을 수 있습니다."
+      },
+      {
+        "q": "Which groups are mentioned as necessary for successful AI transition?",
+        "options": [
+          "Only technology companies",
+          "Government, educational institutions, and businesses",
+          "Only workers",
+          "International organizations only"
+        ],
+        "answer": 1,
+        "explanation": "마지막 문장에서 'collaborative efforts between government, educational institutions, and businesses'라고 명확히 언급되어 있습니다."
       }
     ]
   },
   "writing": {
-    "sentences": [
-      {
-        "original": "Cognitive psychology has fundamentally transformed our understanding of how the human mind processes, stores, and retrieves information.",
-        "paraphrase": "The way we comprehend how the human mind acquires, maintains, and accesses information has been profoundly changed by advances in cognitive psychology.",
-        "tip": "능동태→수동태 변환 및 동사 형태 변경(transforms → has been changed, retrieves → accesses)"
-      },
-      {
-        "original": "During encoding, sensory information is converted into a form that can be processed by the brain.",
-        "paraphrase": "The brain converts sensory information into a processable form during the encoding stage.",
-        "tip": "수동태→능동태 변환으로 문장을 더 직접적이고 명확하게 표현"
-      },
-      {
-        "original": "Declarative memory, which encompasses facts and events, relies heavily on the hippocampus and prefrontal cortex.",
-        "paraphrase": "The hippocampus and prefrontal cortex are heavily relied upon by declarative memory, which includes factual and event-related information.",
-        "tip": "관계절 재구성 및 동의어 사용(encompasses → includes, relies heavily on → are relied upon)"
-      },
-      {
-        "original": "Understanding these mechanisms has profound implications for education, clinical treatment of memory disorders, and cognitive enhancement strategies.",
-        "paraphrase": "The comprehension of these mechanisms significantly impacts how we approach education, treat memory-related clinical conditions, and develop methods to enhance cognition.",
-        "tip": "명사 → 동명사 변환(Understanding), 병렬 구조 재정렬로 강조 효과 증진"
-      }
+    "prompt": "Do you agree or disagree with the statement: 'Technology has made our lives better'? Use specific reasons and examples to support your position.",
+    "structure": {
+      "intro": "명확한 입장 표현으로 시작. 예: 'I strongly agree that technology has significantly improved our quality of life' 또는 'While technology offers benefits, I believe its drawbacks outweigh advantages'",
+      "body1": "첫 번째 이유: 의료 분야의 발전 - 진단 기술 개선, 원격진료 가능성 등 구체적 예시 제시",
+      "body2": "두 번째 이유: 커뮤니케이션 혁신 - 지리적 거리 극복, 실시간 연결, 관계 유지 용이성",
+      "conclusion": "입장을 재확인하고 종합적 의견 제시. 미래에 대한 긍정적 전망이나 고려사항 언급"
+    },
+    "useful_phrases": [
+      "In my opinion, technology has fundamentally transformed...",
+      "To illustrate this point, consider the advancements in...",
+      "Furthermore, technology enables us to...",
+      "However, we must acknowledge that...",
+      "In conclusion, the benefits of technology clearly outweigh the drawbacks because..."
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer studying alone to focus better on their work. Others prefer studying in groups to share ideas and motivate each other. Which do you prefer and why? Include specific reasons and details in your response.",
-    "model_sentences": [
-      "Personally, I prefer studying in groups rather than studying alone because I believe collaborative learning leads to better understanding and retention of material.",
-      "First, when I study with peers, I can discuss difficult concepts and get immediate feedback, which helps me clarify confusing topics more effectively than studying on my own.",
-      "For example, when I was preparing for my chemistry exam last semester, I joined a study group and we explained complex reaction mechanisms to each other; this interactive approach helped me remember the concepts much better than when I tried to study the same material alone previously.",
-      "Additionally, studying in groups keeps me motivated and accountable, as I don't want to let my teammates down, whereas studying alone can sometimes lead to procrastination.",
-      "Overall, I strongly believe that group study is superior because it combines the benefits of social interaction, immediate clarification of doubts, and increased motivation."
+    "prompt": "Some people prefer to study alone in a quiet environment. Others prefer to study in groups with classmates. Which do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer studying in groups because...",
+      "One reason is that group study allows me to...",
+      "Another advantage is that I can explain concepts to others, which helps reinforce my own understanding.",
+      "For example, when I study with classmates, we can discuss difficult problems together.",
+      "In contrast, some people might argue that studying alone is better, but I believe..."
+    ],
+    "sample_points": [
+      "그룹 스터디의 장점: 다양한 관점 공유, 어려운 부분을 함께 해결, 토론을 통한 깊이있는 이해 증진, 동기부여 향상",
+      "구체적 예시: 어려운 수학 문제를 친구들과 함께 풀면서 다양한 해결 방법을 배움, 설명하는 과정에서 개념이 명확해짐"
     ]
   },
   "listening": {
-    "title": "Course Registration Consultation with Professor",
+    "title": "University Library Orientation",
     "type": "conversation",
-    "script": "Student: Professor Kim, I'm really struggling with my course registration. I wanted to enroll in your Advanced Cognitive Psychology seminar, but the class is already full. Is there any way I could join?\n\nProfessor: I understand your frustration. The seminar is quite popular this semester. Let me check the waitlist status. How many credits are you currently taking?\n\nStudent: I'm taking fifteen credits right now, but I was planning to drop one elective to make room for your seminar.\n\nProfessor: That's good planning. Actually, I do have the authority to add one more student to the roster since the department approved an expansion. However, the seminar requires a strong foundation in introductory cognitive psychology and research methods.\n\nStudent: I've completed both of those courses with an A and a B+, so I think I'm prepared.\n\nProfessor: Excellent. In that case, I can add you to the class. However, you'll need to attend our first meeting, and I'll send you the reading list by email. The course moves quickly, so be prepared for substantial weekly assignments.\n\nStudent: Thank you so much, Professor. I really appreciate your flexibility. I'll definitely be ready.",
-    "vocabulary": [
-      {
-        "word": "roster",
-        "meaning_ko": "명단, 등록 학생 목록"
-      },
-      {
-        "word": "waitlist",
-        "meaning_ko": "대기자 명단, 수강 신청 대기 목록"
-      },
-      {
-        "word": "authority",
-        "meaning_ko": "권한, 권위"
-      },
-      {
-        "word": "foundation",
-        "meaning_ko": "기초, 기본 토대"
-      },
-      {
-        "word": "expansion",
-        "meaning_ko": "확대, 확장"
-      },
-      {
-        "word": "flexibility",
-        "meaning_ko": "유연성, 융통성"
-      }
-    ],
+    "script": "Student: Excuse me, I'm new here and I'm not sure how to find research materials for my history project. Librarian: Welcome! I'd be happy to help. First, you can use our online database system to search for books and academic journals. We have access to thousands of scholarly articles related to history. Student: That sounds helpful. How do I access it? Librarian: You can use your student ID and password to log in from any computer on campus or from home. We also offer free workshops every Wednesday at 2 PM where I teach students advanced search techniques. Additionally, I recommend visiting our history section in the third floor where you'll find primary sources and historical documents. Student: Great! And what if I have questions while researching? Librarian: You can come back and ask me directly, or use our online chat service available from 9 AM to 8 PM daily. We also have research consultants who can schedule one-on-one appointments with you.",
     "questions": [
       {
-        "q": "What is the main problem the student is facing?",
+        "q": "What is the main purpose of this conversation?",
         "options": [
-          "The student wants to drop the Advanced Cognitive Psychology seminar",
-          "The student cannot enroll in the seminar because it is full",
-          "The student has too many credits and needs advice on course reduction",
-          "The student is unsure about the professor's grading criteria"
+          "To explain library rules and regulations",
+          "To provide orientation about library research resources and services",
+          "To register the student for a library membership",
+          "To schedule the student's first library visit"
         ],
         "answer": 1,
-        "explanation": "학생은 'I wanted to enroll in your Advanced Cognitive Psychology seminar, but the class is already full'이라고 명확히 문제를 제시하고 있습니다."
+        "explanation": "도서관 사서가 신입 학생에게 도서관의 여러 리소스(온라인 데이터베이스, 워크숍, 3층 역사 섹션, 온라인 채팅 서비스)에 대해 설명하고 있습니다. 이는 도서관 오리엔테이션의 전형적인 내용입니다."
       },
       {
-        "q": "What does the professor suggest the student should do?",
+        "q": "According to the librarian, where can the student find primary sources?",
         "options": [
-          "Drop the elective course and take the seminar next semester",
-          "Join the waitlist and wait for an opening",
-          "Attend the first class meeting and get the reading list by email",
-          "Complete additional prerequisite courses before enrolling"
+          "In the online database system",
+          "In the workshop sessions",
+          "In the history section on the third floor",
+          "In the research consultant's office"
         ],
         "answer": 2,
-        "explanation": "교수는 'you'll need to attend our first meeting, and I'll send you the reading list by email'이라고 학생이 해야 할 일을 제시합니다."
+        "explanation": "사서가 'I recommend visiting our history section in the third floor where you'll find primary sources and historical documents'라고 명확히 언급했습니다."
       },
       {
-        "q": "Why does the professor decide to add the student to the seminar?",
+        "q": "What services does the library offer for students who need help during research?",
         "options": [
-          "Because the student is the top performer in the class",
-          "Because the department approved an expansion and the student has the required foundation",
-          "Because the student promised to help other classmates",
-          "Because there is space in the waitlist for one more student"
+          "Only in-person consultations",
+          "Online chat service and one-on-one appointments with consultants",
+          "Only email support",
+          "Telephone support only"
         ],
         "answer": 1,
-        "explanation": "교수가 'I do have the authority to add one more student to the roster since the department approved an expansion'이라고 설명하고, 학생이 선수과목을 우수한 성적으로 완료했기 때문입니다."
+        "explanation": "사서가 'You can come back and ask me directly, or use our online chat service available from 9 AM to 8 PM daily. We also have research consultants who can schedule one-on-one appointments with you'라고 설명했습니다."
       }
     ]
   }
