@@ -426,12 +426,12 @@ export default function TOEFLScreen() {
   };
 
   const VOICE_MAP: Record<string, string> = {
-    'Student A': 'nova',
-    'Student B': 'shimmer',
-    'Professor': 'nova',
-    'Narrator': 'nova',
-    'Man': 'fable',
-    'Woman': 'nova',
+    'Narrator':  'nova',
+    'Professor': 'shimmer',
+    'Student A': 'fable',
+    'Student B': 'echo',
+    'Man':       'fable',
+    'Woman':     'nova',
   };
 
   function parseScriptToTurns(script: string): { speaker: string; text: string }[] {

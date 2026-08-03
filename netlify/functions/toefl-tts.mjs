@@ -2,12 +2,12 @@
 // Cached for 24 h so replays don't incur extra API cost.
 
 const VOICE_MAP = {
-  'Student A': 'nova',
-  'Student B': 'shimmer',
-  'Professor': 'nova',
-  'Narrator': 'nova',
-  'Man': 'fable',
-  'Woman': 'nova',
+  'Narrator':   'nova',     // 밝은 여성 (메인 진행)
+  'Professor':  'shimmer',  // 차분한 여성 (교수)
+  'Student A':  'fable',    // 활기찬 남성
+  'Student B':  'echo',     // 중성 남성
+  'Man':        'fable',    // 활기찬 남성
+  'Woman':      'nova',     // 밝은 여성
 };
 
 export default async (req) => {
