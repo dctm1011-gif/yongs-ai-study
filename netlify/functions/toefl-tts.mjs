@@ -3,10 +3,10 @@
 
 const VOICE_MAP = {
   'Student A': 'nova',
-  'Student B': 'echo',
-  'Professor': 'onyx',
-  'Narrator': 'alloy',
-  'Man': 'echo',
+  'Student B': 'shimmer',
+  'Professor': 'nova',
+  'Narrator': 'nova',
+  'Man': 'fable',
   'Woman': 'nova',
 };
 
@@ -44,7 +44,7 @@ export default async (req) => {
       Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ model: 'tts-1', input: text, voice }),
+    body: JSON.stringify({ model: 'tts-1-hd', input: text, voice }),
   });
 
   if (!ttsResponse.ok) {

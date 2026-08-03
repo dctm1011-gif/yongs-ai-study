@@ -427,10 +427,10 @@ export default function TOEFLScreen() {
 
   const VOICE_MAP: Record<string, string> = {
     'Student A': 'nova',
-    'Student B': 'echo',
-    'Professor': 'onyx',
-    'Narrator': 'alloy',
-    'Man': 'echo',
+    'Student B': 'shimmer',
+    'Professor': 'nova',
+    'Narrator': 'nova',
+    'Man': 'fable',
     'Woman': 'nova',
   };
 
