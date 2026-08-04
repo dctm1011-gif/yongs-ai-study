@@ -1,208 +1,208 @@
 {
-  "date": "2026-08-04",
+  "date": "2026-08-05",
   "words": [
     {
-      "word": "pellucid",
+      "word": "garrulous",
       "part_of_speech": "adjective",
-      "meaning_ko": "명확한, 투명한, 이해하기 쉬운",
-      "explanation": "Translucently clear in style or meaning; easy to understand or see through; characterized by clarity and transparency",
-      "example_from_convo": "The professor's pellucid explanation made the complex theory easy to grasp",
-      "example_ko": "그 교수의 명확한 설명은 복잡한 이론을 이해하기 쉽게 만들었다",
-      "tip": "Synonym: lucid (명확한)—both mean clear, but pellucid emphasizes transparency and directness while lucid emphasizes clarity of thought. Antonym: opaque (불투명한), obscure (모호한)",
-      "emoji": "🔍"
+      "meaning_ko": "수다스러운, 말이 많은",
+      "explanation": "Tending to talk excessively; overly talkative or chatty in a way that can be annoying or tiresome",
+      "example_from_convo": "My uncle is so garrulous that he talked for three hours straight at dinner",
+      "example_ko": "내 삼촌은 정말 수다스러워서 저녁 식사 때 3시간을 쉴 새 없이 말했어",
+      "tip": "Synonym(동의어): loquacious (더 격식적); Antonym(반의어): taciturn, reticent (말이 적은). Garrulous는 단순히 말이 많은 것을 넘어 지루하고 불필요한 말을 많이 한다는 부정적 뉘앙스가 강함",
+      "emoji": "🗣️"
     },
     {
-      "word": "desultory",
+      "word": "propitious",
       "part_of_speech": "adjective",
-      "meaning_ko": "산만한, 일관성 없는, 성의 없는",
-      "explanation": "Lacking a plan, purpose, or enthusiasm; jumping from one thing to another without method or purpose",
-      "example_from_convo": "His desultory approach to studying didn't help him prepare for the exam",
-      "example_ko": "그의 산만한 공부 방식은 시험 준비에 도움이 되지 않았다",
-      "tip": "Synonym: haphazard (무작위적인)—both suggest lack of order, but desultory implies lack of interest/effort. Antonym: methodical (체계적인), systematic (체계적인), diligent (부지런한)",
-      "emoji": "🌪️"
+      "meaning_ko": "길한, 호리한, 유리한",
+      "explanation": "Giving or indicating a good chance of success; favorable or advantageous circumstances or timing",
+      "example_from_convo": "The propitious weather conditions made it perfect for launching the new product",
+      "example_ko": "호리한 날씨 조건이 새 제품 출시에 완벽했어",
+      "tip": "Synonym(동의어): auspicious (더 일반적); Antonym(반의어): inauspicious, unfavorable. Propitious는 특히 미래의 성공 가능성을 암시하는 현재 상황을 묘사할 때 사용",
+      "emoji": "✨"
     },
     {
-      "word": "contention",
-      "part_of_speech": "noun",
-      "meaning_ko": "주장, 논쟁, 분쟁",
-      "explanation": "A heated argument or disagreement; a point or assertion that someone argues for or claims to be true",
-      "example_from_convo": "The main contention between the two researchers is whether the data supports the hypothesis",
-      "example_ko": "두 연구자 사이의 주요 쟁점은 데이터가 가설을 뒷받침하는지 여부이다",
-      "tip": "Synonym: assertion (주장)—both present claims, but contention implies disagreement/debate while assertion is neutral. Related: dispute (분쟁), controversy (논쟁). Antonym: agreement (동의)",
-      "emoji": "⚔️"
+      "word": "perspire",
+      "part_of_speech": "verb",
+      "meaning_ko": "땀을 흘리다",
+      "explanation": "To produce and discharge sweat through the pores of the skin, especially as a response to heat or exertion",
+      "example_from_convo": "I perspired heavily during the marathon, losing lots of fluids",
+      "example_ko": "마라톤 중에 땀을 많이 흘렸어, 체액을 많이 잃었지",
+      "tip": "Synonym(동의어): sweat (더 일상적인 표현); Related: perspiration (명사). Perspire는 좀 더 격식적이고 과학적인 표현. 'Sweat' 대신 formal writing에서 사용하면 좋음",
+      "emoji": "💦"
     },
     {
-      "word": "fecund",
+      "word": "recalcitrant",
       "part_of_speech": "adjective",
-      "meaning_ko": "비옥한, 다산의, 창의적인",
-      "explanation": "Producing much fruit or foliage or many seeds; intellectually productive and inventive; fertile",
-      "example_from_convo": "Her fecund imagination produced countless creative ideas for the project",
-      "example_ko": "그녀의 풍부한 상상력은 프로젝트를 위한 셀 수 없는 창의적인 아이디어를 만들어냈다",
-      "tip": "Synonym: fertile (비옥한)—both indicate productivity, but fecund often implies abundance and creativity while fertile is more general. Antonym: barren (불모의), sterile (불임의), infertile (불임의)",
-      "emoji": "🌾"
+      "meaning_ko": "완고한, 저항하는, 말을 안 듣는",
+      "explanation": "Stubbornly refusing to obey or comply; showing persistent opposition or resistance",
+      "example_from_convo": "The recalcitrant employee refused to follow the new company policies",
+      "example_ko": "그 완고한 직원은 새로운 회사 정책을 따르기를 거부했어",
+      "tip": "Synonym(동의어): obstinate, defiant (하지만 obstinate는 더 개인적 성향, recalcitrant는 지시/권위에 대한 저항); Antonym(반의어): compliant, obedient, tractable. 특히 권위나 지시에 대한 거부의 의미가 강함",
+      "emoji": "🚫"
     },
     {
-      "word": "prescient",
+      "word": "laconic",
       "part_of_speech": "adjective",
-      "meaning_ko": "선견지명이 있는, 미리 아는",
-      "explanation": "Having knowledge of events before they take place; showing foresight; able to predict the future",
-      "example_from_convo": "Her prescient warnings about the market crash were proven right months later",
-      "example_ko": "시장 붕괴에 대한 그녀의 선견지명 있는 경고는 수개월 후 정확하다는 것이 증명되었다",
-      "tip": "Synonym: prophetic (예언적인)—both predict future, but prescient emphasizes knowledge while prophetic emphasizes divine or mystical insight. Antonym: unaware (무의식적인), oblivious (무지한)",
-      "emoji": "🔮"
+      "meaning_ko": "간결한, 말을 적게 하는",
+      "explanation": "Using very few words; brief and concise in speech or writing, often to the point of seeming curt or mysterious",
+      "example_from_convo": "His laconic response to my question was just 'yes' and nothing else",
+      "example_ko": "내 질문에 그의 간결한 대답은 그냥 '네'뿐이었어",
+      "tip": "Synonym(동의어): terse (더 직설적/차갑게 들림), concise (중립적); Antonym(반의어): verbose, garrulous (말이 많은). Laconic은 긍정적으로는 효율적, 부정적으로는 무뚝뚝하거나 신비로운 느낌을 줄 수 있음",
+      "emoji": "🤐"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "pellucid",
-      "question": "What does 'pellucid' mean?",
+      "word": "garrulous",
+      "question": "What does 'garrulous' mean?",
       "options": [
-        "Clear and easy to understand; transparent",
-        "Logically sound and rational",
-        "Calm and peaceful",
-        "Confusing and unclear"
+        "Excessively talkative and prone to unnecessary chatter",
+        "Capable of speaking multiple languages fluently",
+        "Speaking in a loud and aggressive manner",
+        "Quiet and unwilling to speak"
       ],
       "answer": 0,
-      "explanation": "Pellucid means translucently clear and easy to understand.",
+      "explanation": "Garrulous는 지루하고 불필요한 말을 계속 많이 하는 사람을 설명합니다.",
       "option_explanations": [
         null,
-        "Synonym(동의어): lucid는 pellucid와 유사하지만 '명확한 생각'에 더 초점을 맞춘다",
-        "Related word(관련어): placid는 '고요한, 차분한'이라는 뜻으로 clarity와 무관하다",
-        "Antonym(반의어): obscure는 '불명확한, 모호한'이라는 뜻으로 반대 의미다"
+        "polyglot 또는 multilingual (여러 언어를 구사하는): 말의 양이 아니라 언어 능력을 나타냄",
+        "bombastic 또는 overbearing (호들갑스럽거나 거들먹대는): 말의 방식이지 양이 많다는 의미가 아님",
+        "taciturn (말이 적은): garrulous와 정반대의 의미"
       ]
     },
     {
       "type": "meaning",
-      "word": "desultory",
-      "question": "What is the best definition of 'desultory'?",
+      "word": "propitious",
+      "question": "Which statement best defines 'propitious'?",
       "options": [
-        "Lacking plan, purpose, or enthusiasm; jumping randomly from one thing to another",
-        "Passionate and deeply committed",
-        "Careful and methodical",
-        "Brief and superficial"
+        "Favorable circumstances that suggest a good outcome",
+        "Something that is expensive or costly",
+        "Similar or comparable to something else",
+        "Unlikely to succeed or destined to fail"
       ],
       "answer": 0,
-      "explanation": "Desultory describes something done without method, plan, or interest.",
+      "explanation": "Propitious는 성공 가능성이 높은 유리한 상황을 의미합니다.",
       "option_explanations": [
         null,
-        "Antonym(반의어): ardent/passionate는 desultory의 정반대로, 강한 열정과 헌신을 의미한다",
-        "Antonym(반의어): meticulous/methodical은 계획적이고 신중함을 뜻하므로 정반대다",
-        "Related word(관련어): superficial은 깊이가 없다는 점에서 관련되지만 무계획성을 직접 나타내지 않는다"
+        "costly 또는 expensive (비싼): 경제적 가치에 관한 것으로 운세나 기회와 무관",
+        "analogous (비슷한): 상황의 호리함과는 무관",
+        "inauspicious (불리한): propitious와 정반대의 의미"
       ]
     },
     {
       "type": "meaning",
-      "word": "prescient",
-      "question": "What does 'prescient' mean?",
+      "word": "recalcitrant",
+      "question": "What is the meaning of 'recalcitrant'?",
       "options": [
-        "Having knowledge of events before they happen; showing foresight",
-        "Being present at a particular event",
-        "Following established rules and customs",
-        "Lacking awareness or knowledge"
+        "Stubbornly resistant to authority or control",
+        "Extremely careful and paying close attention to details",
+        "Having a tendency to break easily or frequently",
+        "Willing to follow instructions without complaint"
       ],
       "answer": 0,
-      "explanation": "Prescient means having the ability to know or predict future events.",
+      "explanation": "Recalcitrant는 권위나 지시에 완고하게 저항하는 것을 의미합니다.",
       "option_explanations": [
         null,
-        "Related word(관련어): present는 '현재에 있다'는 뜻으로, prescient의 '미래를 아는' 의미와 무관하다",
-        "Related word(관련어): prescriptive는 '처방적인'이라는 뜻으로 prescient과 음성이 유사하지만 뜻이 완전히 다르다",
-        "Antonym(반의어): oblivious는 '무지한, 인식하지 못하는'이라는 뜻으로 정반대다"
+        "meticulous (세심한, 꼼꼼한): 주의 깊음에 관한 것으로 저항이나 불복종과 무관",
+        "brittle 또는 fragile (부서지기 쉬운): 물질의 성질에 관한 것",
+        "compliant 또는 obedient (순종적인): recalcitrant와 정반대의 의미"
       ]
     },
     {
       "type": "fill_blank",
-      "word": "contention",
-      "question": "The main _______ between climate scientists is not whether global warming exists, but how quickly it will accelerate.",
+      "word": "laconic",
+      "question": "The professor gave a _____ explanation that left students confused about the complex theory. Everyone wished he had elaborated more.",
       "options": [
-        "contention",
-        "harmony",
-        "assertion",
-        "topic"
+        "laconic",
+        "verbose",
+        "thorough",
+        "eloquent"
       ],
       "answer": 0,
-      "explanation": "Contention fits perfectly here as it refers to a point of disagreement or debate.",
+      "explanation": "Laconic (간결한/말이 적은)은 너무 짧아서 학생들이 혼란스러웠다는 문맥에 맞습니다.",
       "option_explanations": [
         null,
-        "Antonym(반의어): harmony는 '조화, 일치'라는 뜻으로 '의견 불일치'를 나타내는 contention의 정반대다",
-        "Near-synonym(유사어): assertion은 '주장'이라는 뜻이지만 disagreement의 뉘앙스가 약하고, 문맥에서는 contention이 더 적절하다",
-        "Related word(관련어): topic은 '주제'라는 뜻으로 이들이 뭔가를 논의하고 있다는 것만 나타낼 뿐, 의견 충돌을 전달하지 못한다"
+        "verbose (말이 많은): 문맥상 'wished he had elaborated more(더 자세히 설명했으면 좋겠다)'와 맞지 않음. Verbose는 오히려 너무 길다는 의미",
+        "thorough (철저한): 긍정적인 의미로 'wished he had elaborated'와 충돌하지 않지만, '학생들이 혼란스러워했다'는 맥락과 안 맞음",
+        "eloquent (웅변적인): 설득력 있게 말하는 것인데 학생들이 혼란스러워했다는 맥락과 모순"
       ]
     },
     {
       "type": "fill_blank",
-      "word": "fecund",
-      "question": "The artist's _______ mind continuously generated innovative concepts that impressed gallery curators.",
+      "word": "perspire",
+      "question": "Athletes tend to _____ more during intense training sessions in hot weather conditions.",
       "options": [
-        "fecund",
-        "barren",
-        "meager",
-        "sluggish"
+        "perspire",
+        "shiver",
+        "hydrate",
+        "dehydrate"
       ],
       "answer": 0,
-      "explanation": "Fecund means productive and creative, perfectly describing an artist's innovative mind.",
+      "explanation": "Perspire (땀을 흘리다)는 운동선수들이 더운 날씨에 강도 높은 훈련 중에 하는 생리적 반응입니다.",
       "option_explanations": [
         null,
-        "Antonym(반의어): barren은 '불모의, 생산성이 없는'이라는 뜻으로 정반대의 의미다",
-        "Antonym(반의어): meager는 '부족한, 적은'이라는 뜻으로 풍부한 창의성을 나타낼 수 없다",
-        "Related word(관련어): sluggish는 '둔한, 느린'이라는 뜻으로 창의성의 부족을 나타내지만, fecund의 의미인 '풍부한 생산성'을 전달하지 못한다"
+        "shiver (떨다): 추운 환경에서의 반응으로 더운 날씨와 맞지 않음",
+        "hydrate (수분을 섭취하다): perspire의 결과로 나타나는 행동이지만, perspire 자체의 의미는 아님. 또한 문맥상 '경향이 있다'와 맞지 않음",
+        "dehydrate (탈수되다): perspire의 결과이지만, perspire 자체가 아님"
       ]
     },
     {
       "type": "fill_blank",
-      "word": "pellucid",
-      "question": "The instruction manual's _______ writing style helped even novices understand the complex software.",
+      "word": "garrulous",
+      "question": "The _____ old man at the coffee shop talked for hours about his past adventures, barely pausing for breath.",
       "options": [
-        "pellucid",
-        "opaque",
-        "ambiguous",
-        "cryptic"
+        "garrulous",
+        "taciturn",
+        "inquisitive",
+        "nostalgic"
       ],
       "answer": 0,
-      "explanation": "Pellucid means clear and easy to understand, which fits the context of a helpful instruction manual.",
+      "explanation": "Garrulous (수다스러운)는 쉬지 않고 계속 말하는 사람을 설명합니다.",
       "option_explanations": [
         null,
-        "Antonym(반의어): opaque는 '불투명한, 불명확한'이라는 뜻으로 정반대다",
-        "Antonym(반의어): ambiguous는 '모호한'이라는 뜻으로 clear의 정반대 개념이다",
-        "Antonym(반의어): cryptic은 '수수께끼의, 난해한'이라는 뜻으로 명확성과 정반대다"
+        "taciturn (말이 적은): '수시간 이야기하다'와 완전히 반대의 의미",
+        "inquisitive (호기심 많은): 질문을 많이 하는 것이지, 자기가 계속 말하는 것이 아님",
+        "nostalgic (향수에 빠진): 과거를 그리워하는 감정이지, 말이 많다는 의미가 아님. 비록 그가 과거를 얘기했지만 그것이 '말이 많다'는 이유는 아님"
       ]
     },
     {
       "type": "situation",
-      "word": "desultory",
-      "question": "A student attends lectures sporadically, takes notes without focus, and studies different topics each day without a structured plan. How would you best describe this approach?",
+      "word": "propitious",
+      "question": "A startup company is looking to launch its new product. The market research shows high demand, investors are ready, and the economy is strong. The CEO says, 'The timing is absolutely _____.' Which word fits best?",
       "options": [
-        "A desultory approach to education",
-        "A diligent approach to education",
-        "A pragmatic approach to education",
-        "A competitive approach to education"
+        "propitious",
+        "inopportune",
+        "pragmatic",
+        "ambiguous"
       ],
       "answer": 0,
-      "explanation": "Desultory perfectly describes studying without method, purpose, or consistency.",
+      "explanation": "모든 조건이 유리하고 성공 가능성이 높으므로 propitious (길한, 호리한)가 가장 적절합니다.",
       "option_explanations": [
         null,
-        "Antonym(반의어): diligent는 '부지런한, 성실한'이라는 뜻으로, 이 학생의 산만함과 정반대다",
-        "Plausible-but-wrong(그럴듯하지만 틀린): pragmatic은 '실용적인'이라는 뜻인데, 이 학생의 접근은 실용적이지 않고 무계획적이다",
-        "Unrelated(관련 없음): competitive는 '경쟁적인'이라는 뜻으로 무계획적 학습과 무관하다"
+        "inopportune (부적절한, 안 좋은 때): 모든 상황이 긍정적인 것과 정반대",
+        "pragmatic (실용적인): CEO가 말하는 의미가 시간의 '좋음'이 아니라 태도를 나타낼 수 있어서 문맥과 안 맞음",
+        "ambiguous (모호한): 상황이 명확하게 긍정적이므로 모호함과 무관"
       ]
     },
     {
       "type": "situation",
-      "word": "fecund",
-      "question": "An author publishes five novels in three years, each exploring different themes and receiving critical acclaim for originality. What characteristic does this demonstrate?",
+      "word": "recalcitrant",
+      "question": "A manager has repeatedly asked an employee to complete a report by Friday following the new format. The employee has ignored the requests and continues using the old format. The manager describes this behavior as _____.",
       "options": [
-        "A fecund creative talent",
-        "A sterile approach to writing",
-        "A mundane writing style",
-        "A procrastinating author"
+        "recalcitrant",
+        "diligent",
+        "ambivalent",
+        "meticulous"
       ],
       "answer": 0,
-      "explanation": "Fecund describes the author's highly productive and creative output.",
+      "explanation": "직원이 관리자의 지시를 계속 무시하고 따르지 않으므로 recalcitrant (완고하게 저항하는)이 가장 적절합니다.",
       "option_explanations": [
         null,
-        "Antonym(반의어): sterile은 '불임의, 생산성 없는'이라는 뜻으로, 다작의 창의적 작가와 정반대다",
-        "Plausible-but-wrong(그럴듯하지만 틀린): mundane은 '평범한, 일상적인'이라는 뜻인데, 비평가들의 극찬을 받은 원문과 맞지 않는다",
-        "Unrelated(관련 없음): procrastinating은 '미루는'이라는 뜻으로, 다작과 정반대의 개념이다"
+        "diligent (부지런한, 성실한): 오히려 열심히 일하는 긍정적인 의미로 상황과 맞지 않음",
+        "ambivalent (양가적인, 확신하지 못하는): 직원이 몰라서 그런 게 아니라 의도적으로 거부하고 있으므로 부적절",
+        "meticulous (꼼꼼한, 세심한): 주의 깊음에 관한 것으로 순종/저항과 무관"
       ]
     }
   ]

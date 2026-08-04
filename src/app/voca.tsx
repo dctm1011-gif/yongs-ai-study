@@ -114,6 +114,29 @@ function mapFirebaseQuizzes(data: any): Quiz[] {
   });
 }
 
+// 읽음 처리된 단어를 reviewPool에 동기화. toggleWordRead를 거치지 않고
+// readStatus가 복원된 단어(재설치·타기기·레이스컨디션)도 pool에 등록되도록 보장한다.
+async function syncReadWordsToPool(uid: string, readWords: Word[]): Promise<void> {
+  if (!uid || readWords.length === 0) return;
+  const db = getDatabase(getFirebaseApp());
+  for (const w of readWords) {
+    if (!w.id) continue;
+    const poolRef = userRef(uid, `english/reviewPool/${w.id}`);
+    get(poolRef).then(snap => {
+      if (!snap.exists()) {
+        dbSet(poolRef, {
+          word: w.word,
+          meaning: w.meaning,
+          pos: w.pos,
+          emoji: w.emoji,
+          count: 0,
+          lastReviewedDate: null,
+        }).catch(() => {});
+      }
+    }).catch(() => {});
+  }
+}
+
 export default function VocaScreen() {
   const { user } = useAuth();
   const uid = user!.uid;
@@ -231,6 +254,7 @@ export default function VocaScreen() {
         await AsyncStorage.setItem('english_words', JSON.stringify(mergedWords));
         await cacheManager.set('english_words', mergedWords, 24 * 60 * 60 * 1000);
         await saveUpdateTime();
+        syncReadWordsToPool(uid, mergedWords.filter(w => w.isRead));
 
         const fbQuizzes = mapFirebaseQuizzes(snapshot.val());
         const newQuizzes = fbQuizzes.length > 0 ? fbQuizzes : generateQuizzes(mergedWords);
@@ -286,15 +310,27 @@ export default function VocaScreen() {
         setQuizzes(generateQuizzes(loadedWords));
       }
 
-      // 다른 기기/재설치 등으로 로컬 캐시가 없어도 읽음 상태는 Firebase에서 복원
+      // 다른 기기/재설치 등으로 로컬 캐시가 없어도 읽음 상태는 Firebase에서 복원.
+      // fetchReadStatusFromFirebase 비동기 구간에 Firebase 구독이 AsyncStorage를
+      // 오늘 단어로 갱신했을 수 있으므로, 완료 후 AsyncStorage를 재조회해
+      // 최신 단어 목록에 readStatus를 적용한다 (레이스 컨디션 방지).
       const remoteReadStatus = await fetchReadStatusFromFirebase(uid, getKSTDateString());
       if (Object.keys(remoteReadStatus).length > 0) {
-        const merged = loadedWords.map(w => ({
+        const freshSaved = await AsyncStorage.getItem('english_words');
+        let freshWords: Word[];
+        try {
+          const parsed = freshSaved ? JSON.parse(freshSaved) : null;
+          freshWords = Array.isArray(parsed) ? parsed : loadedWords;
+        } catch {
+          freshWords = loadedWords;
+        }
+        const merged = freshWords.map(w => ({
           ...w,
           isRead: remoteReadStatus[w.id] ?? w.isRead,
         }));
         setWords(merged);
         await AsyncStorage.setItem('english_words', JSON.stringify(merged));
+        syncReadWordsToPool(uid, merged.filter(w => w.isRead));
       }
     } catch (error) {
       console.error('Failed to load Voca data:', error);

@@ -6,6 +6,7 @@ investment/daily.json으로 저장 (netlify/functions/investment-daily.mjs가 �
 """
 import json
 import os
+import re
 import subprocess
 import sys
 from datetime import date
@@ -41,6 +42,11 @@ SITE_NAMES = {
     "www.yna.co.kr": "연합뉴스",
     "biz.chosun.com": "조선비즈",
 }
+
+
+def strip_citations(text: str) -> str:
+    """웹검색 응답에서 <cite> 태그 제거."""
+    return re.sub(r'</?cite[^>]*>', '', text).strip()
 
 
 def extract_cited_sites(response) -> list[str]:
@@ -221,6 +227,94 @@ NEWS_PROMPT = """오늘 날짜: {today}
 - 투자자에게 실질적으로 도움이 되는 내용
 - 부동산 1~2개, 주식·경제 1~2개 균형 있게 구성"""
 
+TAX_POLICY_PROMPT = """오늘 날짜: {today}
+
+웹 검색으로 최근 한국 양도소득세 관련 정책 동향을 검색해줘. 아래 세 가지 주제를 중심으로 찾아줘:
+1. 다주택자 양도세 중과세율 현황 및 단계별 완화/재개 일정 (2026~2029)
+2. 장기보유특별공제 → 장기거주소득공제 전환 내용 (거주기간 기준 공제 방식 변경)
+3. 최근 양도세 관련 정책 개편 논의나 뉴스
+
+검색 결과를 바탕으로 현재 양도세 정책 방향을 4~6문장으로 요약해줘.
+JSON만 출력. JSON 외 텍스트 포함 금지.
+
+{{
+  "text": "현재 양도세 정책 방향 요약 (4~6문장). 중과세율 단계별 일정, 장기보유공제 방식 변화, 실수요자·투자자 시사점 순으로 작성.",
+  "updatedAt": "{today}"
+}}
+
+요약 작성 기준:
+- 양도세 중과가 재개됐는지, 단계별 세율(2주택/3주택) 구체적으로 언급
+- 장기거주소득공제 전환으로 달라지는 점 1~2문장
+- 실수요자·투자자 관점의 시사점으로 마무리
+- 확인되지 않은 내용은 추정하지 말 것"""
+
+
+def generate_tax_policy_summary(client: anthropic.Anthropic, target_date: date) -> dict | None:
+    """최근 양도세 정책 방향을 뉴스 검색 기반으로 요약. 실패 시 None 반환."""
+    try:
+        messages = [{"role": "user", "content": TAX_POLICY_PROMPT.format(today=target_date)}]
+        tools = [{"type": "web_search_20250305", "name": "web_search", "max_uses": 4}]
+        while True:
+            response = client.messages.create(model=MODEL, max_tokens=2000, tools=tools, messages=messages)
+            if response.stop_reason == "pause_turn":
+                messages.append({"role": "assistant", "content": response.content})
+                continue
+            break
+        text = "".join(b.text for b in response.content if b.type == "text")
+        start, end = text.find("{"), text.rfind("}") + 1
+        if start == -1 or end == 0:
+            raise ValueError("JSON not found in response")
+        result = json.loads(text[start:end])
+        result["text"] = strip_citations(result.get("text", ""))
+        result["updatedAt"] = str(target_date)
+        return result
+    except Exception as e:
+        print(f"[!] 양도세 정책 요약 생성 실패 (무시): {e}")
+        return None
+
+
+JONGBUSE_POLICY_PROMPT = """오늘 날짜: {today}
+
+웹 검색으로 최근 한국 종합부동산세(종부세) 정책 동향에 관한 뉴스를 2~3건 찾아줘.
+세율 개편안, 공정시장가액비율 변경, 과세 기준 조정, 다주택자 세부담 등을 중심으로 검색해.
+검색 결과를 바탕으로 현재 종부세 정책 방향을 3~5문장으로 요약해줘.
+JSON만 출력. JSON 외 텍스트 포함 금지.
+
+{{
+  "text": "현재 종부세 정책 방향 요약 (3~5문장). 최근 개편 내용, 세율·과세기준 변화, 향후 방향성 순으로 작성.",
+  "updatedAt": "{today}"
+}}
+
+요약 작성 기준:
+- 최근 세제개편안이나 정책 변화 구체적으로 언급 (세율, 공제금액 등 수치 포함)
+- 1주택자와 다주택자 영향 구분
+- 실수요자·투자자 관점의 시사점으로 마무리
+- 확인되지 않은 내용은 추정하지 말 것"""
+
+
+def generate_jongbuse_summary(client: anthropic.Anthropic, target_date: date) -> dict | None:
+    """최근 종합부동산세 정책 방향을 뉴스 검색 기반으로 요약. 실패 시 None 반환."""
+    try:
+        messages = [{"role": "user", "content": JONGBUSE_POLICY_PROMPT.format(today=target_date)}]
+        tools = [{"type": "web_search_20250305", "name": "web_search", "max_uses": 3}]
+        while True:
+            response = client.messages.create(model=MODEL, max_tokens=1500, tools=tools, messages=messages)
+            if response.stop_reason == "pause_turn":
+                messages.append({"role": "assistant", "content": response.content})
+                continue
+            break
+        text = "".join(b.text for b in response.content if b.type == "text")
+        start, end = text.find("{"), text.rfind("}") + 1
+        if start == -1 or end == 0:
+            raise ValueError("JSON not found in response")
+        result = json.loads(text[start:end])
+        result["text"] = strip_citations(result.get("text", ""))
+        result["updatedAt"] = str(target_date)
+        return result
+    except Exception as e:
+        print(f"[!] 종부세 정책 요약 생성 실패 (무시): {e}")
+        return None
+
 
 def _fetch_used_terms() -> list[str]:
     """Firebase에서 최근 30일간 사용된 용어 목록을 가져온다."""
@@ -252,7 +346,7 @@ def generate_term(client: anthropic.Anthropic, target_date: date) -> dict:
         messages = [{"role": "user", "content": TERM_PROMPT.format(today=target_date, used_terms=used_str)}]
         tools = [{"type": "web_search_20250305", "name": "web_search", "max_uses": 3}]
         while True:
-            response = client.messages.create(model=MODEL, max_tokens=2000, tools=tools, messages=messages)
+            response = client.messages.create(model=MODEL, max_tokens=3000, tools=tools, messages=messages)
             if response.stop_reason == "pause_turn":
                 messages.append({"role": "assistant", "content": response.content})
                 continue
@@ -265,7 +359,7 @@ def generate_term(client: anthropic.Anthropic, target_date: date) -> dict:
         term["date"] = str(target_date)
         return term
     except Exception as e:
-        print(f"[!] 용어 생성 실패, fallback 사용: {e}")
+        print(f"[!] 용어 생성 실패 ({type(e).__name__}: {e}), fallback 사용")
         return {
             "term": "LTV",
             "fullName": "주택담보대출비율 (Loan-to-Value Ratio)",
@@ -515,13 +609,24 @@ def main(target_date: date = None):
     data["newsArticles"] = news_articles
     data["dongCharts"] = dong_charts
 
+    print(f"[*] {target_date} 양도세 정책 방향 요약 생성 중 (웹 검색)...")
+    tax_policy_summary = generate_tax_policy_summary(client, target_date)
+    print(f"[+] 양도세 정책 요약 완료" if tax_policy_summary else f"[!] 양도세 정책 요약 실패 (null로 저장)")
+    data["taxPolicySummary"] = tax_policy_summary
+
+    print(f"[*] {target_date} 종합부동산세 정책 방향 요약 생성 중 (웹 검색)...")
+    jongbuse_summary = generate_jongbuse_summary(client, target_date)
+    print(f"[+] 종부세 정책 요약 완료" if jongbuse_summary else f"[!] 종부세 정책 요약 실패 (null로 저장)")
+    data["jongbuseSummary"] = jongbuse_summary
+
     OUTPUT_JSON.parent.mkdir(exist_ok=True)
     OUTPUT_JSON.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"[+] daily.json 저장: {OUTPUT_JSON}")
 
     deploy(target_date)
-    _push_to_firebase_direct(target_date)  # Netlify 빌드 타이밍과 무관하게 즉시 반영
-    _trigger_netlify_investment(target_date)
+    _push_to_firebase_direct(target_date)  # 즉시 반영 (1차)
+    _trigger_netlify_investment(target_date)  # 5분 대기 후 Netlify 트리거
+    _push_to_firebase_direct(target_date)  # Netlify가 혹시 덮어썼을 경우 재보정 (2차)
 
 
 if __name__ == "__main__":

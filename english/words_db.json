@@ -1526,5 +1526,65 @@
     "explanation": "Having knowledge of events before they take place; showing foresight; able to predict the future",
     "tip": "Synonym: prophetic (예언적인)—both predict future, but prescient emphasizes knowledge while prophetic emphasizes divine or mystical insight. Antonym: unaware (무의식적인), oblivious (무지한)",
     "emoji": "🔮"
+  },
+  {
+    "id": "garrulous",
+    "word": "garrulous",
+    "pos": "adjective",
+    "date": "2026-08-05",
+    "meaning": "수다스러운, 말이 많은",
+    "example_ko": "내 삼촌은 정말 수다스러워서 저녁 식사 때 3시간을 쉴 새 없이 말했어",
+    "example_en": "My uncle is so garrulous that he talked for three hours straight at dinner",
+    "explanation": "Tending to talk excessively; overly talkative or chatty in a way that can be annoying or tiresome",
+    "tip": "Synonym(동의어): loquacious (더 격식적); Antonym(반의어): taciturn, reticent (말이 적은). Garrulous는 단순히 말이 많은 것을 넘어 지루하고 불필요한 말을 많이 한다는 부정적 뉘앙스가 강함",
+    "emoji": "🗣️"
+  },
+  {
+    "id": "propitious",
+    "word": "propitious",
+    "pos": "adjective",
+    "date": "2026-08-05",
+    "meaning": "길한, 호리한, 유리한",
+    "example_ko": "호리한 날씨 조건이 새 제품 출시에 완벽했어",
+    "example_en": "The propitious weather conditions made it perfect for launching the new product",
+    "explanation": "Giving or indicating a good chance of success; favorable or advantageous circumstances or timing",
+    "tip": "Synonym(동의어): auspicious (더 일반적); Antonym(반의어): inauspicious, unfavorable. Propitious는 특히 미래의 성공 가능성을 암시하는 현재 상황을 묘사할 때 사용",
+    "emoji": "✨"
+  },
+  {
+    "id": "perspire",
+    "word": "perspire",
+    "pos": "verb",
+    "date": "2026-08-05",
+    "meaning": "땀을 흘리다",
+    "example_ko": "마라톤 중에 땀을 많이 흘렸어, 체액을 많이 잃었지",
+    "example_en": "I perspired heavily during the marathon, losing lots of fluids",
+    "explanation": "To produce and discharge sweat through the pores of the skin, especially as a response to heat or exertion",
+    "tip": "Synonym(동의어): sweat (더 일상적인 표현); Related: perspiration (명사). Perspire는 좀 더 격식적이고 과학적인 표현. 'Sweat' 대신 formal writing에서 사용하면 좋음",
+    "emoji": "💦"
+  },
+  {
+    "id": "recalcitrant",
+    "word": "recalcitrant",
+    "pos": "adjective",
+    "date": "2026-08-05",
+    "meaning": "완고한, 저항하는, 말을 안 듣는",
+    "example_ko": "그 완고한 직원은 새로운 회사 정책을 따르기를 거부했어",
+    "example_en": "The recalcitrant employee refused to follow the new company policies",
+    "explanation": "Stubbornly refusing to obey or comply; showing persistent opposition or resistance",
+    "tip": "Synonym(동의어): obstinate, defiant (하지만 obstinate는 더 개인적 성향, recalcitrant는 지시/권위에 대한 저항); Antonym(반의어): compliant, obedient, tractable. 특히 권위나 지시에 대한 거부의 의미가 강함",
+    "emoji": "🚫"
+  },
+  {
+    "id": "laconic",
+    "word": "laconic",
+    "pos": "adjective",
+    "date": "2026-08-05",
+    "meaning": "간결한, 말을 적게 하는",
+    "example_ko": "내 질문에 그의 간결한 대답은 그냥 '네'뿐이었어",
+    "example_en": "His laconic response to my question was just 'yes' and nothing else",
+    "explanation": "Using very few words; brief and concise in speech or writing, often to the point of seeming curt or mysterious",
+    "tip": "Synonym(동의어): terse (더 직설적/차갑게 들림), concise (중립적); Antonym(반의어): verbose, garrulous (말이 많은). Laconic은 긍정적으로는 효율적, 부정적으로는 무뚝뚝하거나 신비로운 느낌을 줄 수 있음",
+    "emoji": "🤐"
   }
 ]

@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { createLogger } from './_utils.mjs';
 import { initializeApp, getApps } from 'firebase/app';
-import { getDatabase, ref, set } from 'firebase/database';
+import { getDatabase, ref, set, get } from 'firebase/database';
 
 export const config = {
   schedule: '0 21 * * *',
@@ -140,6 +140,8 @@ export default async (req, context) => {
     let termOfDay = null;
     let newsArticles = [];
     let dongCharts = [];
+    let taxPolicySummary = null;
+    let jongbuseSummary = null;
     try {
       const dailyPath = resolve(process.cwd(), 'investment', 'daily.json');
       const parsed = JSON.parse(readFileSync(dailyPath, 'utf-8'));
@@ -147,6 +149,8 @@ export default async (req, context) => {
       termOfDay = parsed.termOfDay || null;
       newsArticles = parsed.newsArticles || [];
       dongCharts = parsed.dongCharts || [];
+      taxPolicySummary = parsed.taxPolicySummary || null;
+      jongbuseSummary = parsed.jongbuseSummary || null;
       log.log('✅ investment/daily.json 사용');
     } catch (e) {
       log.log('investment/daily.json 없음/파싱 실패, fallback 사용:', e.message);
@@ -156,12 +160,30 @@ export default async (req, context) => {
     const firebaseApp = getFirebaseApp();
     const db = getDatabase(firebaseApp);
 
-    // Firebase에 칼럼 + 용어 + 뉴스 저장
+    // 이미 오늘 데이터가 Firebase에 있고 1시간 이내에 작성된 경우 덮어쓰지 않음
+    // (Python 스크립트가 _push_to_firebase_direct로 먼저 올린 최신 데이터를 Netlify가 덮어쓰는 문제 방지)
+    const existingSnap = await get(ref(db, `investment/columns/${today}`));
+    if (existingSnap.exists()) {
+      const existing = existingSnap.val();
+      const existingTs = existing.timestamp ? new Date(existing.timestamp).getTime() : 0;
+      const ageMinutes = (Date.now() - existingTs) / 60000;
+      if (ageMinutes < 60) {
+        log.log(`⏭️ Firebase already has fresh data for ${today} (${Math.round(ageMinutes)}min ago), skipping write`);
+        return new Response(
+          JSON.stringify({ success: true, skipped: true, reason: 'fresh data exists', date: today }),
+          { status: 200 }
+        );
+      }
+    }
+
+    // Firebase에 칼럼 + 용어 + 뉴스 + 양도세 정책 요약 저장
     const columnData = {
       columns: investmentColumns,
       termOfDay,
       newsArticles,
       dongCharts,
+      taxPolicySummary,
+      jongbuseSummary,
       timestamp: new Date().toISOString(),
       date: today,
       count: investmentColumns.length,

@@ -143,6 +143,8 @@ export function useInvestmentSync() {
   const [termOfDay, setTermOfDay] = useState<DailyTerm | null>(null);
   const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
   const [dongCharts, setDongCharts] = useState<DongChartEntry[]>([]);
+  const [taxPolicySummary, setTaxPolicySummary] = useState<{ text: string; updatedAt: string } | null>(null);
+  const [jongbuseSummary, setJongbuseSummary] = useState<{ text: string; updatedAt: string } | null>(null);
   const [bookmarks, setBookmarks] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -177,6 +179,8 @@ export function useInvestmentSync() {
             setTermOfDay(data.termOfDay || null);
             setNewsArticles(data.newsArticles || []);
             setDongCharts(data.dongCharts || []);
+            setTaxPolicySummary(data.taxPolicySummary || null);
+            setJongbuseSummary(data.jongbuseSummary || null);
             setLastSyncTime(new Date(data.timestamp || Date.now()));
             setError(null);
           }
@@ -229,6 +233,8 @@ export function useInvestmentSync() {
     termOfDay,
     newsArticles,
     dongCharts,
+    taxPolicySummary,
+    jongbuseSummary,
     bookmarks,
     loading,
     error,
