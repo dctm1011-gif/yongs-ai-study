@@ -1,178 +1,112 @@
 {
   "date": "2026-08-05",
   "reading": {
-    "title": "Volcanic Activity and Geological Change",
-    "passage": "Volcanic eruptions represent one of the most significant geological processes that shape the Earth's surface and atmosphere. When magma rises through the Earth's crust and reaches the surface, it releases enormous amounts of energy, creating dramatic transformations in the surrounding landscape. The 1883 eruption of Krakatoa in Indonesia demonstrated the global impact of volcanic activity, producing sound waves that traveled around the world and ash clouds that reduced sunlight across the planet for months. Volcanic ash and gases, particularly sulfur dioxide, have profound effects on climate by reflecting solar radiation and creating temporary cooling effects in the atmosphere. Beyond immediate atmospheric impacts, volcanic activity contributes to long-term geological processes by building new landmasses and enriching soils with essential minerals. The Hawaiian Islands, for example, were formed entirely through successive volcanic eruptions over millions of years, and the fertile volcanic soils found in regions like Java and Ecuador support some of the world's most productive agricultural systems. Understanding volcanic processes remains crucial for geologists predicting future eruptions and assessing geological hazards in populated regions.",
-    "vocabulary": [
-      {
-        "word": "magma",
-        "meaning_ko": "지표면 아래의 용융된 암석 물질"
-      },
-      {
-        "word": "crust",
-        "meaning_ko": "지구의 가장 바깥쪽 단단한 층"
-      },
-      {
-        "word": "sulfur dioxide",
-        "meaning_ko": "이산화황, 화산 가스"
-      },
-      {
-        "word": "solar radiation",
-        "meaning_ko": "태양 복사 에너지"
-      },
-      {
-        "word": "successive",
-        "meaning_ko": "연속된, 차례차례의"
-      },
-      {
-        "word": "fertile",
-        "meaning_ko": "비옥한, 생산력 있는"
-      },
-      {
-        "word": "assess",
-        "meaning_ko": "평가하다, 측정하다"
-      }
-    ],
+    "title": "The Impact of Artificial Intelligence on Education",
+    "passage": "Artificial intelligence is revolutionizing the education sector by personalizing learning experiences for students. AI-powered systems can analyze individual learning patterns and adapt content accordingly, helping struggling students catch up while challenging advanced learners. Teachers benefit from automated grading and administrative task reduction, allowing them to focus on mentorship. However, concerns about data privacy and the potential loss of human interaction in classrooms remain significant challenges that educators must address carefully.",
     "questions": [
       {
-        "q": "According to the passage, what was a global consequence of the 1883 Krakatao eruption?",
+        "q": "According to the passage, which of the following is NOT mentioned as a benefit of AI in education?",
         "options": [
-          "It created new agricultural land in Southeast Asia.",
-          "Sound waves traveled around the world and ash reduced sunlight for months.",
-          "It caused permanent changes to the Earth's climate.",
-          "It prevented future volcanic eruptions in the region."
-        ],
-        "answer": 1,
-        "explanation": "지문의 두 번째 문장에서 1883년 크라카타우 폭발이 '전 세계를 여행한 음파를 생성했고' 수개월 동안 햇빛을 감소시킨 화산재 구름을 만들었다고 명시되어 있습니다."
-      },
-      {
-        "q": "What can be inferred from the passage about volcanic soils?",
-        "options": [
-          "They are less productive than synthetic fertilizers.",
-          "They are found only in tropical regions.",
-          "They contain minerals that support agriculture.",
-          "They are dangerous for human habitation."
+          "Personalized learning experiences",
+          "Automated grading systems",
+          "Increased student tuition costs",
+          "Reduced administrative burden for teachers"
         ],
         "answer": 2,
-        "explanation": "지문에서 화산 토양이 '필수 광물로 토양을 풍부하게 하고' Java와 Ecuador와 같은 지역에서 '세계에서 가장 생산성 있는 농업 시스템을 지원한다'고 설명합니다."
+        "explanation": "지문에서 AI의 교육적 이점으로 개인화된 학습, 자동 채점, 교사의 행정업무 감소가 언급되었습니다. 하지만 학생 등록금 증가는 언급되지 않았으므로 정답은 C입니다."
       },
       {
-        "q": "The word 'successive' in the passage is closest in meaning to:",
+        "q": "What can AI systems do based on individual learning patterns?",
         "options": [
-          "Violent and destructive",
-          "One after another in order",
-          "Slow and gradual",
-          "Unsuccessful and failed"
+          "Replace all teachers in schools",
+          "Adapt content to meet student needs",
+          "Eliminate the need for homework",
+          "Guarantee perfect test scores"
         ],
         "answer": 1,
-        "explanation": "'Successive'는 '연속된' 또는 '차례차례의'를 의미하며, 하와이 섬들이 '수백만 년에 걸친 연속적인 화산 폭발'로 형성되었다는 문맥에서 이 의미가 가장 적절합니다."
+        "explanation": "지문의 두 번째 문장에서 'AI-powered systems can analyze individual learning patterns and adapt content accordingly'라고 명시되어 있습니다."
       },
       {
-        "q": "Why does the author mention the Hawaiian Islands?",
+        "q": "What concern is mentioned regarding AI in education?",
         "options": [
-          "To explain how volcanic activity creates new landmasses",
-          "To describe the most dangerous volcanic region",
-          "To argue that volcanic eruptions are unpredictable",
-          "To show that volcanic regions are unsuitable for farming"
+          "AI is too expensive to implement",
+          "Students prefer traditional teaching methods",
+          "Data privacy and loss of human interaction",
+          "AI technology becomes outdated quickly"
         ],
-        "answer": 0,
-        "explanation": "하와이 섬이 '수백만 년에 걸친 연속적인 화산 폭발을 통해 완전히 형성되었다'는 예시를 제시함으로써, 화산 활동이 어떻게 새로운 육지를 만드는지 보여주기 위함입니다."
+        "answer": 2,
+        "explanation": "지문의 마지막 문장에서 'concerns about data privacy and the potential loss of human interaction in classrooms'이 주요 우려사항으로 언급되었습니다."
       }
     ]
   },
   "writing": {
-    "sentences": [
-      {
-        "original": "Volcanic ash and gases, particularly sulfur dioxide, have profound effects on climate by reflecting solar radiation and creating temporary cooling effects in the atmosphere.",
-        "paraphrase": "The climate is profoundly affected by volcanic ash and gases, especially sulfur dioxide, which reflect solar radiation and produce temporary atmospheric cooling.",
-        "tip": "능동→수동 변환 및 주요 명사 강조로 문장 재구성"
-      },
-      {
-        "original": "When magma rises through the Earth's crust and reaches the surface, it releases enormous amounts of energy, creating dramatic transformations in the surrounding landscape.",
-        "paraphrase": "As magma ascends through the Earth's crust to the surface, it liberates vast quantities of energy that fundamentally alter the adjacent terrain.",
-        "tip": "동의어 치환 (rises→ascends, releases→liberates, enormous→vast, creates→alter)"
-      },
-      {
-        "original": "The Hawaiian Islands, for example, were formed entirely through successive volcanic eruptions over millions of years, and the fertile volcanic soils found in regions like Java and Ecuador support some of the world's most productive agricultural systems.",
-        "paraphrase": "The formation of the Hawaiian Islands through millions of years of continuous volcanic activity exemplifies how fertile volcanic soils in areas such as Java and Ecuador sustain globally significant agricultural productivity.",
-        "tip": "복합문을 단순화하고 구조 변환(were formed→formation) 및 의미 축약"
-      }
+    "prompt": "Do you agree or disagree with the statement: 'Technology has made our lives better rather than more complicated'? Use specific examples to support your answer.",
+    "structure": {
+      "intro": "의견을 명확히 제시하고 2-3개의 주요 근거를 미리 언급합니다. 예: 'I strongly agree that technology has improved our daily lives in several important ways.'",
+      "body1": "첫 번째 논거로 의료 기술의 발전과 건강 개선을 다룹니다. 구체적인 예시(원격진료, 진단기술 향상)를 포함하세요.",
+      "body2": "두 번째 논거로 통신 기술이 인간관계를 어떻게 개선했는지 설명합니다. 장거리 가족 연락, 글로벌 협업의 예시를 제시하세요.",
+      "conclusion": "주요 요점들을 요약하고 최종 의견을 재확인합니다. 미래 전망이나 광범위한 영향력으로 마무리하세요."
+    },
+    "useful_phrases": [
+      "In my opinion,",
+      "I strongly believe that",
+      "For example,",
+      "Furthermore,",
+      "On the other hand,",
+      "In conclusion,",
+      "As a result,",
+      "It is undeniable that"
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer living in cities. Others prefer living in rural areas. Which do you prefer and why? Include specific reasons and details to support your answer.",
-    "model_sentences": [
-      "Personally, I prefer living in cities because they offer more opportunities and convenience for my daily life.",
-      "First, cities have better job markets and higher salaries, which allows me to build a more secure financial future.",
-      "For example, when I lived in the countryside, there were limited career options, but after moving to the city, I found better employment and professional growth opportunities.",
-      "Additionally, cities provide excellent access to public transportation, entertainment, healthcare, and educational facilities, all within a short distance.",
-      "Although rural areas offer peace and nature, the practical advantages of city life, such as career development and accessibility to services, make it a better choice for me.",
-      "Overall, I believe urban living aligns better with my personal goals and lifestyle preferences."
+    "prompt": "Some people prefer studying alone, while others prefer studying in groups. Which study method do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer studying in groups because...",
+      "One reason is that group study helps me understand difficult concepts better.",
+      "Another advantage is that I can learn from my peers' perspectives and insights."
+    ],
+    "sample_points": [
+      "그룹 스터디에서 다양한 관점을 배울 수 있고, 어려운 개념을 함께 논의하며 해결할 수 있습니다.",
+      "동료들과 공부하면서 동기부여가 되고, 설명하는 과정에서 자신의 이해도를 확인할 수 있습니다."
     ]
   },
   "listening": {
-    "title": "Student Club Budget Discussion",
+    "title": "Career Planning Meeting",
     "type": "conversation",
-    "script": "Student A: Hey Sarah, thanks for meeting with me. I wanted to talk about the club budget for next semester. We have $2,000 allocated, but I'm not sure how to distribute it. Student B: Yeah, I've been thinking about this too. The main expenses are usually activities and supplies. I think we should spend about 60 percent on organizing events and workshops. Student A: That sounds reasonable. So that would be $1,200 for events. But what about purchasing new equipment? Our sound system is getting old. Student B: Good point. We definitely need to upgrade the equipment. How about we allocate $500 for that? Student A: $500 might not be enough. Last year, a decent microphone system cost at least $700. Student B: You're right. Well, we could reduce the events budget to 50 percent, which would give us $1,000 for events and $700 for equipment. We'd still have $300 left for miscellaneous supplies. Student A: That works. Let's present this plan to the club members next week and see if they agree.",
-    "vocabulary": [
-      {
-        "word": "allocated",
-        "meaning_ko": "배정된, 할당된"
-      },
-      {
-        "word": "distribute",
-        "meaning_ko": "분배하다, 나누어 주다"
-      },
-      {
-        "word": "miscellaneous",
-        "meaning_ko": "잡다한, 여러 가지의"
-      },
-      {
-        "word": "upgrade",
-        "meaning_ko": "업그레이드하다, 향상시키다"
-      },
-      {
-        "word": "decent",
-        "meaning_ko": "괜찮은, 적절한"
-      },
-      {
-        "word": "allocate",
-        "meaning_ko": "배정하다, 할당하다"
-      }
-    ],
+    "script": "Student: Professor Chen, I'm trying to decide between pursuing a career in environmental science or technology. I'm really interested in both fields. Professor Chen: That's wonderful, but let me ask you this: what specifically attracts you to each field? Student: Well, environmental science appeals to me because I want to help solve climate problems. But technology interests me because of the innovation and problem-solving aspects. Professor Chen: Here's my suggestion: you don't have to choose one forever. Many professionals today work at the intersection of both fields. For example, you could develop green technology solutions. Have you considered that possibility? Student: That's actually a great idea! I hadn't thought about combining them. Professor Chen: Many of the most exciting careers today are interdisciplinary. You might research renewable energy systems or develop software for environmental monitoring. This way, you address your passion for the environment while using technological innovation.",
     "questions": [
       {
-        "q": "What is the main topic of the conversation?",
+        "q": "What are the two career fields the student is considering?",
         "options": [
-          "How to purchase new club equipment",
-          "How to distribute the club's budget for next semester",
-          "Why the club needs to increase its budget",
-          "When to schedule the next club meeting"
+          "Environmental science and business",
+          "Environmental science and technology",
+          "Climate research and software development",
+          "Environmental engineering and medicine"
         ],
         "answer": 1,
-        "explanation": "학생 A는 '$2,000 예산을 어떻게 배분할지'에 대해 이야기하고 싶다고 명시하며, 전체 대화는 비용을 배분하는 방법에 초점을 맞춥니다."
+        "explanation": "대화의 첫 부분에서 학생이 '환경 과학(environmental science)과 기술(technology) 중에 선택해야 한다'고 명시적으로 언급했습니다."
       },
       {
-        "q": "What does Student B suggest as the final budget distribution?",
+        "q": "What suggestion does Professor Chen make?",
         "options": [
-          "$1,200 for events and $800 for equipment",
-          "$1,000 for events and $700 for equipment",
-          "$1,500 for events and $500 for equipment",
-          "$1,000 for events and $1,000 for equipment"
+          "Choose environmental science immediately",
+          "Pursue only technology-related careers",
+          "Combine both fields through interdisciplinary work",
+          "Wait a few years before deciding"
         ],
-        "answer": 1,
-        "explanation": "Student B는 최종적으로 '50%를 이벤트에 할당하면 $1,000이고, 장비에 $700, 잡다한 용품에 $300이 남는다'고 제안합니다."
+        "answer": 2,
+        "explanation": "교수는 '두 분야 중 하나를 선택할 필요가 없다'고 말하고 '두 분야의 교차점에서 일하는 것'을 제안했습니다. 녹색 기술 개발이 그 예시입니다."
       },
       {
-        "q": "Why does Student A object to the initial equipment budget?",
+        "q": "What examples does the professor give of combined career paths?",
         "options": [
-          "Because the sound system doesn't need to be upgraded",
-          "Because $500 is not enough for a decent microphone system",
-          "Because events are more important than equipment",
-          "Because they want to save money for next year"
+          "Teaching and research only",
+          "Renewable energy systems and environmental monitoring software",
+          "Business management and environmental policy",
+          "International relations and climate diplomacy"
         ],
         "answer": 1,
-        "explanation": "Student A는 '$500은 충분하지 않을 수 있다'고 언급하고, '작년에 괜찮은 마이크 시스템이 최소 $700이 들었다'고 지적합니다."
+        "explanation": "교수는 '재생에너지 시스템 연구' 또는 '환경 모니터링 소프트웨어 개발'을 구체적인 예시로 제시했습니다."
       }
     ]
   }
