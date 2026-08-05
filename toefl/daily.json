@@ -1,188 +1,108 @@
 {
   "date": "2026-08-06",
   "reading": {
-    "title": "The Discovery and Classification of Exoplanets",
-    "passage": "The detection of exoplanets has fundamentally transformed our understanding of planetary systems beyond our solar system. Since the first confirmed discovery in 1995, astronomers have identified over 5,000 exoplanets orbiting distant stars, revealing the remarkable diversity of worlds that exist throughout the universe. These discoveries have been made possible through sophisticated observational techniques, most notably the transit method, which measures the subtle dimming of a star's light as a planet passes in front of it. This technique has proven extraordinarily sensitive, capable of detecting planets only slightly larger than Earth. The characteristics of discovered exoplanets have challenged conventional assumptions about planetary formation. While early discoveries consisted predominantly of massive gas giants in close orbits around their host stars—configurations vastly different from our solar system—subsequent observations have revealed numerous Earth-sized planets in habitable zones where liquid water could potentially exist. These findings suggest that planetary systems with diverse architectures are commonplace rather than exceptional phenomena. The implications of exoplanet research extend beyond scientific curiosity, raising profound questions about the prevalence of potentially habitable environments and the possibility of life elsewhere in the cosmos.",
-    "vocabulary": [
-      {
-        "word": "exoplanet",
-        "meaning_ko": "항성 주위를 공전하는 태양계 외의 행성"
-      },
-      {
-        "word": "transit method",
-        "meaning_ko": "행성이 별 앞을 지나갈 때의 밝기 감소를 측정하여 행성을 감지하는 관측 기법"
-      },
-      {
-        "word": "dimming",
-        "meaning_ko": "어두워짐, 밝기 감소"
-      },
-      {
-        "word": "habitable zone",
-        "meaning_ko": "생명체가 존재할 수 있는 환경 조건을 가진 항성 주위의 영역"
-      },
-      {
-        "word": "architecture",
-        "meaning_ko": "구조, 배치 (행성계의 구성 방식)"
-      },
-      {
-        "word": "commonplace",
-        "meaning_ko": "흔한, 일반적인"
-      },
-      {
-        "word": "cosmos",
-        "meaning_ko": "우주"
-      }
-    ],
+    "title": "The Impact of Renewable Energy on Global Economy",
+    "passage": "Renewable energy sources such as solar and wind power have become increasingly important in recent years. Many countries are investing heavily in these technologies to reduce carbon emissions and combat climate change. Solar energy, in particular, has experienced significant cost reductions, making it more accessible to developing nations. This shift toward renewable energy is creating new job opportunities in manufacturing, installation, and maintenance sectors. Additionally, renewable energy reduces dependence on fossil fuels, which strengthens energy security and promotes sustainable economic growth.",
     "questions": [
       {
-        "q": "According to the passage, what technique is primarily responsible for the detection of exoplanets?",
+        "q": "According to the passage, what is one benefit of renewable energy adoption?",
         "options": [
-          "Direct imaging of distant stars",
-          "The transit method that measures changes in a star's brightness",
-          "Analysis of gravitational waves from planetary collisions",
-          "Spectroscopic analysis of stellar composition"
+          "Increases fossil fuel consumption",
+          "Creates job opportunities in multiple sectors",
+          "Reduces investment in technology",
+          "Decreases energy security"
         ],
         "answer": 1,
-        "explanation": "지문의 두 번째 문장에서 '가장 주목할 만한 관측 기법은 transit method로, 행성이 별 앞을 지나갈 때 별의 밝기 감소를 측정한다'고 명시되어 있습니다."
+        "explanation": "본문에서 '신재생에너지는 제조, 설치, 유지보수 분야에서 새로운 일자리를 창출한다'고 명시되어 있습니다."
       },
       {
-        "q": "What can be inferred from the passage about early exoplanet discoveries compared to recent ones?",
+        "q": "Why has solar energy become more accessible to developing nations?",
         "options": [
-          "Early discoveries were more accurate than recent observations",
-          "Recent discoveries have revealed greater diversity in planetary characteristics than initially expected",
-          "Early discoveries focused primarily on Earth-sized planets",
-          "Recent discoveries have made the transit method obsolete"
+          "Government bans on fossil fuels",
+          "Increased carbon emissions",
+          "Significant cost reductions",
+          "New manufacturing requirements"
         ],
-        "answer": 1,
-        "explanation": "지문에서 초기 발견은 '대부분 항성 근처의 거대 가스 행성'이었으나, 이후 관측으로 '다양한 크기의 행성이 거주 가능 영역에 존재함'이 드러났으므로, 최근 발견이 더 큰 다양성을 보여줍니다."
+        "answer": 2,
+        "explanation": "태양에너지의 비용이 크게 감소했기 때문에 개발도상국이 더 쉽게 접근할 수 있게 되었습니다."
       },
       {
-        "q": "The word 'architecture' in the third sentence of the second paragraph is closest in meaning to",
+        "q": "Which of the following is mentioned as a consequence of reducing fossil fuel dependence?",
         "options": [
-          "The physical structure of buildings in a city",
-          "The design and arrangement of a planetary system",
-          "The mathematical calculations used in astronomy",
-          "The historical development of space exploration"
+          "Higher energy costs",
+          "Weakened economic growth",
+          "Strengthened energy security",
+          "Increased emissions"
         ],
-        "answer": 1,
-        "explanation": "'Planetary systems with diverse architectures'는 행성계의 다양한 구조나 배치를 의미하며, 여기서 'architecture'는 '설계와 배열'을 뜻합니다."
-      },
-      {
-        "q": "Why does the author mention that early exoplanet discoveries consisted predominantly of massive gas giants?",
-        "options": [
-          "To explain why the transit method is unreliable",
-          "To demonstrate how initial discoveries differed from solar system configurations and highlighted diversity in planetary systems",
-          "To argue that exoplanet detection should have stopped after 1995",
-          "To prove that habitable zones do not exist around distant stars"
-        ],
-        "answer": 1,
-        "explanation": "저자는 초기 발견이 태양계와 달랐음을 언급함으로써, 이후 다양한 행성계 구조가 흔하다는 주장을 뒷받침하고 있습니다."
+        "answer": 2,
+        "explanation": "본문에서 재생에너지가 화석연료 의존도를 줄임으로써 에너지 안보를 강화한다고 설명합니다."
       }
     ]
   },
   "writing": {
-    "task_prompt": "Do you agree or disagree with the following statement? Governments should allocate more funding to space exploration and development rather than addressing immediate social problems on Earth. Use specific reasons and examples to support your answer.",
-    "sentences": [
-      {
-        "original": "Since the first confirmed discovery in 1995, astronomers have identified over 5,000 exoplanets orbiting distant stars.",
-        "paraphrase": "The identification of more than 5,000 exoplanets in orbit around distant stars has been accomplished by astronomers in the period following the first confirmed detection in 1995.",
-        "tip": "수동태 구조로 변환하여 객관성 강화 및 문장 복잡도 증대"
-      },
-      {
-        "original": "The characteristics of discovered exoplanets have challenged conventional assumptions about planetary formation.",
-        "paraphrase": "Conventional assumptions regarding planetary formation have been challenged by the properties exhibited by discovered exoplanets.",
-        "tip": "능동→수동 변환 및 구체적 명사 'characteristics'를 보다 학술적인 'properties'로 치환"
-      },
-      {
-        "original": "These findings suggest that planetary systems with diverse architectures are commonplace rather than exceptional phenomena.",
-        "paraphrase": "The prevalence of planetary systems displaying architectural diversity indicates that such configurations constitute the norm rather than rare occurrences.",
-        "tip": "명사구 재구성(architectural diversity) 및 동의어 사용(commonplace→norm, exceptional→rare occurrences)"
-      },
-      {
-        "original": "The implications of exoplanet research extend beyond scientific curiosity, raising profound questions about the prevalence of potentially habitable environments.",
-        "paraphrase": "Beyond mere scientific inquiry, exoplanet research carries significant implications that prompt fundamental inquiries into the abundance of environments conducive to potential habitability.",
-        "tip": "복합 문장의 의미 보존하며 고급 표현으로 재구성(implications extend→carries implications, profound questions→fundamental inquiries)"
-      },
-      {
-        "original": "This technique has proven extraordinarily sensitive, capable of detecting planets only slightly larger than Earth.",
-        "paraphrase": "The exceptional sensitivity of this technique enables the detection of planets with dimensions only marginally exceeding those of Earth.",
-        "tip": "형용사 구조(extraordinarily sensitive) → 명사구(exceptional sensitivity) 변환으로 학술성 강화"
-      }
+    "prompt": "Do you agree or disagree with the statement: 'Technology has made modern life better'? Use specific examples to support your answer.",
+    "structure": {
+      "intro": "명확한 입장 제시 (동의 또는 반대)와 함께 2-3가지 주요 이유를 간단히 언급합니다.",
+      "body1": "첫 번째 이유를 구체적인 예시와 함께 설명합니다. (예: 의료 기술, 통신, 교육 등)",
+      "body2": "두 번째 이유를 다른 관점에서 제시합니다. (예: 효율성, 접근성, 시간 절약 등)",
+      "conclusion": "주요 포인트를 요약하고 최종 입장을 재확인합니다."
+    },
+    "useful_phrases": [
+      "In my opinion, technology has significantly improved modern life.",
+      "Furthermore, technology has made communication more efficient.",
+      "For example, medical advancements have extended human lifespan.",
+      "In conclusion, the benefits of technology outweigh its drawbacks."
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer reading books to understand stories and ideas. Others prefer watching movies for entertainment and information. Which do you prefer and why? Include specific reasons and examples in your response.",
-    "model_sentences": [
-      "I definitely prefer reading books over watching movies because books offer a much deeper and more imaginative experience.",
-      "First, when you read a book, you have to actively imagine the characters, settings, and scenes in your mind, which makes the experience more personal and engaging.",
-      "For example, when I read the Harry Potter series, I could visualize Hogwarts exactly as I imagined it, but when I watched the movies, I was limited to the director's interpretation.",
-      "Additionally, books contain much more detailed information and internal monologues that help you truly understand the characters' thoughts and motivations.",
-      "In conclusion, although movies are convenient and entertaining, books provide a richer, more interactive experience that stimulates your imagination and critical thinking skills in ways that films simply cannot match."
+    "prompt": "Some people prefer to work in large companies. Others prefer to work in small startups. Which do you prefer and why?",
+    "useful_expressions": [
+      "I prefer working in [large companies/startups] because...",
+      "One significant advantage is that...",
+      "In my view, this is important because..."
+    ],
+    "sample_points": [
+      "큰 회사: 안정적인 급여, 명확한 경력 발전 경로, 포괄적인 복리후생 제공",
+      "스타트업: 창의성 발휘, 빠른 의사결정, 다양한 업무 경험, 성장 기회"
     ]
   },
   "listening": {
-    "title": "Academic Advising: Discussing Research Paper Topic",
+    "title": "University Library Orientation",
     "type": "conversation",
-    "script": "Professor Martinez: Good afternoon. I saw your email about your research paper topic on exoplanet detection. Come in, please. Student: Thanks for making time. I'm really interested in studying how the transit method works, but I'm worried the topic might be too narrow. Professor Martinez: Actually, that's an excellent starting point. The transit method is fundamental to modern astronomy. You could examine not just the technical aspects, but also how this discovery technique has transformed our understanding of planetary systems. Student: Oh, that's helpful. So you think I should broaden it to include the implications of these discoveries? Professor Martinez: Precisely. You might discuss how finding thousands of exoplanets has challenged our assumptions about planetary formation and the prevalence of potentially habitable worlds. Student: That makes sense. Should I include information about future space missions dedicated to exoplanet research? Professor Martinez: Definitely. Missions like the James Webb Space Telescope are producing groundbreaking observations. Your paper could discuss how new technologies enable more precise detection methods. Student: Great. I think I have a clear direction now. Thanks for the guidance. Professor Martinez: You're welcome. Submit a detailed outline by next week, and we can refine your thesis statement further.",
-    "vocabulary": [
-      {
-        "word": "transit method",
-        "meaning_ko": "행성이 별 앞을 지나갈 때의 밝기 변화로 행성을 감지하는 기법"
-      },
-      {
-        "word": "narrow",
-        "meaning_ko": "좁은, 제한된 (범위가 제한된)"
-      },
-      {
-        "word": "broaden",
-        "meaning_ko": "확대하다, 범위를 넓히다"
-      },
-      {
-        "word": "implications",
-        "meaning_ko": "함축된 의미, 영향, 결과"
-      },
-      {
-        "word": "groundbreaking",
-        "meaning_ko": "획기적인, 혁신적인"
-      },
-      {
-        "word": "thesis statement",
-        "meaning_ko": "논문의 핵심 주장을 담은 명제"
-      }
-    ],
+    "script": "Professor: Welcome to the library orientation session. Today I'll explain how our digital resources work. Most of our academic journals and databases are available online through our website. You'll need your student ID to log in. We have thousands of peer-reviewed articles covering science, history, literature, and more. Student: Can I access these resources from home? Professor: Yes, absolutely. You can access everything remotely using the library portal. We also offer research workshops every Thursday at 2 PM where librarians can help you find specific sources for your assignments. Additionally, we have physical books organized by the Dewey Decimal System. If you need help locating materials, our librarians at the front desk are always available. Student: That's helpful. Are there any printing services? Professor: Yes, you can print from the computers in our study areas. The first 100 pages per semester are free. After that, it's a small fee. We want to encourage digital reading to save paper.",
     "questions": [
       {
-        "q": "What is the main purpose of the conversation?",
+        "q": "What is required to access the library's digital resources?",
         "options": [
-          "The professor is explaining the history of astronomy to the student",
-          "The professor is helping the student refine and broaden their research paper topic on exoplanet detection",
-          "The student is asking for permission to change their major to astronomy",
-          "The professor is assigning a new research project on the James Webb Space Telescope"
+          "A library card",
+          "A student ID",
+          "A password and email",
+          "A professor's permission"
         ],
         "answer": 1,
-        "explanation": "대화의 핵심은 교수가 학생의 처음에는 '너무 좁은' 주제를 더 광범위한 관점으로 확대하도록 조언하는 과정입니다."
+        "explanation": "교수님이 '학생증으로 로그인해야 한다'고 명시했습니다."
       },
       {
-        "q": "According to the professor, how could the student improve their initial topic?",
+        "q": "When are the research workshops held?",
         "options": [
-          "By focusing only on the technical details of the transit method",
-          "By examining not just the technical aspects, but also how the discovery technique has transformed our understanding of planetary systems",
-          "By completely changing the topic to focus on the James Webb Space Telescope",
-          "By limiting the research to only one exoplanet discovery"
+          "Every Monday at 3 PM",
+          "Every Thursday at 2 PM",
+          "Every Friday at 4 PM",
+          "Every Wednesday at 1 PM"
         ],
         "answer": 1,
-        "explanation": "교수는 '기술적 측면뿐만 아니라 이 발견 기법이 행성계에 대한 우리의 이해를 어떻게 변화시켰는지 살펴봐야 한다'고 조언합니다."
+        "explanation": "교수님이 '사서가 도움을 주는 연구 워크숍이 매주 목요일 오후 2시에 있다'고 설명했습니다."
       },
       {
-        "q": "Why does the professor mention the James Webb Space Telescope?",
+        "q": "How many free pages can students print per semester?",
         "options": [
-          "To convince the student to change their research topic entirely",
-          "To explain that the student's topic is outdated and no longer relevant",
-          "To suggest that including information about future space missions and new technologies would strengthen the student's research paper",
-          "To indicate that the student should only write about recent technology"
+          "50 pages",
+          "75 pages",
+          "100 pages",
+          "150 pages"
         ],
         "answer": 2,
-        "explanation": "교수는 새로운 기술이 더 정확한 감지 방법을 가능하게 한다는 점을 언급함으로써, 우주 미션 정보를 포함하면 논문이 더 강력해질 것이라고 제안합니다."
+        "explanation": "교수님이 '학기당 처음 100페이지는 무료'라고 말했습니다."
       }
     ]
   }
