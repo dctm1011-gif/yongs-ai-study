@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import VocaScreen from './voca';
 import TOEFLScreen from './toefl';
 import InvestmentScreen from './investment';
+import CultureScreen from './culture';
 
 const APP_VARIANT = process.env.EXPO_PUBLIC_APP_VARIANT ?? 'full';
 import LoginScreen from './login';
@@ -136,6 +137,16 @@ function MainTabs() {
             }}
           />
         )}
+        <Tab.Screen
+          name="Culture"
+          component={CultureScreen}
+          options={{
+            title: '교양',
+            tabBarIcon: ({ color }) => (
+              <MaterialIcons name="menu-book" size={24} color={color} />
+            ),
+          }}
+        />
       </Tab.Navigator>
       </NavigationContainer>
 

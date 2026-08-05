@@ -51,6 +51,7 @@ interface Quiz {
   option_explanations?: (string | null)[];
   answered?: boolean;
   correct_answer?: boolean;
+  selectedOption?: string; // FlatList 재마운트 후에도 선택값 복원을 위해 부모 상태에 저장
 }
 
 type ViewType = 'words' | 'quiz' | 'game';
@@ -526,7 +527,7 @@ export default function VocaScreen() {
     const updated = quizzes.map(q => {
       if (q.id === quizId) {
         const isCorrect = selectedOption === q.correct;
-        return { ...q, answered: true, correct_answer: isCorrect };
+        return { ...q, answered: true, correct_answer: isCorrect, selectedOption };
       }
       return q;
     });
@@ -925,7 +926,7 @@ const QuizView = React.memo(({ quizzes, words, onAnswer, onComplete }: {
 
 // Memoized quiz card
 const QuizCard = React.memo(({ quiz, wordName, onAnswer }: { quiz: Quiz, wordName: string, onAnswer: (id: string, selected: string) => void }) => {
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [selectedOption, setSelectedOption] = useState<string | null>(quiz.selectedOption ?? null);
 
   const handlePress = (option: string) => {
     if (quiz.answered) return;

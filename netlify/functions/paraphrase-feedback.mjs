@@ -44,8 +44,8 @@ JSON format to return:
   "meaning": "<Korean: did the student preserve the core meaning? 1–2 sentences>",
   "vocabulary": "<Korean: did the student change vocabulary substantially, or just minor synonyms? 1–2 sentences. Be specific about which words were/weren't changed enough.>",
   "grammar": "<Korean: any grammar issues? 1–2 sentences>",
-  "suggestion": "<Korean: one concrete structural change the student should make — e.g. 'subject를 바꿔서 수동태로 써보세요' or '두 절의 순서를 바꿔보세요'>",
-  "rewrite": "<English: a model paraphrase with clearly different structure AND vocabulary from the original>"
+  "suggestion": "<Korean: 위의 어휘/문법 피드백에서 지적한 구체적인 수정사항(예: 어떤 단어를 무엇으로 바꿔야 하는지)을 먼저 언급하고, 추가로 문장 구조를 어떻게 개선할지 함께 제안하세요. 잘못된 점만 지적하지 말고 '~로 바꾸면 더 좋다'는 방향으로 설명하세요.>",
+  "rewrite": "<English: a model paraphrase that explicitly fixes every vocabulary and grammar issue identified in the vocabulary and grammar fields above, AND uses a clearly different sentence structure from the original. The corrected words/phrases must actually appear in this rewrite.>"
 }`;
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {

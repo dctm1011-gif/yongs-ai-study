@@ -1,208 +1,206 @@
 {
-  "date": "2026-08-05",
+  "date": "2026-08-06",
   "words": [
     {
-      "word": "garrulous",
+      "word": "pertinent",
       "part_of_speech": "adjective",
-      "meaning_ko": "수다스러운, 말이 많은",
-      "explanation": "Tending to talk excessively; overly talkative or chatty in a way that can be annoying or tiresome",
-      "example_from_convo": "My uncle is so garrulous that he talked for three hours straight at dinner",
-      "example_ko": "내 삼촌은 정말 수다스러워서 저녁 식사 때 3시간을 쉴 새 없이 말했어",
-      "tip": "Synonym(동의어): loquacious (더 격식적); Antonym(반의어): taciturn, reticent (말이 적은). Garrulous는 단순히 말이 많은 것을 넘어 지루하고 불필요한 말을 많이 한다는 부정적 뉘앙스가 강함",
-      "emoji": "🗣️"
+      "meaning_ko": "적절한, 관련 있는",
+      "explanation": "relevant or applicable to a particular matter; directly related to the topic at hand",
+      "example_from_convo": "That comment isn't pertinent to our discussion",
+      "example_ko": "그 의견은 우리 논의와 관련이 없어",
+      "tip": "Synonyms: relevant, applicable, germane(이미 학습함). Antonym: irrelevant, extraneous. 'Pertinent'은 더 formal하고 정확하게 '직접적으로 관련 있는'을 의미",
+      "emoji": "🎯"
     },
     {
-      "word": "propitious",
-      "part_of_speech": "adjective",
-      "meaning_ko": "길한, 호리한, 유리한",
-      "explanation": "Giving or indicating a good chance of success; favorable or advantageous circumstances or timing",
-      "example_from_convo": "The propitious weather conditions made it perfect for launching the new product",
-      "example_ko": "호리한 날씨 조건이 새 제품 출시에 완벽했어",
-      "tip": "Synonym(동의어): auspicious (더 일반적); Antonym(반의어): inauspicious, unfavorable. Propitious는 특히 미래의 성공 가능성을 암시하는 현재 상황을 묘사할 때 사용",
-      "emoji": "✨"
+      "word": "discrepancy",
+      "part_of_speech": "noun",
+      "meaning_ko": "불일치, 차이",
+      "explanation": "a difference or inconsistency between two things that should be the same",
+      "example_from_convo": "There's a discrepancy between the two reports",
+      "example_ko": "두 보고서 사이에 불일치가 있어",
+      "tip": "Synonyms: inconsistency, variance, conflict. Antonym: consistency, agreement, harmony. 'Discrepancy'는 negative한 뉘앙스의 차이를 강조",
+      "emoji": "⚠️"
     },
     {
-      "word": "perspire",
+      "word": "nascent",
+      "part_of_speech": "adjective",
+      "meaning_ko": "초기 단계의, 막 태어난",
+      "explanation": "just beginning to exist or develop; in an early stage of growth or formation",
+      "example_from_convo": "The startup's nascent technology is very promising",
+      "example_ko": "스타트업의 초기 기술이 매우 유망해",
+      "tip": "Synonyms: emerging, budding, incipient. Antonym: mature, established, developed. 'Nascent'은 좀 더 formal하고 literary한 표현으로, 잠재력 있는 새로운 것을 암시",
+      "emoji": "🌱"
+    },
+    {
+      "word": "satiate",
       "part_of_speech": "verb",
-      "meaning_ko": "땀을 흘리다",
-      "explanation": "To produce and discharge sweat through the pores of the skin, especially as a response to heat or exertion",
-      "example_from_convo": "I perspired heavily during the marathon, losing lots of fluids",
-      "example_ko": "마라톤 중에 땀을 많이 흘렸어, 체액을 많이 잃었지",
-      "tip": "Synonym(동의어): sweat (더 일상적인 표현); Related: perspiration (명사). Perspire는 좀 더 격식적이고 과학적인 표현. 'Sweat' 대신 formal writing에서 사용하면 좋음",
-      "emoji": "💦"
+      "meaning_ko": "포만시키다, 충분히 만족시키다",
+      "explanation": "to satisfy completely; to fulfill a desire or need to the fullest extent",
+      "example_from_convo": "The delicious meal satiated our hunger",
+      "example_ko": "맛있는 식사가 우리의 배고픔을 완전히 채웠어",
+      "tip": "Synonyms: satisfy, gratify, fulfill. Near-synonym: appease(일시적 만족), alleviate(완화만 함). Antonym: deprive, frustrate. 'Satiate'는 '완전한 만족'을 강조하는 좀 더 강한 표현",
+      "emoji": "😋"
     },
     {
-      "word": "recalcitrant",
+      "word": "obdurate",
       "part_of_speech": "adjective",
-      "meaning_ko": "완고한, 저항하는, 말을 안 듣는",
-      "explanation": "Stubbornly refusing to obey or comply; showing persistent opposition or resistance",
-      "example_from_convo": "The recalcitrant employee refused to follow the new company policies",
-      "example_ko": "그 완고한 직원은 새로운 회사 정책을 따르기를 거부했어",
-      "tip": "Synonym(동의어): obstinate, defiant (하지만 obstinate는 더 개인적 성향, recalcitrant는 지시/권위에 대한 저항); Antonym(반의어): compliant, obedient, tractable. 특히 권위나 지시에 대한 거부의 의미가 강함",
-      "emoji": "🚫"
-    },
-    {
-      "word": "laconic",
-      "part_of_speech": "adjective",
-      "meaning_ko": "간결한, 말을 적게 하는",
-      "explanation": "Using very few words; brief and concise in speech or writing, often to the point of seeming curt or mysterious",
-      "example_from_convo": "His laconic response to my question was just 'yes' and nothing else",
-      "example_ko": "내 질문에 그의 간결한 대답은 그냥 '네'뿐이었어",
-      "tip": "Synonym(동의어): terse (더 직설적/차갑게 들림), concise (중립적); Antonym(반의어): verbose, garrulous (말이 많은). Laconic은 긍정적으로는 효율적, 부정적으로는 무뚝뚝하거나 신비로운 느낌을 줄 수 있음",
-      "emoji": "🤐"
+      "meaning_ko": "고집 센, 완고한",
+      "explanation": "stubbornly refusing to change one's mind or course of action; inflexible and hardened",
+      "example_from_convo": "He was obdurate in his refusal to compromise",
+      "example_ko": "그는 타협하기를 거부하는 데 완고했어",
+      "tip": "Synonyms: stubborn, inflexible, unyielding, recalcitrant(이미 학습함). Near-synonym: intransigent(더 이데올로기적). Antonym: flexible, yielding, amenable. 'Obdurate'는 보통 negative한 뉘앙스로 개선될 가능성이 거의 없는 완고함을 의미",
+      "emoji": "🪨"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "garrulous",
-      "question": "What does 'garrulous' mean?",
+      "word": "pertinent",
+      "question": "What does 'pertinent' mean?",
       "options": [
-        "Excessively talkative and prone to unnecessary chatter",
-        "Capable of speaking multiple languages fluently",
-        "Speaking in a loud and aggressive manner",
-        "Quiet and unwilling to speak"
+        "Relevant or applicable to a particular matter",
+        "Slightly related but not directly connected",
+        "Belonging to a specific person or group",
+        "Completely unrelated or irrelevant"
       ],
       "answer": 0,
-      "explanation": "Garrulous는 지루하고 불필요한 말을 계속 많이 하는 사람을 설명합니다.",
+      "explanation": "'Pertinent'는 '직접적으로 관련 있는' 또는 '적절한'이라는 뜻입니다.",
       "option_explanations": [
         null,
-        "polyglot 또는 multilingual (여러 언어를 구사하는): 말의 양이 아니라 언어 능력을 나타냄",
-        "bombastic 또는 overbearing (호들갑스럽거나 거들먹대는): 말의 방식이지 양이 많다는 의미가 아님",
-        "taciturn (말이 적은): garrulous와 정반대의 의미"
+        "Near-synonym 'tangential': '주변적으로 관련된' 뜻으로, 'pertinent'처럼 직접적으로 관련되지 않음",
+        "Related word 'personal': '개인적인' 뜻으로, 관련성과는 무관함",
+        "Antonym 'irrelevant': 완전히 반대 의미로 '관련 없는'이라는 뜻"
       ]
     },
     {
       "type": "meaning",
-      "word": "propitious",
-      "question": "Which statement best defines 'propitious'?",
+      "word": "discrepancy",
+      "question": "What does 'discrepancy' mean?",
       "options": [
-        "Favorable circumstances that suggest a good outcome",
-        "Something that is expensive or costly",
-        "Similar or comparable to something else",
-        "Unlikely to succeed or destined to fail"
+        "A difference or inconsistency between two things",
+        "A slight variation or minor change",
+        "An agreement or consensus between parties",
+        "A detailed explanation or description"
       ],
       "answer": 0,
-      "explanation": "Propitious는 성공 가능성이 높은 유리한 상황을 의미합니다.",
+      "explanation": "'Discrepancy'는 '불일치' 또는 '차이'라는 뜻으로, 부정적인 뉘앙스의 불일치를 의미합니다.",
       "option_explanations": [
         null,
-        "costly 또는 expensive (비싼): 경제적 가치에 관한 것으로 운세나 기회와 무관",
-        "analogous (비슷한): 상황의 호리함과는 무관",
-        "inauspicious (불리한): propitious와 정반대의 의미"
+        "Near-synonym 'variance': '변화' 또는 '편차'를 의미하지만, 'discrepancy'처럼 문제성을 강조하지 않음",
+        "Antonym 'consistency': 'discrepancy'의 반대 의미로 '일관성' 또는 '일치'를 뜻함",
+        "Related word 'definition': '정의' 또는 '설명'으로, 불일치와는 무관함"
       ]
     },
     {
       "type": "meaning",
-      "word": "recalcitrant",
-      "question": "What is the meaning of 'recalcitrant'?",
+      "word": "satiate",
+      "question": "What does 'satiate' mean?",
       "options": [
-        "Stubbornly resistant to authority or control",
-        "Extremely careful and paying close attention to details",
-        "Having a tendency to break easily or frequently",
-        "Willing to follow instructions without complaint"
+        "To satisfy completely; to fulfill a desire to the fullest extent",
+        "To temporarily ease or reduce discomfort",
+        "To provide a small amount of what is needed",
+        "To leave someone wanting more"
       ],
       "answer": 0,
-      "explanation": "Recalcitrant는 권위나 지시에 완고하게 저항하는 것을 의미합니다.",
+      "explanation": "'Satiate'는 '완전히 만족시키다' 또는 '충분히 채우다'라는 뜻입니다.",
       "option_explanations": [
         null,
-        "meticulous (세심한, 꼼꼼한): 주의 깊음에 관한 것으로 저항이나 불복종과 무관",
-        "brittle 또는 fragile (부서지기 쉬운): 물질의 성질에 관한 것",
-        "compliant 또는 obedient (순종적인): recalcitrant와 정반대의 의미"
+        "Near-synonym 'appease': '진정시키다' 또는 '일시적으로 만족시키다'를 의미하지만, 'satiate'처럼 완전한 만족을 주지 않음",
+        "Related word 'provide': '제공하다'는 뜻으로, 충분한 만족을 의미하지 않음",
+        "Antonym 'deprive': '박탈하다'의 반대 의미로, 완전히 반대의 뜻"
       ]
     },
     {
       "type": "fill_blank",
-      "word": "laconic",
-      "question": "The professor gave a _____ explanation that left students confused about the complex theory. Everyone wished he had elaborated more.",
+      "word": "nascent",
+      "question": "The _____ technology showed great promise, though it still needed further development.",
       "options": [
-        "laconic",
-        "verbose",
-        "thorough",
+        "nascent",
+        "mature",
+        "established",
+        "obsolete"
+      ],
+      "answer": 0,
+      "explanation": "'Nascent'는 '초기 단계의'를 의미하므로, '아직 발전이 필요한' 기술을 설명하는 데 적합합니다.",
+      "option_explanations": [
+        null,
+        "Antonym 'mature': '성숙한' 또는 '발달된'의 의미로 'nascent'과 반대되며, '아직 발전이 필요하다'는 문맥과 맞지 않음",
+        "Near-synonym 'established': '확립된'의 의미로, 'nascent'처럼 '초기 단계'를 나타내지 못함",
+        "Related word 'obsolete': '구식의' 또는 '더 이상 사용되지 않는'으로, 새로운 기술 발전의 맥락과 맞지 않음"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "word": "obdurate",
+      "question": "Despite all evidence to the contrary, he remained _____ in his beliefs.",
+      "options": [
+        "obdurate",
+        "flexible",
+        "convinced",
+        "thoughtful"
+      ],
+      "answer": 0,
+      "explanation": "'Obdurate'는 '완고한' 또는 '고집 센'을 의미하므로, '증거에도 불구하고 변하지 않는 태도'를 설명하는 데 완벽합니다.",
+      "option_explanations": [
+        null,
+        "Antonym 'flexible': '유연한'의 의미로 'obdurate'의 반대 뜻이며, 문맥상 맞지 않음",
+        "Near-synonym 'convinced': '확신한'의 의미로, 증거를 인정하되 확신함을 나타내지만, 'obdurate'처럼 고집 센 거부를 의미하지 않음",
+        "Related word 'thoughtful': '사려 깊은'의 의미로, 완고한 태도와는 무관함"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "word": "discrepancy",
+      "question": "The auditors discovered a significant _____ between the reported expenses and actual spending.",
+      "options": [
+        "discrepancy",
+        "agreement",
+        "similarity",
+        "relationship"
+      ],
+      "answer": 0,
+      "explanation": "'Discrepancy'는 '불일치' 또는 '차이'를 의미하므로, 보고된 금액과 실제 지출 사이의 문제를 설명하는 데 적합합니다.",
+      "option_explanations": [
+        null,
+        "Antonym 'agreement': '일치' 또는 '합의'의 의미로 'discrepancy'의 반대 뜻이며, 문맥상 맞지 않음",
+        "Near-synonym 'similarity': '유사성'의 의미로, 차이를 나타내지만 negative한 불일치의 뉘앙스를 전달하지 못함",
+        "Related word 'relationship': '관계'의 의미로, 수치 간의 불일치와는 무관함"
+      ]
+    },
+    {
+      "type": "situation",
+      "question": "During a job interview, a candidate makes a comment about their experience that is not _____ to the position being discussed. What word best describes this situation?",
+      "options": [
+        "pertinent",
+        "irrelevant",
+        "comprehensive",
         "eloquent"
       ],
       "answer": 0,
-      "explanation": "Laconic (간결한/말이 적은)은 너무 짧아서 학생들이 혼란스러웠다는 문맥에 맞습니다.",
+      "explanation": "'Pertinent'은 '관련 있는' 또는 '적절한'을 의미하므로, 직무와 관련 있는 경험을 설명하는 데 사용됩니다. 상황에서는 comment가 '관련이 없다'고 했으므로, 그 반대 의미인 'pertinent'이 올바른 표현입니다.",
       "option_explanations": [
         null,
-        "verbose (말이 많은): 문맥상 'wished he had elaborated more(더 자세히 설명했으면 좋겠다)'와 맞지 않음. Verbose는 오히려 너무 길다는 의미",
-        "thorough (철저한): 긍정적인 의미로 'wished he had elaborated'와 충돌하지 않지만, '학생들이 혼란스러워했다'는 맥락과 안 맞음",
-        "eloquent (웅변적인): 설득력 있게 말하는 것인데 학생들이 혼란스러워했다는 맥락과 모순"
-      ]
-    },
-    {
-      "type": "fill_blank",
-      "word": "perspire",
-      "question": "Athletes tend to _____ more during intense training sessions in hot weather conditions.",
-      "options": [
-        "perspire",
-        "shiver",
-        "hydrate",
-        "dehydrate"
-      ],
-      "answer": 0,
-      "explanation": "Perspire (땀을 흘리다)는 운동선수들이 더운 날씨에 강도 높은 훈련 중에 하는 생리적 반응입니다.",
-      "option_explanations": [
-        null,
-        "shiver (떨다): 추운 환경에서의 반응으로 더운 날씨와 맞지 않음",
-        "hydrate (수분을 섭취하다): perspire의 결과로 나타나는 행동이지만, perspire 자체의 의미는 아님. 또한 문맥상 '경향이 있다'와 맞지 않음",
-        "dehydrate (탈수되다): perspire의 결과이지만, perspire 자체가 아님"
-      ]
-    },
-    {
-      "type": "fill_blank",
-      "word": "garrulous",
-      "question": "The _____ old man at the coffee shop talked for hours about his past adventures, barely pausing for breath.",
-      "options": [
-        "garrulous",
-        "taciturn",
-        "inquisitive",
-        "nostalgic"
-      ],
-      "answer": 0,
-      "explanation": "Garrulous (수다스러운)는 쉬지 않고 계속 말하는 사람을 설명합니다.",
-      "option_explanations": [
-        null,
-        "taciturn (말이 적은): '수시간 이야기하다'와 완전히 반대의 의미",
-        "inquisitive (호기심 많은): 질문을 많이 하는 것이지, 자기가 계속 말하는 것이 아님",
-        "nostalgic (향수에 빠진): 과거를 그리워하는 감정이지, 말이 많다는 의미가 아님. 비록 그가 과거를 얘기했지만 그것이 '말이 많다'는 이유는 아님"
+        "Antonym 'irrelevant': '관련 없는'의 의미로, 'pertinent'의 직접적인 반대 뜻이지만, 상황에서 'not pertinent'과 같은 의미가 되어 부자연스러움",
+        "Related word 'comprehensive': '포괄적인'의 의미로, 답변의 완전성을 나타내지만 직무와의 관련성과는 무관함",
+        "Related word 'eloquent': '웅변적인'의 의미로, 답변의 표현력을 나타내지만 관련성과는 무관함"
       ]
     },
     {
       "type": "situation",
-      "word": "propitious",
-      "question": "A startup company is looking to launch its new product. The market research shows high demand, investors are ready, and the economy is strong. The CEO says, 'The timing is absolutely _____.' Which word fits best?",
+      "question": "A restaurant's special meal successfully _____ customers' appetites after a long day of work. What word best fits this situation?",
       "options": [
-        "propitious",
-        "inopportune",
-        "pragmatic",
-        "ambiguous"
+        "satiate",
+        "frustrate",
+        "diminish",
+        "diminished"
       ],
       "answer": 0,
-      "explanation": "모든 조건이 유리하고 성공 가능성이 높으므로 propitious (길한, 호리한)가 가장 적절합니다.",
+      "explanation": "'Satiate'는 '완전히 만족시키다'를 의미하므로, 길고 힘든 하루 후 고객들의 배고픔을 충분히 채우는 식사의 효과를 잘 설명합니다.",
       "option_explanations": [
         null,
-        "inopportune (부적절한, 안 좋은 때): 모든 상황이 긍정적인 것과 정반대",
-        "pragmatic (실용적인): CEO가 말하는 의미가 시간의 '좋음'이 아니라 태도를 나타낼 수 있어서 문맥과 안 맞음",
-        "ambiguous (모호한): 상황이 명확하게 긍정적이므로 모호함과 무관"
-      ]
-    },
-    {
-      "type": "situation",
-      "word": "recalcitrant",
-      "question": "A manager has repeatedly asked an employee to complete a report by Friday following the new format. The employee has ignored the requests and continues using the old format. The manager describes this behavior as _____.",
-      "options": [
-        "recalcitrant",
-        "diligent",
-        "ambivalent",
-        "meticulous"
-      ],
-      "answer": 0,
-      "explanation": "직원이 관리자의 지시를 계속 무시하고 따르지 않으므로 recalcitrant (완고하게 저항하는)이 가장 적절합니다.",
-      "option_explanations": [
-        null,
-        "diligent (부지런한, 성실한): 오히려 열심히 일하는 긍정적인 의미로 상황과 맞지 않음",
-        "ambivalent (양가적인, 확신하지 못하는): 직원이 몰라서 그런 게 아니라 의도적으로 거부하고 있으므로 부적절",
-        "meticulous (꼼꼼한, 세심한): 주의 깊음에 관한 것으로 순종/저항과 무관"
+        "Antonym 'frustrate': '실망시키다'의 의미로 'satiate'의 반대 뜻이며, 좋은 식사 경험과 맞지 않음",
+        "Near-synonym 'diminish': '줄이다' 또는 '감소시키다'의 의미로, 배고픔을 조금 완화할 수 있지만 'satiate'처럼 완전한 만족을 전달하지 못함",
+        "Related word 'diminished': '감소된'의 의미로, 시제가 맞지 않고 문맥상 어색함"
       ]
     }
   ]

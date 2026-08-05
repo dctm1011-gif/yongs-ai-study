@@ -1586,5 +1586,65 @@
     "explanation": "Using very few words; brief and concise in speech or writing, often to the point of seeming curt or mysterious",
     "tip": "Synonym(동의어): terse (더 직설적/차갑게 들림), concise (중립적); Antonym(반의어): verbose, garrulous (말이 많은). Laconic은 긍정적으로는 효율적, 부정적으로는 무뚝뚝하거나 신비로운 느낌을 줄 수 있음",
     "emoji": "🤐"
+  },
+  {
+    "id": "pertinent",
+    "word": "pertinent",
+    "pos": "adjective",
+    "date": "2026-08-06",
+    "meaning": "적절한, 관련 있는",
+    "example_ko": "그 의견은 우리 논의와 관련이 없어",
+    "example_en": "That comment isn't pertinent to our discussion",
+    "explanation": "relevant or applicable to a particular matter; directly related to the topic at hand",
+    "tip": "Synonyms: relevant, applicable, germane(이미 학습함). Antonym: irrelevant, extraneous. 'Pertinent'은 더 formal하고 정확하게 '직접적으로 관련 있는'을 의미",
+    "emoji": "🎯"
+  },
+  {
+    "id": "discrepancy",
+    "word": "discrepancy",
+    "pos": "noun",
+    "date": "2026-08-06",
+    "meaning": "불일치, 차이",
+    "example_ko": "두 보고서 사이에 불일치가 있어",
+    "example_en": "There's a discrepancy between the two reports",
+    "explanation": "a difference or inconsistency between two things that should be the same",
+    "tip": "Synonyms: inconsistency, variance, conflict. Antonym: consistency, agreement, harmony. 'Discrepancy'는 negative한 뉘앙스의 차이를 강조",
+    "emoji": "⚠️"
+  },
+  {
+    "id": "nascent",
+    "word": "nascent",
+    "pos": "adjective",
+    "date": "2026-08-06",
+    "meaning": "초기 단계의, 막 태어난",
+    "example_ko": "스타트업의 초기 기술이 매우 유망해",
+    "example_en": "The startup's nascent technology is very promising",
+    "explanation": "just beginning to exist or develop; in an early stage of growth or formation",
+    "tip": "Synonyms: emerging, budding, incipient. Antonym: mature, established, developed. 'Nascent'은 좀 더 formal하고 literary한 표현으로, 잠재력 있는 새로운 것을 암시",
+    "emoji": "🌱"
+  },
+  {
+    "id": "satiate",
+    "word": "satiate",
+    "pos": "verb",
+    "date": "2026-08-06",
+    "meaning": "포만시키다, 충분히 만족시키다",
+    "example_ko": "맛있는 식사가 우리의 배고픔을 완전히 채웠어",
+    "example_en": "The delicious meal satiated our hunger",
+    "explanation": "to satisfy completely; to fulfill a desire or need to the fullest extent",
+    "tip": "Synonyms: satisfy, gratify, fulfill. Near-synonym: appease(일시적 만족), alleviate(완화만 함). Antonym: deprive, frustrate. 'Satiate'는 '완전한 만족'을 강조하는 좀 더 강한 표현",
+    "emoji": "😋"
+  },
+  {
+    "id": "obdurate",
+    "word": "obdurate",
+    "pos": "adjective",
+    "date": "2026-08-06",
+    "meaning": "고집 센, 완고한",
+    "example_ko": "그는 타협하기를 거부하는 데 완고했어",
+    "example_en": "He was obdurate in his refusal to compromise",
+    "explanation": "stubbornly refusing to change one's mind or course of action; inflexible and hardened",
+    "tip": "Synonyms: stubborn, inflexible, unyielding, recalcitrant(이미 학습함). Near-synonym: intransigent(더 이데올로기적). Antonym: flexible, yielding, amenable. 'Obdurate'는 보통 negative한 뉘앙스로 개선될 가능성이 거의 없는 완고함을 의미",
+    "emoji": "🪨"
   }
 ]

@@ -1,10 +1,5 @@
 [
   {
-    "date": "2026-07-26",
-    "name": "Broadcom",
-    "ticker": "AVGO"
-  },
-  {
     "date": "2026-07-27",
     "name": "Meta",
     "ticker": "META"
@@ -46,6 +41,11 @@
   },
   {
     "date": "2026-08-04",
+    "name": "삼성전자",
+    "ticker": "005930.KS"
+  },
+  {
+    "date": "2026-08-05",
     "name": "삼성전자",
     "ticker": "005930.KS"
   }
