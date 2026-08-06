@@ -1,183 +1,116 @@
 {
   "date": "2026-08-07",
   "reading": {
-    "title": "Marine Ecosystem Resilience and Ocean Acidification",
-    "passage": "Ocean acidification, caused primarily by increased atmospheric carbon dioxide absorption, represents one of the most significant threats to marine ecosystems worldwide. When CO₂ dissolves in seawater, it forms carbonic acid, which lowers the ocean's pH and reduces the availability of carbonate ions essential for shell-forming organisms. This process, occurring at an unprecedented rate of 0.1 pH units per decade, undermines the calcification processes in pteropods, corals, and mollusks, potentially destabilizing entire food webs.\n\nRecent studies indicate that the physiological stress induced by acidification extends beyond calcification challenges. Many organisms exhibit impaired sensory capabilities and behavioral changes even at modest pH reductions, suggesting that neural systems are particularly vulnerable to chemical changes. Research conducted in controlled laboratory environments demonstrates that larval fish exposed to elevated CO₂ levels lose their ability to detect predators and navigate effectively, resulting in significantly higher mortality rates compared to control groups.\n\nMitigation strategies must address both immediate and long-term considerations. While reducing greenhouse gas emissions remains the primary solution, scientists propose localized interventions such as marine protected areas and kelp forest restoration, which enhance ecosystem resilience through increased biodiversity and improved water quality. These complementary approaches offer promising pathways toward sustaining marine productivity in an increasingly acidified ocean.",
-    "vocabulary": [
-      {
-        "word": "acidification",
-        "meaning_ko": "산성화"
-      },
-      {
-        "word": "carbonate ions",
-        "meaning_ko": "탄산염 이온"
-      },
-      {
-        "word": "calcification",
-        "meaning_ko": "석회화, 칼슘 침전"
-      },
-      {
-        "word": "pteropods",
-        "meaning_ko": "익족류 (날개발 달린 조개류)"
-      },
-      {
-        "word": "destabilizing",
-        "meaning_ko": "불안정하게 만드는"
-      },
-      {
-        "word": "physiological",
-        "meaning_ko": "생리적인"
-      },
-      {
-        "word": "mitigation",
-        "meaning_ko": "완화, 경감"
-      },
-      {
-        "word": "resilience",
-        "meaning_ko": "회복력, 탄력성"
-      }
-    ],
+    "title": "The Impact of Renewable Energy on Global Economics",
+    "passage": "Renewable energy sources such as solar and wind power have become increasingly important in the global economy. Unlike fossil fuels, renewable energy produces electricity without generating greenhouse gases, making it environmentally sustainable. Countries investing in renewable energy infrastructure have experienced job creation and reduced energy costs over time. However, the initial investment required for solar panels and wind turbines remains substantial, which challenges developing nations. Despite these obstacles, experts predict that renewable energy will account for 50% of global electricity by 2050, fundamentally transforming how societies produce and consume energy.",
     "questions": [
       {
-        "q": "According to the passage, what is the primary cause of ocean acidification?",
+        "q": "According to the passage, what is a key advantage of renewable energy compared to fossil fuels?",
         "options": [
-          "Increased atmospheric carbon dioxide absorption",
-          "Excessive fishing practices",
-          "Industrial waste dumping",
-          "Rising sea surface temperatures"
-        ],
-        "answer": 0,
-        "explanation": "지문의 첫 번째 문장에서 '산성화는 주로 증가된 대기 CO₂ 흡수에 의해 야기된다'고 명시되어 있습니다."
-      },
-      {
-        "q": "What can be inferred from the passage about the effects of ocean acidification on larval fish?",
-        "options": [
-          "They develop stronger immune systems",
-          "They lose the ability to detect predators and navigate",
-          "They migrate to deeper ocean waters",
-          "They reproduce more rapidly"
+          "A) It requires less maintenance",
+          "B) It produces electricity without generating greenhouse gases",
+          "C) It is cheaper to install immediately",
+          "D) It creates fewer jobs"
         ],
         "answer": 1,
-        "explanation": "세 번째 문단에서 실험실 연구에 따르면 높은 CO₂에 노출된 어류 유생은 포식자를 감지하고 항해하는 능력을 잃는다고 나와있습니다."
+        "explanation": "지문에서 'renewable energy produces electricity without generating greenhouse gases'라고 명시되어 있습니다. 다른 선택지들은 지문에서 언급되지 않거나 거짓입니다."
       },
       {
-        "q": "The word 'undermines' in the first paragraph is closest in meaning to",
+        "q": "What challenge does the passage mention regarding renewable energy development in developing nations?",
         "options": [
-          "supports",
-          "weakens",
-          "measures",
-          "accelerates"
-        ],
-        "answer": 1,
-        "explanation": "'undermines'는 '약화시키다, 훼손하다'는 의미입니다. 문맥에서 산성화가 석회화 과정을 약화시킨다는 뜻입니다."
-      },
-      {
-        "q": "Why does the author mention marine protected areas and kelp forest restoration?",
-        "options": [
-          "To criticize the ineffectiveness of these strategies",
-          "To provide examples of long-term emissions reduction techniques",
-          "To illustrate localized interventions that enhance ecosystem resilience",
-          "To demonstrate that oceanography is an evolving field"
+          "A) Lack of wind and sunlight",
+          "B) Environmental concerns",
+          "C) The substantial initial investment required",
+          "D) Lack of skilled workers"
         ],
         "answer": 2,
-        "explanation": "지문에서 이들을 '생물다양성을 증가시키고 수질을 개선함으로써 생태계 회복력을 강화하는 국소적 중재'의 예로 제시합니다."
+        "explanation": "'However, the initial investment required for solar panels and wind turbines remains substantial, which challenges developing nations'에서 초기 투자 비용이 도전 과제임을 알 수 있습니다."
+      },
+      {
+        "q": "What does the passage predict about renewable energy's role by 2050?",
+        "options": [
+          "A) It will completely replace fossil fuels",
+          "B) It will account for 50% of global electricity",
+          "C) It will become more expensive",
+          "D) It will be abandoned by most countries"
+        ],
+        "answer": 1,
+        "explanation": "지문의 마지막 문장에서 '재생에너지가 2050년까지 전 세계 전기의 50%를 차지할 것'이라고 명시되어 있습니다."
       }
     ]
   },
   "writing": {
-    "topic": "저출산 대응 정책의 효과와 한계",
-    "task_description": "다음 주제로 TOEFL iBT Integrated Writing을 작성하세요: 저출산 문제를 해결하기 위한 정부 정책들이 실제로 출산율을 높이는 데 어느 정도 효과적인가?",
-    "paraphrase_practice": [
-      {
-        "original": "When CO₂ dissolves in seawater, it forms carbonic acid, which lowers the ocean's pH and reduces the availability of carbonate ions essential for shell-forming organisms.",
-        "paraphrase": "The dissolution of CO₂ in seawater produces carbonic acid that decreases oceanic pH while simultaneously diminishing the quantity of carbonate ions required by calcifying organisms.",
-        "tip": "수동형을 능동형으로 변환하고, 'which' 절을 '~while' 구조로 변환하여 인과 관계를 명확히 함"
-      },
-      {
-        "original": "This process, occurring at an unprecedented rate of 0.1 pH units per decade, undermines the calcification processes in pteropods, corals, and mollusks.",
-        "paraphrase": "The unprecedentedly rapid pace of this phenomenon—0.1 pH unit changes annually—impairs the skeletal formation capabilities of various marine organisms including pteropods, corals, and mollusks.",
-        "tip": "동위어(synonym) 사용: 'undermines'→'impairs', 'calcification'→'skeletal formation', 삽입절 재배치"
-      },
-      {
-        "original": "Many organisms exhibit impaired sensory capabilities and behavioral changes even at modest pH reductions, suggesting that neural systems are particularly vulnerable to chemical changes.",
-        "paraphrase": "Even minimal pH fluctuations can compromise both the sensory functions and conduct of numerous marine species, implying heightened susceptibility of their neurological systems to chemical alterations.",
-        "tip": "명사 + 동사 구조를 능동형으로 통합하고, 'exhibit'를 'compromise'로 치환하며, 접속사 강화"
-      }
+    "prompt": "Do you agree or disagree with the following statement? 'Renewable energy should be the primary focus of government investment rather than traditional energy sources.' Provide specific reasons and examples to support your position.",
+    "structure": {
+      "intro": "명확한 입장 표시: '동의한다/동의하지 않는다'를 직접 명시하고, 주요 논거 2-3개를 간단히 소개합니다.",
+      "body1": "첫 번째 이유를 구체적인 예시와 함께 전개합니다. 환경 오염, 에너지 비용, 일자리 창출 등의 관점에서 서술할 수 있습니다.",
+      "body2": "두 번째 이유를 제시합니다. 기술 발전, 장기적 경제성, 에너지 안보 등을 다룰 수 있습니다. 반대 입장의 논거도 인정하되 반박합니다.",
+      "conclusion": "서론에서 제시한 주요 논거들을 요약하고 최종 결론을 명확히 표시합니다. 미래 영향에 대한 간단한 전망으로 마무리합니다."
+    },
+    "useful_phrases": [
+      "In my opinion,",
+      "I strongly agree/disagree that",
+      "First and foremost,",
+      "Furthermore,",
+      "For example,",
+      "This demonstrates that",
+      "In conclusion,",
+      "Therefore,",
+      "As a result,"
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer shopping online because of convenience and variety. Others prefer shopping in physical stores because of personal experience and immediate product inspection. Which do you prefer and why? Include specific reasons and details in your response.",
-    "model_sentences": [
-      "Personally, I prefer shopping in physical stores rather than online because I value the ability to examine products directly before making a purchase decision.",
-      "First, when I shop in-store, I can check the quality, size, and color of items immediately, which helps me avoid returning products later.",
-      "For example, if I'm buying clothes, I can try them on to ensure they fit properly, whereas online shopping often results in inconvenient returns and exchanges.",
-      "Additionally, shopping in physical stores allows me to avoid shipping delays and unexpected delivery fees that online retailers sometimes charge.",
-      "In conclusion, although online shopping offers convenience, the hands-on experience and immediate satisfaction of in-store shopping make it my preferred option."
+    "prompt": "Some people believe that technology has improved our quality of life. Others think technology has made our lives more stressful and complicated. Which perspective do you agree with? Provide specific reasons and examples.",
+    "useful_expressions": [
+      "In my opinion,",
+      "One reason is that...",
+      "For instance,",
+      "On the other hand,",
+      "To sum up,",
+      "I think that"
+    ],
+    "sample_points": [
+      "기술은 의료, 교육, 통신 등 다양한 분야에서 생활의 편의성을 크게 향상시켰고, 원격 근무와 온라인 학습 등 새로운 기회를 제공하고 있습니다.",
+      "반면 기술 의존도 증가로 인한 스트레스, 개인정보 침해, 수면 부족 등의 부작용도 존재하며, 이러한 부작용을 관리하기 위한 균형 잡힌 접근이 필요합니다."
     ]
   },
   "listening": {
-    "title": "기숙사 배정 상담",
+    "title": "Campus Sustainability Initiative Discussion",
     "type": "conversation",
-    "script": "Student A: Hi, I'm here about my dormitory assignment for next semester. I requested a single room, but I'm not sure if my request was processed.\n\nAdministrator: Hello! Let me check your file. May I have your student ID number?\n\nStudent A: It's 20247856.\n\nAdministrator: Thank you. I see here that you did submit a request, but unfortunately, single rooms are extremely limited this year. We can only accommodate about thirty percent of requests. However, I do have good news—we can offer you a double room in the newly renovated North Hall, which is much closer to the library and dining facilities.\n\nStudent A: Oh, I see. What's the cost difference between a single and a double room?\n\nAdministrator: The double room in North Hall is actually twenty percent cheaper than a single room in the older residence buildings. Plus, you'll benefit from the new amenities, including faster internet and updated furniture.\n\nStudent A: That sounds reasonable. When do I need to confirm my decision?\n\nAdministrator: You have until August fifteenth to accept or decline the offer. Simply reply to the email we'll send you by tomorrow afternoon.",
-    "vocabulary": [
-      {
-        "word": "accommodate",
-        "meaning_ko": "수용하다, 배치하다"
-      },
-      {
-        "word": "limited",
-        "meaning_ko": "제한된, 한정된"
-      },
-      {
-        "word": "renovated",
-        "meaning_ko": "개조된, 새롭게 단장한"
-      },
-      {
-        "word": "amenities",
-        "meaning_ko": "편의시설, 부대 설비"
-      },
-      {
-        "word": "confirm",
-        "meaning_ko": "확인하다, 승인하다"
-      },
-      {
-        "word": "decline",
-        "meaning_ko": "거절하다, 사양하다"
-      }
-    ],
+    "script": "Professor Johnson: Good morning, everyone. I wanted to discuss our university's new sustainability initiative. We're planning to install solar panels on three campus buildings this fall. Student: That sounds interesting, Professor. How much will that cost? Professor Johnson: The initial investment is about 2 million dollars, but we expect to recover that cost within eight years through reduced electricity bills. Plus, we'll reduce our carbon footprint by approximately 40 percent. Student: That's impressive. Will students be involved in this project? Professor Johnson: Absolutely! We need student volunteers to help with awareness campaigns and monitoring energy usage in dormitories. We're also offering internships for students interested in renewable energy and environmental studies. Student: I'd definitely like to be involved. What's the timeline? Professor Johnson: Construction begins in September and should be completed by December. After that, we'll hold an educational workshop series to explain how the system works and why sustainability matters for our future.",
     "questions": [
       {
-        "q": "What is the main topic of this conversation?",
+        "q": "What is the main purpose of the conversation?",
         "options": [
-          "Discussing payment methods for dormitory fees",
-          "Processing a dormitory assignment request and exploring alternative options",
-          "Comparing different residence halls on campus",
-          "Addressing complaints about dormitory conditions"
+          "A) To discuss the university's new sustainability initiative with solar panel installation",
+          "B) To recruit students for a summer internship program",
+          "C) To explain why electricity bills have increased",
+          "D) To cancel the planned construction project"
         ],
-        "answer": 1,
-        "explanation": "학생이 기숙사 배정과 관련하여 상담하고, 관리자가 대안으로 새로 개조된 기숙사를 제안합니다."
+        "answer": 0,
+        "explanation": "교수가 캠퍼스 지속 가능성 이니셔티브와 태양광 패널 설치 계획에 대해 논의하고 있습니다. 이것이 대화의 주요 목적입니다."
       },
       {
-        "q": "Why does the administrator mention the location of North Hall?",
+        "q": "According to Professor Johnson, what is the expected benefit of installing solar panels?",
         "options": [
-          "To explain why it is more expensive",
-          "To highlight advantages of the newly renovated building",
-          "To discourage the student from choosing a single room",
-          "To show that it is farther from campus facilities"
+          "A) Immediate cost reduction within one year",
+          "B) A 40% reduction in carbon footprint and cost recovery within eight years",
+          "C) Elimination of all energy costs",
+          "D) No significant environmental impact"
         ],
         "answer": 1,
-        "explanation": "관리자는 North Hall이 도서관과 식당 시설에 더 가깝다는 점을 장점으로 제시합니다."
+        "explanation": "교수는 '8년 내에 비용을 회수하고 탄소 발자국을 약 40% 감소시킬 것으로 예상한다'고 명시했습니다."
       },
       {
-        "q": "What does the administrator suggest about the cost of the double room in North Hall?",
+        "q": "How will students be involved in the sustainability project?",
         "options": [
-          "It is more expensive than other double rooms",
-          "It is twenty percent cheaper than a single room in older buildings",
-          "It costs the same as a single room",
-          "The cost has not yet been determined"
+          "A) Only through class assignments",
+          "B) Through volunteer awareness campaigns, energy monitoring, and internship opportunities",
+          "C) By paying additional fees",
+          "D) They will not be involved"
         ],
         "answer": 1,
-        "explanation": "관리자는 North Hall의 더블룸이 구형 기숙사의 싱글룸보다 20% 더 저렴하다고 명시합니다."
+        "explanation": "교수는 학생들이 인식 제고 캠페인, 에너지 사용 모니터링 그리고 인턴십을 통해 참여할 수 있다고 설명했습니다."
       }
     ]
   }
