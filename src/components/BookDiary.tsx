@@ -38,6 +38,30 @@ function makeBookId(): string {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 }
 
+function SearchableText({ text, style }: { text: string; style?: any }) {
+  const parts = text.split(/(\s+)/);
+  return (
+    <Text style={style}>
+      {parts.map((part, i) => {
+        const word = part.trim();
+        if (!word) return part;
+        return (
+          <Text
+            key={i}
+            onLongPress={() => {
+              const clean = word.replace(/^["""''(.,!?;:]+|["""''().,!?;:]+$/g, '');
+              if (clean) Linking.openURL(`https://www.google.com/search?q=${encodeURIComponent(clean)}`);
+            }}
+            {...{ delayLongPress: 400 } as any}
+          >
+            {part}
+          </Text>
+        );
+      })}
+    </Text>
+  );
+}
+
 const COVER_KEY = (id: string) => `bookCover_${id}`;
 
 async function saveCoverToStorage(bookId: string, base64: string): Promise<void> {
@@ -219,9 +243,6 @@ function BookDiaryModal({ book, onClose }: BookDiaryModalProps) {
   const [editPageInput, setEditPageInput] = useState('');
   const [editNoteInput, setEditNoteInput] = useState('');
   const [editSaving, setEditSaving] = useState(false);
-  const [showWordSearch, setShowWordSearch] = useState(false);
-  const [wordQuery, setWordQuery] = useState('');
-  const wordInputRef = useRef<TextInput>(null);
 
   const [pageInput, setPageInput] = useState('');
   const [noteInput, setNoteInput] = useState('');
@@ -309,20 +330,6 @@ function BookDiaryModal({ book, onClose }: BookDiaryModalProps) {
       setSaving(false);
     }
   }, [book, pageInput, noteInput, uid, today]);
-
-  const openWordSearch = () => {
-    setWordQuery('');
-    setShowWordSearch(true);
-    setTimeout(() => wordInputRef.current?.focus(), 100);
-  };
-
-  const doGoogleSearch = () => {
-    const q = wordQuery.trim();
-    if (!q) return;
-    Linking.openURL(`https://www.google.com/search?q=${encodeURIComponent(q)}`);
-    setShowWordSearch(false);
-    setWordQuery('');
-  };
 
   const startEditEntry = (date: string) => {
     setEditingDate(date);
@@ -444,7 +451,7 @@ function BookDiaryModal({ book, onClose }: BookDiaryModalProps) {
                     <MaterialIcons name="check-circle" size={18} color="#16a34a" />
                     <Text style={d.savedPage}>{logs[today]?.endPage}페이지까지 읽음</Text>
                   </View>
-                  <Text style={d.savedNote} onLongPress={openWordSearch} delayLongPress={400}>"{logs[today]?.note}"</Text>
+                  <SearchableText text={`"${logs[today]?.note}"`} style={d.savedNote} />
                   <TouchableOpacity style={d.editBtn} onPress={() => setTodaySaved(false)}>
                     <MaterialIcons name="edit" size={14} color="#6b7280" />
                     <Text style={d.editBtnText}>수정</Text>
@@ -559,7 +566,7 @@ function BookDiaryModal({ book, onClose }: BookDiaryModalProps) {
                         />
                       </View>
                     ) : (
-                      <Text style={d.entryNote} onLongPress={openWordSearch} delayLongPress={400}>"{logs[date].note}"</Text>
+                      <SearchableText text={`"${logs[date].note}"`} style={d.entryNote} />
                     )}
                   </View>
                 );
@@ -569,34 +576,6 @@ function BookDiaryModal({ book, onClose }: BookDiaryModalProps) {
         </KeyboardAvoidingView>
       </SafeAreaView>
 
-      {/* 단어 검색 시트 */}
-      <Modal visible={showWordSearch} transparent animationType="slide" onRequestClose={() => setShowWordSearch(false)}>
-        <TouchableOpacity style={d.searchOverlay} activeOpacity={1} onPress={() => setShowWordSearch(false)} />
-        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={d.searchSheet}>
-          <Text style={d.searchTitle}>단어 검색</Text>
-          <Text style={d.searchHint}>모르는 단어를 입력하면 구글에서 검색합니다</Text>
-          <TextInput
-            ref={wordInputRef}
-            style={d.searchInput}
-            value={wordQuery}
-            onChangeText={setWordQuery}
-            placeholder="검색할 단어 입력..."
-            placeholderTextColor="#9ca3af"
-            returnKeyType="search"
-            onSubmitEditing={doGoogleSearch}
-            autoCorrect={false}
-          />
-          <View style={d.searchBtns}>
-            <TouchableOpacity style={d.searchCancelBtn} onPress={() => setShowWordSearch(false)} activeOpacity={0.8}>
-              <Text style={d.searchCancelText}>취소</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[d.searchGoBtn, !wordQuery.trim() && d.btnDisabled]} onPress={doGoogleSearch} disabled={!wordQuery.trim()} activeOpacity={0.8}>
-              <MaterialIcons name="search" size={18} color="#fff" />
-              <Text style={d.searchGoText}>구글 검색</Text>
-            </TouchableOpacity>
-          </View>
-        </KeyboardAvoidingView>
-      </Modal>
     </Modal>
   );
 }
@@ -834,30 +813,6 @@ const d = StyleSheet.create({
     paddingHorizontal: 10, paddingVertical: 8, fontSize: 14, color: '#111827',
     backgroundColor: '#f9fafb', minHeight: 60, textAlignVertical: 'top',
   },
-  searchOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.4)' },
-  searchSheet: {
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 20, borderTopRightRadius: 20,
-    padding: 20, paddingBottom: Platform.OS === 'ios' ? 36 : 24,
-  },
-  searchTitle: { fontSize: 17, fontWeight: '700', color: '#111827', marginBottom: 4 },
-  searchHint: { fontSize: 13, color: '#6b7280', marginBottom: 14 },
-  searchInput: {
-    borderWidth: 1, borderColor: '#e5e7eb', borderRadius: 12,
-    paddingHorizontal: 14, paddingVertical: 12,
-    fontSize: 16, color: '#111827', backgroundColor: '#f9fafb', marginBottom: 14,
-  },
-  searchBtns: { flexDirection: 'row', gap: 10 },
-  searchCancelBtn: {
-    flex: 1, borderWidth: 1, borderColor: '#e5e7eb', borderRadius: 12,
-    paddingVertical: 13, alignItems: 'center',
-  },
-  searchCancelText: { fontSize: 15, color: '#6b7280', fontWeight: '600' },
-  searchGoBtn: {
-    flex: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
-    backgroundColor: '#2563eb', borderRadius: 12, paddingVertical: 13, gap: 6,
-  },
-  searchGoText: { color: '#fff', fontSize: 15, fontWeight: '700' },
 });
 
 const bs = StyleSheet.create({

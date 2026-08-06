@@ -207,6 +207,7 @@ export default function CrosswordGame() {
   const [bounds, setBounds] = useState({ minR: 0, maxR: 0, minC: 0, maxC: 0 });
   const [synced, setSynced] = useState(false);
   const [revealedWordIds, setRevealedWordIds] = useState<Set<string>>(new Set());
+  const [wordCountMap, setWordCountMap] = useState<Record<string, number>>({});
 
   const loadGame = useCallback(async () => {
     setGameState('loading');
@@ -235,9 +236,14 @@ export default function CrosswordGame() {
       if (!snapshot.exists()) { setGameState('empty'); return; }
 
       const pool = snapshot.val() as Record<string, any>;
+      const countMap: Record<string, number> = {};
       const wordList: WordData[] = Object.entries(pool)
-        .map(([wordId, v]: [string, any]) => ({ wordId, word: v.word ?? '', meaning: v.meaning ?? '' }))
+        .map(([wordId, v]: [string, any]) => {
+          countMap[wordId] = v.count ?? 0;
+          return { wordId, word: v.word ?? '', meaning: v.meaning ?? '' };
+        })
         .filter(w => /^[a-zA-Z]{3,}$/.test(w.word));
+      setWordCountMap(countMap);
 
       if (wordList.length < 2) { setGameState('empty'); return; }
 
@@ -361,6 +367,18 @@ export default function CrosswordGame() {
     try {
       const today = getKSTDateString();
       const db = getDatabase(getFirebaseApp());
+
+      // 자력으로 푼 단어(정답 보기 미사용)만 count +1
+      const GRADUATE_AT = 10;
+      await Promise.all(
+        placedWords
+          .filter(pw => !revealedWordIds.has(pw.wordId))
+          .map(pw => {
+            const next = Math.min((wordCountMap[pw.wordId] ?? 0) + 1, GRADUATE_AT);
+            return dbSet(userRef(uid, `english/reviewPool/${pw.wordId}/count`), next);
+          })
+      );
+
       await dbSet(userRef(uid, `completion/english_crossword/${today}`), true);
       setSynced(true);
       const saved = await AsyncStorage.getItem(DAILY_STATS_KEY);

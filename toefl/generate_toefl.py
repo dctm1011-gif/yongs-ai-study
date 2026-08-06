@@ -35,7 +35,7 @@ def generate_toefl_with_claude(client: anthropic.Anthropic) -> dict:
 
     prompt = f"""JSON 형식으로만 응답. 설명 없음.
 {{
-  "reading": {{"title": "title", "passage": "TOEFL iBT Academic 수준 영어 지문. 200-250단어. 2-3단락(\\n\\n으로 구분). 고급 학술 어휘·복잡한 문장 구조. 단락마다 주제문+근거+예시. TOEFL iBT Reading 실전 난이도.", "vocabulary": [{{"word": "지문에 등장하는 단어", "meaning_ko": "뜻"}}], "questions": [{{"q": "According to the passage, ...", "options": ["A","B","C","D"], "answer": 0, "explanation": "해설"}}, {{"q": "What can be inferred from the passage?", "options": ["A","B","C","D"], "answer": 1, "explanation": "해설"}}, {{"q": "The word '...' is closest in meaning to ...", "options": ["A","B","C","D"], "answer": 2, "explanation": "해설"}}, {{"q": "Why does the author mention ...?", "options": ["A","B","C","D"], "answer": 3, "explanation": "해설"}}]}},
+  "reading": {{"title": "title", "passage": "TOEFL iBT 고급 학술 지문. 280-350단어. 3단락(\\n\\n으로 구분). 대학원 수준 학술 어휘·복잡한 복합 문장·고밀도 논증 구조. 단락마다 주제문+복수 근거+반례 또는 심화 예시. TOEFL iBT Reading 최고 난이도(30점 목표).", "vocabulary": [{{"word": "지문 고급 어휘1", "meaning_ko": "뜻"}},{{"word": "어휘2", "meaning_ko": "뜻"}},{{"word": "어휘3", "meaning_ko": "뜻"}},{{"word": "어휘4", "meaning_ko": "뜻"}},{{"word": "어휘5", "meaning_ko": "뜻"}},{{"word": "어휘6", "meaning_ko": "뜻"}},{{"word": "어휘7", "meaning_ko": "뜻"}},{{"word": "어휘8", "meaning_ko": "뜻"}}], "questions": [{{"q": "According to the passage, ...", "options": ["A","B","C","D"], "answer": 0, "explanation": "해설"}}, {{"q": "What can be inferred from the passage about ...?", "options": ["A","B","C","D"], "answer": 1, "explanation": "해설"}}, {{"q": "The word '...' in paragraph X is closest in meaning to ...", "options": ["A","B","C","D"], "answer": 2, "explanation": "해설"}}, {{"q": "Why does the author mention ... in paragraph X?", "options": ["A","B","C","D"], "answer": 3, "explanation": "해설"}}, {{"q": "Which of the following best describes the organization of the passage?", "options": ["A","B","C","D"], "answer": 0, "explanation": "해설"}}]}},
   "writing": {{"sentences": [{{"original": "reading passage에서 그대로 가져온 핵심 문장", "paraphrase": "모범 패러프레이즈", "tip": "사용 기법"}}, {{"original": "두 번째 핵심 문장", "paraphrase": "모범 패러프레이즈", "tip": "기법"}}, {{"original": "세 번째 핵심 문장", "paraphrase": "모범 패러프레이즈", "tip": "기법"}}]}},
   "speaking": {{"prompt": "Describe X", "useful_expressions": ["e1", "e2"], "sample_points": ["s1", "s2"]}},
   "listening": {{"script": "30단어 영어 대화", "questions": [{{"q": "Q1", "options": ["A", "B", "C", "D"], "answer": 0, "explanation": "exp"}}]}}
@@ -43,7 +43,7 @@ def generate_toefl_with_claude(client: anthropic.Anthropic) -> dict:
 
     response = client.messages.create(
         model="claude-haiku-4-5-20251001",
-        max_tokens=1024,
+        max_tokens=1800,
         messages=[{"role": "user", "content": prompt}]
     )
 

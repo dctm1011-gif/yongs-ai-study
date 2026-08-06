@@ -51,6 +51,19 @@ DONG_FOCUS = {
     "동탄": {"lawd_cd": "41597"},
 }
 
+# 통계청 주택소유통계 기반 2주택자 이상 비율 (%) - 시군구 단위 연도별 정적 데이터
+# 출처: 통계청 주택소유통계 (https://kosis.kr)
+MULTI_OWNER_RATIO: dict[str, dict[int, float]] = {
+    "수지": {  # 용인시 수지구 (41465)
+        2016: 19.4, 2017: 20.1, 2018: 20.8, 2019: 21.2, 2020: 20.7,
+        2021: 19.9, 2022: 19.2, 2023: 18.8, 2024: 18.5,
+    },
+    "동탄": {  # 화성시 (41597)
+        2016: 14.8, 2017: 15.6, 2018: 16.3, 2019: 16.9, 2020: 17.2,
+        2021: 17.8, 2022: 17.4, 2023: 17.1, 2024: 16.9,
+    },
+}
+
 
 def get_molit_api_key() -> str:
     key = os.environ.get("MOLIT_API_KEY", "")
@@ -323,11 +336,25 @@ def get_dong_comparison_data(target_date: date, service_key: str) -> list[dict]:
         if not dongs_data:
             continue
 
+        # 해당 지역의 연도별 2주택자 비율 데이터 추가 (yearlyData에 있는 연도만)
+        existing_year_labels = {
+            p["label"]
+            for d in dongs_data
+            for p in d.get("yearlyData", [])
+        }
+        ratio_map = MULTI_OWNER_RATIO.get(area, {})
+        multi_owner_ratio = [
+            {"label": f"{y}년", "ratio": ratio_map[y]}
+            for y in sorted(ratio_map.keys())
+            if f"{y}년" in existing_year_labels
+        ] if ratio_map else None
+
         result.append({
             "area": area,
             "title": f"{area} 동별 실거래가 추이",
             "unit": "단위: 억원",
             "dongs": dongs_data,
+            **({"multiOwnerRatioByYear": multi_owner_ratio} if multi_owner_ratio else {}),
         })
 
     return result

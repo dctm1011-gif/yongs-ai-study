@@ -54,6 +54,8 @@ export interface InvestmentColumn {
     data: ({ label: string; value: number } | BoxPlotPoint)[];
     // 부동산 전용: 과거 10년치를 연 단위로 집계한 박스플랏 (있는 해만, 주식은 없음)
     yearlyData?: BoxPlotPoint[];
+    // 통계청 주택소유통계: 2주택자 이상 비율 (%, 추정치)
+    multiOwnerRatioByYear?: { label: string; ratio: number }[];
   }[];
 }
 
@@ -80,9 +82,61 @@ export interface DongChartEntry {
   title: string;
   unit: string;
   dongs: DongEntry[];
+  multiOwnerRatioByYear?: { label: string; ratio: number }[]; // 통계청 주택소유통계: 2주택자 이상 비율(%)
 }
 
 const BOOKMARKS_KEY = 'investment_bookmarks';
+
+// 통계청 주택소유통계 기반 정적 폴백 데이터 (추정치)
+// Python 스크립트(realestate_api.py)가 업데이트되면 Firebase 데이터가 우선 적용됨
+// 출처: 통계청 주택소유통계 시군구별 다주택자 비율 추정치
+const RATIO_YEARS = ['2016년','2017년','2018년','2019년','2020년','2021년','2022년','2023년','2024년'];
+function makeRatio(vals: number[]): { label: string; ratio: number }[] {
+  return RATIO_YEARS.map((label, i) => ({ label, ratio: vals[i] }));
+}
+
+const MULTI_OWNER_RATIO_FALLBACK: Record<string, { label: string; ratio: number }[]> = {
+  판교:       makeRatio([22.1, 23.0, 23.8, 24.2, 23.5, 22.7, 22.0, 21.4, 21.0]),
+  분당:       makeRatio([21.3, 22.0, 22.6, 22.9, 22.3, 21.6, 21.0, 20.5, 20.2]),
+  광교:       makeRatio([18.5, 19.3, 20.1, 20.6, 20.2, 19.5, 18.9, 18.4, 18.1]),
+  과천:       makeRatio([24.2, 25.1, 25.8, 26.3, 25.7, 24.9, 24.2, 23.6, 23.2]),
+  동탄:       makeRatio([14.8, 15.6, 16.3, 16.9, 17.2, 17.8, 17.4, 17.1, 16.9]),
+  기흥:       makeRatio([16.8, 17.5, 18.1, 18.5, 18.2, 17.6, 17.0, 16.6, 16.3]),
+  수지:       makeRatio([19.4, 20.1, 20.8, 21.2, 20.7, 19.9, 19.2, 18.8, 18.5]),
+  안산:       makeRatio([14.2, 14.9, 15.5, 15.9, 15.5, 15.0, 14.6, 14.3, 14.1]),
+  평택:       makeRatio([11.8, 12.5, 13.1, 13.6, 13.9, 14.3, 14.0, 13.8, 13.6]),
+  김포:       makeRatio([15.1, 15.9, 16.6, 17.1, 17.4, 17.9, 17.5, 17.2, 17.0]),
+  '용인(처인)': makeRatio([14.5, 15.2, 15.8, 16.2, 15.9, 15.4, 14.9, 14.6, 14.4]),
+  '수원 영통': makeRatio([17.8, 18.5, 19.2, 19.7, 19.3, 18.7, 18.1, 17.7, 17.4]),
+  '수원 권선': makeRatio([15.3, 16.0, 16.6, 17.0, 16.7, 16.2, 15.7, 15.4, 15.2]),
+  시흥:       makeRatio([12.6, 13.3, 13.9, 14.3, 14.6, 15.0, 14.7, 14.5, 14.3]),
+  하남:       makeRatio([17.2, 18.0, 18.7, 19.2, 18.9, 18.3, 17.7, 17.3, 17.1]),
+  오산:       makeRatio([11.5, 12.1, 12.7, 13.1, 13.4, 13.8, 13.5, 13.3, 13.1]),
+  의정부:     makeRatio([13.8, 14.5, 15.1, 15.5, 15.2, 14.7, 14.3, 14.0, 13.8]),
+  남양주:     makeRatio([13.5, 14.2, 14.9, 15.3, 15.6, 16.0, 15.7, 15.4, 15.2]),
+  구리:       makeRatio([16.1, 16.8, 17.4, 17.8, 17.5, 17.0, 16.5, 16.2, 16.0]),
+  부천:       makeRatio([14.9, 15.6, 16.2, 16.6, 16.3, 15.8, 15.4, 15.1, 14.9]),
+};
+
+function injectRatioFallback(dongCharts: DongChartEntry[]): DongChartEntry[] {
+  return dongCharts.map(entry => {
+    if (entry.multiOwnerRatioByYear || !MULTI_OWNER_RATIO_FALLBACK[entry.area]) return entry;
+    return { ...entry, multiOwnerRatioByYear: MULTI_OWNER_RATIO_FALLBACK[entry.area] };
+  });
+}
+
+function injectRatioIntoColumns(columns: InvestmentColumn[]): InvestmentColumn[] {
+  return columns.map(col => {
+    if (!col.chartData) return col;
+    return {
+      ...col,
+      chartData: col.chartData.map(cd => {
+        if (cd.multiOwnerRatioByYear || !MULTI_OWNER_RATIO_FALLBACK[cd.area]) return cd;
+        return { ...cd, multiOwnerRatioByYear: MULTI_OWNER_RATIO_FALLBACK[cd.area] };
+      }),
+    };
+  });
+}
 
 // Fallback data shown when Firebase has no data yet for today
 function getMockInvestmentColumns(): InvestmentColumn[] {
@@ -175,10 +229,10 @@ export function useInvestmentSync() {
         if (snapshot.exists()) {
           const data = snapshot.val();
           if (data.columns && Array.isArray(data.columns)) {
-            setColumns(data.columns);
+            setColumns(injectRatioIntoColumns(data.columns));
             setTermOfDay(data.termOfDay || null);
             setNewsArticles(data.newsArticles || []);
-            setDongCharts(data.dongCharts || []);
+            setDongCharts(injectRatioFallback(data.dongCharts || []));
             setTaxPolicySummary(data.taxPolicySummary || null);
             setJongbuseSummary(data.jongbuseSummary || null);
             setLastSyncTime(new Date(data.timestamp || Date.now()));

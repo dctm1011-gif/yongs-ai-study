@@ -1646,5 +1646,29 @@
     "explanation": "stubbornly refusing to change one's mind or course of action; inflexible and hardened",
     "tip": "Synonyms: stubborn, inflexible, unyielding, recalcitrant(이미 학습함). Near-synonym: intransigent(더 이데올로기적). Antonym: flexible, yielding, amenable. 'Obdurate'는 보통 negative한 뉘앙스로 개선될 가능성이 거의 없는 완고함을 의미",
     "emoji": "🪨"
+  },
+  {
+    "id": "gregarious",
+    "word": "gregarious",
+    "pos": "adjective",
+    "date": "2026-08-07",
+    "meaning": "사교적인, 무리를 이루는",
+    "example_ko": "그녀는 항상 친구들과 어울리고 싶어 하는 사교적인 사람이야",
+    "example_en": "She's a gregarious person who always wants to hang out with friends",
+    "explanation": "Fond of being in company with others; living in groups or herds; enjoying social interaction",
+    "tip": "Synonym(동의어): social, outgoing - but 'gregarious' emphasizes the instinctive herd behavior. Antonym(반의어): solitary, reclusive",
+    "emoji": "👥"
+  },
+  {
+    "id": "insouciant",
+    "word": "insouciant",
+    "pos": "adjective",
+    "date": "2026-08-07",
+    "meaning": "무관심한, 태평한, 걱정 없는",
+    "example_ko": "공부하지 않았음에도 불구하고 그는 시험에 대해 태평한 태도를 보였다",
+    "example_en": "He had an insouciant attitude toward his upcoming exam despite not studying",
+    "explanation": "Showing a carefree lack of concern; nonchalant and unconcerned, often inappropriately so",
+    "tip": "Implies casual indifference, sometimes with negative connotation. Different from 'relaxed'(편안한) which is positive. Antonym: anxious, worried(걱정스러운)",
+    "emoji": "😎"
   }
 ]

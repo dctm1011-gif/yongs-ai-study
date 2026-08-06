@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import WordMatchGame from './WordMatchGame';
 import CrosswordGame from './CrosswordGame';
+import ScrambleGame from './ScrambleGame';
 
-type Mode = 'select' | 'match' | 'crossword';
+type Mode = 'select' | 'match' | 'crossword' | 'scramble';
 
 export default function GameHub() {
   const [mode, setMode] = useState<Mode>('select');
@@ -30,6 +31,17 @@ export default function GameHub() {
     );
   }
 
+  if (mode === 'scramble') {
+    return (
+      <View style={s.flex}>
+        <TouchableOpacity style={s.backBar} onPress={() => setMode('select')}>
+          <Text style={s.backText}>← 게임 선택</Text>
+        </TouchableOpacity>
+        <ScrambleGame />
+      </View>
+    );
+  }
+
   return (
     <View style={s.container}>
       <Text style={s.title}>게임 선택</Text>
@@ -48,6 +60,15 @@ export default function GameHub() {
         <View style={s.cardBody}>
           <Text style={s.cardName}>낱말 퍼즐</Text>
           <Text style={s.cardDesc}>가로세로 크로스워드</Text>
+        </View>
+        <Text style={s.arrow}>›</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={s.card} onPress={() => setMode('scramble')} activeOpacity={0.8}>
+        <Text style={s.cardEmoji}>🔀</Text>
+        <View style={s.cardBody}>
+          <Text style={s.cardName}>스크램블</Text>
+          <Text style={s.cardDesc}>섞인 글자를 순서대로 탭하세요</Text>
         </View>
         <Text style={s.arrow}>›</Text>
       </TouchableOpacity>

@@ -240,12 +240,19 @@ const isBoxPlotData = (
   data: NonNullable<InvestmentColumn['chartData']>[number]['data'] | null | undefined
 ): data is BoxPlotPoint[] => Array.isArray(data) && data.length > 0 && 'median' in data[0];
 
+const RATIO_MAX = 30; // 2주택자 비율 Y축 최대치 (%)
+const TRACK_BOTTOM_Y = 112; // 트랙 하단의 container 상단 기준 y (px, 근사치)
+const TRACK_H = 80;
+const COL_W = 48;
+const CONTAINER_H = 140;
+
 const BoxPlotChart: React.FC<{
   data: BoxPlotPoint[];
   yearlyData?: BoxPlotPoint[];
   title: string;
   unit: string;
-}> = React.memo(({ data, yearlyData, title, unit }) => {
+  multiOwnerRatioData?: { label: string; ratio: number }[];
+}> = React.memo(({ data, yearlyData, title, unit, multiOwnerRatioData }) => {
   const [viewMode, setViewMode] = useState<'monthly' | 'yearly'>('monthly');
   const [expanded, setExpanded] = useState(false);
   const { width: winW, height: winH } = useWindowDimensions();
@@ -255,6 +262,73 @@ const BoxPlotChart: React.FC<{
   const allOutliers = points.flatMap(p => p.outliers ?? []);
   const globalMax = Math.max(...points.map(d => d.max), ...allOutliers, 1);
   const pct = (v: number) => Math.min(100, Math.max(0, (v / globalMax) * 100));
+
+  // 2주택자 비율 오버레이 (연도별 뷰 전용)
+  const showRatioOverlay = viewMode === 'yearly' && !!multiOwnerRatioData?.length;
+  const ratioPoints = showRatioOverlay
+    ? points.map((p, i) => {
+        const rd = multiOwnerRatioData!.find(r => r.label === p.label);
+        if (!rd) return null;
+        return {
+          x: i * COL_W + COL_W / 2,
+          y: TRACK_BOTTOM_Y - (rd.ratio / RATIO_MAX) * TRACK_H,
+          ratio: rd.ratio,
+          label: p.label,
+        };
+      })
+    : [];
+
+  // 월별 뷰 - 가장 최근 연도 기준선
+  const latestRatio = viewMode === 'monthly' && multiOwnerRatioData?.length
+    ? multiOwnerRatioData[multiOwnerRatioData.length - 1]
+    : null;
+
+  const renderRatioOverlay = () => {
+    const totalW = points.length * COL_W;
+    return (
+      <View pointerEvents="none" style={{ position: 'absolute', top: 0, left: 0, width: totalW, height: CONTAINER_H }}>
+        {ratioPoints.map((p, i) => {
+          if (!p) return null;
+          const next = ratioPoints[i + 1];
+          return (
+            <React.Fragment key={i}>
+              {next && (() => {
+                const dx = next.x - p.x;
+                const dy = next.y - p.y;
+                const len = Math.sqrt(dx * dx + dy * dy);
+                const angle = Math.atan2(dy, dx);
+                return (
+                  <View style={{
+                    position: 'absolute',
+                    width: len, height: 2,
+                    backgroundColor: '#f97316', opacity: 0.75,
+                    left: (p.x + next.x) / 2 - len / 2,
+                    top: (p.y + next.y) / 2 - 1,
+                    transform: [{ rotate: `${angle}rad` }],
+                  }} />
+                );
+              })()}
+              <View style={{ position: 'absolute', width: 8, height: 8, borderRadius: 4, backgroundColor: '#f97316', borderWidth: 1.5, borderColor: '#fff', left: p.x - 4, top: p.y - 4 }} />
+            </React.Fragment>
+          );
+        })}
+      </View>
+    );
+  };
+
+  const renderRatioRefLine = () => {
+    if (!latestRatio) return null;
+    const totalW = points.length * COL_W;
+    const lineY = TRACK_BOTTOM_Y - (latestRatio.ratio / RATIO_MAX) * TRACK_H;
+    return (
+      <View pointerEvents="none" style={{ position: 'absolute', top: 0, left: 0, width: totalW, height: CONTAINER_H }}>
+        <View style={{ position: 'absolute', left: 0, width: totalW, top: lineY, height: 1.5, backgroundColor: '#f97316', opacity: 0.6 }} />
+        <Text style={{ position: 'absolute', right: 2, top: lineY - 13, fontSize: 9, color: '#ea580c', fontWeight: '700', backgroundColor: 'rgba(255,255,255,0.85)', paddingHorizontal: 3, borderRadius: 3 }}>
+          {latestRatio.label.replace('년', '')}년 {latestRatio.ratio}%
+        </Text>
+      </View>
+    );
+  };
 
   const openFullscreen = async () => {
     setExpanded(true);
@@ -324,45 +398,76 @@ const BoxPlotChart: React.FC<{
           <Text style={styles.yAxisLabel}>0</Text>
         </View>
         <ScrollView horizontal nestedScrollEnabled showsHorizontalScrollIndicator style={styles.hChartScroll}>
-          <View style={styles.hBarChart}>
-            {points.map((point, idx) => (
-              <View key={idx} style={styles.hBarColumn}>
-                <Text style={styles.barValue}>{point.avg.toLocaleString()}</Text>
-                <View style={styles.boxPlotTrack}>
-                  <View
-                    style={[
-                      styles.boxWhisker,
-                      {
-                        bottom: `${pct(point.min)}%`,
-                        height: `${Math.max(pct(point.max) - pct(point.min), 1)}%`,
-                      },
-                    ]}
-                  />
-                  <View
-                    style={[
-                      styles.boxRect,
-                      {
-                        bottom: `${pct(point.q1)}%`,
-                        height: `${Math.max(pct(point.q3) - pct(point.q1), 3)}%`,
-                      },
-                    ]}
-                  />
-                  <View style={[styles.boxMedian, { bottom: `${pct(point.median)}%` }]} />
-                  <View style={[styles.boxAvgDot, { bottom: `${pct(point.avg)}%` }]} />
-                  {(point.outliers ?? []).map((val, oi) => (
-                    <View key={`o${oi}`} style={[styles.boxOutlierDot, { bottom: `${pct(val)}%` }]} />
-                  ))}
+          <View style={{ position: 'relative' }}>
+            <View style={styles.hBarChart}>
+              {points.map((point, idx) => (
+                <View key={idx} style={styles.hBarColumn}>
+                  <Text style={styles.barValue}>{point.avg.toLocaleString()}</Text>
+                  <View style={styles.boxPlotTrack}>
+                    <View
+                      style={[
+                        styles.boxWhisker,
+                        {
+                          bottom: `${pct(point.min)}%`,
+                          height: `${Math.max(pct(point.max) - pct(point.min), 1)}%`,
+                        },
+                      ]}
+                    />
+                    <View
+                      style={[
+                        styles.boxRect,
+                        {
+                          bottom: `${pct(point.q1)}%`,
+                          height: `${Math.max(pct(point.q3) - pct(point.q1), 3)}%`,
+                        },
+                      ]}
+                    />
+                    <View style={[styles.boxMedian, { bottom: `${pct(point.median)}%` }]} />
+                    <View style={[styles.boxAvgDot, { bottom: `${pct(point.avg)}%` }]} />
+                    {(point.outliers ?? []).map((val, oi) => (
+                      <View key={`o${oi}`} style={[styles.boxOutlierDot, { bottom: `${pct(val)}%` }]} />
+                    ))}
+                  </View>
+                  <Text style={styles.barLabel}>{point.label}</Text>
+                  <Text style={styles.boxRangeLabel}>{point.min}~{point.max}</Text>
                 </View>
-                <Text style={styles.barLabel}>{point.label}</Text>
-                <Text style={styles.boxRangeLabel}>{point.min}~{point.max}</Text>
-              </View>
-            ))}
+              ))}
+            </View>
+            {showRatioOverlay && renderRatioOverlay()}
+            {latestRatio && renderRatioRefLine()}
           </View>
         </ScrollView>
       </View>
       <Text style={styles.chartUnit}>
         {unit} · 박스: 25~75% · 굵은 선: 중앙값 · 점: 평균
       </Text>
+      {(showRatioOverlay || !!latestRatio) && (
+        <View style={{ marginTop: 8 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 6 }}>
+            <View style={{ width: 16, height: 2, backgroundColor: '#f97316', borderRadius: 1 }} />
+            <View style={{ width: 7, height: 7, borderRadius: 3.5, backgroundColor: '#f97316' }} />
+            <Text style={{ fontSize: 11, color: '#ea580c', fontWeight: '600' }}>2주택자 이상 비율</Text>
+            <View style={{ backgroundColor: '#fff3cd', borderRadius: 4, paddingHorizontal: 5, paddingVertical: 1, borderWidth: 1, borderColor: '#f97316' }}>
+              <Text style={{ fontSize: 9, color: '#ea580c', fontWeight: '700' }}>추정치</Text>
+            </View>
+            <Text style={{ fontSize: 9, color: '#9ca3af' }}>통계청 주택소유통계</Text>
+          </View>
+          {showRatioOverlay && (
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 4, paddingBottom: 2 }}>
+              {ratioPoints.filter(Boolean).map((p, i) => (
+                <View key={i} style={{ backgroundColor: '#fff7ed', borderRadius: 6, paddingHorizontal: 7, paddingVertical: 3, borderWidth: 1, borderColor: '#fed7aa' }}>
+                  <Text style={{ fontSize: 10, color: '#ea580c', fontWeight: '600' }}>{p!.label.replace('년', '')}: {p!.ratio}%</Text>
+                </View>
+              ))}
+            </ScrollView>
+          )}
+          {!!latestRatio && (
+            <Text style={{ fontSize: 10, color: '#9ca3af', marginTop: 2 }}>
+              기준선: {latestRatio.label} {latestRatio.ratio}% (추정)
+            </Text>
+          )}
+        </View>
+      )}
 
       <ScrollView horizontal nestedScrollEnabled showsHorizontalScrollIndicator={false} style={{ marginTop: 10 }}>
         <View style={{ borderWidth: 1, borderColor: '#e2e8f0', borderRadius: 8, overflow: 'hidden' }}>
@@ -586,7 +691,7 @@ const ChartSelector: React.FC<{
   const renderChart = (chart: NonNullable<InvestmentColumn['chartData']>[number]) => {
     if (!Array.isArray(chart.data) || chart.data.length === 0) return null;
     return isBoxPlotData(chart.data) ? (
-      <BoxPlotChart data={chart.data} yearlyData={chart.yearlyData} title={chart.title} unit={chart.unit} />
+      <BoxPlotChart data={chart.data} yearlyData={chart.yearlyData} title={chart.title} unit={chart.unit} multiOwnerRatioData={chart.multiOwnerRatioByYear} />
     ) : (
       <BarChart data={chart.data as { label: string; value: number }[]} title={chart.title} unit={chart.unit} />
     );
@@ -660,6 +765,7 @@ const DongChartViewer: React.FC<{ entry: DongChartEntry }> = React.memo(({ entry
         yearlyData={selected.yearlyData}
         title={`${entry.title.split(' ')[0]} ${selected.name} 실거래가`}
         unit={entry.unit}
+        multiOwnerRatioData={entry.multiOwnerRatioByYear}
       />
     </View>
   );
