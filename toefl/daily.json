@@ -1,196 +1,112 @@
 {
   "date": "2026-08-08",
   "reading": {
-    "title": "The Role of Banking Systems in Medieval Economic Development",
-    "passage": "The emergence of sophisticated banking systems during the medieval period fundamentally transformed European economic structures. Before the 12th century, most transactions relied on barter or direct currency exchange, limiting commercial expansion across regions. However, the development of letters of credit by Italian merchant families, particularly the Medici and Fugger dynasties, revolutionized long-distance trade by eliminating the necessity to physically transport precious metals. These financial instruments enabled merchants to conduct business with unprecedented security and efficiency, thereby facilitating the growth of international commerce.\n\nThe proliferation of banking networks also contributed significantly to capital accumulation and investment opportunities. By establishing branches across major trading cities such as Venice, Florence, and Antwerp, banks could aggregate resources from multiple depositors and allocate them toward profitable ventures. This mechanism of financial intermediation accelerated industrialization and enabled the rise of a merchant class whose wealth and influence eventually challenged feudal hierarchies. Consequently, the banking system functioned not merely as a commercial convenience but as a catalyst for broader socioeconomic transformation, laying the groundwork for modern capitalist economies.",
-    "vocabulary": [
-      {
-        "word": "sophistication",
-        "meaning_ko": "정교함, 복잡하고 발달된 성질"
-      },
-      {
-        "word": "barter",
-        "meaning_ko": "물물교환"
-      },
-      {
-        "word": "letters of credit",
-        "meaning_ko": "신용장, 금융 서류"
-      },
-      {
-        "word": "intermediation",
-        "meaning_ko": "중개, 매개 역할"
-      },
-      {
-        "word": "accumulation",
-        "meaning_ko": "축적, 모음"
-      },
-      {
-        "word": "feudal",
-        "meaning_ko": "봉건 제도의"
-      },
-      {
-        "word": "catalyst",
-        "meaning_ko": "촉매, 계기"
-      }
-    ],
+    "title": "The Evolution of Renewable Energy",
+    "passage": "Renewable energy sources such as solar and wind power have become increasingly important in addressing climate change and reducing dependence on fossil fuels. Over the past decade, technological advancements have significantly reduced the cost of solar panels and wind turbines, making them more accessible to developing nations. Countries like Denmark and Costa Rica have successfully integrated renewable energy into their national grids, generating over 80% of their electricity from sustainable sources. This transition demonstrates that renewable energy is not only environmentally beneficial but also economically viable for long-term energy security.",
     "questions": [
       {
-        "q": "According to the passage, what was the primary limitation of transactions before the 12th century?",
+        "q": "According to the passage, what has made renewable energy more accessible to developing nations?",
         "options": [
-          "Banks did not exist in Europe.",
-          "Merchants could not access letters of credit.",
-          "Transactions relied on barter or direct currency exchange.",
-          "International trade networks were fully developed."
-        ],
-        "answer": 2,
-        "explanation": "지문의 첫 번째 단락에서 '12세기 이전에는 대부분의 거래가 물물교환이나 직접 화폐 교환에 의존했다'고 명시되어 있습니다."
-      },
-      {
-        "q": "What can be inferred from the passage about the impact of banking systems on social structures?",
-        "options": [
-          "They strengthened the feudal system.",
-          "They enabled the merchant class to accumulate wealth and challenge existing hierarchies.",
-          "They had minimal effect on European society.",
-          "They exclusively benefited the nobility."
+          "Government subsidies",
+          "Technological advancements reducing costs",
+          "International agreements",
+          "Population growth"
         ],
         "answer": 1,
-        "explanation": "지문에서 은행 네트워크가 '자본 축적과 투자 기회를 기여했으며' 결과적으로 '부와 영향력을 갖춘 상인 계층이 봉건 제도에 도전했다'고 설명합니다."
+        "explanation": "본문에서 'technological advancements have significantly reduced the cost of solar panels and wind turbines'라고 명시되어 있습니다. 따라서 기술 발전이 개발도상국에 신재생에너지를 더 접근 가능하게 만들었습니다."
       },
       {
-        "q": "The word 'proliferation' in paragraph 2 is closest in meaning to",
+        "q": "Which countries are mentioned as examples of successful renewable energy integration?",
         "options": [
-          "decline",
-          "rapid increase and spread",
-          "careful management",
-          "periodic review"
+          "Germany and France",
+          "Denmark and Costa Rica",
+          "Norway and Iceland",
+          "Sweden and Portugal"
         ],
         "answer": 1,
-        "explanation": "'Proliferation'은 빠른 증가와 확산을 의미합니다. 문맥상 은행 네트워크의 확대를 나타냅니다."
+        "explanation": "본문에서 'Countries like Denmark and Costa Rica have successfully integrated renewable energy'라고 직접 언급되어 있습니다."
       },
       {
-        "q": "Why does the author mention the Medici and Fugger dynasties?",
+        "q": "What can be inferred about the future of renewable energy?",
         "options": [
-          "To show that they opposed banking systems.",
-          "To provide examples of merchant families who developed letters of credit.",
-          "To demonstrate that feudalism never existed in Italy.",
-          "To explain why international trade failed."
+          "It will replace all fossil fuels immediately",
+          "It is economically and environmentally viable for the future",
+          "It is too expensive for most countries",
+          "It cannot be integrated into existing grids"
         ],
         "answer": 1,
-        "explanation": "저자는 이탈리아 상인 가족들이 신용장을 개발했다는 것을 보여주기 위해 메디치 가족과 푸거 가족을 구체적 사례로 언급합니다."
+        "explanation": "본문의 마지막 문장 'renewable energy is not only environmentally beneficial but also economically viable for long-term energy security'에서 신재생에너지의 긍정적인 미래 전망을 추론할 수 있습니다."
       }
     ]
   },
   "writing": {
-    "sentences": [
-      {
-        "original": "The emergence of sophisticated banking systems during the medieval period fundamentally transformed European economic structures.",
-        "paraphrase": "Medieval banking systems brought about a fundamental shift in how European economies were organized.",
-        "tip": "수동→능동 변환 및 'emergence of ~ transformed' 구조를 'brought about a shift in' 구조로 단순화"
-      },
-      {
-        "original": "The development of letters of credit by Italian merchant families revolutionized long-distance trade by eliminating the necessity to physically transport precious metals.",
-        "paraphrase": "Italian merchants revolutionized long-distance trade when they developed letters of credit, which made it unnecessary to transport precious metals.",
-        "tip": "'by eliminating' 전치사구를 'which made it unnecessary' 관계절로 변환"
-      },
-      {
-        "original": "These financial instruments enabled merchants to conduct business with unprecedented security and efficiency, thereby facilitating the growth of international commerce.",
-        "paraphrase": "Merchants could conduct secure and efficient business with these financial instruments, which in turn promoted the expansion of international commerce.",
-        "tip": "분사구 'thereby facilitating'을 관계절 'which in turn promoted'로 변환"
-      },
-      {
-        "original": "By establishing branches across major trading cities such as Venice, Florence, and Antwerp, banks could aggregate resources from multiple depositors and allocate them toward profitable ventures.",
-        "paraphrase": "Banks opened branches in major trading cities including Venice, Florence, and Antwerp, allowing them to collect deposits and invest in profitable projects.",
-        "tip": "'By establishing ~ aggregate' 구조를 'Banks opened ~ allowing them' 구조로 변환하고 'allocate toward' to 'invest in'으로 단순화"
-      },
-      {
-        "original": "This mechanism of financial intermediation accelerated industrialization and enabled the rise of a merchant class whose wealth and influence eventually challenged feudal hierarchies.",
-        "paraphrase": "Financial intermediation not only sped up industrialization but also allowed merchants to accumulate wealth and power that challenged feudal structures.",
-        "tip": "'mechanism of ~' 명사구를 '~' 동사로 단순화하고 'enabled the rise of' to 'allowed merchants to accumulate'"
-      }
+    "prompt": "Do you agree or disagree with the statement: 'Remote work is more productive than working in an office environment'?",
+    "structure": {
+      "intro": "명확한 입장 표현하기: 'I agree/disagree because...' 또는 'In my opinion, remote work is/is not more productive because...'로 시작하여 주요 이유를 간단히 제시",
+      "body1": "첫 번째 이유 발전시키기: 구체적인 예시나 증거 제시 (집중력 향상, 출퇴근 시간 단축 등)",
+      "body2": "두 번째 이유 발전시키기: 상반된 관점도 언급하면서 자신의 입장 강화 (협업의 어려움 vs 자율성 증가 등)",
+      "conclusion": "앞의 주장들을 요약하고 최종 결론 도출: 'In conclusion, remote work is beneficial because...'"
+    },
+    "useful_phrases": [
+      "In my opinion,",
+      "Furthermore,",
+      "On the other hand,",
+      "To illustrate,",
+      "It is clear that",
+      "In conclusion,",
+      "For instance,",
+      "This demonstrates that"
     ]
   },
-  "writing_essay_topic": "Do you think the growth of remote work is positive or negative for society? Provide specific reasons and examples.",
   "speaking": {
-    "prompt": "Some people are morning types who wake up early and are productive in the morning. Others are evening types who work better in the afternoon and night. Which type are you and why? Include specific reasons and examples.",
-    "model_sentences": [
-      "Personally, I consider myself an evening type, and I believe this chronotype suits my lifestyle and work patterns much better.",
-      "The primary reason is that my energy levels naturally increase as the day progresses, allowing me to concentrate more effectively on complex tasks during evening hours.",
-      "For example, when I was working on my university project last semester, I completed the most challenging research and analysis between 7 PM and midnight, producing significantly better results than when I attempted the same work in the morning.",
-      "Moreover, evening hours provide fewer distractions since most people are winding down, which creates an ideal environment for deep focus.",
-      "In conclusion, I strongly prefer being an evening type because it aligns with my natural circadian rhythm and enhances my productivity."
+    "prompt": "Some people prefer spending leisure time outdoors with friends. Others prefer indoor activities like watching movies or reading. Which do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer outdoor activities because...",
+      "One reason is that spending time outside helps me relax and stay healthy.",
+      "Additionally, I believe that..."
+    ],
+    "sample_points": [
+      "야외활동의 건강상 이점: 신선한 공기, 신체활동, 스트레스 해소 등을 구체적으로 설명",
+      "친구와의 상호작용 강화: 야외에서 더 자연스러운 대화와 깊은 유대관계 형성 가능성 강조"
     ]
   },
   "listening": {
-    "title": "Biology Lecture: The Process of Photosynthesis",
-    "type": "lecture",
-    "script": "Professor: Good morning, everyone. Today we're discussing photosynthesis, the fundamental process through which plants convert light energy into chemical energy. This process occurs primarily in the chloroplasts, specifically in structures called thylakoids. Now, photosynthesis consists of two main stages: the light-dependent reactions and the light-independent reactions, or the Calvin cycle.\n\nThe light-dependent reactions occur in the thylakoid membranes when chlorophyll absorbs photons from sunlight. This energy excites electrons, initiating a series of electron transport chains that ultimately generate ATP and NADPH—two crucial molecules that provide energy for the subsequent reactions. During this phase, water molecules are split, releasing oxygen as a byproduct, which is essential for aerobic respiration in most organisms.\n\nStudent: Professor, does the Calvin cycle also require light?\n\nProfessor: Excellent question. The Calvin cycle is technically light-independent because it doesn't directly require photons. However, it depends on the ATP and NADPH produced during the light-dependent reactions. So indirectly, the entire process requires light. The Calvin cycle uses these molecules to reduce carbon dioxide into glucose, the primary sugar that plants use for energy and growth. Without sufficient light intensity, the entire photosynthetic efficiency diminishes significantly.",
-    "vocabulary": [
-      {
-        "word": "chloroplasts",
-        "meaning_ko": "엽록체, 광합성을 수행하는 세포소기관"
-      },
-      {
-        "word": "thylakoids",
-        "meaning_ko": "틸라코이드, 엽록체 내 명반응이 일어나는 구조"
-      },
-      {
-        "word": "photons",
-        "meaning_ko": "광자, 빛의 입자"
-      },
-      {
-        "word": "electron transport chain",
-        "meaning_ko": "전자 전달계, 산화-환원 반응의 연쇄"
-      },
-      {
-        "word": "ATP",
-        "meaning_ko": "아데노신 삼인산, 에너지 분자"
-      },
-      {
-        "word": "NADPH",
-        "meaning_ko": "환원형 니코틴아마이드 아데닌 이핵산포스페이트"
-      },
-      {
-        "word": "Calvin cycle",
-        "meaning_ko": "캘빈 순환, 광합성 암반응"
-      },
-      {
-        "word": "glucose",
-        "meaning_ko": "포도당"
-      }
-    ],
+    "title": "Study Habits Discussion",
+    "type": "conversation",
+    "script": "Professor: Good afternoon, Sarah. How are your studies progressing this semester? Sarah: Hi Professor. Honestly, I've been struggling to balance my classes and part-time job. I'm finding it hard to concentrate on my assignments. Professor: I understand. Many students face this challenge. Have you considered using the library's study spaces? They're quieter and designed to minimize distractions. Sarah: I haven't tried that yet. I usually study in my dorm, but there are too many distractions there. Professor: That's a common problem. Also, try breaking your study sessions into smaller chunks with short breaks in between. This technique, called the Pomodoro method, can significantly improve focus and retention. Sarah: That sounds helpful. How long should each study session be? Professor: Typically, 25 minutes of focused studying followed by a 5-minute break works well. After four cycles, take a longer 15-minute break. It gives your brain time to rest and process information. Sarah: I'll definitely try this. Thank you for the advice!",
     "questions": [
       {
-        "q": "What is the main topic of the lecture?",
+        "q": "What is Sarah's main problem?",
         "options": [
-          "The differences between prokaryotic and eukaryotic cells",
-          "The two stages of photosynthesis and how they work",
-          "The importance of ATP in cellular respiration",
-          "How water is utilized in plant growth"
+          "She has too many classes",
+          "She struggles to balance studies and work with concentration difficulties",
+          "She doesn't like her professor",
+          "She has no access to study materials"
         ],
         "answer": 1,
-        "explanation": "교수는 광합성의 두 가지 주요 단계(명반응과 암반응)를 설명하는 것이 강의의 핵심 주제입니다."
+        "explanation": "대화에서 Sarah가 'I've been struggling to balance my classes and part-time job. I'm finding it hard to concentrate'라고 명시적으로 말합니다."
       },
       {
-        "q": "According to the professor, where do the light-dependent reactions occur?",
+        "q": "What study technique does the professor recommend?",
         "options": [
-          "In the mitochondria",
-          "In the Calvin cycle",
-          "In the thylakoid membranes within chloroplasts",
-          "In the stroma of chloroplasts"
-        ],
-        "answer": 2,
-        "explanation": "교수는 '명반응은 엽록체 내 틸라코이드 막에서 일어난다'고 명시했습니다."
-      },
-      {
-        "q": "Why does the professor emphasize that the Calvin cycle is 'technically light-independent'?",
-        "options": [
-          "Because it produces oxygen without light",
-          "Because it indirectly depends on products from light-dependent reactions",
-          "Because it occurs in the dark",
-          "Because it doesn't use ATP or NADPH"
+          "Study for one hour continuously",
+          "The Pomodoro method with 25-minute sessions and breaks",
+          "Group study sessions",
+          "Studying at midnight when it's quiet"
         ],
         "answer": 1,
-        "explanation": "교수는 캘빈 순환이 직접 빛을 요구하지 않지만, 명반응에서 생성되는 ATP와 NADPH에 의존하므로 간접적으로 빛이 필요하다고 설명합니다."
+        "explanation": "교수는 'This technique, called the Pomodoro method'라고 구체적으로 설명하며 25분 공부와 5분 휴식을 권장합니다."
+      },
+      {
+        "q": "Where does the professor suggest Sarah study?",
+        "options": [
+          "In her dorm room",
+          "At the library's study spaces",
+          "In a coffee shop",
+          "At her workplace"
+        ],
+        "answer": 1,
+        "explanation": "교수가 'Have you considered using the library's study spaces? They're quieter and designed to minimize distractions'라고 제안합니다."
       }
     ]
   }
