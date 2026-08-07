@@ -1670,5 +1670,65 @@
     "explanation": "Showing a carefree lack of concern; nonchalant and unconcerned, often inappropriately so",
     "tip": "Implies casual indifference, sometimes with negative connotation. Different from 'relaxed'(편안한) which is positive. Antonym: anxious, worried(걱정스러운)",
     "emoji": "😎"
+  },
+  {
+    "id": "insipid",
+    "word": "insipid",
+    "pos": "adjective",
+    "date": "2026-08-08",
+    "meaning": "밋밋한, 무미건조한, 지루한",
+    "example_ko": "그 영화는 너무 지루해서 중간에 잠을 잤어",
+    "example_en": "The movie was so insipid that I fell asleep halfway through",
+    "explanation": "lacking flavor, interest, or excitement; dull and uninteresting",
+    "tip": "Synonym: bland, dull, tedious. Antonym: fascinating, captivating, vivid. 'Insipid' emphasizes lack of flavor or interest, more negative than 'bland'",
+    "emoji": "😑"
+  },
+  {
+    "id": "diligence",
+    "word": "diligence",
+    "pos": "noun",
+    "date": "2026-08-08",
+    "meaning": "근면함, 성실함, 부지런함",
+    "example_ko": "그녀의 공부에 대한 부지런함이 만점으로 보상받았어",
+    "example_en": "Her diligence in studying paid off when she got a perfect score",
+    "explanation": "care and effort in one's work or duties; persistent attention to tasks",
+    "tip": "Synonym: industriousness, assiduity. Antonym: laziness, negligence. 'Diligence' implies consistent, careful effort over time",
+    "emoji": "🏆"
+  },
+  {
+    "id": "preempt",
+    "word": "preempt",
+    "pos": "verb",
+    "date": "2026-08-08",
+    "meaning": "선제적으로 대처하다, 미리 차단하다, 우선권을 행사하다",
+    "example_ko": "정부는 긴급자금을 풀어서 위기를 미리 차단했어",
+    "example_en": "The government preempted the crisis by releasing emergency funds",
+    "explanation": "to take action to prevent something from happening; to take priority or precedence over something",
+    "tip": "Synonym: forestall, prevent, anticipate. Antonym: allow, permit. 'Preempt' suggests acting ahead of time to avoid a problem",
+    "emoji": "🛡️"
+  },
+  {
+    "id": "temerity",
+    "word": "temerity",
+    "pos": "noun",
+    "date": "2026-08-08",
+    "meaning": "무모함, 대담함 (부정적인 의미)",
+    "example_ko": "그녀는 회의에서 CEO의 결정에 이의를 제기할 정도로 뻔뻔했어",
+    "example_en": "She had the temerity to question the CEO's decision at the meeting",
+    "explanation": "excessive confidence or boldness; audacity to do something risky or disrespectful",
+    "tip": "Synonym: audacity, boldness, nerve. Antonym: caution, timidity, restraint. 'Temerity' has a NEGATIVE connotation unlike neutral 'boldness'",
+    "emoji": "😤"
+  },
+  {
+    "id": "amiable",
+    "word": "amiable",
+    "pos": "adjective",
+    "date": "2026-08-08",
+    "meaning": "친근한, 상냥한, 온화한",
+    "example_ko": "내 새 동료는 너무 상냥해서 모두가 그녀를 좋아해",
+    "example_en": "My new coworker is so amiable that everyone likes her immediately",
+    "explanation": "friendly, pleasant, and sociable; having a good-natured and likable quality",
+    "tip": "Synonym: friendly, genial, affable. Antonym: unfriendly, hostile, grumpy. 'Amiable' emphasizes warmth in social interactions",
+    "emoji": "😊"
   }
 ]

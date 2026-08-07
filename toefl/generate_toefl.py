@@ -35,15 +35,28 @@ def generate_toefl_with_claude(client: anthropic.Anthropic) -> dict:
 
     prompt = f"""JSON 형식으로만 응답. 설명 없음.
 {{
-  "reading": {{"title": "title", "passage": "TOEFL iBT 고급 학술 지문. 280-350단어. 3단락(\\n\\n으로 구분). 대학원 수준 학술 어휘·복잡한 복합 문장·고밀도 논증 구조. 단락마다 주제문+복수 근거+반례 또는 심화 예시. TOEFL iBT Reading 최고 난이도(30점 목표).", "vocabulary": [{{"word": "지문 고급 어휘1", "meaning_ko": "뜻"}},{{"word": "어휘2", "meaning_ko": "뜻"}},{{"word": "어휘3", "meaning_ko": "뜻"}},{{"word": "어휘4", "meaning_ko": "뜻"}},{{"word": "어휘5", "meaning_ko": "뜻"}},{{"word": "어휘6", "meaning_ko": "뜻"}},{{"word": "어휘7", "meaning_ko": "뜻"}},{{"word": "어휘8", "meaning_ko": "뜻"}}], "questions": [{{"q": "According to the passage, ...", "options": ["A","B","C","D"], "answer": 0, "explanation": "해설"}}, {{"q": "What can be inferred from the passage about ...?", "options": ["A","B","C","D"], "answer": 1, "explanation": "해설"}}, {{"q": "The word '...' in paragraph X is closest in meaning to ...", "options": ["A","B","C","D"], "answer": 2, "explanation": "해설"}}, {{"q": "Why does the author mention ... in paragraph X?", "options": ["A","B","C","D"], "answer": 3, "explanation": "해설"}}, {{"q": "Which of the following best describes the organization of the passage?", "options": ["A","B","C","D"], "answer": 0, "explanation": "해설"}}]}},
-  "writing": {{"sentences": [{{"original": "reading passage에서 그대로 가져온 핵심 문장", "paraphrase": "모범 패러프레이즈", "tip": "사용 기법"}}, {{"original": "두 번째 핵심 문장", "paraphrase": "모범 패러프레이즈", "tip": "기법"}}, {{"original": "세 번째 핵심 문장", "paraphrase": "모범 패러프레이즈", "tip": "기법"}}]}},
+  "reading": {{
+    "title": "title",
+    "passage": "TOEFL iBT 최고난이도 학술 지문. 380-450단어. 3단락(\\n\\n으로 구분). 좁고 전문적인 학문 분야(고고학·신경과학·지질학·경제사학·언어학 중 하나). 대학원 논문 수준 어휘·복잡한 복합-복문 구조·인과·대조·반박 논리 병행. 단락마다 핵심 주장+복수 근거+반증 또는 한계 제시. 지문에서만 답을 찾을 수 있는 정보 밀도.",
+    "vocabulary": [{{"word":"어휘1","meaning_ko":"뜻"}},{{"word":"어휘2","meaning_ko":"뜻"}},{{"word":"어휘3","meaning_ko":"뜻"}},{{"word":"어휘4","meaning_ko":"뜻"}},{{"word":"어휘5","meaning_ko":"뜻"}},{{"word":"어휘6","meaning_ko":"뜻"}},{{"word":"어휘7","meaning_ko":"뜻"}},{{"word":"어휘8","meaning_ko":"뜻"}}],
+    "questions": [
+      {{"q": "According to paragraph 2, which of the following is true about ...?", "options": ["A 지문과 일치하는 정답","B 그럴싸하지만 지문에 없는 내용","C 지문의 일부만 반영한 오답","D 반대 방향으로 서술된 오답"], "answer": 0, "explanation": "해설"}},
+      {{"q": "Which of the following is NOT mentioned in the passage as a reason for ...?", "options": ["A 지문에 없는 이유(정답)","B 지문에 명시된 이유","C 지문에 명시된 이유","D 지문에 명시된 이유"], "answer": 0, "explanation": "해설"}},
+      {{"q": "The word '실제지문단어' in paragraph X is closest in meaning to ...", "options": ["A 정답 동의어","B 혼동하기 쉬운 유사어","C 반의어","D 무관한 어휘"], "answer": 0, "explanation": "해설"}},
+      {{"q": "Which of the following sentences best expresses the essential information in this sentence from the passage: \\"지문에서 가장 복잡한 문장 그대로 삽입\\"?", "options": ["A 핵심만 정확히 담은 정답","B 핵심 정보 누락 오답","C 지문에 없는 내용 추가 오답","D 인과관계 뒤바꾼 오답"], "answer": 0, "explanation": "해설"}},
+      {{"q": "What does the author imply about ... in paragraph 3?", "options": ["A 지문 근거로 추론 가능한 정답","B 지문 내용 초과 추론 오답","C 반대 함의 오답","D 무관한 추론 오답"], "answer": 0, "explanation": "해설"}}
+    ]
+  }},
+  "writing": {{"sentences": [{{"original": "reading passage 핵심 문장1(그대로)", "paraphrase": "모범 패러프레이즈", "tip": "기법"}}, {{"original": "핵심 문장2(그대로)", "paraphrase": "모범 패러프레이즈", "tip": "기법"}}, {{"original": "핵심 문장3(그대로)", "paraphrase": "모범 패러프레이즈", "tip": "기법"}}]}},
   "speaking": {{"prompt": "Describe X", "useful_expressions": ["e1", "e2"], "sample_points": ["s1", "s2"]}},
   "listening": {{"script": "30단어 영어 대화", "questions": [{{"q": "Q1", "options": ["A", "B", "C", "D"], "answer": 0, "explanation": "exp"}}]}}
-}}"""
+}}
+
+규칙: 1)모든 오답 보기는 지문의 일부 내용을 이용해 그럴싸하게 보이지만 틀린 내용이어야 함. 2)vocabulary는 지문에 실제 등장한 단어만. 3)question 3의 '실제지문단어'와 문장은 지문에서 실제로 사용된 것으로 교체."""
 
     response = client.messages.create(
         model="claude-haiku-4-5-20251001",
-        max_tokens=1800,
+        max_tokens=2400,
         messages=[{"role": "user", "content": prompt}]
     )
 
