@@ -73,11 +73,13 @@ JSON format to return:
 
     let feedback;
     try {
-      feedback = JSON.parse(text);
+      // Claude sometimes prepends conversational text before JSON — extract the object directly
+      const start = text.indexOf('{');
+      const end = text.lastIndexOf('}') + 1;
+      if (start === -1 || end === 0) throw new Error('No JSON object in response');
+      feedback = JSON.parse(text.slice(start, end));
     } catch {
-      // strip potential markdown code fences and retry
-      const cleaned = text.replace(/```json\n?|\n?```/g, '').trim();
-      feedback = JSON.parse(cleaned);
+      throw new Error(`JSON parse failed. Raw: ${text.slice(0, 200)}`);
     }
 
     log.log('Feedback generated', { score: feedback.score });

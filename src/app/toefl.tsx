@@ -289,8 +289,11 @@ export default function TOEFLScreen() {
   }, [loading, isCached]);
 
   useEffect(() => {
-    loadData();
-    checkAndResetDaily();
+    const init = async () => {
+      await checkAndResetDaily();
+      await loadData();
+    };
+    init();
   }, []);
 
   useEffect(() => {
@@ -556,11 +559,14 @@ export default function TOEFLScreen() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ original, userAnswer: answer }),
       });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      if (!res.ok) {
+        const errBody = await res.text().catch(() => '');
+        throw new Error(`HTTP ${res.status}: ${errBody.slice(0, 100)}`);
+      }
       const data = await res.json();
       setParaphraseFeedback(data);
-    } catch (error) {
-      Alert.alert('오류', 'AI 피드백 요청 실패. 인터넷 연결을 확인해주세요.');
+    } catch (error: any) {
+      Alert.alert('오류', `AI 피드백 실패\n${error?.message ?? String(error)}`);
     } finally {
       setFeedbackLoading(false);
     }

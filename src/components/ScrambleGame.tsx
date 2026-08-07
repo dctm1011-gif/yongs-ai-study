@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import {
-  View, Text, TouchableOpacity, StyleSheet, ActivityIndicator, Animated,
+  View, Text, TouchableOpacity, StyleSheet, ActivityIndicator, Animated, ScrollView,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getDatabase, get, set as dbSet } from 'firebase/database';
@@ -30,7 +30,7 @@ interface LetterTile {
 }
 
 type GameState = 'loading' | 'empty' | 'playing' | 'complete';
-type FeedbackState = 'none' | 'correct' | 'wrong';
+type FeedbackState = 'none' | 'correct' | 'wrong' | 'revealed';
 
 function scramble(word: string): LetterTile[] {
   const tiles: LetterTile[] = word.toUpperCase().split('').map((l, i) => ({ id: String(i), letter: l }));
@@ -57,6 +57,7 @@ export default function ScrambleGame() {
   const [feedback, setFeedback] = useState<FeedbackState>('none');
   const [solvedWordIds, setSolvedWordIds] = useState<string[]>([]);
   const [wrongWordIds, setWrongWordIds] = useState<Set<string>>(new Set());
+  const [revealedWordIds, setRevealedWordIds] = useState<Set<string>>(new Set());
   const [synced, setSynced] = useState(false);
   const shakeAnim = useRef(new Animated.Value(0)).current;
 
@@ -80,6 +81,7 @@ export default function ScrambleGame() {
           if (data.completed) {
             setWords(data.words ?? []);
             setSolvedWordIds(data.solvedWordIds ?? []);
+            setRevealedWordIds(new Set(data.revealedWordIds ?? []));
             setSynced(data.synced ?? false);
             setCurrentIndex(data.words?.length ?? 0);
             setGameState('complete');
@@ -108,6 +110,7 @@ export default function ScrambleGame() {
       setCurrentIndex(0);
       setSolvedWordIds([]);
       setWrongWordIds(new Set());
+      setRevealedWordIds(new Set());
       setSynced(false);
       setupWord(selected[0]);
       setGameState('playing');
@@ -130,13 +133,17 @@ export default function ScrambleGame() {
     ]).start();
   };
 
-  const goNext = useCallback((newSolved: string[]) => {
+  const goNext = useCallback((newSolved: string[], newRevealed: Set<string>) => {
     const nextIdx = currentIndex + 1;
     if (nextIdx >= words.length) {
       const today = getKSTDateString();
       AsyncStorage.setItem(DAILY_PLAY_KEY, today).catch(() => {});
       AsyncStorage.setItem(DAILY_STATS_KEY, JSON.stringify({
-        words, solvedWordIds: newSolved, completed: true, synced: false,
+        words,
+        solvedWordIds: newSolved,
+        revealedWordIds: Array.from(newRevealed),
+        completed: true,
+        synced: false,
       })).catch(() => {});
       setSolvedWordIds(newSolved);
       setGameState('complete');
@@ -158,7 +165,7 @@ export default function ScrambleGame() {
         setFeedback('correct');
         const newSolved = [...solvedWordIds, currentWord.wordId];
         setSolvedWordIds(newSolved);
-        setTimeout(() => goNext(newSolved), 700);
+        setTimeout(() => goNext(newSolved, revealedWordIds), 700);
       } else {
         setFeedback('wrong');
         setWrongWordIds(prev => new Set([...prev, currentWord.wordId]));
@@ -170,7 +177,7 @@ export default function ScrambleGame() {
         }, 750);
       }
     }
-  }, [feedback, currentWord, selectedTiles, solvedWordIds, goNext]);
+  }, [feedback, currentWord, selectedTiles, solvedWordIds, revealedWordIds, goNext]);
 
   const handleBackspace = useCallback(() => {
     if (selectedTiles.length === 0 || feedback !== 'none') return;
@@ -179,15 +186,33 @@ export default function ScrambleGame() {
     setScrambledTiles(prev => [...prev, last]);
   }, [selectedTiles, feedback]);
 
+  const handleReveal = useCallback(async () => {
+    if (!currentWord || feedback !== 'none') return;
+    const correctTiles = currentWord.word.toUpperCase().split('').map((l, i) => ({ id: `rev-${i}`, letter: l }));
+    setSelectedTiles(correctTiles);
+    setScrambledTiles([]);
+    setFeedback('revealed');
+    const newRevealed = new Set([...revealedWordIds, currentWord.wordId]);
+    setRevealedWordIds(newRevealed);
+    try {
+      await dbSet(userRef(uid, `english/reviewPool/${currentWord.wordId}/count`), 0);
+    } catch (e) {
+      console.warn('리뷰 카운트 초기화 실패:', e);
+    }
+    setTimeout(() => goNext(solvedWordIds, newRevealed), 900);
+  }, [currentWord, feedback, revealedWordIds, solvedWordIds, uid, goNext]);
+
   const handleComplete = useCallback(async () => {
     if (synced) return;
     try {
       const db = getDatabase(getFirebaseApp());
-      // 오답 단어: count 0 (패널티), 정답이어도 오답 기록 있으면 패널티 우선
-      const wrongIds = Array.from(wrongWordIds);
-      const cleanSolvedIds = solvedWordIds.filter(id => !wrongWordIds.has(id));
+      // 오답·정답보기 단어: count 0, 자력으로 맞춘 단어만 count +1
+      const penaltyIds = new Set([...Array.from(wrongWordIds), ...Array.from(revealedWordIds)]);
+      const cleanSolvedIds = solvedWordIds.filter(id => !penaltyIds.has(id));
       await Promise.all([
-        ...wrongIds.map(wordId => dbSet(userRef(uid, `english/reviewPool/${wordId}/count`), 0)),
+        ...Array.from(penaltyIds).map(wordId =>
+          dbSet(userRef(uid, `english/reviewPool/${wordId}/count`), 0)
+        ),
         ...cleanSolvedIds.map(wordId => {
           const next = Math.min((wordCounts[wordId] ?? 0) + 1, GRADUATE_AT);
           return dbSet(userRef(uid, `english/reviewPool/${wordId}/count`), next);
@@ -204,9 +229,9 @@ export default function ScrambleGame() {
     } catch (e) {
       console.warn('스크램블 완료 기록 실패:', e);
     }
-  }, [synced, solvedWordIds, wrongWordIds, wordCounts, uid]);
+  }, [synced, solvedWordIds, wrongWordIds, revealedWordIds, wordCounts, uid]);
 
-  // ── 빈 상태 ──────────────────────────────────────────────────────────────
+  // ── 로딩 ─────────────────────────────────────────────────────────────────
   if (gameState === 'loading') {
     return <View style={s.centered}><ActivityIndicator size="large" color="#7c3aed" /></View>;
   }
@@ -223,13 +248,12 @@ export default function ScrambleGame() {
 
   // ── 완료 ─────────────────────────────────────────────────────────────────
   if (gameState === 'complete') {
+    const revealedWords = words.filter(w => revealedWordIds.has(w.wordId));
     return (
-      <View style={s.centered}>
+      <ScrollView contentContainerStyle={s.completePage}>
         <Text style={s.bigEmoji}>{solvedWordIds.length === words.length ? '🏆' : '✅'}</Text>
         <Text style={s.completeTitle}>완료!</Text>
-        <Text style={s.completeScore}>
-          {solvedWordIds.length} / {words.length} 정답
-        </Text>
+        <Text style={s.completeScore}>{solvedWordIds.length} / {words.length} 정답</Text>
         {!synced ? (
           <TouchableOpacity style={s.completeBtn} onPress={handleComplete} activeOpacity={0.85}>
             <Text style={s.completeBtnText}>완료 기록하기</Text>
@@ -239,7 +263,18 @@ export default function ScrambleGame() {
             <Text style={s.syncedText}>✓ 오늘 기록 완료</Text>
           </View>
         )}
-      </View>
+        {revealedWords.length > 0 && (
+          <View style={s.reviewSection}>
+            <Text style={s.reviewTitle}>📖 복습할 단어</Text>
+            {revealedWords.map(w => (
+              <View key={w.wordId} style={s.reviewItem}>
+                <Text style={s.reviewWord}>{w.word}</Text>
+                <Text style={s.reviewMeaning}>{w.meaning}</Text>
+              </View>
+            ))}
+          </View>
+        )}
+      </ScrollView>
     );
   }
 
@@ -251,12 +286,16 @@ export default function ScrambleGame() {
   const tileFontSize = wordLen <= 5 ? 22 : wordLen <= 8 ? 18 : 15;
 
   const answerBorderColor =
-    feedback === 'correct' ? '#16a34a' :
-    feedback === 'wrong'   ? '#ef4444' : '#c4b5fd';
+    feedback === 'correct'  ? '#16a34a' :
+    feedback === 'wrong'    ? '#ef4444' :
+    feedback === 'revealed' ? '#f59e0b' : '#c4b5fd';
 
   const answerBg =
-    feedback === 'correct' ? '#dcfce7' :
-    feedback === 'wrong'   ? '#fee2e2' : '#f5f3ff';
+    feedback === 'correct'  ? '#dcfce7' :
+    feedback === 'wrong'    ? '#fee2e2' :
+    feedback === 'revealed' ? '#fef3c7' : '#f5f3ff';
+
+  const slotFilledStyle = feedback === 'revealed' ? s.answerSlotRevealed : s.answerSlotFilled;
 
   return (
     <View style={s.container}>
@@ -286,16 +325,22 @@ export default function ScrambleGame() {
               style={[
                 s.answerSlot,
                 { width: tileSize, height: tileSize },
-                tile ? s.answerSlotFilled : s.answerSlotEmpty,
+                tile ? slotFilledStyle : s.answerSlotEmpty,
               ]}
             >
-              <Text style={[s.answerLetter, { fontSize: tileFontSize }]}>{tile?.letter ?? ''}</Text>
+              <Text style={[
+                s.answerLetter,
+                { fontSize: tileFontSize },
+                feedback === 'revealed' && s.answerLetterRevealed,
+              ]}>
+                {tile?.letter ?? ''}
+              </Text>
             </View>
           );
         })}
       </Animated.View>
 
-      {/* 섞인 글자 타일 */}
+      {/* 섞인 글자 타일 + 버튼 행 */}
       <View style={s.tilesArea}>
         <View style={s.tilesRow}>
           {scrambledTiles.map(tile => (
@@ -310,11 +355,18 @@ export default function ScrambleGame() {
           ))}
         </View>
 
-        {selectedTiles.length > 0 && feedback === 'none' && (
-          <TouchableOpacity style={s.backspaceBtn} onPress={handleBackspace} activeOpacity={0.7}>
-            <Text style={s.backspaceText}>⌫ 지우기</Text>
-          </TouchableOpacity>
-        )}
+        <View style={s.btnRow}>
+          {selectedTiles.length > 0 && feedback === 'none' && (
+            <TouchableOpacity style={s.backspaceBtn} onPress={handleBackspace} activeOpacity={0.7}>
+              <Text style={s.backspaceText}>⌫ 지우기</Text>
+            </TouchableOpacity>
+          )}
+          {feedback === 'none' && (
+            <TouchableOpacity style={s.answerBtn} onPress={handleReveal} activeOpacity={0.7}>
+              <Text style={s.answerBtnText}>정답보기</Text>
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
     </View>
   );
@@ -325,24 +377,33 @@ const s = StyleSheet.create({
   bigEmoji: { fontSize: 58, marginBottom: 14 },
   emptyTitle: { fontSize: 18, fontWeight: '700', color: '#1e293b', marginBottom: 8 },
   emptySub: { fontSize: 14, color: '#64748b', textAlign: 'center', lineHeight: 22 },
+
+  completePage: { alignItems: 'center', padding: 28, paddingBottom: 48 },
   completeTitle: { fontSize: 30, fontWeight: '800', color: '#1e293b', marginBottom: 8 },
   completeScore: { fontSize: 20, color: '#7c3aed', fontWeight: '700', marginBottom: 28 },
   completeBtn: {
     backgroundColor: '#7c3aed', borderRadius: 14,
-    paddingHorizontal: 36, paddingVertical: 15,
+    paddingHorizontal: 36, paddingVertical: 15, marginBottom: 24,
   },
   completeBtnText: { color: '#fff', fontSize: 16, fontWeight: '700' },
   syncedBadge: {
     backgroundColor: '#dcfce7', borderRadius: 12,
-    paddingHorizontal: 24, paddingVertical: 12,
+    paddingHorizontal: 24, paddingVertical: 12, marginBottom: 24,
   },
   syncedText: { color: '#16a34a', fontWeight: '700', fontSize: 16 },
 
-  container: { flex: 1, backgroundColor: '#faf5ff', paddingHorizontal: 20, paddingBottom: 20 },
-
-  progressBar: {
-    height: 5, backgroundColor: '#ede9fe', borderRadius: 3, marginTop: 14, marginBottom: 4,
+  reviewSection: { width: '100%', marginTop: 8 },
+  reviewTitle: { fontSize: 15, fontWeight: '700', color: '#92400e', marginBottom: 10 },
+  reviewItem: {
+    flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
+    paddingVertical: 10, paddingHorizontal: 14,
+    backgroundColor: '#fef3c7', borderRadius: 10, marginBottom: 6,
   },
+  reviewWord: { fontSize: 15, fontWeight: '800', color: '#92400e' },
+  reviewMeaning: { fontSize: 13, color: '#78350f', flex: 1, textAlign: 'right', marginLeft: 8 },
+
+  container: { flex: 1, backgroundColor: '#faf5ff', paddingHorizontal: 20, paddingBottom: 20 },
+  progressBar: { height: 5, backgroundColor: '#ede9fe', borderRadius: 3, marginTop: 14, marginBottom: 4 },
   progressFill: { height: 5, backgroundColor: '#7c3aed', borderRadius: 3 },
   progressLabel: { fontSize: 12, color: '#a78bfa', textAlign: 'right', marginBottom: 20, fontWeight: '600' },
 
@@ -365,8 +426,14 @@ const s = StyleSheet.create({
     borderWidth: 2, borderColor: '#7c3aed',
     alignItems: 'center', justifyContent: 'center',
   },
+  answerSlotRevealed: {
+    borderRadius: 10, backgroundColor: '#f59e0b',
+    borderWidth: 2, borderColor: '#f59e0b',
+    alignItems: 'center', justifyContent: 'center',
+  },
   answerSlot: {},
   answerLetter: { fontWeight: '800', color: '#fff' },
+  answerLetterRevealed: { color: '#fff' },
 
   tilesArea: { paddingBottom: 8, alignItems: 'center', gap: 16 },
   tilesRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, justifyContent: 'center' },
@@ -378,6 +445,8 @@ const s = StyleSheet.create({
     shadowOpacity: 0.18, shadowRadius: 5, elevation: 4,
   },
   tileLetter: { fontWeight: '800', color: '#7c3aed' },
+
+  btnRow: { flexDirection: 'row', gap: 10, alignItems: 'center' },
   backspaceBtn: {
     backgroundColor: '#fff', borderRadius: 12,
     paddingHorizontal: 22, paddingVertical: 11,
@@ -386,4 +455,10 @@ const s = StyleSheet.create({
     shadowOpacity: 0.06, shadowRadius: 3, elevation: 2,
   },
   backspaceText: { fontSize: 16, color: '#64748b', fontWeight: '600' },
+  answerBtn: {
+    paddingVertical: 11, paddingHorizontal: 16,
+    backgroundColor: '#fef3c7', borderWidth: 1.5, borderColor: '#f59e0b',
+    borderRadius: 12,
+  },
+  answerBtnText: { fontSize: 14, fontWeight: '700', color: '#b45309' },
 });

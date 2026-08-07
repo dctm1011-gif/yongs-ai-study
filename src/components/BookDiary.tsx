@@ -263,11 +263,15 @@ function BookDiaryModal({ book, onClose }: BookDiaryModalProps) {
     if (!uid || !book) return;
     setLoadingLogs(true);
     try {
-      const snap = await get(
-        ref(getDatabase(getFirebaseApp()), `users/${uid}/books/${book.id}/logs`)
-      );
-      if (snap.exists()) {
-        const data: Record<string, DayLog> = snap.val();
+      const db = getDatabase(getFirebaseApp());
+      const [logsSnap, totalSnap] = await Promise.all([
+        get(ref(db, `users/${uid}/books/${book.id}/logs`)),
+        get(ref(db, `users/${uid}/books/${book.id}/info/totalPages`)),
+      ]);
+      // Firebase에서 최신 totalPages 로드 (부모 prop이 스테일일 수 있음)
+      if (totalSnap.exists()) setTotalPages(totalSnap.val());
+      if (logsSnap.exists()) {
+        const data: Record<string, DayLog> = logsSnap.val();
         setLogs(data);
         if (data[today]) {
           setPageInput(String(data[today].endPage));
@@ -302,8 +306,8 @@ function BookDiaryModal({ book, onClose }: BookDiaryModalProps) {
       Alert.alert('입력 오류', '현재 읽은 페이지를 입력해주세요.');
       return;
     }
-    if (endPage > book.totalPages) {
-      Alert.alert('입력 오류', `전체 페이지(${book.totalPages}p)를 초과했습니다.`);
+    if (totalPages > 0 && endPage > totalPages) {
+      Alert.alert('입력 오류', `전체 페이지(${totalPages}p)를 초과했습니다.`);
       return;
     }
     if (!noteInput.trim()) {
@@ -329,7 +333,7 @@ function BookDiaryModal({ book, onClose }: BookDiaryModalProps) {
     } finally {
       setSaving(false);
     }
-  }, [book, pageInput, noteInput, uid, today]);
+  }, [book, pageInput, noteInput, uid, today, totalPages]);
 
   const startEditEntry = (date: string) => {
     setEditingDate(date);
