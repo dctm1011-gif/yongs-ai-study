@@ -240,7 +240,7 @@ const isBoxPlotData = (
   data: NonNullable<InvestmentColumn['chartData']>[number]['data'] | null | undefined
 ): data is BoxPlotPoint[] => Array.isArray(data) && data.length > 0 && 'median' in data[0];
 
-const RATIO_MAX = 30; // 2주택자 비율 Y축 최대치 (%)
+const RATIO_MAX_FLOOR = 30; // 2주택자 비율 Y축 최소 최대치 (%) — 실측값이 이를 초과하면 자동 확장
 const TRACK_BOTTOM_Y = 112; // 트랙 하단의 container 상단 기준 y (px, 근사치)
 const TRACK_H = 80;
 const COL_W = 48;
@@ -265,13 +265,16 @@ const BoxPlotChart: React.FC<{
 
   // 2주택자 비율 오버레이 (연도별 뷰 전용)
   const showRatioOverlay = viewMode === 'yearly' && !!multiOwnerRatioData?.length;
+  const ratioMax = showRatioOverlay
+    ? Math.max(RATIO_MAX_FLOOR, ...multiOwnerRatioData!.map(r => r.ratio))
+    : RATIO_MAX_FLOOR;
   const ratioPoints = showRatioOverlay
     ? points.map((p, i) => {
         const rd = multiOwnerRatioData!.find(r => r.label === p.label);
         if (!rd) return null;
         return {
           x: i * COL_W + COL_W / 2,
-          y: TRACK_BOTTOM_Y - (rd.ratio / RATIO_MAX) * TRACK_H,
+          y: TRACK_BOTTOM_Y - (rd.ratio / ratioMax) * TRACK_H,
           ratio: rd.ratio,
           label: p.label,
         };
@@ -319,7 +322,7 @@ const BoxPlotChart: React.FC<{
   const renderRatioRefLine = () => {
     if (!latestRatio) return null;
     const totalW = points.length * COL_W;
-    const lineY = TRACK_BOTTOM_Y - (latestRatio.ratio / RATIO_MAX) * TRACK_H;
+    const lineY = TRACK_BOTTOM_Y - (latestRatio.ratio / RATIO_MAX_FLOOR) * TRACK_H;
     return (
       <View pointerEvents="none" style={{ position: 'absolute', top: 0, left: 0, width: totalW, height: CONTAINER_H }}>
         <View style={{ position: 'absolute', left: 0, width: totalW, top: lineY, height: 1.5, backgroundColor: '#f97316', opacity: 0.6 }} />
@@ -447,8 +450,8 @@ const BoxPlotChart: React.FC<{
             <View style={{ width: 16, height: 2, backgroundColor: '#f97316', borderRadius: 1 }} />
             <View style={{ width: 7, height: 7, borderRadius: 3.5, backgroundColor: '#f97316' }} />
             <Text style={{ fontSize: 11, color: '#ea580c', fontWeight: '600' }}>2주택자 이상 비율</Text>
-            <View style={{ backgroundColor: '#fff3cd', borderRadius: 4, paddingHorizontal: 5, paddingVertical: 1, borderWidth: 1, borderColor: '#f97316' }}>
-              <Text style={{ fontSize: 9, color: '#ea580c', fontWeight: '700' }}>추정치</Text>
+            <View style={{ backgroundColor: '#dcfce7', borderRadius: 4, paddingHorizontal: 5, paddingVertical: 1, borderWidth: 1, borderColor: '#86efac' }}>
+              <Text style={{ fontSize: 9, color: '#16a34a', fontWeight: '700' }}>KOSIS 실측</Text>
             </View>
             <Text style={{ fontSize: 9, color: '#9ca3af' }}>통계청 주택소유통계</Text>
           </View>
@@ -463,7 +466,7 @@ const BoxPlotChart: React.FC<{
           )}
           {!!latestRatio && (
             <Text style={{ fontSize: 10, color: '#9ca3af', marginTop: 2 }}>
-              기준선: {latestRatio.label} {latestRatio.ratio}% (추정)
+              기준선: {latestRatio.label} {latestRatio.ratio}% (KOSIS 실측)
             </Text>
           )}
         </View>
