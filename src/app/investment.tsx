@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import {
   View,
   Text,
@@ -13,16 +13,18 @@ import {
   Modal,
   useWindowDimensions,
   ToastAndroid,
+  Animated,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as ScreenOrientation from 'expo-screen-orientation';
-import { useInvestmentSync, InvestmentColumn, BoxPlotPoint, DongChartEntry, DongEntry, DailyTerm, NewsArticle } from '../hooks/useInvestmentSync';
+import { useInvestmentSync, InvestmentColumn, BoxPlotPoint, DongChartEntry, DongEntry, DailyTerm, NewsArticle, RegionChartEntry } from '../hooks/useInvestmentSync';
 import { getDatabase, ref, set as dbSet } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
 import { useAuth } from '../context/AuthContext';
 import { userRef } from '../utils/userDb';
+import { useScreenFade } from '../hooks/useScreenFade';
 
 const { width } = Dimensions.get('window');
 
@@ -90,14 +92,14 @@ const TaxLineChart: React.FC = React.memo(() => {
       <View style={{ flexDirection: 'row' }}>
         <View style={{ width: LEFT_AXIS, height: CHART_H }}>
           {yTicks.map(tick => (
-            <Text key={tick} style={{ position: 'absolute', top: getY(tick) - 7, right: 4, fontSize: 9, color: '#9ca3af' }}>
+            <Text key={tick} style={{ position: 'absolute', top: getY(tick) - 7, right: 4, fontSize: 9, color: '#8e8e8e' }}>
               {tick}%
             </Text>
           ))}
         </View>
         <View style={{ width: CHART_W, height: CHART_H }}>
           {yTicks.map(tick => (
-            <View key={tick} style={{ position: 'absolute', top: getY(tick), left: 0, right: 0, height: 1, backgroundColor: tick === 0 ? '#94a3b8' : '#e2e8f0' }} />
+            <View key={tick} style={{ position: 'absolute', top: getY(tick), left: 0, right: 0, height: 1, backgroundColor: tick === 0 ? '#8e8e8e' : '#dbdbdb' }} />
           ))}
           {TAX_RATE_SERIES.map(series => {
             const pts = series.data.map((d, i) => ({ x: getX(i), y: getY(d.value) }));
@@ -120,7 +122,7 @@ const TaxLineChart: React.FC = React.memo(() => {
             );
           })}
           {years.map((year, i) => (
-            <Text key={year} style={{ position: 'absolute', top: CHART_H + 4, left: getX(i) - 12, width: 24, textAlign: 'center', fontSize: 8, color: '#6b7280' }}>
+            <Text key={year} style={{ position: 'absolute', top: CHART_H + 4, left: getX(i) - 12, width: 24, textAlign: 'center', fontSize: 8, color: '#8e8e8e' }}>
               {`'${String(year).slice(2)}`}
             </Text>
           ))}
@@ -131,7 +133,7 @@ const TaxLineChart: React.FC = React.memo(() => {
         {TAX_RATE_SERIES.map(s => (
           <View key={s.label} style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
             <View style={{ width: 16, height: 2.5, backgroundColor: s.color, borderRadius: 1 }} />
-            <Text style={{ fontSize: 11, color: '#6b7280' }}>{s.label}</Text>
+            <Text style={{ fontSize: 11, color: '#8e8e8e' }}>{s.label}</Text>
           </View>
         ))}
       </View>
@@ -140,41 +142,41 @@ const TaxLineChart: React.FC = React.memo(() => {
 });
 
 const TaxHistoryTable: React.FC = React.memo(() => (
-  <View style={{ borderWidth: 1, borderColor: '#e2e8f0', borderRadius: 8, overflow: 'hidden', marginTop: 12 }}>
-    <View style={{ flexDirection: 'row', backgroundColor: '#f1f5f9', paddingVertical: 7, paddingHorizontal: 10 }}>
-      <Text style={{ width: 38, fontSize: 11, fontWeight: '700', color: '#475569' }}>연도</Text>
-      <Text style={{ width: 88, fontSize: 11, fontWeight: '700', color: '#475569' }}>정책/변화</Text>
-      <Text style={{ flex: 1, fontSize: 11, fontWeight: '700', color: '#475569' }}>내용</Text>
+  <View style={{ borderWidth: 1, borderColor: '#dbdbdb', borderRadius: 8, overflow: 'hidden', marginTop: 12 }}>
+    <View style={{ flexDirection: 'row', backgroundColor: '#fafafa', paddingVertical: 7, paddingHorizontal: 10 }}>
+      <Text style={{ width: 38, fontSize: 11, fontWeight: '600', color: '#8e8e8e' }}>연도</Text>
+      <Text style={{ width: 88, fontSize: 11, fontWeight: '600', color: '#8e8e8e' }}>정책/변화</Text>
+      <Text style={{ flex: 1, fontSize: 11, fontWeight: '600', color: '#8e8e8e' }}>내용</Text>
     </View>
     {TAX_HISTORY.map((row, idx) => (
-      <View key={idx} style={{ flexDirection: 'row', paddingVertical: 7, paddingHorizontal: 10, backgroundColor: idx % 2 === 1 ? '#f8fafc' : '#fff', borderTopWidth: 1, borderTopColor: '#f1f5f9' }}>
-        <Text style={{ width: 38, fontSize: 11, fontWeight: '600', color: '#64748b' }}>{row.year}</Text>
-        <Text style={{ width: 88, fontSize: 11, fontWeight: '600', color: '#334155' }}>{row.event}</Text>
-        <Text style={{ flex: 1, fontSize: 11, color: '#475569', lineHeight: 16 }}>{row.detail}</Text>
+      <View key={idx} style={{ flexDirection: 'row', paddingVertical: 7, paddingHorizontal: 10, backgroundColor: idx % 2 === 1 ? '#fafafa' : '#fff', borderTopWidth: 1, borderTopColor: '#fafafa' }}>
+        <Text style={{ width: 38, fontSize: 11, fontWeight: '600', color: '#8e8e8e' }}>{row.year}</Text>
+        <Text style={{ width: 88, fontSize: 11, fontWeight: '600', color: '#262626' }}>{row.event}</Text>
+        <Text style={{ flex: 1, fontSize: 11, color: '#8e8e8e', lineHeight: 16 }}>{row.detail}</Text>
       </View>
     ))}
   </View>
 ));
 
 const TaxPolicySummaryCard: React.FC<{ summary: { text: string; updatedAt: string } }> = React.memo(({ summary }) => (
-  <View style={{ marginTop: 16, backgroundColor: '#f0f9ff', borderRadius: 10, padding: 12, borderLeftWidth: 3, borderLeftColor: '#0ea5e9' }}>
+  <View style={{ marginTop: 16, backgroundColor: '#fafafa', borderRadius: 10, padding: 12, borderLeftWidth: 3, borderLeftColor: '#0095f6' }}>
     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 8 }}>
-      <MaterialIcons name="auto-awesome" size={14} color="#0ea5e9" />
-      <Text style={{ fontSize: 12, fontWeight: '700', color: '#0369a1' }}>최근 양도세 정책 방향</Text>
+      <MaterialIcons name="auto-awesome" size={14} color="#0095f6" />
+      <Text style={{ fontSize: 12, fontWeight: '600', color: '#0095f6' }}>최근 양도세 정책 방향</Text>
     </View>
-    <Text style={{ fontSize: 12, color: '#1e3a5f', lineHeight: 19 }}>{summary.text}</Text>
-    <Text style={{ fontSize: 10, color: '#94a3b8', marginTop: 8 }}>AI 뉴스 요약 · {summary.updatedAt} 기준</Text>
+    <Text style={{ fontSize: 12, color: '#262626', lineHeight: 19 }}>{summary.text}</Text>
+    <Text style={{ fontSize: 10, color: '#8e8e8e', marginTop: 8 }}>AI 뉴스 요약 · {summary.updatedAt} 기준</Text>
   </View>
 ));
 
 const JongbuseSummaryCard: React.FC<{ summary: { text: string; updatedAt: string } }> = React.memo(({ summary }) => (
-  <View style={{ marginTop: 12, backgroundColor: '#fdf4ff', borderRadius: 10, padding: 12, borderLeftWidth: 3, borderLeftColor: '#a855f7' }}>
+  <View style={{ marginTop: 12, backgroundColor: '#fafafa', borderRadius: 10, padding: 12, borderLeftWidth: 3, borderLeftColor: '#0095f6' }}>
     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 8 }}>
-      <MaterialIcons name="auto-awesome" size={14} color="#a855f7" />
-      <Text style={{ fontSize: 12, fontWeight: '700', color: '#7e22ce' }}>최근 종합부동산세 정책 방향</Text>
+      <MaterialIcons name="auto-awesome" size={14} color="#0095f6" />
+      <Text style={{ fontSize: 12, fontWeight: '600', color: '#0095f6' }}>최근 종합부동산세 정책 방향</Text>
     </View>
-    <Text style={{ fontSize: 12, color: '#3b1764', lineHeight: 19 }}>{summary.text}</Text>
-    <Text style={{ fontSize: 10, color: '#94a3b8', marginTop: 8 }}>AI 뉴스 요약 · {summary.updatedAt} 기준</Text>
+    <Text style={{ fontSize: 12, color: '#262626', lineHeight: 19 }}>{summary.text}</Text>
+    <Text style={{ fontSize: 10, color: '#8e8e8e', marginTop: 8 }}>AI 뉴스 요약 · {summary.updatedAt} 기준</Text>
   </View>
 ));
 
@@ -240,7 +242,6 @@ const isBoxPlotData = (
   data: NonNullable<InvestmentColumn['chartData']>[number]['data'] | null | undefined
 ): data is BoxPlotPoint[] => Array.isArray(data) && data.length > 0 && 'median' in data[0];
 
-const RATIO_MAX_FLOOR = 30; // 2주택자 비율 Y축 최소 최대치 (%) — 실측값이 이를 초과하면 자동 확장
 const TRACK_BOTTOM_Y = 112; // 트랙 하단의 container 상단 기준 y (px, 근사치)
 const TRACK_H = 80;
 const COL_W = 48;
@@ -251,8 +252,7 @@ const BoxPlotChart: React.FC<{
   yearlyData?: BoxPlotPoint[];
   title: string;
   unit: string;
-  multiOwnerRatioData?: { label: string; ratio: number }[];
-}> = React.memo(({ data, yearlyData, title, unit, multiOwnerRatioData }) => {
+}> = React.memo(({ data, yearlyData, title, unit }) => {
   const [viewMode, setViewMode] = useState<'monthly' | 'yearly'>('monthly');
   const [expanded, setExpanded] = useState(false);
   const { width: winW, height: winH } = useWindowDimensions();
@@ -262,76 +262,6 @@ const BoxPlotChart: React.FC<{
   const allOutliers = points.flatMap(p => p.outliers ?? []);
   const globalMax = Math.max(...points.map(d => d.max), ...allOutliers, 1);
   const pct = (v: number) => Math.min(100, Math.max(0, (v / globalMax) * 100));
-
-  // 2주택자 비율 오버레이 (연도별 뷰 전용)
-  const showRatioOverlay = viewMode === 'yearly' && !!multiOwnerRatioData?.length;
-  const ratioMax = showRatioOverlay
-    ? Math.max(RATIO_MAX_FLOOR, ...multiOwnerRatioData!.map(r => r.ratio))
-    : RATIO_MAX_FLOOR;
-  const ratioPoints = showRatioOverlay
-    ? points.map((p, i) => {
-        const rd = multiOwnerRatioData!.find(r => r.label === p.label);
-        if (!rd) return null;
-        return {
-          x: i * COL_W + COL_W / 2,
-          y: TRACK_BOTTOM_Y - (rd.ratio / ratioMax) * TRACK_H,
-          ratio: rd.ratio,
-          label: p.label,
-        };
-      })
-    : [];
-
-  // 월별 뷰 - 가장 최근 연도 기준선
-  const latestRatio = viewMode === 'monthly' && multiOwnerRatioData?.length
-    ? multiOwnerRatioData[multiOwnerRatioData.length - 1]
-    : null;
-
-  const renderRatioOverlay = () => {
-    const totalW = points.length * COL_W;
-    return (
-      <View pointerEvents="none" style={{ position: 'absolute', top: 0, left: 0, width: totalW, height: CONTAINER_H }}>
-        {ratioPoints.map((p, i) => {
-          if (!p) return null;
-          const next = ratioPoints[i + 1];
-          return (
-            <React.Fragment key={i}>
-              {next && (() => {
-                const dx = next.x - p.x;
-                const dy = next.y - p.y;
-                const len = Math.sqrt(dx * dx + dy * dy);
-                const angle = Math.atan2(dy, dx);
-                return (
-                  <View style={{
-                    position: 'absolute',
-                    width: len, height: 2,
-                    backgroundColor: '#f97316', opacity: 0.75,
-                    left: (p.x + next.x) / 2 - len / 2,
-                    top: (p.y + next.y) / 2 - 1,
-                    transform: [{ rotate: `${angle}rad` }],
-                  }} />
-                );
-              })()}
-              <View style={{ position: 'absolute', width: 8, height: 8, borderRadius: 4, backgroundColor: '#f97316', borderWidth: 1.5, borderColor: '#fff', left: p.x - 4, top: p.y - 4 }} />
-            </React.Fragment>
-          );
-        })}
-      </View>
-    );
-  };
-
-  const renderRatioRefLine = () => {
-    if (!latestRatio) return null;
-    const totalW = points.length * COL_W;
-    const lineY = TRACK_BOTTOM_Y - (latestRatio.ratio / RATIO_MAX_FLOOR) * TRACK_H;
-    return (
-      <View pointerEvents="none" style={{ position: 'absolute', top: 0, left: 0, width: totalW, height: CONTAINER_H }}>
-        <View style={{ position: 'absolute', left: 0, width: totalW, top: lineY, height: 1.5, backgroundColor: '#f97316', opacity: 0.6 }} />
-        <Text style={{ position: 'absolute', right: 2, top: lineY - 13, fontSize: 9, color: '#ea580c', fontWeight: '700', backgroundColor: 'rgba(255,255,255,0.85)', paddingHorizontal: 3, borderRadius: 3 }}>
-          {latestRatio.label.replace('년', '')}년 {latestRatio.ratio}%
-        </Text>
-      </View>
-    );
-  };
 
   const openFullscreen = async () => {
     setExpanded(true);
@@ -374,7 +304,7 @@ const BoxPlotChart: React.FC<{
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
         <Text style={[styles.chartTitle, { marginBottom: 0, flex: 1 }]}>{title}</Text>
         <TouchableOpacity onPress={openFullscreen} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
-          <MaterialIcons name="open-in-full" size={18} color="#94a3b8" />
+          <MaterialIcons name="open-in-full" size={18} color="#8e8e8e" />
         </TouchableOpacity>
       </View>
 
@@ -398,6 +328,9 @@ const BoxPlotChart: React.FC<{
       <View style={styles.chartBody}>
         <View style={styles.yAxis}>
           <Text style={styles.yAxisLabel}>{globalMax.toLocaleString()}</Text>
+          <Text style={styles.yAxisLabel}>{Math.round(globalMax * 0.75).toLocaleString()}</Text>
+          <Text style={styles.yAxisLabel}>{Math.round(globalMax * 0.5).toLocaleString()}</Text>
+          <Text style={styles.yAxisLabel}>{Math.round(globalMax * 0.25).toLocaleString()}</Text>
           <Text style={styles.yAxisLabel}>0</Text>
         </View>
         <ScrollView horizontal nestedScrollEnabled showsHorizontalScrollIndicator style={styles.hChartScroll}>
@@ -436,46 +369,27 @@ const BoxPlotChart: React.FC<{
                 </View>
               ))}
             </View>
-            {showRatioOverlay && renderRatioOverlay()}
-            {latestRatio && renderRatioRefLine()}
+            {/* 가격 그리드라인 (25%, 50%, 75%) */}
+            <View pointerEvents="none" style={{ position: 'absolute', top: 0, left: 0, right: 0, height: CONTAINER_H }}>
+              {[0.25, 0.5, 0.75].map(frac => (
+                <View key={frac} style={{
+                  position: 'absolute', left: 0, right: 0,
+                  top: TRACK_BOTTOM_Y - frac * TRACK_H,
+                  height: 0.5, backgroundColor: '#dbdbdb', opacity: 0.7,
+                }} />
+              ))}
+            </View>
           </View>
         </ScrollView>
       </View>
       <Text style={styles.chartUnit}>
         {unit} · 박스: 25~75% · 굵은 선: 중앙값 · 점: 평균
       </Text>
-      {(showRatioOverlay || !!latestRatio) && (
-        <View style={{ marginTop: 8 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 6 }}>
-            <View style={{ width: 16, height: 2, backgroundColor: '#f97316', borderRadius: 1 }} />
-            <View style={{ width: 7, height: 7, borderRadius: 3.5, backgroundColor: '#f97316' }} />
-            <Text style={{ fontSize: 11, color: '#ea580c', fontWeight: '600' }}>2주택자 이상 비율</Text>
-            <View style={{ backgroundColor: '#dcfce7', borderRadius: 4, paddingHorizontal: 5, paddingVertical: 1, borderWidth: 1, borderColor: '#86efac' }}>
-              <Text style={{ fontSize: 9, color: '#16a34a', fontWeight: '700' }}>KOSIS 실측</Text>
-            </View>
-            <Text style={{ fontSize: 9, color: '#9ca3af' }}>통계청 주택소유통계</Text>
-          </View>
-          {showRatioOverlay && (
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 4, paddingBottom: 2 }}>
-              {ratioPoints.filter(Boolean).map((p, i) => (
-                <View key={i} style={{ backgroundColor: '#fff7ed', borderRadius: 6, paddingHorizontal: 7, paddingVertical: 3, borderWidth: 1, borderColor: '#fed7aa' }}>
-                  <Text style={{ fontSize: 10, color: '#ea580c', fontWeight: '600' }}>{p!.label.replace('년', '')}: {p!.ratio}%</Text>
-                </View>
-              ))}
-            </ScrollView>
-          )}
-          {!!latestRatio && (
-            <Text style={{ fontSize: 10, color: '#9ca3af', marginTop: 2 }}>
-              기준선: {latestRatio.label} {latestRatio.ratio}% (KOSIS 실측)
-            </Text>
-          )}
-        </View>
-      )}
 
       <ScrollView horizontal nestedScrollEnabled showsHorizontalScrollIndicator={false} style={{ marginTop: 10 }}>
-        <View style={{ borderWidth: 1, borderColor: '#e2e8f0', borderRadius: 8, overflow: 'hidden' }}>
+        <View style={{ borderWidth: 1, borderColor: '#dbdbdb', borderRadius: 8, overflow: 'hidden' }}>
           {/* 헤더 */}
-          <View style={[styles.bpTableRow, { backgroundColor: '#f1f5f9' }]}>
+          <View style={[styles.bpTableRow, { backgroundColor: '#fafafa' }]}>
             <View style={styles.bpTableLabelCell}><Text style={styles.bpTableHeader}>기간</Text></View>
             <View style={styles.bpTableCell}><Text style={styles.bpTableHeader}>최소</Text></View>
             <View style={styles.bpTableCell}><Text style={[styles.bpTableHeader, { color: '#3b82f6' }]}>Q1</Text></View>
@@ -489,10 +403,10 @@ const BoxPlotChart: React.FC<{
             <View key={idx} style={[styles.bpTableRow, idx % 2 === 1 && styles.bpTableRowAlt]}>
               <View style={styles.bpTableLabelCell}><Text style={styles.bpTableLabelText}>{p.label}</Text></View>
               <View style={styles.bpTableCell}><Text style={styles.bpTableText}>{p.min.toLocaleString()}</Text></View>
-              <View style={styles.bpTableCell}><Text style={[styles.bpTableText, { color: '#2563eb' }]}>{p.q1.toLocaleString()}</Text></View>
-              <View style={styles.bpTableCell}><Text style={[styles.bpTableText, { fontWeight: '700', color: '#1d4ed8' }]}>{p.median.toLocaleString()}</Text></View>
+              <View style={styles.bpTableCell}><Text style={[styles.bpTableText, { color: '#0095f6' }]}>{p.q1.toLocaleString()}</Text></View>
+              <View style={styles.bpTableCell}><Text style={[styles.bpTableText, { fontWeight: '600', color: '#1d4ed8' }]}>{p.median.toLocaleString()}</Text></View>
               <View style={styles.bpTableCell}><Text style={[styles.bpTableText, { color: '#f97316' }]}>{p.avg.toLocaleString()}</Text></View>
-              <View style={styles.bpTableCell}><Text style={[styles.bpTableText, { color: '#2563eb' }]}>{p.q3.toLocaleString()}</Text></View>
+              <View style={styles.bpTableCell}><Text style={[styles.bpTableText, { color: '#0095f6' }]}>{p.q3.toLocaleString()}</Text></View>
               <View style={styles.bpTableCell}><Text style={styles.bpTableText}>{p.max.toLocaleString()}</Text></View>
             </View>
           ))}
@@ -521,7 +435,7 @@ const BoxPlotChart: React.FC<{
             )}
             <View style={{ flex: 1 }} />
             <TouchableOpacity onPress={closeFullscreen} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
-              <MaterialIcons name="fullscreen-exit" size={24} color="#64748b" />
+              <MaterialIcons name="fullscreen-exit" size={24} color="#8e8e8e" />
             </TouchableOpacity>
           </View>
 
@@ -545,8 +459,8 @@ const BoxPlotChart: React.FC<{
 });
 
 const TERM_CATEGORY_COLORS: Record<string, string> = {
-  금융정책: '#2563eb',
-  부동산세제: '#7c3aed',
+  금융정책: '#0095f6',
+  부동산세제: '#0095f6',
   청약제도: '#059669',
   대출규제: '#dc2626',
   시장분석: '#d97706',
@@ -556,7 +470,7 @@ const TermOfDayCard: React.FC<{ term: DailyTerm }> = React.memo(({ term }) => {
   const [expanded, setExpanded] = useState(false);
   const [done, setDone] = useState(false);
   const { user } = useAuth();
-  const tagColor = TERM_CATEGORY_COLORS[term.category] ?? '#64748b';
+  const tagColor = TERM_CATEGORY_COLORS[term.category] ?? '#8e8e8e';
 
   const today = new Date(Date.now() + 9 * 3600000).toISOString().split('T')[0];
   const storageKey = `term_done_${today}`;
@@ -582,13 +496,13 @@ const TermOfDayCard: React.FC<{ term: DailyTerm }> = React.memo(({ term }) => {
     >
       <View style={styles.termHeader}>
         <View style={styles.termHeaderLeft}>
-          <MaterialIcons name="menu-book" size={18} color="#7c3aed" />
+          <MaterialIcons name="menu-book" size={18} color="#0095f6" />
           <Text style={styles.termSectionLabel}>오늘의 부동산 용어</Text>
         </View>
         <MaterialIcons
           name={expanded ? 'keyboard-arrow-up' : 'keyboard-arrow-down'}
           size={20}
-          color="#94a3b8"
+          color="#8e8e8e"
         />
       </View>
 
@@ -616,13 +530,13 @@ const TermOfDayCard: React.FC<{ term: DailyTerm }> = React.memo(({ term }) => {
           <Text style={styles.termDetailText}>{term.example}</Text>
 
           <View style={styles.termDetailRow}>
-            <MaterialIcons name="account-balance" size={14} color="#2563eb" />
+            <MaterialIcons name="account-balance" size={14} color="#0095f6" />
             <Text style={styles.termDetailLabel}>관련 정책</Text>
           </View>
           <Text style={styles.termDetailText}>{term.relatedPolicy}</Text>
 
           <View style={[styles.termTipBox]}>
-            <MaterialIcons name="stars" size={14} color="#7c3aed" />
+            <MaterialIcons name="stars" size={14} color="#0095f6" />
             <Text style={styles.termTipText}>{term.tip}</Text>
           </View>
         </>
@@ -658,7 +572,7 @@ const NewsCard: React.FC<{ articles: NewsArticle[] }> = React.memo(({ articles }
   return (
     <View style={styles.newsSection}>
       <View style={styles.newsSectionHeader}>
-        <MaterialIcons name="newspaper" size={18} color="#0f766e" />
+        <MaterialIcons name="newspaper" size={18} color="#0095f6" />
         <Text style={styles.newsSectionLabel}>뉴스 큐레이션</Text>
       </View>
       {articles.map(article => (
@@ -667,7 +581,7 @@ const NewsCard: React.FC<{ articles: NewsArticle[] }> = React.memo(({ articles }
             <View
               style={[
                 styles.newsCategoryBadge,
-                { backgroundColor: NEWS_CATEGORY_COLORS[article.category] ?? '#64748b' },
+                { backgroundColor: NEWS_CATEGORY_COLORS[article.category] ?? '#8e8e8e' },
               ]}
             >
               <Text style={styles.newsCategoryText}>
@@ -694,7 +608,7 @@ const ChartSelector: React.FC<{
   const renderChart = (chart: NonNullable<InvestmentColumn['chartData']>[number]) => {
     if (!Array.isArray(chart.data) || chart.data.length === 0) return null;
     return isBoxPlotData(chart.data) ? (
-      <BoxPlotChart data={chart.data} yearlyData={chart.yearlyData} title={chart.title} unit={chart.unit} multiOwnerRatioData={chart.multiOwnerRatioByYear} />
+      <BoxPlotChart data={chart.data} yearlyData={chart.yearlyData} title={chart.title} unit={chart.unit} />
     ) : (
       <BarChart data={chart.data as { label: string; value: number }[]} title={chart.title} unit={chart.unit} />
     );
@@ -738,9 +652,119 @@ const ChartSelector: React.FC<{
   );
 });
 
+const AREA_ADMIN_MAP: Record<string, { adminName: string; parentSi?: string; ratio: number }> = {
+  '판교':       { adminName: '분당구',   parentSi: '성남시',  ratio: 27.4 },
+  '분당':       { adminName: '분당구',   parentSi: '성남시',  ratio: 27.4 },
+  '광교':       { adminName: '영통구',   parentSi: '수원시',  ratio: 24.1 },
+  '수원 영통':  { adminName: '영통구',   parentSi: '수원시',  ratio: 24.1 },
+  '수원 권선':  { adminName: '권선구',   parentSi: '수원시',  ratio: 23.1 },
+  '기흥':       { adminName: '기흥구',   parentSi: '용인시',  ratio: 25.4 },
+  '수지':       { adminName: '수지구',   parentSi: '용인시',  ratio: 27.5 },
+  '용인(처인)': { adminName: '처인구',   parentSi: '용인시',  ratio: 24.3 },
+  '과천':       { adminName: '과천시',                        ratio: 26.0 },
+  '성남':       { adminName: '성남시',                        ratio: 25.1 },
+  '용인':       { adminName: '용인시',                        ratio: 25.8 },
+  '동탄':       { adminName: '화성시',                        ratio: 23.9 },
+  '안산':       { adminName: '안산시',                        ratio: 23.9 },
+  '평택':       { adminName: '평택시',                        ratio: 25.7 },
+  '김포':       { adminName: '김포시',                        ratio: 24.1 },
+  '시흥':       { adminName: '시흥시',                        ratio: 22.7 },
+  '하남':       { adminName: '하남시',                        ratio: 20.2 },
+  '오산':       { adminName: '오산시',                        ratio: 21.2 },
+  '의정부':     { adminName: '의정부시',                      ratio: 22.1 },
+  '남양주':     { adminName: '남양주시',                      ratio: 24.6 },
+  '구리':       { adminName: '구리시',                        ratio: 23.4 },
+  '부천':       { adminName: '부천시',                        ratio: 22.9 },
+};
+
+type AreaChip = { name: string; parent?: string; ratio: number };
+type RatioCategory = '전체' | '성남' | '수원' | '용인' | '기타';
+
+const RATIO_CATEGORIES: Record<RatioCategory, string[]> = {
+  전체: [],
+  성남: ['성남시', '분당구'],
+  수원: ['영통구', '권선구'],
+  용인: ['용인시', '수지구', '기흥구', '처인구'],
+  기타: ['과천시', '화성시', '안산시', '평택시', '김포시', '시흥시', '하남시', '오산시', '의정부시', '남양주시', '구리시', '부천시'],
+};
+
+const ALL_AREA_CHIPS: AreaChip[] = Object.values(
+  Object.fromEntries(
+    Object.values(AREA_ADMIN_MAP).map(a => [a.adminName, { name: a.adminName, parent: a.parentSi, ratio: a.ratio }])
+  )
+).sort((a, b) => b.ratio - a.ratio);
+
+const MultiOwnerRatioChips: React.FC<{ areaKey: string }> = React.memo(({ areaKey }) => {
+  const highlightName = AREA_ADMIN_MAP[areaKey]?.adminName;
+
+  const defaultCat = (): RatioCategory => {
+    if (!highlightName) return '전체';
+    for (const [cat, names] of Object.entries(RATIO_CATEGORIES) as [RatioCategory, string[]][]) {
+      if (cat !== '전체' && names.includes(highlightName)) return cat;
+    }
+    return '기타';
+  };
+
+  const [cat, setCat] = useState<RatioCategory>(defaultCat);
+
+  const items = cat === '전체'
+    ? ALL_AREA_CHIPS
+    : ALL_AREA_CHIPS.filter(c => RATIO_CATEGORIES[cat].includes(c.name));
+
+  return (
+    <View style={{ marginTop: 16, paddingTop: 14, borderTopWidth: 1, borderTopColor: '#fafafa' }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 10 }}>
+        <Text style={{ fontSize: 13, fontWeight: '600', color: '#262626' }}>2주택자 이상 비율 비교</Text>
+        <Text style={{ fontSize: 10, color: '#8e8e8e' }}>KOSIS 2024년 · 비율순</Text>
+      </View>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 10 }}>
+        <View style={{ flexDirection: 'row', gap: 6 }}>
+          {(Object.keys(RATIO_CATEGORIES) as RatioCategory[]).map(c => (
+            <TouchableOpacity
+              key={c}
+              onPress={() => setCat(c)}
+              style={{
+                paddingVertical: 5, paddingHorizontal: 13, borderRadius: 14,
+                backgroundColor: cat === c ? '#0095f6' : '#fafafa',
+                borderWidth: 1, borderColor: cat === c ? '#0095f6' : '#dbdbdb',
+              }}
+            >
+              <Text style={{ fontSize: 12, fontWeight: '600', color: cat === c ? '#fff' : '#8e8e8e' }}>{c}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6 }}>
+        {items.map(item => {
+          const isHighlight = item.name === highlightName;
+          return (
+            <View
+              key={item.name}
+              style={{
+                paddingHorizontal: 9, paddingVertical: 5, borderRadius: 14,
+                backgroundColor: isHighlight ? '#fff7ed' : '#fafafa',
+                borderWidth: 1, borderColor: isHighlight ? '#f97316' : '#dbdbdb',
+              }}
+            >
+              <Text style={{ fontSize: 11, fontWeight: isHighlight ? '700' : '400', color: isHighlight ? '#ea580c' : '#8e8e8e' }}>
+                {item.name} {item.ratio}%
+              </Text>
+              {item.parent && (
+                <Text style={{ fontSize: 9, color: '#dbdbdb', marginTop: 1 }}>{item.parent}</Text>
+              )}
+            </View>
+          );
+        })}
+      </View>
+      <Text style={{ fontSize: 9, color: '#8e8e8e', marginTop: 8 }}>출처: 통계청 주택소유통계 · 주황: 현재 지역</Text>
+    </View>
+  );
+});
+
 const DongChartViewer: React.FC<{ entry: DongChartEntry }> = React.memo(({ entry }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const selected: DongEntry = entry.dongs[selectedIndex];
+  const areaKey = entry.title.split(' 동별')[0];
 
   if (!selected) return null;
 
@@ -768,8 +792,537 @@ const DongChartViewer: React.FC<{ entry: DongChartEntry }> = React.memo(({ entry
         yearlyData={selected.yearlyData}
         title={`${entry.title.split(' ')[0]} ${selected.name} 실거래가`}
         unit={entry.unit}
-        multiOwnerRatioData={entry.multiOwnerRatioByYear}
       />
+      <MultiOwnerRatioChips areaKey={areaKey} />
+    </View>
+  );
+});
+
+// 경기도 시 표시 순서 (구 수 많은 시 우선)
+const SI_ORDER = [
+  '수원시', '성남시', '용인시', '고양시', '안양시', '안산시',
+  '화성시', '부천시', '의정부시', '남양주시', '광명시', '평택시',
+  '김포시', '시흥시', '하남시', '구리시', '오산시', '군포시',
+  '의왕시', '파주시', '이천시', '광주시', '양주시', '과천시',
+];
+
+const REGION_BOOKMARKS_KEY = 'region_bookmarks_v1';
+const REGION_FILTER_KEY   = 'region_filter_state_v1';
+
+interface RegionBookmark {
+  area: string;
+  si: string;
+  label: string;
+  dongName?: string;
+  displayLabel: string;
+}
+
+// 2026년 7월 기준 중앙값 6억~8억 동 (중앙값 오름차순)
+const DEFAULT_REGION_BOOKMARKS: RegionBookmark[] = [
+  { area: '고양_덕양',  si: '고양시',  label: '덕양구',  dongName: '신원동',   displayLabel: '고양시 덕양구 신원동' },
+  { area: '오산',       si: '오산시',  label: '오산시',  dongName: '외삼미동', displayLabel: '오산시 외삼미동' },
+  { area: '수원_장안',  si: '수원시',  label: '장안구',  dongName: '송죽동',   displayLabel: '수원시 장안구 송죽동' },
+  { area: '시흥',       si: '시흥시',  label: '시흥시',  dongName: '능곡동',   displayLabel: '시흥시 능곡동' },
+  { area: '성남_중원',  si: '성남시',  label: '중원구',  dongName: '성남동',   displayLabel: '성남시 중원구 성남동' },
+  { area: '부천',       si: '부천시',  label: '부천시',  dongName: '범박동',   displayLabel: '부천시 범박동' },
+  { area: '용인_기흥',  si: '용인시',  label: '기흥구',  dongName: '중동',     displayLabel: '용인시 기흥구 중동' },
+  { area: '용인_기흥',  si: '용인시',  label: '기흥구',  dongName: '영덕동',   displayLabel: '용인시 기흥구 영덕동' },
+  { area: '용인_기흥',  si: '용인시',  label: '기흥구',  dongName: '서천동',   displayLabel: '용인시 기흥구 서천동' },
+  { area: '용인_기흥',  si: '용인시',  label: '기흥구',  dongName: '상갈동',   displayLabel: '용인시 기흥구 상갈동' },
+  { area: '고양_일산동', si: '고양시', label: '일산동구', dongName: '식사동',  displayLabel: '고양시 일산동구 식사동' },
+  { area: '광주',       si: '광주시',  label: '광주시',  dongName: '고산동',   displayLabel: '광주시 고산동' },
+  { area: '수원_팔달',  si: '수원시',  label: '팔달구',  dongName: '매산로2가', displayLabel: '수원시 팔달구 매산로2가' },
+  { area: '용인_기흥',  si: '용인시',  label: '기흥구',  dongName: '신갈동',   displayLabel: '용인시 기흥구 신갈동' },
+  { area: '용인_기흥',  si: '용인시',  label: '기흥구',  dongName: '마북동',   displayLabel: '용인시 기흥구 마북동' },
+  { area: '광주',       si: '광주시',  label: '광주시',  dongName: '신현동',   displayLabel: '광주시 신현동' },
+  { area: '수원_장안',  si: '수원시',  label: '장안구',  dongName: '정자동',   displayLabel: '수원시 장안구 정자동' },
+  { area: '안양_만안',  si: '안양시',  label: '만안구',  dongName: '석수동',   displayLabel: '안양시 만안구 석수동' },
+  { area: '수원_팔달',  si: '수원시',  label: '팔달구',  dongName: '화서동',   displayLabel: '수원시 팔달구 화서동' },
+  { area: '수원_팔달',  si: '수원시',  label: '팔달구',  dongName: '인계동',   displayLabel: '수원시 팔달구 인계동' },
+  { area: '화성_동탄',  si: '화성시',  label: '동탄구',  dongName: '목동',     displayLabel: '화성시 동탄구 목동' },
+  { area: '수원_장안',  si: '수원시',  label: '장안구',  dongName: '이목동',   displayLabel: '수원시 장안구 이목동' },
+  { area: '수원_권선',  si: '수원시',  label: '권선구',  dongName: '곡반정동', displayLabel: '수원시 권선구 곡반정동' },
+  { area: '부천',       si: '부천시',  label: '부천시',  dongName: '옥길동',   displayLabel: '부천시 옥길동' },
+  { area: '고양_덕양',  si: '고양시',  label: '덕양구',  dongName: '도내동',   displayLabel: '고양시 덕양구 도내동' },
+  { area: '광주',       si: '광주시',  label: '광주시',  dongName: '역동',     displayLabel: '광주시 역동' },
+  { area: '구리',       si: '구리시',  label: '구리시',  dongName: '인창동',   displayLabel: '구리시 인창동' },
+  { area: '하남',       si: '하남시',  label: '하남시',  dongName: '창우동',   displayLabel: '하남시 창우동' },
+  { area: '시흥',       si: '시흥시',  label: '시흥시',  dongName: '군자동',   displayLabel: '시흥시 군자동' },
+  { area: '의왕',       si: '의왕시',  label: '의왕시',  dongName: '고천동',   displayLabel: '의왕시 고천동' },
+  { area: '하남',       si: '하남시',  label: '하남시',  dongName: '덕풍동',   displayLabel: '하남시 덕풍동' },
+  { area: '구리',       si: '구리시',  label: '구리시',  dongName: '수택동',   displayLabel: '구리시 수택동' },
+  { area: '광명',       si: '광명시',  label: '광명시',  dongName: '하안동',   displayLabel: '광명시 하안동' },
+  { area: '남양주',     si: '남양주시', label: '남양주시', dongName: '별내동',  displayLabel: '남양주시 별내동' },
+  { area: '화성_동탄',  si: '화성시',  label: '동탄구',  dongName: '장지동',   displayLabel: '화성시 동탄구 장지동' },
+  { area: '안양_동안',  si: '안양시',  label: '동안구',  dongName: '비산동',   displayLabel: '안양시 동안구 비산동' },
+  { area: '구리',       si: '구리시',  label: '구리시',  dongName: '갈매동',   displayLabel: '구리시 갈매동' },
+  { area: '안양_동안',  si: '안양시',  label: '동안구',  dongName: '관양동',   displayLabel: '안양시 동안구 관양동' },
+  { area: '부천',       si: '부천시',  label: '부천시',  dongName: '여월동',   displayLabel: '부천시 여월동' },
+  { area: '고양_덕양',  si: '고양시',  label: '덕양구',  dongName: '원흥동',   displayLabel: '고양시 덕양구 원흥동' },
+  { area: '고양_덕양',  si: '고양시',  label: '덕양구',  dongName: '삼송동',   displayLabel: '고양시 덕양구 삼송동' },
+  { area: '시흥',       si: '시흥시',  label: '시흥시',  dongName: '목감동',   displayLabel: '시흥시 목감동' },
+  { area: '광명',       si: '광명시',  label: '광명시',  dongName: '소하동',   displayLabel: '광명시 소하동' },
+  { area: '용인_기흥',  si: '용인시',  label: '기흥구',  dongName: '언남동',   displayLabel: '용인시 기흥구 언남동' },
+  { area: '고양_덕양',  si: '고양시',  label: '덕양구',  dongName: '동산동',   displayLabel: '고양시 덕양구 동산동' },
+  { area: '고양_덕양',  si: '고양시',  label: '덕양구',  dongName: '향동동',   displayLabel: '고양시 덕양구 향동동' },
+  { area: '의왕',       si: '의왕시',  label: '의왕시',  dongName: '학의동',   displayLabel: '의왕시 학의동' },
+];
+
+const REGION_RATIO_LABELS = ["'16","'17","'18","'19","'20","'21","'22","'23","'24"];
+
+// KOSIS 주택소유통계 (시군구 단위) - 2주택 이상 소유 가구 비율 (%)
+// 출처: 통계청 KOSIS Open API DT_1OH0407, 2026-08-07 조회
+const REGION_RATIO_DATA: Record<string, number[]> = {
+  '수원_권선':  [22.6, 23.4, 24.0, 23.9, 23.5, 22.6, 22.9, 23.2, 23.1],
+  '수원_영통':  [25.0, 25.8, 26.9, 28.5, 28.0, 25.5, 24.9, 24.3, 24.1],
+  '성남_분당':  [30.9, 31.3, 31.1, 31.0, 29.7, 27.6, 27.3, 27.2, 27.4],
+  '의정부':     [23.7, 23.6, 23.5, 24.1, 23.3, 22.0, 21.8, 21.9, 22.1],
+  '부천':       [24.0, 24.1, 24.1, 24.2, 24.1, 22.8, 22.5, 22.7, 22.9],
+  '평택':       [27.7, 27.8, 29.6, 30.1, 29.6, 26.8, 26.0, 25.6, 25.7],
+  '안산_상록':  [23.5, 23.4, 23.6, 24.5, 25.4, 23.7, 23.2, 23.4, 23.9],
+  '안산_단원':  [23.5, 23.4, 23.6, 24.5, 25.4, 23.7, 23.2, 23.4, 23.9],
+  '과천':       [34.0, 32.7, 31.8, 31.5, 30.9, 29.9, 27.9, 26.2, 26.0],
+  '구리':       [24.4, 24.8, 24.8, 24.5, 23.9, 22.6, 22.5, 22.8, 23.4],
+  '남양주':     [27.5, 26.7, 26.9, 26.8, 26.0, 24.9, 24.6, 24.5, 24.6],
+  '오산':       [22.8, 23.3, 24.2, 24.3, 24.0, 21.9, 21.5, 21.5, 21.2],
+  '시흥':       [22.8, 22.8, 23.8, 24.3, 24.2, 23.4, 22.7, 23.1, 22.7],
+  '하남':       [22.7, 23.5, 23.3, 24.1, 23.5, 20.6, 19.6, 19.7, 20.2],
+  '용인_처인':  [27.3, 26.0, 27.0, 27.8, 26.6, 25.2, 24.2, 24.2, 24.3],
+  '용인_기흥':  [28.0, 28.1, 28.2, 28.8, 27.8, 25.7, 25.1, 25.1, 25.4],
+  '용인_수지':  [31.7, 31.5, 31.5, 31.7, 31.3, 28.9, 27.8, 27.7, 27.5],
+  '김포':       [26.4, 26.3, 26.3, 26.6, 25.5, 24.9, 24.4, 24.3, 24.1],
+  '화성_동탄':  [26.6, 26.9, 27.0, 28.8, 27.5, 25.2, 24.9, 24.4, 23.9],
+};
+
+const RATIO_CHART_W = width - 56; // regionSection: marginH 12*2 + padding 16*2
+const RATIO_CHART_H = 64;
+
+const RegionRatioChart: React.FC<{ area: string }> = React.memo(({ area }) => {
+  const vals = REGION_RATIO_DATA[area];
+  if (!vals) return null;
+
+  const n = vals.length;
+  const minV = Math.floor(Math.min(...vals) - 1);
+  const maxV = Math.ceil(Math.max(...vals) + 1);
+  const PAD_H = 8;
+  const getX = (i: number) => PAD_H + (i / (n - 1)) * (RATIO_CHART_W - PAD_H * 2);
+  const getY = (v: number) => RATIO_CHART_H - ((v - minV) / (maxV - minV)) * RATIO_CHART_H;
+  const pts = vals.map((v, i) => ({ x: getX(i), y: getY(v) }));
+
+  return (
+    <View style={{ marginTop: 16, paddingTop: 14, borderTopWidth: 1, borderTopColor: '#fafafa' }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+        <Text style={{ fontSize: 13, fontWeight: '600', color: '#262626' }}>2주택 이상 보유 비율</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 3 }}>
+          <Text style={{ fontSize: 18, fontWeight: '600', color: '#0095f6' }}>{vals[n - 1]}%</Text>
+          <Text style={{ fontSize: 9, color: '#8e8e8e' }}>2024년</Text>
+        </View>
+      </View>
+      <View style={{ height: RATIO_CHART_H + 16, width: RATIO_CHART_W, overflow: 'hidden' }}>
+        {pts.slice(0, -1).map((p, i) => {
+          const q = pts[i + 1];
+          const dx = q.x - p.x;
+          const dy = q.y - p.y;
+          const len = Math.sqrt(dx * dx + dy * dy);
+          const angle = Math.atan2(dy, dx);
+          return (
+            <View key={i} style={{ position: 'absolute', width: len, height: 2, left: (p.x + q.x) / 2 - len / 2, top: (p.y + q.y) / 2 - 1, backgroundColor: '#93c5fd', transform: [{ rotate: `${angle}rad` }] }} />
+          );
+        })}
+        {pts.map((p, i) => {
+          const isLast = i === n - 1;
+          const sz = isLast ? 7 : 5;
+          return (
+            <View key={i} style={{ position: 'absolute', width: sz, height: sz, borderRadius: sz / 2, backgroundColor: isLast ? '#0095f6' : '#bfdbfe', left: p.x - sz / 2, top: p.y - sz / 2 }} />
+          );
+        })}
+        {REGION_RATIO_LABELS.map((lbl, i) => (
+          <Text key={i} style={{ position: 'absolute', fontSize: 8, color: '#8e8e8e', top: RATIO_CHART_H + 2, left: getX(i) - 10, width: 20, textAlign: 'center' }}>{lbl}</Text>
+        ))}
+      </View>
+      <Text style={{ fontSize: 9, color: '#8e8e8e', marginTop: 2 }}>출처: 통계청 KOSIS 주택소유통계 · 시군구 단위 · 데이터 없는 지역은 미표시</Text>
+    </View>
+  );
+});
+
+type RegionViewMode = 'series' | 'compare';
+
+const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo(({ regionCharts }) => {
+  const [viewMode, setViewMode] = useState<RegionViewMode>('series');
+
+  // ── 즐겨찾기 (두 모드 공통 보조 기능) ──
+  const [bookmarks, setBookmarks] = useState<RegionBookmark[]>([]);
+
+  useEffect(() => {
+    AsyncStorage.getItem(REGION_BOOKMARKS_KEY).then(v => {
+      if (v === null) {
+        saveBookmarks(DEFAULT_REGION_BOOKMARKS);
+      } else {
+        setBookmarks(JSON.parse(v));
+      }
+    });
+  }, []);
+
+  const saveBookmarks = useCallback(async (next: RegionBookmark[]) => {
+    setBookmarks(next);
+    await AsyncStorage.setItem(REGION_BOOKMARKS_KEY, JSON.stringify(next));
+  }, []);
+
+  const isBookmarked = useCallback((area: string, dongName?: string) =>
+    bookmarks.some(b => b.area === area && b.dongName === dongName),
+  [bookmarks]);
+
+  // ── 시계열 모드 상태 ──
+  const siList = useMemo(() => {
+    const available = new Set(regionCharts.map(r => r.si));
+    return SI_ORDER.filter(si => available.has(si));
+  }, [regionCharts]);
+
+  const [selectedSi, setSelectedSi] = useState<string>(() => siList[0] ?? '');
+  const [selectedArea, setSelectedArea] = useState<string | null>(null);
+  const [selectedDong, setSelectedDong] = useState<string | null>(null);
+
+  // 복원 시 area/dong을 정확히 재현하기 위한 ref (selectedSi effect가 덮어쓰기 전에 적용)
+  const pendingAreaRef = useRef<string | null>(null);
+  const pendingDongRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (pendingAreaRef.current !== null) {
+      const area = pendingAreaRef.current;
+      const dong = pendingDongRef.current;
+      pendingAreaRef.current = null;
+      pendingDongRef.current = null;
+      const valid = regionCharts.find(r => r.area === area && r.si === selectedSi);
+      if (valid) { setSelectedArea(area); setSelectedDong(dong); return; }
+    }
+    const first = regionCharts.find(r => r.si === selectedSi);
+    setSelectedArea(first?.area ?? null);
+    setSelectedDong(null);
+  }, [selectedSi, regionCharts]);
+
+  const handleAreaSelect = useCallback((area: string) => {
+    setSelectedArea(area);
+    setSelectedDong(null);
+  }, []);
+
+  const guList = useMemo(() => regionCharts.filter(r => r.si === selectedSi), [regionCharts, selectedSi]);
+  const selectedEntry = useMemo(() => regionCharts.find(r => r.area === selectedArea) ?? null, [regionCharts, selectedArea]);
+  const dongList = useMemo(() => selectedEntry?.dongs ?? [], [selectedEntry]);
+  const showGuRow = guList.length > 1;
+
+  const seriesData = useMemo(() => {
+    if (!selectedEntry) return null;
+    if (selectedDong) {
+      const dong = selectedEntry.dongs.find(d => d.name === selectedDong);
+      if (dong) return { data: dong.data, yearlyData: dong.yearlyData, title: `${selectedEntry.label} ${selectedDong}`, unit: selectedEntry.unit };
+    }
+    return { data: selectedEntry.data, yearlyData: selectedEntry.yearlyData, title: selectedEntry.title, unit: selectedEntry.unit };
+  }, [selectedEntry, selectedDong]);
+
+  const starred = selectedEntry ? isBookmarked(selectedEntry.area, selectedDong ?? undefined) : false;
+
+  const toggleBookmark = useCallback(() => {
+    if (!selectedEntry) return;
+    const dong = selectedDong ?? undefined;
+    const displayLabel = dong
+      ? `${selectedEntry.si} ${selectedEntry.label} ${dong}`
+      : `${selectedEntry.si} ${selectedEntry.label}`;
+    const bm: RegionBookmark = { area: selectedEntry.area, si: selectedEntry.si, label: selectedEntry.label, dongName: dong, displayLabel };
+    if (isBookmarked(selectedEntry.area, dong)) {
+      saveBookmarks(bookmarks.filter(b => !(b.area === selectedEntry.area && b.dongName === dong)));
+    } else {
+      saveBookmarks([...bookmarks, bm]);
+    }
+  }, [selectedEntry, selectedDong, bookmarks, isBookmarked, saveBookmarks]);
+
+  const resetSeries = useCallback(() => {
+    const firstSi = siList[0] ?? '';
+    setSelectedSi(firstSi);
+    setSelectedDong(null);
+    // selectedArea는 selectedSi effect가 자동으로 첫 번째로 설정함
+  }, [siList]);
+
+  // ── 비교 모드 상태 ──
+  const [compareAreas, setCompareAreas] = useState<string[]>([]);
+  const [compareSi, setCompareSi] = useState<string>(() => siList[0] ?? '');
+
+  const toggleCompareArea = useCallback((area: string) => {
+    setCompareAreas(prev =>
+      prev.includes(area) ? prev.filter(a => a !== area) : [...prev, area]
+    );
+  }, []);
+
+  const loadFavoritesIntoCompare = useCallback(() => {
+    const areaKeys = [...new Set(bookmarks.map(b => b.area))];
+    setCompareAreas(prev => [...new Set([...prev, ...areaKeys])]);
+  }, [bookmarks]);
+
+  const resetCompare = useCallback(() => {
+    setCompareAreas([]);
+  }, []);
+
+  const compareGuList = useMemo(
+    () => regionCharts.filter(r => r.si === compareSi),
+    [regionCharts, compareSi]
+  );
+
+  const compareData = useMemo<BoxPlotPoint[]>(() => {
+    return compareAreas.flatMap(area => {
+      const entry = regionCharts.find(r => r.area === area);
+      if (!entry || entry.data.length === 0) return [];
+      const latest = entry.data[entry.data.length - 1];
+      const shortLabel = entry.gu ?? entry.si.replace('시', '');
+      return [{ ...latest, label: shortLabel }];
+    });
+  }, [compareAreas, regionCharts]);
+
+  // ── 필터 상태 저장/복원 ──
+  const hydratedRef = useRef(false);
+
+  // regionCharts가 처음 로드될 때 한 번 복원
+  useEffect(() => {
+    if (hydratedRef.current || regionCharts.length === 0) return;
+    hydratedRef.current = true;
+    AsyncStorage.getItem(REGION_FILTER_KEY).then(v => {
+      if (!v) return;
+      try {
+        const s = JSON.parse(v);
+        if (s.viewMode === 'series' || s.viewMode === 'compare') setViewMode(s.viewMode);
+        if (Array.isArray(s.compareAreas)) {
+          const valid = s.compareAreas.filter((a: string) => regionCharts.some(r => r.area === a));
+          if (valid.length) setCompareAreas(valid);
+        }
+        if (s.compareSi && regionCharts.some(r => r.si === s.compareSi)) setCompareSi(s.compareSi);
+        if (s.selectedSi && regionCharts.some(r => r.si === s.selectedSi)) {
+          pendingAreaRef.current = s.selectedArea ?? null;
+          pendingDongRef.current = s.selectedDong ?? null;
+          setSelectedSi(s.selectedSi);
+        }
+      } catch {}
+    });
+  }, [regionCharts]);
+
+  // 필터 변경 시 자동 저장 (복원 완료 후에만)
+  useEffect(() => {
+    if (!hydratedRef.current) return;
+    AsyncStorage.setItem(REGION_FILTER_KEY, JSON.stringify({
+      viewMode, selectedSi, selectedArea, selectedDong, compareAreas, compareSi,
+    }));
+  }, [viewMode, selectedSi, selectedArea, selectedDong, compareAreas, compareSi]);
+
+  if (siList.length === 0) return null;
+
+  return (
+    <View style={styles.regionSection}>
+      <Text style={[styles.regionTitle, { marginBottom: 10 }]}>경기도 지역별 실거래가</Text>
+
+      {/* 모드 탭 */}
+      <View style={{ flexDirection: 'row', gap: 8, marginBottom: 14 }}>
+        {([
+          { key: 'series',  label: '시계열' },
+          { key: 'compare', label: `지역 비교${compareAreas.length > 0 ? ` (${compareAreas.length})` : ''}` },
+        ] as { key: RegionViewMode; label: string }[]).map(tab => (
+          <TouchableOpacity
+            key={tab.key}
+            onPress={() => setViewMode(tab.key)}
+            style={{
+              flex: 1, paddingVertical: 8, borderRadius: 10, alignItems: 'center',
+              backgroundColor: viewMode === tab.key ? '#0095f6' : '#fafafa',
+              borderWidth: 1, borderColor: viewMode === tab.key ? '#0095f6' : '#dbdbdb',
+            }}
+          >
+            <Text style={{ fontSize: 13, fontWeight: '600', color: viewMode === tab.key ? '#fff' : '#8e8e8e' }}>
+              {tab.label}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      {viewMode === 'series' ? (
+        /* ══ 시계열 모드 ══ */
+        <View>
+          {/* 시 + 초기화 */}
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flex: 1 }}>
+              <View style={{ flexDirection: 'row', gap: 6 }}>
+                {siList.map(si => (
+                  <TouchableOpacity key={si} onPress={() => setSelectedSi(si)}
+                    style={[styles.regionSiChip, selectedSi === si && styles.regionSiChipActive]}>
+                    <Text style={[styles.regionSiChipText, selectedSi === si && styles.regionSiChipTextActive]}>{si}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </ScrollView>
+            <TouchableOpacity onPress={resetSeries} style={{ marginLeft: 8, paddingHorizontal: 10, paddingVertical: 5, borderRadius: 8, backgroundColor: '#fafafa', borderWidth: 1, borderColor: '#dbdbdb' }}>
+              <Text style={{ fontSize: 11, color: '#8e8e8e', fontWeight: '600' }}>초기화</Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* 구 (구 있는 시만) */}
+          {showGuRow && (
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 8 }}>
+              <View style={{ flexDirection: 'row', gap: 6 }}>
+                {guList.map(r => (
+                  <TouchableOpacity key={r.area} onPress={() => handleAreaSelect(r.area)}
+                    style={[styles.regionGuChip, selectedArea === r.area && styles.regionGuChipActive]}>
+                    <Text style={[styles.regionGuChipText, selectedArea === r.area && styles.regionGuChipTextActive]}>{r.label}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </ScrollView>
+          )}
+
+          {/* 동 */}
+          {dongList.length > 0 && (
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 12 }}>
+              <View style={{ flexDirection: 'row', gap: 6 }}>
+                <TouchableOpacity onPress={() => setSelectedDong(null)}
+                  style={[styles.regionDongChip, selectedDong === null && styles.regionDongChipActive]}>
+                  <Text style={[styles.regionDongChipText, selectedDong === null && styles.regionDongChipTextActive]}>전체</Text>
+                </TouchableOpacity>
+                {dongList.map(d => (
+                  <TouchableOpacity key={d.name} onPress={() => setSelectedDong(d.name)}
+                    style={[styles.regionDongChip, selectedDong === d.name && styles.regionDongChipActive]}>
+                    <Text style={[styles.regionDongChipText, selectedDong === d.name && styles.regionDongChipTextActive]}>{d.name}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </ScrollView>
+          )}
+
+          {seriesData && (
+            <View>
+              {/* 즐겨찾기 저장 버튼 */}
+              <TouchableOpacity onPress={toggleBookmark} style={styles.regionStarBtn}>
+                <Text style={[styles.regionStarBtnText, starred && styles.regionStarBtnTextActive]}>
+                  {starred ? '★ 즐겨찾기 해제' : '☆ 즐겨찾기 추가'}
+                </Text>
+              </TouchableOpacity>
+              {/* 12개월 시계열 박스플랏 */}
+              <BoxPlotChart data={seriesData.data} yearlyData={seriesData.yearlyData}
+                title={seriesData.title} unit={seriesData.unit} />
+              {/* 다주택자 비율 라인차트 */}
+              {selectedEntry && <RegionRatioChart area={selectedEntry.area} />}
+            </View>
+          )}
+        </View>
+
+      ) : (
+        /* ══ 지역 비교 모드 ══ */
+        <View>
+          {/* 즐겨찾기 불러오기 */}
+          {bookmarks.length > 0 && (
+            <TouchableOpacity
+              onPress={loadFavoritesIntoCompare}
+              style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 12, paddingVertical: 7, paddingHorizontal: 12, borderRadius: 10, backgroundColor: '#e7f5ff', borderWidth: 1, borderColor: '#bfdbfe', alignSelf: 'flex-start' }}
+            >
+              <Text style={{ fontSize: 12, fontWeight: '600', color: '#1d4ed8' }}>★ 즐겨찾기 {bookmarks.length}개 불러오기</Text>
+            </TouchableOpacity>
+          )}
+
+          {/* 시 네비게이션 + 초기화 */}
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flex: 1 }}>
+              <View style={{ flexDirection: 'row', gap: 6 }}>
+                {siList.map(si => (
+                  <TouchableOpacity key={si} onPress={() => setCompareSi(si)}
+                    style={[styles.regionSiChip, compareSi === si && styles.regionSiChipActive]}>
+                    <Text style={[styles.regionSiChipText, compareSi === si && styles.regionSiChipTextActive]}>{si}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </ScrollView>
+            {compareAreas.length > 0 && (
+              <TouchableOpacity onPress={resetCompare} style={{ marginLeft: 8, paddingHorizontal: 10, paddingVertical: 5, borderRadius: 8, backgroundColor: '#fee2e2', borderWidth: 1, borderColor: '#fecaca' }}>
+                <Text style={{ fontSize: 11, color: '#dc2626', fontWeight: '600' }}>초기화</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+
+          {/* 구/지역 멀티셀렉트 */}
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 10 }}>
+            <View style={{ flexDirection: 'row', gap: 6 }}>
+              {compareGuList.map(r => {
+                const checked = compareAreas.includes(r.area);
+                return (
+                  <TouchableOpacity key={r.area} onPress={() => toggleCompareArea(r.area)}
+                    style={{ paddingHorizontal: 12, paddingVertical: 6, borderRadius: 16, backgroundColor: checked ? '#0095f6' : '#fafafa', borderWidth: 1, borderColor: checked ? '#0095f6' : '#dbdbdb' }}>
+                    <Text style={{ fontSize: 12, fontWeight: '600', color: checked ? '#fff' : '#8e8e8e' }}>
+                      {checked ? '✓ ' : ''}{r.label}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          </ScrollView>
+
+          {/* 선택된 지역 태그 */}
+          {compareAreas.length > 0 && (
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginBottom: 12 }}>
+              {compareAreas.map(area => {
+                const entry = regionCharts.find(r => r.area === area);
+                if (!entry) return null;
+                const lbl = entry.gu ? `${entry.si.replace('시', '')} ${entry.gu}` : entry.si;
+                return (
+                  <TouchableOpacity key={area} onPress={() => toggleCompareArea(area)}
+                    style={{ paddingHorizontal: 10, paddingVertical: 4, borderRadius: 12, backgroundColor: '#e7f5ff', flexDirection: 'row', alignItems: 'center', gap: 3 }}>
+                    <Text style={{ fontSize: 11, color: '#0095f6', fontWeight: '600' }}>{lbl}</Text>
+                    <Text style={{ fontSize: 10, color: '#8e8e8e' }}>✕</Text>
+                  </TouchableOpacity>
+                );
+              })}
+              <TouchableOpacity onPress={resetCompare}
+                style={{ paddingHorizontal: 10, paddingVertical: 4, borderRadius: 12, backgroundColor: '#fee2e2' }}>
+                <Text style={{ fontSize: 11, color: '#dc2626', fontWeight: '600' }}>전체 해제</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+
+          {compareData.length >= 2 ? (
+            <View>
+              {/* 가격 비교 박스플랏 */}
+              <BoxPlotChart
+                data={compareData}
+                title={`지역별 현재 가격 비교 (${compareData.length}개)`}
+                unit="단위: 억원 · 최근 1개월"
+              />
+              {/* 다주택자 비율 비교 카드 */}
+              {compareAreas.some(a => REGION_RATIO_DATA[a]) && (
+                <View style={{ marginTop: 16, paddingTop: 14, borderTopWidth: 1, borderTopColor: '#fafafa' }}>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+                    <Text style={{ fontSize: 13, fontWeight: '600', color: '#262626' }}>2주택 이상 보유 비율</Text>
+                    <Text style={{ fontSize: 10, color: '#8e8e8e' }}>KOSIS 2024년</Text>
+                  </View>
+                  <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
+                    {compareAreas.map(area => {
+                      const entry = regionCharts.find(r => r.area === area);
+                      if (!entry) return null;
+                      const vals = REGION_RATIO_DATA[area];
+                      const ratio = vals ? vals[vals.length - 1] : null;
+                      const lbl = entry.gu ?? entry.si.replace('시', '');
+                      return (
+                        <View key={area} style={{ paddingHorizontal: 12, paddingVertical: 8, borderRadius: 10, backgroundColor: ratio ? '#e7f5ff' : '#fafafa', borderWidth: 1, borderColor: ratio ? '#bfdbfe' : '#dbdbdb', alignItems: 'center', minWidth: 72 }}>
+                          <Text style={{ fontSize: 10, color: '#8e8e8e', marginBottom: 2 }}>{lbl}</Text>
+                          <Text style={{ fontSize: 18, fontWeight: '600', color: ratio ? '#1d4ed8' : '#8e8e8e' }}>
+                            {ratio != null ? `${ratio}%` : '–'}
+                          </Text>
+                        </View>
+                      );
+                    })}
+                  </View>
+                  <Text style={{ fontSize: 9, color: '#8e8e8e', marginTop: 8 }}>출처: 통계청 KOSIS · 시군구 단위 · 데이터 없는 지역은 – 표시</Text>
+                </View>
+              )}
+            </View>
+          ) : (
+            <View style={{ alignItems: 'center', paddingVertical: 36 }}>
+              <Text style={{ fontSize: 13, color: '#8e8e8e' }}>
+                {compareAreas.length === 0 ? '비교할 지역을 선택하세요' : '지역을 1개 더 선택하세요'}
+              </Text>
+            </View>
+          )}
+        </View>
+      )}
     </View>
   );
 });
@@ -845,7 +1398,7 @@ const ColumnCard: React.FC<ColumnCardProps> = React.memo(
           <MaterialIcons
             name={isBookmarked ? 'bookmark' : 'bookmark-border'}
             size={24}
-            color={isBookmarked ? '#f59e0b' : '#d1d5db'}
+            color={isBookmarked ? '#f59e0b' : '#dbdbdb'}
           />
         </TouchableOpacity>
       </View>
@@ -856,7 +1409,7 @@ const ColumnCard: React.FC<ColumnCardProps> = React.memo(
 
       <View style={styles.columnInfo}>
         <View style={styles.authorInfo}>
-          <MaterialIcons name="person" size={14} color="#6b7280" />
+          <MaterialIcons name="person" size={14} color="#8e8e8e" />
           <View style={styles.authorDetails}>
             <Text style={styles.authorName}>{column.author}</Text>
             <Text style={styles.authorTitle}>{column.authorTitle}</Text>
@@ -880,7 +1433,7 @@ const ColumnCard: React.FC<ColumnCardProps> = React.memo(
 
       <View style={styles.columnFooter}>
         <Text style={styles.readTime}>약 {column.readTime}분 읽음</Text>
-        <MaterialIcons name="chevron-right" size={20} color="#d1d5db" />
+        <MaterialIcons name="chevron-right" size={20} color="#dbdbdb" />
       </View>
     </TouchableOpacity>
     );
@@ -939,7 +1492,7 @@ const DetailModal: React.FC<DetailModalProps> = React.memo(
       <SafeAreaView style={styles.detailContainer}>
         <View style={styles.detailHeader}>
           <TouchableOpacity onPress={onClose} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
-            <MaterialIcons name="close" size={28} color="#1f2937" />
+            <MaterialIcons name="close" size={28} color="#262626" />
           </TouchableOpacity>
           <Text style={styles.detailTitle}>{getCategoryLabel(column.category)}</Text>
           <View style={{ width: 28 }} />
@@ -954,7 +1507,7 @@ const DetailModal: React.FC<DetailModalProps> = React.memo(
           <Text style={styles.detailColumnTitle}>{column.title}</Text>
 
           <View style={styles.detailAuthor}>
-            <MaterialIcons name="person" size={16} color="#2563eb" />
+            <MaterialIcons name="person" size={16} color="#0095f6" />
             <View>
               <Text style={styles.detailAuthorName}>{column.author}</Text>
               <Text style={styles.detailAuthorTitle}>{column.authorTitle}</Text>
@@ -1055,7 +1608,7 @@ const FilterModal: React.FC<FilterModalProps> = React.memo(
       <SafeAreaView style={styles.filterContainer}>
         <View style={styles.filterHeader}>
           <TouchableOpacity onPress={onClose} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
-            <MaterialIcons name="close" size={28} color="#1f2937" />
+            <MaterialIcons name="close" size={28} color="#262626" />
           </TouchableOpacity>
           <Text style={styles.filterTitle}>분석 필터</Text>
           <View style={{ width: 28 }} />
@@ -1080,7 +1633,7 @@ const FilterModal: React.FC<FilterModalProps> = React.memo(
                   <MaterialIcons
                     name={selectedCategory === category.id ? 'radio-button-checked' : 'radio-button-unchecked'}
                     size={24}
-                    color={selectedCategory === category.id ? '#2563eb' : '#d1d5db'}
+                    color={selectedCategory === category.id ? '#0095f6' : '#dbdbdb'}
                   />
                   <Text
                     style={[
@@ -1109,6 +1662,7 @@ export default function InvestmentScreen() {
     termOfDay,
     newsArticles,
     dongCharts,
+    regionCharts,
     taxPolicySummary,
     jongbuseSummary,
     bookmarks,
@@ -1120,6 +1674,7 @@ export default function InvestmentScreen() {
     toggleBookmark,
   } = useInvestmentSync();
 
+  const { opacity, translateY } = useScreenFade();
   const [refreshing, setRefreshing] = useState(false);
   const [selectedColumn, setSelectedColumn] = useState<InvestmentColumn | null>(null);
   const [detailVisible, setDetailVisible] = useState(false);
@@ -1129,7 +1684,7 @@ export default function InvestmentScreen() {
   const handleRefresh = useCallback(async () => {
     setRefreshing(true);
     try {
-      await syncData(true);
+      await syncData();
     } finally {
       setRefreshing(false);
     }
@@ -1205,6 +1760,7 @@ export default function InvestmentScreen() {
     () => (
       <View>
         {termOfDay && <TermOfDayCard term={termOfDay} />}
+        {regionCharts.length > 0 && <RegionBrowser regionCharts={regionCharts} />}
         <View style={styles.statsSection}>
           <View style={styles.statCard}>
             <MaterialIcons name="home-work" size={24} color="#8b5cf6" />
@@ -1214,7 +1770,7 @@ export default function InvestmentScreen() {
         </View>
       </View>
     ),
-    [stats, termOfDay]
+    [stats, termOfDay, regionCharts]
   );
 
   const listFooterComponent = useMemo(
@@ -1230,6 +1786,7 @@ export default function InvestmentScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Animated.View style={{ flex: 1, opacity, transform: [{ translateY }] }}>
       <View style={styles.header}>
         <View style={styles.headerTitleSection}>
           <Text style={styles.headerTitle}>💼 투자 분석</Text>
@@ -1254,7 +1811,7 @@ export default function InvestmentScreen() {
 
       {loading && !columns.length ? (
         <View style={styles.centerContainer}>
-          <ActivityIndicator size="large" color="#2563eb" />
+          <ActivityIndicator size="large" color="#0095f6" />
           <Text style={styles.loadingText}>투자 분석을 불러오는 중...</Text>
         </View>
       ) : columns.length > 0 ? (
@@ -1272,7 +1829,7 @@ export default function InvestmentScreen() {
         />
       ) : (
         <View style={styles.centerContainer}>
-          <MaterialIcons name="article" size={48} color="#d1d5db" />
+          <MaterialIcons name="article" size={48} color="#dbdbdb" />
           <Text style={styles.emptyText}>이용 가능한 투자 분석이 없습니다</Text>
         </View>
       )}
@@ -1284,6 +1841,7 @@ export default function InvestmentScreen() {
         onClose={() => setFilterVisible(false)}
         onSelectCategory={setSelectedCategory}
       />
+      </Animated.View>
     </SafeAreaView>
   );
 }
@@ -1291,7 +1849,7 @@ export default function InvestmentScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9fafb',
+    backgroundColor: '#fafafa',
   },
   header: {
     flexDirection: 'row',
@@ -1301,15 +1859,15 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     backgroundColor: '#fff',
     borderBottomWidth: 1,
-    borderBottomColor: '#e5e7eb',
+    borderBottomColor: '#dbdbdb',
   },
   headerTitleSection: {
     flex: 1,
   },
   headerTitle: {
     fontSize: 24,
-    fontWeight: '700',
-    color: '#1f2937',
+    fontWeight: '600',
+    color: '#262626',
     marginBottom: 4,
   },
   syncStatus: {
@@ -1319,7 +1877,7 @@ const styles = StyleSheet.create({
   },
   syncStatusText: {
     fontSize: 12,
-    color: '#6b7280',
+    color: '#8e8e8e',
   },
   filterButton: {
     padding: 8,
@@ -1351,12 +1909,12 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 16,
     fontSize: 16,
-    color: '#6b7280',
+    color: '#8e8e8e',
   },
   emptyText: {
     marginTop: 16,
     fontSize: 16,
-    color: '#9ca3af',
+    color: '#8e8e8e',
   },
   listContent: {
     paddingHorizontal: 12,
@@ -1375,18 +1933,13 @@ const styles = StyleSheet.create({
     padding: 16,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: '#dbdbdb',
   },
   statNumber: {
     fontSize: 24,
-    fontWeight: '700',
-    color: '#1f2937',
+    fontWeight: '600',
+    color: '#262626',
     marginTop: 8,
-  },
-  statLabel: {
-    fontSize: 12,
-    color: '#6b7280',
-    marginTop: 4,
   },
   columnCard: {
     backgroundColor: '#fff',
@@ -1395,12 +1948,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
     padding: 16,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
+    borderColor: '#dbdbdb',
+    elevation: 0,
   },
   columnHeader: {
     flexDirection: 'row',
@@ -1425,7 +1974,7 @@ const styles = StyleSheet.create({
   },
   dateText: {
     fontSize: 12,
-    color: '#9ca3af',
+    color: '#8e8e8e',
   },
   bookmarkButton: {
     padding: 4,
@@ -1433,7 +1982,7 @@ const styles = StyleSheet.create({
   columnTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1f2937',
+    color: '#262626',
     marginBottom: 10,
     lineHeight: 22,
   },
@@ -1445,8 +1994,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderTopColor: '#f3f4f6',
-    borderBottomColor: '#f3f4f6',
+    borderTopColor: '#fafafa',
+    borderBottomColor: '#fafafa',
   },
   authorInfo: {
     flexDirection: 'row',
@@ -1460,11 +2009,11 @@ const styles = StyleSheet.create({
   authorName: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#1f2937',
+    color: '#262626',
   },
   authorTitle: {
     fontSize: 11,
-    color: '#6b7280',
+    color: '#8e8e8e',
   },
   outlookBadge: {
     flexDirection: 'row',
@@ -1472,7 +2021,7 @@ const styles = StyleSheet.create({
     gap: 4,
     paddingHorizontal: 8,
     paddingVertical: 4,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: '#fafafa',
     borderRadius: 6,
   },
   outlookText: {
@@ -1481,7 +2030,7 @@ const styles = StyleSheet.create({
   },
   columnSummary: {
     fontSize: 13,
-    color: '#6b7280',
+    color: '#8e8e8e',
     lineHeight: 18,
     marginBottom: 10,
   },
@@ -1491,11 +2040,165 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 10,
     borderTopWidth: 1,
-    borderTopColor: '#f3f4f6',
+    borderTopColor: '#fafafa',
   },
   readTime: {
     fontSize: 12,
-    color: '#9ca3af',
+    color: '#8e8e8e',
+  },
+  regionSection: {
+    backgroundColor: '#fff',
+    marginHorizontal: 12,
+    marginVertical: 8,
+    borderRadius: 16,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: '#dbdbdb',
+    elevation: 0,
+  },
+  regionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+    marginBottom: 12,
+  },
+  regionTitle: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#262626',
+  },
+  regionSubtitle: {
+    fontSize: 10,
+    color: '#8e8e8e',
+  },
+  regionSiChip: {
+    paddingVertical: 6,
+    paddingHorizontal: 13,
+    borderRadius: 16,
+    backgroundColor: '#fafafa',
+    borderWidth: 1,
+    borderColor: '#dbdbdb',
+  },
+  regionSiChipActive: {
+    backgroundColor: '#0095f6',
+    borderColor: '#0095f6',
+  },
+  regionSiChipText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#8e8e8e',
+  },
+  regionSiChipTextActive: {
+    color: '#fff',
+  },
+  regionGuChip: {
+    paddingVertical: 5,
+    paddingHorizontal: 11,
+    borderRadius: 14,
+    backgroundColor: '#fafafa',
+    borderWidth: 1,
+    borderColor: '#dbdbdb',
+  },
+  regionGuChipActive: {
+    backgroundColor: '#e7f5ff',
+    borderColor: '#0095f6',
+  },
+  regionGuChipText: {
+    fontSize: 12,
+    fontWeight: '500',
+    color: '#8e8e8e',
+  },
+  regionGuChipTextActive: {
+    color: '#0095f6',
+    fontWeight: '600',
+  },
+  regionDongChip: {
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    borderRadius: 12,
+    backgroundColor: '#fafafa',
+    borderWidth: 1,
+    borderColor: '#dbdbdb',
+  },
+  regionDongChipActive: {
+    backgroundColor: '#1e3a8a',
+    borderColor: '#1e3a8a',
+  },
+  regionDongChipText: {
+    fontSize: 11,
+    fontWeight: '500',
+    color: '#8e8e8e',
+  },
+  regionDongChipTextActive: {
+    color: '#fff',
+    fontWeight: '600',
+  },
+  regionFavToggle: {
+    paddingVertical: 5,
+    paddingHorizontal: 11,
+    borderRadius: 14,
+    backgroundColor: '#fafafa',
+    borderWidth: 1,
+    borderColor: '#dbdbdb',
+  },
+  regionFavToggleActive: {
+    backgroundColor: '#fef3c7',
+    borderColor: '#f59e0b',
+  },
+  regionFavToggleText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#8e8e8e',
+  },
+  regionFavToggleTextActive: {
+    color: '#d97706',
+  },
+  regionStarBtn: {
+    alignSelf: 'flex-end',
+    paddingVertical: 5,
+    paddingHorizontal: 12,
+    borderRadius: 14,
+    backgroundColor: '#fafafa',
+    borderWidth: 1,
+    borderColor: '#dbdbdb',
+    marginBottom: 8,
+  },
+  regionStarBtnText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#8e8e8e',
+  },
+  regionStarBtnTextActive: {
+    color: '#f59e0b',
+  },
+  regionFavRemoveBtn: {
+    alignSelf: 'flex-end',
+    paddingVertical: 5,
+    paddingHorizontal: 12,
+    borderRadius: 14,
+    backgroundColor: '#fef3c7',
+    borderWidth: 1,
+    borderColor: '#f59e0b',
+    marginBottom: 8,
+  },
+  regionFavRemoveBtnText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#d97706',
+  },
+  regionFavEmpty: {
+    alignItems: 'center',
+    paddingVertical: 32,
+    gap: 8,
+  },
+  regionFavEmptyText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#8e8e8e',
+  },
+  regionFavEmptyHint: {
+    fontSize: 12,
+    color: '#dbdbdb',
   },
   footer: {
     paddingVertical: 16,
@@ -1503,11 +2206,11 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontSize: 12,
-    color: '#9ca3af',
+    color: '#8e8e8e',
   },
   detailContainer: {
     flex: 1,
-    backgroundColor: '#f9fafb',
+    backgroundColor: '#fafafa',
   },
   detailHeader: {
     flexDirection: 'row',
@@ -1517,12 +2220,12 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     backgroundColor: '#fff',
     borderBottomWidth: 1,
-    borderBottomColor: '#e5e7eb',
+    borderBottomColor: '#dbdbdb',
   },
   detailTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#1f2937',
+    color: '#262626',
   },
   detailContent: {
     flex: 1,
@@ -1535,20 +2238,20 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     paddingBottom: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#e5e7eb',
+    borderBottomColor: '#dbdbdb',
   },
   detailDate: {
     fontSize: 13,
-    color: '#6b7280',
+    color: '#8e8e8e',
   },
   detailReadTime: {
     fontSize: 13,
-    color: '#6b7280',
+    color: '#8e8e8e',
   },
   detailColumnTitle: {
     fontSize: 20,
-    fontWeight: '700',
-    color: '#1f2937',
+    fontWeight: '600',
+    color: '#262626',
     marginBottom: 16,
     lineHeight: 28,
   },
@@ -1556,7 +2259,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
-    backgroundColor: '#f0f9ff',
+    backgroundColor: '#fafafa',
     padding: 12,
     borderRadius: 10,
     marginBottom: 16,
@@ -1564,11 +2267,11 @@ const styles = StyleSheet.create({
   detailAuthorName: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#1f2937',
+    color: '#262626',
   },
   detailAuthorTitle: {
     fontSize: 12,
-    color: '#6b7280',
+    color: '#8e8e8e',
     marginTop: 2,
   },
   detailStats: {
@@ -1582,17 +2285,17 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: '#dbdbdb',
   },
   statLabel: {
     fontSize: 11,
-    color: '#9ca3af',
+    color: '#8e8e8e',
     marginBottom: 4,
   },
   statValue: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#1f2937',
+    color: '#262626',
   },
   detailSection: {
     backgroundColor: '#fff',
@@ -1600,25 +2303,25 @@ const styles = StyleSheet.create({
     padding: 16,
     marginBottom: 12,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: '#dbdbdb',
   },
   detailSectionTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1f2937',
+    color: '#262626',
     marginBottom: 12,
     paddingBottom: 8,
     borderBottomWidth: 1,
-    borderBottomColor: '#f3f4f6',
+    borderBottomColor: '#fafafa',
   },
   detailSectionContent: {
     fontSize: 14,
-    color: '#4b5563',
+    color: '#8e8e8e',
     lineHeight: 22,
   },
   detailSource: {
     fontSize: 12,
-    color: '#9ca3af',
+    color: '#8e8e8e',
     marginBottom: 16,
     fontStyle: 'italic',
   },
@@ -1627,7 +2330,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 8,
-    backgroundColor: '#16a34a',
+    backgroundColor: '#0095f6',
     borderRadius: 12,
     paddingVertical: 14,
     marginBottom: 32,
@@ -1635,12 +2338,12 @@ const styles = StyleSheet.create({
   readCompleteButtonText: {
     color: '#fff',
     fontSize: 15,
-    fontWeight: '700',
+    fontWeight: '600',
   },
   chartTitle: {
     fontSize: 14,
-    fontWeight: '700',
-    color: '#1f2937',
+    fontWeight: '600',
+    color: '#262626',
     marginBottom: 12,
   },
   fsContainer: {
@@ -1656,8 +2359,8 @@ const styles = StyleSheet.create({
   },
   fsTitle: {
     fontSize: 15,
-    fontWeight: '700',
-    color: '#1f2937',
+    fontWeight: '600',
+    color: '#262626',
   },
   chartChipRow: {
     gap: 8,
@@ -1667,18 +2370,18 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     paddingHorizontal: 14,
     borderRadius: 16,
-    backgroundColor: '#f1f5f9',
+    backgroundColor: '#fafafa',
     borderWidth: 1,
-    borderColor: '#e2e8f0',
+    borderColor: '#dbdbdb',
   },
   chartChipActive: {
-    backgroundColor: '#2563eb',
-    borderColor: '#2563eb',
+    backgroundColor: '#0095f6',
+    borderColor: '#0095f6',
   },
   chartChipText: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#475569',
+    color: '#8e8e8e',
   },
   chartChipTextActive: {
     color: '#fff',
@@ -1689,21 +2392,21 @@ const styles = StyleSheet.create({
   },
   yAxis: {
     justifyContent: 'space-between',
-    height: 80,
-    marginTop: 18,
+    height: TRACK_H,
+    marginTop: TRACK_BOTTOM_Y - TRACK_H,
     marginRight: 8,
     paddingRight: 6,
     borderRightWidth: 1,
-    borderRightColor: '#d1d5db',
+    borderRightColor: '#dbdbdb',
   },
   yAxisLabel: {
     fontSize: 10,
-    color: '#9ca3af',
+    color: '#8e8e8e',
     textAlign: 'right',
   },
   chartUnit: {
     fontSize: 11,
-    color: '#9ca3af',
+    color: '#8e8e8e',
     textAlign: 'right',
     marginTop: 6,
   },
@@ -1715,7 +2418,7 @@ const styles = StyleSheet.create({
     height: 140,
     paddingTop: 8,
     borderBottomWidth: 1,
-    borderBottomColor: '#d1d5db',
+    borderBottomColor: '#dbdbdb',
   },
   barColumn: {
     flex: 1,
@@ -1723,25 +2426,25 @@ const styles = StyleSheet.create({
   },
   barValue: {
     fontSize: 10,
-    color: '#6b7280',
+    color: '#8e8e8e',
     marginBottom: 4,
   },
   barTrack: {
     width: 20,
     height: 80,
     justifyContent: 'flex-end',
-    backgroundColor: '#f3f4f6',
+    backgroundColor: '#fafafa',
     borderRadius: 4,
     overflow: 'hidden',
   },
   barFill: {
     width: '100%',
-    backgroundColor: '#2563eb',
+    backgroundColor: '#0095f6',
     borderRadius: 4,
   },
   barLabel: {
     fontSize: 11,
-    color: '#6b7280',
+    color: '#8e8e8e',
     marginTop: 6,
   },
   viewModeRow: {
@@ -1753,21 +2456,21 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 14,
     borderRadius: 14,
-    backgroundColor: '#f1f5f9',
+    backgroundColor: '#fafafa',
     borderWidth: 1,
-    borderColor: '#e2e8f0',
+    borderColor: '#dbdbdb',
   },
   viewModeButtonActive: {
-    backgroundColor: '#dbeafe',
-    borderColor: '#2563eb',
+    backgroundColor: '#e7f5ff',
+    borderColor: '#0095f6',
   },
   viewModeButtonText: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#64748b',
+    color: '#8e8e8e',
   },
   viewModeButtonTextActive: {
-    color: '#2563eb',
+    color: '#0095f6',
   },
   hChartScroll: {
     flex: 1,
@@ -1778,7 +2481,7 @@ const styles = StyleSheet.create({
     height: 140,
     paddingTop: 8,
     borderBottomWidth: 1,
-    borderBottomColor: '#d1d5db',
+    borderBottomColor: '#dbdbdb',
   },
   hBarColumn: {
     width: 48,
@@ -1794,7 +2497,7 @@ const styles = StyleSheet.create({
     left: '50%',
     marginLeft: -1,
     width: 2,
-    backgroundColor: '#9ca3af',
+    backgroundColor: '#8e8e8e',
   },
   boxRect: {
     position: 'absolute',
@@ -1802,7 +2505,7 @@ const styles = StyleSheet.create({
     right: 2,
     backgroundColor: '#93c5fd',
     borderWidth: 1,
-    borderColor: '#2563eb',
+    borderColor: '#0095f6',
     borderRadius: 2,
   },
   boxMedian: {
@@ -1838,12 +2541,12 @@ const styles = StyleSheet.create({
   },
   boxRangeLabel: {
     fontSize: 9,
-    color: '#9ca3af',
+    color: '#8e8e8e',
     marginTop: 2,
   },
   filterContainer: {
     flex: 1,
-    backgroundColor: '#f9fafb',
+    backgroundColor: '#fafafa',
   },
   filterHeader: {
     flexDirection: 'row',
@@ -1853,12 +2556,12 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     backgroundColor: '#fff',
     borderBottomWidth: 1,
-    borderBottomColor: '#e5e7eb',
+    borderBottomColor: '#dbdbdb',
   },
   filterTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#1f2937',
+    color: '#262626',
   },
   filterContent: {
     flex: 1,
@@ -1869,12 +2572,12 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: '#dbdbdb',
   },
   filterLabel: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#1f2937',
+    color: '#262626',
     marginBottom: 12,
   },
   filterOptions: {
@@ -1887,20 +2590,20 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 10,
     borderRadius: 8,
-    backgroundColor: '#f9fafb',
+    backgroundColor: '#fafafa',
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: '#dbdbdb',
   },
   filterOptionActive: {
-    backgroundColor: '#dbeafe',
-    borderColor: '#2563eb',
+    backgroundColor: '#e7f5ff',
+    borderColor: '#0095f6',
   },
   filterOptionText: {
     fontSize: 14,
-    color: '#6b7280',
+    color: '#8e8e8e',
   },
   filterOptionTextActive: {
-    color: '#2563eb',
+    color: '#0095f6',
     fontWeight: '600',
   },
 
@@ -1908,10 +2611,10 @@ const styles = StyleSheet.create({
   bpTableRow: {
     flexDirection: 'row',
     borderBottomWidth: 1,
-    borderBottomColor: '#f1f5f9',
+    borderBottomColor: '#fafafa',
   },
   bpTableRowAlt: {
-    backgroundColor: '#f8fafc',
+    backgroundColor: '#fafafa',
   },
   bpTableLabelCell: {
     width: 44,
@@ -1919,7 +2622,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
     justifyContent: 'center',
     borderRightWidth: 1,
-    borderRightColor: '#e2e8f0',
+    borderRightColor: '#dbdbdb',
   },
   bpTableCell: {
     width: 52,
@@ -1930,28 +2633,28 @@ const styles = StyleSheet.create({
   },
   bpTableHeader: {
     fontSize: 10,
-    fontWeight: '700',
-    color: '#64748b',
+    fontWeight: '600',
+    color: '#8e8e8e',
   },
   bpTableLabelText: {
     fontSize: 10,
-    color: '#374151',
+    color: '#262626',
     fontWeight: '600',
   },
   bpTableText: {
     fontSize: 10,
-    color: '#374151',
+    color: '#262626',
   },
 
   // TermOfDayCard
   termCard: {
-    backgroundColor: '#faf5ff',
+    backgroundColor: '#fafafa',
     borderRadius: 12,
     marginBottom: 12,
     marginHorizontal: 4,
     padding: 16,
     borderWidth: 1,
-    borderColor: '#e9d5ff',
+    borderColor: '#dbdbdb',
   },
   termHeader: {
     flexDirection: 'row',
@@ -1966,8 +2669,8 @@ const styles = StyleSheet.create({
   },
   termSectionLabel: {
     fontSize: 12,
-    fontWeight: '700',
-    color: '#7c3aed',
+    fontWeight: '600',
+    color: '#0095f6',
     letterSpacing: 0.3,
   },
   termTitleRow: {
@@ -1978,8 +2681,8 @@ const styles = StyleSheet.create({
   },
   termName: {
     fontSize: 20,
-    fontWeight: '800',
-    color: '#1f2937',
+    fontWeight: '600',
+    color: '#262626',
   },
   termCategoryBadge: {
     paddingHorizontal: 8,
@@ -1993,13 +2696,13 @@ const styles = StyleSheet.create({
   },
   termFullName: {
     fontSize: 12,
-    color: '#7c3aed',
+    color: '#0095f6',
     marginBottom: 8,
     fontStyle: 'italic',
   },
   termDefinition: {
     fontSize: 14,
-    color: '#374151',
+    color: '#262626',
     lineHeight: 20,
     marginBottom: 6,
   },
@@ -2012,19 +2715,19 @@ const styles = StyleSheet.create({
   },
   termDetailLabel: {
     fontSize: 12,
-    fontWeight: '700',
-    color: '#4b5563',
+    fontWeight: '600',
+    color: '#8e8e8e',
   },
   termDetailText: {
     fontSize: 13,
-    color: '#4b5563',
+    color: '#8e8e8e',
     lineHeight: 19,
   },
   termTipBox: {
     flexDirection: 'row',
     alignItems: 'flex-start',
     gap: 6,
-    backgroundColor: '#ede9fe',
+    backgroundColor: '#e7f5ff',
     borderRadius: 8,
     padding: 10,
     marginTop: 12,
@@ -2032,7 +2735,7 @@ const styles = StyleSheet.create({
   termTipText: {
     flex: 1,
     fontSize: 13,
-    color: '#5b21b6',
+    color: '#0095f6',
     lineHeight: 18,
     fontWeight: '500',
   },
@@ -2040,7 +2743,7 @@ const styles = StyleSheet.create({
     marginTop: 14,
     paddingVertical: 10,
     borderRadius: 10,
-    backgroundColor: '#7c3aed',
+    backgroundColor: '#0095f6',
     alignItems: 'center',
   },
   termCompleteBtnDone: {
@@ -2049,7 +2752,7 @@ const styles = StyleSheet.create({
   termCompleteBtnText: {
     color: '#fff',
     fontSize: 14,
-    fontWeight: '700',
+    fontWeight: '600',
   },
   termCompleteBtnTextDone: {
     color: '#065f46',
@@ -2069,8 +2772,8 @@ const styles = StyleSheet.create({
   },
   newsSectionLabel: {
     fontSize: 12,
-    fontWeight: '700',
-    color: '#0f766e',
+    fontWeight: '600',
+    color: '#0095f6',
     letterSpacing: 0.3,
   },
   newsArticleCard: {
@@ -2079,9 +2782,9 @@ const styles = StyleSheet.create({
     padding: 14,
     marginBottom: 8,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: '#dbdbdb',
     borderLeftWidth: 3,
-    borderLeftColor: '#0d9488',
+    borderLeftColor: '#0095f6',
   },
   newsArticleHeader: {
     flexDirection: 'row',
@@ -2101,19 +2804,19 @@ const styles = StyleSheet.create({
   },
   newsSourceText: {
     fontSize: 12,
-    color: '#6b7280',
+    color: '#8e8e8e',
     fontWeight: '500',
   },
   newsTitle: {
     fontSize: 14,
-    fontWeight: '700',
-    color: '#111827',
+    fontWeight: '600',
+    color: '#262626',
     lineHeight: 20,
     marginBottom: 6,
   },
   newsSummary: {
     fontSize: 13,
-    color: '#4b5563',
+    color: '#8e8e8e',
     lineHeight: 19,
   },
 });

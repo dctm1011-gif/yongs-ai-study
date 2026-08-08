@@ -15,7 +15,7 @@ from urllib.parse import urlparse
 
 import anthropic
 
-from realestate_api import get_all_areas_chart_data, get_dong_comparison_data, get_molit_api_key
+from realestate_api import get_all_areas_chart_data, get_dong_comparison_data, get_molit_api_key, get_all_regions_chart_data
 from stock_api import pick_and_fetch_stock, load_recent_picks
 
 ROOT = Path(__file__).parent.parent
@@ -563,6 +563,10 @@ def main(target_date: date = None):
     dong_charts = get_dong_comparison_data(target_date, molit_key)
     print(f"[+] 동별 데이터 확보: {len(dong_charts)}개 지역")
 
+    print(f"[*] {target_date} 경기도 전체 지역별(시/구) 실거래가 조회 중...")
+    region_charts = get_all_regions_chart_data(target_date, molit_key)
+    print(f"[+] 지역 탐색 데이터 확보: {len(region_charts)}개 구/시")
+
     client = anthropic.Anthropic(api_key=get_api_key())
 
     print(f"[*] {target_date} 오늘의 관심 종목 선정 중 (웹 검색)...")
@@ -608,6 +612,7 @@ def main(target_date: date = None):
     print(f"[+] 뉴스 기사: {len(news_articles)}개")
     data["newsArticles"] = news_articles
     data["dongCharts"] = dong_charts
+    data["regionCharts"] = region_charts
 
     print(f"[*] {target_date} 양도세 정책 방향 요약 생성 중 (웹 검색)...")
     tax_policy_summary = generate_tax_policy_summary(client, target_date)

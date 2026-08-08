@@ -1,208 +1,148 @@
 {
-  "date": "2026-08-08",
+  "date": "2026-08-09",
   "words": [
     {
-      "word": "insipid",
-      "part_of_speech": "adjective",
-      "meaning_ko": "밋밋한, 무미건조한, 지루한",
-      "explanation": "lacking flavor, interest, or excitement; dull and uninteresting",
-      "example_from_convo": "The movie was so insipid that I fell asleep halfway through",
-      "example_ko": "그 영화는 너무 지루해서 중간에 잠을 잤어",
-      "tip": "Synonym: bland, dull, tedious. Antonym: fascinating, captivating, vivid. 'Insipid' emphasizes lack of flavor or interest, more negative than 'bland'",
-      "emoji": "😑"
-    },
-    {
-      "word": "diligence",
-      "part_of_speech": "noun",
-      "meaning_ko": "근면함, 성실함, 부지런함",
-      "explanation": "care and effort in one's work or duties; persistent attention to tasks",
-      "example_from_convo": "Her diligence in studying paid off when she got a perfect score",
-      "example_ko": "그녀의 공부에 대한 부지런함이 만점으로 보상받았어",
-      "tip": "Synonym: industriousness, assiduity. Antonym: laziness, negligence. 'Diligence' implies consistent, careful effort over time",
-      "emoji": "🏆"
-    },
-    {
-      "word": "preempt",
+      "word": "consummate",
       "part_of_speech": "verb",
-      "meaning_ko": "선제적으로 대처하다, 미리 차단하다, 우선권을 행사하다",
-      "explanation": "to take action to prevent something from happening; to take priority or precedence over something",
-      "example_from_convo": "The government preempted the crisis by releasing emergency funds",
-      "example_ko": "정부는 긴급자금을 풀어서 위기를 미리 차단했어",
-      "tip": "Synonym: forestall, prevent, anticipate. Antonym: allow, permit. 'Preempt' suggests acting ahead of time to avoid a problem",
-      "emoji": "🛡️"
+      "meaning_ko": "완성하다, 완벽하게 이루다",
+      "explanation": "To complete or perfect something, or to reach the highest degree of excellence; often used to describe achieving a goal with skill and finality",
+      "example_from_convo": "After years of training, she consummated her dream of becoming a professional dancer",
+      "example_ko": "수년간의 훈련 후, 그녀는 전문 무용수가 되려는 꿈을 완성했다",
+      "tip": "동의어: fulfill, achieve, perfect / 반의어: abandon, fail / 'consummate professional'은 '완벽한 전문가'라는 숙어로도 사용됨",
+      "emoji": "🎯"
     },
     {
-      "word": "temerity",
-      "part_of_speech": "noun",
-      "meaning_ko": "무모함, 대담함 (부정적인 의미)",
-      "explanation": "excessive confidence or boldness; audacity to do something risky or disrespectful",
-      "example_from_convo": "She had the temerity to question the CEO's decision at the meeting",
-      "example_ko": "그녀는 회의에서 CEO의 결정에 이의를 제기할 정도로 뻔뻔했어",
-      "tip": "Synonym: audacity, boldness, nerve. Antonym: caution, timidity, restraint. 'Temerity' has a NEGATIVE connotation unlike neutral 'boldness'",
-      "emoji": "😤"
-    },
-    {
-      "word": "amiable",
+      "word": "exiguous",
       "part_of_speech": "adjective",
-      "meaning_ko": "친근한, 상냥한, 온화한",
-      "explanation": "friendly, pleasant, and sociable; having a good-natured and likable quality",
-      "example_from_convo": "My new coworker is so amiable that everyone likes her immediately",
-      "example_ko": "내 새 동료는 너무 상냥해서 모두가 그녀를 좋아해",
-      "tip": "Synonym: friendly, genial, affable. Antonym: unfriendly, hostile, grumpy. 'Amiable' emphasizes warmth in social interactions",
-      "emoji": "😊"
+      "meaning_ko": "극히 적은, 부족한",
+      "explanation": "Scanty or extremely small in quantity; barely sufficient or inadequate in amount",
+      "example_from_convo": "The exiguous budget forced the team to cancel several important projects",
+      "example_ko": "극히 적은 예산으로 인해 팀은 여러 중요한 프로젝트를 취소해야 했다",
+      "tip": "동의어: meager, scant, scanty (모두 '부족한'이지만 exiguous는 더 formal하고 극단적) / 반의어: abundant, copious / meager와 달리 exiguous는 더 정식적인 문어체",
+      "emoji": "📉"
+    },
+    {
+      "word": "nefarious",
+      "part_of_speech": "adjective",
+      "meaning_ko": "악의적인, 불명예스러운",
+      "explanation": "Infamous or wicked; relating to something morally evil and criminal in nature",
+      "example_from_convo": "The detective uncovered the villain's nefarious plot to steal the diamond",
+      "example_ko": "형사는 악당의 다이아몬드를 훔치려는 악의적인 계획을 적발했다",
+      "tip": "동의어: wicked, evil, sinister, villainous (nefarious는 더 formal하고 dramatic) / 반의어: virtuous, noble, righteous / 항상 부정적 도덕성을 암시",
+      "emoji": "😈"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "insipid",
-      "question": "What does 'insipid' mean?",
+      "word": "consummate",
+      "question": "What does 'consummate' mean?",
       "options": [
-        "lacking flavor, interest, or excitement; dull",
-        "slightly salty or bitter in taste",
-        "creative but poorly executed",
-        "incredibly entertaining and memorable"
+        "To complete or perfect something with finality",
+        "To begin or start a new project",
+        "To estimate or calculate approximately",
+        "To abandon or give up on a goal"
       ],
       "answer": 0,
-      "explanation": "'Insipid'는 맛이나 흥미가 없는 밋밋함을 의미합니다",
+      "explanation": "consummate는 '완성하다, 완벽하게 이루다'는 의미로, 무언가를 최종적으로 완성하는 것을 나타냅니다.",
       "option_explanations": [
         null,
-        "Near-synonym but narrower: 'salty'는 특정 맛을 지칭하며, 'insipid'는 모든 맛이 없음을 의미합니다",
-        "Related word but different: '창의적'은 'insipid'와 반대 개념입니다",
-        "Antonym: 'entertaining'은 'insipid'의 정반대입니다"
+        "antonym(반의어): begin, start는 완성의 반대 개념입니다",
+        "관련어: estimate는 '추정하다'로 consummate와 무관합니다",
+        "antonym(반의어): abandon은 consummate의 정반대 의미입니다"
       ]
     },
     {
       "type": "meaning",
-      "word": "temerity",
-      "question": "Which definition best matches 'temerity'?",
+      "word": "exiguous",
+      "question": "What does 'exiguous' mean?",
       "options": [
-        "excessive boldness or audacity, often showing disrespect",
-        "confident and skilled ability in a particular field",
-        "careful and strategic planning",
-        "shy and withdrawn behavior"
+        "Extremely small or scanty in quantity",
+        "Abundant or plentiful in supply",
+        "Moderate or average in size",
+        "Growing or expanding rapidly"
       ],
       "answer": 0,
-      "explanation": "'Temerity'는 과도한 대담함을 의미하며 부정적인 뉘앙스를 가집니다",
+      "explanation": "exiguous는 '극히 적은, 부족한'이라는 의미로 수량이 거의 없음을 나타냅니다.",
       "option_explanations": [
         null,
-        "Near-synonym but positive: 'confidence'는 좋은 의미의 자신감이지만, 'temerity'는 무모하고 불경스러운 의미입니다",
-        "Related word but opposite in meaning: 'planning'은 신중한 행동을 의미하므로 정반대입니다",
-        "Antonym: 'shyness'는 'temerity'의 정반대입니다"
+        "antonym(반의어): abundant는 exiguous의 정반대로 '풍부한'을 의미합니다",
+        "관련어: moderate는 '적당한'이지만 exiguous처럼 부족함을 강조하지 않습니다",
+        "관련어: expanding은 '증가하는'으로 수량의 개념이 다릅니다"
       ]
     },
     {
       "type": "meaning",
-      "word": "amiable",
-      "question": "What is the primary meaning of 'amiable'?",
+      "word": "nefarious",
+      "question": "What does 'nefarious' mean?",
       "options": [
-        "friendly and pleasant in manner",
-        "physically attractive or beautiful",
-        "intelligent and well-educated",
-        "ambitious and competitive"
+        "Morally evil or wicked in nature",
+        "Somewhat unfortunate or unlucky",
+        "Mysterious or unknown in origin",
+        "Honest and morally upright"
       ],
       "answer": 0,
-      "explanation": "'Amiable'는 사람의 친근하고 상냥한 성품을 나타냅니다",
+      "explanation": "nefarious는 '악의적인, 불명예스러운'으로 도덕적으로 악한 것을 강조합니다.",
       "option_explanations": [
         null,
-        "Related word but different concept: '아름다운'은 외모에 관한 것이고, 'amiable'은 성격에 관한 것입니다",
-        "Unrelated concept: '지능'은 'amiable'과 무관합니다",
-        "Antonym-like: '경쟁적'은 'amiable'한 성품의 반대입니다"
+        "near-synonym(유사어): unfortunate는 단순히 '운이 안 좋은' 정도이며, nefarious처럼 도덕적 악의를 포함하지 않습니다",
+        "관련어: mysterious는 '신비로운'으로 도덕성과 무관합니다",
+        "antonym(반의어): honest and upright는 nefarious의 정반대 의미입니다"
       ]
     },
     {
       "type": "fill_blank",
-      "word": "preempt",
-      "question": "The company decided to _______ potential legal issues by consulting lawyers before launching the product.",
+      "word": "consummate",
+      "question": "After decades of dedication, the artist finally _____ her life's work with this masterpiece.",
       "options": [
-        "preempt",
-        "allow",
-        "overlook",
-        "postpone"
+        "consummated",
+        "abandoned",
+        "commenced",
+        "sabotaged"
       ],
       "answer": 0,
-      "explanation": "'Preempt'는 '미리 문제에 대처하다'는 의미로 문맥에 맞습니다",
+      "explanation": "consummated는 '완성했다'는 의미로, 수십 년의 헌신 끝에 예술 작품을 완성한 것을 나타냅니다.",
       "option_explanations": [
         null,
-        "Antonym: 'allow'는 문제가 발생하도록 허용한다는 의미로 반대입니다",
-        "Near-synonym but doesn't fit context: 'overlook'은 '간과하다'는 의미로, 미리 대처하는 'preempt'의 의미와 맞지 않습니다",
-        "Related word but wrong meaning: 'postpone'는 '미루다'는 의미로, 적극적인 대처를 의미하지 않습니다"
-      ]
-    },
-    {
-      "type": "fill_blank",
-      "word": "diligence",
-      "question": "The student's _______ in completing her assignments earned her the teacher's praise and respect.",
-      "options": [
-        "diligence",
-        "negligence",
-        "procrastination",
-        "creativity"
-      ],
-      "answer": 0,
-      "explanation": "'Diligence'는 '근면성'을 의미하며 문맥상 칭찬받는 이유로 적합합니다",
-      "option_explanations": [
-        null,
-        "Antonym: 'negligence'는 부주의를 의미하며 칭찬의 대상이 될 수 없습니다",
-        "Near-synonym but wrong context: 'procrastination'은 지연을 의미하며 긍정적인 결과와 맞지 않습니다",
-        "Related word but different meaning: 'creativity'는 창의성을 의미하며 '근면성'과는 다릅니다"
-      ]
-    },
-    {
-      "type": "fill_blank",
-      "word": "insipid",
-      "question": "The critics panned the new restaurant for serving _______ food with no distinctive flavors or character.",
-      "options": [
-        "insipid",
-        "flavorful",
-        "exotic",
-        "expensive"
-      ],
-      "answer": 0,
-      "explanation": "'Insipid'는 '밋밋한'이라는 의미로 맛이 없는 음식을 설명합니다",
-      "option_explanations": [
-        null,
-        "Antonym: 'flavorful'는 '맛있는'이라는 의미로 정반대입니다",
-        "Near-synonym but wrong context: 'exotic'은 '이국적인'을 의미하며, 밋밋함을 나타내지 않습니다",
-        "Unrelated word: 'expensive'는 가격에 관한 것이고 맛과는 무관합니다"
+        "antonym(반의어): abandoned는 '포기했다'로 완성과 정반대입니다",
+        "near-synonym(유사어): commenced는 '시작했다'로 완성이 아닌 시작을 의미합니다",
+        "antonym(반의어): sabotaged는 '방해했다'로 완성의 반대 행동입니다"
       ]
     },
     {
       "type": "situation",
-      "word": "amiable",
-      "question": "Your new neighbor always greets you warmly, invites you to community events, and listens carefully to your problems. You would describe your neighbor as _______.",
+      "question": "A student has worked on a research project for an entire year. Her professor says, 'Your thesis _____ years of rigorous investigation.' Which word best fits?",
       "options": [
-        "amiable",
-        "hostile",
-        "reserved",
-        "ambitious"
+        "consummated",
+        "initiated",
+        "frustrated",
+        "dismissed"
       ],
       "answer": 0,
-      "explanation": "이웃의 따뜻하고 친근한 행동은 'amiable'한 성품을 반영합니다",
+      "explanation": "consummated는 '완성했다'로, 1년간의 연구를 완벽하게 마친 학위논문을 설명하기에 가장 적절합니다.",
       "option_explanations": [
         null,
-        "Antonym: 'hostile'는 적대적인 태도를 의미하며 상황과 정반대입니다",
-        "Plausible-but-wrong: 'reserved'는 조용하고 예의바른 의미인데, 상황에서는 따뜻한 초대와 경청이 묘사되어 단순히 '내성적'이 아닙니다",
-        "Unrelated word: 'ambitious'는 야심 있는을 의미하며 이웃의 행동과 무관합니다"
+        "near-synonym(유사어): initiated는 '시작했다'로 긴 연구 과정의 결과물을 설명하기에 부적절합니다",
+        "antonym(반의어): frustrated는 '좌절했다'로 성공한 연구를 부정적으로 평가합니다",
+        "unrelated word: dismissed는 '무시했다'로 긍정적 평가와 맞지 않습니다"
       ]
     },
     {
       "type": "situation",
-      "word": "temerity",
-      "question": "A junior employee interrupts the CEO during a board meeting to argue about the company's strategy without being asked for their opinion. This shows _______.",
+      "question": "A manager reviewing a team member's report finds it difficult to understand due to unclear language. The manager says, 'This report needs to be more _____.' Which word best fits?",
       "options": [
-        "temerity",
-        "humility",
-        "respectfulness",
-        "caution"
+        "pellucid",
+        "obfuscated",
+        "elaborate",
+        "verbose"
       ],
       "answer": 0,
-      "explanation": "직원의 무모한 행동은 'temerity'라는 과도한 대담함을 보여줍니다",
+      "explanation": "pellucid(명확한)는 이해하기 어려운 보고서를 명확하게 만들어야 한다는 관리자의 지적을 가장 잘 나타냅니다.",
       "option_explanations": [
         null,
-        "Antonym: 'humility'는 겸손함을 의미하며 정반대입니다",
-        "Related but plausible-wrong: 'respectfulness'는 직원의 행동과 정반대로 존경심이 부족합니다",
-        "Antonym-like: 'caution'은 신중함을 의미하며 무모함과 반대입니다"
+        "antonym(반의어): obfuscated는 '모호하게 한'으로 문제를 더 악화시킵니다",
+        "near-synonym(유사어): elaborate는 '더 자세히 설명한'인데, 현재 문제가 복잡성이 아닌 명확성이므로 적절하지 않습니다",
+        "related word: verbose는 '장황한'으로 길이를 늘리기만 하고 명확성을 보장하지 않습니다"
       ]
     }
   ]

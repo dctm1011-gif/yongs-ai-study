@@ -83,22 +83,23 @@ function MainTabs() {
         <Tab.Navigator
         screenOptions={{
           headerShown: false,
-          tabBarActiveTintColor: '#2563eb',
-          tabBarInactiveTintColor: '#ccc',
+          tabBarActiveTintColor: '#262626',
+          tabBarInactiveTintColor: '#8e8e8e',
           tabBarLabelStyle: {
-            fontSize: 11,
-            fontWeight: '600',
+            fontSize: 10,
+            fontWeight: '400',
             marginTop: 2,
             marginBottom: 4,
           },
           tabBarStyle: {
             backgroundColor: '#fff',
             borderTopWidth: 1,
-            borderTopColor: '#e5e7eb',
-            height: 56,
+            borderTopColor: '#dbdbdb',
+            height: 60,
             paddingTop: 4,
-            paddingBottom: 4,
-            elevation: 2,
+            paddingBottom: 6,
+            elevation: 0,
+            shadowOpacity: 0,
           },
           tabBarIconStyle: {
             marginTop: 2,
@@ -111,7 +112,7 @@ function MainTabs() {
           options={{
             title: 'Voca',
             tabBarIcon: ({ color }) => (
-              <MaterialIcons name="language" size={24} color={color} />
+              <MaterialIcons name="language" size={26} color={color} />
             ),
           }}
         />
@@ -121,7 +122,7 @@ function MainTabs() {
           options={{
             title: 'TOEFL',
             tabBarIcon: ({ color }) => (
-              <MaterialIcons name="school" size={24} color={color} />
+              <MaterialIcons name="school" size={26} color={color} />
             ),
           }}
         />
@@ -132,7 +133,7 @@ function MainTabs() {
             options={{
               title: 'Investment',
               tabBarIcon: ({ color }) => (
-                <MaterialIcons name="trending-up" size={24} color={color} />
+                <MaterialIcons name="trending-up" size={26} color={color} />
               ),
             }}
           />
@@ -143,7 +144,7 @@ function MainTabs() {
           options={{
             title: '교양',
             tabBarIcon: ({ color }) => (
-              <MaterialIcons name="menu-book" size={24} color={color} />
+              <MaterialIcons name="menu-book" size={26} color={color} />
             ),
           }}
         />

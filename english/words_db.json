@@ -1730,5 +1730,41 @@
     "explanation": "friendly, pleasant, and sociable; having a good-natured and likable quality",
     "tip": "Synonym: friendly, genial, affable. Antonym: unfriendly, hostile, grumpy. 'Amiable' emphasizes warmth in social interactions",
     "emoji": "😊"
+  },
+  {
+    "id": "consummate",
+    "word": "consummate",
+    "pos": "verb",
+    "date": "2026-08-09",
+    "meaning": "완성하다, 완벽하게 이루다",
+    "example_ko": "수년간의 훈련 후, 그녀는 전문 무용수가 되려는 꿈을 완성했다",
+    "example_en": "After years of training, she consummated her dream of becoming a professional dancer",
+    "explanation": "To complete or perfect something, or to reach the highest degree of excellence; often used to describe achieving a goal with skill and finality",
+    "tip": "동의어: fulfill, achieve, perfect / 반의어: abandon, fail / 'consummate professional'은 '완벽한 전문가'라는 숙어로도 사용됨",
+    "emoji": "🎯"
+  },
+  {
+    "id": "exiguous",
+    "word": "exiguous",
+    "pos": "adjective",
+    "date": "2026-08-09",
+    "meaning": "극히 적은, 부족한",
+    "example_ko": "극히 적은 예산으로 인해 팀은 여러 중요한 프로젝트를 취소해야 했다",
+    "example_en": "The exiguous budget forced the team to cancel several important projects",
+    "explanation": "Scanty or extremely small in quantity; barely sufficient or inadequate in amount",
+    "tip": "동의어: meager, scant, scanty (모두 '부족한'이지만 exiguous는 더 formal하고 극단적) / 반의어: abundant, copious / meager와 달리 exiguous는 더 정식적인 문어체",
+    "emoji": "📉"
+  },
+  {
+    "id": "nefarious",
+    "word": "nefarious",
+    "pos": "adjective",
+    "date": "2026-08-09",
+    "meaning": "악의적인, 불명예스러운",
+    "example_ko": "형사는 악당의 다이아몬드를 훔치려는 악의적인 계획을 적발했다",
+    "example_en": "The detective uncovered the villain's nefarious plot to steal the diamond",
+    "explanation": "Infamous or wicked; relating to something morally evil and criminal in nature",
+    "tip": "동의어: wicked, evil, sinister, villainous (nefarious는 더 formal하고 dramatic) / 반의어: virtuous, noble, righteous / 항상 부정적 도덕성을 암시",
+    "emoji": "😈"
   }
 ]

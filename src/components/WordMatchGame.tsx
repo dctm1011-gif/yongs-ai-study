@@ -223,7 +223,7 @@ export default function WordMatchGame() {
   if (gameState === 'loading') {
     return (
       <View style={styles.centered}>
-        <ActivityIndicator size="large" color="#2563eb" />
+        <ActivityIndicator size="large" color="#0095f6" />
       </View>
     );
   }
@@ -297,7 +297,7 @@ export default function WordMatchGame() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
+    backgroundColor: '#fff',
     padding: 12,
   },
   centered: {
@@ -305,6 +305,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 32,
+    backgroundColor: '#fff',
   },
   emptyEmoji: {
     fontSize: 48,
@@ -312,13 +313,13 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 18,
-    fontWeight: '700',
-    color: '#1e293b',
+    fontWeight: '600',
+    color: '#262626',
     marginBottom: 8,
   },
   emptySubtext: {
     fontSize: 13,
-    color: '#64748b',
+    color: '#8e8e8e',
     textAlign: 'center',
     lineHeight: 20,
   },
@@ -331,8 +332,8 @@ const styles = StyleSheet.create({
   },
   statusText: {
     fontSize: 14,
-    fontWeight: '700',
-    color: '#1e293b',
+    fontWeight: '600',
+    color: '#262626',
   },
   gridWrapper: {
     flex: 1,
@@ -346,23 +347,24 @@ const styles = StyleSheet.create({
   completeOverlay: {
     position: 'absolute',
     top: 0, left: 0, right: 0, bottom: 0,
-    backgroundColor: 'rgba(248, 250, 252, 0.88)',
+    backgroundColor: 'rgba(255, 255, 255, 0.92)',
     justifyContent: 'center',
     alignItems: 'center',
   },
   completeEmoji: { fontSize: 52, marginBottom: 10 },
-  completeTitle: { fontSize: 26, fontWeight: '800', color: '#1e293b', marginBottom: 6 },
-  completeSub: { fontSize: 14, color: '#64748b', marginBottom: 14 },
+  completeTitle: { fontSize: 26, fontWeight: '600', color: '#262626', marginBottom: 6 },
+  completeSub: { fontSize: 14, color: '#8e8e8e', marginBottom: 14 },
   completeBtn: {
-    backgroundColor: '#2563eb',
+    backgroundColor: '#0095f6',
     paddingVertical: 12, paddingHorizontal: 36,
     borderRadius: 12, marginBottom: 12,
   },
   completeBtnDone: { backgroundColor: '#10b981' },
-  completeBtnText: { color: '#fff', fontWeight: '700', fontSize: 16 },
+  completeBtnText: { color: '#fff', fontWeight: '600', fontSize: 16 },
   completeDailyNote: {
-    fontSize: 12, color: '#64748b',
-    backgroundColor: '#e2e8f0',
+    fontSize: 12, color: '#8e8e8e',
+    backgroundColor: '#fafafa',
+    borderWidth: 1, borderColor: '#dbdbdb',
     paddingHorizontal: 14, paddingVertical: 6,
     borderRadius: 20,
   },
@@ -371,7 +373,7 @@ const styles = StyleSheet.create({
     aspectRatio: 0.85,
     marginBottom: 8,
     borderRadius: 10,
-    backgroundColor: '#2563eb',
+    backgroundColor: '#0095f6',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 6,
@@ -379,7 +381,7 @@ const styles = StyleSheet.create({
   cardFlipped: {
     backgroundColor: '#fff',
     borderWidth: 1,
-    borderColor: '#cbd5e1',
+    borderColor: '#dbdbdb',
   },
   cardMatched: {
     backgroundColor: '#d1fae5',
@@ -388,18 +390,18 @@ const styles = StyleSheet.create({
   cardText: {
     fontSize: 10,
     fontWeight: '600',
-    color: '#1e293b',
+    color: '#262626',
     textAlign: 'center',
   },
   cardBackText: {
     fontSize: 16,
-    fontWeight: '800',
+    fontWeight: '600',
     color: '#dbeafe',
     textAlign: 'center',
   },
   cardWordText: {
-    color: '#2563eb',
+    color: '#0095f6',
     fontSize: 11,
-    fontWeight: '700',
+    fontWeight: '600',
   },
 });

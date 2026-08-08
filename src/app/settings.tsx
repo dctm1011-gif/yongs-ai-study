@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, Alert, FlatList } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, Alert, FlatList, Animated } from 'react-native';
+import { useScreenFade } from '../hooks/useScreenFade';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LAST_BUILD_TIME } from '../constants/buildInfo';
@@ -16,6 +17,7 @@ interface FeedbackItem {
 
 export default function SettingsScreen() {
   const { user } = useAuth();
+  const { opacity, translateY } = useScreenFade();
   const [feedback, setFeedback] = useState('');
   const [feedbackList, setFeedbackList] = useState<FeedbackItem[]>([]);
   const [remindersEnabled, setRemindersEnabled] = useState(false);
@@ -111,9 +113,10 @@ export default function SettingsScreen() {
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>⚙️ 설정</Text>
+        <Text style={styles.headerTitle}>설정</Text>
       </View>
       <ScrollView contentContainerStyle={styles.content}>
+        <Animated.View style={{ opacity, transform: [{ translateY }] }}>
         {buildTime && (
           <View style={styles.buildInfoContainer}>
             <Text style={styles.buildInfoLabel}>📦 최종 빌드</Text>
@@ -122,7 +125,7 @@ export default function SettingsScreen() {
         )}
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>🔔 알림 설정</Text>
+          <Text style={styles.sectionTitle}>알림 설정</Text>
           <Text style={styles.feedbackDesc}>
             08:00~22:00, 매시간 학습 알림을 받습니다.
           </Text>
@@ -139,7 +142,7 @@ export default function SettingsScreen() {
         <View style={styles.divider} />
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>💬 피드백</Text>
+          <Text style={styles.sectionTitle}>피드백</Text>
           <Text style={styles.feedbackDesc}>
             앱을 사용하면서 불편한 점이나 추가했으면 하는 기능을 알려주세요.
           </Text>
@@ -156,7 +159,7 @@ export default function SettingsScreen() {
             style={styles.submitButton}
             onPress={submitFeedback}
           >
-            <Text style={styles.submitButtonText}>✉️ 피드백 제출</Text>
+            <Text style={styles.submitButtonText}>피드백 제출</Text>
           </TouchableOpacity>
 
           {feedbackList.length > 0 && (
@@ -215,6 +218,7 @@ export default function SettingsScreen() {
             <Text style={styles.value}>투자 분석</Text>
           </View>
         </View>
+        </Animated.View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -226,9 +230,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#f8fafc',
   },
   header: {
-    backgroundColor: '#10b981',
-    paddingHorizontal: 16,
+    backgroundColor: '#2563eb',
+    paddingHorizontal: 20,
     paddingVertical: 18,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 3,
   },
   headerTitle: {
     fontSize: 22,
@@ -236,7 +245,7 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   content: {
-    padding: 12,
+    padding: 16,
     paddingBottom: 80,
   },
   buildInfoContainer: {
@@ -261,14 +270,19 @@ const styles = StyleSheet.create({
   },
   section: {
     backgroundColor: '#fff',
-    borderRadius: 12,
-    marginVertical: 8,
-    padding: 16,
+    borderRadius: 16,
+    marginVertical: 6,
+    padding: 18,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
   },
   sectionTitle: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#10b981',
+    color: '#2563eb',
     marginBottom: 8,
   },
   feedbackDesc: {
@@ -293,8 +307,8 @@ const styles = StyleSheet.create({
   submitButton: {
     paddingVertical: 12,
     paddingHorizontal: 16,
-    backgroundColor: '#10b981',
-    borderRadius: 8,
+    backgroundColor: '#2563eb',
+    borderRadius: 12,
     alignItems: 'center',
     marginBottom: 14,
   },
@@ -312,7 +326,7 @@ const styles = StyleSheet.create({
   feedbackListTitle: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#10b981',
+    color: '#2563eb',
     marginBottom: 10,
   },
   feedbackItem: {
@@ -376,9 +390,9 @@ const styles = StyleSheet.create({
   },
   testButton: {
     backgroundColor: '#ef4444',
-    paddingVertical: 12,
+    paddingVertical: 13,
     paddingHorizontal: 16,
-    borderRadius: 10,
+    borderRadius: 12,
     alignItems: 'center',
     marginTop: 10,
   },

@@ -9,7 +9,10 @@ import {
   Platform,
   Alert,
   ActivityIndicator,
+  Animated,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useStaggerFade } from '../hooks/useScreenFade';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as IntentLauncher from 'expo-intent-launcher';
 import { getDatabase, ref, set as dbSet, get } from 'firebase/database';
@@ -54,6 +57,7 @@ async function openMillie() {
 export default function CultureScreen() {
   const { user } = useAuth();
   const uid = user?.uid ?? '';
+  const cards = useStaggerFade(3, 70);
 
   const [readingDone, setReadingDone] = useState(false);
   const [synced, setSynced] = useState(false);
@@ -124,19 +128,20 @@ export default function CultureScreen() {
   if (loading) {
     return (
       <View style={s.centered}>
-        <ActivityIndicator size="large" color="#2563eb" />
+        <ActivityIndicator size="large" color="#0095f6" />
       </View>
     );
   }
 
   return (
+    <SafeAreaView style={s.safeArea} edges={['top']}>
     <ScrollView style={s.container} contentContainerStyle={s.content}>
       <Text style={s.screenTitle}>교양</Text>
 
       {/* 독서 카드 */}
-      <View style={s.card}>
+      <Animated.View style={[s.card, { opacity: cards[0].opacity, transform: [{ translateY: cards[0].translateY }] }]}>
         <View style={s.cardHeader}>
-          <MaterialIcons name="menu-book" size={24} color="#2563eb" />
+          <MaterialIcons name="menu-book" size={24} color="#0095f6" />
           <Text style={s.cardTitle}>오늘의 독서</Text>
           {streak > 0 && (
             <View style={s.streakBadge}>
@@ -192,10 +197,10 @@ export default function CultureScreen() {
 
         <View style={s.divider} />
         <BookSection uid={uid} />
-      </View>
+      </Animated.View>
 
       {/* 사자성어 카드 (준비 중) */}
-      <View style={[s.card, s.cardDisabled]}>
+      <Animated.View style={[s.card, s.cardDisabled, { opacity: cards[1].opacity, transform: [{ translateY: cards[1].translateY }] }]}>
         <View style={s.cardHeader}>
           <MaterialIcons name="translate" size={24} color="#9ca3af" />
           <Text style={[s.cardTitle, s.cardTitleDisabled]}>사자성어</Text>
@@ -204,10 +209,10 @@ export default function CultureScreen() {
           </View>
         </View>
         <Text style={s.disabledDesc}>매일 사자성어 하나씩 학습</Text>
-      </View>
+      </Animated.View>
 
       {/* 상식 카드 (준비 중) */}
-      <View style={[s.card, s.cardDisabled]}>
+      <Animated.View style={[s.card, s.cardDisabled, { opacity: cards[2].opacity, transform: [{ translateY: cards[2].translateY }] }]}>
         <View style={s.cardHeader}>
           <MaterialIcons name="lightbulb" size={24} color="#9ca3af" />
           <Text style={[s.cardTitle, s.cardTitleDisabled]}>오늘의 상식</Text>
@@ -216,30 +221,36 @@ export default function CultureScreen() {
           </View>
         </View>
         <Text style={s.disabledDesc}>교양 상식 퀴즈</Text>
-      </View>
+      </Animated.View>
     </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const s = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   centered: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#fff',
   },
   container: {
     flex: 1,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: '#fff',
   },
   content: {
     padding: 16,
-    paddingTop: 56,
+    paddingTop: 16,
     paddingBottom: 32,
   },
   screenTitle: {
     fontSize: 26,
-    fontWeight: '700',
-    color: '#111827',
+    fontWeight: '600',
+    color: '#262626',
     marginBottom: 20,
   },
   card: {
@@ -247,11 +258,9 @@ const s = StyleSheet.create({
     borderRadius: 16,
     padding: 20,
     marginBottom: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.06,
-    shadowRadius: 4,
-    elevation: 2,
+    borderWidth: 1,
+    borderColor: '#dbdbdb',
+    elevation: 0,
   },
   cardDisabled: {
     opacity: 0.6,
@@ -264,12 +273,12 @@ const s = StyleSheet.create({
   },
   cardTitle: {
     fontSize: 18,
-    fontWeight: '700',
-    color: '#111827',
+    fontWeight: '600',
+    color: '#262626',
     flex: 1,
   },
   cardTitleDisabled: {
-    color: '#9ca3af',
+    color: '#8e8e8e',
   },
   streakBadge: {
     backgroundColor: '#fff7ed',
@@ -285,14 +294,16 @@ const s = StyleSheet.create({
     color: '#ea580c',
   },
   comingSoonBadge: {
-    backgroundColor: '#f3f4f6',
+    backgroundColor: '#fafafa',
     borderRadius: 20,
     paddingHorizontal: 10,
     paddingVertical: 3,
+    borderWidth: 1,
+    borderColor: '#dbdbdb',
   },
   comingSoonText: {
     fontSize: 12,
-    color: '#9ca3af',
+    color: '#8e8e8e',
     fontWeight: '500',
   },
   goalRow: {
@@ -303,7 +314,7 @@ const s = StyleSheet.create({
   },
   goalText: {
     fontSize: 14,
-    color: '#6b7280',
+    color: '#8e8e8e',
   },
   doneBox: {
     alignItems: 'center',
@@ -317,13 +328,13 @@ const s = StyleSheet.create({
   },
   doneSub: {
     fontSize: 13,
-    color: '#6b7280',
+    color: '#8e8e8e',
   },
   completeBtn: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#2563eb',
+    backgroundColor: '#0095f6',
     borderRadius: 12,
     paddingVertical: 14,
     gap: 8,
@@ -332,7 +343,7 @@ const s = StyleSheet.create({
   completeBtnText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: '600',
   },
   btnDisabled: {
     opacity: 0.6,
@@ -406,12 +417,12 @@ const s = StyleSheet.create({
   },
   divider: {
     height: 1,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: '#dbdbdb',
     marginVertical: 16,
   },
   disabledDesc: {
     fontSize: 14,
-    color: '#9ca3af',
+    color: '#8e8e8e',
     marginTop: 2,
   },
 });

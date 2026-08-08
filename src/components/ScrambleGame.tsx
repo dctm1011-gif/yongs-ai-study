@@ -233,7 +233,7 @@ export default function ScrambleGame() {
 
   // ── 로딩 ─────────────────────────────────────────────────────────────────
   if (gameState === 'loading') {
-    return <View style={s.centered}><ActivityIndicator size="large" color="#7c3aed" /></View>;
+    return <View style={s.centered}><ActivityIndicator size="large" color="#0095f6" /></View>;
   }
 
   if (gameState === 'empty') {
@@ -288,12 +288,12 @@ export default function ScrambleGame() {
   const answerBorderColor =
     feedback === 'correct'  ? '#16a34a' :
     feedback === 'wrong'    ? '#ef4444' :
-    feedback === 'revealed' ? '#f59e0b' : '#c4b5fd';
+    feedback === 'revealed' ? '#f59e0b' : '#dbdbdb';
 
   const answerBg =
     feedback === 'correct'  ? '#dcfce7' :
     feedback === 'wrong'    ? '#fee2e2' :
-    feedback === 'revealed' ? '#fef3c7' : '#f5f3ff';
+    feedback === 'revealed' ? '#fef3c7' : '#fafafa';
 
   const slotFilledStyle = feedback === 'revealed' ? s.answerSlotRevealed : s.answerSlotFilled;
 
@@ -373,92 +373,88 @@ export default function ScrambleGame() {
 }
 
 const s = StyleSheet.create({
-  centered: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 28 },
+  centered: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 28, backgroundColor: '#fff' },
   bigEmoji: { fontSize: 58, marginBottom: 14 },
-  emptyTitle: { fontSize: 18, fontWeight: '700', color: '#1e293b', marginBottom: 8 },
-  emptySub: { fontSize: 14, color: '#64748b', textAlign: 'center', lineHeight: 22 },
+  emptyTitle: { fontSize: 18, fontWeight: '600', color: '#262626', marginBottom: 8 },
+  emptySub: { fontSize: 14, color: '#8e8e8e', textAlign: 'center', lineHeight: 22 },
 
-  completePage: { alignItems: 'center', padding: 28, paddingBottom: 48 },
-  completeTitle: { fontSize: 30, fontWeight: '800', color: '#1e293b', marginBottom: 8 },
-  completeScore: { fontSize: 20, color: '#7c3aed', fontWeight: '700', marginBottom: 28 },
+  completePage: { alignItems: 'center', padding: 28, paddingBottom: 48, backgroundColor: '#fff' },
+  completeTitle: { fontSize: 30, fontWeight: '600', color: '#262626', marginBottom: 8 },
+  completeScore: { fontSize: 20, color: '#0095f6', fontWeight: '600', marginBottom: 28 },
   completeBtn: {
-    backgroundColor: '#7c3aed', borderRadius: 14,
+    backgroundColor: '#0095f6', borderRadius: 14,
     paddingHorizontal: 36, paddingVertical: 15, marginBottom: 24,
   },
-  completeBtnText: { color: '#fff', fontSize: 16, fontWeight: '700' },
+  completeBtnText: { color: '#fff', fontSize: 16, fontWeight: '600' },
   syncedBadge: {
     backgroundColor: '#dcfce7', borderRadius: 12,
     paddingHorizontal: 24, paddingVertical: 12, marginBottom: 24,
   },
-  syncedText: { color: '#16a34a', fontWeight: '700', fontSize: 16 },
+  syncedText: { color: '#16a34a', fontWeight: '600', fontSize: 16 },
 
   reviewSection: { width: '100%', marginTop: 8 },
-  reviewTitle: { fontSize: 15, fontWeight: '700', color: '#92400e', marginBottom: 10 },
+  reviewTitle: { fontSize: 15, fontWeight: '600', color: '#262626', marginBottom: 10 },
   reviewItem: {
     flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
     paddingVertical: 10, paddingHorizontal: 14,
-    backgroundColor: '#fef3c7', borderRadius: 10, marginBottom: 6,
+    backgroundColor: '#fafafa', borderWidth: 1, borderColor: '#dbdbdb', borderRadius: 10, marginBottom: 6,
   },
-  reviewWord: { fontSize: 15, fontWeight: '800', color: '#92400e' },
-  reviewMeaning: { fontSize: 13, color: '#78350f', flex: 1, textAlign: 'right', marginLeft: 8 },
+  reviewWord: { fontSize: 15, fontWeight: '600', color: '#262626' },
+  reviewMeaning: { fontSize: 13, color: '#8e8e8e', flex: 1, textAlign: 'right', marginLeft: 8 },
 
-  container: { flex: 1, backgroundColor: '#faf5ff', paddingHorizontal: 20, paddingBottom: 20 },
-  progressBar: { height: 5, backgroundColor: '#ede9fe', borderRadius: 3, marginTop: 14, marginBottom: 4 },
-  progressFill: { height: 5, backgroundColor: '#7c3aed', borderRadius: 3 },
-  progressLabel: { fontSize: 12, color: '#a78bfa', textAlign: 'right', marginBottom: 20, fontWeight: '600' },
+  container: { flex: 1, backgroundColor: '#fff', paddingHorizontal: 20, paddingBottom: 20 },
+  progressBar: { height: 5, backgroundColor: '#fafafa', borderWidth: 1, borderColor: '#dbdbdb', borderRadius: 3, marginTop: 14, marginBottom: 4 },
+  progressFill: { height: 5, backgroundColor: '#0095f6', borderRadius: 3 },
+  progressLabel: { fontSize: 12, color: '#8e8e8e', textAlign: 'right', marginBottom: 20, fontWeight: '600' },
 
   meaningBox: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 12 },
-  meaningHint: { fontSize: 13, color: '#a78bfa', fontWeight: '600', marginBottom: 10, letterSpacing: 0.5 },
-  meaningText: { fontSize: 24, fontWeight: '700', color: '#1e293b', textAlign: 'center', lineHeight: 34 },
+  meaningHint: { fontSize: 13, color: '#8e8e8e', fontWeight: '600', marginBottom: 10, letterSpacing: 0.5 },
+  meaningText: { fontSize: 24, fontWeight: '600', color: '#262626', textAlign: 'center', lineHeight: 34 },
 
   answerArea: {
     flexDirection: 'row', flexWrap: 'wrap', gap: 6,
     justifyContent: 'center', alignItems: 'center',
     padding: 14, borderRadius: 18, marginBottom: 28,
-    borderWidth: 2, minHeight: 70,
+    borderWidth: 1, minHeight: 70,
   },
   answerSlotEmpty: {
-    borderWidth: 2, borderColor: '#c4b5fd', borderStyle: 'dashed',
+    borderWidth: 1, borderColor: '#dbdbdb', borderStyle: 'dashed',
     borderRadius: 10, backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center',
   },
   answerSlotFilled: {
-    borderRadius: 10, backgroundColor: '#7c3aed',
-    borderWidth: 2, borderColor: '#7c3aed',
+    borderRadius: 10, backgroundColor: '#0095f6',
+    borderWidth: 1, borderColor: '#0095f6',
     alignItems: 'center', justifyContent: 'center',
   },
   answerSlotRevealed: {
     borderRadius: 10, backgroundColor: '#f59e0b',
-    borderWidth: 2, borderColor: '#f59e0b',
+    borderWidth: 1, borderColor: '#f59e0b',
     alignItems: 'center', justifyContent: 'center',
   },
   answerSlot: {},
-  answerLetter: { fontWeight: '800', color: '#fff' },
+  answerLetter: { fontWeight: '600', color: '#fff' },
   answerLetterRevealed: { color: '#fff' },
 
   tilesArea: { paddingBottom: 8, alignItems: 'center', gap: 16 },
   tilesRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, justifyContent: 'center' },
   tile: {
     borderRadius: 12, backgroundColor: '#fff',
-    borderWidth: 2, borderColor: '#7c3aed',
+    borderWidth: 1, borderColor: '#0095f6',
     alignItems: 'center', justifyContent: 'center',
-    shadowColor: '#7c3aed', shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.18, shadowRadius: 5, elevation: 4,
   },
-  tileLetter: { fontWeight: '800', color: '#7c3aed' },
+  tileLetter: { fontWeight: '600', color: '#0095f6' },
 
   btnRow: { flexDirection: 'row', gap: 10, alignItems: 'center' },
   backspaceBtn: {
     backgroundColor: '#fff', borderRadius: 12,
     paddingHorizontal: 22, paddingVertical: 11,
-    borderWidth: 1.5, borderColor: '#e2e8f0',
-    shadowColor: '#000', shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.06, shadowRadius: 3, elevation: 2,
+    borderWidth: 1, borderColor: '#dbdbdb',
   },
-  backspaceText: { fontSize: 16, color: '#64748b', fontWeight: '600' },
+  backspaceText: { fontSize: 16, color: '#8e8e8e', fontWeight: '600' },
   answerBtn: {
     paddingVertical: 11, paddingHorizontal: 16,
-    backgroundColor: '#fef3c7', borderWidth: 1.5, borderColor: '#f59e0b',
+    backgroundColor: '#fff', borderWidth: 1, borderColor: '#dbdbdb',
     borderRadius: 12,
   },
-  answerBtnText: { fontSize: 14, fontWeight: '700', color: '#b45309' },
+  answerBtnText: { fontSize: 14, fontWeight: '600', color: '#0095f6' },
 });

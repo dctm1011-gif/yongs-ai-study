@@ -3,8 +3,9 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import WordMatchGame from './WordMatchGame';
 import CrosswordGame from './CrosswordGame';
 import ScrambleGame from './ScrambleGame';
+import SentenceQuizGame from './SentenceQuizGame';
 
-type Mode = 'select' | 'match' | 'crossword' | 'scramble';
+type Mode = 'select' | 'match' | 'crossword' | 'scramble' | 'sentence';
 
 export default function GameHub() {
   const [mode, setMode] = useState<Mode>('select');
@@ -42,6 +43,17 @@ export default function GameHub() {
     );
   }
 
+  if (mode === 'sentence') {
+    return (
+      <View style={s.flex}>
+        <TouchableOpacity style={s.backBar} onPress={() => setMode('select')}>
+          <Text style={s.backText}>← 게임 선택</Text>
+        </TouchableOpacity>
+        <SentenceQuizGame />
+      </View>
+    );
+  }
+
   return (
     <View style={s.container}>
       <Text style={s.title}>게임 선택</Text>
@@ -72,31 +84,42 @@ export default function GameHub() {
         </View>
         <Text style={s.arrow}>›</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity style={[s.card, s.cardNew]} onPress={() => setMode('sentence')} activeOpacity={0.8}>
+        <Text style={s.cardEmoji}>🔍</Text>
+        <View style={s.cardBody}>
+          <Text style={s.cardName}>예문 O/X</Text>
+          <Text style={s.cardDesc}>예문이 자연스러운지 뉘앙스를 판단하세요</Text>
+        </View>
+        <Text style={s.arrow}>›</Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
 const s = StyleSheet.create({
-  flex: { flex: 1 },
+  flex: { flex: 1, backgroundColor: '#fff' },
   backBar: {
     paddingHorizontal: 16,
-    paddingVertical: 10,
+    paddingVertical: 13,
+    minHeight: 44,
+    justifyContent: 'center',
     backgroundColor: '#fff',
     borderBottomWidth: 1,
-    borderBottomColor: '#e5e7eb',
+    borderBottomColor: '#dbdbdb',
   },
-  backText: { fontSize: 14, fontWeight: '600', color: '#2563eb' },
+  backText: { fontSize: 14, fontWeight: '600', color: '#0095f6' },
 
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
+    backgroundColor: '#fff',
     paddingHorizontal: 20,
     justifyContent: 'center',
   },
   title: {
     fontSize: 22,
-    fontWeight: '800',
-    color: '#1e293b',
+    fontWeight: '600',
+    color: '#262626',
     textAlign: 'center',
     marginBottom: 28,
   },
@@ -107,16 +130,15 @@ const s = StyleSheet.create({
     borderRadius: 16,
     padding: 20,
     marginVertical: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 4,
-    elevation: 3,
+    borderWidth: 1,
+    borderColor: '#dbdbdb',
+    elevation: 0,
     gap: 16,
   },
   cardEmoji: { fontSize: 36 },
   cardBody: { flex: 1 },
-  cardName: { fontSize: 17, fontWeight: '700', color: '#1e293b', marginBottom: 4 },
-  cardDesc: { fontSize: 12, color: '#64748b' },
-  arrow: { fontSize: 26, color: '#94a3b8', fontWeight: '300' },
+  cardNew: { borderWidth: 1.5, borderColor: '#0095f6' },
+  cardName: { fontSize: 17, fontWeight: '600', color: '#262626', marginBottom: 4 },
+  cardDesc: { fontSize: 12, color: '#8e8e8e' },
+  arrow: { fontSize: 26, color: '#8e8e8e', fontWeight: '300' },
 });

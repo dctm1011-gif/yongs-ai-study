@@ -1,10 +1,5 @@
 [
   {
-    "date": "2026-07-29",
-    "name": "NVIDIA",
-    "ticker": "NVDA"
-  },
-  {
     "date": "2026-07-30",
     "name": "Bloom Energy",
     "ticker": "BE"
@@ -48,5 +43,10 @@
     "date": "2026-08-07",
     "name": "삼성전자",
     "ticker": "005930.KS"
+  },
+  {
+    "date": "2026-08-08",
+    "name": "SK하이닉스",
+    "ticker": "000660.KS"
   }
 ]

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, Alert, ToastAndroid, Linking, Modal } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, Alert, ToastAndroid, Linking, Modal, Animated } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useScreenFade } from '../hooks/useScreenFade';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Speech from 'expo-speech';
 import { cacheManager } from '../utils/CacheManager';
@@ -158,6 +159,7 @@ export default function VocaScreen() {
   const [lastUpdateTime, setLastUpdateTime] = useState<string | null>(null);
   const [cacheTimeLeft, setCacheTimeLeft] = useState<string>('캐시 정보 로딩 중...');
   const [speakingWordId, setSpeakingWordId] = useState<string | null>(null);
+  const { opacity, translateY } = useScreenFade();
 
   // Performance monitoring
   useEffect(() => {
@@ -641,7 +643,7 @@ export default function VocaScreen() {
           <Text style={styles.headerTitle}>📚 Voca</Text>
         </View>
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#2563eb" />
+          <ActivityIndicator size="large" color="#0095f6" />
           <Text style={styles.loadingText}>Netlify에서 데이터를 가져오는 중...</Text>
         </View>
       </SafeAreaView>
@@ -664,6 +666,7 @@ export default function VocaScreen() {
 
   return (
     <SafeAreaView style={styles.screen}>
+      <Animated.View style={{ flex: 1, opacity, transform: [{ translateY }] }}>
       <View style={styles.header}>
         <View style={styles.headerTop}>
           <View>
@@ -797,6 +800,7 @@ export default function VocaScreen() {
           </View>
         </View>
       </Modal>
+      </Animated.View>
     </SafeAreaView>
   );
 }
@@ -1028,17 +1032,14 @@ const StatsView = React.memo(({ stats }: { stats: any }) => (
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#f8fafc',
+    backgroundColor: '#fff',
   },
   header: {
-    backgroundColor: '#2563eb',
+    backgroundColor: '#fff',
     paddingHorizontal: 16,
     paddingVertical: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 3,
+    borderBottomWidth: 1,
+    borderBottomColor: '#dbdbdb',
   },
   headerTop: {
     flexDirection: 'row',
@@ -1047,23 +1048,23 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 22,
-    fontWeight: '800',
-    color: '#fff',
+    fontWeight: '600',
+    color: '#262626',
     marginBottom: 2,
   },
   headerSubtitle: {
     fontSize: 11,
-    color: '#dbeafe',
+    color: '#8e8e8e',
   },
   headerInfo: {
     marginTop: 10,
     paddingTop: 8,
     borderTopWidth: 1,
-    borderTopColor: 'rgba(255,255,255,0.2)',
+    borderTopColor: '#dbdbdb',
   },
   headerInfoText: {
     fontSize: 10,
-    color: '#e0e7ff',
+    color: '#8e8e8e',
     marginVertical: 2,
   },
   refreshButton: {
@@ -1078,28 +1079,30 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     backgroundColor: '#fff',
     borderBottomWidth: 1,
-    borderBottomColor: '#e5e7eb',
+    borderBottomColor: '#dbdbdb',
     gap: 8,
   },
   filterButton: {
-    paddingVertical: 8,
-    paddingHorizontal: 12,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    minHeight: 40,
+    justifyContent: 'center',
     borderRadius: 20,
-    backgroundColor: '#f1f5f9',
+    backgroundColor: '#fff',
     borderWidth: 1,
-    borderColor: '#cbd5e1',
+    borderColor: '#dbdbdb',
   },
   filterButtonActive: {
-    backgroundColor: '#dbeafe',
-    borderColor: '#2563eb',
+    backgroundColor: '#fff',
+    borderColor: '#0095f6',
   },
   filterButtonText: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#64748b',
+    color: '#8e8e8e',
   },
   filterButtonTextActive: {
-    color: '#2563eb',
+    color: '#0095f6',
   },
   loadingContainer: {
     flex: 1,
@@ -1110,7 +1113,7 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 12,
     fontSize: 14,
-    color: '#64748b',
+    color: '#8e8e8e',
     textAlign: 'center',
   },
   tabButtons: {
@@ -1119,23 +1122,28 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     backgroundColor: '#fff',
     borderBottomWidth: 1,
-    borderBottomColor: '#e5e7eb',
+    borderBottomColor: '#dbdbdb',
   },
   tabButton: {
     flex: 1,
-    paddingVertical: 10,
+    paddingVertical: 12,
+    minHeight: 44,
+    justifyContent: 'center',
     marginHorizontal: 4,
     borderRadius: 8,
     alignItems: 'center',
-    backgroundColor: '#f1f5f9',
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#dbdbdb',
   },
   tabButtonActive: {
-    backgroundColor: '#2563eb',
+    backgroundColor: '#0095f6',
+    borderColor: '#0095f6',
   },
   tabButtonText: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#64748b',
+    color: '#8e8e8e',
   },
   tabButtonTextActive: {
     color: '#fff',
@@ -1149,17 +1157,13 @@ const styles = StyleSheet.create({
     marginVertical: 6,
     padding: 14,
     borderRadius: 12,
-    borderLeftWidth: 5,
-    borderLeftColor: '#2563eb',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.08,
-    shadowRadius: 2,
-    elevation: 2,
+    borderWidth: 1,
+    borderColor: '#dbdbdb',
+    elevation: 0,
   },
   cardRead: {
     opacity: 0.5,
-    backgroundColor: '#f1f5f9',
+    backgroundColor: '#fafafa',
   },
   cardHeader: {
     flexDirection: 'row',
@@ -1181,12 +1185,12 @@ const styles = StyleSheet.create({
   },
   word: {
     fontSize: 16,
-    fontWeight: '700',
-    color: '#1e293b',
+    fontWeight: '600',
+    color: '#262626',
   },
   pos: {
     fontSize: 11,
-    color: '#94a3b8',
+    color: '#8e8e8e',
     marginTop: 2,
   },
   speakerButton: {
@@ -1202,27 +1206,27 @@ const styles = StyleSheet.create({
   },
   updateDate: {
     fontSize: 10,
-    color: '#94a3b8',
+    color: '#8e8e8e',
   },
   readBadge: {
     fontSize: 16,
-    color: '#2563eb',
+    color: '#0095f6',
   },
   meaning: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#1e293b',
+    color: '#262626',
     marginBottom: 6,
   },
   explanation: {
     fontSize: 12,
-    color: '#64748b',
+    color: '#8e8e8e',
     marginBottom: 6,
     lineHeight: 18,
   },
   example: {
     fontSize: 12,
-    color: '#94a3b8',
+    color: '#8e8e8e',
     fontStyle: 'italic',
   },
   googleSearchBtn: {
@@ -1232,12 +1236,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     borderRadius: 14,
     borderWidth: 1,
-    borderColor: '#bfdbfe',
-    backgroundColor: '#eff6ff',
+    borderColor: '#dbdbdb',
+    backgroundColor: '#fff',
   },
   googleSearchBtnText: {
     fontSize: 12,
-    color: '#2563eb',
+    color: '#0095f6',
     fontWeight: '600',
   },
   debugOverlay: {
@@ -1319,24 +1323,20 @@ const styles = StyleSheet.create({
     marginVertical: 6,
     padding: 16,
     borderRadius: 12,
-    borderLeftWidth: 5,
-    borderLeftColor: '#2563eb',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.08,
-    shadowRadius: 2,
-    elevation: 2,
+    borderWidth: 1,
+    borderColor: '#dbdbdb',
+    elevation: 0,
   },
   quizWord: {
     fontSize: 16,
-    fontWeight: '700',
-    color: '#2563eb',
+    fontWeight: '600',
+    color: '#0095f6',
     marginBottom: 8,
   },
   quizQuestion: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#1e293b',
+    color: '#262626',
     marginBottom: 12,
   },
   optionsContainer: {
@@ -1346,9 +1346,9 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 12,
     borderRadius: 8,
-    backgroundColor: '#f1f5f9',
+    backgroundColor: '#fff',
     borderWidth: 1,
-    borderColor: '#e2e8f0',
+    borderColor: '#dbdbdb',
   },
   optionCorrect: {
     backgroundColor: '#d1fae5',
@@ -1360,7 +1360,7 @@ const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: 13,
-    color: '#1e293b',
+    color: '#262626',
     fontWeight: '500',
   },
   optionTextCorrect: {
@@ -1381,16 +1381,16 @@ const styles = StyleSheet.create({
     marginTop: 8,
     paddingVertical: 14,
     borderRadius: 12,
-    backgroundColor: '#2563eb',
+    backgroundColor: '#0095f6',
     alignItems: 'center',
   },
   completeButtonDim: {
-    backgroundColor: '#94a3b8',
+    backgroundColor: '#b2dffc',
   },
   completeButtonText: {
     color: '#fff',
     fontSize: 15,
-    fontWeight: '700',
+    fontWeight: '600',
   },
   answerFeedback: {
     marginTop: 10,
@@ -1406,21 +1406,21 @@ const styles = StyleSheet.create({
   },
   explanationBox: {
     marginTop: 10,
-    backgroundColor: '#eff6ff',
+    backgroundColor: '#fafafa',
     borderRadius: 8,
     padding: 12,
     borderLeftWidth: 3,
-    borderLeftColor: '#2563eb',
+    borderLeftColor: '#0095f6',
   },
   explanationLabel: {
     fontSize: 11,
     fontWeight: '700',
-    color: '#2563eb',
+    color: '#0095f6',
     marginBottom: 4,
   },
   explanationText: {
     fontSize: 13,
-    color: '#1e293b',
+    color: '#262626',
     lineHeight: 20,
   },
   wrongExplBox: {
@@ -1429,12 +1429,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 12,
     borderWidth: 1,
-    borderColor: '#e2e8f0',
+    borderColor: '#dbdbdb',
   },
   wrongExplTitle: {
     fontSize: 11,
     fontWeight: '700',
-    color: '#64748b',
+    color: '#8e8e8e',
     marginBottom: 8,
   },
   wrongExplItem: {
@@ -1461,21 +1461,19 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     marginVertical: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.08,
-    shadowRadius: 2,
-    elevation: 2,
+    borderWidth: 1,
+    borderColor: '#dbdbdb',
+    elevation: 0,
   },
   statLabel: {
     fontSize: 13,
-    color: '#64748b',
+    color: '#8e8e8e',
     fontWeight: '600',
     marginBottom: 6,
   },
   statValue: {
     fontSize: 28,
-    fontWeight: '800',
-    color: '#2563eb',
+    fontWeight: '600',
+    color: '#0095f6',
   },
 });

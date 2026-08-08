@@ -85,6 +85,18 @@ export interface DongChartEntry {
   multiOwnerRatioByYear?: { label: string; ratio: number }[]; // 통계청 주택소유통계: 2주택자 이상 비율(%)
 }
 
+export interface RegionChartEntry {
+  area: string;          // 내부 키 (예: "수원_장안")
+  si: string;            // 시 (예: "수원시")
+  gu: string | null;     // 구 (예: "장안구", 단일시는 null)
+  label: string;         // 표시명 (gu가 있으면 gu, 없으면 si)
+  title: string;
+  unit: string;
+  data: BoxPlotPoint[];
+  yearlyData: BoxPlotPoint[];
+  dongs: { name: string; data: BoxPlotPoint[]; yearlyData: BoxPlotPoint[] }[];
+}
+
 const BOOKMARKS_KEY = 'investment_bookmarks';
 
 // 통계청 주택소유통계 기반 정적 폴백 데이터 (실측치)
@@ -199,6 +211,7 @@ export function useInvestmentSync() {
   const [termOfDay, setTermOfDay] = useState<DailyTerm | null>(null);
   const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
   const [dongCharts, setDongCharts] = useState<DongChartEntry[]>([]);
+  const [regionCharts, setRegionCharts] = useState<RegionChartEntry[]>([]);
   const [taxPolicySummary, setTaxPolicySummary] = useState<{ text: string; updatedAt: string } | null>(null);
   const [jongbuseSummary, setJongbuseSummary] = useState<{ text: string; updatedAt: string } | null>(null);
   const [bookmarks, setBookmarks] = useState<string[]>([]);
@@ -235,6 +248,7 @@ export function useInvestmentSync() {
             setTermOfDay(data.termOfDay || null);
             setNewsArticles(data.newsArticles || []);
             setDongCharts(injectRatioFallback(data.dongCharts || []));
+            setRegionCharts(data.regionCharts || []);
             setTaxPolicySummary(data.taxPolicySummary || null);
             setJongbuseSummary(data.jongbuseSummary || null);
             setLastSyncTime(new Date(data.timestamp || Date.now()));
@@ -289,6 +303,7 @@ export function useInvestmentSync() {
     termOfDay,
     newsArticles,
     dongCharts,
+    regionCharts,
     taxPolicySummary,
     jongbuseSummary,
     bookmarks,

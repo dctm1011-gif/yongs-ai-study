@@ -362,6 +362,162 @@ def get_dong_comparison_data(target_date: date, service_key: str) -> list[dict]:
     return result
 
 
+# 경기도 시/구 단위 LAWD_CD 매핑 (지역 탐색 UI용)
+# 기존 AREA_CODES(칼럼용 named areas)와 별개로, 행정구역 기준으로 경기 전체 커버
+REGION_CODES: dict[str, dict] = {
+    # 수원시
+    "수원_장안": {"lawd_cd": "41111", "si": "수원시", "gu": "장안구"},
+    "수원_권선": {"lawd_cd": "41113", "si": "수원시", "gu": "권선구"},
+    "수원_팔달": {"lawd_cd": "41115", "si": "수원시", "gu": "팔달구"},
+    "수원_영통": {"lawd_cd": "41117", "si": "수원시", "gu": "영통구"},
+    # 성남시
+    "성남_수정": {"lawd_cd": "41131", "si": "성남시", "gu": "수정구"},
+    "성남_중원": {"lawd_cd": "41133", "si": "성남시", "gu": "중원구"},
+    "성남_분당": {"lawd_cd": "41135", "si": "성남시", "gu": "분당구"},
+    # 의정부시
+    "의정부": {"lawd_cd": "41150", "si": "의정부시", "gu": None},
+    # 안양시
+    "안양_만안": {"lawd_cd": "41171", "si": "안양시", "gu": "만안구"},
+    "안양_동안": {"lawd_cd": "41173", "si": "안양시", "gu": "동안구"},
+    # 부천시 (2016년 일반구 폐지)
+    "부천": {"lawd_cd": ["41194", "41196", "41198"], "si": "부천시", "gu": None},
+    # 광명시
+    "광명": {"lawd_cd": "41210", "si": "광명시", "gu": None},
+    # 평택시
+    "평택": {"lawd_cd": "41220", "si": "평택시", "gu": None},
+    # 안산시
+    "안산_상록": {"lawd_cd": "41271", "si": "안산시", "gu": "상록구"},
+    "안산_단원": {"lawd_cd": "41273", "si": "안산시", "gu": "단원구"},
+    # 고양시
+    "고양_덕양": {"lawd_cd": "41281", "si": "고양시", "gu": "덕양구"},
+    "고양_일산동": {"lawd_cd": "41285", "si": "고양시", "gu": "일산동구"},
+    "고양_일산서": {"lawd_cd": "41287", "si": "고양시", "gu": "일산서구"},
+    # 과천시
+    "과천": {"lawd_cd": "41290", "si": "과천시", "gu": None},
+    # 구리시
+    "구리": {"lawd_cd": "41310", "si": "구리시", "gu": None},
+    # 남양주시
+    "남양주": {"lawd_cd": "41360", "si": "남양주시", "gu": None},
+    # 오산시
+    "오산": {"lawd_cd": "41370", "si": "오산시", "gu": None},
+    # 시흥시
+    "시흥": {"lawd_cd": "41390", "si": "시흥시", "gu": None},
+    # 군포시
+    "군포": {"lawd_cd": "41410", "si": "군포시", "gu": None},
+    # 의왕시
+    "의왕": {"lawd_cd": "41430", "si": "의왕시", "gu": None},
+    # 하남시
+    "하남": {"lawd_cd": "41450", "si": "하남시", "gu": None},
+    # 용인시
+    "용인_처인": {"lawd_cd": "41461", "si": "용인시", "gu": "처인구"},
+    "용인_기흥": {"lawd_cd": "41463", "si": "용인시", "gu": "기흥구"},
+    "용인_수지": {"lawd_cd": "41465", "si": "용인시", "gu": "수지구"},
+    # 파주시
+    "파주": {"lawd_cd": "41480", "si": "파주시", "gu": None},
+    # 이천시
+    "이천": {"lawd_cd": "41500", "si": "이천시", "gu": None},
+    # 김포시
+    "김포": {"lawd_cd": "41570", "si": "김포시", "gu": None},
+    # 화성시 (2026-02 동탄구 신설)
+    "화성_동탄": {"lawd_cd": "41597", "si": "화성시", "gu": "동탄구"},
+    # 광주시
+    "광주": {"lawd_cd": "41610", "si": "광주시", "gu": None},
+    # 양주시
+    "양주": {"lawd_cd": "41630", "si": "양주시", "gu": None},
+}
+
+
+def get_all_regions_chart_data(target_date: date, service_key: str) -> list[dict]:
+    """REGION_CODES 전체의 경기도 지역별 chartData. 앱 지역 탐색 UI용.
+
+    구 있는 시: 시→구→동 3단계 / 구 없는 시: 시→동 2단계.
+    trades는 한 번만 fetch하고, 동별 분리는 umdNm 필드로 추가 API 호출 없이 처리.
+    """
+    all_months = recent_year_months(target_date, YEARLY_WINDOW_MONTHS)
+    recent_6_set = {(y, m) for (y, m) in recent_year_months(target_date, 6)}
+    years = sorted({y for (y, m) in all_months})
+
+    chart_data = []
+    for area, config in REGION_CODES.items():
+        gu = config.get("gu")
+        si = config.get("si", area)
+        label = gu if gu else si
+        print(f"[*] {si} {label} 실거래가 + 동별 조회 중...")
+
+        try:
+            trades_by_month: dict[tuple[int, int], list[dict]] = {}
+            for (y, m) in all_months:
+                raw: list[dict] = []
+                for lawd_cd in _lawd_codes(config):
+                    raw.extend(fetch_trades(lawd_cd, f"{y}{m:02d}", service_key))
+                trades_by_month[(y, m)] = raw
+        except Exception as e:
+            print(f"[!] {area}: 조회 실패 - 항목 생략: {e}")
+            continue
+
+        # 구/시 전체 월별
+        monthly_points = []
+        for (y, m) in all_months[-MONTHLY_WINDOW:]:
+            s = summarize_trades(trades_by_month[(y, m)])
+            if s:
+                monthly_points.append({"label": f"{m}월", **s})
+
+        # 구/시 전체 연도별
+        yearly_points = []
+        for y in years:
+            year_trades = [t for (yy, mm), ts in trades_by_month.items() if yy == y for t in ts]
+            s = summarize_trades(year_trades)
+            if s:
+                yearly_points.append({"label": f"{y}년", **s})
+
+        if not monthly_points and not yearly_points:
+            print(f"[!] {area}: 거래 데이터 없음 - 항목 생략")
+            continue
+
+        # 동별 드릴다운: 최근 6개월 DONG_MIN_TRADES 이상인 동만 포함
+        trades_6m = [t for (y, m), ts in trades_by_month.items() if (y, m) in recent_6_set for t in ts]
+        by_dong_6m: dict[str, list[dict]] = {}
+        for t in trades_6m:
+            dong = t.get("umdNm", "").strip()
+            if dong:
+                by_dong_6m.setdefault(dong, []).append(t)
+
+        valid_dongs = {d for d, ts in by_dong_6m.items() if len(ts) >= DONG_MIN_TRADES}
+
+        dongs_data = []
+        for dong in sorted(valid_dongs):
+            dong_monthly = []
+            for (y, m) in all_months[-MONTHLY_WINDOW:]:
+                dong_trades = [t for t in trades_by_month[(y, m)] if t.get("umdNm", "").strip() == dong]
+                s = summarize_trades(dong_trades)
+                if s:
+                    dong_monthly.append({"label": f"{m}월", **s})
+
+            dong_yearly = []
+            for y in years:
+                dong_trades = [t for (yy, mm), ts in trades_by_month.items() if yy == y for t in ts if t.get("umdNm", "").strip() == dong]
+                s = summarize_trades(dong_trades)
+                if s:
+                    dong_yearly.append({"label": f"{y}년", **s})
+
+            if dong_monthly or dong_yearly:
+                dongs_data.append({"name": dong, "data": dong_monthly, "yearlyData": dong_yearly})
+
+        chart_data.append({
+            "area": area,
+            "si": si,
+            "gu": gu,
+            "label": label,
+            "title": f"{label} 아파트 매매가 분포",
+            "unit": "단위: 억원",
+            "data": monthly_points,
+            "yearlyData": yearly_points,
+            "dongs": dongs_data,
+        })
+
+    return chart_data
+
+
 if __name__ == "__main__":
     key = get_molit_api_key()
     data = get_all_areas_chart_data(date.today(), key)

@@ -393,7 +393,7 @@ export default function CrosswordGame() {
   }, [synced]);
 
   if (gameState === 'loading') {
-    return <View style={s.centered}><ActivityIndicator size="large" color="#2563eb" /></View>;
+    return <View style={s.centered}><ActivityIndicator size="large" color="#0095f6" /></View>;
   }
 
   if (gameState === 'empty') {
@@ -538,11 +538,11 @@ export default function CrosswordGame() {
 const KEY_W = Math.floor((SCREEN_WIDTH - 12) / 10) - 3;
 
 const s = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f8fafc' },
-  centered: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 32 },
+  container: { flex: 1, backgroundColor: '#fff' },
+  centered: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 32, backgroundColor: '#fff' },
   bigEmoji: { fontSize: 48, marginBottom: 12 },
-  emptyTitle: { fontSize: 18, fontWeight: '700', color: '#1e293b', marginBottom: 8 },
-  emptySub: { fontSize: 13, color: '#64748b', textAlign: 'center', lineHeight: 20 },
+  emptyTitle: { fontSize: 18, fontWeight: '600', color: '#262626', marginBottom: 8 },
+  emptySub: { fontSize: 13, color: '#8e8e8e', textAlign: 'center', lineHeight: 20 },
 
   gridArea: { flex: 1, position: 'relative' },
   gridScroll: { flex: 1 },
@@ -552,79 +552,79 @@ const s = StyleSheet.create({
   cellBlank: { margin: 1 },
   cell: {
     margin: 1, backgroundColor: '#fff',
-    borderWidth: 1, borderColor: '#94a3b8',
+    borderWidth: 1, borderColor: '#dbdbdb',
     alignItems: 'center', justifyContent: 'center',
     position: 'relative',
   },
-  cellActive: { backgroundColor: '#dbeafe', borderColor: '#60a5fa' },
-  cellCursor: { backgroundColor: '#2563eb', borderColor: '#1d4ed8' },
+  cellActive: { backgroundColor: '#e7f5ff', borderColor: '#0095f6' },
+  cellCursor: { backgroundColor: '#0095f6', borderColor: '#0095f6' },
   cellCorrect: { backgroundColor: '#d1fae5', borderColor: '#10b981' },
   cellWrong: { backgroundColor: '#fee2e2', borderColor: '#ef4444' },
-  cellClueNum: { position: 'absolute', top: 1, left: 2, fontWeight: '700', color: '#475569', lineHeight: 10 },
-  cellLetter: { fontWeight: '700', color: '#1e293b', textAlign: 'center' },
+  cellClueNum: { position: 'absolute', top: 1, left: 2, fontWeight: '600', color: '#8e8e8e', lineHeight: 10 },
+  cellLetter: { fontWeight: '600', color: '#262626', textAlign: 'center' },
   cellLetterCursor: { color: '#fff' },
 
   completeOverlay: {
     position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-    backgroundColor: 'rgba(248, 250, 252, 0.95)',
+    backgroundColor: 'rgba(255, 255, 255, 0.96)',
   },
   completeContent: {
     flexGrow: 1, justifyContent: 'center', alignItems: 'center', padding: 24,
   },
-  completeTitle: { fontSize: 26, fontWeight: '800', color: '#1e293b', marginBottom: 6 },
-  completeSub: { fontSize: 14, color: '#64748b', marginBottom: 20 },
+  completeTitle: { fontSize: 26, fontWeight: '600', color: '#262626', marginBottom: 6 },
+  completeSub: { fontSize: 14, color: '#8e8e8e', marginBottom: 20 },
   completeBtn: {
-    backgroundColor: '#2563eb',
+    backgroundColor: '#0095f6',
     paddingVertical: 12, paddingHorizontal: 36,
     borderRadius: 12, marginBottom: 12,
   },
   completeBtnDone: { backgroundColor: '#10b981' },
-  completeBtnText: { color: '#fff', fontWeight: '700', fontSize: 16 },
+  completeBtnText: { color: '#fff', fontWeight: '600', fontSize: 16 },
   reviewSection: {
     width: '100%', marginTop: 12, marginBottom: 12,
     backgroundColor: '#fff', borderRadius: 12,
-    borderWidth: 1, borderColor: '#e2e8f0', overflow: 'hidden',
+    borderWidth: 1, borderColor: '#dbdbdb', overflow: 'hidden',
   },
   reviewTitle: {
-    fontSize: 13, fontWeight: '700', color: '#475569',
+    fontSize: 13, fontWeight: '600', color: '#262626',
     paddingHorizontal: 16, paddingVertical: 10,
-    backgroundColor: '#f8fafc', borderBottomWidth: 1, borderBottomColor: '#e2e8f0',
+    backgroundColor: '#fafafa', borderBottomWidth: 1, borderBottomColor: '#dbdbdb',
   },
   reviewItem: {
     paddingHorizontal: 16, paddingVertical: 10,
-    borderBottomWidth: 1, borderBottomColor: '#f1f5f9',
+    borderBottomWidth: 1, borderBottomColor: '#dbdbdb',
   },
-  reviewWord: { fontSize: 15, fontWeight: '700', color: '#1e293b', marginBottom: 2 },
-  reviewMeaning: { fontSize: 13, color: '#64748b' },
+  reviewWord: { fontSize: 15, fontWeight: '600', color: '#262626', marginBottom: 2 },
+  reviewMeaning: { fontSize: 13, color: '#8e8e8e' },
   completeDailyNote: {
-    fontSize: 12, color: '#64748b',
-    backgroundColor: '#e2e8f0',
+    fontSize: 12, color: '#8e8e8e',
+    backgroundColor: '#fafafa',
+    borderWidth: 1, borderColor: '#dbdbdb',
     paddingHorizontal: 14, paddingVertical: 6, borderRadius: 20,
   },
 
   clueBar: {
     flexDirection: 'row', alignItems: 'center',
-    backgroundColor: '#fff', borderTopWidth: 1, borderTopColor: '#e2e8f0',
+    backgroundColor: '#fff', borderTopWidth: 1, borderTopColor: '#dbdbdb',
     paddingHorizontal: 12, paddingVertical: 8, minHeight: 52,
   },
-  clueLabel: { fontSize: 14, fontWeight: '800', color: '#2563eb', marginRight: 10, minWidth: 32 },
-  clueText: { flex: 1, fontSize: 13, color: '#1e293b', lineHeight: 19 },
+  clueLabel: { fontSize: 14, fontWeight: '600', color: '#0095f6', marginRight: 10, minWidth: 32 },
+  clueText: { flex: 1, fontSize: 13, color: '#262626', lineHeight: 19 },
   answerBtn: {
     marginLeft: 8, paddingVertical: 6, paddingHorizontal: 10,
-    backgroundColor: '#fef3c7', borderWidth: 1, borderColor: '#f59e0b',
+    backgroundColor: '#fff', borderWidth: 1, borderColor: '#dbdbdb',
     borderRadius: 8,
   },
-  answerBtnText: { fontSize: 12, fontWeight: '700', color: '#b45309' },
+  answerBtnText: { fontSize: 12, fontWeight: '600', color: '#0095f6' },
 
-  keyboard: { backgroundColor: '#d1d5db', paddingVertical: 6, paddingHorizontal: 4 },
+  keyboard: { backgroundColor: '#fafafa', borderTopWidth: 1, borderTopColor: '#dbdbdb', paddingVertical: 6, paddingHorizontal: 4 },
   keyRow: { flexDirection: 'row', justifyContent: 'center', marginVertical: 2 },
   key: {
     width: KEY_W, marginHorizontal: 2, paddingVertical: 11,
     backgroundColor: '#fff', borderRadius: 5, alignItems: 'center',
-    shadowColor: '#000', shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.15, shadowRadius: 1, elevation: 2,
+    borderWidth: 1, borderColor: '#dbdbdb',
   },
-  keyText: { fontSize: 13, fontWeight: '600', color: '#1e293b' },
-  keyBs: { width: KEY_W * 1.5, backgroundColor: '#6b7280' },
-  keyBsText: { color: '#fff' },
+  keyText: { fontSize: 13, fontWeight: '600', color: '#262626' },
+  keyBs: { width: KEY_W * 1.5, backgroundColor: '#fafafa' },
+  keyBsText: { color: '#8e8e8e' },
 });
