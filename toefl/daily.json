@@ -1,182 +1,111 @@
 {
   "date": "2026-08-09",
   "reading": {
-    "title": "Archaeological Dating Methods and Ancient Civilizations",
-    "passage": "Archaeological dating techniques have revolutionized our understanding of ancient civilizations by enabling researchers to establish precise chronologies for historical events and artifacts. Radiocarbon dating, developed in the 1940s, measures the decay of carbon-14 isotopes in organic materials, allowing scientists to date specimens up to approximately 50,000 years old. This methodology has proven invaluable for studying prehistoric societies and validating historical records. However, radiocarbon dating has limitations; it cannot be applied to inorganic materials such as stone or metal, which constitute many archaeological artifacts. Consequently, archaeologists employ complementary techniques including thermoluminescence, potassium-argon dating, and stratigraphic analysis to construct comprehensive chronological frameworks. Thermoluminescence dating measures accumulated radiation in crystalline materials, making it particularly suitable for ceramic artifacts and heated stones. Recent advances in DNA analysis have further enhanced our capacity to trace human migration patterns and establish connections between ancient populations. These multifaceted approaches have collectively enabled archaeologists to reconstruct intricate details of ancient civilizations, from their subsistence patterns to their technological innovations, fundamentally reshaping our comprehension of human history.",
-    "vocabulary": [
-      {
-        "word": "chronologies",
-        "meaning_ko": "연대기, 시간 순서"
-      },
-      {
-        "word": "isotopes",
-        "meaning_ko": "동위원소"
-      },
-      {
-        "word": "inorganic",
-        "meaning_ko": "무기질의, 유기질이 아닌"
-      },
-      {
-        "word": "thermoluminescence",
-        "meaning_ko": "열형광"
-      },
-      {
-        "word": "stratigraphic",
-        "meaning_ko": "지층학적인"
-      },
-      {
-        "word": "crystalline",
-        "meaning_ko": "결정체의, 결정질의"
-      },
-      {
-        "word": "subsistence",
-        "meaning_ko": "생계, 생존"
-      }
-    ],
+    "title": "Arctic Ice Melting and Global Climate",
+    "passage": "The Arctic ice sheet has been melting at an alarming rate due to rising global temperatures. Scientists estimate that the Arctic loses approximately 13,000 square kilometers of ice annually. This phenomenon directly impacts sea levels, wildlife habitats, and weather patterns worldwide. The melting ice releases methane, a potent greenhouse gas that accelerates climate change further. Additionally, the reduction of white ice surface means less sunlight is reflected back into space, causing additional warming. International cooperation and emission reduction policies are essential to slow this critical environmental crisis.",
     "questions": [
       {
-        "q": "According to the passage, radiocarbon dating is limited in its application to which type of materials?",
+        "q": "According to the passage, how much Arctic ice is lost annually?",
         "options": [
-          "Organic materials",
-          "Inorganic materials such as stone or metal",
-          "Ceramic artifacts",
-          "All archaeological artifacts"
+          "A) 5,000 square kilometers",
+          "B) 13,000 square kilometers",
+          "C) 20,000 square kilometers",
+          "D) 30,000 square kilometers"
         ],
         "answer": 1,
-        "explanation": "지문에서 'radiocarbon dating has limitations; it cannot be applied to inorganic materials such as stone or metal'이라고 명시되어 있습니다."
+        "explanation": "본문에서 '연간 약 13,000제곱킬로미터의 얼음을 잃는다'고 명시되어 있습니다."
       },
       {
-        "q": "What can be inferred from the passage about thermoluminescence dating?",
+        "q": "What is one consequence of melting Arctic ice mentioned in the passage?",
         "options": [
-          "It is more accurate than radiocarbon dating",
-          "It is particularly useful for dating ceramic artifacts and heated stones",
-          "It cannot measure accumulated radiation",
-          "It was developed before radiocarbon dating"
+          "A) Increased polar bear population",
+          "B) Release of methane gas",
+          "C) Lower global temperatures",
+          "D) Decreased ocean salinity"
         ],
         "answer": 1,
-        "explanation": "지문에서 'Thermoluminescence dating measures accumulated radiation in crystalline materials, making it particularly suitable for ceramic artifacts and heated stones'라고 설명합니다."
+        "explanation": "본문에서 녹는 얼음이 '메탄이라는 강력한 온실가스를 방출한다'고 설명하고 있습니다."
       },
       {
-        "q": "The word 'invaluable' in the first paragraph is closest in meaning to which of the following?",
+        "q": "Why is the reduction of white ice surface problematic?",
         "options": [
-          "Without value",
-          "Extremely useful and important",
-          "Difficult to understand",
-          "Rarely used in practice"
+          "A) It increases animal migration",
+          "B) Less sunlight is reflected, causing additional warming",
+          "C) It improves weather prediction",
+          "D) It reduces ocean currents"
         ],
         "answer": 1,
-        "explanation": "'invaluable'은 '극히 귀중한, 매우 유용한'이라는 뜻으로, 'without value'의 반대 의미입니다."
-      },
-      {
-        "q": "Why does the author mention the limitations of radiocarbon dating in the passage?",
-        "options": [
-          "To criticize the development of dating techniques",
-          "To explain why archaeologists use multiple complementary dating methods",
-          "To suggest that dating artifacts is impossible",
-          "To show that all dating methods are unreliable"
-        ],
-        "answer": 1,
-        "explanation": "저자는 방사성탄소측정법의 한계를 언급한 후 이를 보완하기 위해 여러 기법을 사용한다고 설명하여, 다중 방법론의 필요성을 보여줍니다."
+        "explanation": "백색 얼음 표면이 줄어들면 햇빛이 우주로 반사되지 않아 추가 온난화가 발생한다는 내용입니다."
       }
     ]
   },
   "writing": {
-    "sentences": [
-      {
-        "original": "Radiocarbon dating has proven invaluable for studying prehistoric societies and validating historical records.",
-        "paraphrase": "The value of radiocarbon dating lies in its capacity to facilitate the investigation of prehistoric societies while simultaneously confirming the accuracy of historical documentation.",
-        "tip": "능동태→수동태 및 명사구 확장. 'has proven invaluable'을 'The value...lies in'으로 변환하여 더 학술적인 표현으로 개선"
-      },
-      {
-        "original": "Radiocarbon dating cannot be applied to inorganic materials such as stone or metal.",
-        "paraphrase": "The inapplicability of radiocarbon dating to inorganic materials, including stone and metal, represents a significant constraint in archaeological research.",
-        "tip": "부정형 문장의 긍정형 명사화. 'cannot be applied'를 'The inapplicability'로 바꾸어 더 정식적인 학술 표현으로 변환"
-      },
-      {
-        "original": "These multifaceted approaches have collectively enabled archaeologists to reconstruct intricate details of ancient civilizations.",
-        "paraphrase": "The integration of multiple dating methodologies has empowered archaeologists to elucidate the complex characteristics and nuances of ancient societies.",
-        "tip": "동의어 치환 및 문구 재구성. 'multifaceted approaches'→'integration of multiple methodologies', 'reconstruct'→'elucidate', 'intricate details'→'complex characteristics and nuances'"
-      }
+    "prompt": "Do you agree or disagree with the statement: 'Governments should prioritize environmental protection over economic growth'?",
+    "structure": {
+      "intro": "명확한 입장을 제시하고, 환경 보호와 경제 성장의 관계에 대한 간단한 배경을 제공하세요.",
+      "body1": "환경 보호 우선의 긍정적 이유 (기후변화 완화, 미래 세대를 위한 지속가능성, 건강한 생태계의 중요성)",
+      "body2": "경제 성장과의 균형 필요성 또는 반대 입장 (일자리 창출, 국가 발전, 빈곤 감소, 기술 혁신 가능성)",
+      "conclusion": "두 가지 관점을 통합한 결론을 제시하고, 최종 입장을 재확인하세요."
+    },
+    "useful_phrases": [
+      "In my opinion, environmental protection should take precedence because...",
+      "Furthermore, governments can implement green technologies that create jobs.",
+      "However, some argue that economic growth is necessary for...",
+      "Although economic development is important, we cannot ignore...",
+      "In conclusion, a balanced approach that combines both priorities is ideal."
     ]
   },
-  "writing_integrated": {
-    "topic": "Social Media and Youth Development: Benefits and Concerns",
-    "prompt": "Some educators argue that social media provides valuable platforms for youth to develop communication skills and build communities. Others contend that excessive social media use negatively impacts adolescent mental health and academic performance. What is your position on this issue? Provide specific evidence and examples to support your argument.",
-    "model_essay": "Social media has become an integral part of youth culture, generating considerable debate about its overall impact on adolescent development. While social media offers certain educational and social benefits, the negative effects on mental health and academic performance are more substantial, suggesting that youth should exercise greater caution in their digital engagement. Although proponents argue that social media enables young people to develop communication skills and establish meaningful peer connections, research increasingly demonstrates that excessive usage correlates with elevated anxiety, depression, and reduced academic achievement. Furthermore, the curated nature of social media content often creates unrealistic social comparisons, undermining adolescent self-esteem and fostering unhealthy body image concerns. For instance, a comprehensive study by the American Psychological Association found that teenagers spending more than three hours daily on social media exhibited significantly higher rates of depression and loneliness. Given these documented risks, limiting social media consumption during formative developmental years appears prudent. In conclusion, while social media possesses potential advantages for youth, the preponderance of evidence suggests that minimizing exposure to these platforms constitutes a more responsible approach to ensuring healthy adolescent development."
-  },
   "speaking": {
-    "prompt": "Some people prefer to travel and explore new destinations. Others prefer to save money and build financial security. Which do you prefer and why? Include specific reasons and details in your response.",
-    "model_sentences": [
-      "I believe that traveling is more valuable than saving money because it provides irreplaceable experiences that enrich personal development.",
-      "First, traveling exposes you to diverse cultures and perspectives that cannot be gained through any other means, fundamentally broadening your worldview.",
-      "For example, when I traveled to Japan last year, I not only learned about traditional customs and historical sites, but I also developed greater independence and adaptability by navigating unfamiliar environments.",
-      "Additionally, experiences create lasting memories and personal growth that money accumulated in savings accounts cannot replicate.",
-      "While financial security is certainly important, I believe that prioritizing meaningful travel experiences during your youth leads to a more fulfilling and well-rounded life."
+    "prompt": "Some people believe that remote work increases productivity and work-life balance. Others think that in-person office work is more effective. Which perspective do you agree with and why?",
+    "useful_expressions": [
+      "Personally, I believe that remote work is more beneficial because...",
+      "One significant advantage is that employees can avoid long commutes...",
+      "Additionally, I think that home environments allow for better focus and concentration...",
+      "On the other hand, some people argue that office collaboration is essential...",
+      "In summary, remote work offers more flexibility, which is crucial in today's modern workplace."
+    ],
+    "sample_points": [
+      "원격 근무의 장점: 출퇴근 시간 절약, 유연한 일정 관리, 집중력 향상, 직장-생활 균형 개선",
+      "원격 근무의 단점 극복: 기술 도구를 통한 협업 (화상회의, 프로젝트 관리 소프트웨어), 정기적인 팀 빌딩 활동"
     ]
   },
   "listening": {
-    "title": "The Industrial Revolution and Technological Innovation",
-    "type": "lecture",
-    "script": "Professor: Today, we're going to discuss the Industrial Revolution, one of the most transformative periods in human history. This era, spanning roughly from the 1760s to the 1840s, fundamentally altered the way societies produced goods and organized labor. Now, the revolution began in Britain, primarily due to several convergent factors: abundant coal deposits, a strong textile industry, and significant technological innovations. The steam engine, perfected by James Watt in the 1770s, became the driving force behind mechanization. This invention allowed factories to produce goods at unprecedented scales and speeds. Student: Professor, were there any negative consequences to this rapid industrialization? Professor: Excellent question. While the Industrial Revolution generated tremendous economic growth and innovation, it also created severe social problems. Urbanization occurred rapidly, leading to overcrowded cities with inadequate sanitation and housing. Factory workers, including many children, faced dangerous conditions and exploitative wages. The environmental degradation was substantial as well. However, the technological advances ultimately improved living standards for many people in subsequent generations. The Industrial Revolution essentially set the foundation for the modern industrial economy we see today.",
-    "vocabulary": [
-      {
-        "word": "convergent",
-        "meaning_ko": "수렴하는, 한 점으로 모이는"
-      },
-      {
-        "word": "mechanization",
-        "meaning_ko": "기계화"
-      },
-      {
-        "word": "unprecedented",
-        "meaning_ko": "전례 없는, 유례없는"
-      },
-      {
-        "word": "exploitation",
-        "meaning_ko": "착취, 부당한 이용"
-      },
-      {
-        "word": "environmental degradation",
-        "meaning_ko": "환경 악화"
-      },
-      {
-        "word": "subsequent",
-        "meaning_ko": "그 후의, 나중의"
-      }
-    ],
+    "title": "Academic Advising Session",
+    "type": "conversation",
+    "script": "Advisor: Hello, Sarah. I see you're considering changing your major from Biology to Environmental Science. Tell me about your decision. Student: Yes, I've been thinking about this for a while. I'm passionate about climate change and sustainability, but I feel like pure biology doesn't give me enough practical experience in environmental issues. Advisor: That's a valid concern. Environmental Science would give you more interdisciplinary exposure, combining biology, chemistry, and policy. However, be aware that you'll need to retake some prerequisites and delay your graduation by one semester. Student: Is it worth the extra time? Advisor: Definitely. Environmental Science graduates have strong job prospects in government agencies, NGOs, and private companies focused on sustainability. Plus, you can still use your biology credits as electives. Student: That sounds good. What's the next step? Advisor: Fill out the change-of-major form and meet with the Environmental Science department head. They'll create a customized degree plan for you.",
     "questions": [
       {
-        "q": "What is the main topic of the lecture?",
+        "q": "Why does Sarah want to change her major?",
         "options": [
-          "The history of coal mining in Britain",
-          "The Industrial Revolution and its societal impacts",
-          "The biography of James Watt",
-          "The development of textile manufacturing"
+          "A) Biology is too difficult",
+          "B) She wants more practical experience in environmental issues",
+          "C) Her advisor recommended it",
+          "D) She needs to graduate faster"
         ],
         "answer": 1,
-        "explanation": "교수는 산업혁명의 정의, 시간대, 영향에 대해 논의하므로 이것이 강의의 주요 주제입니다."
+        "explanation": "Sarah는 '순수 생물학이 환경 문제에 대해 충분한 실무 경험을 주지 못한다'고 말합니다."
       },
       {
-        "q": "According to the professor, which factor was NOT mentioned as contributing to the Industrial Revolution beginning in Britain?",
+        "q": "What is one consequence of changing majors that the advisor mentions?",
         "options": [
-          "Abundant coal deposits",
-          "Strong textile industry",
-          "Technological innovations",
-          "Geographic proximity to Europe"
+          "A) She cannot use her biology credits",
+          "B) She will need to retake all her classes",
+          "C) She will delay her graduation by one semester",
+          "D) She must take additional chemistry courses"
         ],
-        "answer": 3,
-        "explanation": "교수는 석탄 매장량, 섬유 산업, 기술 혁신을 언급했지만 유럽과의 지리적 근접성은 언급하지 않았습니다."
+        "answer": 2,
+        "explanation": "상담사가 '몇몇 선수 과목을 다시 수강해야 하고 졸업을 한 학기 연기해야 한다'고 명확히 말합니다."
       },
       {
-        "q": "Why does the student ask about negative consequences?",
+        "q": "What should Sarah do next according to the advisor?",
         "options": [
-          "To criticize the professor's explanation",
-          "To gain a balanced understanding of the Industrial Revolution's full impact",
-          "To argue that the Industrial Revolution was harmful",
-          "To change the topic of discussion"
+          "A) Meet with the biology department head",
+          "B) Start taking environmental science courses immediately",
+          "C) Fill out the change-of-major form and meet with the Environmental Science department head",
+          "D) Wait until next semester to decide"
         ],
-        "answer": 1,
-        "explanation": "학생은 산업혁명의 긍정적 측면만 논의되었으므로, 부정적 결과도 이해하기 위해 질문합니다."
+        "answer": 2,
+        "explanation": "상담사는 '전공 변경 양식을 작성하고 환경과학 학부장을 만나라'고 지시합니다."
       }
     ]
   }
