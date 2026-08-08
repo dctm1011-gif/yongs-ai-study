@@ -26,16 +26,40 @@
 - 같은 Wi-Fi에서만 작동 (포트는 재부팅마다 바뀔 수 있음)
 
 ## 빌드 명령
-```powershell
-# YongStudy APK
-cd C:\Users\dctm1\YongStudyApp\android
-./gradlew assembleDebug
-# 출력: android/app/build/outputs/apk/debug/app-debug.apk
 
-# APK 설치
-adb install -r C:\Users\dctm1\YongStudyApp\android\app\build\outputs\apk\debug\app-debug.apk
+### ⚠️ 로컬 빌드 주의사항
+- `android/local.properties`는 반드시 **슬래시** 경로 사용 (`C:/Users/...` ← 맞음, `C:\Users\...` ← 틀림)
+- 역슬래시는 Java properties 파서가 이스케이프로 처리해 SDK 경로를 깨뜨림 → Gradle 설정 단계 실패
+- Gradle이 설정 단계에서 실패하면 빌드 태스크가 하나도 실행되지 않아 기존 APK가 그대로 남음
+- `tee`로 로그를 파이프하면 종료코드가 0으로 보여 성공처럼 보이므로 반드시 `BUILD SUCCESSFUL` 문자열로 확인
 
-# WirelessDebugHelper APK
+### 로컬 APK 빌드 (권장: 스크립트 사용)
+```bash
+# Git Bash에서 실행 — local.properties 자동 수정 + .env 로드 + 결과 검증
+bash C:\Users\dctm1\YongStudyApp\build-apk.sh
+# 출력: android/app/build/outputs/apk/release/app-release.apk
+```
+
+### 수동 빌드 (직접)
+```bash
+# 1. local.properties 확인 (슬래시 경로인지 반드시 체크)
+cat android/local.properties
+# 올바른 형태: sdk.dir=C:/Users/dctm1/AppData/Local/Android/Sdk
+
+# 2. .env 로드 후 빌드
+cd C:\Users\dctm1\YongStudyApp
+set -a && source .env && set +a
+cd android && ./gradlew assembleRelease
+# 출력: android/app/build/outputs/apk/release/app-release.apk
+```
+
+### APK 설치
+```bash
+adb install -r "C:\Users\dctm1\YongStudyApp\android\app\build\outputs\apk\release\app-release.apk"
+```
+
+### WirelessDebugHelper APK
+```bash
 cd C:\Users\dctm1\WirelessDebugHelper
 ./gradlew assembleDebug
 ```
