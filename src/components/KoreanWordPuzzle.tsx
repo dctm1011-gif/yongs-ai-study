@@ -113,21 +113,8 @@ function generateCrossword(words: PuzzleWord[]): { placed: PlacedWord[]; grid: G
       const id = String(idx + 1);
       placeWord(grid, id, wd.word, best.row, best.col, best.dir);
       placed.push({ id, word: wd.word, clue: wd.clue, direction: best.dir, startRow: best.row, startCol: best.col, clueNumber: 0 });
-    } else {
-      // 교차점 없을 때 독립 배치 폴백: 빈 행에 가로로 배치
-      const len = wdChars.length;
-      for (let row = 0; row < GRID_SIZE; row++) {
-        for (let col = 0; col <= GRID_SIZE - len; col++) {
-          if (canPlace(grid, wd.word, row, col, 'across')) {
-            const id = String(idx + 1);
-            placeWord(grid, id, wd.word, row, col, 'across');
-            placed.push({ id, word: wd.word, clue: wd.clue, direction: 'across', startRow: row, startCol: col, clueNumber: 0 });
-            break;
-          }
-        }
-        if (placed.some(p => p.id === String(idx + 1))) break;
-      }
     }
+    // 연결 불가 단어는 배치하지 않음 — AI가 공통 음절 보장해야 함
   });
 
   const cellNums = new Map<string, number>();
