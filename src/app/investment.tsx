@@ -238,6 +238,38 @@ const BarChart: React.FC<{
   );
 });
 
+const HorizontalBarChart: React.FC<{
+  data: { label: string; sub?: string; value: number }[];
+  title: string;
+  unit: string;
+  color?: string;
+  valueSuffix?: string;
+  decimals?: number;
+}> = React.memo(({ data, title, unit, color = '#0095f6', valueSuffix = '', decimals = 1 }) => {
+  const max = Math.max(...data.map(d => d.value), 1);
+  const sorted = [...data].sort((a, b) => b.value - a.value);
+  return (
+    <View style={{ marginTop: 8 }}>
+      <Text style={styles.chartTitle}>{title}</Text>
+      {sorted.map((d, i) => (
+        <View key={i} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
+          <View style={{ width: 76 }}>
+            <Text style={{ fontSize: 11, color: '#262626', fontWeight: '600' }} numberOfLines={1}>{d.label}</Text>
+            {d.sub ? <Text style={{ fontSize: 9, color: '#8e8e8e' }} numberOfLines={1}>{d.sub}</Text> : null}
+          </View>
+          <View style={{ flex: 1, height: 16, backgroundColor: '#f0f0f0', borderRadius: 4, marginHorizontal: 6 }}>
+            <View style={{ width: `${Math.max((d.value / max) * 100, 2)}%`, height: '100%', backgroundColor: color, borderRadius: 4 }} />
+          </View>
+          <Text style={{ width: 48, fontSize: 11, color: '#262626', fontWeight: '600', textAlign: 'right' }}>
+            {d.value.toFixed(decimals)}{valueSuffix}
+          </Text>
+        </View>
+      ))}
+      <Text style={styles.chartUnit}>{unit}</Text>
+    </View>
+  );
+});
+
 const isBoxPlotData = (
   data: NonNullable<InvestmentColumn['chartData']>[number]['data'] | null | undefined
 ): data is BoxPlotPoint[] => Array.isArray(data) && data.length > 0 && 'median' in data[0];
@@ -806,7 +838,7 @@ const SI_ORDER = [
   '의왕시', '파주시', '이천시', '광주시', '양주시', '과천시',
 ];
 
-const REGION_BOOKMARKS_KEY = 'region_bookmarks_v1';
+const REGION_BOOKMARKS_KEY = 'region_bookmarks_v2';
 const REGION_FILTER_KEY   = 'region_filter_state_v1';
 
 interface RegionBookmark {
@@ -818,80 +850,50 @@ interface RegionBookmark {
 }
 
 // 2026년 7월 기준 중앙값 6억~8억 동 (중앙값 오름차순)
-const DEFAULT_REGION_BOOKMARKS: RegionBookmark[] = [
-  { area: '고양_덕양',  si: '고양시',  label: '덕양구',  dongName: '신원동',   displayLabel: '고양시 덕양구 신원동' },
-  { area: '오산',       si: '오산시',  label: '오산시',  dongName: '외삼미동', displayLabel: '오산시 외삼미동' },
-  { area: '수원_장안',  si: '수원시',  label: '장안구',  dongName: '송죽동',   displayLabel: '수원시 장안구 송죽동' },
-  { area: '시흥',       si: '시흥시',  label: '시흥시',  dongName: '능곡동',   displayLabel: '시흥시 능곡동' },
-  { area: '성남_중원',  si: '성남시',  label: '중원구',  dongName: '성남동',   displayLabel: '성남시 중원구 성남동' },
-  { area: '부천',       si: '부천시',  label: '부천시',  dongName: '범박동',   displayLabel: '부천시 범박동' },
-  { area: '용인_기흥',  si: '용인시',  label: '기흥구',  dongName: '중동',     displayLabel: '용인시 기흥구 중동' },
-  { area: '용인_기흥',  si: '용인시',  label: '기흥구',  dongName: '영덕동',   displayLabel: '용인시 기흥구 영덕동' },
-  { area: '용인_기흥',  si: '용인시',  label: '기흥구',  dongName: '서천동',   displayLabel: '용인시 기흥구 서천동' },
-  { area: '용인_기흥',  si: '용인시',  label: '기흥구',  dongName: '상갈동',   displayLabel: '용인시 기흥구 상갈동' },
-  { area: '고양_일산동', si: '고양시', label: '일산동구', dongName: '식사동',  displayLabel: '고양시 일산동구 식사동' },
-  { area: '광주',       si: '광주시',  label: '광주시',  dongName: '고산동',   displayLabel: '광주시 고산동' },
-  { area: '수원_팔달',  si: '수원시',  label: '팔달구',  dongName: '매산로2가', displayLabel: '수원시 팔달구 매산로2가' },
-  { area: '용인_기흥',  si: '용인시',  label: '기흥구',  dongName: '신갈동',   displayLabel: '용인시 기흥구 신갈동' },
-  { area: '용인_기흥',  si: '용인시',  label: '기흥구',  dongName: '마북동',   displayLabel: '용인시 기흥구 마북동' },
-  { area: '광주',       si: '광주시',  label: '광주시',  dongName: '신현동',   displayLabel: '광주시 신현동' },
-  { area: '수원_장안',  si: '수원시',  label: '장안구',  dongName: '정자동',   displayLabel: '수원시 장안구 정자동' },
-  { area: '안양_만안',  si: '안양시',  label: '만안구',  dongName: '석수동',   displayLabel: '안양시 만안구 석수동' },
-  { area: '수원_팔달',  si: '수원시',  label: '팔달구',  dongName: '화서동',   displayLabel: '수원시 팔달구 화서동' },
-  { area: '수원_팔달',  si: '수원시',  label: '팔달구',  dongName: '인계동',   displayLabel: '수원시 팔달구 인계동' },
-  { area: '화성_동탄',  si: '화성시',  label: '동탄구',  dongName: '목동',     displayLabel: '화성시 동탄구 목동' },
-  { area: '수원_장안',  si: '수원시',  label: '장안구',  dongName: '이목동',   displayLabel: '수원시 장안구 이목동' },
-  { area: '수원_권선',  si: '수원시',  label: '권선구',  dongName: '곡반정동', displayLabel: '수원시 권선구 곡반정동' },
-  { area: '부천',       si: '부천시',  label: '부천시',  dongName: '옥길동',   displayLabel: '부천시 옥길동' },
-  { area: '고양_덕양',  si: '고양시',  label: '덕양구',  dongName: '도내동',   displayLabel: '고양시 덕양구 도내동' },
-  { area: '광주',       si: '광주시',  label: '광주시',  dongName: '역동',     displayLabel: '광주시 역동' },
-  { area: '구리',       si: '구리시',  label: '구리시',  dongName: '인창동',   displayLabel: '구리시 인창동' },
-  { area: '하남',       si: '하남시',  label: '하남시',  dongName: '창우동',   displayLabel: '하남시 창우동' },
-  { area: '시흥',       si: '시흥시',  label: '시흥시',  dongName: '군자동',   displayLabel: '시흥시 군자동' },
-  { area: '의왕',       si: '의왕시',  label: '의왕시',  dongName: '고천동',   displayLabel: '의왕시 고천동' },
-  { area: '하남',       si: '하남시',  label: '하남시',  dongName: '덕풍동',   displayLabel: '하남시 덕풍동' },
-  { area: '구리',       si: '구리시',  label: '구리시',  dongName: '수택동',   displayLabel: '구리시 수택동' },
-  { area: '광명',       si: '광명시',  label: '광명시',  dongName: '하안동',   displayLabel: '광명시 하안동' },
-  { area: '남양주',     si: '남양주시', label: '남양주시', dongName: '별내동',  displayLabel: '남양주시 별내동' },
-  { area: '화성_동탄',  si: '화성시',  label: '동탄구',  dongName: '장지동',   displayLabel: '화성시 동탄구 장지동' },
-  { area: '안양_동안',  si: '안양시',  label: '동안구',  dongName: '비산동',   displayLabel: '안양시 동안구 비산동' },
-  { area: '구리',       si: '구리시',  label: '구리시',  dongName: '갈매동',   displayLabel: '구리시 갈매동' },
-  { area: '안양_동안',  si: '안양시',  label: '동안구',  dongName: '관양동',   displayLabel: '안양시 동안구 관양동' },
-  { area: '부천',       si: '부천시',  label: '부천시',  dongName: '여월동',   displayLabel: '부천시 여월동' },
-  { area: '고양_덕양',  si: '고양시',  label: '덕양구',  dongName: '원흥동',   displayLabel: '고양시 덕양구 원흥동' },
-  { area: '고양_덕양',  si: '고양시',  label: '덕양구',  dongName: '삼송동',   displayLabel: '고양시 덕양구 삼송동' },
-  { area: '시흥',       si: '시흥시',  label: '시흥시',  dongName: '목감동',   displayLabel: '시흥시 목감동' },
-  { area: '광명',       si: '광명시',  label: '광명시',  dongName: '소하동',   displayLabel: '광명시 소하동' },
-  { area: '용인_기흥',  si: '용인시',  label: '기흥구',  dongName: '언남동',   displayLabel: '용인시 기흥구 언남동' },
-  { area: '고양_덕양',  si: '고양시',  label: '덕양구',  dongName: '동산동',   displayLabel: '고양시 덕양구 동산동' },
-  { area: '고양_덕양',  si: '고양시',  label: '덕양구',  dongName: '향동동',   displayLabel: '고양시 덕양구 향동동' },
-  { area: '의왕',       si: '의왕시',  label: '의왕시',  dongName: '학의동',   displayLabel: '의왕시 학의동' },
-];
+const DEFAULT_REGION_BOOKMARKS: RegionBookmark[] = [];
 
 const REGION_RATIO_LABELS = ["'16","'17","'18","'19","'20","'21","'22","'23","'24"];
 
 // KOSIS 주택소유통계 (시군구 단위) - 2주택 이상 소유 가구 비율 (%)
 // 출처: 통계청 KOSIS Open API DT_1OH0407, 2026-08-07 조회
+// 출처: 통계청 KOSIS Open API DT_1OH0407, 2026-08-09 실측 (fetch_multi_owner_ratio.py)
 const REGION_RATIO_DATA: Record<string, number[]> = {
-  '수원_권선':  [22.6, 23.4, 24.0, 23.9, 23.5, 22.6, 22.9, 23.2, 23.1],
-  '수원_영통':  [25.0, 25.8, 26.9, 28.5, 28.0, 25.5, 24.9, 24.3, 24.1],
-  '성남_분당':  [30.9, 31.3, 31.1, 31.0, 29.7, 27.6, 27.3, 27.2, 27.4],
-  '의정부':     [23.7, 23.6, 23.5, 24.1, 23.3, 22.0, 21.8, 21.9, 22.1],
-  '부천':       [24.0, 24.1, 24.1, 24.2, 24.1, 22.8, 22.5, 22.7, 22.9],
-  '평택':       [27.7, 27.8, 29.6, 30.1, 29.6, 26.8, 26.0, 25.6, 25.7],
-  '안산_상록':  [23.5, 23.4, 23.6, 24.5, 25.4, 23.7, 23.2, 23.4, 23.9],
-  '안산_단원':  [23.5, 23.4, 23.6, 24.5, 25.4, 23.7, 23.2, 23.4, 23.9],
-  '과천':       [34.0, 32.7, 31.8, 31.5, 30.9, 29.9, 27.9, 26.2, 26.0],
-  '구리':       [24.4, 24.8, 24.8, 24.5, 23.9, 22.6, 22.5, 22.8, 23.4],
-  '남양주':     [27.5, 26.7, 26.9, 26.8, 26.0, 24.9, 24.6, 24.5, 24.6],
-  '오산':       [22.8, 23.3, 24.2, 24.3, 24.0, 21.9, 21.5, 21.5, 21.2],
-  '시흥':       [22.8, 22.8, 23.8, 24.3, 24.2, 23.4, 22.7, 23.1, 22.7],
-  '하남':       [22.7, 23.5, 23.3, 24.1, 23.5, 20.6, 19.6, 19.7, 20.2],
-  '용인_처인':  [27.3, 26.0, 27.0, 27.8, 26.6, 25.2, 24.2, 24.2, 24.3],
-  '용인_기흥':  [28.0, 28.1, 28.2, 28.8, 27.8, 25.7, 25.1, 25.1, 25.4],
-  '용인_수지':  [31.7, 31.5, 31.5, 31.7, 31.3, 28.9, 27.8, 27.7, 27.5],
-  '김포':       [26.4, 26.3, 26.3, 26.6, 25.5, 24.9, 24.4, 24.3, 24.1],
-  '화성_동탄':  [26.6, 26.9, 27.0, 28.8, 27.5, 25.2, 24.9, 24.4, 23.9],
+  '수원_장안':   [23.8, 24.3, 24.8, 25.2, 24.8, 24.2, 24.4, 24.6, 24.4],
+  '수원_권선':   [22.6, 23.4, 24.0, 23.9, 23.5, 22.6, 22.9, 23.2, 23.1],
+  '수원_팔달':   [24.5, 25.0, 25.4, 24.9, 24.2, 22.9, 22.6, 23.7, 23.6],
+  '수원_영통':   [25.0, 25.8, 26.9, 28.5, 28.0, 25.5, 24.9, 24.3, 24.1],
+  '성남_수정':   [24.2, 24.6, 24.7, 24.7, 24.3, 23.5, 23.0, 22.3, 23.1],
+  '성남_중원':   [23.7, 23.6, 22.8, 22.8, 21.9, 21.4, 21.0, 21.4, 21.5],
+  '성남_분당':   [30.9, 31.3, 31.1, 31.0, 29.7, 27.6, 27.3, 27.2, 27.4],
+  '의정부':      [23.7, 23.6, 23.5, 24.1, 23.3, 22.0, 21.8, 21.9, 22.1],
+  '안양_만안':   [24.9, 25.8, 26.2, 26.2, 25.8, 24.2, 23.5, 24.1, 24.0],
+  '안양_동안':   [27.1, 27.6, 28.0, 28.3, 27.4, 25.6, 25.5, 25.5, 25.4],
+  '부천':        [24.0, 24.1, 24.1, 24.2, 24.1, 22.8, 22.5, 22.7, 22.9],
+  '광명':        [26.0, 26.4, 26.8, 26.8, 26.3, 24.6, 24.6, 25.0, 24.7],
+  '평택':        [27.7, 27.8, 29.6, 30.1, 29.6, 26.8, 26.0, 25.6, 25.7],
+  '안산_상록':   [22.8, 22.8, 22.7, 23.6, 24.4, 23.0, 22.5, 22.6, 23.0],
+  '안산_단원':   [24.2, 24.0, 24.6, 25.5, 26.5, 24.4, 24.0, 24.4, 24.8],
+  '고양_덕양':   [25.0, 24.9, 24.9, 24.8, 23.8, 22.4, 22.0, 22.0, 21.8],
+  '고양_일산동':  [27.4, 27.5, 27.7, 27.8, 27.2, 26.0, 25.6, 25.8, 26.1], // KOSIS SGG 코드 오류, 추정치 유지
+  '고양_일산서':  [27.7, 27.7, 27.8, 27.5, 27.6, 26.7, 26.5, 26.4, 24.8],
+  '과천':        [34.0, 32.7, 31.8, 31.5, 30.9, 29.9, 27.9, 26.2, 26.0],
+  '구리':        [24.4, 24.8, 24.8, 24.5, 23.9, 22.6, 22.5, 22.8, 23.4],
+  '남양주':      [27.5, 26.7, 26.9, 26.8, 26.0, 24.9, 24.6, 24.5, 24.6],
+  '오산':        [22.8, 23.3, 24.2, 24.3, 24.0, 21.9, 21.5, 21.5, 21.2],
+  '시흥':        [22.8, 22.8, 23.8, 24.3, 24.2, 23.4, 22.7, 23.1, 22.7],
+  '군포':        [24.8, 25.4, 25.9, 26.1, 26.3, 24.0, 23.6, 24.0, 24.2],
+  '의왕':        [27.9, 27.9, 28.3, 28.2, 28.7, 26.0, 26.3, 26.6, 26.3],
+  '하남':        [22.7, 23.5, 23.3, 24.1, 23.5, 20.6, 19.6, 19.7, 20.2],
+  '용인_처인':   [27.3, 26.0, 27.0, 27.8, 26.6, 25.2, 24.2, 24.2, 24.3],
+  '용인_기흥':   [28.0, 28.1, 28.2, 28.8, 27.8, 25.7, 25.1, 25.1, 25.4],
+  '용인_수지':   [31.7, 31.5, 31.5, 31.7, 31.3, 28.9, 27.8, 27.7, 27.5],
+  '파주':        [26.9, 26.3, 26.1, 26.3, 25.8, 25.2, 25.1, 24.8, 24.5],
+  '이천':        [28.2, 28.6, 28.3, 28.6, 28.2, 27.1, 26.8, 26.9, 26.7],
+  '김포':        [26.4, 26.3, 26.3, 26.6, 25.5, 24.9, 24.4, 24.3, 24.1],
+  '화성_동탄':   [26.6, 26.9, 27.0, 28.8, 27.5, 25.2, 24.9, 24.4, 23.9],
+  '화성_본청':   [26.6, 26.9, 27.0, 28.8, 27.5, 25.2, 24.9, 24.4, 23.9],
+  '광주':        [25.2, 25.0, 25.3, 25.3, 24.1, 22.6, 21.9, 22.0, 22.0],
+  '양주':        [23.8, 25.7, 25.4, 25.7, 24.0, 22.6, 22.8, 24.2, 23.3],
 };
 
 const RATIO_CHART_W = width - 56; // regionSection: marginH 12*2 + padding 16*2
@@ -1042,39 +1044,130 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
     // selectedArea는 selectedSi effect가 자동으로 첫 번째로 설정함
   }, [siList]);
 
-  // ── 비교 모드 상태 ──
-  const [compareAreas, setCompareAreas] = useState<string[]>([]);
-  const [compareSi, setCompareSi] = useState<string>(() => siList[0] ?? '');
+  // ── 숨김 동 (area별 동 이름 목록) ──
+  const [hiddenDongs, setHiddenDongs] = useState<Record<string, string[]>>({});
 
-  const toggleCompareArea = useCallback((area: string) => {
-    setCompareAreas(prev =>
-      prev.includes(area) ? prev.filter(a => a !== area) : [...prev, area]
-    );
+  const toggleHiddenDong = useCallback((area: string, dongName: string) => {
+    setHiddenDongs(prev => {
+      const list = prev[area] ?? [];
+      return {
+        ...prev,
+        [area]: list.includes(dongName) ? list.filter(d => d !== dongName) : [...list, dongName],
+      };
+    });
+  }, []);
+
+  const hiddenDongListForArea = useMemo(
+    () => (selectedArea ? (hiddenDongs[selectedArea] ?? []) : []),
+    [hiddenDongs, selectedArea]
+  );
+
+  const visibleDongList = useMemo(
+    () => dongList.filter(d => !hiddenDongListForArea.includes(d.name)),
+    [dongList, hiddenDongListForArea]
+  );
+
+  const restoreHiddenDongsInArea = useCallback(() => {
+    if (!selectedArea) return;
+    setHiddenDongs(prev => ({ ...prev, [selectedArea]: [] }));
+  }, [selectedArea]);
+
+  // 숨긴 동이 선택된 경우 전체(null)로 fallback
+  useEffect(() => {
+    if (selectedDong && selectedArea && (hiddenDongs[selectedArea] ?? []).includes(selectedDong)) {
+      setSelectedDong(null);
+    }
+  }, [hiddenDongs]);
+
+  // ── 차트 로딩 표시 ──
+  const [isChartLoading, setIsChartLoading] = useState(false);
+  const chartTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (!selectedArea) return;
+    setIsChartLoading(true);
+    if (chartTimerRef.current) clearTimeout(chartTimerRef.current);
+    chartTimerRef.current = setTimeout(() => setIsChartLoading(false), 300);
+    return () => { if (chartTimerRef.current) clearTimeout(chartTimerRef.current); };
+  }, [selectedArea, selectedDong]);
+
+  // ── 비교 모드 상태 ──
+  const [compareDongs, setCompareDongs] = useState<{ area: string; dongName: string }[]>([]);
+  const [compareMetric, setCompareMetric] = useState<'price' | 'ratio' | 'turnover'>('price');
+
+  const toggleCompareDong = useCallback((area: string, dongName: string) => {
+    setCompareDongs(prev => {
+      const exists = prev.some(d => d.area === area && d.dongName === dongName);
+      return exists
+        ? prev.filter(d => !(d.area === area && d.dongName === dongName))
+        : [...prev, { area, dongName }];
+    });
   }, []);
 
   const loadFavoritesIntoCompare = useCallback(() => {
-    const areaKeys = [...new Set(bookmarks.map(b => b.area))];
-    setCompareAreas(prev => [...new Set([...prev, ...areaKeys])]);
+    const pairs = bookmarks.map(b => ({ area: b.area, dongName: b.dongName ?? '' })).filter(b => b.dongName);
+    setCompareDongs(prev => {
+      const existing = new Set(prev.map(d => `${d.area}__${d.dongName}`));
+      const toAdd = pairs.filter(p => !existing.has(`${p.area}__${p.dongName}`));
+      return [...prev, ...toAdd];
+    });
   }, [bookmarks]);
 
-  const resetCompare = useCallback(() => {
-    setCompareAreas([]);
-  }, []);
+  const resetCompare = useCallback(() => setCompareDongs([]), []);
 
-  const compareGuList = useMemo(
-    () => regionCharts.filter(r => r.si === compareSi),
-    [regionCharts, compareSi]
-  );
 
-  const compareData = useMemo<BoxPlotPoint[]>(() => {
-    return compareAreas.flatMap(area => {
+  useEffect(() => {
+    if (compareDongs.length === 0) return;
+    setIsChartLoading(true);
+    if (chartTimerRef.current) clearTimeout(chartTimerRef.current);
+    chartTimerRef.current = setTimeout(() => setIsChartLoading(false), 350);
+    return () => { if (chartTimerRef.current) clearTimeout(chartTimerRef.current); };
+  }, [compareDongs]);
+
+  // 동별 최신 중위가 가로 바 차트 데이터
+  const compareDongBarData = useMemo<{ label: string; sub: string; value: number }[]>(() => {
+    return compareDongs.flatMap(({ area, dongName }) => {
       const entry = regionCharts.find(r => r.area === area);
-      if (!entry || entry.data.length === 0) return [];
-      const latest = entry.data[entry.data.length - 1];
-      const shortLabel = entry.gu ?? entry.si.replace('시', '');
-      return [{ ...latest, label: shortLabel }];
+      if (!entry) return [];
+      const dong = entry.dongs.find(d => d.name === dongName);
+      if (!dong || dong.data.length === 0) return [];
+      const latest = dong.data[dong.data.length - 1];
+      const shortArea = entry.gu ?? entry.si.replace('시', '');
+      return [{ label: dongName, sub: shortArea, value: latest.median }];
     });
-  }, [compareAreas, regionCharts]);
+  }, [compareDongs, regionCharts]);
+
+  // 동별 연간 거래 회전율 (%) = 6개월 거래건수×2 / 총세대수 × 100
+  // dongUnitCounts 없는 동은 제외 (부정확한 데이터 미표시)
+  const compareTurnoverBarData = useMemo<{ label: string; sub: string; value: number }[]>(() => {
+    return compareDongs.flatMap(({ area, dongName }) => {
+      const entry = regionCharts.find(r => r.area === area);
+      if (!entry?.dongUnitCounts) return [];
+      const totalUnits = entry.dongUnitCounts[dongName];
+      if (!totalUnits || totalUnits === 0) return [];
+      const dong = entry.dongs.find(d => d.name === dongName);
+      if (!dong || dong.data.length === 0) return [];
+      const last6 = dong.data.slice(-6);
+      const trades6m = last6.reduce((s, p) => s + (p.count ?? 0), 0);
+      if (trades6m === 0) return [];
+      const annualRate = Math.round((trades6m * 2 / totalUnits) * 1000) / 10; // 소수 1자리
+      const shortArea = entry.gu ?? entry.si.replace('시', '');
+      return [{ label: dongName, sub: shortArea, value: annualRate }];
+    });
+  }, [compareDongs, regionCharts]);
+
+  // 구별 다주택자 비율 가로 바 차트 데이터 (area 기준 중복 제거)
+  const compareRatioBarData = useMemo<{ label: string; sub: string; value: number }[]>(() => {
+    const seen = new Set<string>();
+    return compareDongs.flatMap(({ area }) => {
+      if (seen.has(area)) return [];
+      seen.add(area);
+      const entry = regionCharts.find(r => r.area === area);
+      const vals = REGION_RATIO_DATA[area];
+      if (!vals || !entry) return [];
+      return [{ label: entry.gu ?? entry.si.replace('시', ''), sub: entry.si, value: vals[vals.length - 1] }];
+    });
+  }, [compareDongs, regionCharts]);
 
   // ── 필터 상태 저장/복원 ──
   const hydratedRef = useRef(false);
@@ -1088,11 +1181,12 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
       try {
         const s = JSON.parse(v);
         if (s.viewMode === 'series' || s.viewMode === 'compare') setViewMode(s.viewMode);
-        if (Array.isArray(s.compareAreas)) {
-          const valid = s.compareAreas.filter((a: string) => regionCharts.some(r => r.area === a));
-          if (valid.length) setCompareAreas(valid);
+        if (Array.isArray(s.compareDongs)) {
+          setCompareDongs(s.compareDongs);
         }
-        if (s.compareSi && regionCharts.some(r => r.si === s.compareSi)) setCompareSi(s.compareSi);
+        if (s.hiddenDongs && typeof s.hiddenDongs === 'object') {
+          setHiddenDongs(s.hiddenDongs);
+        }
         if (s.selectedSi && regionCharts.some(r => r.si === s.selectedSi)) {
           pendingAreaRef.current = s.selectedArea ?? null;
           pendingDongRef.current = s.selectedDong ?? null;
@@ -1106,9 +1200,9 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
   useEffect(() => {
     if (!hydratedRef.current) return;
     AsyncStorage.setItem(REGION_FILTER_KEY, JSON.stringify({
-      viewMode, selectedSi, selectedArea, selectedDong, compareAreas, compareSi,
+      viewMode, selectedSi, selectedArea, selectedDong, compareDongs, hiddenDongs,
     }));
-  }, [viewMode, selectedSi, selectedArea, selectedDong, compareAreas, compareSi]);
+  }, [viewMode, selectedSi, selectedArea, selectedDong, compareDongs, hiddenDongs]);
 
   if (siList.length === 0) return null;
 
@@ -1120,7 +1214,7 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
       <View style={{ flexDirection: 'row', gap: 8, marginBottom: 14 }}>
         {([
           { key: 'series',  label: '시계열' },
-          { key: 'compare', label: `지역 비교${compareAreas.length > 0 ? ` (${compareAreas.length})` : ''}` },
+          { key: 'compare', label: `지역 비교${compareDongs.length > 0 ? ` (${compareDongs.length})` : ''}` },
         ] as { key: RegionViewMode; label: string }[]).map(tab => (
           <TouchableOpacity
             key={tab.key}
@@ -1141,7 +1235,7 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
       {viewMode === 'series' ? (
         /* ══ 시계열 모드 ══ */
         <View>
-          {/* 시 + 초기화 */}
+          {/* 시 */}
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flex: 1 }}>
               <View style={{ flexDirection: 'row', gap: 6 }}>
@@ -1153,56 +1247,95 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
                 ))}
               </View>
             </ScrollView>
-            <TouchableOpacity onPress={resetSeries} style={{ marginLeft: 8, paddingHorizontal: 10, paddingVertical: 5, borderRadius: 8, backgroundColor: '#fafafa', borderWidth: 1, borderColor: '#dbdbdb' }}>
-              <Text style={{ fontSize: 11, color: '#8e8e8e', fontWeight: '600' }}>초기화</Text>
-            </TouchableOpacity>
+            {selectedSi !== siList[0] && (
+              <TouchableOpacity onPress={() => setSelectedSi(siList[0] ?? '')}
+                style={{ marginLeft: 8, paddingHorizontal: 10, paddingVertical: 5, borderRadius: 8, backgroundColor: '#fafafa', borderWidth: 1, borderColor: '#dbdbdb' }}>
+                <Text style={{ fontSize: 11, color: '#8e8e8e', fontWeight: '600' }}>초기화</Text>
+              </TouchableOpacity>
+            )}
           </View>
 
           {/* 구 (구 있는 시만) */}
           {showGuRow && (
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 8 }}>
-              <View style={{ flexDirection: 'row', gap: 6 }}>
-                {guList.map(r => (
-                  <TouchableOpacity key={r.area} onPress={() => handleAreaSelect(r.area)}
-                    style={[styles.regionGuChip, selectedArea === r.area && styles.regionGuChipActive]}>
-                    <Text style={[styles.regionGuChipText, selectedArea === r.area && styles.regionGuChipTextActive]}>{r.label}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </ScrollView>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flex: 1 }}>
+                <View style={{ flexDirection: 'row', gap: 6, alignItems: 'center' }}>
+                  {guList.map(r => (
+                    <TouchableOpacity key={r.area} onPress={() => handleAreaSelect(r.area)}
+                      style={[styles.regionGuChip, selectedArea === r.area && styles.regionGuChipActive]}>
+                      <Text style={[styles.regionGuChipText, selectedArea === r.area && styles.regionGuChipTextActive]}>{r.label}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </ScrollView>
+              {selectedArea !== guList[0]?.area && (
+                <TouchableOpacity onPress={() => handleAreaSelect(guList[0]?.area ?? '')}
+                  style={{ marginLeft: 8, paddingHorizontal: 10, paddingVertical: 5, borderRadius: 8, backgroundColor: '#fafafa', borderWidth: 1, borderColor: '#dbdbdb' }}>
+                  <Text style={{ fontSize: 11, color: '#8e8e8e', fontWeight: '600' }}>초기화</Text>
+                </TouchableOpacity>
+              )}
+            </View>
           )}
 
           {/* 동 */}
           {dongList.length > 0 && (
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 12 }}>
-              <View style={{ flexDirection: 'row', gap: 6 }}>
-                <TouchableOpacity onPress={() => setSelectedDong(null)}
-                  style={[styles.regionDongChip, selectedDong === null && styles.regionDongChipActive]}>
-                  <Text style={[styles.regionDongChipText, selectedDong === null && styles.regionDongChipTextActive]}>전체</Text>
-                </TouchableOpacity>
-                {dongList.map(d => (
-                  <TouchableOpacity key={d.name} onPress={() => setSelectedDong(d.name)}
-                    style={[styles.regionDongChip, selectedDong === d.name && styles.regionDongChipActive]}>
-                    <Text style={[styles.regionDongChipText, selectedDong === d.name && styles.regionDongChipTextActive]}>{d.name}</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flex: 1 }}>
+                <View style={{ flexDirection: 'row', gap: 6, alignItems: 'center' }}>
+                  <TouchableOpacity onPress={() => setSelectedDong(null)}
+                    style={[styles.regionDongChip, selectedDong === null && styles.regionDongChipActive]}>
+                    <Text style={[styles.regionDongChipText, selectedDong === null && styles.regionDongChipTextActive]}>전체</Text>
                   </TouchableOpacity>
-                ))}
-              </View>
-            </ScrollView>
+                  {visibleDongList.map(d => (
+                    <TouchableOpacity key={d.name} onPress={() => setSelectedDong(d.name)}
+                      style={[styles.regionDongChip, selectedDong === d.name && styles.regionDongChipActive]}>
+                      <Text style={[styles.regionDongChipText, selectedDong === d.name && styles.regionDongChipTextActive]}>{d.name}</Text>
+                    </TouchableOpacity>
+                  ))}
+                  {hiddenDongListForArea.length > 0 && (
+                    <TouchableOpacity onPress={restoreHiddenDongsInArea}
+                      style={{ paddingHorizontal: 8, paddingVertical: 5, borderRadius: 14, backgroundColor: '#fafafa', borderWidth: 1, borderColor: '#dbdbdb' }}>
+                      <Text style={{ fontSize: 10, color: '#8e8e8e' }}>숨김 {hiddenDongListForArea.length}개 복원</Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
+              </ScrollView>
+              {selectedDong !== null && (
+                <TouchableOpacity onPress={() => setSelectedDong(null)}
+                  style={{ marginLeft: 8, paddingHorizontal: 10, paddingVertical: 5, borderRadius: 8, backgroundColor: '#fafafa', borderWidth: 1, borderColor: '#dbdbdb' }}>
+                  <Text style={{ fontSize: 11, color: '#8e8e8e', fontWeight: '600' }}>초기화</Text>
+                </TouchableOpacity>
+              )}
+            </View>
           )}
 
           {seriesData && (
             <View>
-              {/* 즐겨찾기 저장 버튼 */}
-              <TouchableOpacity onPress={toggleBookmark} style={styles.regionStarBtn}>
-                <Text style={[styles.regionStarBtnText, starred && styles.regionStarBtnTextActive]}>
-                  {starred ? '★ 즐겨찾기 해제' : '☆ 즐겨찾기 추가'}
-                </Text>
-              </TouchableOpacity>
-              {/* 12개월 시계열 박스플랏 */}
-              <BoxPlotChart data={seriesData.data} yearlyData={seriesData.yearlyData}
-                title={seriesData.title} unit={seriesData.unit} />
-              {/* 다주택자 비율 라인차트 */}
-              {selectedEntry && <RegionRatioChart area={selectedEntry.area} />}
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                <TouchableOpacity onPress={toggleBookmark} style={[styles.regionStarBtn, { marginBottom: 0, flex: 1 }]}>
+                  <Text style={[styles.regionStarBtnText, starred && styles.regionStarBtnTextActive]}>
+                    {starred ? '★ 즐겨찾기 해제' : '☆ 즐겨찾기 추가'}
+                  </Text>
+                </TouchableOpacity>
+                {selectedDong && selectedArea && (
+                  <TouchableOpacity onPress={() => toggleHiddenDong(selectedArea, selectedDong)}
+                    style={{ paddingHorizontal: 12, paddingVertical: 7, borderRadius: 8, backgroundColor: '#fafafa', borderWidth: 1, borderColor: '#dbdbdb' }}>
+                    <Text style={{ fontSize: 12, color: '#8e8e8e', fontWeight: '600' }}>숨김</Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+              {isChartLoading ? (
+                <View style={{ height: 180, alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+                  <ActivityIndicator size="small" color="#0095f6" />
+                  <Text style={{ fontSize: 12, color: '#8e8e8e' }}>차트 로딩 중...</Text>
+                </View>
+              ) : (
+                <>
+                  <BoxPlotChart data={seriesData.data} yearlyData={seriesData.yearlyData}
+                    title={seriesData.title} unit={seriesData.unit} />
+                  {selectedEntry && <RegionRatioChart area={selectedEntry.area} />}
+                </>
+              )}
             </View>
           )}
         </View>
@@ -1210,114 +1343,109 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
       ) : (
         /* ══ 지역 비교 모드 ══ */
         <View>
-          {/* 즐겨찾기 불러오기 */}
-          {bookmarks.length > 0 && (
-            <TouchableOpacity
-              onPress={loadFavoritesIntoCompare}
-              style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 12, paddingVertical: 7, paddingHorizontal: 12, borderRadius: 10, backgroundColor: '#e7f5ff', borderWidth: 1, borderColor: '#bfdbfe', alignSelf: 'flex-start' }}
-            >
-              <Text style={{ fontSize: 12, fontWeight: '600', color: '#1d4ed8' }}>★ 즐겨찾기 {bookmarks.length}개 불러오기</Text>
+          {/* 즐겨찾기 불러오기 + 해제 */}
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 14 }}>
+            <TouchableOpacity onPress={loadFavoritesIntoCompare}
+              style={{ flex: 1, paddingVertical: 10, alignItems: 'center', borderRadius: 10, backgroundColor: '#e7f5ff', borderWidth: 1, borderColor: '#bfdbfe' }}>
+              <Text style={{ fontSize: 13, fontWeight: '600', color: '#1d4ed8' }}>★ 즐겨찾기 불러오기</Text>
             </TouchableOpacity>
-          )}
-
-          {/* 시 네비게이션 + 초기화 */}
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flex: 1 }}>
-              <View style={{ flexDirection: 'row', gap: 6 }}>
-                {siList.map(si => (
-                  <TouchableOpacity key={si} onPress={() => setCompareSi(si)}
-                    style={[styles.regionSiChip, compareSi === si && styles.regionSiChipActive]}>
-                    <Text style={[styles.regionSiChipText, compareSi === si && styles.regionSiChipTextActive]}>{si}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </ScrollView>
-            {compareAreas.length > 0 && (
-              <TouchableOpacity onPress={resetCompare} style={{ marginLeft: 8, paddingHorizontal: 10, paddingVertical: 5, borderRadius: 8, backgroundColor: '#fee2e2', borderWidth: 1, borderColor: '#fecaca' }}>
-                <Text style={{ fontSize: 11, color: '#dc2626', fontWeight: '600' }}>초기화</Text>
+            {compareDongs.length > 0 && (
+              <TouchableOpacity onPress={resetCompare}
+                style={{ paddingVertical: 10, paddingHorizontal: 16, borderRadius: 10, backgroundColor: '#fee2e2', borderWidth: 1, borderColor: '#fecaca' }}>
+                <Text style={{ fontSize: 13, fontWeight: '600', color: '#dc2626' }}>해제</Text>
               </TouchableOpacity>
             )}
           </View>
 
-          {/* 구/지역 멀티셀렉트 */}
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 10 }}>
-            <View style={{ flexDirection: 'row', gap: 6 }}>
-              {compareGuList.map(r => {
-                const checked = compareAreas.includes(r.area);
-                return (
-                  <TouchableOpacity key={r.area} onPress={() => toggleCompareArea(r.area)}
-                    style={{ paddingHorizontal: 12, paddingVertical: 6, borderRadius: 16, backgroundColor: checked ? '#0095f6' : '#fafafa', borderWidth: 1, borderColor: checked ? '#0095f6' : '#dbdbdb' }}>
-                    <Text style={{ fontSize: 12, fontWeight: '600', color: checked ? '#fff' : '#8e8e8e' }}>
-                      {checked ? '✓ ' : ''}{r.label}
-                    </Text>
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
-          </ScrollView>
-
-          {/* 선택된 지역 태그 */}
-          {compareAreas.length > 0 && (
+          {/* 선택된 동 태그 */}
+          {compareDongs.length > 0 && (
             <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginBottom: 12 }}>
-              {compareAreas.map(area => {
+              {compareDongs.map(({ area, dongName }) => {
                 const entry = regionCharts.find(r => r.area === area);
-                if (!entry) return null;
-                const lbl = entry.gu ? `${entry.si.replace('시', '')} ${entry.gu}` : entry.si;
+                const areaLabel = entry ? (entry.gu ?? entry.si.replace('시', '')) : area;
                 return (
-                  <TouchableOpacity key={area} onPress={() => toggleCompareArea(area)}
+                  <TouchableOpacity key={`${area}__${dongName}`}
+                    onPress={() => toggleCompareDong(area, dongName)}
                     style={{ paddingHorizontal: 10, paddingVertical: 4, borderRadius: 12, backgroundColor: '#e7f5ff', flexDirection: 'row', alignItems: 'center', gap: 3 }}>
-                    <Text style={{ fontSize: 11, color: '#0095f6', fontWeight: '600' }}>{lbl}</Text>
+                    <Text style={{ fontSize: 11, color: '#0095f6', fontWeight: '600' }}>{dongName} <Text style={{ color: '#8e8e8e', fontWeight: '400' }}>{areaLabel}</Text></Text>
                     <Text style={{ fontSize: 10, color: '#8e8e8e' }}>✕</Text>
                   </TouchableOpacity>
                 );
               })}
-              <TouchableOpacity onPress={resetCompare}
-                style={{ paddingHorizontal: 10, paddingVertical: 4, borderRadius: 12, backgroundColor: '#fee2e2' }}>
-                <Text style={{ fontSize: 11, color: '#dc2626', fontWeight: '600' }}>전체 해제</Text>
-              </TouchableOpacity>
             </View>
           )}
 
-          {compareData.length >= 2 ? (
-            <View>
-              {/* 가격 비교 박스플랏 */}
-              <BoxPlotChart
-                data={compareData}
-                title={`지역별 현재 가격 비교 (${compareData.length}개)`}
-                unit="단위: 억원 · 최근 1개월"
-              />
-              {/* 다주택자 비율 비교 카드 */}
-              {compareAreas.some(a => REGION_RATIO_DATA[a]) && (
-                <View style={{ marginTop: 16, paddingTop: 14, borderTopWidth: 1, borderTopColor: '#fafafa' }}>
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-                    <Text style={{ fontSize: 13, fontWeight: '600', color: '#262626' }}>2주택 이상 보유 비율</Text>
-                    <Text style={{ fontSize: 10, color: '#8e8e8e' }}>KOSIS 2024년</Text>
-                  </View>
-                  <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
-                    {compareAreas.map(area => {
-                      const entry = regionCharts.find(r => r.area === area);
-                      if (!entry) return null;
-                      const vals = REGION_RATIO_DATA[area];
-                      const ratio = vals ? vals[vals.length - 1] : null;
-                      const lbl = entry.gu ?? entry.si.replace('시', '');
-                      return (
-                        <View key={area} style={{ paddingHorizontal: 12, paddingVertical: 8, borderRadius: 10, backgroundColor: ratio ? '#e7f5ff' : '#fafafa', borderWidth: 1, borderColor: ratio ? '#bfdbfe' : '#dbdbdb', alignItems: 'center', minWidth: 72 }}>
-                          <Text style={{ fontSize: 10, color: '#8e8e8e', marginBottom: 2 }}>{lbl}</Text>
-                          <Text style={{ fontSize: 18, fontWeight: '600', color: ratio ? '#1d4ed8' : '#8e8e8e' }}>
-                            {ratio != null ? `${ratio}%` : '–'}
-                          </Text>
-                        </View>
-                      );
-                    })}
-                  </View>
-                  <Text style={{ fontSize: 9, color: '#8e8e8e', marginTop: 8 }}>출처: 통계청 KOSIS · 시군구 단위 · 데이터 없는 지역은 – 표시</Text>
+          {/* 서브탭: 아파트 가격 / 다주택자 비율 */}
+          {compareDongs.length >= 2 && (
+            <View style={{ flexDirection: 'row', gap: 6, marginBottom: 12 }}>
+              {([
+                { key: 'price',    label: '아파트 가격' },
+                { key: 'ratio',    label: '다주택자 비율' },
+                { key: 'turnover', label: '거래 활발도' },
+              ] as { key: 'price' | 'ratio' | 'turnover'; label: string }[]).map(tab => (
+                <TouchableOpacity key={tab.key} onPress={() => setCompareMetric(tab.key)}
+                  style={{ flex: 1, paddingVertical: 7, borderRadius: 8, alignItems: 'center',
+                    backgroundColor: compareMetric === tab.key ? '#0095f6' : '#fafafa',
+                    borderWidth: 1, borderColor: compareMetric === tab.key ? '#0095f6' : '#dbdbdb' }}>
+                  <Text style={{ fontSize: 11, fontWeight: '600', color: compareMetric === tab.key ? '#fff' : '#8e8e8e' }}>
+                    {tab.label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          )}
+
+          {/* 차트 */}
+          {isChartLoading && compareDongs.length >= 2 ? (
+            <View style={{ height: 180, alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+              <ActivityIndicator size="small" color="#0095f6" />
+              <Text style={{ fontSize: 12, color: '#8e8e8e' }}>차트 로딩 중...</Text>
+            </View>
+          ) : compareMetric === 'price' && compareDongBarData.length >= 2 ? (
+            <HorizontalBarChart
+              data={compareDongBarData}
+              title={`동별 최신 중위가 (${compareDongBarData.length}개)`}
+              unit="단위: 억원 · 최근 거래 기준"
+              color="#0095f6"
+            />
+          ) : compareMetric === 'ratio' && compareRatioBarData.length >= 1 ? (
+            <HorizontalBarChart
+              data={compareRatioBarData}
+              title="2주택 이상 보유 비율"
+              unit="출처: 통계청 KOSIS 2024년 · 시군구 단위"
+              color="#f59e0b"
+              valueSuffix="%"
+            />
+          ) : compareMetric === 'turnover' && compareTurnoverBarData.length >= 1 ? (
+            <HorizontalBarChart
+              data={compareTurnoverBarData}
+              title="동별 연간 거래 회전율 (6개월 거래×2 / 총세대수)"
+              unit="단위: % · 국토부 실거래가 + 공동주택 현황"
+              color="#10b981"
+              valueSuffix="%"
+            />
+          ) : compareMetric === 'turnover' ? (
+            <View style={{ paddingVertical: 20, paddingHorizontal: 4, gap: 10 }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                <Text style={{ fontSize: 14, fontWeight: '700', color: '#262626' }}>거래 회전율</Text>
+                <View style={{ paddingHorizontal: 8, paddingVertical: 2, borderRadius: 6, backgroundColor: '#fef3c7', borderWidth: 1, borderColor: '#fde68a' }}>
+                  <Text style={{ fontSize: 11, fontWeight: '700', color: '#92400e' }}>준비 중</Text>
                 </View>
-              )}
+              </View>
+              <Text style={{ fontSize: 12, color: '#8e8e8e', lineHeight: 18 }}>
+                {'연간 거래 회전율 = 거래건수 / 총 아파트 세대수 × 100%\n환금성(얼마나 쉽게 팔리는지)을 수치로 비교합니다.'}
+              </Text>
+              <View style={{ backgroundColor: '#fafafa', borderRadius: 8, padding: 12, gap: 6, borderWidth: 1, borderColor: '#dbdbdb' }}>
+                <Text style={{ fontSize: 11, fontWeight: '700', color: '#262626' }}>데이터 준비 방법</Text>
+                <Text style={{ fontSize: 11, color: '#8e8e8e', lineHeight: 17 }}>
+                  {'1. stat.molit.go.kr → 주택 → 공동주택 현황 Excel 다운로드\n2. 파일 경로를 Claude에 알려주면 자동 처리\n3. push_region_charts.py 재실행으로 Firebase 업로드'}
+                </Text>
+              </View>
             </View>
           ) : (
             <View style={{ alignItems: 'center', paddingVertical: 36 }}>
               <Text style={{ fontSize: 13, color: '#8e8e8e' }}>
-                {compareAreas.length === 0 ? '비교할 지역을 선택하세요' : '지역을 1개 더 선택하세요'}
+                {compareDongs.length === 0 ? '즐겨찾기를 불러온 뒤 2개 이상 선택하세요' : '동을 1개 더 선택하세요'}
               </Text>
             </View>
           )}
@@ -1730,15 +1858,6 @@ export default function InvestmentScreen() {
     return lastSyncTime.toLocaleDateString();
   }, [lastSyncTime]);
 
-  // Memoize category stats
-  const stats = useMemo(() => {
-    const realEstate = columns.filter(
-      c => c.category === 'real-estate'
-    ).length;
-    const stocks = columns.filter(c => c.category === 'stocks').length;
-    return { realEstate, stocks };
-  }, [columns]);
-
   // These must stay unconditional (top-level) — moving them inside the
   // conditional FlatList JSX below caused "Rendered more hooks than during
   // the previous render" once columns loaded and the branch changed.
@@ -1761,16 +1880,9 @@ export default function InvestmentScreen() {
       <View>
         {termOfDay && <TermOfDayCard term={termOfDay} />}
         {regionCharts.length > 0 && <RegionBrowser regionCharts={regionCharts} />}
-        <View style={styles.statsSection}>
-          <View style={styles.statCard}>
-            <MaterialIcons name="home-work" size={24} color="#8b5cf6" />
-            <Text style={styles.statNumber}>{stats.realEstate}</Text>
-            <Text style={styles.statLabel}>부동산 분석</Text>
-          </View>
-        </View>
       </View>
     ),
-    [stats, termOfDay, regionCharts]
+    [termOfDay, regionCharts]
   );
 
   const listFooterComponent = useMemo(
