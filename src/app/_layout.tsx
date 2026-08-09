@@ -142,7 +142,7 @@ function MainTabs() {
           name="Culture"
           component={CultureScreen}
           options={{
-            title: '교양',
+            title: 'Korean',
             tabBarIcon: ({ color }) => (
               <MaterialIcons name="menu-book" size={26} color={color} />
             ),
