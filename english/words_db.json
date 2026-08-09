@@ -1766,5 +1766,65 @@
     "explanation": "Infamous or wicked; relating to something morally evil and criminal in nature",
     "tip": "동의어: wicked, evil, sinister, villainous (nefarious는 더 formal하고 dramatic) / 반의어: virtuous, noble, righteous / 항상 부정적 도덕성을 암시",
     "emoji": "😈"
+  },
+  {
+    "id": "voracious",
+    "word": "voracious",
+    "pos": "adjective",
+    "date": "2026-08-10",
+    "meaning": "욕심 많은, 탐욕스러운; (음식을) 많이 먹는",
+    "example_ko": "그녀는 한 주에 책 3권을 다 읽을 정도로 탐욕스러운 독자다",
+    "example_en": "She's a voracious reader who devours three books a week",
+    "explanation": "Having or showing a keen interest in something; eager to consume or learn without limit",
+    "tip": "Synonym: avid(열정적인), insatiable(만족할 수 없는). 주로 긍정적 맥락에서 지적 욕구나 관심에 사용. Antonym: indifferent(무관심한)",
+    "emoji": "😋"
+  },
+  {
+    "id": "aloof",
+    "word": "aloof",
+    "pos": "adjective/adverb",
+    "date": "2026-08-10",
+    "meaning": "거리를 두는, 냉담한; 떨어져 있는",
+    "example_ko": "그는 사무실 드라마에서 거리를 두고 있어서 수다에 참여하지 않았다",
+    "example_en": "He stayed aloof from the office drama and didn't participate in gossip",
+    "explanation": "Not friendly or interested; distant in manner or emotionally detached",
+    "tip": "Synonym: detached(초연한), distant(거리감 있는). 의도적으로 거리를 유지하는 뉘앙스. Antonym: warm(따뜻한), engaged(참여하는)",
+    "emoji": "❄️"
+  },
+  {
+    "id": "belabor",
+    "word": "belabor",
+    "pos": "verb",
+    "date": "2026-08-10",
+    "meaning": "과도하게 강조하다, 지루하게 늘어놓다",
+    "example_ko": "그 점을 계속 늘어놓지 마—우리 다 이해했어",
+    "example_en": "Don't belabor the point—we all understand what you mean already",
+    "explanation": "To dwell on at tedious length; to emphasize or elaborate on something excessively",
+    "tip": "Synonym: belabor = emphasize excessively, dwell on. Antonym: abbreviate(축약하다), condense(압축하다). 부정적 뉘앙스 포함—불필요한 반복",
+    "emoji": "😤"
+  },
+  {
+    "id": "sagacious",
+    "word": "sagacious",
+    "pos": "adjective",
+    "date": "2026-08-10",
+    "meaning": "현명한, 총명한, 통찰력 있는",
+    "example_ko": "그녀의 현명한 조언이 내가 끔찍한 사업 실수를 피하도록 도와줬다",
+    "example_en": "Her sagacious advice helped me avoid a terrible business mistake",
+    "explanation": "Having good judgment and keen insight; wise and discerning",
+    "tip": "Synonym: wise(지혜로운), astute(예리한), discerning(통찰력 있는). 깊은 이해와 예측 능력을 담음. Antonym: foolish(어리석은), naive(순진한)",
+    "emoji": "🧠"
+  },
+  {
+    "id": "fulsome",
+    "word": "fulsome",
+    "pos": "adjective",
+    "date": "2026-08-10",
+    "meaning": "과분한, 과도하게 칭찬하는; 풍부한",
+    "example_ko": "그의 과분한 칭찬은 진심 없어 보였어—아무도 그렇게 완벽할 수는 없지",
+    "example_en": "His fulsome praise seemed insincere—nobody is that perfect",
+    "explanation": "Complimentary or flattering to an excessive degree; often insincere or exaggerated",
+    "tip": "Synonym: excessive(과도한), effusive(열정적인, 분출하는). 주로 부정적 뉘앙스—과하고 진심 없는 느낌. Antonym: modest(겸손한), restrained(절제된)",
+    "emoji": "🙄"
   }
 ]

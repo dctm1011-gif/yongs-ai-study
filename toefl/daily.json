@@ -1,111 +1,185 @@
 {
-  "date": "2026-08-09",
+  "date": "2026-08-10",
   "reading": {
-    "title": "Arctic Ice Melting and Global Climate",
-    "passage": "The Arctic ice sheet has been melting at an alarming rate due to rising global temperatures. Scientists estimate that the Arctic loses approximately 13,000 square kilometers of ice annually. This phenomenon directly impacts sea levels, wildlife habitats, and weather patterns worldwide. The melting ice releases methane, a potent greenhouse gas that accelerates climate change further. Additionally, the reduction of white ice surface means less sunlight is reflected back into space, causing additional warming. International cooperation and emission reduction policies are essential to slow this critical environmental crisis.",
+    "title": "Neuroplasticity: The Brain's Capacity for Change",
+    "passage": "Neuroplasticity refers to the brain's remarkable ability to reorganize itself by forming new neural connections throughout life. For decades, neuroscientists believed that the adult brain was essentially fixed and unchangeable after a critical period in childhood. However, recent research has fundamentally challenged this assumption. Studies using advanced imaging techniques have demonstrated that the brain can physically alter its structure and function in response to experience, learning, and environmental demands. This phenomenon occurs through two primary mechanisms: structural plasticity, where the brain reassigns functions from damaged regions to undamaged ones, and functional plasticity, where neural networks reorganize to compensate for injury or intensive training. A compelling example involves stroke patients who regain lost abilities through rehabilitation; their brains literally rewire themselves, with healthy regions assuming the responsibilities of damaged areas. Furthermore, musicians and athletes exhibit enhanced neural development in specific brain regions associated with their skills, suggesting that deliberate practice strengthens particular neural pathways. These findings have profound implications for education, cognitive rehabilitation, and our understanding of human potential, indicating that age-related cognitive decline is not inevitable but rather can be mitigated through continued mental engagement and learning.",
+    "vocabulary": [
+      {
+        "word": "neuroplasticity",
+        "meaning_ko": "신경 가소성; 뇌가 경험과 학습에 반응하여 자신을 재구성하는 능력"
+      },
+      {
+        "word": "reorganize",
+        "meaning_ko": "재조직하다, 다시 정리하다"
+      },
+      {
+        "word": "fundamental",
+        "meaning_ko": "근본적인, 기초적인"
+      },
+      {
+        "word": "imaging techniques",
+        "meaning_ko": "뇌를 촬영하고 분석하는 첨단 기술"
+      },
+      {
+        "word": "structural plasticity",
+        "meaning_ko": "뇌의 구조적 변화; 손상된 부위의 기능을 건강한 부위가 담당하도록 물리적으로 변하는 것"
+      },
+      {
+        "word": "functional plasticity",
+        "meaning_ko": "기능적 가소성; 신경망이 재정렬되어 손상이나 훈련에 적응하는 것"
+      },
+      {
+        "word": "rehabilitation",
+        "meaning_ko": "재활 치료, 회복 훈련"
+      },
+      {
+        "word": "deliberate practice",
+        "meaning_ko": "의도적이고 집중된 연습"
+      }
+    ],
     "questions": [
       {
-        "q": "According to the passage, how much Arctic ice is lost annually?",
+        "q": "According to the passage, what did neuroscientists previously believe about the adult brain?",
         "options": [
-          "A) 5,000 square kilometers",
-          "B) 13,000 square kilometers",
-          "C) 20,000 square kilometers",
-          "D) 30,000 square kilometers"
+          "The adult brain could form new neural connections indefinitely.",
+          "The adult brain was essentially fixed and unchangeable after childhood.",
+          "The adult brain could only change through medication.",
+          "The adult brain was more flexible than a child's brain."
         ],
         "answer": 1,
-        "explanation": "본문에서 '연간 약 13,000제곱킬로미터의 얼음을 잃는다'고 명시되어 있습니다."
+        "explanation": "지문의 두 번째 문장에서 '과거 신경과학자들은 성인의 뇌가 어린 시절 이후 본질적으로 고정되고 불변이라고 믿었다'고 명시되어 있습니다."
       },
       {
-        "q": "What is one consequence of melting Arctic ice mentioned in the passage?",
+        "q": "What can be inferred from the passage about stroke patients?",
         "options": [
-          "A) Increased polar bear population",
-          "B) Release of methane gas",
-          "C) Lower global temperatures",
-          "D) Decreased ocean salinity"
+          "They can never regain their lost abilities.",
+          "Their brains can rewire themselves to restore lost functions through rehabilitation.",
+          "They require surgery to recover cognitive abilities.",
+          "Their neural plasticity decreases with age."
         ],
         "answer": 1,
-        "explanation": "본문에서 녹는 얼음이 '메탄이라는 강력한 온실가스를 방출한다'고 설명하고 있습니다."
+        "explanation": "지문에서 뇌졸중 환자들이 재활을 통해 기능을 회복한다고 설명하며, '건강한 영역이 손상된 부위의 책임을 맡으면서 뇌가 다시 연결된다'고 명시합니다."
       },
       {
-        "q": "Why is the reduction of white ice surface problematic?",
+        "q": "The word 'mitigated' in the final sentence is closest in meaning to which of the following?",
         "options": [
-          "A) It increases animal migration",
-          "B) Less sunlight is reflected, causing additional warming",
-          "C) It improves weather prediction",
-          "D) It reduces ocean currents"
+          "Increased or enhanced",
+          "Eliminated completely",
+          "Made less severe or reduced",
+          "Completely reversed"
+        ],
+        "answer": 2,
+        "explanation": "'Mitigated'는 '완화하다' 또는 '경감하다'는 뜻으로, 나이 관련 인지 저하를 덜 심각하게 만들 수 있다는 의미입니다."
+      },
+      {
+        "q": "Why does the author mention musicians and athletes in the passage?",
+        "options": [
+          "To explain why sports are more beneficial than music.",
+          "To provide evidence that deliberate practice strengthens specific neural pathways.",
+          "To argue that only talented individuals can develop neuroplasticity.",
+          "To demonstrate that brain development stops after childhood."
         ],
         "answer": 1,
-        "explanation": "백색 얼음 표면이 줄어들면 햇빛이 우주로 반사되지 않아 추가 온난화가 발생한다는 내용입니다."
+        "explanation": "음악가와 운동선수는 신경가소성을 보여주는 구체적인 예시로 제시되며, 의도적 연습이 특정 신경 경로를 강화한다는 저자의 주장을 뒷받침합니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Governments should prioritize environmental protection over economic growth'?",
-    "structure": {
-      "intro": "명확한 입장을 제시하고, 환경 보호와 경제 성장의 관계에 대한 간단한 배경을 제공하세요.",
-      "body1": "환경 보호 우선의 긍정적 이유 (기후변화 완화, 미래 세대를 위한 지속가능성, 건강한 생태계의 중요성)",
-      "body2": "경제 성장과의 균형 필요성 또는 반대 입장 (일자리 창출, 국가 발전, 빈곤 감소, 기술 혁신 가능성)",
-      "conclusion": "두 가지 관점을 통합한 결론을 제시하고, 최종 입장을 재확인하세요."
-    },
-    "useful_phrases": [
-      "In my opinion, environmental protection should take precedence because...",
-      "Furthermore, governments can implement green technologies that create jobs.",
-      "However, some argue that economic growth is necessary for...",
-      "Although economic development is important, we cannot ignore...",
-      "In conclusion, a balanced approach that combines both priorities is ideal."
+    "sentences": [
+      {
+        "original": "Neuroplasticity refers to the brain's remarkable ability to reorganize itself by forming new neural connections throughout life.",
+        "paraphrase": "The capacity of the brain to establish novel neural pathways and restructure itself continuously across the lifespan is known as neuroplasticity.",
+        "tip": "주어-술어 구조 변환 및 명사구 활용: 'refers to' → 'is known as', 'ability' → 'capacity', 'throughout life' → 'across the lifespan'"
+      },
+      {
+        "original": "Studies using advanced imaging techniques have demonstrated that the brain can physically alter its structure and function in response to experience, learning, and environmental demands.",
+        "paraphrase": "By employing sophisticated imaging methods, researchers have shown that experience, learning, and environmental pressures can prompt the brain to undergo physical modifications in both its organization and operation.",
+        "tip": "능동→수동 변환 및 동사 치환: 'demonstrated' → 'have shown', 'can physically alter' → 'can undergo physical modifications', 명사구 재배열"
+      },
+      {
+        "original": "A compelling example involves stroke patients who regain lost abilities through rehabilitation; their brains literally rewire themselves, with healthy regions assuming the responsibilities of damaged areas.",
+        "paraphrase": "The recovery of stroke patients through therapeutic intervention exemplifies this phenomenon, as healthy brain regions take over the functions previously handled by impaired areas, effectively reconstructing neural circuits.",
+        "tip": "능동구→명사구 변환: 'rewire themselves' → 'reconstructing neural circuits', 'assuming' → 'take over', 복합문을 단순화"
+      }
     ]
   },
   "speaking": {
-    "prompt": "Some people believe that remote work increases productivity and work-life balance. Others think that in-person office work is more effective. Which perspective do you agree with and why?",
-    "useful_expressions": [
-      "Personally, I believe that remote work is more beneficial because...",
-      "One significant advantage is that employees can avoid long commutes...",
-      "Additionally, I think that home environments allow for better focus and concentration...",
-      "On the other hand, some people argue that office collaboration is essential...",
-      "In summary, remote work offers more flexibility, which is crucial in today's modern workplace."
-    ],
-    "sample_points": [
-      "원격 근무의 장점: 출퇴근 시간 절약, 유연한 일정 관리, 집중력 향상, 직장-생활 균형 개선",
-      "원격 근무의 단점 극복: 기술 도구를 통한 협업 (화상회의, 프로젝트 관리 소프트웨어), 정기적인 팀 빌딩 활동"
+    "prompt": "Some people believe students should have complete freedom in choosing their major regardless of job prospects. Others believe students should prioritize choosing majors with strong employment opportunities. Which perspective do you prefer and why? Include specific reasons and details.",
+    "model_sentences": [
+      "I believe students should have the freedom to choose their major based on their personal interests and passions rather than solely focusing on job market demand.",
+      "First, when students pursue fields they genuinely enjoy, they tend to be more motivated, engaged, and ultimately more successful in their careers because they're doing what they love.",
+      "For example, my friend chose philosophy as a major even though her parents worried about job prospects; however, she excelled academically and later combined her philosophical training with law school, becoming a highly sought-after attorney.",
+      "Additionally, the job market changes rapidly, so choosing a major purely for employment security today might lead to reduced opportunities tomorrow.",
+      "In conclusion, while considering career prospects is important, students should ultimately prioritize their genuine interests because passion and motivation are key factors that lead to both personal fulfillment and long-term professional success."
     ]
   },
   "listening": {
-    "title": "Academic Advising Session",
-    "type": "conversation",
-    "script": "Advisor: Hello, Sarah. I see you're considering changing your major from Biology to Environmental Science. Tell me about your decision. Student: Yes, I've been thinking about this for a while. I'm passionate about climate change and sustainability, but I feel like pure biology doesn't give me enough practical experience in environmental issues. Advisor: That's a valid concern. Environmental Science would give you more interdisciplinary exposure, combining biology, chemistry, and policy. However, be aware that you'll need to retake some prerequisites and delay your graduation by one semester. Student: Is it worth the extra time? Advisor: Definitely. Environmental Science graduates have strong job prospects in government agencies, NGOs, and private companies focused on sustainability. Plus, you can still use your biology credits as electives. Student: That sounds good. What's the next step? Advisor: Fill out the change-of-major form and meet with the Environmental Science department head. They'll create a customized degree plan for you.",
+    "title": "Memory Formation and Consolidation",
+    "type": "lecture",
+    "script": "Professor: Today we're going to explore how memories are formed and consolidated in the brain. When you experience something, sensory information enters your brain and activates specific neural pathways. This initial stage is called encoding. However, and this is crucial, encoding alone doesn't guarantee that you'll remember something. The information must then undergo consolidation, a process where the memory becomes stabilized and integrated into long-term storage. Research shows that consolidation requires protein synthesis and involves the hippocampus, a small structure deep in the brain. Now, here's something fascinating: consolidation doesn't happen instantaneously. Studies reveal that memories are particularly vulnerable to interference and loss during the first few hours after learning. This is why sleep is so important. During sleep, the brain replays recent experiences, strengthening the neural connections associated with new memories. Without adequate sleep, consolidation is significantly impaired, and you're much more likely to forget what you learned. Additionally, repeated retrieval of memories—or spaced repetition—enhances consolidation by forcing the brain to reconstruct and restabilize the memory each time. So if you want to remember something, don't just study it once; review it multiple times over several days.",
+    "vocabulary": [
+      {
+        "word": "encoding",
+        "meaning_ko": "기억 정보를 뇌에 입력하는 과정"
+      },
+      {
+        "word": "consolidation",
+        "meaning_ko": "기억이 안정화되어 장기 저장소에 통합되는 과정"
+      },
+      {
+        "word": "protein synthesis",
+        "meaning_ko": "기억 형성에 필요한 단백질 생성"
+      },
+      {
+        "word": "hippocampus",
+        "meaning_ko": "뇌의 깊은 부분에 위치한 구조로, 기억 형성에 중요한 역할을 하는 기관"
+      },
+      {
+        "word": "interference",
+        "meaning_ko": "새로운 정보가 기존 기억을 방해하는 현상"
+      },
+      {
+        "word": "spaced repetition",
+        "meaning_ko": "일정 간격을 두고 정보를 반복해서 검색하는 학습 기법"
+      },
+      {
+        "word": "reconstruct",
+        "meaning_ko": "다시 구성하다, 재구축하다"
+      }
+    ],
     "questions": [
       {
-        "q": "Why does Sarah want to change her major?",
+        "q": "What is the main topic of the lecture?",
         "options": [
-          "A) Biology is too difficult",
-          "B) She wants more practical experience in environmental issues",
-          "C) Her advisor recommended it",
-          "D) She needs to graduate faster"
+          "The different types of long-term memory disorders",
+          "How memories are formed, consolidated, and retained in the brain",
+          "Why sleep deprivation improves memory performance",
+          "The role of the hippocampus in controlling emotions"
         ],
         "answer": 1,
-        "explanation": "Sarah는 '순수 생물학이 환경 문제에 대해 충분한 실무 경험을 주지 못한다'고 말합니다."
+        "explanation": "강의의 주제는 기억이 어떻게 형성되고 통합되는지에 관한 것입니다. 교수는 인코딩, 통합, 그리고 이러한 과정에 영향을 미치는 요소들을 설명합니다."
       },
       {
-        "q": "What is one consequence of changing majors that the advisor mentions?",
+        "q": "According to the professor, why is sleep important for memory consolidation?",
         "options": [
-          "A) She cannot use her biology credits",
-          "B) She will need to retake all her classes",
-          "C) She will delay her graduation by one semester",
-          "D) She must take additional chemistry courses"
+          "Sleep prevents the brain from forming new memories.",
+          "During sleep, the brain replays recent experiences and strengthens neural connections associated with new memories.",
+          "Sleep increases protein synthesis in the hippocampus.",
+          "Sleep eliminates the need for spaced repetition."
         ],
-        "answer": 2,
-        "explanation": "상담사가 '몇몇 선수 과목을 다시 수강해야 하고 졸업을 한 학기 연기해야 한다'고 명확히 말합니다."
+        "answer": 1,
+        "explanation": "교수는 '수면 중에 뇌가 최근의 경험을 재생하고 새로운 기억과 관련된 신경 연결을 강화한다'고 명시합니다."
       },
       {
-        "q": "What should Sarah do next according to the advisor?",
+        "q": "What does the professor suggest about reviewing studied material?",
         "options": [
-          "A) Meet with the biology department head",
-          "B) Start taking environmental science courses immediately",
-          "C) Fill out the change-of-major form and meet with the Environmental Science department head",
-          "D) Wait until next semester to decide"
+          "Students should review material only once immediately after learning.",
+          "Spaced repetition over several days enhances memory consolidation more effectively than single study sessions.",
+          "Memory consolidation is complete within the first few hours of learning.",
+          "The hippocampus automatically consolidates all information without requiring review."
         ],
-        "answer": 2,
-        "explanation": "상담사는 '전공 변경 양식을 작성하고 환경과학 학부장을 만나라'고 지시합니다."
+        "answer": 1,
+        "explanation": "교수는 강의 마지막에 '무언가를 기억하고 싶으면 한 번 공부하지 말고 며칠에 걸쳐 여러 번 복습해야 한다'고 명확히 조언합니다."
       }
     ]
   }

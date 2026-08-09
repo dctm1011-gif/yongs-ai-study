@@ -15,6 +15,7 @@ from datetime import date
 import requests
 
 ENDPOINT = "https://apis.data.go.kr/1613000/RTMSDataSvcAptTrade/getRTMSDataSvcAptTrade"
+APT_LIST_ENDPOINT = "https://apis.data.go.kr/1613000/ApartBasisInfoService/getApartBasisList"
 
 MONTHLY_WINDOW = 12   # 월별 보기: 최근 12개월
 YEARLY_WINDOW_MONTHS = 120  # 연도별 보기: 과거 10년(=120개월)치를 모아서 연 단위로 집계
@@ -65,6 +66,57 @@ MULTI_OWNER_RATIO: dict[str, dict[int, float]] = {
         2021: 25.2, 2022: 24.9, 2023: 24.4, 2024: 23.9,
     },
 }
+
+
+def fetch_dong_unit_counts(sigungu_cd: str, service_key: str) -> dict[str, int]:
+    """시군구의 동별 아파트 총세대수 합산.
+    공동주택 기본정보 목록 API(ApartBasisInfoService/getApartBasisList)를 사용.
+    API 실패 또는 데이터 없으면 빈 dict 반환 (거래 회전율 미표시 처리).
+    """
+    dong_units: dict[str, int] = {}
+    page_no = 1
+    while True:
+        try:
+            resp = requests.get(APT_LIST_ENDPOINT, params={
+                "serviceKey": service_key,
+                "sigunguCd": sigungu_cd,
+                "pageNo": page_no,
+                "numOfRows": 1000,
+            }, timeout=20)
+            resp.raise_for_status()
+            root = ET.fromstring(resp.content)
+        except Exception as e:
+            print(f"    [!] 공동주택 목록 조회 실패 ({sigungu_cd}): {e}")
+            break
+
+        result_code = root.findtext(".//resultCode")
+        if result_code not in (None, "00", "000"):
+            print(f"    [!] 공동주택 API 오류 ({sigungu_cd}): {root.findtext('.//resultMsg', '')}")
+            break
+
+        items = root.findall(".//item")
+        if not items:
+            break
+
+        for item in items:
+            dong = (item.findtext("bjdongNm") or "").strip()
+            units_raw = (item.findtext("kaptTotFam") or "0").strip()
+            if not dong:
+                continue
+            try:
+                units = int(units_raw)
+                if units > 0:
+                    dong_units[dong] = dong_units.get(dong, 0) + units
+            except ValueError:
+                pass
+
+        total = int(root.findtext(".//totalCount", default="0") or 0)
+        if page_no * 1000 >= total:
+            break
+        page_no += 1
+        time.sleep(0.1)
+
+    return dong_units
 
 
 def get_molit_api_key() -> str:
@@ -418,7 +470,8 @@ REGION_CODES: dict[str, dict] = {
     "이천": {"lawd_cd": "41500", "si": "이천시", "gu": None},
     # 김포시
     "김포": {"lawd_cd": "41570", "si": "김포시", "gu": None},
-    # 화성시 (2026-02 동탄구 신설)
+    # 화성시 (2026-02 동탄구 신설 - 본청(병점 등)과 동탄구 분리)
+    "화성_본청": {"lawd_cd": "41590", "si": "화성시", "gu": "화성본청"},
     "화성_동탄": {"lawd_cd": "41597", "si": "화성시", "gu": "동탄구"},
     # 광주시
     "광주": {"lawd_cd": "41610", "si": "광주시", "gu": None},
@@ -503,7 +556,15 @@ def get_all_regions_chart_data(target_date: date, service_key: str) -> list[dict
             if dong_monthly or dong_yearly:
                 dongs_data.append({"name": dong, "data": dong_monthly, "yearlyData": dong_yearly})
 
-        chart_data.append({
+        # 동별 총세대수 조회 (거래 회전율 계산용 — API 실패 시 빈 dict → 앱에서 미표시)
+        dong_unit_counts: dict[str, int] = {}
+        for lawd_cd in _lawd_codes(config):
+            print(f"    세대수 조회 중 ({lawd_cd})...")
+            counts = fetch_dong_unit_counts(lawd_cd, service_key)
+            for dong, units in counts.items():
+                dong_unit_counts[dong] = dong_unit_counts.get(dong, 0) + units
+
+        entry: dict = {
             "area": area,
             "si": si,
             "gu": gu,
@@ -513,7 +574,10 @@ def get_all_regions_chart_data(target_date: date, service_key: str) -> list[dict
             "data": monthly_points,
             "yearlyData": yearly_points,
             "dongs": dongs_data,
-        })
+        }
+        if dong_unit_counts:
+            entry["dongUnitCounts"] = dong_unit_counts
+        chart_data.append(entry)
 
     return chart_data
 

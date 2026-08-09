@@ -95,6 +95,7 @@ export interface RegionChartEntry {
   data: BoxPlotPoint[];
   yearlyData: BoxPlotPoint[];
   dongs: { name: string; data: BoxPlotPoint[]; yearlyData: BoxPlotPoint[] }[];
+  dongUnitCounts?: Record<string, number>; // 동별 총 아파트 세대수 (거래 회전율 계산용)
 }
 
 const BOOKMARKS_KEY = 'investment_bookmarks';

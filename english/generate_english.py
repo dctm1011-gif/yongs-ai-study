@@ -248,7 +248,16 @@ Rules:
                 data["quiz"].extend(fill["quiz"])
                 print(f"[+] 부족분 {missing}개 보충 완료")
             else:
-                print(f"[!] 부족분 보충 실패 - {len(data['words'])}개로 진행")
+                # API 보충 실패 시 기본 단어 풀에서 미사용 단어로 채우기
+                print(f"[!] API 보충 실패 - 기본 단어로 대체")
+                exclude_now = used_lower | already_picked
+                defaults = get_default_words(target_date)
+                spare_words = [w for w in defaults["words"] if w.get("word", "").lower() not in exclude_now][:missing]
+                spare_names = {w["word"].lower() for w in spare_words}
+                spare_quiz = [q for q in defaults["quiz"] if q.get("word", "").lower() in spare_names]
+                data["words"].extend(spare_words)
+                data["quiz"].extend(spare_quiz)
+                print(f"[+] 기본 단어 {len(spare_words)}개 보충 (총 {len(data['words'])}개)")
 
         if data["words"]:
             return data

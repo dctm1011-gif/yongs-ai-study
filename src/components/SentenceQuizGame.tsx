@@ -3,7 +3,7 @@ import {
   View, Text, TouchableOpacity, StyleSheet, ActivityIndicator, ScrollView, Animated,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { get } from 'firebase/database';
+import { get, update, increment } from 'firebase/database';
 import { getDatabase } from 'firebase/database';
 import { useAuth } from '../context/AuthContext';
 import { userRef } from '../utils/userDb';
@@ -15,6 +15,7 @@ const ROUND_SIZE = 8;
 const GRADUATE_AT = 10;
 
 interface ReviewWord {
+  id: string;
   word: string;
   meaning: string;
   pos?: string;
@@ -28,6 +29,7 @@ interface QuizPair {
 }
 
 interface QuizItem {
+  id: string;
   word: string;
   meaning: string;
   sentence: string;
@@ -106,7 +108,7 @@ export default function SentenceQuizGame() {
       if (!snap.exists()) { setGameState('empty'); return; }
 
       const pool: ReviewWord[] = Object.entries(snap.val())
-        .map(([, v]: [string, any]) => v as ReviewWord)
+        .map(([id, v]: [string, any]) => ({ ...v, id } as ReviewWord))
         .filter(w => w.word && w.meaning && (w.count ?? 0) < GRADUATE_AT);
 
       if (pool.length === 0) { setGameState('empty'); return; }
@@ -136,6 +138,7 @@ export default function SentenceQuizGame() {
         .map(({ value: { w, pair } }) => {
           const showO = Math.random() < 0.5;
           return {
+            id: w.id,
             word: w.word,
             meaning: w.meaning,
             sentence: showO ? pair!.oSentence : pair!.xSentence,
@@ -157,11 +160,14 @@ export default function SentenceQuizGame() {
 
   const handleAnswer = useCallback((pickedO: boolean) => {
     if (answerState !== 'waiting') return;
-    const correct = pickedO === items[current].isO;
+    const item = items[current];
+    const correct = pickedO === item.isO;
     setUserPicked(pickedO);
     setAnswerState(correct ? 'correct' : 'wrong');
     if (correct) setScore(s => s + 1);
-  }, [answerState, items, current]);
+    const db = getDatabase(getFirebaseApp());
+    update(userRef(uid, `english/reviewPool/${item.id}`), { count: increment(1) }).catch(() => {});
+  }, [answerState, items, current, uid]);
 
   const handleNext = useCallback(() => {
     if (current + 1 >= items.length) {

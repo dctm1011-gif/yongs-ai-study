@@ -85,7 +85,7 @@ export default function GameHub() {
         <Text style={s.arrow}>›</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={[s.card, s.cardNew]} onPress={() => setMode('sentence')} activeOpacity={0.8}>
+      <TouchableOpacity style={s.card} onPress={() => setMode('sentence')} activeOpacity={0.8}>
         <Text style={s.cardEmoji}>🔍</Text>
         <View style={s.cardBody}>
           <Text style={s.cardName}>예문 O/X</Text>

@@ -1,148 +1,206 @@
 {
-  "date": "2026-08-09",
+  "date": "2026-08-10",
   "words": [
     {
-      "word": "consummate",
+      "word": "voracious",
+      "part_of_speech": "adjective",
+      "meaning_ko": "욕심 많은, 탐욕스러운; (음식을) 많이 먹는",
+      "explanation": "Having or showing a keen interest in something; eager to consume or learn without limit",
+      "example_from_convo": "She's a voracious reader who devours three books a week",
+      "example_ko": "그녀는 한 주에 책 3권을 다 읽을 정도로 탐욕스러운 독자다",
+      "tip": "Synonym: avid(열정적인), insatiable(만족할 수 없는). 주로 긍정적 맥락에서 지적 욕구나 관심에 사용. Antonym: indifferent(무관심한)",
+      "emoji": "😋"
+    },
+    {
+      "word": "aloof",
+      "part_of_speech": "adjective/adverb",
+      "meaning_ko": "거리를 두는, 냉담한; 떨어져 있는",
+      "explanation": "Not friendly or interested; distant in manner or emotionally detached",
+      "example_from_convo": "He stayed aloof from the office drama and didn't participate in gossip",
+      "example_ko": "그는 사무실 드라마에서 거리를 두고 있어서 수다에 참여하지 않았다",
+      "tip": "Synonym: detached(초연한), distant(거리감 있는). 의도적으로 거리를 유지하는 뉘앙스. Antonym: warm(따뜻한), engaged(참여하는)",
+      "emoji": "❄️"
+    },
+    {
+      "word": "belabor",
       "part_of_speech": "verb",
-      "meaning_ko": "완성하다, 완벽하게 이루다",
-      "explanation": "To complete or perfect something, or to reach the highest degree of excellence; often used to describe achieving a goal with skill and finality",
-      "example_from_convo": "After years of training, she consummated her dream of becoming a professional dancer",
-      "example_ko": "수년간의 훈련 후, 그녀는 전문 무용수가 되려는 꿈을 완성했다",
-      "tip": "동의어: fulfill, achieve, perfect / 반의어: abandon, fail / 'consummate professional'은 '완벽한 전문가'라는 숙어로도 사용됨",
-      "emoji": "🎯"
+      "meaning_ko": "과도하게 강조하다, 지루하게 늘어놓다",
+      "explanation": "To dwell on at tedious length; to emphasize or elaborate on something excessively",
+      "example_from_convo": "Don't belabor the point—we all understand what you mean already",
+      "example_ko": "그 점을 계속 늘어놓지 마—우리 다 이해했어",
+      "tip": "Synonym: belabor = emphasize excessively, dwell on. Antonym: abbreviate(축약하다), condense(압축하다). 부정적 뉘앙스 포함—불필요한 반복",
+      "emoji": "😤"
     },
     {
-      "word": "exiguous",
+      "word": "sagacious",
       "part_of_speech": "adjective",
-      "meaning_ko": "극히 적은, 부족한",
-      "explanation": "Scanty or extremely small in quantity; barely sufficient or inadequate in amount",
-      "example_from_convo": "The exiguous budget forced the team to cancel several important projects",
-      "example_ko": "극히 적은 예산으로 인해 팀은 여러 중요한 프로젝트를 취소해야 했다",
-      "tip": "동의어: meager, scant, scanty (모두 '부족한'이지만 exiguous는 더 formal하고 극단적) / 반의어: abundant, copious / meager와 달리 exiguous는 더 정식적인 문어체",
-      "emoji": "📉"
+      "meaning_ko": "현명한, 총명한, 통찰력 있는",
+      "explanation": "Having good judgment and keen insight; wise and discerning",
+      "example_from_convo": "Her sagacious advice helped me avoid a terrible business mistake",
+      "example_ko": "그녀의 현명한 조언이 내가 끔찍한 사업 실수를 피하도록 도와줬다",
+      "tip": "Synonym: wise(지혜로운), astute(예리한), discerning(통찰력 있는). 깊은 이해와 예측 능력을 담음. Antonym: foolish(어리석은), naive(순진한)",
+      "emoji": "🧠"
     },
     {
-      "word": "nefarious",
+      "word": "fulsome",
       "part_of_speech": "adjective",
-      "meaning_ko": "악의적인, 불명예스러운",
-      "explanation": "Infamous or wicked; relating to something morally evil and criminal in nature",
-      "example_from_convo": "The detective uncovered the villain's nefarious plot to steal the diamond",
-      "example_ko": "형사는 악당의 다이아몬드를 훔치려는 악의적인 계획을 적발했다",
-      "tip": "동의어: wicked, evil, sinister, villainous (nefarious는 더 formal하고 dramatic) / 반의어: virtuous, noble, righteous / 항상 부정적 도덕성을 암시",
-      "emoji": "😈"
+      "meaning_ko": "과분한, 과도하게 칭찬하는; 풍부한",
+      "explanation": "Complimentary or flattering to an excessive degree; often insincere or exaggerated",
+      "example_from_convo": "His fulsome praise seemed insincere—nobody is that perfect",
+      "example_ko": "그의 과분한 칭찬은 진심 없어 보였어—아무도 그렇게 완벽할 수는 없지",
+      "tip": "Synonym: excessive(과도한), effusive(열정적인, 분출하는). 주로 부정적 뉘앙스—과하고 진심 없는 느낌. Antonym: modest(겸손한), restrained(절제된)",
+      "emoji": "🙄"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "consummate",
-      "question": "What does 'consummate' mean?",
+      "word": "voracious",
+      "question": "What does 'voracious' mean?",
       "options": [
-        "To complete or perfect something with finality",
-        "To begin or start a new project",
-        "To estimate or calculate approximately",
-        "To abandon or give up on a goal"
+        "Having an eager and keen interest in something; consuming without limit",
+        "Eager to eat food quickly without chewing",
+        "Showing strong determination in competitive situations",
+        "Lazy and disinterested in most activities"
       ],
       "answer": 0,
-      "explanation": "consummate는 '완성하다, 완벽하게 이루다'는 의미로, 무언가를 최종적으로 완성하는 것을 나타냅니다.",
+      "explanation": "Voracious는 지적 욕구, 관심, 또는 음식 등을 탐욕적으로 소비하려는 태도를 나타냅니다.",
       "option_explanations": [
         null,
-        "antonym(반의어): begin, start는 완성의 반대 개념입니다",
-        "관련어: estimate는 '추정하다'로 consummate와 무관합니다",
-        "antonym(반의어): abandon은 consummate의 정반대 의미입니다"
+        "Related but narrower: voracious는 음식뿐 아니라 지식, 정보 등 모든 것에 적용 가능",
+        "Related but different: voracious는 경쟁성과 무관, 욕구와 관심의 강도를 의미",
+        "Antonym(반의어): indifferent나 uninterested와 정반대 의미"
       ]
     },
     {
       "type": "meaning",
-      "word": "exiguous",
-      "question": "What does 'exiguous' mean?",
+      "word": "aloof",
+      "question": "What does 'aloof' mean?",
       "options": [
-        "Extremely small or scanty in quantity",
-        "Abundant or plentiful in supply",
-        "Moderate or average in size",
-        "Growing or expanding rapidly"
+        "Distant in manner; not friendly or emotionally engaged",
+        "Physically located at a high elevation",
+        "Skillfully avoiding someone's attention",
+        "Warmly interested and deeply involved"
       ],
       "answer": 0,
-      "explanation": "exiguous는 '극히 적은, 부족한'이라는 의미로 수량이 거의 없음을 나타냅니다.",
+      "explanation": "Aloof는 심리적 거리감, 냉담함, 또는 의도적으로 관여하지 않으려는 태도를 의미합니다.",
       "option_explanations": [
         null,
-        "antonym(반의어): abundant는 exiguous의 정반대로 '풍부한'을 의미합니다",
-        "관련어: moderate는 '적당한'이지만 exiguous처럼 부족함을 강조하지 않습니다",
-        "관련어: expanding은 '증가하는'으로 수량의 개념이 다릅니다"
+        "Word confusion: aloft(높이 떠있는)와 혼동 가능하지만 aloof는 태도를 나타냄",
+        "Related but different: 피하는 것과 거리를 두는 것은 다름—aloof는 감정적 거리감",
+        "Antonym(반의어): warm이나 engaged의 반대—극단적으로 다른 의미"
       ]
     },
     {
       "type": "meaning",
-      "word": "nefarious",
-      "question": "What does 'nefarious' mean?",
+      "word": "sagacious",
+      "question": "What does 'sagacious' mean?",
       "options": [
-        "Morally evil or wicked in nature",
-        "Somewhat unfortunate or unlucky",
-        "Mysterious or unknown in origin",
-        "Honest and morally upright"
+        "Having keen insight and good judgment; wise and discerning",
+        "Speaking in an angry and aggressive tone",
+        "Moving slowly and deliberately through space",
+        "Acting without thinking or planning"
       ],
       "answer": 0,
-      "explanation": "nefarious는 '악의적인, 불명예스러운'으로 도덕적으로 악한 것을 강조합니다.",
+      "explanation": "Sagacious는 깊은 이해, 예리한 통찰력, 그리고 현명한 판단력을 나타내는 긍정적 형용사입니다.",
       "option_explanations": [
         null,
-        "near-synonym(유사어): unfortunate는 단순히 '운이 안 좋은' 정도이며, nefarious처럼 도덕적 악의를 포함하지 않습니다",
-        "관련어: mysterious는 '신비로운'으로 도덕성과 무관합니다",
-        "antonym(반의어): honest and upright는 nefarious의 정반대 의미입니다"
+        "Word confusion: sagacious의 발음이 유사하지만 무관한 단어들과 혼동",
+        "Related but opposite: deliberate movement는 sagacious의 의미와 무관",
+        "Antonym(반의어): foolish나 reckless와 정반대—sagacious는 신중한 판단을 의미"
       ]
     },
     {
       "type": "fill_blank",
-      "word": "consummate",
-      "question": "After decades of dedication, the artist finally _____ her life's work with this masterpiece.",
+      "word": "belabor",
+      "question": "The professor tends to _____ his points, repeating the same argument five times in one lecture.",
       "options": [
-        "consummated",
-        "abandoned",
-        "commenced",
-        "sabotaged"
+        "belabor",
+        "abbreviate",
+        "emphasize",
+        "illustrate"
       ],
       "answer": 0,
-      "explanation": "consummated는 '완성했다'는 의미로, 수십 년의 헌신 끝에 예술 작품을 완성한 것을 나타냅니다.",
+      "explanation": "Belabor는 지루하게 반복해서 강조하는 것을 의미하므로, 같은 주장을 다섯 번 반복하는 상황에 정확히 맞습니다.",
       "option_explanations": [
         null,
-        "antonym(반의어): abandoned는 '포기했다'로 완성과 정반대입니다",
-        "near-synonym(유사어): commenced는 '시작했다'로 완성이 아닌 시작을 의미합니다",
-        "antonym(반의어): sabotaged는 '방해했다'로 완성의 반대 행동입니다"
+        "Antonym(반의어): abbreviate는 '축약하다'의 의미—문맥상 정반대",
+        "Near-synonym but doesn't fit: emphasize는 강조하지만 과도함이나 지루함을 담지 않음",
+        "Related word but wrong fit: illustrate는 '설명하다, 예시하다'—반복의 뉘앙스 없음"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "word": "voracious",
+      "question": "As a _____ learner, she spent every evening taking online courses and reading academic papers.",
+      "options": [
+        "voracious",
+        "reluctant",
+        "superficial",
+        "passive"
+      ],
+      "answer": 0,
+      "explanation": "Voracious learner는 학습에 대한 강렬한 욕구와 탐욕스러운 태도를 표현하는 표준 표현입니다.",
+      "option_explanations": [
+        null,
+        "Antonym(반의어): reluctant는 '꺼리는'—voracious와 정반대의 태도",
+        "Related but wrong: superficial은 '피상적인'—깊이 있는 학습과 반대",
+        "Related but wrong: passive는 '수동적인'—적극적 학습 태도와 대조"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "word": "aloof",
+      "question": "Despite the team's efforts to include him, Marcus remained _____ and refused to attend social events.",
+      "options": [
+        "aloof",
+        "engaged",
+        "detached",
+        "sociable"
+      ],
+      "answer": 0,
+      "explanation": "Aloof는 사회 활동에 참여하지 않고 거리를 유지하는 태도를 정확하게 설명합니다.",
+      "option_explanations": [
+        null,
+        "Antonym(반의어): engaged는 '참여하는'—aloof와 정반대 의미",
+        "Near-synonym but doesn't fit perfectly: detached도 거리감을 나타내지만 aloof는 더 의도적인 냉담함",
+        "Antonym(반의어): sociable은 '사교적인'—상황과 완전히 모순"
       ]
     },
     {
       "type": "situation",
-      "question": "A student has worked on a research project for an entire year. Her professor says, 'Your thesis _____ years of rigorous investigation.' Which word best fits?",
+      "question": "A CEO receives criticism about a business decision. In the meeting, she doesn't become defensive or emotional—she calmly listens to all perspectives and then provides a thoughtful response. This behavior demonstrates her being:",
       "options": [
-        "consummated",
-        "initiated",
-        "frustrated",
-        "dismissed"
+        "sagacious",
+        "impulsive",
+        "pedantic",
+        "garrulous"
       ],
       "answer": 0,
-      "explanation": "consummated는 '완성했다'로, 1년간의 연구를 완벽하게 마친 학위논문을 설명하기에 가장 적절합니다.",
+      "explanation": "침착함, 전체 관점 청취, 신중한 응답은 모두 sagacious(현명하고 통찰력 있는)의 특징입니다.",
       "option_explanations": [
         null,
-        "near-synonym(유사어): initiated는 '시작했다'로 긴 연구 과정의 결과물을 설명하기에 부적절합니다",
-        "antonym(반의어): frustrated는 '좌절했다'로 성공한 연구를 부정적으로 평가합니다",
-        "unrelated word: dismissed는 '무시했다'로 긍정적 평가와 맞지 않습니다"
+        "Antonym(반의어): impulsive는 '충동적인'—신중한 태도와 정반대",
+        "Related but wrong: pedantic은 '학식만 자랑하는'—현명함과 무관한 특성",
+        "Unrelated: garrulous는 '수다 많은'—침착함과 대조"
       ]
     },
     {
       "type": "situation",
-      "question": "A manager reviewing a team member's report finds it difficult to understand due to unclear language. The manager says, 'This report needs to be more _____.' Which word best fits?",
+      "question": "During a company celebration, the manager gives a long speech full of exaggerated compliments like 'You are all absolute geniuses and the most talented people I've ever met.' The employees find this uncomfortable. The manager's praise is:",
       "options": [
-        "pellucid",
-        "obfuscated",
-        "elaborate",
-        "verbose"
+        "fulsome",
+        "minimal",
+        "sincere",
+        "critical"
       ],
       "answer": 0,
-      "explanation": "pellucid(명확한)는 이해하기 어려운 보고서를 명확하게 만들어야 한다는 관리자의 지적을 가장 잘 나타냅니다.",
+      "explanation": "Fulsome은 과도하고 진심 없어 보이는 칭찬을 의미하며, 직원들을 불편하게 만드는 상황과 정확히 부합합니다.",
       "option_explanations": [
         null,
-        "antonym(반의어): obfuscated는 '모호하게 한'으로 문제를 더 악화시킵니다",
-        "near-synonym(유사어): elaborate는 '더 자세히 설명한'인데, 현재 문제가 복잡성이 아닌 명확성이므로 적절하지 않습니다",
-        "related word: verbose는 '장황한'으로 길이를 늘리기만 하고 명확성을 보장하지 않습니다"
+        "Antonym(반의어): minimal은 '최소한의'—과도한 칭찬과 정반대",
+        "Related but wrong: sincere는 '진심 어린'—fulsome praise는 종종 insincere함",
+        "Antonym(반의어): critical은 '비판적인'—칭찬의 반대이며 상황과 맞지 않음"
       ]
     }
   ]
