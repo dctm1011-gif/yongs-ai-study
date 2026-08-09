@@ -594,6 +594,7 @@ export function BookSection({ uid }: BookSectionProps) {
   const [loadingBooks, setLoadingBooks] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
   const [selectedBook, setSelectedBook] = useState<BookInfo | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     if (!uid) return;
@@ -632,7 +633,7 @@ export function BookSection({ uid }: BookSectionProps) {
       <Text style={bs.sectionLabel}>독서록</Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={bs.row}>
         {books.map(book => (
-          <BookCard key={book.id} book={book} uid={uid} onPress={() => setSelectedBook(book)} />
+          <BookCard key={book.id} book={book} uid={uid} onPress={() => setSelectedBook(book)} refreshKey={refreshKey} />
         ))}
         <TouchableOpacity style={bs.addCard} onPress={() => setShowAdd(true)} activeOpacity={0.8}>
           <MaterialIcons name="add" size={28} color="#2563eb" />
@@ -641,7 +642,7 @@ export function BookSection({ uid }: BookSectionProps) {
       </ScrollView>
 
       <AddBookModal visible={showAdd} onClose={() => setShowAdd(false)} onAdd={handleAdd} uid={uid} />
-      <BookDiaryModal book={selectedBook} onClose={() => setSelectedBook(null)} />
+      <BookDiaryModal book={selectedBook} onClose={() => { setSelectedBook(null); setRefreshKey(k => k + 1); }} />
     </View>
   );
 }
@@ -651,9 +652,10 @@ interface BookCardProps {
   book: BookInfo;
   uid: string;
   onPress: () => void;
+  refreshKey?: number;
 }
 
-function BookCard({ book, uid, onPress }: BookCardProps) {
+function BookCard({ book, uid, onPress, refreshKey }: BookCardProps) {
   const [currentPage, setCurrentPage] = useState<number | null>(null);
   const [coverData, setCoverData] = useState<string | null>(book.localCoverUri ?? null);
 
@@ -678,7 +680,7 @@ function BookCard({ book, uid, onPress }: BookCardProps) {
     if (!book.localCoverUri) {
       loadCoverFromStorage(book.id).then(data => { if (data) setCoverData(data); });
     }
-  }, [book.id, uid]);
+  }, [book.id, uid, refreshKey]);
 
   const progress = currentPage !== null && book.totalPages > 0
     ? currentPage / book.totalPages
