@@ -91,9 +91,11 @@ export default function CultureScreen() {
   const [sangshikDone, setSangshikDone] = useState(false);
 
   // ── 낱말퍼즐 ─────────────────────────────────────────────────────
-  const [puzzleWords, setPuzzleWords] = useState<PuzzleWord[]>(
-    PUZZLE_SETS[getDayIndex(PUZZLE_SETS.length)]
-  );
+  const [puzzleWords, setPuzzleWords] = useState<PuzzleWord[]>(() => {
+    const idx = getDayIndex(PUZZLE_SETS.length);
+    const next = (idx + 1) % PUZZLE_SETS.length;
+    return [...PUZZLE_SETS[idx], ...PUZZLE_SETS[next]];
+  });
 
   useEffect(() => {
     if (!uid) { setLoading(false); return; }
@@ -134,7 +136,7 @@ export default function CultureScreen() {
           const daily = koreanSnap.val();
           if (daily.sajaseongeo?.idiom) setSajaseongeo(daily.sajaseongeo);
           if (daily.sangshik?.question) setSangshik(daily.sangshik);
-          if (Array.isArray(daily.puzzle) && daily.puzzle.length >= 5) setPuzzleWords(daily.puzzle);
+          if (Array.isArray(daily.puzzle) && daily.puzzle.length >= 8) setPuzzleWords(daily.puzzle);
         }
       } catch (e) {
         console.warn('데이터 로드 실패:', e);

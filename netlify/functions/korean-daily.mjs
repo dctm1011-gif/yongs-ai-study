@@ -50,14 +50,19 @@ const PROMPT = `오늘의 한국어 학습 콘텐츠를 생성해줘. 아래 JSO
     {"word": "한국어단어2", "clue": "힌트설명"},
     {"word": "한국어단어3", "clue": "힌트설명"},
     {"word": "한국어단어4", "clue": "힌트설명"},
-    {"word": "한국어단어5", "clue": "힌트설명"}
+    {"word": "한국어단어5", "clue": "힌트설명"},
+    {"word": "한국어단어6", "clue": "힌트설명"},
+    {"word": "한국어단어7", "clue": "힌트설명"},
+    {"word": "한국어단어8", "clue": "힌트설명"},
+    {"word": "한국어단어9", "clue": "힌트설명"},
+    {"word": "한국어단어10", "clue": "힌트설명"}
   ]
 }
 
 조건:
 - sajaseongeo: 잘 알려진 사자성어 중 교훈적인 것, 실생활 예문 포함
 - sangshik: 역사·과학·지리·문화 등 교양 수준의 4지선다 문제, answer는 0-3 인덱스
-- puzzle: 2~5글자 한국어 단어 5개, 각 단어의 뜻을 힌트로. 너무 쉽거나 어렵지 않게.`;
+- puzzle: 2~5글자 한국어 단어 정확히 10개, 각 단어의 뜻을 힌트로. 너무 쉽거나 어렵지 않게. 단어끼리 교차 배치가 가능하도록 공통 글자가 있는 단어 포함.`;
 
 export default async (req, context) => {
   try {
@@ -85,7 +90,7 @@ export default async (req, context) => {
       },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
-        max_tokens: 1200,
+        max_tokens: 1800,
         messages: [{ role: 'user', content: PROMPT }],
       }),
     });
