@@ -57,7 +57,7 @@ JSON format to return:
       },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
-        max_tokens: 600,
+        max_tokens: 1200,
         messages: [{ role: 'user', content: prompt }],
       }),
     });
@@ -73,11 +73,12 @@ JSON format to return:
 
     let feedback;
     try {
-      // Claude sometimes prepends conversational text before JSON — extract the object directly
-      const start = text.indexOf('{');
-      const end = text.lastIndexOf('}') + 1;
+      // Strip markdown code fences if present, then extract the JSON object
+      const stripped = text.replace(/^```(?:json)?\s*/i, '').replace(/\s*```\s*$/i, '');
+      const start = stripped.indexOf('{');
+      const end = stripped.lastIndexOf('}') + 1;
       if (start === -1 || end === 0) throw new Error('No JSON object in response');
-      feedback = JSON.parse(text.slice(start, end));
+      feedback = JSON.parse(stripped.slice(start, end));
     } catch {
       throw new Error(`JSON parse failed. Raw: ${text.slice(0, 200)}`);
     }
