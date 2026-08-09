@@ -1,185 +1,114 @@
 {
   "date": "2026-08-10",
   "reading": {
-    "title": "Neuroplasticity: The Brain's Capacity for Change",
-    "passage": "Neuroplasticity refers to the brain's remarkable ability to reorganize itself by forming new neural connections throughout life. For decades, neuroscientists believed that the adult brain was essentially fixed and unchangeable after a critical period in childhood. However, recent research has fundamentally challenged this assumption. Studies using advanced imaging techniques have demonstrated that the brain can physically alter its structure and function in response to experience, learning, and environmental demands. This phenomenon occurs through two primary mechanisms: structural plasticity, where the brain reassigns functions from damaged regions to undamaged ones, and functional plasticity, where neural networks reorganize to compensate for injury or intensive training. A compelling example involves stroke patients who regain lost abilities through rehabilitation; their brains literally rewire themselves, with healthy regions assuming the responsibilities of damaged areas. Furthermore, musicians and athletes exhibit enhanced neural development in specific brain regions associated with their skills, suggesting that deliberate practice strengthens particular neural pathways. These findings have profound implications for education, cognitive rehabilitation, and our understanding of human potential, indicating that age-related cognitive decline is not inevitable but rather can be mitigated through continued mental engagement and learning.",
-    "vocabulary": [
-      {
-        "word": "neuroplasticity",
-        "meaning_ko": "신경 가소성; 뇌가 경험과 학습에 반응하여 자신을 재구성하는 능력"
-      },
-      {
-        "word": "reorganize",
-        "meaning_ko": "재조직하다, 다시 정리하다"
-      },
-      {
-        "word": "fundamental",
-        "meaning_ko": "근본적인, 기초적인"
-      },
-      {
-        "word": "imaging techniques",
-        "meaning_ko": "뇌를 촬영하고 분석하는 첨단 기술"
-      },
-      {
-        "word": "structural plasticity",
-        "meaning_ko": "뇌의 구조적 변화; 손상된 부위의 기능을 건강한 부위가 담당하도록 물리적으로 변하는 것"
-      },
-      {
-        "word": "functional plasticity",
-        "meaning_ko": "기능적 가소성; 신경망이 재정렬되어 손상이나 훈련에 적응하는 것"
-      },
-      {
-        "word": "rehabilitation",
-        "meaning_ko": "재활 치료, 회복 훈련"
-      },
-      {
-        "word": "deliberate practice",
-        "meaning_ko": "의도적이고 집중된 연습"
-      }
-    ],
+    "title": "Artificial Intelligence in Healthcare",
+    "passage": "Artificial intelligence has revolutionized modern healthcare by improving diagnostic accuracy and treatment outcomes. AI algorithms can analyze medical images such as X-rays and MRIs faster than human radiologists, detecting diseases like cancer at earlier stages. Additionally, AI-powered systems assist in drug discovery by identifying potential compounds that could treat various illnesses. Machine learning models predict patient outcomes and personalize treatment plans based on individual genetic profiles. However, concerns about data privacy and the need for regulatory frameworks remain critical challenges in implementing AI healthcare solutions globally.",
     "questions": [
       {
-        "q": "According to the passage, what did neuroscientists previously believe about the adult brain?",
+        "q": "According to the passage, what is one advantage of using AI in medical imaging?",
         "options": [
-          "The adult brain could form new neural connections indefinitely.",
-          "The adult brain was essentially fixed and unchangeable after childhood.",
-          "The adult brain could only change through medication.",
-          "The adult brain was more flexible than a child's brain."
+          "It eliminates the need for radiologists",
+          "It can detect diseases earlier than human radiologists",
+          "It is less expensive than traditional equipment",
+          "It works only on X-rays"
         ],
         "answer": 1,
-        "explanation": "지문의 두 번째 문장에서 '과거 신경과학자들은 성인의 뇌가 어린 시절 이후 본질적으로 고정되고 불변이라고 믿었다'고 명시되어 있습니다."
+        "explanation": "본문에서 AI 알고리즘이 인간 방사선사보다 빠르게 의료 이미지를 분석할 수 있고 암과 같은 질병을 더 초기 단계에서 감지할 수 있다고 명시되어 있습니다."
       },
       {
-        "q": "What can be inferred from the passage about stroke patients?",
+        "q": "What does the passage suggest about AI in drug discovery?",
         "options": [
-          "They can never regain their lost abilities.",
-          "Their brains can rewire themselves to restore lost functions through rehabilitation.",
-          "They require surgery to recover cognitive abilities.",
-          "Their neural plasticity decreases with age."
+          "It has failed to produce results",
+          "It can identify potential therapeutic compounds",
+          "It replaces all traditional research methods",
+          "It is only theoretical"
         ],
         "answer": 1,
-        "explanation": "지문에서 뇌졸중 환자들이 재활을 통해 기능을 회복한다고 설명하며, '건강한 영역이 손상된 부위의 책임을 맡으면서 뇌가 다시 연결된다'고 명시합니다."
+        "explanation": "AI가 치료할 수 있는 잠재적 화합물을 식별함으로써 약물 발견을 지원한다고 본문에서 명시되어 있습니다."
       },
       {
-        "q": "The word 'mitigated' in the final sentence is closest in meaning to which of the following?",
+        "q": "What concern is mentioned about AI implementation in healthcare?",
         "options": [
-          "Increased or enhanced",
-          "Eliminated completely",
-          "Made less severe or reduced",
-          "Completely reversed"
-        ],
-        "answer": 2,
-        "explanation": "'Mitigated'는 '완화하다' 또는 '경감하다'는 뜻으로, 나이 관련 인지 저하를 덜 심각하게 만들 수 있다는 의미입니다."
-      },
-      {
-        "q": "Why does the author mention musicians and athletes in the passage?",
-        "options": [
-          "To explain why sports are more beneficial than music.",
-          "To provide evidence that deliberate practice strengthens specific neural pathways.",
-          "To argue that only talented individuals can develop neuroplasticity.",
-          "To demonstrate that brain development stops after childhood."
+          "Lack of technology",
+          "Data privacy and regulatory issues",
+          "Patient resistance",
+          "High success rates"
         ],
         "answer": 1,
-        "explanation": "음악가와 운동선수는 신경가소성을 보여주는 구체적인 예시로 제시되며, 의도적 연습이 특정 신경 경로를 강화한다는 저자의 주장을 뒷받침합니다."
+        "explanation": "본문의 마지막 부분에서 데이터 프라이버시 우려와 규제 프레임워크의 필요성이 AI 의료 솔루션 구현의 중요한 과제로 언급되어 있습니다."
       }
     ]
   },
   "writing": {
-    "sentences": [
-      {
-        "original": "Neuroplasticity refers to the brain's remarkable ability to reorganize itself by forming new neural connections throughout life.",
-        "paraphrase": "The capacity of the brain to establish novel neural pathways and restructure itself continuously across the lifespan is known as neuroplasticity.",
-        "tip": "주어-술어 구조 변환 및 명사구 활용: 'refers to' → 'is known as', 'ability' → 'capacity', 'throughout life' → 'across the lifespan'"
-      },
-      {
-        "original": "Studies using advanced imaging techniques have demonstrated that the brain can physically alter its structure and function in response to experience, learning, and environmental demands.",
-        "paraphrase": "By employing sophisticated imaging methods, researchers have shown that experience, learning, and environmental pressures can prompt the brain to undergo physical modifications in both its organization and operation.",
-        "tip": "능동→수동 변환 및 동사 치환: 'demonstrated' → 'have shown', 'can physically alter' → 'can undergo physical modifications', 명사구 재배열"
-      },
-      {
-        "original": "A compelling example involves stroke patients who regain lost abilities through rehabilitation; their brains literally rewire themselves, with healthy regions assuming the responsibilities of damaged areas.",
-        "paraphrase": "The recovery of stroke patients through therapeutic intervention exemplifies this phenomenon, as healthy brain regions take over the functions previously handled by impaired areas, effectively reconstructing neural circuits.",
-        "tip": "능동구→명사구 변환: 'rewire themselves' → 'reconstructing neural circuits', 'assuming' → 'take over', 복합문을 단순화"
-      }
+    "prompt": "Do you agree or disagree with the statement: Remote work is more productive than working in an office environment?",
+    "structure": {
+      "intro": "명확한 입장을 표현하며 2-3개의 주요 이유를 미리 제시합니다. (예: I strongly agree that remote work is more productive because...)",
+      "body1": "첫 번째 이유를 구체적인 예시와 함께 설명합니다. (예: 재택근무는 출퇴근 시간 절약, 집중력 향상)",
+      "body2": "두 번째 이유를 뒷받침하는 증거와 함께 제시합니다. (예: 유연한 업무 일정, 방해 요소 감소)",
+      "conclusion": "처음 제시한 입장을 재확인하고 전체 논의를 요약하며 마무리합니다."
+    },
+    "useful_phrases": [
+      "In my opinion,",
+      "First and foremost,",
+      "Furthermore,",
+      "Moreover,",
+      "For example,",
+      "In conclusion,",
+      "To sum up,",
+      "This clearly demonstrates that..."
     ]
   },
   "speaking": {
-    "prompt": "Some people believe students should have complete freedom in choosing their major regardless of job prospects. Others believe students should prioritize choosing majors with strong employment opportunities. Which perspective do you prefer and why? Include specific reasons and details.",
-    "model_sentences": [
-      "I believe students should have the freedom to choose their major based on their personal interests and passions rather than solely focusing on job market demand.",
-      "First, when students pursue fields they genuinely enjoy, they tend to be more motivated, engaged, and ultimately more successful in their careers because they're doing what they love.",
-      "For example, my friend chose philosophy as a major even though her parents worried about job prospects; however, she excelled academically and later combined her philosophical training with law school, becoming a highly sought-after attorney.",
-      "Additionally, the job market changes rapidly, so choosing a major purely for employment security today might lead to reduced opportunities tomorrow.",
-      "In conclusion, while considering career prospects is important, students should ultimately prioritize their genuine interests because passion and motivation are key factors that lead to both personal fulfillment and long-term professional success."
+    "prompt": "Some people prefer to learn through practical hands-on experience. Others prefer to learn through lectures and reading. Which method do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I strongly prefer...",
+      "One reason is that hands-on learning allows me to...",
+      "Another advantage of this approach is that it helps...",
+      "This is why I believe...",
+      "For instance, when I..."
+    ],
+    "sample_points": [
+      "실습 경험을 통한 학습은 이론을 실제 상황에 적용하게 하여 이해도를 높이고 장기 기억에 남긴다는 장점이 있습니다.",
+      "동시에 강의나 독서를 통한 학습은 광범위한 지식을 효율적으로 습득할 수 있으며, 기초 개념을 체계적으로 이해하는 데 도움이 됩니다."
     ]
   },
   "listening": {
-    "title": "Memory Formation and Consolidation",
-    "type": "lecture",
-    "script": "Professor: Today we're going to explore how memories are formed and consolidated in the brain. When you experience something, sensory information enters your brain and activates specific neural pathways. This initial stage is called encoding. However, and this is crucial, encoding alone doesn't guarantee that you'll remember something. The information must then undergo consolidation, a process where the memory becomes stabilized and integrated into long-term storage. Research shows that consolidation requires protein synthesis and involves the hippocampus, a small structure deep in the brain. Now, here's something fascinating: consolidation doesn't happen instantaneously. Studies reveal that memories are particularly vulnerable to interference and loss during the first few hours after learning. This is why sleep is so important. During sleep, the brain replays recent experiences, strengthening the neural connections associated with new memories. Without adequate sleep, consolidation is significantly impaired, and you're much more likely to forget what you learned. Additionally, repeated retrieval of memories—or spaced repetition—enhances consolidation by forcing the brain to reconstruct and restabilize the memory each time. So if you want to remember something, don't just study it once; review it multiple times over several days.",
-    "vocabulary": [
-      {
-        "word": "encoding",
-        "meaning_ko": "기억 정보를 뇌에 입력하는 과정"
-      },
-      {
-        "word": "consolidation",
-        "meaning_ko": "기억이 안정화되어 장기 저장소에 통합되는 과정"
-      },
-      {
-        "word": "protein synthesis",
-        "meaning_ko": "기억 형성에 필요한 단백질 생성"
-      },
-      {
-        "word": "hippocampus",
-        "meaning_ko": "뇌의 깊은 부분에 위치한 구조로, 기억 형성에 중요한 역할을 하는 기관"
-      },
-      {
-        "word": "interference",
-        "meaning_ko": "새로운 정보가 기존 기억을 방해하는 현상"
-      },
-      {
-        "word": "spaced repetition",
-        "meaning_ko": "일정 간격을 두고 정보를 반복해서 검색하는 학습 기법"
-      },
-      {
-        "word": "reconstruct",
-        "meaning_ko": "다시 구성하다, 재구축하다"
-      }
-    ],
+    "title": "Campus Library Services",
+    "type": "conversation",
+    "script": "Student: Hi, I'm new to campus and I'm trying to find information about library services. Librarian: Welcome! I'd be happy to help. We offer extensive resources including over two million books, digital databases, and research journals. We also provide tutoring sessions, study rooms, and interlibrary loan services for books we don't have. Additionally, we've recently launched a new mobile app that allows you to search our catalog, renew materials, and access digital resources remotely. We're open 24 hours during exam periods. Student: That sounds great! Can I access databases from home? Librarian: Yes, absolutely. All registered students can access our databases remotely using their student ID and password. We also offer workshops on research skills and citation formats every month. If you need help navigating the system, our reference librarians are available in person or online.",
     "questions": [
       {
-        "q": "What is the main topic of the lecture?",
+        "q": "What is the main purpose of this conversation?",
         "options": [
-          "The different types of long-term memory disorders",
-          "How memories are formed, consolidated, and retained in the brain",
-          "Why sleep deprivation improves memory performance",
-          "The role of the hippocampus in controlling emotions"
+          "To discuss the history of the library",
+          "To explain available library services to a new student",
+          "To complain about library hours",
+          "To schedule a tutoring session"
         ],
         "answer": 1,
-        "explanation": "강의의 주제는 기억이 어떻게 형성되고 통합되는지에 관한 것입니다. 교수는 인코딩, 통합, 그리고 이러한 과정에 영향을 미치는 요소들을 설명합니다."
+        "explanation": "대화에서 사서가 신입 학생에게 도서관의 다양한 서비스(책, 데이터베이스, 튜터링, 앱 등)를 설명하고 있습니다."
       },
       {
-        "q": "According to the professor, why is sleep important for memory consolidation?",
+        "q": "Which of the following services does the library offer?",
         "options": [
-          "Sleep prevents the brain from forming new memories.",
-          "During sleep, the brain replays recent experiences and strengthens neural connections associated with new memories.",
-          "Sleep increases protein synthesis in the hippocampus.",
-          "Sleep eliminates the need for spaced repetition."
+          "Housing assistance",
+          "24-hour access during exam periods",
+          "Car parking",
+          "Food delivery"
         ],
         "answer": 1,
-        "explanation": "교수는 '수면 중에 뇌가 최근의 경험을 재생하고 새로운 기억과 관련된 신경 연결을 강화한다'고 명시합니다."
+        "explanation": "사서는 '시험 기간 중 24시간 운영'한다고 명시적으로 언급했습니다."
       },
       {
-        "q": "What does the professor suggest about reviewing studied material?",
+        "q": "How can students access library databases from home?",
         "options": [
-          "Students should review material only once immediately after learning.",
-          "Spaced repetition over several days enhances memory consolidation more effectively than single study sessions.",
-          "Memory consolidation is complete within the first few hours of learning.",
-          "The hippocampus automatically consolidates all information without requiring review."
+          "By visiting the physical library",
+          "By using their student ID and password online",
+          "By purchasing a premium membership",
+          "They cannot access databases from home"
         ],
         "answer": 1,
-        "explanation": "교수는 강의 마지막에 '무언가를 기억하고 싶으면 한 번 공부하지 말고 며칠에 걸쳐 여러 번 복습해야 한다'고 명확히 조언합니다."
+        "explanation": "사서가 '학생들은 학번과 비밀번호를 사용하여 원격으로 데이터베이스에 접근할 수 있다'고 설명했습니다."
       }
     ]
   }
