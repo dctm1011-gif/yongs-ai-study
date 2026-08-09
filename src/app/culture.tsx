@@ -27,6 +27,9 @@ import {
   SAJASEONGEO_LIST,
   SANGSHIK_LIST,
   PUZZLE_SETS,
+  Sajaseongeo,
+  Sangshik,
+  PuzzleWord,
 } from '../data/koreanContent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -74,17 +77,23 @@ export default function CultureScreen() {
   const [saving, setSaving] = useState(false);
 
   // ── 사자성어 ─────────────────────────────────────────────────────
-  const sajaseongeo = SAJASEONGEO_LIST[getDayIndex(SAJASEONGEO_LIST.length)];
+  const [sajaseongeo, setSajaseongeo] = useState<Sajaseongeo>(
+    SAJASEONGEO_LIST[getDayIndex(SAJASEONGEO_LIST.length)]
+  );
   const [sajaExpanded, setSajaExpanded] = useState(false);
   const [sajaDone, setSajaDone] = useState(false);
 
   // ── 오늘의 상식 ──────────────────────────────────────────────────
-  const sangshik = SANGSHIK_LIST[getDayIndex(SANGSHIK_LIST.length)];
+  const [sangshik, setSangshik] = useState<Sangshik>(
+    SANGSHIK_LIST[getDayIndex(SANGSHIK_LIST.length)]
+  );
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [sangshikDone, setSangshikDone] = useState(false);
 
   // ── 낱말퍼즐 ─────────────────────────────────────────────────────
-  const puzzleWords = PUZZLE_SETS[getDayIndex(PUZZLE_SETS.length)];
+  const [puzzleWords, setPuzzleWords] = useState<PuzzleWord[]>(
+    PUZZLE_SETS[getDayIndex(PUZZLE_SETS.length)]
+  );
 
   useEffect(() => {
     if (!uid) { setLoading(false); return; }
@@ -118,6 +127,15 @@ export default function CultureScreen() {
         // 상식 완료
         const sangSnap = await get(ref(db, `users/${uid}/completion/sangshik/${today}`));
         if (sangSnap.val() === true) setSangshikDone(true);
+
+        // AI 생성 콘텐츠 로드 (있으면 static 대체)
+        const koreanSnap = await get(ref(db, `korean/daily/${today}`));
+        if (koreanSnap.exists()) {
+          const daily = koreanSnap.val();
+          if (daily.sajaseongeo?.idiom) setSajaseongeo(daily.sajaseongeo);
+          if (daily.sangshik?.question) setSangshik(daily.sangshik);
+          if (Array.isArray(daily.puzzle) && daily.puzzle.length >= 5) setPuzzleWords(daily.puzzle);
+        }
       } catch (e) {
         console.warn('데이터 로드 실패:', e);
       } finally {
