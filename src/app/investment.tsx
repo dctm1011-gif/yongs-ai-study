@@ -1875,26 +1875,7 @@ export default function InvestmentScreen() {
 
   const keyExtractor = useCallback((item: InvestmentColumn) => item.id, []);
 
-  const listHeaderComponent = useMemo(
-    () => (
-      <View>
-        {termOfDay && <TermOfDayCard term={termOfDay} />}
-        {regionCharts.length > 0 && <RegionBrowser regionCharts={regionCharts} />}
-      </View>
-    ),
-    [termOfDay, regionCharts]
-  );
-
-  const listFooterComponent = useMemo(
-    () => (
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>
-          모든 정보는 {formatLastSync()} 기준입니다
-        </Text>
-      </View>
-    ),
-    [formatLastSync]
-  );
+  const footerText = useMemo(() => formatLastSync(), [formatLastSync]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -1921,29 +1902,24 @@ export default function InvestmentScreen() {
         </View>
       )}
 
-      {loading && !columns.length ? (
+      {loading && !termOfDay && !regionCharts.length ? (
         <View style={styles.centerContainer}>
           <ActivityIndicator size="large" color="#0095f6" />
           <Text style={styles.loadingText}>투자 분석을 불러오는 중...</Text>
         </View>
-      ) : columns.length > 0 ? (
-        <FlatList
-          data={filteredColumns}
-          renderItem={renderItem}
-          keyExtractor={keyExtractor}
+      ) : (
+        <ScrollView
           contentContainerStyle={styles.listContent}
-          scrollEnabled={true}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
           }
-          ListHeaderComponent={listHeaderComponent}
-          ListFooterComponent={listFooterComponent}
-        />
-      ) : (
-        <View style={styles.centerContainer}>
-          <MaterialIcons name="article" size={48} color="#dbdbdb" />
-          <Text style={styles.emptyText}>이용 가능한 투자 분석이 없습니다</Text>
-        </View>
+        >
+          {termOfDay && <TermOfDayCard term={termOfDay} />}
+          {regionCharts.length > 0 && <RegionBrowser regionCharts={regionCharts} />}
+          <View style={styles.footer}>
+            <Text style={styles.footerText}>모든 정보는 {footerText} 기준입니다</Text>
+          </View>
+        </ScrollView>
       )}
 
       <DetailModal column={selectedColumn} visible={detailVisible} onClose={() => setDetailVisible(false)} dongCharts={dongCharts} taxPolicySummary={taxPolicySummary} jongbuseSummary={jongbuseSummary} newsArticles={newsArticles} />
