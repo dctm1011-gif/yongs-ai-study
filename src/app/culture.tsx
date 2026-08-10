@@ -21,15 +21,14 @@ import { getFirebaseApp } from '../config/firebase';
 import { userRef } from '../utils/userDb';
 import { useAuth } from '../context/AuthContext';
 import { BookSection } from '../components/BookDiary';
-import KoreanWordPuzzle from '../components/KoreanWordPuzzle';
+import KoreanOXQuiz, { OXItem } from '../components/KoreanOXQuiz';
 import {
   getDayIndex,
   SAJASEONGEO_LIST,
   SANGSHIK_LIST,
-  PUZZLE_SETS,
+  OX_FALLBACK_LIST,
   Sajaseongeo,
   Sangshik,
-  PuzzleWord,
 } from '../data/koreanContent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -90,12 +89,8 @@ export default function CultureScreen() {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [sangshikDone, setSangshikDone] = useState(false);
 
-  // ── 낱말퍼즐 ─────────────────────────────────────────────────────
-  const [puzzleWords, setPuzzleWords] = useState<PuzzleWord[]>(() => {
-    const idx = getDayIndex(PUZZLE_SETS.length);
-    const next = (idx + 1) % PUZZLE_SETS.length;
-    return [...PUZZLE_SETS[idx], ...PUZZLE_SETS[next]];
-  });
+  // ── 어휘 O/X 퀴즈 ────────────────────────────────────────────────
+  const [oxItems, setOxItems] = useState<OXItem[]>(OX_FALLBACK_LIST);
 
   useEffect(() => {
     if (!uid) { setLoading(false); return; }
@@ -135,8 +130,18 @@ export default function CultureScreen() {
         if (koreanSnap.exists()) {
           const daily = koreanSnap.val();
           if (daily.sajaseongeo?.idiom) setSajaseongeo(daily.sajaseongeo);
-          if (daily.sangshik?.question) setSangshik(daily.sangshik);
-          if (Array.isArray(daily.puzzle) && daily.puzzle.length >= 8) setPuzzleWords(daily.puzzle);
+          if (
+            daily.sangshik?.question &&
+            Array.isArray(daily.sangshik.options) &&
+            daily.sangshik.options.length === 4 &&
+            typeof daily.sangshik.answer === 'number' &&
+            daily.sangshik.answer < daily.sangshik.options.length
+          ) setSangshik(daily.sangshik);
+          if (Array.isArray(daily.oxQuiz) && daily.oxQuiz.length >= 5) {
+            setOxItems(daily.oxQuiz);
+          } else {
+            setOxItems(OX_FALLBACK_LIST);
+          }
         }
       } catch (e) {
         console.warn('데이터 로드 실패:', e);
@@ -364,14 +369,16 @@ export default function CultureScreen() {
         )}
       </Animated.View>
 
-      {/* ── 한국어 낱말퍼즐 카드 ─────────────────────────────── */}
-      <Animated.View style={[s.card, { opacity: cards[3].opacity, transform: [{ translateY: cards[3].translateY }] }]}>
-        <View style={s.cardHeader}>
-          <MaterialIcons name="grid-on" size={24} color="#0891b2" />
-          <Text style={s.cardTitle}>한국어 낱말퍼즐</Text>
-        </View>
-        <KoreanWordPuzzle words={puzzleWords} uid={uid} />
-      </Animated.View>
+      {/* ── 한국어 어휘 O/X 퀴즈 ─────────────────────────────── */}
+      {oxItems.length > 0 && (
+        <Animated.View style={[s.card, { opacity: cards[3].opacity, transform: [{ translateY: cards[3].translateY }] }]}>
+          <View style={s.cardHeader}>
+            <MaterialIcons name="quiz" size={24} color="#0891b2" />
+            <Text style={s.cardTitle}>한국어 어휘 O/X</Text>
+          </View>
+          <KoreanOXQuiz items={oxItems} uid={uid} />
+        </Animated.View>
+      )}
 
     </ScrollView>
     </SafeAreaView>

@@ -20,7 +20,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useInvestmentSync, InvestmentColumn, BoxPlotPoint, DongChartEntry, DongEntry, DailyTerm, NewsArticle, RegionChartEntry } from '../hooks/useInvestmentSync';
-import { getDatabase, ref, set as dbSet } from 'firebase/database';
+import { getDatabase, ref, set as dbSet, get } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
 import { useAuth } from '../context/AuthContext';
 import { userRef } from '../utils/userDb';
@@ -951,24 +951,47 @@ type RegionViewMode = 'series' | 'compare';
 
 const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo(({ regionCharts }) => {
   const [viewMode, setViewMode] = useState<RegionViewMode>('series');
+  const { user } = useAuth();
 
   // ── 즐겨찾기 (두 모드 공통 보조 기능) ──
   const [bookmarks, setBookmarks] = useState<RegionBookmark[]>([]);
 
   useEffect(() => {
-    AsyncStorage.getItem(REGION_BOOKMARKS_KEY).then(v => {
-      if (v === null) {
-        saveBookmarks(DEFAULT_REGION_BOOKMARKS);
-      } else {
-        setBookmarks(JSON.parse(v));
+    const loadBookmarks = async () => {
+      if (user?.uid) {
+        try {
+          const db = getDatabase(getFirebaseApp());
+          const snap = await get(ref(db, `users/${user.uid}/regionBookmarks`));
+          if (snap.exists()) {
+            const val = snap.val();
+            const arr: RegionBookmark[] = Array.isArray(val) ? val : Object.values(val);
+            setBookmarks(arr);
+            await AsyncStorage.setItem(REGION_BOOKMARKS_KEY, JSON.stringify(arr));
+            return;
+          }
+        } catch {}
       }
-    });
-  }, []);
+      // Firebase 없거나 로그인 안 됨 → AsyncStorage 폴백
+      const v = await AsyncStorage.getItem(REGION_BOOKMARKS_KEY);
+      const local: RegionBookmark[] = v ? JSON.parse(v) : DEFAULT_REGION_BOOKMARKS;
+      setBookmarks(local);
+      // 로컬에 데이터 있으면 Firebase에 백업
+      if (user?.uid && local.length > 0) {
+        const db = getDatabase(getFirebaseApp());
+        dbSet(ref(db, `users/${user.uid}/regionBookmarks`), local).catch(() => {});
+      }
+    };
+    loadBookmarks();
+  }, [user?.uid]);
 
   const saveBookmarks = useCallback(async (next: RegionBookmark[]) => {
     setBookmarks(next);
     await AsyncStorage.setItem(REGION_BOOKMARKS_KEY, JSON.stringify(next));
-  }, []);
+    if (user?.uid) {
+      const db = getDatabase(getFirebaseApp());
+      dbSet(ref(db, `users/${user.uid}/regionBookmarks`), next).catch(() => {});
+    }
+  }, [user?.uid]);
 
   const isBookmarked = useCallback((area: string, dongName?: string) =>
     bookmarks.some(b => b.area === area && b.dongName === dongName),
@@ -1092,26 +1115,36 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
   }, [selectedArea, selectedDong]);
 
   // ── 비교 모드 상태 ──
-  const [compareDongs, setCompareDongs] = useState<{ area: string; dongName: string }[]>([]);
+  const [compareDongs, setCompareDongs] = useState<{ area: string; dongName: string; si: string; label?: string }[]>([]);
   const [compareMetric, setCompareMetric] = useState<'price' | 'ratio' | 'turnover'>('price');
 
-  const toggleCompareDong = useCallback((area: string, dongName: string) => {
+  const toggleCompareDong = useCallback((area: string, dongName: string, si: string) => {
     setCompareDongs(prev => {
       const exists = prev.some(d => d.area === area && d.dongName === dongName);
       return exists
         ? prev.filter(d => !(d.area === area && d.dongName === dongName))
-        : [...prev, { area, dongName }];
+        : [...prev, { area, dongName, si }];
     });
   }, []);
 
   const loadFavoritesIntoCompare = useCallback(() => {
-    const pairs = bookmarks.map(b => ({ area: b.area, dongName: b.dongName ?? '' })).filter(b => b.dongName);
+    const pairs = bookmarks
+      .filter(b => b.dongName)
+      .map(b => {
+        // si + dongName으로 정확한 area 키 매핑 (오매핑 0%)
+        const validArea = regionCharts.some(r => r.area === b.area)
+          ? b.area
+          : (regionCharts.find(r => r.si === b.si && r.dongs.some(d => d.name === b.dongName))?.area ?? b.area);
+        const entry = regionCharts.find(r => r.area === validArea);
+        const label = entry ? (entry.gu ?? entry.si.replace('시', '')) : b.label;
+        return { area: validArea, dongName: b.dongName!, si: b.si, label };
+      });
     setCompareDongs(prev => {
       const existing = new Set(prev.map(d => `${d.area}__${d.dongName}`));
       const toAdd = pairs.filter(p => !existing.has(`${p.area}__${p.dongName}`));
       return [...prev, ...toAdd];
     });
-  }, [bookmarks]);
+  }, [bookmarks, regionCharts]);
 
   const resetCompare = useCallback(() => setCompareDongs([]), []);
 
@@ -1157,15 +1190,18 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
   }, [compareDongs, regionCharts]);
 
   // 구별 다주택자 비율 가로 바 차트 데이터 (area 기준 중복 제거)
+  // regionCharts에 없는 지역(거래 데이터 없음)도 KOSIS 비율 데이터가 있으면 표시
   const compareRatioBarData = useMemo<{ label: string; sub: string; value: number }[]>(() => {
     const seen = new Set<string>();
-    return compareDongs.flatMap(({ area }) => {
+    return compareDongs.flatMap(({ area, si, label: dongLabel }) => {
       if (seen.has(area)) return [];
       seen.add(area);
-      const entry = regionCharts.find(r => r.area === area);
       const vals = REGION_RATIO_DATA[area];
-      if (!vals || !entry) return [];
-      return [{ label: entry.gu ?? entry.si.replace('시', ''), sub: entry.si, value: vals[vals.length - 1] }];
+      if (!vals) return [];
+      const entry = regionCharts.find(r => r.area === area);
+      const displayLabel = entry ? (entry.gu ?? entry.si.replace('시', '')) : (dongLabel ?? area);
+      const displaySi = entry?.si ?? si ?? '';
+      return [{ label: displayLabel, sub: displaySi, value: vals[vals.length - 1] }];
     });
   }, [compareDongs, regionCharts]);
 
@@ -1182,7 +1218,21 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
         const s = JSON.parse(v);
         if (s.viewMode === 'series' || s.viewMode === 'compare') setViewMode(s.viewMode);
         if (Array.isArray(s.compareDongs)) {
-          setCompareDongs(s.compareDongs);
+          // area 키가 깨진 경우 si + dongName으로 재매핑 (si 없으면 dongName만)
+          const remapped = s.compareDongs.map(({ area, dongName, si, label }: { area: string; dongName: string; si?: string; label?: string }) => {
+            if (regionCharts.some(r => r.area === area)) {
+              const entry = regionCharts.find(r => r.area === area);
+              const entryLabel = entry ? (entry.gu ?? entry.si.replace('시', '')) : label;
+              return { area, dongName, si: si ?? entry?.si ?? '', label: entryLabel };
+            }
+            const match = si
+              ? (regionCharts.find(r => r.si === si && r.dongs.some(d => d.name === dongName))
+                  ?? regionCharts.find(r => r.dongs.some(d => d.name === dongName)))
+              : regionCharts.find(r => r.dongs.some(d => d.name === dongName));
+            const matchLabel = match ? (match.gu ?? match.si.replace('시', '')) : label;
+            return { area: match?.area ?? area, dongName, si: match?.si ?? si ?? '', label: matchLabel };
+          });
+          setCompareDongs(remapped);
         }
         if (s.hiddenDongs && typeof s.hiddenDongs === 'object') {
           setHiddenDongs(s.hiddenDongs);
@@ -1360,12 +1410,12 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
           {/* 선택된 동 태그 */}
           {compareDongs.length > 0 && (
             <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginBottom: 12 }}>
-              {compareDongs.map(({ area, dongName }) => {
+              {compareDongs.map(({ area, dongName, si }) => {
                 const entry = regionCharts.find(r => r.area === area);
                 const areaLabel = entry ? (entry.gu ?? entry.si.replace('시', '')) : area;
                 return (
                   <TouchableOpacity key={`${area}__${dongName}`}
-                    onPress={() => toggleCompareDong(area, dongName)}
+                    onPress={() => toggleCompareDong(area, dongName, si)}
                     style={{ paddingHorizontal: 10, paddingVertical: 4, borderRadius: 12, backgroundColor: '#e7f5ff', flexDirection: 'row', alignItems: 'center', gap: 3 }}>
                     <Text style={{ fontSize: 11, color: '#0095f6', fontWeight: '600' }}>{dongName} <Text style={{ color: '#8e8e8e', fontWeight: '400' }}>{areaLabel}</Text></Text>
                     <Text style={{ fontSize: 10, color: '#8e8e8e' }}>✕</Text>
@@ -1797,7 +1847,6 @@ export default function InvestmentScreen() {
     loading,
     error,
     lastSyncTime,
-    isOnline,
     syncData,
     toggleBookmark,
   } = useInvestmentSync();
@@ -1885,9 +1934,9 @@ export default function InvestmentScreen() {
           <Text style={styles.headerTitle}>💼 투자 분석</Text>
           <View style={styles.syncStatus}>
             <MaterialIcons
-              name={isOnline ? 'cloud-done' : 'cloud-off'}
+              name="cloud-done"
               size={16}
-              color={isOnline ? '#10b981' : '#ef4444'}
+              color="#10b981"
             />
             <Text style={styles.syncStatusText}>{formatLastSync()}</Text>
           </View>

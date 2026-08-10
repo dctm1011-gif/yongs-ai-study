@@ -46,10 +46,13 @@ export default async (req, context) => {
       dailyData = { words: [], date: getKSTDateString() };
     }
 
-    // Initialize Firebase and save to database
     const firebaseApp = getFirebaseApp();
     const db = getDatabase(firebaseApp);
     const today = getKSTDateString();
+
+    if (dailyData.date && dailyData.date !== today) {
+      console.warn(`⚠️ english daily.json date mismatch: file=${dailyData.date}, today=${today}. Writing anyway but data may be stale.`);
+    }
 
     await set(ref(db, `english/words/${today}`), {
       ...dailyData,

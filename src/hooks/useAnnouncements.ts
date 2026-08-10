@@ -26,7 +26,8 @@ export function useAnnouncements() {
 
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
-      const data = await response.json();
+      const raw = await response.json();
+      const data: Announcement[] = Array.isArray(raw) ? raw : Object.values(raw);
       const now = new Date();
 
       // 만료된 공지사항 필터링
@@ -50,10 +51,9 @@ export function useAnnouncements() {
   // 공지사항 읽음 표시
   const markAsRead = useCallback(async (id: string) => {
     const readIds = await getReadIds();
+    if (readIds.has(id)) return;
     readIds.add(id);
     await AsyncStorage.setItem('readAnnouncements', JSON.stringify([...readIds]));
-
-    // 읽지 않은 개수 업데이트
     setUnreadCount(prev => Math.max(0, prev - 1));
   }, []);
 

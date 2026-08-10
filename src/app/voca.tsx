@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, Alert, ToastAndroid, Linking, Modal, Animated } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, Alert, ToastAndroid, Linking, Modal, Animated, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useScreenFade } from '../hooks/useScreenFade';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -55,7 +55,7 @@ interface Quiz {
   selectedOption?: string; // FlatList 재마운트 후에도 선택값 복원을 위해 부모 상태에 저장
 }
 
-type ViewType = 'words' | 'quiz' | 'game';
+type ViewType = 'words' | 'quiz' | 'game' | 'stats';
 
 const ITEMS_PER_PAGE = 15; // Pagination size for FlatList
 
@@ -529,6 +529,25 @@ export default function VocaScreen() {
     const updated = quizzes.map(q => {
       if (q.id === quizId) {
         const isCorrect = selectedOption === q.correct;
+        if (!isCorrect && uid) {
+          // 오답 단어를 reviewPool에서 count=0으로 리셋 → 알림/게임 최우선 복습
+          const word = words.find(w => w.id === q.wordId);
+          if (word) {
+            const poolRef = userRef(uid, `english/reviewPool/${q.wordId}`);
+            get(poolRef).then(snap => {
+              const entry = snap.exists() ? snap.val() : {};
+              dbSet(poolRef, {
+                word: word.word,
+                meaning: word.meaning,
+                pos: word.pos,
+                emoji: word.emoji,
+                ...entry,
+                count: 0,
+                lastReviewedDate: null,
+              }).catch(() => {});
+            }).catch(() => {});
+          }
+        }
         return { ...q, answered: true, correct_answer: isCorrect, selectedOption };
       }
       return q;
@@ -537,8 +556,9 @@ export default function VocaScreen() {
     if (updated.every(q => q.answered)) {
       const correct = updated.filter(q => q.correct_answer).length;
       const today = getKSTDateString();
-      const db = getDatabase(getFirebaseApp());
-      dbSet(userRef(uid, `completion/english/${today}`), true).catch(() => {});
+      dbSet(userRef(uid, `completion/english/${today}`), {
+        done: true, correct, total: updated.length, ts: Date.now(),
+      }).catch(() => {});
     }
   };
 
@@ -703,6 +723,12 @@ export default function VocaScreen() {
         >
           <Text style={[styles.tabButtonText, view === 'game' && styles.tabButtonTextActive]}>게임</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.tabButton, view === 'stats' && styles.tabButtonActive]}
+          onPress={() => setView('stats')}
+        >
+          <Text style={[styles.tabButtonText, view === 'stats' && styles.tabButtonTextActive]}>통계</Text>
+        </TouchableOpacity>
 
       </View>
 
@@ -724,19 +750,14 @@ export default function VocaScreen() {
             onToggleRead={toggleWordRead}
             onPlayAudio={playWordAudio}
             speakingWordId={speakingWordId}
+            onRefresh={refreshFromNetlify}
+            refreshing={refreshing}
           />
         </View>
       )}
+      {view === 'stats' && <StatsView stats={stats} />}
       {view === 'quiz' && <QuizView quizzes={quizzes} words={words} onAnswer={answerQuiz} onComplete={() => {
-        const today = getKSTDateString();
         const correct = quizzes.filter(q => q.correct_answer).length;
-        const db = getDatabase(getFirebaseApp());
-        dbSet(userRef(uid, `completion/english/${today}`), {
-          done: true,
-          correct,
-          total: quizzes.length,
-          ts: Date.now(),
-        }).catch(() => {});
         ToastAndroid.show(`완료! ${correct}/${quizzes.length} 정답 저장됨`, ToastAndroid.SHORT);
       }} />}
       {view === 'game' && <GameHub />}
@@ -817,11 +838,13 @@ function formatDate(dateStr: string): string {
 }
 
 // Memoized component to prevent unnecessary re-renders
-const WordsView = React.memo(({ words, onToggleRead, onPlayAudio, speakingWordId }: {
+const WordsView = React.memo(({ words, onToggleRead, onPlayAudio, speakingWordId, onRefresh, refreshing }: {
   words: Word[],
   onToggleRead: (id: string) => void,
   onPlayAudio: (id: string, text: string) => void,
   speakingWordId: string | null,
+  onRefresh: () => void,
+  refreshing: boolean,
 }) => {
   return (
     <FlatList
@@ -833,6 +856,7 @@ const WordsView = React.memo(({ words, onToggleRead, onPlayAudio, speakingWordId
       updateCellsBatchingPeriod={50}
       removeClippedSubviews={true}
       scrollEventThrottle={16}
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#0095f6']} />}
       renderItem={({ item }) => (
         <WordCard
           word={item}

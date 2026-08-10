@@ -37,9 +37,17 @@ export default async (req) => {
 
     if (req.method === 'GET') {
       const snap = await get(listRef);
-      const result = snap.exists() ? snap.val() : [];
+      const raw = snap.exists() ? snap.val() : [];
+      const result = Array.isArray(raw) ? raw : Object.values(raw);
       log.log('GET announcements', { count: result.length });
       return Response.json(result, { headers: cors });
+    }
+
+    if (req.method === 'POST' || req.method === 'DELETE') {
+      const secret = req.headers.get('x-admin-secret');
+      if (!secret || secret !== process.env.ADMIN_SECRET) {
+        return Response.json({ error: 'Unauthorized' }, { status: 401, headers: cors });
+      }
     }
 
     if (req.method === 'POST') {
@@ -77,7 +85,7 @@ export default async (req) => {
     if (req.method === 'DELETE') {
       const { id } = await req.json();
       const snap = await get(listRef);
-      const existing = snap.exists() ? snap.val() : [];
+      const existing = snap.exists() ? (Array.isArray(snap.val()) ? snap.val() : Object.values(snap.val())) : [];
       const filtered = existing.filter(a => a.id !== id);
       await set(listRef, filtered);
       log.log('DELETE successful', { id, remaining: filtered.length });

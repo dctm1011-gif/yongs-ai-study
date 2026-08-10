@@ -348,6 +348,9 @@ function BookDiaryModal({ book, onClose }: BookDiaryModalProps) {
     if (!editPageInput || isNaN(endPage) || endPage <= 0) {
       Alert.alert('입력 오류', '페이지 수를 확인해주세요.'); return;
     }
+    if (totalPages > 0 && endPage > totalPages) {
+      Alert.alert('입력 오류', `전체 페이지(${totalPages}p)를 초과했습니다.`); return;
+    }
     if (!editNoteInput.trim()) {
       Alert.alert('입력 오류', '감상을 입력해주세요.'); return;
     }

@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Speech from 'expo-speech';
 import { Audio } from 'expo-av';
 import { performanceMonitor } from '../utils/PerformanceMonitor';
-import { getDatabase, ref, onValue, set as dbSet } from 'firebase/database';
+import { getDatabase, ref, onValue, set as dbSet, get } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
 import { useAuth } from '../context/AuthContext';
 import { userRef } from '../utils/userDb';
@@ -324,17 +324,34 @@ export default function TOEFLScreen() {
     }
   };
 
-  // TOEFL 문제 자체는 위쪽의 라이브 Firebase 구독이 채워준다.
-  // 여기서는 로컬 섹션 진행도(읽음/완료 표시)만 불러온다.
+  // 로컬 AsyncStorage + Firebase 완료 기록을 병합해 섹션 상태를 복원한다.
+  // 재설치 후에도 Firebase에 남은 오늘 완료 기록이 반영된다.
   const loadData = async () => {
     try {
       const savedSections = await AsyncStorage.getItem('toefl_sections');
-      if (savedSections) {
-        const parsed = JSON.parse(savedSections);
-        setSections(Array.isArray(parsed) ? parsed : defaultSections);
-      } else {
-        setSections(defaultSections);
-      }
+      let baseSections: typeof defaultSections = savedSections
+        ? (JSON.parse(savedSections) as typeof defaultSections)
+        : defaultSections;
+      if (!Array.isArray(baseSections)) baseSections = defaultSections;
+
+      const today = getKSTDateString();
+      const db = getDatabase(getFirebaseApp());
+      const keyMap: Record<string, string> = {
+        reading: 'toefl_reading',
+        listening: 'toefl_listening',
+        writing: 'toefl_writing',
+        speaking: 'toefl_speaking',
+      };
+      const snaps = await Promise.all(
+        baseSections.map(s => get(userRef(uid, `completion/${keyMap[s.id]}/${today}`)).catch(() => null))
+      );
+      const merged = baseSections.map((s, i) => {
+        const firebaseDone = snaps[i]?.val() === true;
+        if (firebaseDone && !s.completed) return { ...s, completed: true, progress: 100 };
+        return s;
+      });
+      setSections(merged);
+      await AsyncStorage.setItem('toefl_sections', JSON.stringify(merged));
     } catch (error) {
       console.error('Failed to load TOEFL section progress:', error);
       setSections(defaultSections);
@@ -948,50 +965,64 @@ export default function TOEFLScreen() {
     );
   }
 
+  // selectedSection은 목록에서 탭한 시점의 스냅샷이므로, sections 최신 상태에서 파생
+  const liveSection = selectedSection
+    ? (sections.find(s => s.id === selectedSection.id) ?? selectedSection)
+    : null;
+
   return (
     <SafeAreaView style={styles.screen}>
       <Animated.View style={{ flex: 1, opacity, transform: [{ translateY }] }}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>🎓 TOEFL iBT</Text>
-        <Text style={styles.headerSubtitle}>4가지 영역 연습</Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+          <View>
+            <Text style={styles.headerTitle}>🎓 TOEFL iBT</Text>
+            <Text style={styles.headerSubtitle}>4가지 영역 연습</Text>
+          </View>
+          {!selectedSection && (
+            <TouchableOpacity
+              onPress={() => setView(v => v === 'stats' ? 'sections' : 'stats')}
+              style={{ padding: 8, borderRadius: 8, backgroundColor: view === 'stats' ? '#3b82f6' : '#f0f0f0' }}
+            >
+              <Text style={{ fontSize: 13, fontWeight: '600', color: view === 'stats' ? '#fff' : '#555' }}>
+                {view === 'stats' ? '← 목록' : '📊 통계'}
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
 
-      {/* No tab buttons needed - only showing sections */}
-
-      {selectedSection ? (
+      {liveSection ? (
         <ScrollView style={styles.detailView}>
           <TouchableOpacity onPress={() => { setSelectedSection(null); setSelectedAnswers({}); }} style={styles.backButton}>
             <Text style={styles.backButtonText}>← 뒤로</Text>
           </TouchableOpacity>
 
           <View style={styles.detailHeader}>
-            <Text style={styles.detailEmoji}>{selectedSection.emoji}</Text>
-            <Text style={styles.detailTitle}>{selectedSection.name}</Text>
+            <Text style={styles.detailEmoji}>{liveSection.emoji}</Text>
+            <Text style={styles.detailTitle}>{liveSection.name}</Text>
           </View>
 
-          <Text style={styles.detailDesc}>{selectedSection.description}</Text>
+          <Text style={styles.detailDesc}>{liveSection.description}</Text>
 
-          {selectedSection.id === 'reading' && renderReadingContent()}
-          {selectedSection.id === 'listening' && renderListeningContent()}
-          {selectedSection.id === 'writing' && renderWritingContent()}
-          {selectedSection.id === 'speaking' && renderSpeakingContent()}
+          {liveSection.id === 'reading' && renderReadingContent()}
+          {liveSection.id === 'listening' && renderListeningContent()}
+          {liveSection.id === 'writing' && renderWritingContent()}
+          {liveSection.id === 'speaking' && renderSpeakingContent()}
 
           <View style={styles.progressSection}>
             <Text style={styles.progressLabel}>진행 상황</Text>
-            <View style={[styles.progressBar, { borderColor: selectedSection.color }]}>
-              <View style={[styles.progressFill, { width: `${selectedSection.progress}%`, backgroundColor: selectedSection.color }]} />
+            <View style={[styles.progressBar, { borderColor: liveSection.color }]}>
+              <View style={[styles.progressFill, { width: `${liveSection.progress}%`, backgroundColor: liveSection.color }]} />
             </View>
-            <Text style={styles.progressPercent}>{selectedSection.progress}%</Text>
+            <Text style={styles.progressPercent}>{liveSection.progress}%</Text>
 
             <TouchableOpacity
-              style={[styles.completeBtn, { borderColor: selectedSection.color }]}
-              onPress={() => {
-                toggleCompletion(selectedSection.id);
-                setSelectedSection(null);
-              }}
+              style={[styles.completeBtn, { borderColor: liveSection.color }]}
+              onPress={() => toggleCompletion(liveSection.id)}
             >
-              <Text style={[styles.completeBtnText, { color: selectedSection.color }]}>
-                {selectedSection.completed ? '✓ 완료됨' : '완료 표시'}
+              <Text style={[styles.completeBtnText, { color: liveSection.color }]}>
+                {liveSection.completed ? '✓ 완료됨' : '완료 표시'}
               </Text>
             </TouchableOpacity>
           </View>

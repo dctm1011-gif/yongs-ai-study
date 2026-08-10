@@ -176,13 +176,14 @@ export class CacheManager {
   }
 
   /**
-   * Clear all cache
+   * Clear all cache (only cache-managed keys, not all AsyncStorage)
    */
   async clearAll(): Promise<void> {
+    const keys = Array.from(this.memoryCache.keys());
     this.memoryCache.clear();
     this.currentMemoryUsage = 0;
     try {
-      await AsyncStorage.clear();
+      if (keys.length > 0) await AsyncStorage.multiRemove(keys);
     } catch (error) {
       console.error('Cache clear all failed:', error);
     }

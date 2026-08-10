@@ -16,15 +16,6 @@ function getKSTDateString(): string {
   return kst.toISOString().split('T')[0];
 }
 
-function shuffled<T>(arr: T[]): T[] {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
 /**
  * Firebase english/reviewPool에서 단어를 가져와 8~22시 매시간 알림 스케줄링.
  * 복습 횟수(count)가 적은 단어를 우선 배치하고, 하루에 한 번만 갱신한다.

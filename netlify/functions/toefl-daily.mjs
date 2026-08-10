@@ -46,10 +46,13 @@ export default async (req, context) => {
       dailyData = { sections: [], date: getKSTDateString() };
     }
 
-    // Save to Firebase
     const firebaseApp = getFirebaseApp();
     const db = getDatabase(firebaseApp);
     const today = getKSTDateString();
+
+    if (dailyData.date && dailyData.date !== today) {
+      console.warn(`⚠️ toefl daily.json date mismatch: file=${dailyData.date}, today=${today}. Data may be stale.`);
+    }
 
     await set(ref(db, `toefl/problems/${today}`), {
       ...dailyData,

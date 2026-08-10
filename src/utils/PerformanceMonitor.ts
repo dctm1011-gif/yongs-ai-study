@@ -37,16 +37,13 @@ export class PerformanceMonitor {
   private static instance: PerformanceMonitor;
   private metrics: PerformanceMetric[] = [];
   private memoryMetrics: MemoryMetric[] = [];
-  private readonly MAX_METRICS = 1000; // Store last 1000 measurements
-  private readonly MAX_MEMORY_METRICS = 500; // Store last 500 memory readings
+  private readonly MAX_METRICS = 1000;
+  private readonly MAX_MEMORY_METRICS = 500;
   private startTimes: Map<string, number> = new Map();
-  private lastMemoryCheck = 0;
-  private memoryCheckInterval = 5000; // Check memory every 5 seconds
 
   private constructor() {
     this.loadMetrics();
     this.loadMemoryMetrics();
-    this.startMemoryMonitoring();
   }
 
   static getInstance(): PerformanceMonitor {
@@ -307,15 +304,6 @@ export class PerformanceMonitor {
    */
   clearMemoryMetrics(): void {
     this.memoryMetrics = [];
-  }
-
-  /**
-   * Start automatic memory monitoring
-   */
-  private startMemoryMonitoring(): void {
-    // Note: React Native doesn't have built-in process.memoryUsage()
-    // This is a placeholder for when native module is available
-    console.log('📊 Memory monitoring initialized');
   }
 
   /**

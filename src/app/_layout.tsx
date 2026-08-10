@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -44,6 +44,7 @@ export default function RootLayout() {
 function MainTabs() {
   const { user } = useAuth();
   const [showAnnouncements, setShowAnnouncements] = useState(false);
+  const navigationRef = useRef<any>(null);
   const {
     announcements,
     unreadCount,
@@ -51,10 +52,10 @@ function MainTabs() {
     markAsRead,
   } = useAnnouncements();
 
-  // 앱 시작 시 오늘치 학습 알림 갱신 (하루 1회만 실행)
+  // 앱 시작 시 오늘치 학습 알림 갱신 (하루 1회만 실행, 로그인 후 uid 확보 시 실행)
   useEffect(() => {
-    refreshStudyNotifications(user?.uid);
-  }, []);
+    if (user?.uid) refreshStudyNotifications(user.uid);
+  }, [user?.uid]);
 
   // 알림 수신 시 로그 기록 (디버그용)
   useEffect(() => {
@@ -70,6 +71,19 @@ function MainTabs() {
     return () => sub.remove();
   }, []);
 
+  // 알림 탭 시 Voca 탭으로 이동 (백그라운드에서 탭한 경우 + 앱 완전 종료 후 탭한 경우)
+  useEffect(() => {
+    // 앱이 완전히 꺼진 상태에서 알림을 탭해 실행된 경우 처리
+    Notifications.getLastNotificationResponseAsync().then(response => {
+      if (response) navigationRef.current?.navigate('Voca');
+    });
+    // 앱이 실행 중이거나 백그라운드에 있을 때 알림을 탭한 경우 처리
+    const responseSub = Notifications.addNotificationResponseReceivedListener(() => {
+      navigationRef.current?.navigate('Voca');
+    });
+    return () => responseSub.remove();
+  }, []);
+
 // 읽지 않은 공지사항이 있으면 자동으로 표시
   useEffect(() => {
     if (!loading && unreadCount > 0) {
@@ -79,7 +93,7 @@ function MainTabs() {
 
   return (
     <View style={{ flex: 1 }}>
-      <NavigationContainer independent={true}>
+      <NavigationContainer independent={true} ref={navigationRef}>
         <Tab.Navigator
         screenOptions={{
           headerShown: false,

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getDatabase, ref, onValue } from 'firebase/database';
+import { getDatabase, ref, onValue, get } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
 
 // Firebase Functions run in UTC; KST (UTC+9) doesn't roll to the next
@@ -273,8 +273,27 @@ export function useInvestmentSync() {
     return () => unsubscribe();
   }, []);
 
-  // Firebase pushes updates automatically; kept as a no-op for pull-to-refresh UX
-  const syncData = useCallback(async () => {}, []);
+  const syncData = useCallback(async () => {
+    const db = getDatabase(getFirebaseApp());
+    const today = getKSTDateString();
+    const snap = await get(ref(db, `investment/columns/${today}`));
+    if (snap.exists()) {
+      const data = snap.val();
+      if (data.columns && Array.isArray(data.columns)) {
+        setColumns(injectRatioIntoColumns(data.columns));
+        setTermOfDay(data.termOfDay || null);
+        setNewsArticles(data.newsArticles || []);
+        setDongCharts(injectRatioFallback(data.dongCharts || []));
+        setRegionCharts(data.regionCharts || []);
+        setTaxPolicySummary(data.taxPolicySummary || null);
+        setJongbuseSummary(data.jongbuseSummary || null);
+        setLastSyncTime(new Date(data.timestamp || Date.now()));
+        setError(null);
+      }
+    } else {
+      setError('오늘자 데이터가 아직 없습니다 - 기본 데이터 표시');
+    }
+  }, []);
 
   const toggleBookmark = useCallback(
     async (columnId: string) => {
@@ -311,7 +330,6 @@ export function useInvestmentSync() {
     loading,
     error,
     lastSyncTime,
-    isOnline: true,
     syncData,
     toggleBookmark,
   };

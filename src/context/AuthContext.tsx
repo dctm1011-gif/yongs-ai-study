@@ -36,15 +36,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signIn = async () => {
-    await GoogleSignin.hasPlayServices();
-    const { data } = await GoogleSignin.signIn();
-    const credential = GoogleAuthProvider.credential(data?.idToken ?? null);
-    await signInWithCredential(auth, credential);
+    try {
+      await GoogleSignin.hasPlayServices();
+      const { data } = await GoogleSignin.signIn();
+      if (!data?.idToken) throw new Error('Google 로그인 토큰 없음');
+      await signInWithCredential(auth, GoogleAuthProvider.credential(data.idToken));
+    } catch (e: any) {
+      if (e?.code !== 'SIGN_IN_CANCELLED') throw e;
+    }
   };
 
   const signOut = async () => {
-    await GoogleSignin.signOut();
-    await firebaseSignOut(auth);
+    try {
+      await GoogleSignin.signOut();
+      await firebaseSignOut(auth);
+    } catch (e) {
+      console.error('[AuthContext] signOut error:', e);
+    }
   };
 
   return (

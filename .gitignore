@@ -52,3 +52,7 @@ paper_search/discord_config.json
 __pycache__/
 *.pyc
 deploy.json
+
+# Release signing credentials (passwords must NOT be committed)
+credentials.json
+android/app/release.keystore

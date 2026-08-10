@@ -870,3 +870,25 @@ export const PUZZLE_SETS: PuzzleWord[][] = [
     { word: '태백산', clue: '태백 고원 중심에 있는 천왕봉이 있는 산' },
   ],
 ];
+
+
+// ─── O/X 퀴즈 정적 fallback (AI 생성 실패 시 사용) ───────────────────────
+export interface OXFallbackItem {
+  word: string;
+  sentence: string;
+  isO: boolean;
+  explanation: string;
+}
+
+export const OX_FALLBACK_LIST: OXFallbackItem[] = [
+  { word: '귀납법', sentence: '개별 사례를 모아 일반 원리를 이끌어내는 귀납법은 과학적 탐구의 기초다.', isO: true, explanation: '귀납법(歸納法)은 개별 사실에서 보편적 원리를 도출하는 추론 방식이다. 올바른 쓰임이다.' },
+  { word: '연역법', sentence: '그는 연역법으로 실험을 반복해 새로운 사실을 발견했다.', isO: false, explanation: '연역법(演繹法)은 보편 전제에서 개별 결론을 도출하는 방법이다. 실험 반복은 귀납적 방법에 해당한다.' },
+  { word: '당위성', sentence: '정책 결정에는 법적 근거뿐 아니라 도덕적 당위성도 필요하다.', isO: true, explanation: '당위성(當爲性)은 마땅히 그래야 함을 뜻한다. 도덕적 정당성을 표현하는 올바른 쓰임이다.' },
+  { word: '헤게모니', sentence: '강대국의 문화적 헤게모니는 약소국의 정체성 형성에 깊은 영향을 준다.', isO: true, explanation: '헤게모니는 한 세력의 지배적 영향력·패권을 뜻한다. 문화 권력 맥락에서 올바르게 쓰였다.' },
+  { word: '부정합', sentence: '이 지층의 부정합은 과거 침식 사건을 보여주는 지질학적 증거다.', isO: true, explanation: '부정합(不整合)은 서로 다른 시대의 지층이 침식 후 맞닿는 현상이다. 올바른 지질학 용어 사용이다.' },
+  { word: '정당성', sentence: '논리적 근거를 갖춘 주장은 충분한 정당성을 확보한다고 볼 수 있다.', isO: true, explanation: '정당성(正當性)은 주장이나 행위가 옳고 타당함을 인정받는 성질이다. 올바른 쓰임이다.' },
+  { word: '자율성', sentence: '아이들에게 과도한 자율성을 부여하면 무질서해지므로 규제가 필요하다.', isO: false, explanation: '자율성(自律性)은 스스로 행동을 조절하는 능력이다. 방임·자유로움과 다르므로 과도하다는 표현이 어색하다.' },
+  { word: '귀납법', sentence: '귀납법은 단 하나의 반례로도 결론이 무너질 수 있어 절대적 증명이 불가하다.', isO: true, explanation: '귀납법의 한계를 정확히 설명한 문장이다. 올바른 쓰임이다.' },
+  { word: '관념론', sentence: '그는 현실을 외면하고 관념론만 고집해 구체적 실행 방안을 제시하지 않는다.', isO: true, explanation: '관념론(觀念論)은 현실보다 이념·개념을 중시하는 입장이다. 일상적 비판 맥락에서도 올바르게 쓰였다.' },
+  { word: '준거', sentence: '우리는 국제법을 준거로 삼아 이 분쟁을 해결해야 한다.', isO: true, explanation: '준거(準據)는 기준으로 삼는 근거를 의미한다. 국제법을 기준으로 삼는다는 맥락에서 올바른 쓰임이다.' },
+];

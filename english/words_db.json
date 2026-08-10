@@ -1826,5 +1826,65 @@
     "explanation": "Complimentary or flattering to an excessive degree; often insincere or exaggerated",
     "tip": "Synonym: excessive(과도한), effusive(열정적인, 분출하는). 주로 부정적 뉘앙스—과하고 진심 없는 느낌. Antonym: modest(겸손한), restrained(절제된)",
     "emoji": "🙄"
+  },
+  {
+    "id": "pernicious",
+    "word": "pernicious",
+    "pos": "adjective",
+    "date": "2026-08-11",
+    "meaning": "해로운, 치명적인",
+    "example_ko": "소셜 미디어는 청소년의 자존감에 해로운 영향을 미칠 수 있다",
+    "example_en": "Social media can have pernicious effects on teenagers' self-esteem",
+    "explanation": "Causing great harm or damage, often in a subtle or insidious way; morally destructive or wicked",
+    "tip": "malevolent(악의적인)와 유사하지만, pernicious는 의도와 관계없이 해로운 결과를 강조. nefarious는 사악한 의도를 포함. benevolent(자비로운)는 반의어",
+    "emoji": "☠️"
+  },
+  {
+    "id": "surreptitious",
+    "word": "surreptitious",
+    "pos": "adjective",
+    "date": "2026-08-11",
+    "meaning": "은폐된, 몰래 하는",
+    "example_ko": "그는 그녀의 시험 답안을 몰래 흘깃 봤다",
+    "example_en": "He took a surreptitious glance at her test answers",
+    "explanation": "Done secretly or stealthily, often to avoid detection or without proper authority; clandestine",
+    "tip": "clandestine(비밀의)와 거의 동의어이지만 surreptitious는 조심스러운 숨김을 더 강조. overt(노골적인)는 반의어. covert(비밀의)는 유사",
+    "emoji": "🤫"
+  },
+  {
+    "id": "effervescent",
+    "word": "effervescent",
+    "pos": "adjective",
+    "date": "2026-08-11",
+    "meaning": "거품이 나는, 활기찬",
+    "example_ko": "그녀의 활기찬 성격이 모든 파티를 재미있게 만든다",
+    "example_en": "Her effervescent personality makes every party fun",
+    "explanation": "Giving off bubbles of gas; full of liveliness, enthusiasm, and high spirits; vivacious",
+    "tip": "ebullient(열정적인)와 유사하지만 effervescent는 더 밝고 가벼운 활기를 강조. languid(무기력한)는 반의어",
+    "emoji": "✨"
+  },
+  {
+    "id": "recondite",
+    "word": "recondite",
+    "pos": "adjective",
+    "date": "2026-08-11",
+    "meaning": "난해한, 깊이 숨겨진",
+    "example_ko": "교수의 난해한 이론은 대부분의 학생들이 이해하기 어려웠다",
+    "example_en": "The professor's recondite theories were difficult for most students to grasp",
+    "explanation": "Relating to or dealing with very specialized or technical subjects; obscure or difficult to understand",
+    "tip": "obscure(불분명한)와 유사하지만 recondite는 학문적, 전문적 난해함을 강조. pellucid(명확한)는 반의어. esoteric(비밀의)은 관련 단어",
+    "emoji": "📚"
+  },
+  {
+    "id": "candescence",
+    "word": "candescence",
+    "pos": "noun",
+    "date": "2026-08-11",
+    "meaning": "백열현상, 열에 의한 발광",
+    "example_ko": "그 램프의 백열현상이 방을 따뜻한 빛으로 채웠다.",
+    "example_en": "The candescence of the lamp filled the room with a warm glow.",
+    "explanation": "The emission of light by a substance when heated to a high temperature, commonly seen in incandescent light bulbs.",
+    "tip": "물리학이나 과학 관련 토론에서 사용되는 학술 용어",
+    "emoji": "💡"
   }
 ]
