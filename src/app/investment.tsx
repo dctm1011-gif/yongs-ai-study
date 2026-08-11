@@ -947,6 +947,54 @@ const RegionRatioChart: React.FC<{ area: string }> = React.memo(({ area }) => {
   );
 });
 
+const JeonseRatioChart: React.FC<{ points: { label: string; value: number }[] }> = React.memo(({ points }) => {
+  if (points.length < 2) return null;
+
+  const n = points.length;
+  const vals = points.map(p => p.value);
+  const minV = Math.floor(Math.min(...vals) - 1);
+  const maxV = Math.ceil(Math.max(...vals) + 1);
+  const PAD_H = 8;
+  const getX = (i: number) => PAD_H + (i / (n - 1)) * (RATIO_CHART_W - PAD_H * 2);
+  const getY = (v: number) => RATIO_CHART_H - ((v - minV) / (maxV - minV || 1)) * RATIO_CHART_H;
+  const pts = vals.map((v, i) => ({ x: getX(i), y: getY(v) }));
+
+  return (
+    <View style={{ marginTop: 16, paddingTop: 14, borderTopWidth: 1, borderTopColor: '#fafafa' }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+        <Text style={{ fontSize: 13, fontWeight: '600', color: '#262626' }}>전세가율 (최근 12개월)</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 3 }}>
+          <Text style={{ fontSize: 18, fontWeight: '600', color: '#10b981' }}>{vals[n - 1]}%</Text>
+          <Text style={{ fontSize: 9, color: '#8e8e8e' }}>{points[n - 1].label}</Text>
+        </View>
+      </View>
+      <View style={{ height: RATIO_CHART_H + 16, width: RATIO_CHART_W, overflow: 'hidden' }}>
+        {pts.slice(0, -1).map((p, i) => {
+          const q = pts[i + 1];
+          const dx = q.x - p.x;
+          const dy = q.y - p.y;
+          const len = Math.sqrt(dx * dx + dy * dy);
+          const angle = Math.atan2(dy, dx);
+          return (
+            <View key={i} style={{ position: 'absolute', width: len, height: 2, left: (p.x + q.x) / 2 - len / 2, top: (p.y + q.y) / 2 - 1, backgroundColor: '#6ee7b7', transform: [{ rotate: `${angle}rad` }] }} />
+          );
+        })}
+        {pts.map((p, i) => {
+          const isLast = i === n - 1;
+          const sz = isLast ? 7 : 5;
+          return (
+            <View key={i} style={{ position: 'absolute', width: sz, height: sz, borderRadius: sz / 2, backgroundColor: isLast ? '#10b981' : '#a7f3d0', left: p.x - sz / 2, top: p.y - sz / 2 }} />
+          );
+        })}
+        {points.map((p, i) => (
+          <Text key={i} style={{ position: 'absolute', fontSize: 8, color: '#8e8e8e', top: RATIO_CHART_H + 2, left: getX(i) - 10, width: 20, textAlign: 'center' }}>{p.label}</Text>
+        ))}
+      </View>
+      <Text style={{ fontSize: 9, color: '#8e8e8e', marginTop: 2 }}>전세가율 = 순수 전세 실거래 중앙값 / 매매 실거래 중앙값 × 100 · 국토부 실거래가 기준</Text>
+    </View>
+  );
+});
+
 type RegionViewMode = 'series' | 'compare';
 
 const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo(({ regionCharts }) => {
@@ -1116,7 +1164,7 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
 
   // ── 비교 모드 상태 ──
   const [compareDongs, setCompareDongs] = useState<{ area: string; dongName: string; si: string; label?: string }[]>([]);
-  const [compareMetric, setCompareMetric] = useState<'price' | 'ratio' | 'turnover'>('price');
+  const [compareMetric, setCompareMetric] = useState<'price' | 'ratio' | 'turnover' | 'largeComplex'>('price');
 
   const toggleCompareDong = useCallback((area: string, dongName: string, si: string) => {
     setCompareDongs(prev => {
@@ -1186,6 +1234,18 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
       const annualRate = Math.round((trades6m * 2 / totalUnits) * 1000) / 10; // 소수 1자리
       const shortArea = entry.gu ?? entry.si.replace('시', '');
       return [{ label: dongName, sub: shortArea, value: annualRate }];
+    });
+  }, [compareDongs, regionCharts]);
+
+  // 동별 대단지(1000세대 이상) 비율(%) - 세대수 기준
+  // dongLargeComplexRatio 없는 동은 제외 (단지 정보 없는 동 미표시)
+  const compareLargeComplexBarData = useMemo<{ label: string; sub: string; value: number }[]>(() => {
+    return compareDongs.flatMap(({ area, dongName }) => {
+      const entry = regionCharts.find(r => r.area === area);
+      const ratio = entry?.dongLargeComplexRatio?.[dongName];
+      if (ratio === undefined) return [];
+      const shortArea = entry!.gu ?? entry!.si.replace('시', '');
+      return [{ label: dongName, sub: shortArea, value: ratio }];
     });
   }, [compareDongs, regionCharts]);
 
@@ -1384,6 +1444,7 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
                   <BoxPlotChart data={seriesData.data} yearlyData={seriesData.yearlyData}
                     title={seriesData.title} unit={seriesData.unit} />
                   {selectedEntry && <RegionRatioChart area={selectedEntry.area} />}
+                  {selectedEntry?.jeonseRatioData && <JeonseRatioChart points={selectedEntry.jeonseRatioData} />}
                 </>
               )}
             </View>
@@ -1429,10 +1490,11 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
           {compareDongs.length >= 2 && (
             <View style={{ flexDirection: 'row', gap: 6, marginBottom: 12 }}>
               {([
-                { key: 'price',    label: '아파트 가격' },
-                { key: 'ratio',    label: '다주택자 비율' },
-                { key: 'turnover', label: '거래 활발도' },
-              ] as { key: 'price' | 'ratio' | 'turnover'; label: string }[]).map(tab => (
+                { key: 'price',        label: '아파트 가격' },
+                { key: 'ratio',        label: '다주택자 비율' },
+                { key: 'turnover',     label: '거래 활발도' },
+                { key: 'largeComplex', label: '대단지 비율' },
+              ] as { key: 'price' | 'ratio' | 'turnover' | 'largeComplex'; label: string }[]).map(tab => (
                 <TouchableOpacity key={tab.key} onPress={() => setCompareMetric(tab.key)}
                   style={{ flex: 1, paddingVertical: 7, borderRadius: 8, alignItems: 'center',
                     backgroundColor: compareMetric === tab.key ? '#0095f6' : '#fafafa',
@@ -1472,6 +1534,14 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
               title="동별 연간 거래 회전율 (6개월 거래×2 / 총세대수)"
               unit="단위: % · 국토부 실거래가 + 공동주택 현황"
               color="#10b981"
+              valueSuffix="%"
+            />
+          ) : compareMetric === 'largeComplex' && compareLargeComplexBarData.length >= 1 ? (
+            <HorizontalBarChart
+              data={compareLargeComplexBarData}
+              title="동별 대단지 비율 (1,000세대 이상 단지 세대수 기준)"
+              unit="단위: % · 국토부 공동주택 기본정보"
+              color="#8b5cf6"
               valueSuffix="%"
             />
           ) : compareMetric === 'turnover' ? (

@@ -1,115 +1,195 @@
 {
-  "date": "2026-08-11",
+  "date": "2026-08-12",
   "reading": {
-    "title": "Artificial Intelligence in Healthcare",
-    "passage": "Artificial intelligence has revolutionized modern healthcare by enabling faster diagnosis and personalized treatment plans. AI algorithms analyze medical imaging with remarkable accuracy, often detecting diseases like cancer earlier than human radiologists. Furthermore, machine learning systems predict patient outcomes and recommend optimal treatments based on vast datasets. However, concerns about data privacy and the need for regulatory frameworks remain critical challenges. Despite these obstacles, AI continues to transform healthcare delivery, improving patient outcomes while reducing medical costs significantly.",
+    "title": "Climate Change and Ocean Acidification",
+    "passage": "Ocean acidification, a consequence of increased atmospheric carbon dioxide, represents one of the most pressing environmental challenges of the twenty-first century. When CO2 dissolves in seawater, it forms carbonic acid, which lowers the pH level and reduces the availability of carbonate ions essential for shell-forming organisms. This phenomenon has accelerated dramatically over the past two centuries, with oceanic pH declining by approximately 0.1 units since the Industrial Revolution. Marine organisms such as pteropods, corals, and mollusks face severe threats as their calcium carbonate shells and skeletons become increasingly difficult to construct and maintain in acidified waters. Research indicates that if current emission rates persist, ocean pH could decline by an additional 0.4 units by 2100, potentially causing catastrophic disruptions to marine ecosystems. Furthermore, ocean acidification interferes with the sensory systems of larval fish, impairing their ability to locate food and avoid predators. The cumulative effects of these physiological disruptions could trigger cascading ecological consequences throughout food webs, ultimately affecting fisheries and human populations dependent on marine resources.",
+    "vocabulary": [
+      {
+        "word": "acidification",
+        "meaning_ko": "산성화; 산 성질이 증가하는 과정"
+      },
+      {
+        "word": "carbonate ions",
+        "meaning_ko": "탄산염 이온; 패류의 껍질을 형성하는 데 필수적인 물질"
+      },
+      {
+        "word": "pteropods",
+        "meaning_ko": "익족류(번들링); 작은 해양 생물로 많은 해양 동물의 먹이"
+      },
+      {
+        "word": "cascade",
+        "meaning_ko": "연쇄적으로 일어나다; 급류처럼 흘러내리다"
+      },
+      {
+        "word": "larval",
+        "meaning_ko": "유충의; 성체가 되기 전 발달 단계의"
+      },
+      {
+        "word": "emit",
+        "meaning_ko": "배출하다; 방출하다"
+      },
+      {
+        "word": "physiological",
+        "meaning_ko": "생리적인; 신체 기능과 관련된"
+      }
+    ],
     "questions": [
       {
-        "q": "What is one advantage of AI in healthcare mentioned in the passage?",
+        "q": "According to the passage, how does increased atmospheric CO2 directly affect ocean chemistry?",
         "options": [
-          "It reduces the need for doctors",
-          "It detects diseases earlier through imaging analysis",
-          "It eliminates all medical costs",
-          "It replaces all diagnostic procedures"
+          "It increases the availability of carbonate ions needed for shell formation",
+          "It forms carbonic acid that lowers pH and reduces carbonate ion availability",
+          "It raises ocean temperatures, which dissolves calcium carbonate naturally",
+          "It promotes the growth of algae that neutralizes acidic conditions"
         ],
         "answer": 1,
-        "explanation": "패시지에서 'AI algorithms analyze medical imaging with remarkable accuracy, often detecting diseases like cancer earlier than human radiologists'라고 명시되어 있습니다."
+        "explanation": "지문의 두 번째 문장에서 'When CO2 dissolves in seawater, it forms carbonic acid, which lowers the pH level and reduces the availability of carbonate ions'라고 명시되어 있습니다."
       },
       {
-        "q": "According to the passage, what is a challenge in implementing AI in healthcare?",
+        "q": "What can be inferred from the passage about the relationship between ocean acidification and marine food webs?",
         "options": [
-          "Lack of technology",
-          "Data privacy concerns and regulatory needs",
-          "Patient resistance",
-          "Cost of equipment"
+          "Food webs are unaffected by pH changes in water",
+          "Only predatory fish are impacted by ocean acidification",
+          "Disruptions to individual organisms can have widespread ecosystem effects",
+          "Ocean acidification actually strengthens marine food web structures"
         ],
-        "answer": 1,
-        "explanation": "'concerns about data privacy and the need for regulatory frameworks remain critical challenges'는 AI 의료 적용의 주요 도전 과제를 설명합니다."
+        "answer": 2,
+        "explanation": "지문 마지막 부분에서 'cascading ecological consequences throughout food webs'와 'ultimately affecting fisheries and human populations'이라고 언급하며, 개별 생물의 생리적 장애가 먹이사슬 전체에 영향을 미칠 수 있음을 시사합니다."
       },
       {
-        "q": "The word 'predict' in the passage most closely means:",
+        "q": "The word 'interferes' in the passage is closest in meaning to",
         "options": [
-          "Prevent",
-          "Forecast based on data",
-          "Diagnose",
-          "Treat"
+          "enhances or improves",
+          "disrupts or hinders normal function",
+          "interacts peacefully with",
+          "completely eliminates"
         ],
         "answer": 1,
-        "explanation": "'machine learning systems predict patient outcomes'에서 predict는 데이터를 기반으로 미리 예측하다는 의미입니다."
+        "explanation": "'Interferes with'는 '방해하다, 해를 끼치다'는 의미로, 문맥상 해양생물의 감각 체계에 부정적 영향을 미치는 것을 나타냅니다. 'disrupts or hinders'가 가장 적절한 동의어입니다."
+      },
+      {
+        "q": "Why does the author provide specific information about the decline in ocean pH since the Industrial Revolution?",
+        "options": [
+          "To show that acidification is a recent phenomenon caused only by modern pollution",
+          "To demonstrate the severity and acceleration of ocean acidification over time",
+          "To prove that natural pH fluctuations are more significant than human impacts",
+          "To suggest that the problem will resolve itself within a few decades"
+        ],
+        "answer": 1,
+        "explanation": "저자는 '지난 2세기 동안 pH가 0.1 단위 감소했다'는 구체적 수치를 제시함으로써 산성화가 얼마나 가파르게 진행되고 있는지를 강조하여 문제의 심각성을 입증하고 있습니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Technology is making human relationships weaker'? Use specific examples to support your position.",
-    "structure": {
-      "intro": "명확한 입장 제시 (동의 또는 비동의) + 간단한 이유 2개 언급",
-      "body1": "첫 번째 논거를 구체적인 예시와 함께 전개 (100-120단어)",
-      "body2": "두 번째 논거를 구체적인 예시와 함께 전개 (100-120단어)",
-      "conclusion": "입장 재확인 + 전체 요점 요약 + 미래 전망 추가"
-    },
-    "useful_phrases": [
-      "In my opinion,",
-      "I strongly agree/disagree that",
-      "One compelling reason is that",
-      "Furthermore,",
-      "For example,",
-      "This demonstrates that",
-      "In conclusion,",
-      "Overall, technology should be used as a tool to strengthen rather than weaken relationships"
+    "sentences": [
+      {
+        "original": "Ocean acidification, a consequence of increased atmospheric carbon dioxide, represents one of the most pressing environmental challenges of the twenty-first century.",
+        "paraphrase": "The most urgent ecological issue facing the twenty-first century is ocean acidification, which results from rising levels of atmospheric CO2.",
+        "tip": "주어-동사 구조 재배열 및 명사구 문장 시작으로 변환하여 주제를 강조"
+      },
+      {
+        "original": "When CO2 dissolves in seawater, it forms carbonic acid, which lowers the pH level and reduces the availability of carbonate ions essential for shell-forming organisms.",
+        "paraphrase": "Shell-forming organisms depend on carbonate ions, but when seawater absorbs CO2, the resulting carbonic acid both lowers pH and depletes these essential ions.",
+        "tip": "수동→능동 변환 및 인과관계를 명확히 하는 구조로 변형하여 논리성 강화"
+      },
+      {
+        "original": "Research indicates that if current emission rates persist, ocean pH could decline by an additional 0.4 units by 2100, potentially causing catastrophic disruptions to marine ecosystems.",
+        "paraphrase": "Should present emission levels continue unchanged, scientists predict that the ocean pH will drop approximately 0.4 units by 2100, with potentially catastrophic consequences for marine life.",
+        "tip": "조건부 문장 구조 변경 및 'Research indicates'를 'Scientists predict'로 치환하여 표현 다양화"
+      },
+      {
+        "original": "Marine organisms such as pteropods, corals, and mollusks face severe threats as their calcium carbonate shells and skeletons become increasingly difficult to construct and maintain in acidified waters.",
+        "paraphrase": "In acidified oceans, pteropods, corals, and mollusks struggle to build and preserve their calcium carbonate structures, facing unprecedented threats to their survival.",
+        "tip": "구체적 예시를 전치사구로 문두에 배치하고 수동 표현을 능동으로 변환하여 동적 표현 강화"
+      },
+      {
+        "original": "The cumulative effects of these physiological disruptions could trigger cascading ecological consequences throughout food webs, ultimately affecting fisheries and human populations dependent on marine resources.",
+        "paraphrase": "These combined physiological damages may initiate a chain reaction across marine food webs, eventually impacting human communities and fisheries that rely on ocean resources.",
+        "tip": "추상적 표현 'cascading consequences'를 'chain reaction'으로 구체화하고 관계절 문장 단순화"
+      }
     ]
   },
+  "writing_prompt": {
+    "topic": "Artificial Intelligence Regulation",
+    "task": "Some people believe that artificial intelligence should be heavily regulated by government. Others argue that regulation stifles innovation and that industry self-regulation is sufficient. Which position do you agree with and why? Support your answer with specific reasons and examples."
+  },
   "speaking": {
-    "prompt": "Some people believe education should focus on practical skills. Others believe it should emphasize theoretical knowledge. Which approach do you prefer and why?",
-    "useful_expressions": [
-      "In my opinion, I believe that",
-      "One significant reason is that",
-      "Another important point is",
-      "For instance,",
-      "This means that",
-      "Therefore, I prefer the approach of"
-    ],
-    "sample_points": [
-      "실용적 기술은 학생들이 직업 시장에서 즉시 경쟁력을 가질 수 있게 해줍니다 (예: 프로그래밍, 회계 등)",
-      "그러나 이론적 지식은 비판적 사고능력을 발달시키고 다양한 분야에 적용 가능한 기초를 제공합니다 (예: 과학, 수학의 원리)"
+    "prompt": "Some students prefer to study alone. Others prefer to study in groups. Which do you prefer and why? Include specific reasons and details.",
+    "model_sentences": [
+      "Personally, I prefer studying in groups because I find that collaborative learning helps me understand complex concepts more deeply.",
+      "When I study with peers, we can discuss different perspectives and explain difficult ideas to each other, which is more effective than learning passively from a textbook alone.",
+      "For example, last semester I struggled with organic chemistry until I joined a study group, and my friends' explanations made the material much clearer.",
+      "Additionally, group study keeps me motivated and accountable because we set goals together and encourage each other to stay on track.",
+      "So I definitely believe that studying with others is the better approach for academic success."
     ]
   },
   "listening": {
-    "title": "Student-Professor Discussion about Research Methods",
+    "title": "Student-Professor Conversation: Course Registration Issue",
     "type": "conversation",
-    "script": "Professor: Good afternoon, Sarah. I reviewed your research proposal on climate change. Your topic is interesting, but I'm concerned about your methodology. Sarah: What do you mean, Professor? I planned to use only online surveys. Professor: That's the issue. Online surveys have significant limitations—they reach only digitally-connected populations and may introduce sampling bias. You should combine surveys with interviews and data analysis. Sarah: Should I include peer-reviewed studies too? Professor: Absolutely. Using mixed methods—quantitative data from surveys plus qualitative insights from interviews and existing literature—will strengthen your research validity considerably. This triangulation approach ensures more reliable conclusions. Sarah: Thank you for the guidance. I'll revise my methodology immediately.",
+    "script": "Student: Good morning, Professor. I was hoping to discuss my course registration situation. I wanted to enroll in your Environmental Science class for next semester, but unfortunately, it filled up before I could add it. Professor: I see. That's frustrating. Unfortunately, the section you're interested in has reached capacity. However, I can place you on the waitlist if you'd like. Student: On the waitlist? How does that typically work? Professor: Well, if a student drops the course, your name moves up the list automatically. There's a reasonable chance you'll get in since some students usually drop by the start of the semester. Student: That sounds promising. But what if I don't get in through the waitlist? Is there any other option? Professor: There's actually another section offered on Tuesday and Thursday evenings. It covers the same material and has the same requirements. If the waitlist doesn't work out, that could be a viable alternative. Student: Tuesday and Thursday evenings? That's actually perfect for my schedule. Should I register for that section now? Professor: I'd recommend registering for both options. Stay on the waitlist for my morning section, but secure your spot in the evening section immediately. That way, you're guaranteed a place in the course. Student: That's really helpful advice. Thank you so much, Professor. I'll do that right away.",
+    "vocabulary": [
+      {
+        "word": "capacity",
+        "meaning_ko": "최대 수용량; 가득 참"
+      },
+      {
+        "word": "waitlist",
+        "meaning_ko": "대기 명단; 순서를 기다리는 목록"
+      },
+      {
+        "word": "viable",
+        "meaning_ko": "실행 가능한; 실용적인"
+      },
+      {
+        "word": "enroll",
+        "meaning_ko": "등록하다; 입학하다"
+      },
+      {
+        "word": "section",
+        "meaning_ko": "분반; 같은 과목의 서로 다른 강의 시간"
+      },
+      {
+        "word": "reach capacity",
+        "meaning_ko": "정원에 도달하다; 가득 차다"
+      },
+      {
+        "word": "secure",
+        "meaning_ko": "확보하다; 보장하다"
+      }
+    ],
     "questions": [
       {
-        "q": "What is the professor's main concern about Sarah's research proposal?",
+        "q": "What is the main reason the student visits the professor?",
         "options": [
-          "The topic is too broad",
-          "The methodology relies solely on online surveys which has limitations",
-          "She needs more time to complete it",
-          "She should not use any surveys"
+          "To discuss his grade in the Environmental Science class",
+          "To explain why he missed several lectures",
+          "To address a problem with his course registration",
+          "To ask for a letter of recommendation"
         ],
-        "answer": 1,
-        "explanation": "교수는 온라인 설문조사만 사용하는 것이 문제라고 지적합니다. 디지털 접근성이 제한된 인구를 놓칠 수 있고 샘플링 편향이 있을 수 있다고 설명합니다."
+        "answer": 2,
+        "explanation": "학생이 수강신청 상황에 대해 논의하기 위해 교수를 찾아오며, 원했던 Environmental Science 클래스가 정원이 찼다는 문제가 대화의 주요 주제입니다."
       },
       {
-        "q": "What research approach does the professor recommend?",
+        "q": "What solution does the professor initially suggest?",
         "options": [
-          "Only qualitative interviews",
-          "Mixed methods including surveys, interviews, and existing literature analysis",
-          "Data analysis alone",
-          "Only peer-reviewed studies"
+          "Opening a new section of the course",
+          "Placing the student on a waitlist",
+          "Giving the student priority registration for next semester",
+          "Allowing the student to audit the course without credit"
         ],
         "answer": 1,
-        "explanation": "교수는 설문조사, 인터뷰, 기존 문헌을 결합하는 혼합 방법(triangulation)을 추천합니다."
+        "explanation": "교수가 먼저 제시하는 해결책은 '대기 명단(waitlist)에 학생을 올려주는 것'입니다. 다른 분반은 그 후에 제시된 두 번째 옵션입니다."
       },
       {
-        "q": "According to the professor, what is the advantage of using triangulation in research?",
+        "q": "Why does the professor recommend registering for both options?",
         "options": [
-          "It saves time",
-          "It ensures more reliable and valid conclusions",
-          "It requires less funding",
-          "It eliminates the need for surveys"
+          "To allow the student to choose the better instructor",
+          "To ensure the student has a guaranteed spot while waiting for his preferred section",
+          "To enable the student to take both courses simultaneously",
+          "To help the student graduate earlier"
         ],
         "answer": 1,
-        "explanation": "'This triangulation approach ensures more reliable conclusions'라고 교수가 명시적으로 설명합니다."
+        "explanation": "교수는 '대기 명단에는 남아있으면서 동시에 저녁 분반에도 등록하라'고 권고함으로써, 학생이 이상적인 분반을 기다리는 동안에도 수강을 보장받을 수 있게 하려는 것입니다."
       }
     ]
   }

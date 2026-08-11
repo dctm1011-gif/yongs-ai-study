@@ -6,16 +6,31 @@
 실제 거래 데이터로 집계한다. 최근 12개월(월별)과 과거 10년(연도별) 두 가지 시야를 만든다.
 추정/보간 없음 - 거래가 없는 달/해는 그 데이터 포인트를 생략한다.
 """
+import json
 import os
 import sys
 import time
 import xml.etree.ElementTree as ET
 from datetime import date
+from pathlib import Path
 
 import requests
 
 ENDPOINT = "https://apis.data.go.kr/1613000/RTMSDataSvcAptTrade/getRTMSDataSvcAptTrade"
-APT_LIST_ENDPOINT = "https://apis.data.go.kr/1613000/ApartBasisInfoService/getApartBasisList"
+RENT_ENDPOINT = "https://apis.data.go.kr/1613000/RTMSDataSvcAptRent/getRTMSDataSvcAptRent"  # 전월세 실거래가 (전세가율용)
+# 세대수 조회는 2단계 API로 구성됨 (data.go.kr에서 상품이 분리돼 있음):
+#   1) 단지 목록: 시군구코드 -> 단지코드+동명 목록 (국토교통부_공동주택 단지 목록제공 서비스)
+#   2) 단지 상세: 단지코드 -> 총세대수 kaptdaCnt (국토교통부_공동주택 기본 정보제공 서비스, V4)
+APT_LIST_ENDPOINT = "https://apis.data.go.kr/1613000/AptListService3/getSigunguAptList3"
+APT_BASIS_ENDPOINT = "https://apis.data.go.kr/1613000/AptBasisInfoServiceV4/getAphusBassInfoV4"
+
+# 단지별 원자료(동/세대수)는 사실상 거의 안 바뀌는 값이라, 시군구코드 단위로 로컬에 캐시해두고 재사용한다.
+# (단지 목록 API는 페이지당 1회, 단지 상세 API는 단지 수만큼 호출 - 매일 재실행하면 일일 트래픽 쿼터를
+#  금방 소진하므로, 한번 받아온 뒤로는 이 파일을 지우기 전까진 재호출하지 않음)
+# 캐시에는 단지 단위 원자료를 그대로 저장 - 동별 총세대수(거래 활발도)와 동별 대단지 비율 둘 다
+# 이 원자료 하나에서 파생시켜서 API를 두 번 타지 않도록 한다.
+COMPLEX_CACHE_PATH = Path(__file__).parent / "dong_complexes_cache.json"
+LARGE_COMPLEX_THRESHOLD = 1000  # 이 세대수 이상이면 "대단지"로 분류
 
 MONTHLY_WINDOW = 12   # 월별 보기: 최근 12개월
 YEARLY_WINDOW_MONTHS = 120  # 연도별 보기: 과거 10년(=120개월)치를 모아서 연 단위로 집계
@@ -68,55 +83,114 @@ MULTI_OWNER_RATIO: dict[str, dict[int, float]] = {
 }
 
 
-def fetch_dong_unit_counts(sigungu_cd: str, service_key: str) -> dict[str, int]:
-    """시군구의 동별 아파트 총세대수 합산.
-    공동주택 기본정보 목록 API(ApartBasisInfoService/getApartBasisList)를 사용.
-    API 실패 또는 데이터 없으면 빈 dict 반환 (거래 회전율 미표시 처리).
+def _load_complex_cache() -> dict:
+    if COMPLEX_CACHE_PATH.exists():
+        try:
+            return json.loads(COMPLEX_CACHE_PATH.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            return {}
+    return {}
+
+
+def _save_complex_cache(cache: dict) -> None:
+    COMPLEX_CACHE_PATH.write_text(json.dumps(cache, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def fetch_dong_complexes(sigungu_cd: str, service_key: str) -> list[dict]:
+    """시군구의 단지별 원자료([{dong, units}, ...])를 받아온다.
+    1) 단지 목록(AptListService3/getSigunguAptList3)으로 그 시군구의 단지코드+동명(as3) 목록을 받고
+    2) 단지 상세(AptBasisInfoServiceV4/getAphusBassInfoV4)에서 단지코드별 총세대수(kaptdaCnt)를 받음.
+    결과는 시군구코드 단위로 로컬 캐시에 저장하고 이후에는 캐시를 재사용한다 (세대수는 거의 안 바뀌고,
+    단지 수만큼 API를 호출하므로 매일 다시 받으면 일일 트래픽 쿼터를 낭비함 - 강제로 다시 받으려면
+    dong_complexes_cache.json에서 해당 시군구코드 키를 지울 것).
+    이 원자료 하나에서 동별 총세대수(거래 활발도용)와 동별 대단지 비율을 둘 다 파생시킨다.
+    API 실패 또는 데이터 없으면 빈 리스트 반환.
     """
-    dong_units: dict[str, int] = {}
+    cache = _load_complex_cache()
+    if sigungu_cd in cache:
+        return cache[sigungu_cd]
+
+    list_items: list[dict] = []
     page_no = 1
     while True:
         try:
             resp = requests.get(APT_LIST_ENDPOINT, params={
                 "serviceKey": service_key,
-                "sigunguCd": sigungu_cd,
+                "sigunguCode": sigungu_cd,
                 "pageNo": page_no,
                 "numOfRows": 1000,
             }, timeout=20)
             resp.raise_for_status()
-            root = ET.fromstring(resp.content)
+            body = resp.json().get("response", {}).get("body", {})
         except Exception as e:
-            print(f"    [!] 공동주택 목록 조회 실패 ({sigungu_cd}): {e}")
-            break
+            print(f"    [!] 공동주택 단지 목록 조회 실패 ({sigungu_cd}): {e}")
+            return []
 
-        result_code = root.findtext(".//resultCode")
-        if result_code not in (None, "00", "000"):
-            print(f"    [!] 공동주택 API 오류 ({sigungu_cd}): {root.findtext('.//resultMsg', '')}")
-            break
-
-        items = root.findall(".//item")
+        items = body.get("items") or []
+        if isinstance(items, dict):  # 결과가 1건이면 list 대신 dict로 오는 경우 방어
+            items = [items]
         if not items:
             break
+        list_items.extend(items)
 
-        for item in items:
-            dong = (item.findtext("bjdongNm") or "").strip()
-            units_raw = (item.findtext("kaptTotFam") or "0").strip()
-            if not dong:
-                continue
-            try:
-                units = int(units_raw)
-                if units > 0:
-                    dong_units[dong] = dong_units.get(dong, 0) + units
-            except ValueError:
-                pass
-
-        total = int(root.findtext(".//totalCount", default="0") or 0)
+        total = int(body.get("totalCount", 0) or 0)
         if page_no * 1000 >= total:
             break
         page_no += 1
         time.sleep(0.1)
 
+    complexes: list[dict] = []
+    for c in list_items:
+        kapt_code = c.get("kaptCode")
+        dong = (c.get("as3") or "").strip()
+        if not kapt_code or not dong:
+            continue
+        try:
+            resp = requests.get(APT_BASIS_ENDPOINT, params={
+                "serviceKey": service_key,
+                "kaptCode": kapt_code,
+            }, timeout=20)
+            resp.raise_for_status()
+            item = resp.json().get("response", {}).get("body", {}).get("item") or {}
+        except Exception as e:
+            print(f"    [!] 단지 상세 조회 실패 ({kapt_code}): {e}")
+            continue
+
+        try:
+            units = int(float(item.get("kaptdaCnt") or 0))
+        except (TypeError, ValueError):
+            continue
+        if units > 0:
+            complexes.append({"dong": dong, "units": units})
+
+    cache[sigungu_cd] = complexes
+    _save_complex_cache(cache)
+    return complexes
+
+
+def fetch_dong_unit_counts(sigungu_cd: str, service_key: str) -> dict[str, int]:
+    """시군구의 동별 아파트 총세대수 합산 (거래 회전율 계산용)."""
+    dong_units: dict[str, int] = {}
+    for c in fetch_dong_complexes(sigungu_cd, service_key):
+        dong_units[c["dong"]] = dong_units.get(c["dong"], 0) + c["units"]
     return dong_units
+
+
+def fetch_dong_large_complex_ratio(sigungu_cd: str, service_key: str) -> dict[str, float]:
+    """시군구의 동별 대단지(세대수 LARGE_COMPLEX_THRESHOLD 이상) 비율(%) - 세대수 기준.
+    분모가 0(단지 정보 없음)인 동은 결과에서 제외.
+    """
+    totals: dict[str, int] = {}
+    large: dict[str, int] = {}
+    for c in fetch_dong_complexes(sigungu_cd, service_key):
+        dong, units = c["dong"], c["units"]
+        totals[dong] = totals.get(dong, 0) + units
+        if units >= LARGE_COMPLEX_THRESHOLD:
+            large[dong] = large.get(dong, 0) + units
+    return {
+        dong: round(large.get(dong, 0) / total * 100, 1)
+        for dong, total in totals.items() if total > 0
+    }
 
 
 def get_molit_api_key() -> str:
@@ -172,6 +246,55 @@ def fetch_trades(lawd_cd: str, deal_ymd: str, service_key: str) -> list[dict]:
             except ValueError:
                 continue
             trades.append({"dealAmount": amount, "umdNm": umd})
+
+        total_count = int(root.findtext(".//totalCount", default="0") or 0)
+        if page_no * 1000 >= total_count:
+            break
+        page_no += 1
+
+    return trades
+
+
+def fetch_rent_trades(lawd_cd: str, deal_ymd: str, service_key: str) -> list[dict]:
+    """단일 시군구코드 + 계약월의 순수 전세 거래 목록(월세 0원인 건만 - 반전세/월세는 제외).
+    summarize_trades와 그대로 호환되도록 보증금을 dealAmount(만원 단위) 키로 반환한다."""
+    trades: list[dict] = []
+    page_no = 1
+    while True:
+        try:
+            resp = requests.get(RENT_ENDPOINT, params={
+                "serviceKey": service_key,
+                "LAWD_CD": lawd_cd,
+                "DEAL_YMD": deal_ymd,
+                "pageNo": page_no,
+                "numOfRows": 1000,
+            }, timeout=20)
+            resp.raise_for_status()
+            root = ET.fromstring(resp.content)
+        except (requests.exceptions.RequestException, ET.ParseError) as e:
+            print(f"[!] 전세 조회 실패 (LAWD_CD={lawd_cd}, DEAL_YMD={deal_ymd}): {e}")
+            break
+
+        result_code = root.findtext(".//resultCode")
+        if result_code not in (None, "00", "000"):
+            result_msg = root.findtext(".//resultMsg", default="")
+            print(f"[!] 전세 API 오류 (LAWD_CD={lawd_cd}, DEAL_YMD={deal_ymd}): {result_code} {result_msg}")
+            break
+
+        items = root.findall(".//item")
+        for item in items:
+            monthly_rent_raw = (item.findtext("monthlyRent") or "0").replace(",", "").strip()
+            if monthly_rent_raw not in ("", "0"):
+                continue  # 월세가 있는 건(반전세/월세)은 제외 - 순수 전세만 집계
+            deposit_raw = (item.findtext("deposit") or "").replace(",", "").strip()
+            umd = (item.findtext("umdNm") or "").strip()
+            if not deposit_raw:
+                continue
+            try:
+                deposit = int(deposit_raw)
+            except ValueError:
+                continue
+            trades.append({"dealAmount": deposit, "umdNm": umd})
 
         total_count = int(root.findtext(".//totalCount", default="0") or 0)
         if page_no * 1000 >= total_count:
@@ -333,83 +456,89 @@ def get_dong_comparison_data(target_date: date, service_key: str) -> list[dict]:
     result = []
 
     for area, cfg in DONG_FOCUS.items():
-        lawd_cd = cfg["lawd_cd"]
+        try:
+            lawd_cd = cfg["lawd_cd"]
 
-        # 120개월 전체 수집
-        trades_by_month: dict[tuple[int, int], list[dict]] = {}
-        for (y, m) in all_months:
-            trades_by_month[(y, m)] = fetch_trades(lawd_cd, f"{y}{m:02d}", service_key)
+            # 120개월 전체 수집
+            trades_by_month: dict[tuple[int, int], list[dict]] = {}
+            for (y, m) in all_months:
+                trades_by_month[(y, m)] = fetch_trades(lawd_cd, f"{y}{m:02d}", service_key)
 
-        # 6개월 집계로 유효 동 결정 (Q1~평균 범위 필터)
-        trades_6m = [t for (y, m), ts in trades_by_month.items() if (y, m) in recent_6_set for t in ts]
-        overall = summarize_trades(trades_6m)
-        if overall is None:
-            continue
-        lo, hi = sorted((overall["q1"], overall["avg"]))
-
-        by_dong_6m: dict[str, list[dict]] = {}
-        for t in trades_6m:
-            by_dong_6m.setdefault(t.get("umdNm", ""), []).append(t)
-
-        valid_dongs: set[str] = set()
-        dong_avg_6m: dict[str, float] = {}
-        for dong, trades in by_dong_6m.items():
-            if len(trades) < DONG_MIN_TRADES:
+            # 6개월 집계로 유효 동 결정 (Q1~평균 범위 필터)
+            trades_6m = [t for (y, m), ts in trades_by_month.items() if (y, m) in recent_6_set for t in ts]
+            overall = summarize_trades(trades_6m)
+            if overall is None:
                 continue
-            summary = summarize_trades(trades)
-            if summary and (lo <= summary["avg"] <= hi):
-                valid_dongs.add(dong)
-                dong_avg_6m[dong] = summary["avg"]
+            lo, hi = sorted((overall["q1"], overall["avg"]))
 
-        if not valid_dongs:
+            by_dong_6m: dict[str, list[dict]] = {}
+            for t in trades_6m:
+                by_dong_6m.setdefault(t.get("umdNm", ""), []).append(t)
+
+            valid_dongs: set[str] = set()
+            dong_avg_6m: dict[str, float] = {}
+            for dong, trades in by_dong_6m.items():
+                if len(trades) < DONG_MIN_TRADES:
+                    continue
+                summary = summarize_trades(trades)
+                if summary and (lo <= summary["avg"] <= hi):
+                    valid_dongs.add(dong)
+                    dong_avg_6m[dong] = summary["avg"]
+
+            if not valid_dongs:
+                continue
+
+            # 동별 월별/연도별 시계열 생성
+            dongs_data = []
+            for dong in sorted(valid_dongs, key=lambda d: dong_avg_6m.get(d, 0)):
+                # 월별: 최근 12개월
+                monthly: list[dict] = []
+                for (y, m) in all_months[-MONTHLY_WINDOW:]:
+                    dong_trades = [t for t in trades_by_month[(y, m)] if t.get("umdNm") == dong]
+                    summary = summarize_trades(dong_trades)
+                    if summary is not None:
+                        monthly.append({"label": f"{m}월", **summary})
+
+                # 연도별: 10년
+                years = sorted({y for (y, m) in all_months})
+                yearly: list[dict] = []
+                for y in years:
+                    dong_trades = [t for (yy, mm), ts in trades_by_month.items() if yy == y for t in ts if t.get("umdNm") == dong]
+                    summary = summarize_trades(dong_trades)
+                    if summary is not None:
+                        yearly.append({"label": f"{y}년", **summary})
+
+                if monthly or yearly:
+                    dongs_data.append({"name": dong, "data": monthly, "yearlyData": yearly})
+
+            if not dongs_data:
+                continue
+
+            # 해당 지역의 연도별 2주택자 비율 데이터 추가 (yearlyData에 있는 연도만)
+            existing_year_labels = {
+                p["label"]
+                for d in dongs_data
+                for p in d.get("yearlyData", [])
+            }
+            ratio_map = MULTI_OWNER_RATIO.get(area, {})
+            multi_owner_ratio = [
+                {"label": f"{y}년", "ratio": ratio_map[y]}
+                for y in sorted(ratio_map.keys())
+                if f"{y}년" in existing_year_labels
+            ] if ratio_map else None
+
+            result.append({
+                "area": area,
+                "title": f"{area} 동별 실거래가 추이",
+                "unit": "단위: 억원",
+                "dongs": dongs_data,
+                **({"multiOwnerRatioByYear": multi_owner_ratio} if multi_owner_ratio else {}),
+            })
+        except Exception as e:
+            # get_all_regions_chart_data와 동일하게, 한 지역이 실패(예: API 429)해도 전체가 죽지 않고
+            # 그 지역만 생략하고 계속 진행 (부분 데이터라도 배포되는 게 스크립트 전체 크래시보다 나음)
+            print(f"[!] {area}: 동별 비교 데이터 조회 실패 - 항목 생략: {e}")
             continue
-
-        # 동별 월별/연도별 시계열 생성
-        dongs_data = []
-        for dong in sorted(valid_dongs, key=lambda d: dong_avg_6m.get(d, 0)):
-            # 월별: 최근 12개월
-            monthly: list[dict] = []
-            for (y, m) in all_months[-MONTHLY_WINDOW:]:
-                dong_trades = [t for t in trades_by_month[(y, m)] if t.get("umdNm") == dong]
-                summary = summarize_trades(dong_trades)
-                if summary is not None:
-                    monthly.append({"label": f"{m}월", **summary})
-
-            # 연도별: 10년
-            years = sorted({y for (y, m) in all_months})
-            yearly: list[dict] = []
-            for y in years:
-                dong_trades = [t for (yy, mm), ts in trades_by_month.items() if yy == y for t in ts if t.get("umdNm") == dong]
-                summary = summarize_trades(dong_trades)
-                if summary is not None:
-                    yearly.append({"label": f"{y}년", **summary})
-
-            if monthly or yearly:
-                dongs_data.append({"name": dong, "data": monthly, "yearlyData": yearly})
-
-        if not dongs_data:
-            continue
-
-        # 해당 지역의 연도별 2주택자 비율 데이터 추가 (yearlyData에 있는 연도만)
-        existing_year_labels = {
-            p["label"]
-            for d in dongs_data
-            for p in d.get("yearlyData", [])
-        }
-        ratio_map = MULTI_OWNER_RATIO.get(area, {})
-        multi_owner_ratio = [
-            {"label": f"{y}년", "ratio": ratio_map[y]}
-            for y in sorted(ratio_map.keys())
-            if f"{y}년" in existing_year_labels
-        ] if ratio_map else None
-
-        result.append({
-            "area": area,
-            "title": f"{area} 동별 실거래가 추이",
-            "unit": "단위: 억원",
-            "dongs": dongs_data,
-            **({"multiOwnerRatioByYear": multi_owner_ratio} if multi_owner_ratio else {}),
-        })
 
     return result
 
@@ -556,13 +685,46 @@ def get_all_regions_chart_data(target_date: date, service_key: str) -> list[dict
             if dong_monthly or dong_yearly:
                 dongs_data.append({"name": dong, "data": dong_monthly, "yearlyData": dong_yearly})
 
-        # 동별 총세대수 조회 (거래 회전율 계산용 — API 실패 시 빈 dict → 앱에서 미표시)
+        # 동별 총세대수 + 대단지 비율 조회 (같은 단지 원자료에서 파생 - API 추가 호출 없음)
+        # 실패(예: API 429)해도 이미 구한 매매 데이터는 살리고 이 부분만 빈 값으로 생략
         dong_unit_counts: dict[str, int] = {}
-        for lawd_cd in _lawd_codes(config):
-            print(f"    세대수 조회 중 ({lawd_cd})...")
-            counts = fetch_dong_unit_counts(lawd_cd, service_key)
-            for dong, units in counts.items():
-                dong_unit_counts[dong] = dong_unit_counts.get(dong, 0) + units
+        dong_large_units: dict[str, int] = {}
+        try:
+            for lawd_cd in _lawd_codes(config):
+                print(f"    세대수 조회 중 ({lawd_cd})...")
+                for c in fetch_dong_complexes(lawd_cd, service_key):
+                    dong_unit_counts[c["dong"]] = dong_unit_counts.get(c["dong"], 0) + c["units"]
+                    if c["units"] >= LARGE_COMPLEX_THRESHOLD:
+                        dong_large_units[c["dong"]] = dong_large_units.get(c["dong"], 0) + c["units"]
+        except Exception as e:
+            print(f"[!] {area}: 세대수/대단지 비율 조회 실패 - 생략: {e}")
+            dong_unit_counts, dong_large_units = {}, {}
+        dong_large_complex_ratio = {
+            dong: round(dong_large_units.get(dong, 0) / total * 100, 1)
+            for dong, total in dong_unit_counts.items() if total > 0
+        }
+
+        # 전세가율 (최근 12개월만 - 매매처럼 10년치까지 볼 필요 없어 API 호출량을 아낌)
+        # 실패해도 이미 구한 매매 데이터는 살리고 이 부분만 빈 값으로 생략
+        rent_monthly_points = []
+        try:
+            for (y, m) in all_months[-MONTHLY_WINDOW:]:
+                deal_ymd = f"{y}{m:02d}"
+                rent_trades: list[dict] = []
+                for lawd_cd in _lawd_codes(config):
+                    rent_trades.extend(fetch_rent_trades(lawd_cd, deal_ymd, service_key))
+                s = summarize_trades(rent_trades)
+                if s:
+                    rent_monthly_points.append({"label": f"{m}월", **s})
+        except Exception as e:
+            print(f"[!] {area}: 전세가율 조회 실패 - 생략: {e}")
+            rent_monthly_points = []
+        trade_median_by_label = {p["label"]: p["median"] for p in monthly_points}
+        jeonse_ratio_points = [
+            {"label": p["label"], "value": round(p["median"] / trade_median_by_label[p["label"]] * 100, 1)}
+            for p in rent_monthly_points
+            if trade_median_by_label.get(p["label"])
+        ]
 
         entry: dict = {
             "area": area,
@@ -577,6 +739,12 @@ def get_all_regions_chart_data(target_date: date, service_key: str) -> list[dict
         }
         if dong_unit_counts:
             entry["dongUnitCounts"] = dong_unit_counts
+        if dong_large_complex_ratio:
+            entry["dongLargeComplexRatio"] = dong_large_complex_ratio
+        if rent_monthly_points:
+            entry["jeonseData"] = rent_monthly_points
+        if jeonse_ratio_points:
+            entry["jeonseRatioData"] = jeonse_ratio_points
         chart_data.append(entry)
 
     return chart_data

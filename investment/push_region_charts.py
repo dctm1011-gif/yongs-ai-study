@@ -63,7 +63,7 @@ set(ref(db, 'investment/columns/{today}/regionCharts'), regionCharts)
     result = subprocess.run(
         ["node", "-e", script],
         cwd=ROOT,
-        capture_output=True, text=True, timeout=30,
+        capture_output=True, encoding="utf-8", errors="replace", timeout=30,
     )
     if result.returncode == 0:
         print(result.stdout.strip())

@@ -12,6 +12,11 @@ function getKSTDateString(): string {
   return kst.toISOString().split('T')[0];
 }
 
+function getKSTDateOffset(offsetDays: number): string {
+  const kst = new Date(Date.now() + 9 * 60 * 60 * 1000 + offsetDays * 86400000);
+  return kst.toISOString().split('T')[0];
+}
+
 export interface DailyTerm {
   term: string;
   fullName: string;
@@ -96,6 +101,9 @@ export interface RegionChartEntry {
   yearlyData: BoxPlotPoint[];
   dongs: { name: string; data: BoxPlotPoint[]; yearlyData: BoxPlotPoint[] }[];
   dongUnitCounts?: Record<string, number>; // 동별 총 아파트 세대수 (거래 회전율 계산용)
+  dongLargeComplexRatio?: Record<string, number>; // 동별 대단지(1000세대 이상) 비율(%) - 세대수 기준
+  jeonseData?: BoxPlotPoint[]; // 최근 12개월 전세 보증금 분포(억원, 순수 전세만)
+  jeonseRatioData?: { label: string; value: number }[]; // 최근 12개월 전세가율(%) = 전세 중앙값 / 매매 중앙값 * 100
 }
 
 const BOOKMARKS_KEY = 'investment_bookmarks';
@@ -207,6 +215,23 @@ function getMockInvestmentColumns(): InvestmentColumn[] {
   ];
 }
 
+async function fetchFallbackRegionCharts(db: ReturnType<typeof getDatabase>): Promise<any[]> {
+  for (let i = 1; i <= 7; i++) {
+    const date = getKSTDateOffset(-i);
+    try {
+      const snap = await get(ref(db, `investment/columns/${date}/regionCharts`));
+      if (snap.exists()) {
+        const charts = snap.val();
+        if (Array.isArray(charts) && charts.length > 0) {
+          console.log(`[useInvestmentSync] regionCharts fallback: ${date}`);
+          return charts;
+        }
+      }
+    } catch {}
+  }
+  return [];
+}
+
 export function useInvestmentSync() {
   const [columns, setColumns] = useState<InvestmentColumn[]>([]);
   const [termOfDay, setTermOfDay] = useState<DailyTerm | null>(null);
@@ -241,7 +266,7 @@ export function useInvestmentSync() {
 
     const unsubscribe = onValue(
       columnsRef,
-      snapshot => {
+      async snapshot => {
         if (snapshot.exists()) {
           const data = snapshot.val();
           if (data.columns && Array.isArray(data.columns)) {
@@ -249,7 +274,10 @@ export function useInvestmentSync() {
             setTermOfDay(data.termOfDay || null);
             setNewsArticles(data.newsArticles || []);
             setDongCharts(injectRatioFallback(data.dongCharts || []));
-            setRegionCharts(data.regionCharts || []);
+            const regionChartsData = (Array.isArray(data.regionCharts) && data.regionCharts.length > 0)
+              ? data.regionCharts
+              : await fetchFallbackRegionCharts(db);
+            setRegionCharts(regionChartsData);
             setTaxPolicySummary(data.taxPolicySummary || null);
             setJongbuseSummary(data.jongbuseSummary || null);
             setLastSyncTime(new Date(data.timestamp || Date.now()));
@@ -284,7 +312,10 @@ export function useInvestmentSync() {
         setTermOfDay(data.termOfDay || null);
         setNewsArticles(data.newsArticles || []);
         setDongCharts(injectRatioFallback(data.dongCharts || []));
-        setRegionCharts(data.regionCharts || []);
+        const regionChartsData = (Array.isArray(data.regionCharts) && data.regionCharts.length > 0)
+          ? data.regionCharts
+          : await fetchFallbackRegionCharts(db);
+        setRegionCharts(regionChartsData);
         setTaxPolicySummary(data.taxPolicySummary || null);
         setJongbuseSummary(data.jongbuseSummary || null);
         setLastSyncTime(new Date(data.timestamp || Date.now()));

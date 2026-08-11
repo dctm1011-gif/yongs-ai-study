@@ -1886,5 +1886,65 @@
     "explanation": "The emission of light by a substance when heated to a high temperature, commonly seen in incandescent light bulbs.",
     "tip": "물리학이나 과학 관련 토론에서 사용되는 학술 용어",
     "emoji": "💡"
+  },
+  {
+    "id": "ebullience",
+    "word": "ebullience",
+    "pos": "noun",
+    "date": "2026-08-12",
+    "meaning": "넘치는 열정, 환희",
+    "example_ko": "그녀가 우승했을 때의 넘치는 기쁨은 전염성이 있었다",
+    "example_en": "Her ebullience was contagious when she won the championship",
+    "explanation": "A state of lively or enthusiastic joy; exuberant and bubbling over with excitement and energy",
+    "tip": "Synonym: exuberance (거의 같은 의미). Antonym: apathy, despondency. 'Ebullient'(형용사)와 구분 - ebullience는 그 상태 자체를 명사로 표현",
+    "emoji": "🎉"
+  },
+  {
+    "id": "recusant",
+    "word": "recusant",
+    "pos": "noun/adjective",
+    "date": "2026-08-12",
+    "meaning": "거부하는 사람, 반항적인",
+    "example_ko": "그 반항적인 직원은 새로운 회사 정책을 따르기를 거부했다",
+    "example_en": "The recusant employee refused to follow the new company policy",
+    "explanation": "A person who refuses to obey an order or authority; stubborn refusal to comply with a rule or law",
+    "tip": "Synonym: defiant, rebellious (하지만 recusant는 더 formal하고 법적/종교적 거부를 암시). Antonym: compliant, obedient. Historically: 16세기 영국에서 천주교 신자들이 신교식 예배를 거부하는 것을 recusancy라 함",
+    "emoji": "🚫"
+  },
+  {
+    "id": "pellucidity",
+    "word": "pellucidity",
+    "pos": "noun",
+    "date": "2026-08-12",
+    "meaning": "명확함, 투명성, 이해하기 쉬움",
+    "example_ko": "그녀의 글의 명확함이 복잡한 이론을 모두에게 이해하기 쉽게 만들었다",
+    "example_en": "The pellucidity of her writing made the complex theory accessible to everyone",
+    "explanation": "The quality of being clear, transparent, and easily understood; clarity of expression or thought",
+    "tip": "Synonym: clarity, lucidity (lucidity는 정신의 명확함을 더 강조). Antonym: obscurity, ambiguity. 'Pellucid'(형용사)가 원형 - 라틴어 pellucidus에서 유래",
+    "emoji": "💎"
+  },
+  {
+    "id": "contumacious",
+    "word": "contumacious",
+    "pos": "adjective",
+    "date": "2026-08-12",
+    "meaning": "고집 센, 복종하지 않는, 반항적인",
+    "example_ko": "그 고집 센 증인은 판사의 질문에 대답하기를 거부했다",
+    "example_en": "The contumacious witness refused to answer the judge's questions",
+    "explanation": "Stubbornly or willfully disobedient; characterized by rebellious resistance to authority",
+    "tip": "Synonym: obstinate, insubordinate (insubordinate는 군대나 조직 내에서 더 쓰임). Antonym: compliant, docile. 'Contumacy'(명사) - 법정에서 자주 사용되는 용어",
+    "emoji": "😠"
+  },
+  {
+    "id": "excoriate",
+    "word": "excoriate",
+    "pos": "verb",
+    "date": "2026-08-12",
+    "meaning": "심하게 비난하다, 피부를 벗기다",
+    "example_ko": "그 비평가는 리뷰에서 배우의 연기를 심하게 비난했다",
+    "example_en": "The critic excoriated the actor's performance in the review",
+    "explanation": "To severely criticize or censure someone harshly; or literally, to strip or damage skin",
+    "tip": "Synonym: condemn, denounce (덜 극단적). Antonym: praise, commend. Literal meaning(피부): abrade, chafe와 유사하지만 excoriate는 더 심각함. 라틴어 excoriare에서 유래",
+    "emoji": "⚡"
   }
 ]
