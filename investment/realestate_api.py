@@ -706,25 +706,48 @@ def get_all_regions_chart_data(target_date: date, service_key: str) -> list[dict
 
         # 전세가율 (최근 12개월만 - 매매처럼 10년치까지 볼 필요 없어 API 호출량을 아낌)
         # 실패해도 이미 구한 매매 데이터는 살리고 이 부분만 빈 값으로 생략
-        rent_monthly_points = []
+        rent_trades_by_month: dict[tuple[int, int], list[dict]] = {}
         try:
             for (y, m) in all_months[-MONTHLY_WINDOW:]:
                 deal_ymd = f"{y}{m:02d}"
-                rent_trades: list[dict] = []
+                raw_rent: list[dict] = []
                 for lawd_cd in _lawd_codes(config):
-                    rent_trades.extend(fetch_rent_trades(lawd_cd, deal_ymd, service_key))
-                s = summarize_trades(rent_trades)
-                if s:
-                    rent_monthly_points.append({"label": f"{m}월", **s})
+                    raw_rent.extend(fetch_rent_trades(lawd_cd, deal_ymd, service_key))
+                rent_trades_by_month[(y, m)] = raw_rent
         except Exception as e:
             print(f"[!] {area}: 전세가율 조회 실패 - 생략: {e}")
-            rent_monthly_points = []
+            rent_trades_by_month = {}
+
+        rent_monthly_points = []
+        for (y, m) in all_months[-MONTHLY_WINDOW:]:
+            s = summarize_trades(rent_trades_by_month.get((y, m), []))
+            if s:
+                rent_monthly_points.append({"label": f"{m}월", **s})
         trade_median_by_label = {p["label"]: p["median"] for p in monthly_points}
         jeonse_ratio_points = [
             {"label": p["label"], "value": round(p["median"] / trade_median_by_label[p["label"]] * 100, 1)}
             for p in rent_monthly_points
             if trade_median_by_label.get(p["label"])
         ]
+
+        # 동별 전세가율 (최근 12개월 전세 중앙값 / 최근 12개월 매매 중앙값 * 100)
+        # 이미 위에서 받은 매매/전세 원자료를 재사용 - API 추가 호출 없음.
+        # 전세 표본이 너무 적은(2건 미만) 동은 노이즈로 보고 제외.
+        dong_jeonse_ratio: dict[str, float] = {}
+        all_rent_12m = [t for ts in rent_trades_by_month.values() for t in ts]
+        for dong in valid_dongs:
+            dong_rent = [t for t in all_rent_12m if t.get("umdNm", "").strip() == dong]
+            rent_summary = summarize_trades(dong_rent)
+            if not rent_summary or rent_summary["count"] < 2:
+                continue
+            dong_trade_12m = [
+                t for (y, m) in all_months[-MONTHLY_WINDOW:] for t in trades_by_month[(y, m)]
+                if t.get("umdNm", "").strip() == dong
+            ]
+            trade_summary = summarize_trades(dong_trade_12m)
+            if not trade_summary or trade_summary["median"] <= 0:
+                continue
+            dong_jeonse_ratio[dong] = round(rent_summary["median"] / trade_summary["median"] * 100, 1)
 
         entry: dict = {
             "area": area,
@@ -745,6 +768,8 @@ def get_all_regions_chart_data(target_date: date, service_key: str) -> list[dict
             entry["jeonseData"] = rent_monthly_points
         if jeonse_ratio_points:
             entry["jeonseRatioData"] = jeonse_ratio_points
+        if dong_jeonse_ratio:
+            entry["dongJeonseRatio"] = dong_jeonse_ratio
         chart_data.append(entry)
 
     return chart_data

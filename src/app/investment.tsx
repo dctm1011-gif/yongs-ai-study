@@ -1164,7 +1164,7 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
 
   // ── 비교 모드 상태 ──
   const [compareDongs, setCompareDongs] = useState<{ area: string; dongName: string; si: string; label?: string }[]>([]);
-  const [compareMetric, setCompareMetric] = useState<'price' | 'ratio' | 'turnover' | 'largeComplex'>('price');
+  const [compareMetric, setCompareMetric] = useState<'price' | 'ratio' | 'turnover' | 'largeComplex' | 'jeonse'>('price');
 
   const toggleCompareDong = useCallback((area: string, dongName: string, si: string) => {
     setCompareDongs(prev => {
@@ -1243,6 +1243,17 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
     return compareDongs.flatMap(({ area, dongName }) => {
       const entry = regionCharts.find(r => r.area === area);
       const ratio = entry?.dongLargeComplexRatio?.[dongName];
+      if (ratio === undefined) return [];
+      const shortArea = entry!.gu ?? entry!.si.replace('시', '');
+      return [{ label: dongName, sub: shortArea, value: ratio }];
+    });
+  }, [compareDongs, regionCharts]);
+
+  // 동별 전세가율(%) - dongJeonseRatio 없는 동(전세 표본 부족 등)은 제외
+  const compareJeonseBarData = useMemo<{ label: string; sub: string; value: number }[]>(() => {
+    return compareDongs.flatMap(({ area, dongName }) => {
+      const entry = regionCharts.find(r => r.area === area);
+      const ratio = entry?.dongJeonseRatio?.[dongName];
       if (ratio === undefined) return [];
       const shortArea = entry!.gu ?? entry!.si.replace('시', '');
       return [{ label: dongName, sub: shortArea, value: ratio }];
@@ -1486,17 +1497,18 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
             </View>
           )}
 
-          {/* 서브탭: 아파트 가격 / 다주택자 비율 */}
+          {/* 서브탭: 아파트 가격 / 다주택자 비율 / 거래 활발도 / 대단지 비율 / 전세가율 */}
           {compareDongs.length >= 2 && (
-            <View style={{ flexDirection: 'row', gap: 6, marginBottom: 12 }}>
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginBottom: 12 }}>
               {([
                 { key: 'price',        label: '아파트 가격' },
                 { key: 'ratio',        label: '다주택자 비율' },
                 { key: 'turnover',     label: '거래 활발도' },
                 { key: 'largeComplex', label: '대단지 비율' },
-              ] as { key: 'price' | 'ratio' | 'turnover' | 'largeComplex'; label: string }[]).map(tab => (
+                { key: 'jeonse',       label: '전세가율' },
+              ] as { key: 'price' | 'ratio' | 'turnover' | 'largeComplex' | 'jeonse'; label: string }[]).map(tab => (
                 <TouchableOpacity key={tab.key} onPress={() => setCompareMetric(tab.key)}
-                  style={{ flex: 1, paddingVertical: 7, borderRadius: 8, alignItems: 'center',
+                  style={{ minWidth: '31%', flexGrow: 1, paddingVertical: 7, borderRadius: 8, alignItems: 'center',
                     backgroundColor: compareMetric === tab.key ? '#0095f6' : '#fafafa',
                     borderWidth: 1, borderColor: compareMetric === tab.key ? '#0095f6' : '#dbdbdb' }}>
                   <Text style={{ fontSize: 11, fontWeight: '600', color: compareMetric === tab.key ? '#fff' : '#8e8e8e' }}>
@@ -1544,6 +1556,18 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
               color="#8b5cf6"
               valueSuffix="%"
             />
+          ) : compareMetric === 'jeonse' && compareJeonseBarData.length >= 1 ? (
+            <HorizontalBarChart
+              data={compareJeonseBarData}
+              title="동별 전세가율 (최근 12개월 전세/매매 중앙값)"
+              unit="단위: % · 국토부 실거래가(전세 표본 2건 미만인 동은 제외)"
+              color="#10b981"
+              valueSuffix="%"
+            />
+          ) : compareMetric === 'jeonse' ? (
+            <View style={{ alignItems: 'center', paddingVertical: 36 }}>
+              <Text style={{ fontSize: 13, color: '#8e8e8e' }}>선택한 동에 전세 거래 표본이 부족해 표시할 수 없어요</Text>
+            </View>
           ) : compareMetric === 'turnover' ? (
             <View style={{ paddingVertical: 20, paddingHorizontal: 4, gap: 10 }}>
               <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
