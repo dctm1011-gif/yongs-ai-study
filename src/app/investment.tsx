@@ -852,6 +852,23 @@ interface RegionBookmark {
 // 2026년 7월 기준 중앙값 6억~8억 동 (중앙값 오름차순)
 const DEFAULT_REGION_BOOKMARKS: RegionBookmark[] = [];
 
+// 오늘 기준 실제 달력상 "최근 N개월" 라벨 집합 ("N월" 형식).
+// dong.data는 거래 0건인 달이 아예 빠지는 희소 배열이라, 뒤에서부터 slice(-N)하면
+// 실제로는 그보다 훨씬 긴 기간(거래 뜸한 동일수록 더)을 "N개월"로 착각하게 됨 —
+// 반드시 라벨로 걸러서 진짜 달력 월인지 확인해야 함 (12개월 롤링 창 안에서만 쓰므로 월 중복 없음).
+function recentMonthLabels(n: number): Set<string> {
+  const now = new Date();
+  let y = now.getFullYear();
+  let m = now.getMonth() + 1;
+  const labels = new Set<string>();
+  for (let i = 0; i < n; i++) {
+    labels.add(`${m}월`);
+    m -= 1;
+    if (m === 0) { m = 12; y -= 1; }
+  }
+  return labels;
+}
+
 const REGION_RATIO_LABELS = ["'16","'17","'18","'19","'20","'21","'22","'23","'24"];
 
 // KOSIS 주택소유통계 (시군구 단위) - 2주택 이상 소유 가구 비율 (%)
@@ -1221,6 +1238,7 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
   // 동별 연간 거래 회전율 (%) = 6개월 거래건수×2 / 총세대수 × 100
   // dongUnitCounts 없는 동은 제외 (부정확한 데이터 미표시)
   const compareTurnoverBarData = useMemo<{ label: string; sub: string; value: number }[]>(() => {
+    const recent6 = recentMonthLabels(6);
     return compareDongs.flatMap(({ area, dongName }) => {
       const entry = regionCharts.find(r => r.area === area);
       if (!entry?.dongUnitCounts) return [];
@@ -1228,8 +1246,11 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
       if (!totalUnits || totalUnits === 0) return [];
       const dong = entry.dongs.find(d => d.name === dongName);
       if (!dong || dong.data.length === 0) return [];
-      const last6 = dong.data.slice(-6);
-      const trades6m = last6.reduce((s, p) => s + (p.count ?? 0), 0);
+      // 배열 끝에서 6개를 자르지 않고, 실제 달력상 최근 6개월 라벨과 매칭되는 것만 합산
+      // (거래 0건인 달은 배열에 없으므로 자동으로 0 취급됨 - 그게 맞는 값)
+      const trades6m = dong.data
+        .filter(p => recent6.has(p.label))
+        .reduce((s, p) => s + (p.count ?? 0), 0);
       if (trades6m === 0) return [];
       const annualRate = Math.round((trades6m * 2 / totalUnits) * 1000) / 10; // 소수 1자리
       const shortArea = entry.gu ?? entry.si.replace('시', '');
