@@ -1,195 +1,117 @@
 {
   "date": "2026-08-12",
   "reading": {
-    "title": "Climate Change and Ocean Acidification",
-    "passage": "Ocean acidification, a consequence of increased atmospheric carbon dioxide, represents one of the most pressing environmental challenges of the twenty-first century. When CO2 dissolves in seawater, it forms carbonic acid, which lowers the pH level and reduces the availability of carbonate ions essential for shell-forming organisms. This phenomenon has accelerated dramatically over the past two centuries, with oceanic pH declining by approximately 0.1 units since the Industrial Revolution. Marine organisms such as pteropods, corals, and mollusks face severe threats as their calcium carbonate shells and skeletons become increasingly difficult to construct and maintain in acidified waters. Research indicates that if current emission rates persist, ocean pH could decline by an additional 0.4 units by 2100, potentially causing catastrophic disruptions to marine ecosystems. Furthermore, ocean acidification interferes with the sensory systems of larval fish, impairing their ability to locate food and avoid predators. The cumulative effects of these physiological disruptions could trigger cascading ecological consequences throughout food webs, ultimately affecting fisheries and human populations dependent on marine resources.",
-    "vocabulary": [
-      {
-        "word": "acidification",
-        "meaning_ko": "산성화; 산 성질이 증가하는 과정"
-      },
-      {
-        "word": "carbonate ions",
-        "meaning_ko": "탄산염 이온; 패류의 껍질을 형성하는 데 필수적인 물질"
-      },
-      {
-        "word": "pteropods",
-        "meaning_ko": "익족류(번들링); 작은 해양 생물로 많은 해양 동물의 먹이"
-      },
-      {
-        "word": "cascade",
-        "meaning_ko": "연쇄적으로 일어나다; 급류처럼 흘러내리다"
-      },
-      {
-        "word": "larval",
-        "meaning_ko": "유충의; 성체가 되기 전 발달 단계의"
-      },
-      {
-        "word": "emit",
-        "meaning_ko": "배출하다; 방출하다"
-      },
-      {
-        "word": "physiological",
-        "meaning_ko": "생리적인; 신체 기능과 관련된"
-      }
-    ],
+    "title": "Climate Change and Biodiversity",
+    "passage": "Climate change represents one of the most significant threats to global biodiversity. Rising temperatures alter ecosystems, forcing species to migrate or adapt rapidly. Coral reefs, rainforests, and polar regions face unprecedented pressure. Scientists warn that without immediate action, we could lose up to 50% of species by 2100. Conservation efforts and renewable energy adoption are essential strategies to mitigate these impacts and preserve Earth's biological diversity for future generations.",
     "questions": [
       {
-        "q": "According to the passage, how does increased atmospheric CO2 directly affect ocean chemistry?",
+        "q": "According to the passage, what is the main threat to global biodiversity?",
         "options": [
-          "It increases the availability of carbonate ions needed for shell formation",
-          "It forms carbonic acid that lowers pH and reduces carbonate ion availability",
-          "It raises ocean temperatures, which dissolves calcium carbonate naturally",
-          "It promotes the growth of algae that neutralizes acidic conditions"
+          "A) Pollution and waste",
+          "B) Climate change",
+          "C) Overfishing",
+          "D) Deforestation"
         ],
         "answer": 1,
-        "explanation": "지문의 두 번째 문장에서 'When CO2 dissolves in seawater, it forms carbonic acid, which lowers the pH level and reduces the availability of carbonate ions'라고 명시되어 있습니다."
+        "explanation": "본문에서 'Climate change represents one of the most significant threats to global biodiversity'라고 명시되어 있습니다."
       },
       {
-        "q": "What can be inferred from the passage about the relationship between ocean acidification and marine food webs?",
+        "q": "Which ecosystems are mentioned as facing unprecedented pressure?",
         "options": [
-          "Food webs are unaffected by pH changes in water",
-          "Only predatory fish are impacted by ocean acidification",
-          "Disruptions to individual organisms can have widespread ecosystem effects",
-          "Ocean acidification actually strengthens marine food web structures"
+          "A) Mountains and deserts",
+          "B) Grasslands and lakes",
+          "C) Coral reefs, rainforests, and polar regions",
+          "D) Urban and agricultural areas"
         ],
         "answer": 2,
-        "explanation": "지문 마지막 부분에서 'cascading ecological consequences throughout food webs'와 'ultimately affecting fisheries and human populations'이라고 언급하며, 개별 생물의 생리적 장애가 먹이사슬 전체에 영향을 미칠 수 있음을 시사합니다."
+        "explanation": "본문의 'Coral reefs, rainforests, and polar regions face unprecedented pressure'에서 답을 찾을 수 있습니다."
       },
       {
-        "q": "The word 'interferes' in the passage is closest in meaning to",
+        "q": "What is suggested as an essential strategy to mitigate climate change impacts?",
         "options": [
-          "enhances or improves",
-          "disrupts or hinders normal function",
-          "interacts peacefully with",
-          "completely eliminates"
+          "A) Increasing industrial production",
+          "B) Conservation efforts and renewable energy adoption",
+          "C) Building more cities",
+          "D) Expanding agriculture"
         ],
         "answer": 1,
-        "explanation": "'Interferes with'는 '방해하다, 해를 끼치다'는 의미로, 문맥상 해양생물의 감각 체계에 부정적 영향을 미치는 것을 나타냅니다. 'disrupts or hinders'가 가장 적절한 동의어입니다."
-      },
-      {
-        "q": "Why does the author provide specific information about the decline in ocean pH since the Industrial Revolution?",
-        "options": [
-          "To show that acidification is a recent phenomenon caused only by modern pollution",
-          "To demonstrate the severity and acceleration of ocean acidification over time",
-          "To prove that natural pH fluctuations are more significant than human impacts",
-          "To suggest that the problem will resolve itself within a few decades"
-        ],
-        "answer": 1,
-        "explanation": "저자는 '지난 2세기 동안 pH가 0.1 단위 감소했다'는 구체적 수치를 제시함으로써 산성화가 얼마나 가파르게 진행되고 있는지를 강조하여 문제의 심각성을 입증하고 있습니다."
+        "explanation": "'Conservation efforts and renewable energy adoption are essential strategies'라는 문장에서 정답을 확인할 수 있습니다."
       }
     ]
   },
   "writing": {
-    "sentences": [
-      {
-        "original": "Ocean acidification, a consequence of increased atmospheric carbon dioxide, represents one of the most pressing environmental challenges of the twenty-first century.",
-        "paraphrase": "The most urgent ecological issue facing the twenty-first century is ocean acidification, which results from rising levels of atmospheric CO2.",
-        "tip": "주어-동사 구조 재배열 및 명사구 문장 시작으로 변환하여 주제를 강조"
-      },
-      {
-        "original": "When CO2 dissolves in seawater, it forms carbonic acid, which lowers the pH level and reduces the availability of carbonate ions essential for shell-forming organisms.",
-        "paraphrase": "Shell-forming organisms depend on carbonate ions, but when seawater absorbs CO2, the resulting carbonic acid both lowers pH and depletes these essential ions.",
-        "tip": "수동→능동 변환 및 인과관계를 명확히 하는 구조로 변형하여 논리성 강화"
-      },
-      {
-        "original": "Research indicates that if current emission rates persist, ocean pH could decline by an additional 0.4 units by 2100, potentially causing catastrophic disruptions to marine ecosystems.",
-        "paraphrase": "Should present emission levels continue unchanged, scientists predict that the ocean pH will drop approximately 0.4 units by 2100, with potentially catastrophic consequences for marine life.",
-        "tip": "조건부 문장 구조 변경 및 'Research indicates'를 'Scientists predict'로 치환하여 표현 다양화"
-      },
-      {
-        "original": "Marine organisms such as pteropods, corals, and mollusks face severe threats as their calcium carbonate shells and skeletons become increasingly difficult to construct and maintain in acidified waters.",
-        "paraphrase": "In acidified oceans, pteropods, corals, and mollusks struggle to build and preserve their calcium carbonate structures, facing unprecedented threats to their survival.",
-        "tip": "구체적 예시를 전치사구로 문두에 배치하고 수동 표현을 능동으로 변환하여 동적 표현 강화"
-      },
-      {
-        "original": "The cumulative effects of these physiological disruptions could trigger cascading ecological consequences throughout food webs, ultimately affecting fisheries and human populations dependent on marine resources.",
-        "paraphrase": "These combined physiological damages may initiate a chain reaction across marine food webs, eventually impacting human communities and fisheries that rely on ocean resources.",
-        "tip": "추상적 표현 'cascading consequences'를 'chain reaction'으로 구체화하고 관계절 문장 단순화"
-      }
+    "prompt": "Do you agree or disagree with the statement: 'Remote work should be the primary work model for all companies'?",
+    "structure": {
+      "intro": "명확한 입장 표현: 동의 또는 반대 의견을 직접 서술하고, 2-3가지 주요 이유를 미리 언급합니다.",
+      "body1": "첫 번째 주요 이유와 구체적 예시 제시: 원격근무의 장점(유연성, 비용절감) 또는 단점(소통 어려움, 업무 감시)을 구체적으로 설명합니다.",
+      "body2": "두 번째 주요 이유와 근거 제시: 기업의 생산성, 직원 만족도, 또는 특정 산업의 특수성 등을 논증합니다.",
+      "conclusion": "앞서 제시한 주요 이유들을 요약하고, 최종 입장을 재강조하며 미래 전망을 제시합니다."
+    },
+    "useful_phrases": [
+      "In my opinion,",
+      "I strongly believe that...",
+      "Furthermore,",
+      "Additionally,",
+      "For example,",
+      "On the other hand,",
+      "However,",
+      "In conclusion,",
+      "Therefore,",
+      "This demonstrates that..."
     ]
   },
-  "writing_prompt": {
-    "topic": "Artificial Intelligence Regulation",
-    "task": "Some people believe that artificial intelligence should be heavily regulated by government. Others argue that regulation stifles innovation and that industry self-regulation is sufficient. Which position do you agree with and why? Support your answer with specific reasons and examples."
-  },
   "speaking": {
-    "prompt": "Some students prefer to study alone. Others prefer to study in groups. Which do you prefer and why? Include specific reasons and details.",
-    "model_sentences": [
-      "Personally, I prefer studying in groups because I find that collaborative learning helps me understand complex concepts more deeply.",
-      "When I study with peers, we can discuss different perspectives and explain difficult ideas to each other, which is more effective than learning passively from a textbook alone.",
-      "For example, last semester I struggled with organic chemistry until I joined a study group, and my friends' explanations made the material much clearer.",
-      "Additionally, group study keeps me motivated and accountable because we set goals together and encourage each other to stay on track.",
-      "So I definitely believe that studying with others is the better approach for academic success."
+    "prompt": "Some people prefer working in an office environment with colleagues. Others prefer working remotely from home. Which work environment do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer...",
+      "One reason is that...",
+      "Another advantage/disadvantage is...",
+      "For example,",
+      "This is important because...",
+      "Therefore, I believe..."
+    ],
+    "sample_points": [
+      "사무실 근무의 장점: 동료와의 직접 소통, 팀 협업 강화, 일-생활 구분이 명확함. 예시: 회의나 브레인스토밍이 더 효과적입니다.",
+      "원격근무의 장점: 출퇴근 시간 절감, 개인 환경에서의 집중력 향상, 시간 활용의 자유도. 예시: 아침시간을 가족과 함께 보낼 수 있고 점심시간도 유연하게 조정할 수 있습니다."
     ]
   },
   "listening": {
-    "title": "Student-Professor Conversation: Course Registration Issue",
+    "title": "대학 도서관 오리엔테이션",
     "type": "conversation",
-    "script": "Student: Good morning, Professor. I was hoping to discuss my course registration situation. I wanted to enroll in your Environmental Science class for next semester, but unfortunately, it filled up before I could add it. Professor: I see. That's frustrating. Unfortunately, the section you're interested in has reached capacity. However, I can place you on the waitlist if you'd like. Student: On the waitlist? How does that typically work? Professor: Well, if a student drops the course, your name moves up the list automatically. There's a reasonable chance you'll get in since some students usually drop by the start of the semester. Student: That sounds promising. But what if I don't get in through the waitlist? Is there any other option? Professor: There's actually another section offered on Tuesday and Thursday evenings. It covers the same material and has the same requirements. If the waitlist doesn't work out, that could be a viable alternative. Student: Tuesday and Thursday evenings? That's actually perfect for my schedule. Should I register for that section now? Professor: I'd recommend registering for both options. Stay on the waitlist for my morning section, but secure your spot in the evening section immediately. That way, you're guaranteed a place in the course. Student: That's really helpful advice. Thank you so much, Professor. I'll do that right away.",
-    "vocabulary": [
-      {
-        "word": "capacity",
-        "meaning_ko": "최대 수용량; 가득 참"
-      },
-      {
-        "word": "waitlist",
-        "meaning_ko": "대기 명단; 순서를 기다리는 목록"
-      },
-      {
-        "word": "viable",
-        "meaning_ko": "실행 가능한; 실용적인"
-      },
-      {
-        "word": "enroll",
-        "meaning_ko": "등록하다; 입학하다"
-      },
-      {
-        "word": "section",
-        "meaning_ko": "분반; 같은 과목의 서로 다른 강의 시간"
-      },
-      {
-        "word": "reach capacity",
-        "meaning_ko": "정원에 도달하다; 가득 차다"
-      },
-      {
-        "word": "secure",
-        "meaning_ko": "확보하다; 보장하다"
-      }
-    ],
+    "script": "Librarian: Welcome to our university library. I'm happy to help you get oriented. Student: Thank you. This is my first time here, and I'm a bit overwhelmed by the size. Librarian: That's completely normal. Let me give you a quick overview. We have five floors. The first floor has our circulation desk and computers for catalog searches. The second and third floors contain our main book collection organized by the Dewey Decimal System. The fourth floor is dedicated to journals, databases, and research materials. Finally, the fifth floor has quiet study areas and private research rooms available by reservation. Student: Wow, that's helpful. How do I access online databases? Librarian: You can access them from any computer on campus using your student ID. We also have a mobile app that provides 24-hour access from anywhere. Many students find this very convenient for researching from home. Student: Excellent. One more question—are there any workshops available for research skills? Librarian: Yes, we offer free workshops every Wednesday at 3 PM covering topics like advanced search techniques and citation management. I highly recommend attending at least one.",
     "questions": [
       {
-        "q": "What is the main reason the student visits the professor?",
+        "q": "What is the main purpose of this conversation?",
         "options": [
-          "To discuss his grade in the Environmental Science class",
-          "To explain why he missed several lectures",
-          "To address a problem with his course registration",
-          "To ask for a letter of recommendation"
-        ],
-        "answer": 2,
-        "explanation": "학생이 수강신청 상황에 대해 논의하기 위해 교수를 찾아오며, 원했던 Environmental Science 클래스가 정원이 찼다는 문제가 대화의 주요 주제입니다."
-      },
-      {
-        "q": "What solution does the professor initially suggest?",
-        "options": [
-          "Opening a new section of the course",
-          "Placing the student on a waitlist",
-          "Giving the student priority registration for next semester",
-          "Allowing the student to audit the course without credit"
+          "A) To discuss library pricing",
+          "B) To introduce a new student to library facilities and services",
+          "C) To schedule a research appointment",
+          "D) To solve a book cataloging problem"
         ],
         "answer": 1,
-        "explanation": "교수가 먼저 제시하는 해결책은 '대기 명단(waitlist)에 학생을 올려주는 것'입니다. 다른 분반은 그 후에 제시된 두 번째 옵션입니다."
+        "explanation": "사서가 새로운 학생을 위해 도서관 시설과 서비스를 소개하고 있습니다. 이것이 대화의 주된 목적입니다."
       },
       {
-        "q": "Why does the professor recommend registering for both options?",
+        "q": "On which floor can students find quiet study areas and private research rooms?",
         "options": [
-          "To allow the student to choose the better instructor",
-          "To ensure the student has a guaranteed spot while waiting for his preferred section",
-          "To enable the student to take both courses simultaneously",
-          "To help the student graduate earlier"
+          "A) Second floor",
+          "B) Third floor",
+          "C) Fourth floor",
+          "D) Fifth floor"
+        ],
+        "answer": 3,
+        "explanation": "사서의 설명에서 'Finally, the fifth floor has quiet study areas and private research rooms available by reservation'라고 명시되어 있습니다."
+      },
+      {
+        "q": "How often are research skills workshops offered?",
+        "options": [
+          "A) Every Monday",
+          "B) Every Wednesday",
+          "C) Twice a week",
+          "D) Only on request"
         ],
         "answer": 1,
-        "explanation": "교수는 '대기 명단에는 남아있으면서 동시에 저녁 분반에도 등록하라'고 권고함으로써, 학생이 이상적인 분반을 기다리는 동안에도 수강을 보장받을 수 있게 하려는 것입니다."
+        "explanation": "사서가 'we offer free workshops every Wednesday at 3 PM'이라고 언급했습니다."
       }
     ]
   }
