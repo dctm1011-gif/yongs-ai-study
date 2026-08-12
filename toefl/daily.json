@@ -1,178 +1,114 @@
 {
   "date": "2026-08-13",
   "reading": {
-    "title": "Microbial Communication and Quorum Sensing",
-    "passage": "Microorganisms, despite their microscopic size, exhibit sophisticated communication systems that coordinate complex behaviors across populations. Quorum sensing represents one of the most remarkable examples of this phenomenon, wherein bacteria detect population density through chemical signaling molecules called autoinducers. When the concentration of these signaling molecules reaches a critical threshold, bacteria collectively alter their gene expression and behavior—a process known as phenotypic switching. This mechanism enables bacteria to perform tasks that would be impossible for individual cells, such as biofilm formation and virulence factor production. Research has demonstrated that quorum sensing controls numerous bacterial functions, including bioluminescence in Vibrio fischeri, antibiotic resistance in Pseudomonas aeruginosa, and pathogenicity in Vibrio cholerae. The implications of understanding quorum sensing extend beyond basic microbiology; pharmaceutical companies are investigating quorum sensing inhibitors as potential therapeutic agents to combat bacterial infections without directly killing bacteria, thereby reducing selective pressure for antibiotic resistance.",
-    "vocabulary": [
-      {
-        "word": "autoinducers",
-        "meaning_ko": "박테리아의 개체군 밀도를 감지하는 데 사용되는 신호 분자"
-      },
-      {
-        "word": "phenotypic switching",
-        "meaning_ko": "유전자 발현의 변화로 인한 형질의 전환"
-      },
-      {
-        "word": "biofilm formation",
-        "meaning_ko": "박테리아가 표면에 형성하는 보호막 구조의 발달"
-      },
-      {
-        "word": "virulence factor",
-        "meaning_ko": "병원성 미생물이 숙주를 감염시키는 데 도움이 되는 인자"
-      },
-      {
-        "word": "bioluminescence",
-        "meaning_ko": "생물이 화학 반응을 통해 빛을 생성하는 현상"
-      },
-      {
-        "word": "pathogenicity",
-        "meaning_ko": "질병을 일으키는 미생물의 능력"
-      },
-      {
-        "word": "selective pressure",
-        "meaning_ko": "환경이 특정 유전적 특성을 가진 생물을 선호하게 하는 환경적 압력"
-      }
-    ],
+    "title": "Climate Change and Ocean Acidification",
+    "passage": "Ocean acidification is a critical consequence of climate change that threatens marine ecosystems worldwide. As atmospheric carbon dioxide levels rise, the ocean absorbs approximately 30% of these emissions, forming carbonic acid. This process lowers the pH of seawater, making it more acidic. The increased acidity interferes with the ability of mollusks, corals, and crustaceans to build their shells and skeletons. Scientists warn that if current emission rates continue, many marine species could face extinction by 2100, fundamentally disrupting food chains and affecting human food security.",
     "questions": [
       {
-        "q": "According to the passage, what is the primary function of autoinducers in bacterial communication?",
+        "q": "According to the passage, what percentage of atmospheric carbon dioxide does the ocean absorb?",
         "options": [
-          "They kill competing bacteria in the environment",
-          "They detect population density through chemical signaling",
-          "They prevent biofilm formation in pathogenic bacteria",
-          "They enhance the effectiveness of antibiotics"
+          "20%",
+          "30%",
+          "40%",
+          "50%"
         ],
         "answer": 1,
-        "explanation": "지문의 두 번째 문장에서 'bacteria detect population density through chemical signaling molecules called autoinducers'라고 명시되어 있습니다."
+        "explanation": "본문에서 'the ocean absorbs approximately 30% of these emissions'라고 명시되어 있습니다."
       },
       {
-        "q": "What can be inferred from the passage about quorum sensing inhibitors?",
+        "q": "Which of the following is mentioned as an effect of ocean acidification?",
         "options": [
-          "They directly kill all bacteria in biofilms",
-          "They are already approved for human use",
-          "They represent a potential alternative to traditional antibiotics",
-          "They only work against Vibrio fischeri species"
-        ],
-        "answer": 2,
-        "explanation": "지문의 마지막 부분에서 quorum sensing inhibitors가 '박테리아를 직접 죽이지 않고도 감염을 퇴치할 수 있는 잠재적 치료제'라고 설명하므로, 항생제의 대안으로 볼 수 있습니다."
-      },
-      {
-        "q": "The word 'remarkable' in the first sentence is closest in meaning to",
-        "options": [
-          "ordinary and expected",
-          "surprising and worthy of attention",
-          "dangerous and harmful",
-          "simple and straightforward"
+          "Increased water temperature",
+          "Interference with shell and skeleton formation",
+          "Reduction in oxygen levels",
+          "Changes in water color"
         ],
         "answer": 1,
-        "explanation": "'Remarkable'은 '눈여겨볼 만한, 특이한'이라는 의미로 'worthy of attention'과 가장 가깝습니다."
+        "explanation": "본문의 'The increased acidity interferes with the ability of mollusks, corals, and crustaceans to build their shells and skeletons'에서 답을 찾을 수 있습니다."
       },
       {
-        "q": "Why does the author mention specific bacterial species like Vibrio fischeri and Vibrio cholerae?",
+        "q": "What is the author's main concern about ocean acidification?",
         "options": [
-          "To explain why these bacteria are harmless",
-          "To provide concrete examples of quorum sensing in different bacterial functions",
-          "To argue that quorum sensing only occurs in marine bacteria",
-          "To demonstrate that antibiotics are ineffective against all bacteria"
+          "It causes ocean water to freeze",
+          "It may lead to extinction of marine species and threaten food security",
+          "It reduces the number of fishing boats",
+          "It makes the ocean warmer"
         ],
         "answer": 1,
-        "explanation": "저자는 quorum sensing이 통제하는 다양한 박테리아 기능들을 구체적으로 보여주기 위해 이들 종을 언급하고 있습니다."
+        "explanation": "본문의 마지막 부분에서 저자는 해양 종의 멸종과 식량 안보 위협에 대해 경고하고 있습니다."
       }
     ]
   },
   "writing": {
-    "topic": "도시 대중교통 확충의 필요성",
-    "sentences": [
-      {
-        "original": "Microorganisms exhibit sophisticated communication systems that coordinate complex behaviors across populations.",
-        "paraphrase": "The expansion of urban public transportation requires sophisticated planning systems that coordinate complex behaviors across city populations.",
-        "tip": "원문의 구조를 유지하면서 대중교통 확충 주제로 문맥 변경. 'exhibit'을 'requires'로 능동→수동 의미 변환"
-      },
-      {
-        "original": "This mechanism enables bacteria to perform tasks that would be impossible for individual cells, such as biofilm formation and virulence factor production.",
-        "paraphrase": "This infrastructure allows commuters to accomplish goals that would be impossible for individual vehicles, such as reducing traffic congestion and lowering environmental pollution.",
-        "tip": "원문의 목적격 구문을 유지하면서 명사를 현대적 맥락으로 치환. 'enables→allows' 동의어 사용"
-      },
-      {
-        "original": "The implications of understanding quorum sensing extend beyond basic microbiology; pharmaceutical companies are investigating quorum sensing inhibitors as potential therapeutic agents to combat bacterial infections without directly killing bacteria.",
-        "paraphrase": "The benefits of improving public transit systems extend beyond environmental concerns; urban planners are developing integrated transportation networks as viable solutions to reduce traffic while enhancing city livability without restricting individual mobility.",
-        "tip": "세미콜론 구조와 관계절을 유지하면서 비유적으로 대중교통 정책으로 전환. 평행 구조 활용"
-      }
+    "prompt": "Do you agree or disagree with the statement: Technology has made people's lives easier but has negatively affected human relationships?",
+    "structure": {
+      "intro": "Opening sentence with clear position statement. Example: 'While technology has undoubtedly made our daily lives more convenient, I agree that it has significantly damaged face-to-face human relationships.' (2-3 sentences)",
+      "body1": "First supporting argument: Explain how technology reduces in-person interaction. Provide specific examples like social media replacing phone calls or instant messaging reducing conversations. (3-4 sentences)",
+      "body2": "Second supporting argument: Discuss how excessive screen time affects emotional connections and empathy development. Use relevant examples of family dynamics or workplace relationships. (3-4 sentences)",
+      "conclusion": "Restate your position and summarize main points. Suggest that balance between technology use and human connection is necessary. (2-3 sentences)"
+    },
+    "useful_phrases": [
+      "In my opinion,",
+      "Furthermore,",
+      "To illustrate,",
+      "On the other hand,",
+      "In conclusion,",
+      "For instance,",
+      "It is undeniable that,",
+      "One significant drawback is that,"
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer living in cities with modern infrastructure and convenient services. Others prefer living in rural areas with natural surroundings and a slower pace of life. Which do you prefer and why? Include specific reasons and details in your response.",
-    "model_sentences": [
-      "I definitely prefer urban living because cities offer far more opportunities for career development and education.",
-      "For instance, I can access diverse job markets, world-class universities, and professional networking events that simply don't exist in rural communities.",
-      "Moreover, city life provides convenient access to public transportation, restaurants, entertainment venues, and healthcare facilities, which significantly enhances my daily quality of life.",
-      "Although rural areas have their charm with peaceful natural environments, the practical benefits and convenience of city life outweigh those advantages for my personal goals.",
-      "In conclusion, the concentration of opportunities and services in urban areas makes it the ideal choice for someone like me who values career growth and modern conveniences."
+    "prompt": "Some people prefer to study in quiet environments. Others prefer to study with background music or in busy cafes. Which do you prefer and why?",
+    "useful_expressions": [
+      "Personally, I believe that...",
+      "One reason is that...",
+      "Additionally, when I...",
+      "For example, in my experience...",
+      "This preference is important because..."
+    ],
+    "sample_points": [
+      "조용한 환경에서는 집중력이 높아져 복잡한 개념을 더 빠르게 이해할 수 있습니다. 예를 들어, 수학 문제나 외국어 학습 시 집중력이 필수적입니다.",
+      "조용한 환경은 스트레스를 줄이고 장시간 공부할 수 있게 해줍니다. 반면 시끄러운 환경은 학습 효율성을 떨어뜨릴 수 있습니다."
     ]
   },
   "listening": {
-    "title": "Club Budget Committee Meeting",
-    "type": "conversation",
-    "script": "Student A: Hey Sarah, thanks for coming to the budget meeting. We need to discuss how to allocate funds for next semester. We have approximately $3,000 to distribute among our activities.\n\nStudent B: Sure, I've been thinking about this. Our debate team has been requesting more funding for travel expenses to competitions. They estimate they need around $1,200 for transportation and registration fees.\n\nStudent A: That's a significant amount. What about the other clubs? The photography club wanted to purchase new equipment, didn't they?\n\nStudent B: Yes, they asked for $800 for camera lenses and lighting equipment. And then there's the volunteer committee who wants to organize community service projects. They're requesting $600 for supplies.\n\nStudent A: So that's roughly $2,600 if we approve all requests. That leaves us with $400 for contingencies. I think we should allocate funds proportionally based on membership size and past contributions.\n\nStudent B: That's reasonable. But I'm concerned that we might not be prioritizing the activities that generate the most student engagement. Maybe we should conduct a survey first?\n\nStudent A: That's a great suggestion. Let's send out a survey to all members and make the final decision next month.",
-    "vocabulary": [
-      {
-        "word": "allocate",
-        "meaning_ko": "자원이나 기금을 특정 목적에 배분하다"
-      },
-      {
-        "word": "contingencies",
-        "meaning_ko": "예기치 않은 상황에 대비하기 위한 준비금"
-      },
-      {
-        "word": "proportionally",
-        "meaning_ko": "비율에 맞게, 균형 있게"
-      },
-      {
-        "word": "prioritizing",
-        "meaning_ko": "우선순위를 정하다"
-      },
-      {
-        "word": "engagement",
-        "meaning_ko": "참여, 몰입도"
-      },
-      {
-        "word": "survey",
-        "meaning_ko": "조사, 설문조사"
-      }
-    ],
+    "title": "Professor's Lecture on Renewable Energy",
+    "type": "lecture",
+    "script": "Good morning, everyone. Today I want to discuss renewable energy sources and their growing importance in addressing climate change. Solar and wind energy have become increasingly cost-effective over the past decade. Solar panels convert sunlight directly into electricity, while wind turbines harness kinetic energy from wind. However, both sources have limitations. Solar energy depends on weather conditions and daylight hours, making it less reliable in cloudy regions. Wind energy requires consistent wind patterns and is most effective in coastal or elevated areas. Despite these challenges, many countries are investing heavily in renewable infrastructure. Germany, for example, generates over 40% of its electricity from renewable sources. The transition to renewable energy requires not only technological advancement but also policy support and public investment. As fossil fuels become more expensive and environmental concerns grow, renewable energy will likely dominate the global energy market within the next 30 years.",
     "questions": [
       {
-        "q": "What is the main topic of the conversation?",
+        "q": "What is the main topic of the lecture?",
         "options": [
-          "How to recruit new members for the debate team",
-          "Distributing a $3,000 budget among different club activities",
-          "Purchasing new camera equipment for the photography club",
-          "Organizing community service projects for volunteers"
+          "The history of fossil fuels",
+          "Renewable energy sources and their development",
+          "How to build solar panels",
+          "Climate change in Germany"
         ],
         "answer": 1,
-        "explanation": "대화의 전반적인 주제는 학생 동아리들 간에 약 $3,000의 예산을 어떻게 배분할 것인가에 관한 것입니다."
+        "explanation": "교수는 재생 에너지원과 기후 변화 대응에서의 중요성에 대해 논의하고 있습니다."
       },
       {
-        "q": "How much money is the debate team requesting?",
+        "q": "According to the professor, what is a limitation of solar energy?",
         "options": [
-          "$600",
-          "$800",
-          "$1,200",
-          "$3,000"
+          "It is too expensive to install",
+          "It is less reliable in cloudy regions due to dependence on daylight",
+          "It requires consistent wind patterns",
+          "It only works in coastal areas"
         ],
-        "answer": 2,
-        "explanation": "Sarah가 'Our debate team has been requesting more funding for travel expenses to competitions. They estimate they need around $1,200'이라고 명시했습니다."
+        "answer": 1,
+        "explanation": "강의에서 'Solar energy depends on weather conditions and daylight hours, making it less reliable in cloudy regions'라고 명시되어 있습니다."
       },
       {
-        "q": "What does Student B suggest as a next step?",
+        "q": "What percentage of electricity does Germany generate from renewable sources?",
         "options": [
-          "Immediately approve all budget requests",
-          "Reduce the debate team's funding",
-          "Conduct a survey to assess student engagement before making final decisions",
-          "Cancel the community service project"
+          "20%",
+          "30%",
+          "Over 40%",
+          "60%"
         ],
         "answer": 2,
-        "explanation": "Student B가 'Maybe we should conduct a survey first?'라고 제안했고, Student A도 이에 동의하여 'Let's send out a survey to all members and make the final decision next month'이라고 확인했습니다."
+        "explanation": "교수는 'Germany, for example, generates over 40% of its electricity from renewable sources'라고 언급했습니다."
       }
     ]
   }
