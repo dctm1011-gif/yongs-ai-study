@@ -239,7 +239,7 @@ const BarChart: React.FC<{
 });
 
 const HorizontalBarChart: React.FC<{
-  data: { label: string; sub?: string; value: number }[];
+  data: { label: string; sub?: string; value: number; note?: string }[];
   title: string;
   unit: string;
   color?: string;
@@ -260,9 +260,12 @@ const HorizontalBarChart: React.FC<{
           <View style={{ flex: 1, height: 16, backgroundColor: '#f0f0f0', borderRadius: 4, marginHorizontal: 6 }}>
             <View style={{ width: `${Math.max((d.value / max) * 100, 2)}%`, height: '100%', backgroundColor: color, borderRadius: 4 }} />
           </View>
-          <Text style={{ width: 48, fontSize: 11, color: '#262626', fontWeight: '600', textAlign: 'right' }}>
-            {d.value.toFixed(decimals)}{valueSuffix}
-          </Text>
+          <View style={{ width: 56, alignItems: 'flex-end' }}>
+            <Text style={{ fontSize: 11, color: '#262626', fontWeight: '600', textAlign: 'right' }}>
+              {d.value.toFixed(decimals)}{valueSuffix}
+            </Text>
+            {d.note ? <Text style={{ fontSize: 8, color: '#8e8e8e' }} numberOfLines={1}>{d.note}</Text> : null}
+          </View>
         </View>
       ))}
       <Text style={styles.chartUnit}>{unit}</Text>
@@ -1234,30 +1237,35 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
       if (trades12m === 0) return [];
       const annualRate = Math.round((trades12m / totalUnits) * 1000) / 10; // 소수 1자리
       const shortArea = entry.gu ?? entry.si.replace('시', '');
-      return [{ label: dongName, sub: shortArea, value: annualRate }];
+      return [{ label: dongName, sub: shortArea, value: annualRate, note: `${trades12m}건` }];
     });
   }, [compareDongs, regionCharts]);
 
   // 동별 대단지(1000세대 이상) 비율(%) - 세대수 기준
-  // dongLargeComplexRatio 없는 동은 제외 (단지 정보 없는 동 미표시)
-  const compareLargeComplexBarData = useMemo<{ label: string; sub: string; value: number }[]>(() => {
+  // dongLargeComplexRatio 없는 동은 제외 (단지 정보 없는 동 미표시). 표본(단지 개수)은 숨기지 않고 note로 같이 노출
+  // - 단지 1~2개짜리 동은 0%/100%로 극단값이 나오기 쉬운데, 그게 노이즈가 아니라 "원래 단지가 적다"는
+  //   사실 그대로라 값 자체를 걸러내진 않되, 사용자가 신뢰도를 판단할 수 있게 단지 개수를 보여줌
+  const compareLargeComplexBarData = useMemo<{ label: string; sub: string; value: number; note: string }[]>(() => {
     return compareDongs.flatMap(({ area, dongName }) => {
       const entry = regionCharts.find(r => r.area === area);
       const ratio = entry?.dongLargeComplexRatio?.[dongName];
       if (ratio === undefined) return [];
+      const complexCount = entry?.dongComplexCount?.[dongName];
       const shortArea = entry!.gu ?? entry!.si.replace('시', '');
-      return [{ label: dongName, sub: shortArea, value: ratio }];
+      return [{ label: dongName, sub: shortArea, value: ratio, note: complexCount ? `단지 ${complexCount}개` : '' }];
     });
   }, [compareDongs, regionCharts]);
 
-  // 동별 전세가율(%) - dongJeonseRatio 없는 동(전세 표본 부족 등)은 제외
-  const compareJeonseBarData = useMemo<{ label: string; sub: string; value: number }[]>(() => {
+  // 동별 전세가율(%) - dongJeonseRatio 없는 동(전세 거래 자체가 없던 동)은 제외.
+  // 표본이 적다고 값을 숨기진 않고, 전세 거래건수를 note로 같이 보여줘서 신뢰도를 사용자가 판단하게 함
+  const compareJeonseBarData = useMemo<{ label: string; sub: string; value: number; note: string }[]>(() => {
     return compareDongs.flatMap(({ area, dongName }) => {
       const entry = regionCharts.find(r => r.area === area);
       const ratio = entry?.dongJeonseRatio?.[dongName];
       if (ratio === undefined) return [];
+      const tradeCount = entry?.dongJeonseTradeCount?.[dongName];
       const shortArea = entry!.gu ?? entry!.si.replace('시', '');
-      return [{ label: dongName, sub: shortArea, value: ratio }];
+      return [{ label: dongName, sub: shortArea, value: ratio, note: tradeCount ? `전세 ${tradeCount}건` : '' }];
     });
   }, [compareDongs, regionCharts]);
 
@@ -1545,7 +1553,7 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
             <HorizontalBarChart
               data={compareTurnoverBarData}
               title="동별 연간 거래 회전율 (최근 12개월 실거래 / 총세대수)"
-              unit="단위: % · 국토부 실거래가 + 공동주택 현황"
+              unit="단위: % · 국토부 실거래가 + 공동주택 현황 · 값 옆 숫자는 12개월 거래건수"
               color="#10b981"
               valueSuffix="%"
             />
@@ -1553,7 +1561,7 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
             <HorizontalBarChart
               data={compareLargeComplexBarData}
               title="동별 대단지 비율 (1,000세대 이상 단지 세대수 기준)"
-              unit="단위: % · 국토부 공동주택 기본정보"
+              unit="단위: % · 국토부 공동주택 기본정보 · 값 옆 숫자는 단지 개수"
               color="#8b5cf6"
               valueSuffix="%"
             />
@@ -1561,7 +1569,7 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
             <HorizontalBarChart
               data={compareJeonseBarData}
               title="동별 전세가율 (최근 12개월 전세/매매 중앙값)"
-              unit="단위: % · 국토부 실거래가(전세 표본 2건 미만인 동은 제외)"
+              unit="단위: % · 국토부 실거래가 · 값 옆 숫자는 전세 표본 건수"
               color="#10b981"
               valueSuffix="%"
             />

@@ -102,9 +102,11 @@ export interface RegionChartEntry {
   dongs: { name: string; data: BoxPlotPoint[]; yearlyData: BoxPlotPoint[] }[];
   dongUnitCounts?: Record<string, number>; // 동별 총 아파트 세대수 (거래 회전율 계산용)
   dongLargeComplexRatio?: Record<string, number>; // 동별 대단지(1000세대 이상) 비율(%) - 세대수 기준
+  dongComplexCount?: Record<string, number>; // 동별 아파트 단지 개수 (대단지 비율의 표본 크기 - UI에서 신뢰도 표시용)
   jeonseData?: BoxPlotPoint[]; // 최근 12개월 전세 보증금 분포(억원, 순수 전세만)
   jeonseRatioData?: { label: string; value: number }[]; // 최근 12개월 전세가율(%) = 전세 중앙값 / 매매 중앙값 * 100
-  dongJeonseRatio?: Record<string, number>; // 동별 전세가율(%) - 최근 12개월 전세/매매 중앙값 기준, 전세 표본 2건 미만인 동은 제외
+  dongJeonseRatio?: Record<string, number>; // 동별 전세가율(%) - 최근 12개월 전세/매매 중앙값 기준
+  dongJeonseTradeCount?: Record<string, number>; // 동별 전세 거래건수 (dongJeonseRatio의 표본 크기 - UI에서 신뢰도 표시용)
 }
 
 const BOOKMARKS_KEY = 'investment_bookmarks';

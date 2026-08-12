@@ -689,16 +689,18 @@ def get_all_regions_chart_data(target_date: date, service_key: str) -> list[dict
         # 실패(예: API 429)해도 이미 구한 매매 데이터는 살리고 이 부분만 빈 값으로 생략
         dong_unit_counts: dict[str, int] = {}
         dong_large_units: dict[str, int] = {}
+        dong_complex_count: dict[str, int] = {}  # 동별 단지 개수 (대단지 비율 신뢰도 판단용 - 표본 자체는 걸러내지 않고 개수를 같이 보여줌)
         try:
             for lawd_cd in _lawd_codes(config):
                 print(f"    세대수 조회 중 ({lawd_cd})...")
                 for c in fetch_dong_complexes(lawd_cd, service_key):
                     dong_unit_counts[c["dong"]] = dong_unit_counts.get(c["dong"], 0) + c["units"]
+                    dong_complex_count[c["dong"]] = dong_complex_count.get(c["dong"], 0) + 1
                     if c["units"] >= LARGE_COMPLEX_THRESHOLD:
                         dong_large_units[c["dong"]] = dong_large_units.get(c["dong"], 0) + c["units"]
         except Exception as e:
             print(f"[!] {area}: 세대수/대단지 비율 조회 실패 - 생략: {e}")
-            dong_unit_counts, dong_large_units = {}, {}
+            dong_unit_counts, dong_large_units, dong_complex_count = {}, {}, {}
         dong_large_complex_ratio = {
             dong: round(dong_large_units.get(dong, 0) / total * 100, 1)
             for dong, total in dong_unit_counts.items() if total > 0
@@ -732,13 +734,15 @@ def get_all_regions_chart_data(target_date: date, service_key: str) -> list[dict
 
         # 동별 전세가율 (최근 12개월 전세 중앙값 / 최근 12개월 매매 중앙값 * 100)
         # 이미 위에서 받은 매매/전세 원자료를 재사용 - API 추가 호출 없음.
-        # 전세 표본이 너무 적은(2건 미만) 동은 노이즈로 보고 제외.
+        # 표본을 이유로 숨기지 않고, 전세 거래건수(dongJeonseTradeCount)를 같이 내려서
+        # 앱에서 "(전세 N건)"처럼 신뢰도를 사용자가 직접 판단하게 함.
         dong_jeonse_ratio: dict[str, float] = {}
+        dong_jeonse_trade_count: dict[str, int] = {}
         all_rent_12m = [t for ts in rent_trades_by_month.values() for t in ts]
         for dong in valid_dongs:
             dong_rent = [t for t in all_rent_12m if t.get("umdNm", "").strip() == dong]
             rent_summary = summarize_trades(dong_rent)
-            if not rent_summary or rent_summary["count"] < 2:
+            if not rent_summary:
                 continue
             dong_trade_12m = [
                 t for (y, m) in all_months[-MONTHLY_WINDOW:] for t in trades_by_month[(y, m)]
@@ -748,6 +752,7 @@ def get_all_regions_chart_data(target_date: date, service_key: str) -> list[dict
             if not trade_summary or trade_summary["median"] <= 0:
                 continue
             dong_jeonse_ratio[dong] = round(rent_summary["median"] / trade_summary["median"] * 100, 1)
+            dong_jeonse_trade_count[dong] = rent_summary["count"]
 
         entry: dict = {
             "area": area,
@@ -764,12 +769,16 @@ def get_all_regions_chart_data(target_date: date, service_key: str) -> list[dict
             entry["dongUnitCounts"] = dong_unit_counts
         if dong_large_complex_ratio:
             entry["dongLargeComplexRatio"] = dong_large_complex_ratio
+        if dong_complex_count:
+            entry["dongComplexCount"] = dong_complex_count
         if rent_monthly_points:
             entry["jeonseData"] = rent_monthly_points
         if jeonse_ratio_points:
             entry["jeonseRatioData"] = jeonse_ratio_points
         if dong_jeonse_ratio:
             entry["dongJeonseRatio"] = dong_jeonse_ratio
+        if dong_jeonse_trade_count:
+            entry["dongJeonseTradeCount"] = dong_jeonse_trade_count
         chart_data.append(entry)
 
     return chart_data
