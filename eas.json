@@ -12,7 +12,8 @@
           "EXPO_USE_HERMES": "0",
           "EXPO_DISABLE_HERMES": "1"
         }
-      }
+      },
+      "channel": "preview"
     },
     "preview2": {
       "android": {
@@ -21,7 +22,8 @@
           "EXPO_USE_HERMES": "0",
           "EXPO_DISABLE_HERMES": "1"
         }
-      }
+      },
+      "channel": "preview2"
     },
     "preview3": {
       "android": {
@@ -30,7 +32,8 @@
           "EXPO_USE_HERMES": "0",
           "EXPO_DISABLE_HERMES": "1"
         }
-      }
+      },
+      "channel": "preview3"
     },
     "production": {
       "android": {
@@ -41,7 +44,8 @@
           "EXPO_USE_HERMES": "0",
           "EXPO_DISABLE_HERMES": "1"
         }
-      }
+      },
+      "channel": "production"
     },
     "voca-only": {
       "android": {
@@ -52,7 +56,8 @@
           "EXPO_USE_HERMES": "0",
           "EXPO_DISABLE_HERMES": "1"
         }
-      }
+      },
+      "channel": "voca-only"
     }
   },
   "submit": {

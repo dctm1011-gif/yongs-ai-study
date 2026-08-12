@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "452033348410",
+    "firebase_url": "https://yongstudy-1f242-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "yongstudy-1f242",
+    "storage_bucket": "yongstudy-1f242.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:452033348410:android:0d1f21420d487261d70603",
+        "android_client_info": {
+          "package_name": "com.dctm1011.yongstudy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "452033348410-bc5igoces5h3otqm4js6o75ba3ud3ge5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dctm1011.yongstudy",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "452033348410-hf0mnnatofurorgb7i7pd6ei0voh38bl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dctm1011.yongstudy",
+            "certificate_hash": "1be99d0cd963285b77279b7dd240db5693a4d9da"
+          }
+        },
+        {
+          "client_id": "452033348410-9ddifqme5shqt3hh3ade0j815058glpj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAafBzu05OyRmpCxv4j7myrlGx23rjOdiA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "452033348410-9ddifqme5shqt3hh3ade0j815058glpj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

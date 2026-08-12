@@ -21,6 +21,7 @@
     "expo-screen-orientation": "~9.0.9",
     "expo-speech": "~14.0.8",
     "expo-task-manager": "~14.0.9",
+    "expo-updates": "~29.0.19",
     "firebase": "^12.16.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",

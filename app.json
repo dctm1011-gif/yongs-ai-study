@@ -10,7 +10,10 @@
     "description": "AI-powered learning platform for English, TOEFL, and research papers",
     "ios": {
       "icon": "./assets/expo.icon",
-      "useFrameworks": "static"
+      "useFrameworks": "static",
+      "runtimeVersion": {
+        "policy": "appVersion"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -72,6 +75,9 @@
       "eas": {
         "projectId": "391a8441-ff72-45ea-846f-ceccae07bd15"
       }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/391a8441-ff72-45ea-846f-ceccae07bd15"
     }
   }
 }
