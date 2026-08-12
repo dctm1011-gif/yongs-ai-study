@@ -1,117 +1,178 @@
 {
-  "date": "2026-08-12",
+  "date": "2026-08-13",
   "reading": {
-    "title": "Climate Change and Biodiversity",
-    "passage": "Climate change represents one of the most significant threats to global biodiversity. Rising temperatures alter ecosystems, forcing species to migrate or adapt rapidly. Coral reefs, rainforests, and polar regions face unprecedented pressure. Scientists warn that without immediate action, we could lose up to 50% of species by 2100. Conservation efforts and renewable energy adoption are essential strategies to mitigate these impacts and preserve Earth's biological diversity for future generations.",
+    "title": "Microbial Communication and Quorum Sensing",
+    "passage": "Microorganisms, despite their microscopic size, exhibit sophisticated communication systems that coordinate complex behaviors across populations. Quorum sensing represents one of the most remarkable examples of this phenomenon, wherein bacteria detect population density through chemical signaling molecules called autoinducers. When the concentration of these signaling molecules reaches a critical threshold, bacteria collectively alter their gene expression and behavior—a process known as phenotypic switching. This mechanism enables bacteria to perform tasks that would be impossible for individual cells, such as biofilm formation and virulence factor production. Research has demonstrated that quorum sensing controls numerous bacterial functions, including bioluminescence in Vibrio fischeri, antibiotic resistance in Pseudomonas aeruginosa, and pathogenicity in Vibrio cholerae. The implications of understanding quorum sensing extend beyond basic microbiology; pharmaceutical companies are investigating quorum sensing inhibitors as potential therapeutic agents to combat bacterial infections without directly killing bacteria, thereby reducing selective pressure for antibiotic resistance.",
+    "vocabulary": [
+      {
+        "word": "autoinducers",
+        "meaning_ko": "박테리아의 개체군 밀도를 감지하는 데 사용되는 신호 분자"
+      },
+      {
+        "word": "phenotypic switching",
+        "meaning_ko": "유전자 발현의 변화로 인한 형질의 전환"
+      },
+      {
+        "word": "biofilm formation",
+        "meaning_ko": "박테리아가 표면에 형성하는 보호막 구조의 발달"
+      },
+      {
+        "word": "virulence factor",
+        "meaning_ko": "병원성 미생물이 숙주를 감염시키는 데 도움이 되는 인자"
+      },
+      {
+        "word": "bioluminescence",
+        "meaning_ko": "생물이 화학 반응을 통해 빛을 생성하는 현상"
+      },
+      {
+        "word": "pathogenicity",
+        "meaning_ko": "질병을 일으키는 미생물의 능력"
+      },
+      {
+        "word": "selective pressure",
+        "meaning_ko": "환경이 특정 유전적 특성을 가진 생물을 선호하게 하는 환경적 압력"
+      }
+    ],
     "questions": [
       {
-        "q": "According to the passage, what is the main threat to global biodiversity?",
+        "q": "According to the passage, what is the primary function of autoinducers in bacterial communication?",
         "options": [
-          "A) Pollution and waste",
-          "B) Climate change",
-          "C) Overfishing",
-          "D) Deforestation"
+          "They kill competing bacteria in the environment",
+          "They detect population density through chemical signaling",
+          "They prevent biofilm formation in pathogenic bacteria",
+          "They enhance the effectiveness of antibiotics"
         ],
         "answer": 1,
-        "explanation": "본문에서 'Climate change represents one of the most significant threats to global biodiversity'라고 명시되어 있습니다."
+        "explanation": "지문의 두 번째 문장에서 'bacteria detect population density through chemical signaling molecules called autoinducers'라고 명시되어 있습니다."
       },
       {
-        "q": "Which ecosystems are mentioned as facing unprecedented pressure?",
+        "q": "What can be inferred from the passage about quorum sensing inhibitors?",
         "options": [
-          "A) Mountains and deserts",
-          "B) Grasslands and lakes",
-          "C) Coral reefs, rainforests, and polar regions",
-          "D) Urban and agricultural areas"
+          "They directly kill all bacteria in biofilms",
+          "They are already approved for human use",
+          "They represent a potential alternative to traditional antibiotics",
+          "They only work against Vibrio fischeri species"
         ],
         "answer": 2,
-        "explanation": "본문의 'Coral reefs, rainforests, and polar regions face unprecedented pressure'에서 답을 찾을 수 있습니다."
+        "explanation": "지문의 마지막 부분에서 quorum sensing inhibitors가 '박테리아를 직접 죽이지 않고도 감염을 퇴치할 수 있는 잠재적 치료제'라고 설명하므로, 항생제의 대안으로 볼 수 있습니다."
       },
       {
-        "q": "What is suggested as an essential strategy to mitigate climate change impacts?",
+        "q": "The word 'remarkable' in the first sentence is closest in meaning to",
         "options": [
-          "A) Increasing industrial production",
-          "B) Conservation efforts and renewable energy adoption",
-          "C) Building more cities",
-          "D) Expanding agriculture"
+          "ordinary and expected",
+          "surprising and worthy of attention",
+          "dangerous and harmful",
+          "simple and straightforward"
         ],
         "answer": 1,
-        "explanation": "'Conservation efforts and renewable energy adoption are essential strategies'라는 문장에서 정답을 확인할 수 있습니다."
+        "explanation": "'Remarkable'은 '눈여겨볼 만한, 특이한'이라는 의미로 'worthy of attention'과 가장 가깝습니다."
+      },
+      {
+        "q": "Why does the author mention specific bacterial species like Vibrio fischeri and Vibrio cholerae?",
+        "options": [
+          "To explain why these bacteria are harmless",
+          "To provide concrete examples of quorum sensing in different bacterial functions",
+          "To argue that quorum sensing only occurs in marine bacteria",
+          "To demonstrate that antibiotics are ineffective against all bacteria"
+        ],
+        "answer": 1,
+        "explanation": "저자는 quorum sensing이 통제하는 다양한 박테리아 기능들을 구체적으로 보여주기 위해 이들 종을 언급하고 있습니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Remote work should be the primary work model for all companies'?",
-    "structure": {
-      "intro": "명확한 입장 표현: 동의 또는 반대 의견을 직접 서술하고, 2-3가지 주요 이유를 미리 언급합니다.",
-      "body1": "첫 번째 주요 이유와 구체적 예시 제시: 원격근무의 장점(유연성, 비용절감) 또는 단점(소통 어려움, 업무 감시)을 구체적으로 설명합니다.",
-      "body2": "두 번째 주요 이유와 근거 제시: 기업의 생산성, 직원 만족도, 또는 특정 산업의 특수성 등을 논증합니다.",
-      "conclusion": "앞서 제시한 주요 이유들을 요약하고, 최종 입장을 재강조하며 미래 전망을 제시합니다."
-    },
-    "useful_phrases": [
-      "In my opinion,",
-      "I strongly believe that...",
-      "Furthermore,",
-      "Additionally,",
-      "For example,",
-      "On the other hand,",
-      "However,",
-      "In conclusion,",
-      "Therefore,",
-      "This demonstrates that..."
+    "topic": "도시 대중교통 확충의 필요성",
+    "sentences": [
+      {
+        "original": "Microorganisms exhibit sophisticated communication systems that coordinate complex behaviors across populations.",
+        "paraphrase": "The expansion of urban public transportation requires sophisticated planning systems that coordinate complex behaviors across city populations.",
+        "tip": "원문의 구조를 유지하면서 대중교통 확충 주제로 문맥 변경. 'exhibit'을 'requires'로 능동→수동 의미 변환"
+      },
+      {
+        "original": "This mechanism enables bacteria to perform tasks that would be impossible for individual cells, such as biofilm formation and virulence factor production.",
+        "paraphrase": "This infrastructure allows commuters to accomplish goals that would be impossible for individual vehicles, such as reducing traffic congestion and lowering environmental pollution.",
+        "tip": "원문의 목적격 구문을 유지하면서 명사를 현대적 맥락으로 치환. 'enables→allows' 동의어 사용"
+      },
+      {
+        "original": "The implications of understanding quorum sensing extend beyond basic microbiology; pharmaceutical companies are investigating quorum sensing inhibitors as potential therapeutic agents to combat bacterial infections without directly killing bacteria.",
+        "paraphrase": "The benefits of improving public transit systems extend beyond environmental concerns; urban planners are developing integrated transportation networks as viable solutions to reduce traffic while enhancing city livability without restricting individual mobility.",
+        "tip": "세미콜론 구조와 관계절을 유지하면서 비유적으로 대중교통 정책으로 전환. 평행 구조 활용"
+      }
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer working in an office environment with colleagues. Others prefer working remotely from home. Which work environment do you prefer and why?",
-    "useful_expressions": [
-      "In my opinion, I prefer...",
-      "One reason is that...",
-      "Another advantage/disadvantage is...",
-      "For example,",
-      "This is important because...",
-      "Therefore, I believe..."
-    ],
-    "sample_points": [
-      "사무실 근무의 장점: 동료와의 직접 소통, 팀 협업 강화, 일-생활 구분이 명확함. 예시: 회의나 브레인스토밍이 더 효과적입니다.",
-      "원격근무의 장점: 출퇴근 시간 절감, 개인 환경에서의 집중력 향상, 시간 활용의 자유도. 예시: 아침시간을 가족과 함께 보낼 수 있고 점심시간도 유연하게 조정할 수 있습니다."
+    "prompt": "Some people prefer living in cities with modern infrastructure and convenient services. Others prefer living in rural areas with natural surroundings and a slower pace of life. Which do you prefer and why? Include specific reasons and details in your response.",
+    "model_sentences": [
+      "I definitely prefer urban living because cities offer far more opportunities for career development and education.",
+      "For instance, I can access diverse job markets, world-class universities, and professional networking events that simply don't exist in rural communities.",
+      "Moreover, city life provides convenient access to public transportation, restaurants, entertainment venues, and healthcare facilities, which significantly enhances my daily quality of life.",
+      "Although rural areas have their charm with peaceful natural environments, the practical benefits and convenience of city life outweigh those advantages for my personal goals.",
+      "In conclusion, the concentration of opportunities and services in urban areas makes it the ideal choice for someone like me who values career growth and modern conveniences."
     ]
   },
   "listening": {
-    "title": "대학 도서관 오리엔테이션",
+    "title": "Club Budget Committee Meeting",
     "type": "conversation",
-    "script": "Librarian: Welcome to our university library. I'm happy to help you get oriented. Student: Thank you. This is my first time here, and I'm a bit overwhelmed by the size. Librarian: That's completely normal. Let me give you a quick overview. We have five floors. The first floor has our circulation desk and computers for catalog searches. The second and third floors contain our main book collection organized by the Dewey Decimal System. The fourth floor is dedicated to journals, databases, and research materials. Finally, the fifth floor has quiet study areas and private research rooms available by reservation. Student: Wow, that's helpful. How do I access online databases? Librarian: You can access them from any computer on campus using your student ID. We also have a mobile app that provides 24-hour access from anywhere. Many students find this very convenient for researching from home. Student: Excellent. One more question—are there any workshops available for research skills? Librarian: Yes, we offer free workshops every Wednesday at 3 PM covering topics like advanced search techniques and citation management. I highly recommend attending at least one.",
+    "script": "Student A: Hey Sarah, thanks for coming to the budget meeting. We need to discuss how to allocate funds for next semester. We have approximately $3,000 to distribute among our activities.\n\nStudent B: Sure, I've been thinking about this. Our debate team has been requesting more funding for travel expenses to competitions. They estimate they need around $1,200 for transportation and registration fees.\n\nStudent A: That's a significant amount. What about the other clubs? The photography club wanted to purchase new equipment, didn't they?\n\nStudent B: Yes, they asked for $800 for camera lenses and lighting equipment. And then there's the volunteer committee who wants to organize community service projects. They're requesting $600 for supplies.\n\nStudent A: So that's roughly $2,600 if we approve all requests. That leaves us with $400 for contingencies. I think we should allocate funds proportionally based on membership size and past contributions.\n\nStudent B: That's reasonable. But I'm concerned that we might not be prioritizing the activities that generate the most student engagement. Maybe we should conduct a survey first?\n\nStudent A: That's a great suggestion. Let's send out a survey to all members and make the final decision next month.",
+    "vocabulary": [
+      {
+        "word": "allocate",
+        "meaning_ko": "자원이나 기금을 특정 목적에 배분하다"
+      },
+      {
+        "word": "contingencies",
+        "meaning_ko": "예기치 않은 상황에 대비하기 위한 준비금"
+      },
+      {
+        "word": "proportionally",
+        "meaning_ko": "비율에 맞게, 균형 있게"
+      },
+      {
+        "word": "prioritizing",
+        "meaning_ko": "우선순위를 정하다"
+      },
+      {
+        "word": "engagement",
+        "meaning_ko": "참여, 몰입도"
+      },
+      {
+        "word": "survey",
+        "meaning_ko": "조사, 설문조사"
+      }
+    ],
     "questions": [
       {
-        "q": "What is the main purpose of this conversation?",
+        "q": "What is the main topic of the conversation?",
         "options": [
-          "A) To discuss library pricing",
-          "B) To introduce a new student to library facilities and services",
-          "C) To schedule a research appointment",
-          "D) To solve a book cataloging problem"
+          "How to recruit new members for the debate team",
+          "Distributing a $3,000 budget among different club activities",
+          "Purchasing new camera equipment for the photography club",
+          "Organizing community service projects for volunteers"
         ],
         "answer": 1,
-        "explanation": "사서가 새로운 학생을 위해 도서관 시설과 서비스를 소개하고 있습니다. 이것이 대화의 주된 목적입니다."
+        "explanation": "대화의 전반적인 주제는 학생 동아리들 간에 약 $3,000의 예산을 어떻게 배분할 것인가에 관한 것입니다."
       },
       {
-        "q": "On which floor can students find quiet study areas and private research rooms?",
+        "q": "How much money is the debate team requesting?",
         "options": [
-          "A) Second floor",
-          "B) Third floor",
-          "C) Fourth floor",
-          "D) Fifth floor"
+          "$600",
+          "$800",
+          "$1,200",
+          "$3,000"
         ],
-        "answer": 3,
-        "explanation": "사서의 설명에서 'Finally, the fifth floor has quiet study areas and private research rooms available by reservation'라고 명시되어 있습니다."
+        "answer": 2,
+        "explanation": "Sarah가 'Our debate team has been requesting more funding for travel expenses to competitions. They estimate they need around $1,200'이라고 명시했습니다."
       },
       {
-        "q": "How often are research skills workshops offered?",
+        "q": "What does Student B suggest as a next step?",
         "options": [
-          "A) Every Monday",
-          "B) Every Wednesday",
-          "C) Twice a week",
-          "D) Only on request"
+          "Immediately approve all budget requests",
+          "Reduce the debate team's funding",
+          "Conduct a survey to assess student engagement before making final decisions",
+          "Cancel the community service project"
         ],
-        "answer": 1,
-        "explanation": "사서가 'we offer free workshops every Wednesday at 3 PM'이라고 언급했습니다."
+        "answer": 2,
+        "explanation": "Student B가 'Maybe we should conduct a survey first?'라고 제안했고, Student A도 이에 동의하여 'Let's send out a survey to all members and make the final decision next month'이라고 확인했습니다."
       }
     ]
   }

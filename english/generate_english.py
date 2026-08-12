@@ -150,54 +150,37 @@ def load_toefl_words(toefl_path: Path = None) -> list:
     print("[*] TOEFL 단어 없음 - 기본값으로 생성")
     return []
 
+
 def generate_default_words(client: anthropic.Anthropic, target_date: date, toefl_words: list = None) -> dict:
-    """Claude API로 새로운 일상 영어 단어 생성 (TOEFL 단어 기반)"""
-    print("[*] Claude API로 일상 영어 단어 생성 중...")
-
-    toefl_context = ""
-    if toefl_words and len(toefl_words) > 0:
-        # TOEFL 단어들의 주제를 추출
-        word_list = [w.get("word", "") for w in toefl_words[:8]]
-        meanings = [w.get("meaning_ko", "") for w in toefl_words[:8]]
-
-        toefl_context = f"""
-📚 학생이 최근 TOEFL 학습에서 배운 단어/개념들:
-- 단어: {', '.join(word_list)}
-- 의미/주제: {', '.join(meanings[:3])}
-
-이 TOEFL 단어들과 관련된 일상 표현과 슬랭을 생성해주세요.
-"""
+    """Claude가 TOEFL iBT 빈출 학술 어휘를 선정하고 학습 자료 생성"""
+    print("[*] TOEFL 빈출 어휘 생성 중...")
 
     used_words = load_used_words()
     used_words_block = ""
     if used_words:
         used_words_block = (
-            "\n\n⚠️ Already used before, do NOT repeat any of these words:\n"
+            "\n⚠️ 아래 단어는 이미 다뤘으니 제외해주세요:\n"
             + ", ".join(used_words) + "\n"
         )
 
-    prompt = f"""Generate 5 daily English words and 8 quiz questions for TOEFL students.
-Return ONLY valid JSON, no other text.
-
-{toefl_context}
+    prompt = f"""TOEFL iBT에 실제로 자주 출제되는 학술 어휘 5개를 선정하고, 각각의 학습 자료를 JSON으로만 생성해주세요. ({target_date})
+JSON 외 다른 텍스트는 절대 포함하지 마세요.
 {used_words_block}
+단어 선정 기준 (반드시 준수):
+- TOEFL iBT Reading/Listening 지문에 실제 등장하는 학술·전문 어휘
+- AWL(Academic Word List) 또는 ETS 공식 교재 빈출 수준
+- 슬랭·구어체·일상 표현 절대 금지 (vibe, chill, hang out 등 금지)
+- 격식체 학술 동사·명사·형용사 위주 (예: alleviate, phenomenon, inevitable, empirical, constituent 등)
 
-JSON Format:
-{{"date": "{target_date}", "words": [{{"word": "example", "part_of_speech": "noun", "meaning_ko": "뜻", "explanation": "영어 설명", "example_from_convo": "I'm lowkey happy", "example_ko": "나 은근히 행복해", "tip": "동의어/반의어 등 뉘앙스 포함한 학습 팁", "emoji": "😊"}}], "quiz": [{{"type": "meaning", "word": "example", "question": "What does 'example' mean?", "options": ["correct definition", "near-synonym with subtle difference", "related word different connotation", "antonym"], "answer": 0, "explanation": "Korean explanation", "option_explanations": [null, "synonym(동의어): 뉘앙스 차이 설명", "related word: 왜 틀렸는지 설명", "antonym(반의어): 반대 의미 설명"]}}]}}
+JSON 형식:
+{{"date": "{target_date}", "words": [{{"word": "alleviate", "part_of_speech": "동사", "meaning_ko": "완화하다, 경감시키다", "explanation": "고통·문제·부담을 줄여서 덜 심각하게 만드는 것. TOEFL Reading 환경·의학 지문에 자주 등장해요.", "example_from_convo": "Governments implement policies to alleviate poverty.", "example_ko": "정부는 빈곤을 완화하기 위한 정책을 시행해요.", "tip": "동의어: relieve(덜다), mitigate(누그러뜨리다). 반의어: aggravate(악화시키다). Reading·Writing 빈출.", "emoji": "💊"}}], "quiz": [{{"type": "meaning", "word": "alleviate", "question": "'alleviate'의 의미로 가장 적절한 것은?", "options": ["문제나 고통을 줄이고 완화하다", "상황을 더욱 심각하게 만들다", "문제를 완전히 해결하다", "상황을 무시하고 방치하다"], "answer": 0, "explanation": "alleviate는 완전히 없애는 게 아니라 '줄이고 덜어주는' 뉘앙스예요.", "option_explanations": [null, "aggravate(악화)의 의미로 alleviate의 반의어예요.", "resolve/solve(해결)와 혼동하기 쉽지만 alleviate는 부분적 완화예요.", "neglect(방치)는 전혀 다른 의미예요."]}}]}}
 
-Rules:
-- Exactly 5 different words, none of which appear in the "already used" list above
-- Exactly 8 quiz questions
-- Mix of: 3x meaning, 3x fill_blank, 2x situation
-- Each word needs part_of_speech, meaning_ko, explanation, example_from_convo, example_ko, tip, emoji
-- IMPORTANT for quiz options: use SYNONYMS and ANTONYMS as wrong choices, NOT random distractors
-  * meaning quiz: [correct def, near-synonym(nuance differs), related word, antonym]
-  * fill_blank quiz: [correct word, antonym, near-synonym(doesn't fit context), related word]
-  * situation quiz: [correct word, antonym, plausible-but-wrong word, unrelated word]
-- ALWAYS include "option_explanations" array (same length as options, null for correct option)
-  * Korean explanation for each wrong option: WHY it's wrong and what makes it different (nuance/connotation/usage)
-- tip field: mention key synonyms/antonyms and usage nuances
-- Return ONLY the JSON object, nothing else"""
+규칙:
+- 단어 5개, 퀴즈 8개 (meaning 3개, fill_blank 3개, situation 2개)
+- tip: TOEFL 출제 영역(Reading/Writing/Listening/Speaking) + 핵심 동의어/반의어 포함
+- 오답 선택지: 동의어(뉘앙스 차이)·관련 단어·반의어 활용 (무작위 distractor 금지)
+- option_explanations: 오답마다 한국어로 WHY 설명 필수 (정답은 null)
+- JSON만 반환"""
 
     used_lower = {w.lower() for w in used_words}
     max_attempts = 3
@@ -226,61 +209,31 @@ Rules:
 
         repeats = [w["word"] for w in data["words"] if w.get("word", "").lower() in used_lower]
         if not repeats:
-            print(f"[+] 새로운 단어 {len(data['words'])}개 생성 완료 (중복 없음)")
+            words_generated = [w["word"] for w in data["words"]]
+            print(f"[+] TOEFL 어휘 {len(data['words'])}개 생성 완료: {', '.join(words_generated)}")
             return data
 
         if attempt < max_attempts - 1:
             print(f"[!] 중복 단어 생성됨 (시도 {attempt + 1}): {repeats} - 재시도")
             continue
 
-        # 마지막 시도까지 중복이면, 중복 단어와 그 단어의 퀴즈만 제거하고 부족한 만큼 채워넣음
-        print(f"[!] {max_attempts}회 시도 후에도 중복 발생: {repeats} - 중복 단어 제외 후 부족분 보충")
-        repeat_lower = {w.lower() for w in repeats}
-        data["words"] = [w for w in data["words"] if w.get("word", "").lower() not in repeat_lower]
-        data["quiz"] = [q for q in data["quiz"] if q.get("word", "").lower() not in repeat_lower]
-
-        missing = 5 - len(data["words"])
-        if missing > 0:
-            already_picked = {w.get("word", "").lower() for w in data["words"]}
-            fill = fetch_replacement_words(client, target_date, used_lower | already_picked, missing)
-            if fill:
-                data["words"].extend(fill["words"])
-                data["quiz"].extend(fill["quiz"])
-                print(f"[+] 부족분 {missing}개 보충 완료")
-            else:
-                # API 보충 실패 시 기본 단어 풀에서 미사용 단어로 채우기
-                print(f"[!] API 보충 실패 - 기본 단어로 대체")
-                exclude_now = used_lower | already_picked
-                defaults = get_default_words(target_date)
-                spare_words = [w for w in defaults["words"] if w.get("word", "").lower() not in exclude_now][:missing]
-                spare_names = {w["word"].lower() for w in spare_words}
-                spare_quiz = [q for q in defaults["quiz"] if q.get("word", "").lower() in spare_names]
-                data["words"].extend(spare_words)
-                data["quiz"].extend(spare_quiz)
-                print(f"[+] 기본 단어 {len(spare_words)}개 보충 (총 {len(data['words'])}개)")
-
-        if data["words"]:
-            return data
-
-    print(f"[!] {max_attempts}회 시도 모두 실패, 기본값 사용")
+    print(f"[!] {max_attempts}회 실패, 기본값 사용")
     return get_default_words(target_date)
 
 
 def fetch_replacement_words(client: anthropic.Anthropic, target_date: date, exclude_lower: set, count: int) -> dict | None:
-    """중복으로 제외된 단어를 대체할 N개를 추가로 생성 (실패하면 None)."""
-    prompt = f"""Generate exactly {count} daily English word(s) and {count * 2} quiz questions for TOEFL students.
-Return ONLY valid JSON, no other text.
+    """부족분 보충용 TOEFL 학술 어휘 N개 생성 (실패하면 None)."""
+    prompt = f"""TOEFL iBT 빈출 학술 어휘 {count}개와 퀴즈를 JSON으로만 생성해주세요.
 
-⚠️ Do NOT use any of these words:
-{', '.join(sorted(exclude_lower))}
+⚠️ 아래 단어는 제외해주세요: {', '.join(sorted(exclude_lower))}
+슬랭·구어체·일상 표현 금지. AWL/ETS 수준 학술 어휘만 선정해주세요.
 
-JSON Format:
-{{"words": [{{"word": "example", "part_of_speech": "noun", "meaning_ko": "뜻", "explanation": "설명", "example_from_convo": "I'm lowkey happy", "example_ko": "나 은근히 행복해", "tip": "일상에서 자주 씀", "emoji": "😊"}}], "quiz": [{{"type": "meaning", "word": "example", "question": "문제?", "options": ["선택1", "선택2"], "answer": 0, "explanation": "설명"}}]}}
+JSON 형식:
+{{"words": [{{"word": "단어", "part_of_speech": "품사", "meaning_ko": "뜻", "explanation": "설명", "example_from_convo": "학술 예문", "example_ko": "한국어 예문", "tip": "동의어/반의어/TOEFL 출제 영역", "emoji": "😊"}}], "quiz": [{{"type": "meaning", "word": "단어", "question": "문제?", "options": ["정답", "오답1", "오답2", "오답3"], "answer": 0, "explanation": "설명"}}]}}
 
-Rules:
-- Exactly {count} word(s), none from the excluded list above
-- Exactly {count * 2} quiz questions (2 per word)
-- Return ONLY the JSON object, nothing else"""
+규칙:
+- 정확히 {count}개 단어, 퀴즈 {count * 2}개
+- JSON만 반환"""
 
     try:
         response = client.messages.create(
@@ -295,7 +248,6 @@ Rules:
             return None
         data = json.loads(text[start:end])
         words = data.get("words", [])
-        # 대체 단어도 제외 목록과 겹치면 신뢰하지 않음
         if not words or any(w.get("word", "").lower() in exclude_lower for w in words):
             return None
         return data
