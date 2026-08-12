@@ -167,17 +167,17 @@ def generate_default_words(client: anthropic.Anthropic, target_date: date, toefl
 JSON 외 다른 텍스트는 절대 포함하지 마세요.
 {used_words_block}
 단어 선정 기준 (반드시 준수):
-- TOEFL iBT Reading/Listening 지문에 실제 등장하는 학술·전문 어휘
-- AWL(Academic Word List) 또는 ETS 공식 교재 빈출 수준
-- 슬랭·구어체·일상 표현 절대 금지 (vibe, chill, hang out 등 금지)
-- 격식체 학술 동사·명사·형용사 위주 (예: alleviate, phenomenon, inevitable, empirical, constituent 등)
+- 난이도: TOEFL iBT 고득점(25점 이상) 목표 수험생 기준 — B2~C1 수준 중상급·고급 어휘
+- 너무 쉬운 기초 학술 어휘 금지: analyze, indicate, require, suggest, significant, provide, increase, develop, create, include 등은 제외
+- 슬랭·구어체·일상 표현 절대 금지
+- 목표 난이도 예시: ameliorate, precipitate, exacerbate, tenuous, pervasive, coalesce, circumvent, ubiquitous, spurious, esoteric, cursory, ephemeral, mitigate, predatory, amalgamate, corroborate, substantiate, laconic, prolific, inundate
 
 JSON 형식:
-{{"date": "{target_date}", "words": [{{"word": "alleviate", "part_of_speech": "동사", "meaning_ko": "완화하다, 경감시키다", "explanation": "고통·문제·부담을 줄여서 덜 심각하게 만드는 것. TOEFL Reading 환경·의학 지문에 자주 등장해요.", "example_from_convo": "Governments implement policies to alleviate poverty.", "example_ko": "정부는 빈곤을 완화하기 위한 정책을 시행해요.", "tip": "동의어: relieve(덜다), mitigate(누그러뜨리다). 반의어: aggravate(악화시키다). Reading·Writing 빈출.", "emoji": "💊"}}], "quiz": [{{"type": "meaning", "word": "alleviate", "question": "'alleviate'의 의미로 가장 적절한 것은?", "options": ["문제나 고통을 줄이고 완화하다", "상황을 더욱 심각하게 만들다", "문제를 완전히 해결하다", "상황을 무시하고 방치하다"], "answer": 0, "explanation": "alleviate는 완전히 없애는 게 아니라 '줄이고 덜어주는' 뉘앙스예요.", "option_explanations": [null, "aggravate(악화)의 의미로 alleviate의 반의어예요.", "resolve/solve(해결)와 혼동하기 쉽지만 alleviate는 부분적 완화예요.", "neglect(방치)는 전혀 다른 의미예요."]}}]}}
+{{"date": "{target_date}", "words": [{{"word": "exacerbate", "part_of_speech": "동사", "meaning_ko": "악화시키다, 심화시키다", "explanation": "이미 나쁜 상황을 더욱 심각하게 만드는 것. TOEFL Reading 환경·사회 지문에서 자주 등장해요.", "example_from_convo": "Deforestation exacerbates climate change by reducing carbon absorption.", "example_ko": "삼림 벌채는 탄소 흡수를 줄여 기후변화를 악화시켜요.", "tip": "동의어: aggravate(악화), worsen(나빠지다). 반의어: alleviate(완화), mitigate(누그러뜨리다). Reading·Writing 고빈출.", "emoji": "📈"}}], "quiz": [{{"type": "meaning", "word": "exacerbate", "question": "'exacerbate'의 의미로 가장 적절한 것은?", "options": ["나쁜 상황을 더욱 심화시키다", "문제를 점진적으로 완화하다", "상황을 근본적으로 해결하다", "변화를 일시적으로 억제하다"], "answer": 0, "explanation": "exacerbate는 이미 나쁜 상황을 '더 나쁘게' 만드는 것이에요.", "option_explanations": [null, "alleviate(완화)의 의미로 exacerbate의 반의어예요.", "resolve(해결)와 혼동 — exacerbate는 해결이 아니라 악화예요.", "suppress(억제)는 다른 뉘앙스예요."]}}]}}
 
 규칙:
 - 단어 5개, 퀴즈 8개 (meaning 3개, fill_blank 3개, situation 2개)
-- tip: TOEFL 출제 영역(Reading/Writing/Listening/Speaking) + 핵심 동의어/반의어 포함
+- tip: TOEFL 출제 영역 + 핵심 동의어/반의어 포함
 - 오답 선택지: 동의어(뉘앙스 차이)·관련 단어·반의어 활용 (무작위 distractor 금지)
 - option_explanations: 오답마다 한국어로 WHY 설명 필수 (정답은 null)
 - JSON만 반환"""
