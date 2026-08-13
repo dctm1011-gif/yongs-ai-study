@@ -5,6 +5,10 @@ on:
     - cron: '0 6 * * *'  # 매일 06:00 UTC (한국 시간 15:00)
   workflow_dispatch:     # 수동 실행 가능
 
+concurrency:
+  group: generate-english-daily
+  cancel-in-progress: false
+
 jobs:
   generate:
     runs-on: ubuntu-latest

@@ -11,6 +11,10 @@ on:
       - 'package.json'
       - 'tsconfig.json'
 
+concurrency:
+  group: pre-build-health-check-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   health-check:
     runs-on: ubuntu-latest

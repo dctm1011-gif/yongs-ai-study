@@ -11,6 +11,10 @@ on:
     - cron: '0 6 * * *'
   workflow_dispatch:
 
+concurrency:
+  group: test-netlify-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -24,8 +28,18 @@ jobs:
 
       - name: Wait for Netlify deployment
         run: |
-          echo "⏳ Waiting 30 seconds for Netlify to deploy..."
-          sleep 30
+          echo "⏳ Polling Netlify until it responds..."
+          BASE="https://illustrious-cuchufli-7c4e58.netlify.app"
+          for i in $(seq 1 20); do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$BASE/.netlify/functions/test" --max-time 10 || echo "000")
+            if [ "$STATUS" -ge 200 ] && [ "$STATUS" -lt 500 ]; then
+              echo "✅ Netlify responded (HTTP $STATUS) after $i attempt(s)"
+              exit 0
+            fi
+            echo "Attempt $i: HTTP $STATUS, retrying in 5s..."
+            sleep 5
+          done
+          echo "⚠️ Netlify did not become ready in time, proceeding anyway"
 
       - name: Test Netlify Functions
         run: node .github/scripts/test-netlify-functions.mjs
