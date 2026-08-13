@@ -2006,5 +2006,65 @@
     "explanation": "특정 분야의 깊은 지식이나 소수의 사람들만 이해할 수 있는 것을 뜻해요. TOEFL Reading의 학술·철학 지문에서 특정 주제의 복잡성을 표현할 때 나타나요.",
     "tip": "동의어: arcane(신비로운), recondite(난해한), abstruse(어려운), obscure(불명확한). 반의어: accessible(접근 가능한), clear(명확한), elementary(기초적인). Reading·Listening에서 학문적 복잡성 표현.",
     "emoji": "🔮"
+  },
+  {
+    "id": "exacerbate",
+    "word": "exacerbate",
+    "pos": "동사",
+    "date": "2026-08-14",
+    "meaning": "악화시키다, 심화시키다",
+    "example_ko": "삼림 벌채는 탄소 흡수를 줄여 기후변화를 악화시켜요.",
+    "example_en": "Deforestation exacerbates climate change by reducing carbon absorption.",
+    "explanation": "이미 나쁜 상황을 더욱 심각하게 만드는 것. TOEFL Reading 환경·사회·과학 지문에서 매우 자주 등장해요.",
+    "tip": "동의어: aggravate(악화), worsen(나빠지다), compound(심각하게 함). 반의어: alleviate(완화), mitigate(누그러뜨리다), ameliorate(개선). Reading·Writing 고빈출.",
+    "emoji": "📈"
+  },
+  {
+    "id": "spurious",
+    "word": "spurious",
+    "pos": "형용사",
+    "date": "2026-08-14",
+    "meaning": "거짓의, 가짜의, 위조된",
+    "example_ko": "연구자는 비타민 보충제가 모든 질병을 예방한다는 허위 주장을 거부했어요.",
+    "example_en": "The researcher rejected the spurious claim that vitamin supplements prevent all diseases.",
+    "explanation": "겉으로는 타당해 보이지만 실제로는 거짓이거나 근거 없는 것. TOEFL Reading 과학·사회 비판적 읽기에서 단골 출제 어휘예요.",
+    "tip": "동의어: fraudulent(사기의), false(거짓), counterfeit(위조된). 반의어: authentic(진정한), genuine(진품의), legitimate(정당한). 논리·주장 평가 문맥에서 높은 빈출.",
+    "emoji": "🎭"
+  },
+  {
+    "id": "cursory",
+    "word": "cursory",
+    "pos": "형용사",
+    "date": "2026-08-14",
+    "meaning": "대충 한, 표면적인, 급하게 훑어본",
+    "example_ko": "원고를 대충 살펴봤을 때는 큰 오류가 없었지만, 정밀 분석 결과 수십 개를 발견했어요.",
+    "example_en": "A cursory examination of the manuscript revealed no significant errors, but thorough analysis found dozens.",
+    "explanation": "깊이 있게 하지 않고 빠르게 훑어보는 방식. TOEFL Reading 학문·역사 지문에서 분석·검토 맥락에서 자주 나와요.",
+    "tip": "동의어: superficial(피상적), perfunctory(형식적), hasty(서두른). 반의어: thorough(철저한), meticulous(정밀한), comprehensive(종합적). 'cursory vs. meticulous' 대비가 TOEFL에서 자주 출제.",
+    "emoji": "⚡"
+  },
+  {
+    "id": "amalgamate",
+    "word": "amalgamate",
+    "pos": "동사",
+    "date": "2026-08-14",
+    "meaning": "합병하다, 통합하다, 혼합하다",
+    "example_ko": "두 회사는 통합되어 글로벌 경쟁력을 갖춘 더 강한 기업을 형성했어요.",
+    "example_en": "The two companies amalgamated to form a stronger entity capable of competing globally.",
+    "explanation": "여러 개의 것을 하나로 모으거나 섞는 것. TOEFL Reading 비즈니스·역사·과학 지문에서 변화·발전 설명할 때 고빈출이에요.",
+    "tip": "동의어: merge(병합), consolidate(통합), combine(결합), coalesce(융합). 반의어: separate(분리), divide(나누다), fragment(분산). 비즈니스·조직·과학 맥락에서 높은 빈출.",
+    "emoji": "🔗"
+  },
+  {
+    "id": "predatory",
+    "word": "predatory",
+    "pos": "형용사",
+    "date": "2026-08-14",
+    "meaning": "포식하는, 약탈적인, 약자를 이용하는",
+    "example_ko": "약탈적 대출 관행은 취약층을 목표로 불공정한 이자를 부과해요.",
+    "example_en": "Predatory lending practices target vulnerable populations with unfair interest rates.",
+    "explanation": "약한 것을 괴롭히거나 착취하는 습성 또는 행동. TOEFL Reading 사회·경제·생물학 지문에서 부정적 행동·특성 비판할 때 자주 등장해요.",
+    "tip": "동의어: exploitative(착취적), rapacious(욕심쟁이), parasitic(기생적). 반의어: altruistic(이타적), benevolent(자선적). 윤리·경제·생태 비판 지문에서 높은 확률.",
+    "emoji": "🦁"
   }
 ]

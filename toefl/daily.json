@@ -1,174 +1,171 @@
 {
-  "date": "2026-08-13",
+  "date": "2026-08-14",
   "reading": {
-    "title": "Microbial Diversity in Extreme Environments",
-    "passage": "Microorganisms have demonstrated a remarkable capacity to thrive in environments that were once considered inhabitable by most life forms. Extremophiles, organisms that flourish in conditions of extreme temperature, pH, or salinity, have fundamentally altered our understanding of life's resilience. Deep-sea hydrothermal vents, with temperatures exceeding 400 degrees Celsius, harbor diverse microbial communities that derive energy from chemical reactions rather than sunlight. These thermophilic bacteria possess specialized proteins and cell membranes that remain stable under conditions that would denature proteins in ordinary organisms. The study of extremophiles has yielded practical applications in biotechnology, particularly in the development of heat-resistant enzymes used in polymerase chain reaction, a cornerstone technique in genetic research. Furthermore, the discovery of life in such hostile terrestrial environments suggests that similar microbial ecosystems might exist on other planets, particularly on Jupiter's moon Europa, where subsurface oceans may support chemosynthetic organisms.",
+    "title": "Ancient Roman Architecture and Structural Innovation",
+    "passage": "Roman architecture represents one of history's most significant technological achievements, fundamentally transforming how civilizations construct buildings and infrastructure. The Romans pioneered the widespread use of concrete, known as opus caementicium, which revolutionized construction methods by enabling the creation of larger, more durable structures than previously possible. This innovation allowed architects to design ambitious projects such as the Pantheon, whose massive dome remained the world's largest unreinforced concrete structure for nearly two thousand years. Beyond concrete, Roman engineers developed the arch and vault systems, which distributed weight more efficiently than earlier post-and-lintel construction techniques, allowing for taller buildings and longer spans. These structural innovations were not merely aesthetic achievements; they had profound practical implications for society. The aqueducts that transported fresh water across vast distances relied on arched construction, while amphitheaters could accommodate tens of thousands of spectators safely. Subsequently, Roman architectural principles influenced building design throughout Europe during the Renaissance and remain relevant to modern engineering. Contemporary architects continue to study Roman structures to understand principles of durability, efficiency, and sustainable design that have proven effective over millennia.",
     "vocabulary": [
       {
-        "word": "extremophiles",
-        "meaning_ko": "극한 환경에서 번성하는 미생물"
+        "word": "opus caementicium",
+        "meaning_ko": "로마 시대의 콘크리트, 고대 로마 건축에 사용된 시멘트 혼합물"
       },
       {
-        "word": "thermophilic",
-        "meaning_ko": "고온을 좋아하는, 열을 좋아하는"
+        "word": "revolutionized",
+        "meaning_ko": "혁신적으로 변화시키다, 근본적으로 개혁하다"
       },
       {
-        "word": "denature",
-        "meaning_ko": "단백질의 구조를 변형시키다"
+        "word": "vault",
+        "meaning_ko": "궁형 천장, 아치형 구조"
       },
       {
-        "word": "chemosynthetic",
-        "meaning_ko": "화학 합성을 통해 에너지를 얻는"
+        "word": "post-and-lintel",
+        "meaning_ko": "주춧돌과 보를 이용한 건축 방식"
       },
       {
-        "word": "resilience",
-        "meaning_ko": "회복력, 탄력성"
+        "word": "aqueduct",
+        "meaning_ko": "수로, 물을 운반하기 위한 구조물"
       },
       {
-        "word": "derive",
-        "meaning_ko": "유도하다, 얻다"
+        "word": "amphitheater",
+        "meaning_ko": "원형 극장, 원형 경기장"
       },
       {
-        "word": "subsurface",
-        "meaning_ko": "지표 아래의, 수심 아래의"
+        "word": "durability",
+        "meaning_ko": "내구성, 오래 지속되는 성질"
       }
     ],
     "questions": [
       {
-        "q": "According to the passage, what is the primary energy source for microbial communities at hydrothermal vents?",
+        "q": "According to the passage, what was the primary advantage of Roman concrete over earlier building materials?",
         "options": [
-          "A. Sunlight converted through photosynthesis",
-          "B. Chemical reactions in the surrounding water",
-          "C. Thermal energy from the Earth's core",
-          "D. Organic matter from dead organisms"
+          "It was more affordable to produce on a large scale",
+          "It enabled the construction of larger and more durable structures",
+          "It required less skilled labor to apply properly",
+          "It was more visually appealing in appearance"
         ],
         "answer": 1,
-        "explanation": "지문에 'Deep-sea hydrothermal vents...harbor diverse microbial communities that derive energy from chemical reactions rather than sunlight'라고 명시되어 있습니다. 따라서 답은 B입니다."
+        "explanation": "지문의 두 번째 문장에서 'revolutionized construction methods by enabling the creation of larger, more durable structures than previously possible'라고 명시되어 있습니다."
       },
       {
-        "q": "What can be inferred from the passage about the proteins in extremophilic bacteria?",
+        "q": "What can be inferred from the passage about the Pantheon's dome?",
         "options": [
-          "A. They are identical to proteins found in ordinary organisms",
-          "B. They have structural features that allow them to withstand extreme heat",
-          "C. They cannot function at temperatures below freezing",
-          "D. They were recently discovered to have no practical applications"
-        ],
-        "answer": 1,
-        "explanation": "지문에서 'These thermophilic bacteria possess specialized proteins and cell membranes that remain stable under conditions that would denature proteins in ordinary organisms'라고 했으므로, 극한 미생물의 단백질은 높은 열에 견딜 수 있는 특별한 구조를 가지고 있다는 것을 추론할 수 있습니다."
-      },
-      {
-        "q": "The word 'harbors' in the passage is closest in meaning to",
-        "options": [
-          "A. Controls or manages",
-          "B. Protects from danger",
-          "C. Contains or provides shelter for",
-          "D. Transports or carries away"
+          "It was the first concrete structure ever built by Romans",
+          "It required reinforcement to remain standing for two thousand years",
+          "Its structural design demonstrated the durability of Roman concrete",
+          "It was primarily built for religious rather than practical purposes"
         ],
         "answer": 2,
-        "explanation": "'harbors'는 '포함하다' 또는 '보관하다'는 의미로, 이 문맥에서는 hydrothermal vents가 다양한 미생물 군집을 '포함하고 있다'는 뜻입니다. 따라서 'Contains or provides shelter for'가 가장 적절한 의미입니다."
+        "explanation": "지문에서 Pantheon의 돔이 'nearly two thousand years' 동안 'unreinforced concrete' 구조로 남아있었다는 것은 로마 콘크리트의 내구성을 입증합니다."
       },
       {
-        "q": "Why does the author mention the discovery of extremophiles in terrestrial extreme environments?",
+        "q": "The word 'distributed' in the third sentence is closest in meaning to:",
         "options": [
-          "A. To demonstrate the failure of previous evolutionary theories",
-          "B. To suggest the potential existence of life on other planets",
-          "C. To criticize the use of enzymes in genetic research",
-          "D. To explain why all microorganisms require sunlight"
+          "transported from one location to another",
+          "divided and spread throughout a structure",
+          "determined based on calculations",
+          "reduced through careful planning"
         ],
         "answer": 1,
-        "explanation": "지문의 마지막 문장에서 'the discovery of life in such hostile terrestrial environments suggests that similar microbial ecosystems might exist on other planets'라고 명시하고 있으므로, 저자는 지구의 극한 환경에서의 발견이 다른 행성에서의 생명 존재 가능성을 시사한다고 언급하고 있습니다."
+        "explanation": "'distributed weight'는 '무게를 구조 전체에 나누어 분산시킨다'는 의미이므로, '나누어 퍼지게 하다'가 가장 가까운 뜻입니다."
+      },
+      {
+        "q": "Why does the author mention aqueducts and amphitheaters?",
+        "options": [
+          "To explain why Romans preferred concrete over other materials",
+          "To provide examples of how structural innovations had practical applications",
+          "To argue that Roman engineering was superior to modern techniques",
+          "To demonstrate that Roman buildings were primarily for entertainment"
+        ],
+        "answer": 1,
+        "explanation": "저자는 이 예시들을 통해 로마의 구조적 혁신이 '실질적인 함의를 가졌다'는 주장을 뒷받침하고 있습니다."
       }
     ]
   },
   "writing": {
-    "topic": "Expanding Public Transportation in Urban Areas",
-    "sentences": [
-      {
-        "original": "Extremophiles, organisms that flourish in conditions of extreme temperature, pH, or salinity, have fundamentally altered our understanding of life's resilience.",
-        "paraphrase": "Our perception of life's resilience has been fundamentally transformed by extremophiles, which are organisms capable of flourishing in extreme conditions such as high temperature, high or low pH, or high salinity.",
-        "tip": "능동태를 수동태로 변환하고, 구체적 설명을 추가하여 복잡도 증가"
-      },
-      {
-        "original": "Deep-sea hydrothermal vents, with temperatures exceeding 400 degrees Celsius, harbor diverse microbial communities that derive energy from chemical reactions rather than sunlight.",
-        "paraphrase": "Rather than relying on sunlight, the diverse microbial populations found in deep-sea hydrothermal vents—where temperatures surpass 400 degrees Celsius—obtain their energy through chemical reactions.",
-        "tip": "수식구 위치 변경과 구조 재편성을 통해 강조점 전환"
-      },
-      {
-        "original": "The study of extremophiles has yielded practical applications in biotechnology, particularly in the development of heat-resistant enzymes used in polymerase chain reaction.",
-        "paraphrase": "Practical applications in biotechnology have emerged from extremophile research, with particular emphasis on creating thermally stable enzymes for use in polymerase chain reaction procedures.",
-        "tip": "명사형(study)을 동사형(research)으로 변환하고, 수식어 배치 변경"
-      }
+    "topic": "온라인 교육 확대의 장점과 단점",
+    "model_sentences": [
+      "The expansion of online education has fundamentally transformed how students access learning opportunities in the twenty-first century.",
+      "Online platforms provide unprecedented flexibility, allowing learners to study at their own pace and from any location, which is particularly beneficial for working professionals and students in remote areas.",
+      "For instance, a student in a rural community can now access world-class instruction from leading universities without relocating, thereby democratizing educational access.",
+      "However, online education also presents significant challenges, including reduced face-to-face interaction and the digital divide that disadvantages students without reliable internet connections.",
+      "Despite these drawbacks, the benefits of accessibility and flexibility suggest that online education will continue to play an increasingly important role alongside traditional classroom instruction.",
+      "Universities should therefore invest in improving the quality of online platforms while simultaneously addressing the technological and social barriers that prevent equitable access.",
+      "Ultimately, a blended approach combining both online and in-person learning offers the most promising path forward for educational institutions in the modern era."
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer living in a city with convenient public transportation, entertainment, and job opportunities. Others prefer living in the countryside with fresh air, nature, and a slower pace of life. Which environment do you prefer and why? Include specific reasons and details in your response.",
+    "prompt": "Some people prefer reading books to learn about stories and ideas. Others prefer watching movies. Which do you prefer and why? Include specific reasons and details in your response.",
     "model_sentences": [
-      "Personally, I prefer living in a city because of the numerous advantages it offers for my lifestyle and career development.",
-      "First, cities provide much better access to public transportation, which means I don't need to own a car and can save a lot of money on fuel and maintenance.",
-      "For example, I can take the subway or bus to go to work, school, or visit friends without worrying about parking or traffic congestion.",
-      "Additionally, cities offer more job opportunities and educational institutions, so I have more options for my future career.",
-      "Although countryside living has its appeal with nature and fresh air, I believe the convenience and opportunities in urban areas make it a better choice for me overall."
+      "Personally, I prefer reading books over watching movies because books offer a deeper and more immersive experience.",
+      "When you read a novel, you actively engage your imagination to visualize characters, settings, and scenarios, which creates a more personal connection to the story.",
+      "For example, when I read 'The Lord of the Rings,' I could imagine Middle-earth according to my own vision, whereas a movie presents a fixed interpretation that everyone sees identically.",
+      "Additionally, books provide more detailed character development and internal thoughts that movies often have to cut or simplify due to time constraints.",
+      "While movies can be entertaining and visually stunning, I believe that the interactive nature of reading makes it a superior medium for truly understanding complex ideas and narratives.",
+      "Therefore, whenever I have the choice between reading a book and watching its film adaptation, I almost always choose the book first."
     ]
   },
   "listening": {
-    "title": "Student Club Budget Discussion",
+    "title": "Professor's Office Meeting About Research Paper Topic",
     "type": "conversation",
-    "script": "Student A: Hey, did you see the email about the club budget meeting next week? Student B: Yeah, I did. I'm actually pretty concerned about it. We need to talk about how we're spending money. Student A: What do you mean? I thought we had plenty of funds from last semester. Student B: Well, we did, but we spent a lot on the trip to the museum last month. Plus, we want to organize a big event for next semester, so we need to be careful. Student A: Oh, I see. So what are you suggesting? Student B: I think we should cut back on some smaller expenses and focus our budget on the main events that most members actually attend. Student A: That makes sense. Maybe we could reduce the budget for snacks at meetings? Student B: Exactly! And we could also ask members for small voluntary contributions for special events. Student A: Good idea. I'll bring these suggestions to the meeting. Thanks for thinking this through!",
+    "script": "Student: Professor Martinez, I wanted to discuss potential topics for my research paper. I'm thinking about studying the impact of sustainable architecture on urban development, but I'm not sure if it's too broad.\n\nProfessor: That's an excellent starting point. Sustainable architecture is definitely relevant, but you're right—it's quite expansive. Let me suggest a more focused approach. What if you narrowed it down to examine how green building certifications, like LEED, have influenced commercial real estate decisions in major cities over the past decade?\n\nStudent: That sounds much more manageable. Would I need to include case studies of specific buildings?\n\nProfessor: Absolutely. Case studies would strengthen your argument considerably. I'd recommend selecting three to four prominent LEED-certified buildings in different cities—perhaps New York, Los Angeles, and Singapore—and analyzing how their design choices addressed both environmental concerns and economic feasibility.\n\nStudent: What about the timeline? How far back should I research?\n\nProfessor: I'd suggest starting from 2010, when LEED certification became more standardized internationally. That gives you a solid fifteen-year window of data. Also, try to incorporate interviews or statements from architects if possible.\n\nStudent: This is really helpful. When should I have a draft completed?\n\nProfessor: Bring me a preliminary outline by next month. That way, we can make sure you're on the right track before you dive too deeply into research.",
     "vocabulary": [
       {
-        "word": "budget",
-        "meaning_ko": "예산"
+        "word": "sustainable architecture",
+        "meaning_ko": "지속 가능한 건축, 환경을 고려한 건축 설계"
       },
       {
-        "word": "funds",
-        "meaning_ko": "자금, 기금"
+        "word": "LEED",
+        "meaning_ko": "Leadership in Energy and Environmental Design, 친환경 건축 인증 제도"
       },
       {
-        "word": "concerned",
-        "meaning_ko": "걱정하는, 관심 있는"
+        "word": "certifications",
+        "meaning_ko": "인증서, 공식적 인정 또는 승인"
       },
       {
-        "word": "voluntary",
-        "meaning_ko": "자발적인, 자원의"
+        "word": "feasibility",
+        "meaning_ko": "실행 가능성, 실현 가능한 정도"
       },
       {
-        "word": "contributions",
-        "meaning_ko": "기여, 공헌, 기부금"
+        "word": "preliminary outline",
+        "meaning_ko": "초안 개요, 사전 계획 개요"
+      },
+      {
+        "word": "incorporate",
+        "meaning_ko": "포함시키다, 통합하다"
       }
     ],
     "questions": [
       {
-        "q": "What is the main topic of the conversation?",
+        "q": "What is the main purpose of this conversation?",
         "options": [
-          "A. Planning a field trip to a museum",
-          "B. Discussing how to manage the club's budget and expenses",
-          "C. Comparing the costs of different club events",
-          "D. Deciding whether to increase membership fees"
+          "To explain the history of sustainable architecture",
+          "To help the student narrow down and refine a research paper topic",
+          "To discuss the professor's own research on green buildings",
+          "To encourage the student to study international architecture exclusively"
         ],
         "answer": 1,
-        "explanation": "대화의 중심은 클럽의 예산 관리와 지출에 관한 것입니다. Student B가 기금 사용에 대해 걱정하고, 그들이 어떻게 돈을 쓸지에 대해 논의하고 있으므로 답은 B입니다."
+        "explanation": "교수가 학생의 광범위한 주제를 좀 더 구체적으로 좁히는 것을 돕기 위해 제안하고 조언합니다."
       },
       {
-        "q": "What does Student B suggest to manage the budget more effectively?",
+        "q": "What does the professor recommend the student do to strengthen the research paper?",
         "options": [
-          "A. Cancel all special events until more money is available",
-          "B. Increase the membership fees immediately",
-          "C. Reduce expenses on smaller items and ask for voluntary contributions",
-          "D. Ask the school administration for additional funding"
+          "Focus only on European LEED-certified buildings",
+          "Include case studies of three to four prominent buildings in different cities",
+          "Research only buildings constructed after 2015",
+          "Interview only architects from North America"
         ],
-        "answer": 2,
-        "explanation": "Student B는 '작은 지출을 줄이고 특별 행사에 대해 자발적인 기여를 요청하자'고 제안합니다. 이는 대화의 후반부에서 명확하게 나타납니다."
+        "answer": 1,
+        "explanation": "교수는 '케이스 스터디가 당신의 주장을 상당히 강화할 것'이라고 말하며, 다양한 도시의 3-4개 건물을 선택할 것을 권장합니다."
       },
       {
-        "q": "Why did Student B become concerned about the club's budget?",
+        "q": "Why does the professor suggest starting research from 2010?",
         "options": [
-          "A. The museum trip cost more than expected",
-          "B. Members were complaining about the snack quality",
-          "C. Past spending and upcoming events required careful financial planning",
-          "D. The school reduced the club's funding for next year"
+          "Because that is when LEED certification was first invented",
+          "Because that year marked the beginning of sustainable architecture",
+          "Because LEED certification became more standardized internationally around that time",
+          "Because most of the world's major cities were built in 2010"
         ],
         "answer": 2,
-        "explanation": "Student B는 지난달 박물관 여행에서 많은 돈을 썼고, 다음 학기에 큰 행사를 계획하고 있기 때문에 예산을 신중히 관리해야 한다고 말합니다. 따라서 과거 지출과 앞으로의 행사 때문에 걱정하고 있습니다."
+        "explanation": "교수는 '2010년은 LEED 인증이 국제적으로 더 표준화되었을 때'라고 명확히 설명합니다."
       }
     ]
   }
