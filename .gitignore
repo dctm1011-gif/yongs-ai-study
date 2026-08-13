@@ -42,7 +42,12 @@ example
 
 # generated native folders
 /ios
-/android
+
+# android build outputs and machine-specific config (source files ARE committed for EAS)
+android/local.properties
+android/build/
+android/app/build/
+android/.gradle/
 
 # Local Netlify folder
 .netlify
