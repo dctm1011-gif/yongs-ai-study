@@ -2,8 +2,8 @@ name: Daily Netlify Health Check
 
 on:
   schedule:
-    # 매일 오전 6:30 (배포 스크립트 후)
-    - cron: '30 6 * * *'
+    # 매일 06:45 UTC (english/investment/toefl 생성+배포 완료 후)
+    - cron: '45 6 * * *'
   workflow_dispatch:
 
 concurrency:
@@ -13,6 +13,7 @@ concurrency:
 jobs:
   monitor:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
