@@ -1,171 +1,111 @@
 {
   "date": "2026-08-14",
   "reading": {
-    "title": "Ancient Roman Architecture and Structural Innovation",
-    "passage": "Roman architecture represents one of history's most significant technological achievements, fundamentally transforming how civilizations construct buildings and infrastructure. The Romans pioneered the widespread use of concrete, known as opus caementicium, which revolutionized construction methods by enabling the creation of larger, more durable structures than previously possible. This innovation allowed architects to design ambitious projects such as the Pantheon, whose massive dome remained the world's largest unreinforced concrete structure for nearly two thousand years. Beyond concrete, Roman engineers developed the arch and vault systems, which distributed weight more efficiently than earlier post-and-lintel construction techniques, allowing for taller buildings and longer spans. These structural innovations were not merely aesthetic achievements; they had profound practical implications for society. The aqueducts that transported fresh water across vast distances relied on arched construction, while amphitheaters could accommodate tens of thousands of spectators safely. Subsequently, Roman architectural principles influenced building design throughout Europe during the Renaissance and remain relevant to modern engineering. Contemporary architects continue to study Roman structures to understand principles of durability, efficiency, and sustainable design that have proven effective over millennia.",
-    "vocabulary": [
-      {
-        "word": "opus caementicium",
-        "meaning_ko": "로마 시대의 콘크리트, 고대 로마 건축에 사용된 시멘트 혼합물"
-      },
-      {
-        "word": "revolutionized",
-        "meaning_ko": "혁신적으로 변화시키다, 근본적으로 개혁하다"
-      },
-      {
-        "word": "vault",
-        "meaning_ko": "궁형 천장, 아치형 구조"
-      },
-      {
-        "word": "post-and-lintel",
-        "meaning_ko": "주춧돌과 보를 이용한 건축 방식"
-      },
-      {
-        "word": "aqueduct",
-        "meaning_ko": "수로, 물을 운반하기 위한 구조물"
-      },
-      {
-        "word": "amphitheater",
-        "meaning_ko": "원형 극장, 원형 경기장"
-      },
-      {
-        "word": "durability",
-        "meaning_ko": "내구성, 오래 지속되는 성질"
-      }
-    ],
+    "title": "The Impact of Artificial Intelligence on Education",
+    "passage": "Artificial intelligence is revolutionizing the education sector by personalizing learning experiences for students. AI-powered platforms can analyze student performance data and adapt teaching methods to match individual learning styles. Teachers can use AI tools to automate administrative tasks, allowing them to focus more on interactive instruction. However, concerns about data privacy and reduced human interaction remain important considerations. Educational institutions must balance technological innovation with maintaining meaningful student-teacher relationships.",
     "questions": [
       {
-        "q": "According to the passage, what was the primary advantage of Roman concrete over earlier building materials?",
+        "q": "According to the passage, what is one benefit of AI in education?",
         "options": [
-          "It was more affordable to produce on a large scale",
-          "It enabled the construction of larger and more durable structures",
-          "It required less skilled labor to apply properly",
-          "It was more visually appealing in appearance"
+          "It eliminates the need for teachers",
+          "It personalizes learning experiences for students",
+          "It increases administrative workload",
+          "It reduces student performance"
         ],
         "answer": 1,
-        "explanation": "지문의 두 번째 문장에서 'revolutionized construction methods by enabling the creation of larger, more durable structures than previously possible'라고 명시되어 있습니다."
+        "explanation": "지문에서 'AI-powered platforms can analyze student performance data and adapt teaching methods to match individual learning styles'라고 명시되어 있습니다. AI는 학생의 학습 스타일에 맞게 교육 방식을 개인화합니다."
       },
       {
-        "q": "What can be inferred from the passage about the Pantheon's dome?",
+        "q": "What concern does the passage mention about AI in education?",
         "options": [
-          "It was the first concrete structure ever built by Romans",
-          "It required reinforcement to remain standing for two thousand years",
-          "Its structural design demonstrated the durability of Roman concrete",
-          "It was primarily built for religious rather than practical purposes"
-        ],
-        "answer": 2,
-        "explanation": "지문에서 Pantheon의 돔이 'nearly two thousand years' 동안 'unreinforced concrete' 구조로 남아있었다는 것은 로마 콘크리트의 내구성을 입증합니다."
-      },
-      {
-        "q": "The word 'distributed' in the third sentence is closest in meaning to:",
-        "options": [
-          "transported from one location to another",
-          "divided and spread throughout a structure",
-          "determined based on calculations",
-          "reduced through careful planning"
+          "High cost of implementation",
+          "Data privacy and reduced human interaction",
+          "Difficulty in updating software",
+          "Lack of student interest"
         ],
         "answer": 1,
-        "explanation": "'distributed weight'는 '무게를 구조 전체에 나누어 분산시킨다'는 의미이므로, '나누어 퍼지게 하다'가 가장 가까운 뜻입니다."
+        "explanation": "'However, concerns about data privacy and reduced human interaction remain important considerations'라는 문장에서 주요 우려 사항이 명확하게 언급되어 있습니다."
       },
       {
-        "q": "Why does the author mention aqueducts and amphitheaters?",
+        "q": "What does the passage suggest educational institutions should do?",
         "options": [
-          "To explain why Romans preferred concrete over other materials",
-          "To provide examples of how structural innovations had practical applications",
-          "To argue that Roman engineering was superior to modern techniques",
-          "To demonstrate that Roman buildings were primarily for entertainment"
+          "Replace all teachers with AI",
+          "Balance technological innovation with meaningful relationships",
+          "Abandon AI technology entirely",
+          "Focus only on administrative automation"
         ],
         "answer": 1,
-        "explanation": "저자는 이 예시들을 통해 로마의 구조적 혁신이 '실질적인 함의를 가졌다'는 주장을 뒷받침하고 있습니다."
+        "explanation": "마지막 문장 'Educational institutions must balance technological innovation with maintaining meaningful student-teacher relationships'에서 기관들이 기술혁신과 인간관계의 균형을 맞춰야 한다고 제시합니다."
       }
     ]
   },
   "writing": {
-    "topic": "온라인 교육 확대의 장점과 단점",
-    "model_sentences": [
-      "The expansion of online education has fundamentally transformed how students access learning opportunities in the twenty-first century.",
-      "Online platforms provide unprecedented flexibility, allowing learners to study at their own pace and from any location, which is particularly beneficial for working professionals and students in remote areas.",
-      "For instance, a student in a rural community can now access world-class instruction from leading universities without relocating, thereby democratizing educational access.",
-      "However, online education also presents significant challenges, including reduced face-to-face interaction and the digital divide that disadvantages students without reliable internet connections.",
-      "Despite these drawbacks, the benefits of accessibility and flexibility suggest that online education will continue to play an increasingly important role alongside traditional classroom instruction.",
-      "Universities should therefore invest in improving the quality of online platforms while simultaneously addressing the technological and social barriers that prevent equitable access.",
-      "Ultimately, a blended approach combining both online and in-person learning offers the most promising path forward for educational institutions in the modern era."
+    "prompt": "Do you agree or disagree with the statement: 'Technology should replace traditional teaching methods in schools'? Use specific reasons and examples to support your answer.",
+    "structure": {
+      "intro": "명확한 입장 제시: 동의하거나 동의하지 않는 입장을 분명히 밝히고, 1-2개의 주요 이유를 간단히 소개합니다.",
+      "body1": "첫 번째 이유: 구체적인 예시와 함께 기술의 장점(개인맞춤 학습, 접근성 향상) 또는 단점(인간관계 약화, 기술격차)을 설명합니다.",
+      "body2": "두 번째 이유: 교육의 다양한 측면을 고려합니다. 예를 들어 학생의 사회성 발달, 비판적 사고력 개발, 또는 기술의 효율성 등을 논의합니다.",
+      "conclusion": "핵심 주장을 재강조하고, 균형잡힌 접근(기술과 전통 방식의 조화)이 가장 효과적일 수 있음을 시사합니다."
+    },
+    "useful_phrases": [
+      "In my opinion, technology should not completely replace traditional teaching because...",
+      "Furthermore, students need face-to-face interaction for social development...",
+      "For example, online platforms can personalize learning, but teachers provide...",
+      "In conclusion, the most effective approach would be to combine both methods...",
+      "One significant concern is that..."
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer reading books to learn about stories and ideas. Others prefer watching movies. Which do you prefer and why? Include specific reasons and details in your response.",
-    "model_sentences": [
-      "Personally, I prefer reading books over watching movies because books offer a deeper and more immersive experience.",
-      "When you read a novel, you actively engage your imagination to visualize characters, settings, and scenarios, which creates a more personal connection to the story.",
-      "For example, when I read 'The Lord of the Rings,' I could imagine Middle-earth according to my own vision, whereas a movie presents a fixed interpretation that everyone sees identically.",
-      "Additionally, books provide more detailed character development and internal thoughts that movies often have to cut or simplify due to time constraints.",
-      "While movies can be entertaining and visually stunning, I believe that the interactive nature of reading makes it a superior medium for truly understanding complex ideas and narratives.",
-      "Therefore, whenever I have the choice between reading a book and watching its film adaptation, I almost always choose the book first."
+    "prompt": "Some people believe that learning through online platforms is more effective than traditional classroom learning. Others prefer traditional classroom learning. Which approach do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer... because...",
+      "One important reason is that...",
+      "For example, when I...",
+      "Additionally, online/traditional learning offers...",
+      "In contrast, the other approach..."
+    ],
+    "sample_points": [
+      "전통 교실 학습의 장점: 교사와의 직접적인 상호작용, 또래 학생들과의 협력 학습, 실시간 질문 가능, 학습 규율 유지",
+      "온라인 학습의 장점: 시간과 장소의 자유로움, 개인맞춤 학습 속도, 반복 학습 가능, 다양한 학습 자료 접근"
     ]
   },
   "listening": {
-    "title": "Professor's Office Meeting About Research Paper Topic",
+    "title": "대학 상담 - 전공 선택에 대한 조언",
     "type": "conversation",
-    "script": "Student: Professor Martinez, I wanted to discuss potential topics for my research paper. I'm thinking about studying the impact of sustainable architecture on urban development, but I'm not sure if it's too broad.\n\nProfessor: That's an excellent starting point. Sustainable architecture is definitely relevant, but you're right—it's quite expansive. Let me suggest a more focused approach. What if you narrowed it down to examine how green building certifications, like LEED, have influenced commercial real estate decisions in major cities over the past decade?\n\nStudent: That sounds much more manageable. Would I need to include case studies of specific buildings?\n\nProfessor: Absolutely. Case studies would strengthen your argument considerably. I'd recommend selecting three to four prominent LEED-certified buildings in different cities—perhaps New York, Los Angeles, and Singapore—and analyzing how their design choices addressed both environmental concerns and economic feasibility.\n\nStudent: What about the timeline? How far back should I research?\n\nProfessor: I'd suggest starting from 2010, when LEED certification became more standardized internationally. That gives you a solid fifteen-year window of data. Also, try to incorporate interviews or statements from architects if possible.\n\nStudent: This is really helpful. When should I have a draft completed?\n\nProfessor: Bring me a preliminary outline by next month. That way, we can make sure you're on the right track before you dive too deeply into research.",
-    "vocabulary": [
-      {
-        "word": "sustainable architecture",
-        "meaning_ko": "지속 가능한 건축, 환경을 고려한 건축 설계"
-      },
-      {
-        "word": "LEED",
-        "meaning_ko": "Leadership in Energy and Environmental Design, 친환경 건축 인증 제도"
-      },
-      {
-        "word": "certifications",
-        "meaning_ko": "인증서, 공식적 인정 또는 승인"
-      },
-      {
-        "word": "feasibility",
-        "meaning_ko": "실행 가능성, 실현 가능한 정도"
-      },
-      {
-        "word": "preliminary outline",
-        "meaning_ko": "초안 개요, 사전 계획 개요"
-      },
-      {
-        "word": "incorporate",
-        "meaning_ko": "포함시키다, 통합하다"
-      }
-    ],
+    "script": "Student: 'Professor, I'm having trouble deciding between engineering and business. I enjoy problem-solving, but I also care about working with people.' Professor: 'Those are both valuable skills. In engineering, you'll focus on technical problem-solving, but modern engineering also requires strong teamwork. In business, you'll work with diverse teams daily, though you'll still need analytical skills. Many students find that internships help clarify their interests. Have you considered interning in either field?' Student: 'That's a great idea. I hadn't thought about that.' Professor: 'You could also take electives from both fields this semester to get a better sense of what resonates with you. The choice doesn't have to be final immediately; many students explore both before deciding.'",
     "questions": [
       {
-        "q": "What is the main purpose of this conversation?",
+        "q": "What is the main topic of this conversation?",
         "options": [
-          "To explain the history of sustainable architecture",
-          "To help the student narrow down and refine a research paper topic",
-          "To discuss the professor's own research on green buildings",
-          "To encourage the student to study international architecture exclusively"
-        ],
-        "answer": 1,
-        "explanation": "교수가 학생의 광범위한 주제를 좀 더 구체적으로 좁히는 것을 돕기 위해 제안하고 조언합니다."
-      },
-      {
-        "q": "What does the professor recommend the student do to strengthen the research paper?",
-        "options": [
-          "Focus only on European LEED-certified buildings",
-          "Include case studies of three to four prominent buildings in different cities",
-          "Research only buildings constructed after 2015",
-          "Interview only architects from North America"
-        ],
-        "answer": 1,
-        "explanation": "교수는 '케이스 스터디가 당신의 주장을 상당히 강화할 것'이라고 말하며, 다양한 도시의 3-4개 건물을 선택할 것을 권장합니다."
-      },
-      {
-        "q": "Why does the professor suggest starting research from 2010?",
-        "options": [
-          "Because that is when LEED certification was first invented",
-          "Because that year marked the beginning of sustainable architecture",
-          "Because LEED certification became more standardized internationally around that time",
-          "Because most of the world's major cities were built in 2010"
+          "The benefits of engineering careers",
+          "How to improve problem-solving skills",
+          "Advice on choosing between engineering and business majors",
+          "The importance of internship programs"
         ],
         "answer": 2,
-        "explanation": "교수는 '2010년은 LEED 인증이 국제적으로 더 표준화되었을 때'라고 명확히 설명합니다."
+        "explanation": "학생이 공학과 경영학 사이에서 전공 선택에 어려움을 겪고 있고, 교수가 이에 대한 조언을 제공하는 것이 주요 내용입니다."
+      },
+      {
+        "q": "What does the professor suggest the student should do? (Select all that apply)",
+        "options": [
+          "Complete an internship before deciding",
+          "Take electives from both fields",
+          "Focus only on engineering",
+          "Avoid working with teams in either field"
+        ],
+        "answer": 0,
+        "explanation": "교수는 인턴십 경험을 통해 관심 분야를 명확히 할 수 있다고 제안하며, 동시에 두 분야의 선택과목을 수강할 것을 권장합니다."
+      },
+      {
+        "q": "According to the professor, what skill is needed in both engineering and business?",
+        "options": [
+          "Technical problem-solving only",
+          "Teamwork and collaboration",
+          "Business management",
+          "Advanced mathematics"
+        ],
+        "answer": 1,
+        "explanation": "교수는 '현대 공학도 강력한 팀워크가 필요하고' 비즈니스는 '다양한 팀과 함께 일한다'고 언급하여 두 분야 모두 팀워크가 중요함을 강조합니다."
       }
     ]
   }
