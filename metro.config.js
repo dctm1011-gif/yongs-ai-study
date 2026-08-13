@@ -5,10 +5,6 @@ const config = getDefaultConfig(__dirname);
 // Optimize bundle size
 config.resolver = {
   ...config.resolver,
-  // Exclude unnecessary modules
-  blockList: [
-    /node_modules\/react-native\/Libraries\/Animated\/(?!Animated\.js)/,
-  ],
 };
 
 // Enable optimizations
