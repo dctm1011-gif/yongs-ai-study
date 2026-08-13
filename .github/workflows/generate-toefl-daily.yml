@@ -2,7 +2,7 @@ name: Generate Daily TOEFL Content
 
 on:
   schedule:
-    - cron: '0 6 * * *'  # 매일 06:00 UTC (한국 시간 15:00)
+    - cron: '30 6 * * *'  # 매일 06:30 UTC (15:30 KST) - english/investment push 충돌 방지
   workflow_dispatch:     # 수동 실행 가능
 
 jobs:
@@ -17,7 +17,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 

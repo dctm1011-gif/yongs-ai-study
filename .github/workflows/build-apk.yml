@@ -1,10 +1,11 @@
 name: Build APK
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
+
+concurrency:
+  group: build-apk
+  cancel-in-progress: false
 
 jobs:
   build:
