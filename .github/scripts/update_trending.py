@@ -6,8 +6,8 @@ from datetime import datetime, timedelta
 
 API_KEY = os.environ.get('YOUTUBE_API_KEY')
 if not API_KEY:
-    print('Error: YOUTUBE_API_KEY not set')
-    exit(1)
+    print('YOUTUBE_API_KEY not set — skipping update')
+    exit(0)
 
 # 어제부터 오늘까지 한국 한국어 급상승 인기 영상
 yesterday = (datetime.now() - timedelta(days=1)).isoformat() + 'Z'
