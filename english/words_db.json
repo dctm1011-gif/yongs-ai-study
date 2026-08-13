@@ -1946,5 +1946,65 @@
     "explanation": "To severely criticize or censure someone harshly; or literally, to strip or damage skin",
     "tip": "Synonym: condemn, denounce (덜 극단적). Antonym: praise, commend. Literal meaning(피부): abrade, chafe와 유사하지만 excoriate는 더 심각함. 라틴어 excoriare에서 유래",
     "emoji": "⚡"
+  },
+  {
+    "id": "precipitate",
+    "word": "precipitate",
+    "pos": "동사",
+    "date": "2026-08-13",
+    "meaning": "촉발하다, 야기하다; (화학) 침전시키다",
+    "example_ko": "경제 위기는 전국적인 사회 불안을 촉발했어요.",
+    "example_en": "The economic crisis precipitated widespread social unrest throughout the nation.",
+    "explanation": "어떤 사건이나 상황을 갑자기 일으키거나 초래하다는 의미. TOEFL Reading의 역사·과학·사회 지문에서 매우 빈번하게 출현해요. 화학 맥락에서는 '침전'의 뜻도 있어요.",
+    "tip": "동의어: trigger(촉발), provoke(야기), incite(선동). 반의어: prevent(방지), avert(피하다). Reading·Writing 초고빈출—특히 역사·정치 텍스트에서 인과관계 표현.",
+    "emoji": "⚡"
+  },
+  {
+    "id": "tenuous",
+    "word": "tenuous",
+    "pos": "형용사",
+    "date": "2026-08-13",
+    "meaning": "약한, 희미한, 불확실한",
+    "example_ko": "두 연구 간의 연결은 기껏해야 약할 뿐이고, 더 많은 증거가 필요해요.",
+    "example_en": "The connection between the two studies is tenuous at best; more evidence is needed.",
+    "explanation": "논리, 증거, 관계 등이 약하거나 불명확하여 신뢰성이 떨어지는 상태를 나타내요. TOEFL Reading에서 주장의 타당성을 평가할 때 자주 등장합니다.",
+    "tip": "동의어: flimsy(약한), fragile(취약한), questionable(의심스러운). 반의어: robust(견고한), solid(확실한), substantiated(입증된). Reading 논리 분석에서 핵심어—주장 평가 문제.",
+    "emoji": "🪡"
+  },
+  {
+    "id": "pervasive",
+    "word": "pervasive",
+    "pos": "형용사",
+    "date": "2026-08-13",
+    "meaning": "널리 퍼진, 만연한, 광범위한",
+    "example_ko": "플라스틱 오염이 전 세계 해양 생태계에 만연해 있어요.",
+    "example_en": "Plastic pollution has become pervasive in marine ecosystems worldwide.",
+    "explanation": "어떤 현상, 사상, 문제 등이 광범위하게 존재하거나 깊숙이 영향을 미치고 있는 상태. TOEFL Reading의 사회·환경·문화 지문에서 매우 자주 나타나요.",
+    "tip": "동의어: widespread(광범위한), prevalent(흔한), ubiquitous(어디나 있는). 반의어: rare(드문), localized(국한된), sparse(희박한). Reading·Listening 매우 자주 출제—특히 문제 상황 설명.",
+    "emoji": "🌊"
+  },
+  {
+    "id": "corroborate",
+    "word": "corroborate",
+    "pos": "동사",
+    "date": "2026-08-13",
+    "meaning": "확증하다, 뒷받침하다, 입증하다",
+    "example_ko": "여러 고고학적 발견이 그 고대 문명에 대한 역사 기록을 확증해요.",
+    "example_en": "Multiple archaeological findings corroborate the historical account of the ancient civilization.",
+    "explanation": "어떤 주장이나 사실을 다른 증거나 정보로 확인하고 지지해주는 것. TOEFL Reading의 학술 텍스트에서 논증 구조를 이해할 때 필수적이에요.",
+    "tip": "동의어: substantiate(입증), verify(검증), confirm(확인), validate(타당성 확인). 반의어: refute(반박), contradict(모순), dispute(이의). Writing Task 1에서 주장 지지 시 자주 요구됨.",
+    "emoji": "✓"
+  },
+  {
+    "id": "esoteric",
+    "word": "esoteric",
+    "pos": "형용사",
+    "date": "2026-08-13",
+    "meaning": "심오한, 비의적인, 소수만 이해할 수 있는",
+    "example_ko": "양자역학은 전문가들만 완전히 이해할 수 있는 심오한 수학 개념을 포함해요.",
+    "example_en": "Quantum mechanics involves esoteric mathematical concepts that only specialists can fully grasp.",
+    "explanation": "특정 분야의 깊은 지식이나 소수의 사람들만 이해할 수 있는 것을 뜻해요. TOEFL Reading의 학술·철학 지문에서 특정 주제의 복잡성을 표현할 때 나타나요.",
+    "tip": "동의어: arcane(신비로운), recondite(난해한), abstruse(어려운), obscure(불명확한). 반의어: accessible(접근 가능한), clear(명확한), elementary(기초적인). Reading·Listening에서 학문적 복잡성 표현.",
+    "emoji": "🔮"
   }
 ]

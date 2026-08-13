@@ -2,145 +2,208 @@
   "date": "2026-08-13",
   "words": [
     {
-      "word": "vibe",
-      "part_of_speech": "명사",
-      "meaning_ko": "분위기, 느낌",
-      "explanation": "누군가나 무언가가 주는 느낌이나 분위기를 나타내요.",
-      "example_from_convo": "I'm getting a good vibe from this",
-      "example_ko": "이거 좋은 느낌이 드는데",
-      "tip": "SNS와 일상 대화에서 매우 자주 쓰이는 표현이에요.",
-      "emoji": "✨"
-    },
-    {
-      "word": "chill",
-      "part_of_speech": "동사/형용사",
-      "meaning_ko": "편하게 쉬다, 차분한",
-      "explanation": "긴장을 풀고 편하게 시간을 보낼 때 쓰여요.",
-      "example_from_convo": "Let's just chill at home",
-      "example_ko": "그냥 집에서 편하게 있자",
-      "tip": "'chill out'으로도 많이 쓰여요.",
-      "emoji": "😎"
-    },
-    {
-      "word": "vibe check",
-      "part_of_speech": "명사",
-      "meaning_ko": "분위기 확인",
-      "explanation": "누군가의 기분이나 상태를 확인하는 것을 말해요.",
-      "example_from_convo": "Vibe check: how are you feeling?",
-      "example_ko": "기분은 어때? 기분 체크 해볼게.",
-      "tip": "현대 영어에서 젊은 세대가 즐겨 쓰는 표현이에요.",
-      "emoji": "📊"
-    },
-    {
-      "word": "nail it",
+      "word": "precipitate",
       "part_of_speech": "동사",
-      "meaning_ko": "완벽하게 해내다",
-      "explanation": "어려운 일을 완벽하게 성공하는 것을 표현해요.",
-      "example_from_convo": "You really nailed that presentation",
-      "example_ko": "그 발표 완벽하게 해냈어",
-      "tip": "칭찬할 때 자주 쓰이는 긍정적인 표현이에요.",
-      "emoji": "🎯"
+      "meaning_ko": "촉발하다, 야기하다; (화학) 침전시키다",
+      "explanation": "어떤 사건이나 상황을 갑자기 일으키거나 초래하다는 의미. TOEFL Reading의 역사·과학·사회 지문에서 매우 빈번하게 출현해요. 화학 맥락에서는 '침전'의 뜻도 있어요.",
+      "example_from_convo": "The economic crisis precipitated widespread social unrest throughout the nation.",
+      "example_ko": "경제 위기는 전국적인 사회 불안을 촉발했어요.",
+      "tip": "동의어: trigger(촉발), provoke(야기), incite(선동). 반의어: prevent(방지), avert(피하다). Reading·Writing 초고빈출—특히 역사·정치 텍스트에서 인과관계 표현.",
+      "emoji": "⚡"
     },
     {
-      "word": "hang out",
+      "word": "tenuous",
+      "part_of_speech": "형용사",
+      "meaning_ko": "약한, 희미한, 불확실한",
+      "explanation": "논리, 증거, 관계 등이 약하거나 불명확하여 신뢰성이 떨어지는 상태를 나타내요. TOEFL Reading에서 주장의 타당성을 평가할 때 자주 등장합니다.",
+      "example_from_convo": "The connection between the two studies is tenuous at best; more evidence is needed.",
+      "example_ko": "두 연구 간의 연결은 기껏해야 약할 뿐이고, 더 많은 증거가 필요해요.",
+      "tip": "동의어: flimsy(약한), fragile(취약한), questionable(의심스러운). 반의어: robust(견고한), solid(확실한), substantiated(입증된). Reading 논리 분석에서 핵심어—주장 평가 문제.",
+      "emoji": "🪡"
+    },
+    {
+      "word": "pervasive",
+      "part_of_speech": "형용사",
+      "meaning_ko": "널리 퍼진, 만연한, 광범위한",
+      "explanation": "어떤 현상, 사상, 문제 등이 광범위하게 존재하거나 깊숙이 영향을 미치고 있는 상태. TOEFL Reading의 사회·환경·문화 지문에서 매우 자주 나타나요.",
+      "example_from_convo": "Plastic pollution has become pervasive in marine ecosystems worldwide.",
+      "example_ko": "플라스틱 오염이 전 세계 해양 생태계에 만연해 있어요.",
+      "tip": "동의어: widespread(광범위한), prevalent(흔한), ubiquitous(어디나 있는). 반의어: rare(드문), localized(국한된), sparse(희박한). Reading·Listening 매우 자주 출제—특히 문제 상황 설명.",
+      "emoji": "🌊"
+    },
+    {
+      "word": "corroborate",
       "part_of_speech": "동사",
-      "meaning_ko": "시간을 보내다, 어울리다",
-      "explanation": "친구들과 함께 시간을 보내거나 누군가와 어울리는 것을 의미해요.",
-      "example_from_convo": "Wanna hang out this weekend?",
-      "example_ko": "이번 주말에 같이 시간 보낼래?",
-      "tip": "일상 영어에서 매우 자연스럽고 자주 쓰이는 표현입니다.",
-      "emoji": "👋"
+      "meaning_ko": "확증하다, 뒷받침하다, 입증하다",
+      "explanation": "어떤 주장이나 사실을 다른 증거나 정보로 확인하고 지지해주는 것. TOEFL Reading의 학술 텍스트에서 논증 구조를 이해할 때 필수적이에요.",
+      "example_from_convo": "Multiple archaeological findings corroborate the historical account of the ancient civilization.",
+      "example_ko": "여러 고고학적 발견이 그 고대 문명에 대한 역사 기록을 확증해요.",
+      "tip": "동의어: substantiate(입증), verify(검증), confirm(확인), validate(타당성 확인). 반의어: refute(반박), contradict(모순), dispute(이의). Writing Task 1에서 주장 지지 시 자주 요구됨.",
+      "emoji": "✓"
+    },
+    {
+      "word": "esoteric",
+      "part_of_speech": "형용사",
+      "meaning_ko": "심오한, 비의적인, 소수만 이해할 수 있는",
+      "explanation": "특정 분야의 깊은 지식이나 소수의 사람들만 이해할 수 있는 것을 뜻해요. TOEFL Reading의 학술·철학 지문에서 특정 주제의 복잡성을 표현할 때 나타나요.",
+      "example_from_convo": "Quantum mechanics involves esoteric mathematical concepts that only specialists can fully grasp.",
+      "example_ko": "양자역학은 전문가들만 완전히 이해할 수 있는 심오한 수학 개념을 포함해요.",
+      "tip": "동의어: arcane(신비로운), recondite(난해한), abstruse(어려운), obscure(불명확한). 반의어: accessible(접근 가능한), clear(명확한), elementary(기초적인). Reading·Listening에서 학문적 복잡성 표현.",
+      "emoji": "🔮"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "vibe",
-      "question": "'vibe'는 어떤 의미인가요?",
+      "word": "precipitate",
+      "question": "'precipitate'의 의미로 가장 적절한 것은?",
       "options": [
-        "기계음",
-        "분위기/느낌",
-        "음악",
-        "색상"
+        "어떤 사건을 갑자기 일으키거나 촉발하다",
+        "천천히 진행되는 과정을 지연시키다",
+        "화학 물질을 증발시키다",
+        "물질을 용해시키기 위해 가열하다"
       ],
-      "answer": 1,
-      "explanation": "vibe는 누군가나 무언가가 주는 분위기나 느낌을 나타내요."
-    },
-    {
-      "type": "fill_blank",
-      "word": "vibe",
-      "sentence": "I'm getting a really good _____ from this place.",
-      "sentence_ko": "이 장소에서 정말 좋은 분위기가 느껴져.",
-      "answer": "vibe",
-      "hint": "분위기/느낌"
+      "answer": 0,
+      "explanation": "'precipitate'의 핵심은 '갑자기' 또는 '촉발하다'는 의미예요.",
+      "option_explanations": [
+        null,
+        "delay(지연) 또는 postpone(연기)와는 다른 의미예요.",
+        "화학에서 precipitate는 '침전'이지만, '증발'은 evaporate예요.",
+        "dissolve(용해)와는 다른 개념이에요."
+      ]
     },
     {
       "type": "meaning",
-      "word": "chill",
-      "question": "'Let's chill'은 무엇을 의미하나요?",
+      "word": "tenuous",
+      "question": "'tenuous'가 설명하는 것으로 가장 적절한 것은?",
       "options": [
-        "춤을 추자",
-        "편하게 쉬자",
-        "달리자",
-        "먹자"
+        "신뢰성이 떨어지고 약한 관계나 증거",
+        "매우 강력하고 명확한 논리",
+        "점진적으로 발전하는 과정",
+        "물리적으로 두꺼운 재료"
       ],
-      "answer": 1,
-      "explanation": "chill은 긴장을 풀고 편하게 시간을 보낸다는 뜻이에요."
-    },
-    {
-      "type": "fill_blank",
-      "word": "chill",
-      "sentence": "I don't want to go anywhere today, let's just _____ at home.",
-      "sentence_ko": "오늘 어디 가기 싫어, 그냥 집에서 편하게 있자.",
-      "answer": "chill",
-      "hint": "편하게 쉬다"
+      "answer": 0,
+      "explanation": "'tenuous'는 약하고 불확실한 상태를 나타내요.",
+      "option_explanations": [
+        null,
+        "robust(견고한) 또는 solid(확실한)는 tenuous의 반의어예요.",
+        "progressive(점진적)는 tenuous와 무관한 개념이에요.",
+        "tenuous는 물리적 두께가 아니라 추상적인 약함을 의미해요."
+      ]
     },
     {
       "type": "meaning",
-      "word": "nail it",
-      "question": "'nail it'의 의미는?",
+      "word": "esoteric",
+      "question": "'esoteric knowledge'가 의미하는 것은?",
       "options": [
-        "못을 박다",
-        "실패하다",
-        "완벽하게 해내다",
-        "느리다"
+        "소수의 전문가들만 이해할 수 있는 심오한 지식",
+        "누구나 쉽게 접근할 수 있는 기초 지식",
+        "역사 기록에 남겨진 공식적인 지식",
+        "대중 매체를 통해 널리 알려진 정보"
       ],
-      "answer": 2,
-      "explanation": "nail it은 어려운 일을 완벽하게 성공하는 것을 의미해요."
+      "answer": 0,
+      "explanation": "'esoteric'은 복잡하고 소수만 이해할 수 있는 것을 의미해요.",
+      "option_explanations": [
+        null,
+        "accessible(접근 가능한) 또는 elementary(기초적)는 esoteric의 반의어예요.",
+        "official(공식적)과 esoteric은 다른 개념이에요.",
+        "widespread(널리 알려진) 또는 popular(인기 있는)는 esoteric과 반대예요."
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "word": "pervasive",
+      "question": "The _____ use of smartphones has transformed communication patterns across all age groups.",
+      "options": [
+        "pervasive",
+        "sparse",
+        "occasional",
+        "hypothetical"
+      ],
+      "answer": 0,
+      "explanation": "스마트폰의 광범위하고 만연한 사용을 설명해야 하므로 'pervasive'가 정답이에요.",
+      "option_explanations": [
+        null,
+        "sparse(희박한)는 반의어—광범위한 사용을 설명하지 못해요.",
+        "occasional(때때로)는 '광범위한'이라는 의미가 없어요.",
+        "hypothetical(가정적)은 실제 현상을 설명하는 데 부적절해요."
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "word": "corroborate",
+      "question": "The witness testimony _____ the defendant's alibi, providing crucial evidence for the trial.",
+      "options": [
+        "corroborated",
+        "contradicted",
+        "complicated",
+        "undermined"
+      ],
+      "answer": 0,
+      "explanation": "증인 증언이 피고인의 알리바이를 확증하는 상황이므로 'corroborated'가 정답이에요.",
+      "option_explanations": [
+        null,
+        "contradicted(모순된)는 반의어—증거를 부정해요.",
+        "complicated(복잡하게)는 확증의 의미가 없어요.",
+        "undermined(약화시킨)는 반의어—증거를 약화시켜요."
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "word": "precipitate",
+      "question": "The sudden price increase _____ a wave of consumer protests and market volatility.",
+      "options": [
+        "precipitated",
+        "prevented",
+        "prolonged",
+        "postponed"
+      ],
+      "answer": 0,
+      "explanation": "가격 인상이 소비자 항의를 '촉발했다'는 의미이므로 'precipitated'가 정답이에요.",
+      "option_explanations": [
+        null,
+        "prevented(방지했다)는 반의어—오히려 촉발했어요.",
+        "prolonged(연장했다)는 인과관계가 맞지 않아요.",
+        "postponed(연기했다)는 의미가 맞지 않아요."
+      ]
     },
     {
       "type": "situation",
-      "word": "nail it",
-      "question": "친구가 어려운 시험을 잘 봤을 때 뭐라고 말할까요?",
+      "word": "tenuous",
+      "question": "Scientific journal이 한 연구의 주요 발견을 평가할 때, 편집자가 다음과 같이 말했어요: \"The link between the laboratory results and real-world applications remains _____. We need stronger empirical data.\" 빈칸에 가장 적절한 단어는?",
       "options": [
-        "You failed it",
-        "You nailed it!",
-        "You broke it",
-        "You lost it"
+        "tenuous",
+        "robust",
+        "comprehensive",
+        "substantiated"
       ],
-      "answer": 1,
-      "explanation": "누군가가 뭔가를 완벽하게 해냈을 때 'You nailed it!'이라고 칭찬해요."
+      "answer": 0,
+      "explanation": "더 강한 데이터가 필요하다는 것은 현재의 연결이 약하고 불확실하다는 뜻이므로 'tenuous'가 정답이에요.",
+      "option_explanations": [
+        null,
+        "robust(견고한)는 '더 강한 데이터가 필요'라는 문맥과 맞지 않아요.",
+        "comprehensive(포괄적)는 약함을 표현하지 못해요.",
+        "substantiated(입증된)는 tenuous의 반의어예요."
+      ]
     },
     {
-      "type": "meaning",
-      "word": "hang out",
-      "question": "'hang out'은 뭘 할 때 쓰나요?",
+      "type": "situation",
+      "word": "pervasive",
+      "question": "환경학 강의에서 교수가 말했어요: \"Climate change is _____ across all sectors of the economy, affecting agriculture, energy, and transportation.\" 문맥상 가장 적절한 단어는?",
       "options": [
-        "공부할 때",
-        "친구들과 시간을 보낼 때",
-        "일할 때",
-        "운동할 때"
+        "pervasive",
+        "isolated",
+        "temporary",
+        "localized"
       ],
-      "answer": 1,
-      "explanation": "hang out은 친구들과 함께 시간을 보내는 것을 의미해요."
-    },
-    {
-      "type": "fill_blank",
-      "word": "hang out",
-      "sentence": "Do you want to _____ together this weekend?",
-      "sentence_ko": "이번 주말에 함께 시간 보낼래?",
-      "answer": "hang out",
-      "hint": "시간을 보내다"
+      "answer": 0,
+      "explanation": "모든 경제 부문(농업, 에너지, 운송)에 영향을 미친다는 것은 광범위하고 만연한 상태를 나타내므로 'pervasive'가 정답이에요.",
+      "option_explanations": [
+        null,
+        "isolated(고립된)는 반의어—광범위하지 않아요.",
+        "temporary(일시적)는 기후변화의 지속적 영향과 맞지 않아요.",
+        "localized(국한된)는 반의어—특정 지역만을 의미해요."
+      ]
     }
   ]
 }
