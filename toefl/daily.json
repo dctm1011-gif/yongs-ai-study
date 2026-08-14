@@ -1,186 +1,109 @@
 {
   "date": "2026-08-15",
   "reading": {
-    "title": "Linguistic Relativity and Language Structure",
-    "passage": "The Sapir-Whorf hypothesis, a foundational concept in linguistics, proposes that language structure fundamentally shapes cognitive processes and worldview perception. This theory suggests that speakers of different languages conceptualize reality through distinct linguistic frameworks, implying that cognitive categories are not universal but rather linguistically determined. For instance, languages with multiple grammatical aspects for expressing time may cultivate different temporal perspectives among speakers compared to languages with minimal temporal distinctions. Empirical research has provided nuanced support for this hypothesis, demonstrating moderate correlations between linguistic features and cognitive patterns. While strong versions of linguistic determinism have been largely refuted, contemporary scholars acknowledge that language exerts subtle but measurable influences on perception, memory, and categorization processes. The debate remains vigorous, with neuroscientific evidence increasingly revealing how linguistic properties modulate neural activation patterns during conceptual processing. This ongoing investigation underscores the intricate relationship between linguistic structure and human cognition, challenging the notion that language merely reflects pre-existing thought.",
-    "vocabulary": [
-      {
-        "word": "Sapir-Whorf hypothesis",
-        "meaning_ko": "언어의 구조가 인지 과정을 결정한다는 언어학 이론"
-      },
-      {
-        "word": "linguistic relativity",
-        "meaning_ko": "언어 구조가 사고방식을 상대적으로 결정한다는 개념"
-      },
-      {
-        "word": "cognitive processes",
-        "meaning_ko": "인지 과정, 사고 작용"
-      },
-      {
-        "word": "determinism",
-        "meaning_ko": "결정론, 언어가 사고를 결정한다는 입장"
-      },
-      {
-        "word": "modulate",
-        "meaning_ko": "조절하다, 변조하다"
-      },
-      {
-        "word": "empirical research",
-        "meaning_ko": "경험적 연구, 실증 연구"
-      },
-      {
-        "word": "conceptualize",
-        "meaning_ko": "개념화하다, 개념적으로 생각하다"
-      },
-      {
-        "word": "nuanced",
-        "meaning_ko": "미묘한, 세밀한"
-      }
-    ],
+    "title": "Bioluminescence in Deep Sea Organisms",
+    "passage": "Bioluminescence is the production of light by living organisms through chemical reactions. Deep sea creatures rely heavily on this phenomenon for survival in the pitch-black ocean depths where sunlight cannot penetrate. Many fish and jellyfish use bioluminescent signals for communication, finding mates, and attracting prey. Scientists estimate that approximately 90% of deep sea organisms possess some form of bioluminescence, making it one of the most common adaptations in the marine environment.",
     "questions": [
       {
-        "q": "According to the passage, what does the Sapir-Whorf hypothesis primarily claim?",
+        "q": "According to the passage, why do deep sea creatures use bioluminescence?",
         "options": [
-          "Language is a universal system that all humans share equally.",
-          "Language structure shapes how speakers perceive and conceptualize reality.",
-          "Cognitive processes are entirely independent of linguistic influences.",
-          "Different languages have identical grammatical structures for expressing time."
+          "To regulate body temperature",
+          "For communication and finding food",
+          "To migrate to shallow waters",
+          "To produce oxygen"
         ],
         "answer": 1,
-        "explanation": "지문의 첫 문장에서 언어 구조가 인지 과정과 세계관을 형성한다는 것이 가설의 핵심 주장입니다."
+        "explanation": "본문에서 깊은 바다 생물들이 '의사소통, 짝짓기, 먹이 잡기'를 위해 생물발광을 사용한다고 명시되어 있습니다."
       },
       {
-        "q": "What can be inferred from the passage about strong versions of linguistic determinism?",
+        "q": "What percentage of deep sea organisms have bioluminescence?",
         "options": [
-          "They remain widely accepted in modern linguistics.",
-          "They have been largely rejected based on evidence.",
-          "They are supported by all contemporary neuroscientific studies.",
-          "They explain why all languages are structurally identical."
+          "Approximately 50%",
+          "Approximately 75%",
+          "Approximately 90%",
+          "Approximately 100%"
         ],
-        "answer": 1,
-        "explanation": "지문에서 'strong versions of linguistic determinism have been largely refuted'라고 명시되어 있습니다."
+        "answer": 2,
+        "explanation": "본문의 마지막 문장에서 '약 90%의 깊은 바다 생물이 생물발광 능력을 가지고 있다'고 명시되어 있습니다."
       },
       {
-        "q": "The word 'modulate' in the final paragraph is closest in meaning to",
+        "q": "Where can sunlight NOT penetrate?",
         "options": [
-          "ignore or dismiss",
-          "regulate or adjust",
-          "eliminate completely",
-          "accelerate rapidly"
+          "Shallow ocean areas",
+          "The pitch-black ocean depths",
+          "Coral reefs",
+          "Coastal regions"
         ],
         "answer": 1,
-        "explanation": "modulate는 '조절하다' 또는 '변화시키다'라는 의미로, 이 문맥에서 언어가 신경 활성화를 어떻게 조절하는지에 대해 말하고 있습니다."
-      },
-      {
-        "q": "Why does the author provide the example about grammatical aspects of time?",
-        "options": [
-          "To prove that all languages are completely different",
-          "To illustrate how linguistic features may influence cognitive perception",
-          "To demonstrate that time cannot be expressed in language",
-          "To argue that the Sapir-Whorf hypothesis is entirely invalid"
-        ],
-        "answer": 1,
-        "explanation": "시간 표현의 문법적 차이 예시는 언어 구조가 시간에 대한 인식에 어떻게 영향을 미칠 수 있는지를 보여주기 위함입니다."
+        "explanation": "본문에서 '햇빛이 침투할 수 없는 암흑의 대양 깊이'라고 명확히 설명하고 있습니다."
       }
     ]
   },
   "writing": {
-    "topic": "Explain your position on immigration policy and provide reasons with examples.",
-    "sentences": [
-      {
-        "original": "This ongoing investigation underscores the intricate relationship between linguistic structure and human cognition, challenging the notion that language merely reflects pre-existing thought.",
-        "paraphrase": "This continuous examination highlights how complex the connection is between language structure and human thinking, questioning whether language simply mirrors thoughts that already exist.",
-        "tip": "복합 구문을 단순화하고 'intricate relationship'을 'how complex the connection is'로 명사구→절 구조로 변환"
-      },
-      {
-        "original": "While strong versions of linguistic determinism have been largely refuted, contemporary scholars acknowledge that language exerts subtle but measurable influences on perception, memory, and categorization processes.",
-        "paraphrase": "Although researchers have rejected extreme forms of linguistic determinism, modern experts recognize that language has small yet significant effects on how we perceive, remember, and organize information.",
-        "tip": "concession구문 유지하면서 'exerts influences on'을 'has effects on'으로 동의어 치환, 복잡한 명사구 단순화"
-      },
-      {
-        "original": "Languages with multiple grammatical aspects for expressing time may cultivate different temporal perspectives among speakers compared to languages with minimal temporal distinctions.",
-        "paraphrase": "When languages have many grammatical ways to express time, speakers may develop different views about time than those who speak languages with few time-related distinctions.",
-        "tip": "복잡한 비교구문을 능동 구조로 변환하고 'cultivate'를 'develop'으로 동의어 치환"
-      }
+    "prompt": "Do you agree or disagree with the statement: 'Technology has improved the quality of human life more than it has harmed it'? Use specific examples to support your opinion.",
+    "structure": {
+      "intro": "명확한 입장 표현 (동의 또는 반대)과 주요 아이디어 2-3개를 간단히 소개",
+      "body1": "첫 번째 이유와 구체적 사례 제시 (의료, 교육, 통신 등의 발전)",
+      "body2": "두 번째 이유와 구체적 사례 제시 (사회적 연결, 경제 성장, 정보 접근성 등)",
+      "conclusion": "주요 아이디어 재정리 및 최종 입장 재확인"
+    },
+    "useful_phrases": [
+      "In my opinion, technology has significantly improved...",
+      "Furthermore, advancements in technology have enabled...",
+      "For example, the development of smartphones has...",
+      "On the other hand, one could argue that...",
+      "To summarize, the benefits outweigh the drawbacks because..."
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer online shopping for its convenience and variety. Others prefer shopping in physical stores for the personal experience. Which do you prefer and why? Include specific reasons and details.",
-    "model_sentences": [
-      "I personally prefer shopping in physical stores because I can see and touch products before buying them.",
-      "First, physically visiting a store allows me to check the quality and size immediately, which reduces the risk of ordering the wrong item.",
-      "For example, when I buy clothes, I can try them on to make sure they fit perfectly, unlike online shopping where I might have to return items multiple times.",
-      "Additionally, I enjoy the in-store experience of browsing around and discovering products I didn't plan to buy, which makes shopping more enjoyable and interactive.",
-      "Overall, while online shopping is convenient, the ability to inspect products and have a personal shopping experience makes physical stores my preferred choice."
+    "prompt": "Some people prefer to study in a group with others. Other people prefer to study alone. Which study method do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer studying in a group because...",
+      "One reason is that group study helps me...",
+      "Additionally, when studying with others, I can..."
+    ],
+    "sample_points": [
+      "그룹 스터디를 통해 다른 관점을 이해할 수 있고, 어려운 부분을 함께 해결할 수 있습니다.",
+      "그룹 스터디는 동기부여가 되며, 토론을 통해 개념을 더 깊이 있게 학습할 수 있습니다."
     ]
   },
   "listening": {
-    "title": "Dormitory Room Assignment Inquiry",
+    "title": "Campus Library Services",
     "type": "conversation",
-    "script": "Student: Hi, I wanted to ask about my dorm room assignment. I haven't received my housing letter yet, and I'm getting worried.\nHousing Officer: Oh, I understand your concern. Let me check our system. Can you provide your student ID number?\nStudent: Sure, it's 2847569.\nHousing Officer: One moment... Ah yes, I see your file. Your assignment has been processed, but there was a slight delay in mailing. You should receive your letter within the next two to three days.\nStudent: Great! But I was also wondering if it's possible to request a specific dorm or roommate.\nHousing Officer: Well, the initial assignments are based on your preferences from the housing application, but if you have special circumstances, you can submit a housing change request after you move in. We typically allow changes during the first two weeks of the semester.\nStudent: That sounds reasonable. And when should I plan to arrive for move-in day?\nHousing Officer: Move-in begins on August 25th and continues through August 30th. We recommend arriving earlier rather than later to have more parking availability. Here's a pamphlet with all the details.",
-    "vocabulary": [
-      {
-        "word": "dorm room assignment",
-        "meaning_ko": "기숙사 방 배정"
-      },
-      {
-        "word": "housing officer",
-        "meaning_ko": "주택/기숙사 담당 직원"
-      },
-      {
-        "word": "processed",
-        "meaning_ko": "처리된, 진행 중인"
-      },
-      {
-        "word": "circumstances",
-        "meaning_ko": "상황, 환경"
-      },
-      {
-        "word": "move-in day",
-        "meaning_ko": "입실날, 이사 가는 날"
-      },
-      {
-        "word": "availability",
-        "meaning_ko": "이용 가능성, 공석"
-      },
-      {
-        "word": "pamphlet",
-        "meaning_ko": "팜플렛, 소책자"
-      }
-    ],
+    "script": "Student: Excuse me, I'm new to campus and I'm not sure how to use the library. Librarian: Welcome! I'd be happy to help. Our library offers many services beyond books. We have computers, study rooms, and access to online databases. Student: That sounds great! Can I borrow books immediately? Librarian: Yes, once you get your student ID, you can borrow up to 20 books at a time for three weeks. We also offer a 24-hour study area on the third floor. Student: Perfect! Do you have research consultants? Librarian: Absolutely. You can book a consultation with our research specialists for free. They can help you find credible sources for your papers. Student: Excellent. I think I have everything I need. Librarian: Great! Feel free to visit us anytime. We're open Monday to Friday from 8 AM to 10 PM.",
     "questions": [
       {
-        "q": "What is the main reason the student visits the housing officer?",
+        "q": "What services does the library provide according to the librarian?",
         "options": [
-          "To complain about the quality of dormitory facilities",
-          "To inquire about the status of their room assignment",
-          "To request a transfer to a different university",
-          "To pay the dormitory deposit fee"
+          "Only books and computers",
+          "Books, computers, study rooms, and online databases",
+          "Only online databases",
+          "Books and a cafeteria"
         ],
         "answer": 1,
-        "explanation": "학생은 기숙사 방 배정을 받지 못했으며, 그 상태를 확인하려고 방문합니다."
+        "explanation": "사서가 '책 외에도 컴퓨터, 스터디룸, 온라인 데이터베이스 접근 등 많은 서비스를 제공한다'고 설명했습니다."
       },
       {
-        "q": "What does the housing officer say about when the student might receive their letter?",
+        "q": "How many books can a student borrow at one time?",
         "options": [
-          "It has already been delivered to their home.",
-          "It will arrive within two to three days.",
-          "It won't be sent until after they arrive on campus.",
-          "They need to come to the office to pick it up in person."
+          "10 books",
+          "15 books",
+          "20 books",
+          "Unlimited"
         ],
-        "answer": 1,
-        "explanation": "주택 담당자는 우편 발송에 약간의 지연이 있었지만 2-3일 이내에 도착할 것이라고 말합니다."
+        "answer": 2,
+        "explanation": "사서가 '학생 ID를 받으면 한 번에 최대 20권을 빌릴 수 있다'고 명시했습니다."
       },
       {
-        "q": "When can students request a housing change if they want to switch rooms?",
+        "q": "What is the purpose of booking a consultation with research specialists?",
         "options": [
-          "Only before they receive their initial assignment",
-          "During the first two weeks of the semester after moving in",
-          "Only during the move-in period",
-          "Any time during the academic year"
+          "To borrow more books",
+          "To get help finding credible sources for papers",
+          "To access the 24-hour study area",
+          "To extend book borrowing time"
         ],
         "answer": 1,
-        "explanation": "주택 담당자는 이사 후 학기 시작 후 첫 2주 동안 기숙사 변경 신청이 가능하다고 설명합니다."
+        "explanation": "사서가 '연구 전문가와의 상담은 논문을 위한 신뢰할 수 있는 출처를 찾는 데 도움을 주기 위한 것'이라고 설명했습니다."
       }
     ]
   }
