@@ -8,6 +8,7 @@ import VocaScreen from './voca';
 import TOEFLScreen from './toefl';
 import InvestmentScreen from './investment';
 import CultureScreen from './culture';
+import ChecklistScreen from './checklist';
 
 const APP_VARIANT = process.env.EXPO_PUBLIC_APP_VARIANT ?? 'full';
 import LoginScreen from './login';
@@ -159,6 +160,16 @@ function MainTabs() {
             title: 'Korean',
             tabBarIcon: ({ color }) => (
               <MaterialIcons name="menu-book" size={26} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Checklist"
+          component={ChecklistScreen}
+          options={{
+            title: 'Today',
+            tabBarIcon: ({ color }) => (
+              <MaterialIcons name="check-circle-outline" size={26} color={color} />
             ),
           }}
         />

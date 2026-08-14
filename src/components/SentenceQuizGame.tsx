@@ -3,7 +3,7 @@ import {
   View, Text, TouchableOpacity, StyleSheet, ActivityIndicator, ScrollView, Animated,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { get, update, increment } from 'firebase/database';
+import { get, update, increment, set as dbSet } from 'firebase/database';
 import { getDatabase } from 'firebase/database';
 import { useAuth } from '../context/AuthContext';
 import { userRef } from '../utils/userDb';
@@ -218,6 +218,13 @@ export default function SentenceQuizGame({ onComplete }: Props) {
   if (gameState === 'complete') {
     const pct = Math.round((score / items.length) * 100);
     const emoji = pct >= 80 ? '🎯' : pct >= 60 ? '💪' : '📖';
+    const handleComplete = () => {
+      if (uid) {
+        const today = new Date(Date.now() + 9 * 3600000).toISOString().split('T')[0];
+        dbSet(userRef(uid, `completion/english_sentence/${today}`), true).catch(() => {});
+      }
+      (onComplete ?? loadGame)();
+    };
     return (
       <View style={s.center}>
         <Text style={[s.completeEmoji]}>{emoji}</Text>
@@ -226,7 +233,7 @@ export default function SentenceQuizGame({ onComplete }: Props) {
         <Text style={s.completeMsg}>
           {pct >= 80 ? '뉘앙스 감각이 훌륭해요!' : pct >= 60 ? '조금만 더 연습해볼까요?' : '예문을 자세히 살펴보세요'}
         </Text>
-        <TouchableOpacity style={s.retryBtn} onPress={onComplete ?? loadGame}>
+        <TouchableOpacity style={s.retryBtn} onPress={handleComplete}>
           <Text style={s.retryBtnText}>완료</Text>
         </TouchableOpacity>
       </View>
