@@ -1,111 +1,186 @@
 {
-  "date": "2026-08-14",
+  "date": "2026-08-15",
   "reading": {
-    "title": "The Impact of Artificial Intelligence on Education",
-    "passage": "Artificial intelligence is revolutionizing the education sector by personalizing learning experiences for students. AI-powered platforms can analyze student performance data and adapt teaching methods to match individual learning styles. Teachers can use AI tools to automate administrative tasks, allowing them to focus more on interactive instruction. However, concerns about data privacy and reduced human interaction remain important considerations. Educational institutions must balance technological innovation with maintaining meaningful student-teacher relationships.",
+    "title": "Linguistic Relativity and Language Structure",
+    "passage": "The Sapir-Whorf hypothesis, a foundational concept in linguistics, proposes that language structure fundamentally shapes cognitive processes and worldview perception. This theory suggests that speakers of different languages conceptualize reality through distinct linguistic frameworks, implying that cognitive categories are not universal but rather linguistically determined. For instance, languages with multiple grammatical aspects for expressing time may cultivate different temporal perspectives among speakers compared to languages with minimal temporal distinctions. Empirical research has provided nuanced support for this hypothesis, demonstrating moderate correlations between linguistic features and cognitive patterns. While strong versions of linguistic determinism have been largely refuted, contemporary scholars acknowledge that language exerts subtle but measurable influences on perception, memory, and categorization processes. The debate remains vigorous, with neuroscientific evidence increasingly revealing how linguistic properties modulate neural activation patterns during conceptual processing. This ongoing investigation underscores the intricate relationship between linguistic structure and human cognition, challenging the notion that language merely reflects pre-existing thought.",
+    "vocabulary": [
+      {
+        "word": "Sapir-Whorf hypothesis",
+        "meaning_ko": "언어의 구조가 인지 과정을 결정한다는 언어학 이론"
+      },
+      {
+        "word": "linguistic relativity",
+        "meaning_ko": "언어 구조가 사고방식을 상대적으로 결정한다는 개념"
+      },
+      {
+        "word": "cognitive processes",
+        "meaning_ko": "인지 과정, 사고 작용"
+      },
+      {
+        "word": "determinism",
+        "meaning_ko": "결정론, 언어가 사고를 결정한다는 입장"
+      },
+      {
+        "word": "modulate",
+        "meaning_ko": "조절하다, 변조하다"
+      },
+      {
+        "word": "empirical research",
+        "meaning_ko": "경험적 연구, 실증 연구"
+      },
+      {
+        "word": "conceptualize",
+        "meaning_ko": "개념화하다, 개념적으로 생각하다"
+      },
+      {
+        "word": "nuanced",
+        "meaning_ko": "미묘한, 세밀한"
+      }
+    ],
     "questions": [
       {
-        "q": "According to the passage, what is one benefit of AI in education?",
+        "q": "According to the passage, what does the Sapir-Whorf hypothesis primarily claim?",
         "options": [
-          "It eliminates the need for teachers",
-          "It personalizes learning experiences for students",
-          "It increases administrative workload",
-          "It reduces student performance"
+          "Language is a universal system that all humans share equally.",
+          "Language structure shapes how speakers perceive and conceptualize reality.",
+          "Cognitive processes are entirely independent of linguistic influences.",
+          "Different languages have identical grammatical structures for expressing time."
         ],
         "answer": 1,
-        "explanation": "지문에서 'AI-powered platforms can analyze student performance data and adapt teaching methods to match individual learning styles'라고 명시되어 있습니다. AI는 학생의 학습 스타일에 맞게 교육 방식을 개인화합니다."
+        "explanation": "지문의 첫 문장에서 언어 구조가 인지 과정과 세계관을 형성한다는 것이 가설의 핵심 주장입니다."
       },
       {
-        "q": "What concern does the passage mention about AI in education?",
+        "q": "What can be inferred from the passage about strong versions of linguistic determinism?",
         "options": [
-          "High cost of implementation",
-          "Data privacy and reduced human interaction",
-          "Difficulty in updating software",
-          "Lack of student interest"
+          "They remain widely accepted in modern linguistics.",
+          "They have been largely rejected based on evidence.",
+          "They are supported by all contemporary neuroscientific studies.",
+          "They explain why all languages are structurally identical."
         ],
         "answer": 1,
-        "explanation": "'However, concerns about data privacy and reduced human interaction remain important considerations'라는 문장에서 주요 우려 사항이 명확하게 언급되어 있습니다."
+        "explanation": "지문에서 'strong versions of linguistic determinism have been largely refuted'라고 명시되어 있습니다."
       },
       {
-        "q": "What does the passage suggest educational institutions should do?",
+        "q": "The word 'modulate' in the final paragraph is closest in meaning to",
         "options": [
-          "Replace all teachers with AI",
-          "Balance technological innovation with meaningful relationships",
-          "Abandon AI technology entirely",
-          "Focus only on administrative automation"
+          "ignore or dismiss",
+          "regulate or adjust",
+          "eliminate completely",
+          "accelerate rapidly"
         ],
         "answer": 1,
-        "explanation": "마지막 문장 'Educational institutions must balance technological innovation with maintaining meaningful student-teacher relationships'에서 기관들이 기술혁신과 인간관계의 균형을 맞춰야 한다고 제시합니다."
+        "explanation": "modulate는 '조절하다' 또는 '변화시키다'라는 의미로, 이 문맥에서 언어가 신경 활성화를 어떻게 조절하는지에 대해 말하고 있습니다."
+      },
+      {
+        "q": "Why does the author provide the example about grammatical aspects of time?",
+        "options": [
+          "To prove that all languages are completely different",
+          "To illustrate how linguistic features may influence cognitive perception",
+          "To demonstrate that time cannot be expressed in language",
+          "To argue that the Sapir-Whorf hypothesis is entirely invalid"
+        ],
+        "answer": 1,
+        "explanation": "시간 표현의 문법적 차이 예시는 언어 구조가 시간에 대한 인식에 어떻게 영향을 미칠 수 있는지를 보여주기 위함입니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Technology should replace traditional teaching methods in schools'? Use specific reasons and examples to support your answer.",
-    "structure": {
-      "intro": "명확한 입장 제시: 동의하거나 동의하지 않는 입장을 분명히 밝히고, 1-2개의 주요 이유를 간단히 소개합니다.",
-      "body1": "첫 번째 이유: 구체적인 예시와 함께 기술의 장점(개인맞춤 학습, 접근성 향상) 또는 단점(인간관계 약화, 기술격차)을 설명합니다.",
-      "body2": "두 번째 이유: 교육의 다양한 측면을 고려합니다. 예를 들어 학생의 사회성 발달, 비판적 사고력 개발, 또는 기술의 효율성 등을 논의합니다.",
-      "conclusion": "핵심 주장을 재강조하고, 균형잡힌 접근(기술과 전통 방식의 조화)이 가장 효과적일 수 있음을 시사합니다."
-    },
-    "useful_phrases": [
-      "In my opinion, technology should not completely replace traditional teaching because...",
-      "Furthermore, students need face-to-face interaction for social development...",
-      "For example, online platforms can personalize learning, but teachers provide...",
-      "In conclusion, the most effective approach would be to combine both methods...",
-      "One significant concern is that..."
+    "topic": "Explain your position on immigration policy and provide reasons with examples.",
+    "sentences": [
+      {
+        "original": "This ongoing investigation underscores the intricate relationship between linguistic structure and human cognition, challenging the notion that language merely reflects pre-existing thought.",
+        "paraphrase": "This continuous examination highlights how complex the connection is between language structure and human thinking, questioning whether language simply mirrors thoughts that already exist.",
+        "tip": "복합 구문을 단순화하고 'intricate relationship'을 'how complex the connection is'로 명사구→절 구조로 변환"
+      },
+      {
+        "original": "While strong versions of linguistic determinism have been largely refuted, contemporary scholars acknowledge that language exerts subtle but measurable influences on perception, memory, and categorization processes.",
+        "paraphrase": "Although researchers have rejected extreme forms of linguistic determinism, modern experts recognize that language has small yet significant effects on how we perceive, remember, and organize information.",
+        "tip": "concession구문 유지하면서 'exerts influences on'을 'has effects on'으로 동의어 치환, 복잡한 명사구 단순화"
+      },
+      {
+        "original": "Languages with multiple grammatical aspects for expressing time may cultivate different temporal perspectives among speakers compared to languages with minimal temporal distinctions.",
+        "paraphrase": "When languages have many grammatical ways to express time, speakers may develop different views about time than those who speak languages with few time-related distinctions.",
+        "tip": "복잡한 비교구문을 능동 구조로 변환하고 'cultivate'를 'develop'으로 동의어 치환"
+      }
     ]
   },
   "speaking": {
-    "prompt": "Some people believe that learning through online platforms is more effective than traditional classroom learning. Others prefer traditional classroom learning. Which approach do you prefer and why?",
-    "useful_expressions": [
-      "In my opinion, I prefer... because...",
-      "One important reason is that...",
-      "For example, when I...",
-      "Additionally, online/traditional learning offers...",
-      "In contrast, the other approach..."
-    ],
-    "sample_points": [
-      "전통 교실 학습의 장점: 교사와의 직접적인 상호작용, 또래 학생들과의 협력 학습, 실시간 질문 가능, 학습 규율 유지",
-      "온라인 학습의 장점: 시간과 장소의 자유로움, 개인맞춤 학습 속도, 반복 학습 가능, 다양한 학습 자료 접근"
+    "prompt": "Some people prefer online shopping for its convenience and variety. Others prefer shopping in physical stores for the personal experience. Which do you prefer and why? Include specific reasons and details.",
+    "model_sentences": [
+      "I personally prefer shopping in physical stores because I can see and touch products before buying them.",
+      "First, physically visiting a store allows me to check the quality and size immediately, which reduces the risk of ordering the wrong item.",
+      "For example, when I buy clothes, I can try them on to make sure they fit perfectly, unlike online shopping where I might have to return items multiple times.",
+      "Additionally, I enjoy the in-store experience of browsing around and discovering products I didn't plan to buy, which makes shopping more enjoyable and interactive.",
+      "Overall, while online shopping is convenient, the ability to inspect products and have a personal shopping experience makes physical stores my preferred choice."
     ]
   },
   "listening": {
-    "title": "대학 상담 - 전공 선택에 대한 조언",
+    "title": "Dormitory Room Assignment Inquiry",
     "type": "conversation",
-    "script": "Student: 'Professor, I'm having trouble deciding between engineering and business. I enjoy problem-solving, but I also care about working with people.' Professor: 'Those are both valuable skills. In engineering, you'll focus on technical problem-solving, but modern engineering also requires strong teamwork. In business, you'll work with diverse teams daily, though you'll still need analytical skills. Many students find that internships help clarify their interests. Have you considered interning in either field?' Student: 'That's a great idea. I hadn't thought about that.' Professor: 'You could also take electives from both fields this semester to get a better sense of what resonates with you. The choice doesn't have to be final immediately; many students explore both before deciding.'",
+    "script": "Student: Hi, I wanted to ask about my dorm room assignment. I haven't received my housing letter yet, and I'm getting worried.\nHousing Officer: Oh, I understand your concern. Let me check our system. Can you provide your student ID number?\nStudent: Sure, it's 2847569.\nHousing Officer: One moment... Ah yes, I see your file. Your assignment has been processed, but there was a slight delay in mailing. You should receive your letter within the next two to three days.\nStudent: Great! But I was also wondering if it's possible to request a specific dorm or roommate.\nHousing Officer: Well, the initial assignments are based on your preferences from the housing application, but if you have special circumstances, you can submit a housing change request after you move in. We typically allow changes during the first two weeks of the semester.\nStudent: That sounds reasonable. And when should I plan to arrive for move-in day?\nHousing Officer: Move-in begins on August 25th and continues through August 30th. We recommend arriving earlier rather than later to have more parking availability. Here's a pamphlet with all the details.",
+    "vocabulary": [
+      {
+        "word": "dorm room assignment",
+        "meaning_ko": "기숙사 방 배정"
+      },
+      {
+        "word": "housing officer",
+        "meaning_ko": "주택/기숙사 담당 직원"
+      },
+      {
+        "word": "processed",
+        "meaning_ko": "처리된, 진행 중인"
+      },
+      {
+        "word": "circumstances",
+        "meaning_ko": "상황, 환경"
+      },
+      {
+        "word": "move-in day",
+        "meaning_ko": "입실날, 이사 가는 날"
+      },
+      {
+        "word": "availability",
+        "meaning_ko": "이용 가능성, 공석"
+      },
+      {
+        "word": "pamphlet",
+        "meaning_ko": "팜플렛, 소책자"
+      }
+    ],
     "questions": [
       {
-        "q": "What is the main topic of this conversation?",
+        "q": "What is the main reason the student visits the housing officer?",
         "options": [
-          "The benefits of engineering careers",
-          "How to improve problem-solving skills",
-          "Advice on choosing between engineering and business majors",
-          "The importance of internship programs"
-        ],
-        "answer": 2,
-        "explanation": "학생이 공학과 경영학 사이에서 전공 선택에 어려움을 겪고 있고, 교수가 이에 대한 조언을 제공하는 것이 주요 내용입니다."
-      },
-      {
-        "q": "What does the professor suggest the student should do? (Select all that apply)",
-        "options": [
-          "Complete an internship before deciding",
-          "Take electives from both fields",
-          "Focus only on engineering",
-          "Avoid working with teams in either field"
-        ],
-        "answer": 0,
-        "explanation": "교수는 인턴십 경험을 통해 관심 분야를 명확히 할 수 있다고 제안하며, 동시에 두 분야의 선택과목을 수강할 것을 권장합니다."
-      },
-      {
-        "q": "According to the professor, what skill is needed in both engineering and business?",
-        "options": [
-          "Technical problem-solving only",
-          "Teamwork and collaboration",
-          "Business management",
-          "Advanced mathematics"
+          "To complain about the quality of dormitory facilities",
+          "To inquire about the status of their room assignment",
+          "To request a transfer to a different university",
+          "To pay the dormitory deposit fee"
         ],
         "answer": 1,
-        "explanation": "교수는 '현대 공학도 강력한 팀워크가 필요하고' 비즈니스는 '다양한 팀과 함께 일한다'고 언급하여 두 분야 모두 팀워크가 중요함을 강조합니다."
+        "explanation": "학생은 기숙사 방 배정을 받지 못했으며, 그 상태를 확인하려고 방문합니다."
+      },
+      {
+        "q": "What does the housing officer say about when the student might receive their letter?",
+        "options": [
+          "It has already been delivered to their home.",
+          "It will arrive within two to three days.",
+          "It won't be sent until after they arrive on campus.",
+          "They need to come to the office to pick it up in person."
+        ],
+        "answer": 1,
+        "explanation": "주택 담당자는 우편 발송에 약간의 지연이 있었지만 2-3일 이내에 도착할 것이라고 말합니다."
+      },
+      {
+        "q": "When can students request a housing change if they want to switch rooms?",
+        "options": [
+          "Only before they receive their initial assignment",
+          "During the first two weeks of the semester after moving in",
+          "Only during the move-in period",
+          "Any time during the academic year"
+        ],
+        "answer": 1,
+        "explanation": "주택 담당자는 이사 후 학기 시작 후 첫 2주 동안 기숙사 변경 신청이 가능하다고 설명합니다."
       }
     ]
   }

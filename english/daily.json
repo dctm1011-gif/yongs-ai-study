@@ -1,201 +1,146 @@
 {
-  "date": "2026-08-14",
+  "date": "2026-08-15",
   "words": [
     {
-      "word": "exacerbate",
+      "word": "vibe",
+      "part_of_speech": "명사",
+      "meaning_ko": "분위기, 느낌",
+      "explanation": "누군가나 무언가가 주는 느낌이나 분위기를 나타내요.",
+      "example_from_convo": "I'm getting a good vibe from this",
+      "example_ko": "이거 좋은 느낌이 드는데",
+      "tip": "SNS와 일상 대화에서 매우 자주 쓰이는 표현이에요.",
+      "emoji": "✨"
+    },
+    {
+      "word": "chill",
+      "part_of_speech": "동사/형용사",
+      "meaning_ko": "편하게 쉬다, 차분한",
+      "explanation": "긴장을 풀고 편하게 시간을 보낼 때 쓰여요.",
+      "example_from_convo": "Let's just chill at home",
+      "example_ko": "그냥 집에서 편하게 있자",
+      "tip": "'chill out'으로도 많이 쓰여요.",
+      "emoji": "😎"
+    },
+    {
+      "word": "vibe check",
+      "part_of_speech": "명사",
+      "meaning_ko": "분위기 확인",
+      "explanation": "누군가의 기분이나 상태를 확인하는 것을 말해요.",
+      "example_from_convo": "Vibe check: how are you feeling?",
+      "example_ko": "기분은 어때? 기분 체크 해볼게.",
+      "tip": "현대 영어에서 젊은 세대가 즐겨 쓰는 표현이에요.",
+      "emoji": "📊"
+    },
+    {
+      "word": "nail it",
       "part_of_speech": "동사",
-      "meaning_ko": "악화시키다, 심화시키다",
-      "explanation": "이미 나쁜 상황을 더욱 심각하게 만드는 것. TOEFL Reading 환경·사회·과학 지문에서 매우 자주 등장해요.",
-      "example_from_convo": "Deforestation exacerbates climate change by reducing carbon absorption.",
-      "example_ko": "삼림 벌채는 탄소 흡수를 줄여 기후변화를 악화시켜요.",
-      "tip": "동의어: aggravate(악화), worsen(나빠지다), compound(심각하게 함). 반의어: alleviate(완화), mitigate(누그러뜨리다), ameliorate(개선). Reading·Writing 고빈출.",
-      "emoji": "📈"
+      "meaning_ko": "완벽하게 해내다",
+      "explanation": "어려운 일을 완벽하게 성공하는 것을 표현해요.",
+      "example_from_convo": "You really nailed that presentation",
+      "example_ko": "그 발표 완벽하게 해냈어",
+      "tip": "칭찬할 때 자주 쓰이는 긍정적인 표현이에요.",
+      "emoji": "🎯"
     },
     {
-      "word": "spurious",
-      "part_of_speech": "형용사",
-      "meaning_ko": "거짓의, 가짜의, 위조된",
-      "explanation": "겉으로는 타당해 보이지만 실제로는 거짓이거나 근거 없는 것. TOEFL Reading 과학·사회 비판적 읽기에서 단골 출제 어휘예요.",
-      "example_from_convo": "The researcher rejected the spurious claim that vitamin supplements prevent all diseases.",
-      "example_ko": "연구자는 비타민 보충제가 모든 질병을 예방한다는 허위 주장을 거부했어요.",
-      "tip": "동의어: fraudulent(사기의), false(거짓), counterfeit(위조된). 반의어: authentic(진정한), genuine(진품의), legitimate(정당한). 논리·주장 평가 문맥에서 높은 빈출.",
-      "emoji": "🎭"
-    },
-    {
-      "word": "cursory",
-      "part_of_speech": "형용사",
-      "meaning_ko": "대충 한, 표면적인, 급하게 훑어본",
-      "explanation": "깊이 있게 하지 않고 빠르게 훑어보는 방식. TOEFL Reading 학문·역사 지문에서 분석·검토 맥락에서 자주 나와요.",
-      "example_from_convo": "A cursory examination of the manuscript revealed no significant errors, but thorough analysis found dozens.",
-      "example_ko": "원고를 대충 살펴봤을 때는 큰 오류가 없었지만, 정밀 분석 결과 수십 개를 발견했어요.",
-      "tip": "동의어: superficial(피상적), perfunctory(형식적), hasty(서두른). 반의어: thorough(철저한), meticulous(정밀한), comprehensive(종합적). 'cursory vs. meticulous' 대비가 TOEFL에서 자주 출제.",
-      "emoji": "⚡"
-    },
-    {
-      "word": "amalgamate",
+      "word": "hang out",
       "part_of_speech": "동사",
-      "meaning_ko": "합병하다, 통합하다, 혼합하다",
-      "explanation": "여러 개의 것을 하나로 모으거나 섞는 것. TOEFL Reading 비즈니스·역사·과학 지문에서 변화·발전 설명할 때 고빈출이에요.",
-      "example_from_convo": "The two companies amalgamated to form a stronger entity capable of competing globally.",
-      "example_ko": "두 회사는 통합되어 글로벌 경쟁력을 갖춘 더 강한 기업을 형성했어요.",
-      "tip": "동의어: merge(병합), consolidate(통합), combine(결합), coalesce(융합). 반의어: separate(분리), divide(나누다), fragment(분산). 비즈니스·조직·과학 맥락에서 높은 빈출.",
-      "emoji": "🔗"
-    },
-    {
-      "word": "predatory",
-      "part_of_speech": "형용사",
-      "meaning_ko": "포식하는, 약탈적인, 약자를 이용하는",
-      "explanation": "약한 것을 괴롭히거나 착취하는 습성 또는 행동. TOEFL Reading 사회·경제·생물학 지문에서 부정적 행동·특성 비판할 때 자주 등장해요.",
-      "example_from_convo": "Predatory lending practices target vulnerable populations with unfair interest rates.",
-      "example_ko": "약탈적 대출 관행은 취약층을 목표로 불공정한 이자를 부과해요.",
-      "tip": "동의어: exploitative(착취적), rapacious(욕심쟁이), parasitic(기생적). 반의어: altruistic(이타적), benevolent(자선적). 윤리·경제·생태 비판 지문에서 높은 확률.",
-      "emoji": "🦁"
+      "meaning_ko": "시간을 보내다, 어울리다",
+      "explanation": "친구들과 함께 시간을 보내거나 누군가와 어울리는 것을 의미해요.",
+      "example_from_convo": "Wanna hang out this weekend?",
+      "example_ko": "이번 주말에 같이 시간 보낼래?",
+      "tip": "일상 영어에서 매우 자연스럽고 자주 쓰이는 표현입니다.",
+      "emoji": "👋"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "exacerbate",
-      "question": "'exacerbate'의 의미로 가장 적절한 것은?",
+      "word": "vibe",
+      "question": "'vibe'는 어떤 의미인가요?",
       "options": [
-        "나쁜 상황을 더욱 심화시키다",
-        "문제를 점진적으로 완화하다",
-        "상황을 근본적으로 해결하다",
-        "변화를 일시적으로 억제하다"
+        "기계음",
+        "분위기/느낌",
+        "음악",
+        "색상"
       ],
-      "answer": 0,
-      "explanation": "exacerbate는 이미 나쁜 상황을 '더 나쁘게' 만드는 것이에요.",
-      "option_explanations": [
-        null,
-        "alleviate(완화)의 의미로 exacerbate의 반의어예요.",
-        "resolve(해결)와 혼동 — exacerbate는 해결이 아니라 악화예요.",
-        "suppress(억제)는 단순 억제일 뿐, 상황 악화의 의미는 없어요."
-      ]
+      "answer": 1,
+      "explanation": "vibe는 누군가나 무언가가 주는 분위기나 느낌을 나타내요."
+    },
+    {
+      "type": "fill_blank",
+      "word": "vibe",
+      "sentence": "I'm getting a really good _____ from this place.",
+      "sentence_ko": "이 장소에서 정말 좋은 분위기가 느껴져.",
+      "answer": "vibe",
+      "hint": "분위기/느낌"
     },
     {
       "type": "meaning",
-      "word": "spurious",
-      "question": "'spurious'의 의미로 가장 적절한 것은?",
+      "word": "chill",
+      "question": "'Let's chill'은 무엇을 의미하나요?",
       "options": [
-        "겉으로는 타당해 보이지만 실제로는 근거 없는",
-        "처음부터 확실히 잘못된",
-        "의도적으로 숨겨진",
-        "부분적으로 검증된"
+        "춤을 추자",
+        "편하게 쉬자",
+        "달리자",
+        "먹자"
       ],
-      "answer": 0,
-      "explanation": "spurious는 '가짜 같지만 실제로 거짓'이라는 뉘앙스가 핵심이에요.",
-      "option_explanations": [
-        null,
-        "spurious는 '타당해 보이지만'이라는 미묘한 차이가 있어요.",
-        "concealed(숨겨진)은 다른 의미예요.",
-        "partially validated는 spurious의 정반대예요."
-      ]
+      "answer": 1,
+      "explanation": "chill은 긴장을 풀고 편하게 시간을 보낸다는 뜻이에요."
+    },
+    {
+      "type": "fill_blank",
+      "word": "chill",
+      "sentence": "I don't want to go anywhere today, let's just _____ at home.",
+      "sentence_ko": "오늘 어디 가기 싫어, 그냥 집에서 편하게 있자.",
+      "answer": "chill",
+      "hint": "편하게 쉬다"
     },
     {
       "type": "meaning",
-      "word": "cursory",
-      "question": "'cursory'의 의미로 가장 적절한 것은?",
+      "word": "nail it",
+      "question": "'nail it'의 의미는?",
       "options": [
-        "깊이 없이 빠르게 훑어본",
-        "체계적으로 단계별 진행한",
-        "매우 정밀하고 신중한",
-        "시간이 오래 걸린"
+        "못을 박다",
+        "실패하다",
+        "완벽하게 해내다",
+        "느리다"
       ],
-      "answer": 0,
-      "explanation": "cursory는 '대충, 표면적으로' 빠르게 보는 방식을 의미해요.",
-      "option_explanations": [
-        null,
-        "systematic(체계적)은 cursory의 정반대예요.",
-        "meticulous(정밀한)는 cursory의 반의어예요.",
-        "time-consuming(시간이 오래 걸린)은 cursory와 무관해요."
-      ]
-    },
-    {
-      "type": "fill_blank",
-      "word": "exacerbate",
-      "question": "The shortage of clean water _____ the health crisis in developing nations.",
-      "options": [
-        "exacerbates",
-        "mitigates",
-        "resolves",
-        "prevents"
-      ],
-      "answer": 0,
-      "explanation": "깨끗한 물의 부족은 건강 위기를 '악화시켜요'. 동사 3인칭 단수형이에요.",
-      "option_explanations": [
-        null,
-        "mitigate(완화)는 문맥상 반대예요.",
-        "resolve(해결)는 exacerbate의 정반대예요.",
-        "prevent(예방)도 문맥에 맞지 않아요."
-      ]
-    },
-    {
-      "type": "fill_blank",
-      "word": "spurious",
-      "question": "The study's _____ conclusion was later debunked by rigorous peer review.",
-      "options": [
-        "spurious",
-        "authentic",
-        "verified",
-        "empirical"
-      ],
-      "answer": 0,
-      "explanation": "그 결론은 근거 없는 거짓 결론이었고, 나중에 검증되었다는 문맥이에요.",
-      "option_explanations": [
-        null,
-        "authentic(진정한)은 debunked와 모순이에요.",
-        "verified(검증된)는 debunked와 반대예요.",
-        "empirical(경험적)는 spurious를 설명하지 못해요."
-      ]
-    },
-    {
-      "type": "fill_blank",
-      "word": "cursory",
-      "question": "The inspector's _____ review of the facility missed several safety violations.",
-      "options": [
-        "cursory",
-        "thorough",
-        "meticulous",
-        "exhaustive"
-      ],
-      "answer": 0,
-      "explanation": "검사관의 대충한 검토 때문에 안전 위반을 놓쳤다는 의미예요.",
-      "option_explanations": [
-        null,
-        "thorough(철저한)면 위반을 찾았을 거예요.",
-        "meticulous(정밀한)도 마찬가지예요.",
-        "exhaustive(철저한)도 문맥상 맞지 않아요."
-      ]
+      "answer": 2,
+      "explanation": "nail it은 어려운 일을 완벽하게 성공하는 것을 의미해요."
     },
     {
       "type": "situation",
-      "word": "amalgamate",
-      "question": "다음 상황에서 'amalgamate'가 가장 적절한가요?\n\n'세 개의 작은 음악 레이블이 하나의 대형 엔터테인먼트 회사로 통합되었다.'",
+      "word": "nail it",
+      "question": "친구가 어려운 시험을 잘 봤을 때 뭐라고 말할까요?",
       "options": [
-        "예, 적절하다",
-        "아니오, 부적절하다"
+        "You failed it",
+        "You nailed it!",
+        "You broke it",
+        "You lost it"
       ],
-      "answer": 0,
-      "explanation": "'여러 개를 하나로 통합'한다는 의미에서 amalgamate가 정확해요.",
-      "option_explanations": [
-        null,
-        "merge, consolidate, combine 모두 가능하지만, amalgamate가 '혼합과 통합'을 잘 표현해요."
-      ]
+      "answer": 1,
+      "explanation": "누군가가 뭔가를 완벽하게 해냈을 때 'You nailed it!'이라고 칭찬해요."
     },
     {
-      "type": "situation",
-      "word": "predatory",
-      "question": "다음 상황에서 'predatory'가 가장 적절한가요?\n\n'그 온라인 플랫폼은 청소년을 대상으로 중독성 있는 게임 메커니즘을 사용했다.'",
+      "type": "meaning",
+      "word": "hang out",
+      "question": "'hang out'은 뭘 할 때 쓰나요?",
       "options": [
-        "예, 적절하다",
-        "아니오, 부적절하다"
+        "공부할 때",
+        "친구들과 시간을 보낼 때",
+        "일할 때",
+        "운동할 때"
       ],
-      "answer": 0,
-      "explanation": "약한 집단(청소년)을 의도적으로 이용하는 약탈적 행동이므로 predatory가 정확해요.",
-      "option_explanations": [
-        null,
-        "exploitative도 가능하지만, predatory가 '약자 대상' 의도를 더 잘 표현해요."
-      ]
+      "answer": 1,
+      "explanation": "hang out은 친구들과 함께 시간을 보내는 것을 의미해요."
+    },
+    {
+      "type": "fill_blank",
+      "word": "hang out",
+      "sentence": "Do you want to _____ together this weekend?",
+      "sentence_ko": "이번 주말에 함께 시간 보낼래?",
+      "answer": "hang out",
+      "hint": "시간을 보내다"
     }
   ]
 }
