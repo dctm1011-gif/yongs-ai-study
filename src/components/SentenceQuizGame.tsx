@@ -73,7 +73,11 @@ function highlightWord(sentence: string, word: string): React.ReactNode[] {
   );
 }
 
-export default function SentenceQuizGame() {
+interface Props {
+  onComplete?: () => void;
+}
+
+export default function SentenceQuizGame({ onComplete }: Props) {
   const { user } = useAuth();
   const uid = user?.uid ?? '';
 
@@ -222,8 +226,8 @@ export default function SentenceQuizGame() {
         <Text style={s.completeMsg}>
           {pct >= 80 ? '뉘앙스 감각이 훌륭해요!' : pct >= 60 ? '조금만 더 연습해볼까요?' : '예문을 자세히 살펴보세요'}
         </Text>
-        <TouchableOpacity style={s.retryBtn} onPress={loadGame}>
-          <Text style={s.retryBtnText}>다시 하기</Text>
+        <TouchableOpacity style={s.retryBtn} onPress={onComplete ?? loadGame}>
+          <Text style={s.retryBtnText}>완료</Text>
         </TouchableOpacity>
       </View>
     );

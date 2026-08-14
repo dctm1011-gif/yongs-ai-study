@@ -49,7 +49,7 @@ export default function GameHub() {
         <TouchableOpacity style={s.backBar} onPress={() => setMode('select')}>
           <Text style={s.backText}>← 게임 선택</Text>
         </TouchableOpacity>
-        <SentenceQuizGame />
+        <SentenceQuizGame onComplete={() => setMode('select')} />
       </View>
     );
   }
