@@ -1,182 +1,178 @@
 {
-  "date": "2026-08-15",
+  "date": "2026-08-16",
   "reading": {
-    "title": "Linguistic Relativity and Language Structure",
-    "passage": "The Sapir-Whorf hypothesis, proposed in the early twentieth century, suggests that language fundamentally shapes how speakers perceive and conceptualize the world. This theory posits that linguistic structures constrain cognitive processes, meaning that speakers of different languages may literally think differently based on their language's grammar and vocabulary. For instance, languages with multiple words for snow, such as certain Inuit dialects, may enable speakers to perceive subtle distinctions in snow types that speakers of English, with its single term, do not readily recognize. Conversely, modern linguists argue that while language may influence cognition to some degree, the relationship is not deterministic. Research demonstrates that speakers can transcend linguistic limitations through conceptual metaphor and abstraction. Furthermore, cognitive development, cultural context, and individual experience play equally significant roles in shaping perception. The contemporary view recognizes language as one among many factors contributing to thought, rather than its sole determinant, suggesting a more nuanced understanding of the language-cognition relationship.",
+    "title": "Animal Behavior and Social Hierarchies in Primate Groups",
+    "passage": "Ethology, the scientific study of animal behavior, has revealed complex social structures among primates that challenge earlier assumptions about the simplicity of animal societies. Research conducted over the past three decades demonstrates that primates establish and maintain hierarchical systems through ritualized displays and strategic alliances. These hierarchies are not merely based on physical dominance; instead, they involve sophisticated cognitive processes and social manipulation. For instance, subordinate chimpanzees have been observed forming coalitions to challenge established leaders, suggesting that social rank depends on a dynamic interplay of strength, intelligence, and political acumen. Furthermore, studies of gorillas and bonobos indicate that maternal lineage and social bonds play crucial roles in determining an individual's position within the group hierarchy. The implications of these findings extend beyond academic interest, as understanding primate social behavior provides insights into the evolutionary origins of human social organization and the neurobiological mechanisms underlying social cognition.",
     "vocabulary": [
       {
-        "word": "relativity",
-        "meaning_ko": "상대성; 관계성"
+        "word": "ethology",
+        "meaning_ko": "동물행동학; 동물의 자연 환경에서의 행동을 과학적으로 연구하는 학문"
       },
       {
-        "word": "posits",
-        "meaning_ko": "주장하다; 제시하다"
+        "word": "hierarchical",
+        "meaning_ko": "위계적인; 단계적 서열이나 순위 체계를 가진"
       },
       {
-        "word": "constrain",
-        "meaning_ko": "제한하다; 억제하다"
+        "word": "ritualized",
+        "meaning_ko": "의례화된; 정형화된 반복적 행동 패턴을 보이는"
       },
       {
-        "word": "deterministic",
-        "meaning_ko": "결정론적인"
+        "word": "subordinate",
+        "meaning_ko": "하위의, 종속적인; 지배를 받는 입장의"
       },
       {
-        "word": "transcend",
-        "meaning_ko": "초월하다; 넘어서다"
+        "word": "coalition",
+        "meaning_ko": "연합, 동맹; 공통의 목표를 위해 연합한 집단"
       },
       {
-        "word": "metaphor",
-        "meaning_ko": "은유; 비유"
+        "word": "acumen",
+        "meaning_ko": "총명함, 민첩한 판단력; 특정 분야에서의 날카로운 이해력"
       },
       {
-        "word": "nuanced",
-        "meaning_ko": "미묘한; 섬세한"
+        "word": "neurobiological",
+        "meaning_ko": "신경생물학적인; 뇌와 신경계의 생물학적 기능과 관련된"
       }
     ],
     "questions": [
       {
-        "q": "According to the passage, what does the Sapir-Whorf hypothesis claim about language?",
+        "q": "According to the passage, what is one key factor that determines social rank among primates?",
         "options": [
-          "Language has no effect on perception",
-          "Language shapes how speakers perceive and conceptualize the world",
-          "Only certain languages influence thought",
-          "All speakers think identically regardless of language"
+          "Physical dominance alone",
+          "Maternal lineage and social bonds",
+          "Geographic location within habitat",
+          "Age of the individual"
         ],
         "answer": 1,
-        "explanation": "지문의 첫 번째 문장에서 '언어가 근본적으로 화자들의 세계 인식 및 개념화 방식을 형성한다'고 명시하고 있습니다."
+        "explanation": "passage의 두 번째 단락에서 '형질적 우월성만이 아니라 고도화된 인지 과정과 사회적 조작이 관여'하며, 또한 '모계 계통과 사회적 유대가 개인의 위계 내 지위 결정에 중요한 역할을 한다'고 명시되어 있습니다."
       },
       {
-        "q": "What can be inferred from the passage about speakers of languages with multiple words for snow?",
+        "q": "What can be inferred from the passage about subordinate chimpanzees forming coalitions?",
         "options": [
-          "They are more intelligent than other speakers",
-          "They may perceive subtle distinctions in snow types more readily than English speakers",
-          "They cannot learn English",
-          "They invented snow themselves"
+          "They are physically stronger than their leaders",
+          "They demonstrate sophisticated cognitive and social strategies",
+          "They are unable to survive in the wild",
+          "They always succeed in changing the hierarchy"
         ],
         "answer": 1,
-        "explanation": "지문에서 여러 개의 눈 단어를 가진 언어의 화자들이 영어 사용자들이 인식하지 못하는 눈의 미묘한 차이를 지각할 수 있다고 설명합니다."
+        "explanation": "종속적 지위의 침팬지들이 연합을 형성하여 확립된 지도자에게 도전한다는 사실은 그들이 단순한 본능이 아닌 정교한 인지 및 사회 전략을 사용한다는 것을 시사합니다."
       },
       {
-        "q": "The word 'transcend' in the second paragraph is closest in meaning to",
+        "q": "The word 'dynamic' in the passage is closest in meaning to",
         "options": [
-          "Accept",
-          "Overcome or go beyond",
-          "Strengthen",
-          "Ignore"
+          "Static and unchanging",
+          "Constantly changing and interactive",
+          "Physically powerful",
+          "Biologically determined"
         ],
         "answer": 1,
-        "explanation": "'transcend'은 '넘어서다, 초월하다'라는 뜻으로, 여기서는 언어의 제한을 극복할 수 있다는 의미입니다."
+        "explanation": "'동적인 상호작용'이라는 표현은 사회적 지위가 시간에 따라 변하고 다양한 요소들이 상호작용한다는 의미로 '끊임없이 변하고 상호작용하는'이 가장 적절한 의미입니다."
       },
       {
-        "q": "Why does the author mention 'cognitive development, cultural context, and individual experience' in the final sentences?",
+        "q": "Why does the author mention the study of gorillas and bonobos?",
         "options": [
-          "To prove the Sapir-Whorf hypothesis is completely correct",
-          "To suggest that language is the only factor affecting thought",
-          "To indicate that multiple factors besides language influence perception",
-          "To explain why Inuit languages are superior"
+          "To show that these species are more intelligent than chimpanzees",
+          "To provide additional evidence that maternal lineage and social bonds influence hierarchy",
+          "To explain why these species are endangered",
+          "To demonstrate that physical dominance is the only factor in hierarchy"
         ],
-        "answer": 2,
-        "explanation": "저자는 이러한 요소들을 언급함으로써 언어가 사고에 영향을 미치는 유일한 요소가 아니며, 다양한 요소들이 역할을 한다는 현대적 관점을 제시합니다."
+        "answer": 1,
+        "explanation": "고릴라와 보노보에 대한 연구 언급은 모계 계통과 사회적 유대가 위계 결정에 중요한 역할을 한다는 주요 주장을 여러 영장류 종을 통해 뒷받침하기 위한 것입니다."
       }
     ]
   },
   "writing": {
+    "title": "동물실험 규제에 관한 에세이 문단 작성 및 패러프레이징 연습",
     "sentences": [
       {
-        "original": "The Sapir-Whorf hypothesis, proposed in the early twentieth century, suggests that language fundamentally shapes how speakers perceive and conceptualize the world.",
-        "paraphrase": "Proposed during the early 1900s, the Sapir-Whorf hypothesis proposes that the way speakers understand and interpret the world is fundamentally determined by their language.",
-        "tip": "관사 변경 및 술어 동사 치환('shapes'→'is determined by'), 단어 순서 재배열을 통한 패러프레이즈"
+        "original": "Research conducted over the past three decades demonstrates that primates establish and maintain hierarchical systems through ritualized displays and strategic alliances.",
+        "paraphrase": "Over the past thirty years, scientific investigations have shown that primates use formalized behavioral patterns and coordinated group relationships to develop and sustain systems of social ranking.",
+        "tip": "복잡한 동사구(establish and maintain)를 'develop and sustain'으로 동의어 치환하고, 'ritualized displays'를 'formalized behavioral patterns'으로 구체화하여 의미는 유지하되 표현을 다양하게 함"
       },
       {
-        "original": "For instance, languages with multiple words for snow, such as certain Inuit dialects, may enable speakers to perceive subtle distinctions in snow types that speakers of English, with its single term, do not readily recognize.",
-        "paraphrase": "As an example, speakers of languages like some Inuit dialects, which contain numerous terms for snow, might be able to detect fine differences among types of snow that English speakers, who use only one word, cannot easily identify.",
-        "tip": "문장 구조 단순화(복잡한 전치사구→명확한 절), 동의어 사용('multiple'→'numerous', 'perceive'→'detect', 'subtle'→'fine')"
+        "original": "These hierarchies are not merely based on physical dominance; instead, they involve sophisticated cognitive processes and social manipulation.",
+        "paraphrase": "The ranking systems within primate groups depend not simply on strength and power but rather on complex mental activities and interpersonal strategic behavior.",
+        "tip": "세미콜론 구조를 'depend not...but'으로 변환하고, 'physical dominance'를 'strength and power'로, 'sophisticated cognitive processes'를 'complex mental activities'로 각각 동의어로 치환"
       },
       {
-        "original": "Research demonstrates that speakers can transcend linguistic limitations through conceptual metaphor and abstraction.",
-        "paraphrase": "Studies show that individuals are capable of overcoming the constraints imposed by their language by using abstract thinking and figurative language.",
-        "tip": "능동 주어 유지하되 술어 변경('demonstrates'→'show'), 동의어 사용('transcend'→'overcome', 'limitations'→'constraints'), 구체적 설명 추가"
-      },
-      {
-        "original": "The contemporary view recognizes language as one among many factors contributing to thought, rather than its sole determinant.",
-        "paraphrase": "Modern scholars understand language to be merely one of numerous influences on thinking, not the only force that shapes it.",
-        "tip": "현대적 표현('contemporary'→'Modern'), 구조 단순화(비교 구조 명확화), 동의어 사용('factors'→'influences', 'determinant'→'force')"
+        "original": "Subordinate chimpanzees have been observed forming coalitions to challenge established leaders, suggesting that social rank depends on a dynamic interplay of strength, intelligence, and political acumen.",
+        "paraphrase": "Lower-ranking chimpanzees have been witnessed creating alliances aimed at opposing current authority figures, which indicates that an individual's social position is determined by the constant interaction of physical capability, intellectual ability, and shrewd decision-making.",
+        "tip": "수동태(have been observed) 유지, 'coalitions'을 'alliances'로 치환, 'dynamic interplay'를 'constant interaction'으로 바꾸고, 'political acumen'을 'shrewd decision-making'으로 풀어서 표현"
       }
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer shopping online. Others prefer shopping in physical stores. Which do you prefer and why? Include specific reasons and details in your response.",
+    "prompt": "Some people are morning people who prefer to wake up early and be productive at the start of the day. Others are night people who feel more alert and creative in the evening. Which do you prefer, and why? Include specific reasons and details.",
     "model_sentences": [
-      "I definitely prefer shopping in physical stores because it offers a more personal and interactive experience.",
-      "First, when I shop in person, I can actually see and touch the products before buying them, which helps me make better purchasing decisions.",
-      "For example, when I bought clothes at a mall last month, I could try them on immediately to check the fit and color, whereas ordering online would have required multiple returns.",
-      "Additionally, I enjoy the immediate gratification of taking my purchases home right away instead of waiting for delivery.",
-      "Overall, despite online shopping's convenience, the ability to inspect products firsthand and enjoy instant possession makes physical stores my preferred shopping method."
+      "Personally, I strongly prefer being a morning person because I find that I accomplish much more when I start my day early.",
+      "First of all, waking up early gives me several peaceful hours to focus on important tasks before other distractions begin.",
+      "For example, I can study for exams or complete assignments in the morning when my mind is fresh and clear, which helps me understand difficult concepts more easily.",
+      "Additionally, starting my day early allows me to exercise and eat a healthy breakfast, which improves my energy levels throughout the day.",
+      "In summary, being a morning person has made me more productive and healthier overall, so I definitely prefer this schedule to staying up late at night."
     ]
   },
   "listening": {
-    "title": "Dormitory Room Assignment Inquiry",
-    "type": "conversation",
-    "script": "Student A: Hi, I need to ask about my dormitory assignment. I applied for housing three weeks ago, but I haven't received any confirmation yet.\n\nAdministrator: Of course, I can help you with that. Let me check the system. Can you provide your student ID number?\n\nStudent A: It's 2847563.\n\nAdministrator: Thank you. I see your application here. It shows that you requested a double room on campus, correct?\n\nStudent A: Yes, I did. I preferred a double room because I thought it would be more social. But I'm becoming concerned about the timeline. When will assignments be finalized?\n\nAdministrator: Assignments are typically completed by late August. However, due to high demand this year, we're processing requests sequentially. You should expect notification by email within the next two weeks.\n\nStudent A: Okay, that's helpful. One more thing—if I don't get a double room, can I request a single room instead?\n\nAdministrator: Absolutely. You can submit a modification request through the housing portal, and we'll reassign you accordingly. Any other concerns?\n\nStudent A: No, that was very informative. Thank you for your help!",
+    "title": "Biology Lecture: Photosynthesis Process",
+    "type": "lecture",
+    "script": "Professor: Today, we're going to discuss photosynthesis, one of the most important biochemical processes on Earth. Photosynthesis is the process by which plants convert light energy from the sun into chemical energy stored in glucose. This process occurs in two main stages: the light-dependent reactions and the light-independent reactions, also called the Calvin cycle. In the light-dependent reactions, which happen in the thylakoid membranes, chlorophyll absorbs photons and releases electrons. These electrons move through the electron transport chain, generating ATP and NADPH. The second stage, the Calvin cycle, takes place in the stroma and doesn't require light directly. During this stage, carbon dioxide is fixed into glucose using the ATP and NADPH produced earlier. One critical aspect students often misunderstand is that both stages are equally important. Without the light reactions, there would be no ATP or NADPH to power the Calvin cycle. Conversely, without the Calvin cycle, the light reactions would have no purpose. Any questions so far?",
     "vocabulary": [
       {
-        "word": "confirmation",
-        "meaning_ko": "확인; 승인"
+        "word": "photosynthesis",
+        "meaning_ko": "광합성; 식물이 빛을 이용해 이산화탄소와 물을 포도당으로 전환하는 생화학 과정"
       },
       {
-        "word": "sequentially",
-        "meaning_ko": "순차적으로; 차례대로"
+        "word": "thylakoid",
+        "meaning_ko": "틸라코이드; 엽록체 내에서 빛 반응이 일어나는 막 구조"
       },
       {
-        "word": "finalized",
-        "meaning_ko": "확정되다; 최종적으로 결정되다"
+        "word": "chlorophyll",
+        "meaning_ko": "엽록소; 식물이 태양빛을 흡수하는 광합성 색소"
       },
       {
-        "word": "modification",
-        "meaning_ko": "수정; 변경"
+        "word": "electron transport chain",
+        "meaning_ko": "전자 전달계; 전자가 이동하면서 에너지를 방출하는 일련의 단백질 복합체"
       },
       {
-        "word": "accordingly",
-        "meaning_ko": "그에 따라; 이에 맞게"
+        "word": "stroma",
+        "meaning_ko": "스트로마; 엽록체의 액체 부분으로 캘빈 순환이 일어나는 곳"
       },
       {
-        "word": "demand",
-        "meaning_ko": "수요; 요청"
+        "word": "glucose",
+        "meaning_ko": "포도당; 식물이 광합성으로 만드는 단순 당분"
       }
     ],
     "questions": [
       {
-        "q": "What is the main purpose of the conversation?",
+        "q": "What is the main topic of the lecture?",
         "options": [
-          "To discuss the quality of dormitory facilities",
-          "To inquire about the status of a dormitory room assignment",
-          "To complain about housing fees",
-          "To request a transfer to a different campus"
+          "The structure of chlorophyll molecules",
+          "The two main stages of photosynthesis and their functions",
+          "How plants absorb water from soil",
+          "The differences between various types of plants"
         ],
         "answer": 1,
-        "explanation": "학생이 기숙사 배정 상태를 확인하기 위해 행정 담당자에게 문의하는 대화입니다."
+        "explanation": "교수가 광합성의 두 가지 주요 단계인 명반응과 암반응(캘빈 순환)을 설명하고 각각의 기능을 상세히 설명하므로, 강의의 주요 주제는 광합성의 두 단계입니다."
       },
       {
-        "q": "When does the administrator say dormitory assignments will typically be completed?",
+        "q": "According to the professor, what happens during the light-dependent reactions?",
         "options": [
-          "Within one week",
-          "By mid-August",
-          "By late August",
-          "In September"
+          "Carbon dioxide is converted into glucose",
+          "Chlorophyll absorbs photons and electrons are released and moved through the electron transport chain",
+          "ATP and NADPH are used to fix carbon dioxide",
+          "The stroma produces energy"
         ],
-        "answer": 2,
-        "explanation": "행정 담당자가 '기숙사 배정은 일반적으로 8월 말경에 완료된다'고 명시합니다."
+        "answer": 1,
+        "explanation": "교수는 '명반응이 틸라코이드 막에서 일어나며, 엽록소가 광자를 흡수하고 전자를 방출하며, 이 전자들이 전자 전달계를 통해 이동하면서 ATP와 NADPH를 생성한다'고 설명했습니다."
       },
       {
-        "q": "Why does the student prefer a double room?",
+        "q": "What does the professor emphasize about the relationship between the light-dependent and light-independent reactions?",
         "options": [
-          "Because it is less expensive",
-          "Because it provides more privacy",
-          "Because it would be more social",
-          "Because it is closer to campus facilities"
+          "The light-dependent reactions are more important",
+          "Both stages are equally important and dependent on each other",
+          "The light-independent reactions are more complex",
+          "They can function independently"
         ],
-        "answer": 2,
-        "explanation": "학생이 '더 사회적일 것 같다고 생각해서 더블 룸을 원했다'고 언급합니다."
+        "answer": 1,
+        "explanation": "교수는 '두 단계가 모두 똑같이 중요하며, 명반응 없이는 캘빈 순환에 필요한 ATP와 NADPH가 없고, 캘빈 순환 없이는 명반응이 목적이 없다'고 강조했습니다."
       }
     ]
   }

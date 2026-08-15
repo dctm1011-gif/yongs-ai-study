@@ -2066,5 +2066,65 @@
     "explanation": "약한 것을 괴롭히거나 착취하는 습성 또는 행동. TOEFL Reading 사회·경제·생물학 지문에서 부정적 행동·특성 비판할 때 자주 등장해요.",
     "tip": "동의어: exploitative(착취적), rapacious(욕심쟁이), parasitic(기생적). 반의어: altruistic(이타적), benevolent(자선적). 윤리·경제·생태 비판 지문에서 높은 확률.",
     "emoji": "🦁"
+  },
+  {
+    "id": "inundate",
+    "word": "inundate",
+    "pos": "동사",
+    "date": "2026-08-16",
+    "meaning": "물로 넘치게 하다, 대량으로 쇄도하게 하다",
+    "example_ko": "무역 시즌 동안 항구는 배들로 뒤덮였어요.",
+    "example_en": "The harbor was inundated with ships during the trading season.",
+    "explanation": "원래는 홍수로 뒤덮는다는 뜻이지만, TOEFL에서는 '(요청, 정보 등이) 대량으로 밀려오다'라는 의미로 자주 나와요. Academic Reading의 역사, 과학, 사회 지문에서 고빈출.",
+    "tip": "동의어: overwhelm(압도), flood(쇄도). 반의어: deplete(고갈), drain(빠지다). Reading·Writing 고빈출. 수동태(be inundated with)로도 자주 출제.",
+    "emoji": "🌊"
+  },
+  {
+    "id": "prolific",
+    "word": "prolific",
+    "pos": "형용사",
+    "date": "2026-08-16",
+    "meaning": "다작의, 생산성 높은, 풍부한",
+    "example_ko": "다윈은 다작의 작가였고 19개 이상의 주요 저작을 출판했어요.",
+    "example_en": "Darwin was a prolific writer, publishing over 19 major works.",
+    "explanation": "작가·예술가·과학자가 많은 작품/논문을 만들어낸다는 의미. 또는 무언가가 풍부하게 생산/증식된다는 뜻. TOEFL Biography, History, Science 지문의 주인공 설명에서 자주 등장.",
+    "tip": "동의어: productive(생산적인), fertile(비옥한), fecund(다작의). 반의어: barren(황량한), sterile(불모의). Listening 학구적 토론과 Reading 인물 전기에서 고빈출.",
+    "emoji": "📚"
+  },
+  {
+    "id": "prudent",
+    "word": "prudent",
+    "pos": "형용사",
+    "date": "2026-08-16",
+    "meaning": "신중한, 분별 있는, 현명한",
+    "example_ko": "정부의 신중한 재정 정책이 경제 붕괴를 피하는 데 도움이 됐어요.",
+    "example_en": "The government's prudent fiscal policy helped avoid economic collapse.",
+    "explanation": "신중하고 분별 있는 판단을 내리는 태도. TOEFL Reading 경제, 정책, 역사 지문에서 '현명한 결정', '신중한 조치'를 설명할 때 자주 나와요.",
+    "tip": "동의어: judicious(분별 있는), cautious(조심스러운), wise(현명한). 반의어: reckless(무모한), imprudent(분별 없는). Academic Writing에서 정책·전략 평가할 때 필수 어휘.",
+    "emoji": "🤔"
+  },
+  {
+    "id": "dichotomy",
+    "word": "dichotomy",
+    "pos": "명사",
+    "date": "2026-08-16",
+    "meaning": "양분, 이분법, 대립",
+    "example_ko": "전통과 현대성 사이의 이분법이 20세기 예술을 형성했어요.",
+    "example_en": "The dichotomy between tradition and modernity shaped 20th-century art.",
+    "explanation": "두 개의 상충하거나 대조되는 것 사이의 분열. TOEFL Reading은 철학, 사회학, 문학 지문에서 대비·대립 구조를 설명할 때 이 단어를 자주 사용해요.",
+    "tip": "동의어: contrast(대비), opposition(대립), dualism(이원론). 관련 단어: dichotomous(이분의), paradox(역설—더 모순적). Reading 개념 설명, Writing 비교·대조 에세이에서 필수.",
+    "emoji": "⚖️"
+  },
+  {
+    "id": "conduit",
+    "word": "conduit",
+    "pos": "명사",
+    "date": "2026-08-16",
+    "meaning": "통로, 매개체, 수로",
+    "example_ko": "무역로는 문명 간 문화 교류의 통로 역할을 했어요.",
+    "example_en": "Trade routes served as a conduit for cultural exchange between civilizations.",
+    "explanation": "물이나 정보가 흐르는 통로, 또는 추상적으로 아이디어·영향력이 전달되는 매개 역할을 하는 것. TOEFL Reading 역사, 문화, 경제 지문에서 '~의 역할을 하다'를 설명할 때 고빈출.",
+    "tip": "동의어: channel(채널), vehicle(매개), medium(매체). 관련 단어: conduct(전도하다), conductor(도체). Reading 인과관계·매개 역할 설명에서 자주 출제.",
+    "emoji": "🚇"
   }
 ]
