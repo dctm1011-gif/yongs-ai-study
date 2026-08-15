@@ -1,109 +1,182 @@
 {
   "date": "2026-08-15",
   "reading": {
-    "title": "Bioluminescence in Deep Sea Organisms",
-    "passage": "Bioluminescence is the production of light by living organisms through chemical reactions. Deep sea creatures rely heavily on this phenomenon for survival in the pitch-black ocean depths where sunlight cannot penetrate. Many fish and jellyfish use bioluminescent signals for communication, finding mates, and attracting prey. Scientists estimate that approximately 90% of deep sea organisms possess some form of bioluminescence, making it one of the most common adaptations in the marine environment.",
+    "title": "Linguistic Relativity and Language Structure",
+    "passage": "The Sapir-Whorf hypothesis, proposed in the early twentieth century, suggests that language fundamentally shapes how speakers perceive and conceptualize the world. This theory posits that linguistic structures constrain cognitive processes, meaning that speakers of different languages may literally think differently based on their language's grammar and vocabulary. For instance, languages with multiple words for snow, such as certain Inuit dialects, may enable speakers to perceive subtle distinctions in snow types that speakers of English, with its single term, do not readily recognize. Conversely, modern linguists argue that while language may influence cognition to some degree, the relationship is not deterministic. Research demonstrates that speakers can transcend linguistic limitations through conceptual metaphor and abstraction. Furthermore, cognitive development, cultural context, and individual experience play equally significant roles in shaping perception. The contemporary view recognizes language as one among many factors contributing to thought, rather than its sole determinant, suggesting a more nuanced understanding of the language-cognition relationship.",
+    "vocabulary": [
+      {
+        "word": "relativity",
+        "meaning_ko": "상대성; 관계성"
+      },
+      {
+        "word": "posits",
+        "meaning_ko": "주장하다; 제시하다"
+      },
+      {
+        "word": "constrain",
+        "meaning_ko": "제한하다; 억제하다"
+      },
+      {
+        "word": "deterministic",
+        "meaning_ko": "결정론적인"
+      },
+      {
+        "word": "transcend",
+        "meaning_ko": "초월하다; 넘어서다"
+      },
+      {
+        "word": "metaphor",
+        "meaning_ko": "은유; 비유"
+      },
+      {
+        "word": "nuanced",
+        "meaning_ko": "미묘한; 섬세한"
+      }
+    ],
     "questions": [
       {
-        "q": "According to the passage, why do deep sea creatures use bioluminescence?",
+        "q": "According to the passage, what does the Sapir-Whorf hypothesis claim about language?",
         "options": [
-          "To regulate body temperature",
-          "For communication and finding food",
-          "To migrate to shallow waters",
-          "To produce oxygen"
+          "Language has no effect on perception",
+          "Language shapes how speakers perceive and conceptualize the world",
+          "Only certain languages influence thought",
+          "All speakers think identically regardless of language"
         ],
         "answer": 1,
-        "explanation": "본문에서 깊은 바다 생물들이 '의사소통, 짝짓기, 먹이 잡기'를 위해 생물발광을 사용한다고 명시되어 있습니다."
+        "explanation": "지문의 첫 번째 문장에서 '언어가 근본적으로 화자들의 세계 인식 및 개념화 방식을 형성한다'고 명시하고 있습니다."
       },
       {
-        "q": "What percentage of deep sea organisms have bioluminescence?",
+        "q": "What can be inferred from the passage about speakers of languages with multiple words for snow?",
         "options": [
-          "Approximately 50%",
-          "Approximately 75%",
-          "Approximately 90%",
-          "Approximately 100%"
+          "They are more intelligent than other speakers",
+          "They may perceive subtle distinctions in snow types more readily than English speakers",
+          "They cannot learn English",
+          "They invented snow themselves"
+        ],
+        "answer": 1,
+        "explanation": "지문에서 여러 개의 눈 단어를 가진 언어의 화자들이 영어 사용자들이 인식하지 못하는 눈의 미묘한 차이를 지각할 수 있다고 설명합니다."
+      },
+      {
+        "q": "The word 'transcend' in the second paragraph is closest in meaning to",
+        "options": [
+          "Accept",
+          "Overcome or go beyond",
+          "Strengthen",
+          "Ignore"
+        ],
+        "answer": 1,
+        "explanation": "'transcend'은 '넘어서다, 초월하다'라는 뜻으로, 여기서는 언어의 제한을 극복할 수 있다는 의미입니다."
+      },
+      {
+        "q": "Why does the author mention 'cognitive development, cultural context, and individual experience' in the final sentences?",
+        "options": [
+          "To prove the Sapir-Whorf hypothesis is completely correct",
+          "To suggest that language is the only factor affecting thought",
+          "To indicate that multiple factors besides language influence perception",
+          "To explain why Inuit languages are superior"
         ],
         "answer": 2,
-        "explanation": "본문의 마지막 문장에서 '약 90%의 깊은 바다 생물이 생물발광 능력을 가지고 있다'고 명시되어 있습니다."
-      },
-      {
-        "q": "Where can sunlight NOT penetrate?",
-        "options": [
-          "Shallow ocean areas",
-          "The pitch-black ocean depths",
-          "Coral reefs",
-          "Coastal regions"
-        ],
-        "answer": 1,
-        "explanation": "본문에서 '햇빛이 침투할 수 없는 암흑의 대양 깊이'라고 명확히 설명하고 있습니다."
+        "explanation": "저자는 이러한 요소들을 언급함으로써 언어가 사고에 영향을 미치는 유일한 요소가 아니며, 다양한 요소들이 역할을 한다는 현대적 관점을 제시합니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Technology has improved the quality of human life more than it has harmed it'? Use specific examples to support your opinion.",
-    "structure": {
-      "intro": "명확한 입장 표현 (동의 또는 반대)과 주요 아이디어 2-3개를 간단히 소개",
-      "body1": "첫 번째 이유와 구체적 사례 제시 (의료, 교육, 통신 등의 발전)",
-      "body2": "두 번째 이유와 구체적 사례 제시 (사회적 연결, 경제 성장, 정보 접근성 등)",
-      "conclusion": "주요 아이디어 재정리 및 최종 입장 재확인"
-    },
-    "useful_phrases": [
-      "In my opinion, technology has significantly improved...",
-      "Furthermore, advancements in technology have enabled...",
-      "For example, the development of smartphones has...",
-      "On the other hand, one could argue that...",
-      "To summarize, the benefits outweigh the drawbacks because..."
+    "sentences": [
+      {
+        "original": "The Sapir-Whorf hypothesis, proposed in the early twentieth century, suggests that language fundamentally shapes how speakers perceive and conceptualize the world.",
+        "paraphrase": "Proposed during the early 1900s, the Sapir-Whorf hypothesis proposes that the way speakers understand and interpret the world is fundamentally determined by their language.",
+        "tip": "관사 변경 및 술어 동사 치환('shapes'→'is determined by'), 단어 순서 재배열을 통한 패러프레이즈"
+      },
+      {
+        "original": "For instance, languages with multiple words for snow, such as certain Inuit dialects, may enable speakers to perceive subtle distinctions in snow types that speakers of English, with its single term, do not readily recognize.",
+        "paraphrase": "As an example, speakers of languages like some Inuit dialects, which contain numerous terms for snow, might be able to detect fine differences among types of snow that English speakers, who use only one word, cannot easily identify.",
+        "tip": "문장 구조 단순화(복잡한 전치사구→명확한 절), 동의어 사용('multiple'→'numerous', 'perceive'→'detect', 'subtle'→'fine')"
+      },
+      {
+        "original": "Research demonstrates that speakers can transcend linguistic limitations through conceptual metaphor and abstraction.",
+        "paraphrase": "Studies show that individuals are capable of overcoming the constraints imposed by their language by using abstract thinking and figurative language.",
+        "tip": "능동 주어 유지하되 술어 변경('demonstrates'→'show'), 동의어 사용('transcend'→'overcome', 'limitations'→'constraints'), 구체적 설명 추가"
+      },
+      {
+        "original": "The contemporary view recognizes language as one among many factors contributing to thought, rather than its sole determinant.",
+        "paraphrase": "Modern scholars understand language to be merely one of numerous influences on thinking, not the only force that shapes it.",
+        "tip": "현대적 표현('contemporary'→'Modern'), 구조 단순화(비교 구조 명확화), 동의어 사용('factors'→'influences', 'determinant'→'force')"
+      }
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to study in a group with others. Other people prefer to study alone. Which study method do you prefer and why?",
-    "useful_expressions": [
-      "In my opinion, I prefer studying in a group because...",
-      "One reason is that group study helps me...",
-      "Additionally, when studying with others, I can..."
-    ],
-    "sample_points": [
-      "그룹 스터디를 통해 다른 관점을 이해할 수 있고, 어려운 부분을 함께 해결할 수 있습니다.",
-      "그룹 스터디는 동기부여가 되며, 토론을 통해 개념을 더 깊이 있게 학습할 수 있습니다."
+    "prompt": "Some people prefer shopping online. Others prefer shopping in physical stores. Which do you prefer and why? Include specific reasons and details in your response.",
+    "model_sentences": [
+      "I definitely prefer shopping in physical stores because it offers a more personal and interactive experience.",
+      "First, when I shop in person, I can actually see and touch the products before buying them, which helps me make better purchasing decisions.",
+      "For example, when I bought clothes at a mall last month, I could try them on immediately to check the fit and color, whereas ordering online would have required multiple returns.",
+      "Additionally, I enjoy the immediate gratification of taking my purchases home right away instead of waiting for delivery.",
+      "Overall, despite online shopping's convenience, the ability to inspect products firsthand and enjoy instant possession makes physical stores my preferred shopping method."
     ]
   },
   "listening": {
-    "title": "Campus Library Services",
+    "title": "Dormitory Room Assignment Inquiry",
     "type": "conversation",
-    "script": "Student: Excuse me, I'm new to campus and I'm not sure how to use the library. Librarian: Welcome! I'd be happy to help. Our library offers many services beyond books. We have computers, study rooms, and access to online databases. Student: That sounds great! Can I borrow books immediately? Librarian: Yes, once you get your student ID, you can borrow up to 20 books at a time for three weeks. We also offer a 24-hour study area on the third floor. Student: Perfect! Do you have research consultants? Librarian: Absolutely. You can book a consultation with our research specialists for free. They can help you find credible sources for your papers. Student: Excellent. I think I have everything I need. Librarian: Great! Feel free to visit us anytime. We're open Monday to Friday from 8 AM to 10 PM.",
+    "script": "Student A: Hi, I need to ask about my dormitory assignment. I applied for housing three weeks ago, but I haven't received any confirmation yet.\n\nAdministrator: Of course, I can help you with that. Let me check the system. Can you provide your student ID number?\n\nStudent A: It's 2847563.\n\nAdministrator: Thank you. I see your application here. It shows that you requested a double room on campus, correct?\n\nStudent A: Yes, I did. I preferred a double room because I thought it would be more social. But I'm becoming concerned about the timeline. When will assignments be finalized?\n\nAdministrator: Assignments are typically completed by late August. However, due to high demand this year, we're processing requests sequentially. You should expect notification by email within the next two weeks.\n\nStudent A: Okay, that's helpful. One more thing—if I don't get a double room, can I request a single room instead?\n\nAdministrator: Absolutely. You can submit a modification request through the housing portal, and we'll reassign you accordingly. Any other concerns?\n\nStudent A: No, that was very informative. Thank you for your help!",
+    "vocabulary": [
+      {
+        "word": "confirmation",
+        "meaning_ko": "확인; 승인"
+      },
+      {
+        "word": "sequentially",
+        "meaning_ko": "순차적으로; 차례대로"
+      },
+      {
+        "word": "finalized",
+        "meaning_ko": "확정되다; 최종적으로 결정되다"
+      },
+      {
+        "word": "modification",
+        "meaning_ko": "수정; 변경"
+      },
+      {
+        "word": "accordingly",
+        "meaning_ko": "그에 따라; 이에 맞게"
+      },
+      {
+        "word": "demand",
+        "meaning_ko": "수요; 요청"
+      }
+    ],
     "questions": [
       {
-        "q": "What services does the library provide according to the librarian?",
+        "q": "What is the main purpose of the conversation?",
         "options": [
-          "Only books and computers",
-          "Books, computers, study rooms, and online databases",
-          "Only online databases",
-          "Books and a cafeteria"
+          "To discuss the quality of dormitory facilities",
+          "To inquire about the status of a dormitory room assignment",
+          "To complain about housing fees",
+          "To request a transfer to a different campus"
         ],
         "answer": 1,
-        "explanation": "사서가 '책 외에도 컴퓨터, 스터디룸, 온라인 데이터베이스 접근 등 많은 서비스를 제공한다'고 설명했습니다."
+        "explanation": "학생이 기숙사 배정 상태를 확인하기 위해 행정 담당자에게 문의하는 대화입니다."
       },
       {
-        "q": "How many books can a student borrow at one time?",
+        "q": "When does the administrator say dormitory assignments will typically be completed?",
         "options": [
-          "10 books",
-          "15 books",
-          "20 books",
-          "Unlimited"
+          "Within one week",
+          "By mid-August",
+          "By late August",
+          "In September"
         ],
         "answer": 2,
-        "explanation": "사서가 '학생 ID를 받으면 한 번에 최대 20권을 빌릴 수 있다'고 명시했습니다."
+        "explanation": "행정 담당자가 '기숙사 배정은 일반적으로 8월 말경에 완료된다'고 명시합니다."
       },
       {
-        "q": "What is the purpose of booking a consultation with research specialists?",
+        "q": "Why does the student prefer a double room?",
         "options": [
-          "To borrow more books",
-          "To get help finding credible sources for papers",
-          "To access the 24-hour study area",
-          "To extend book borrowing time"
+          "Because it is less expensive",
+          "Because it provides more privacy",
+          "Because it would be more social",
+          "Because it is closer to campus facilities"
         ],
-        "answer": 1,
-        "explanation": "사서가 '연구 전문가와의 상담은 논문을 위한 신뢰할 수 있는 출처를 찾는 데 도움을 주기 위한 것'이라고 설명했습니다."
+        "answer": 2,
+        "explanation": "학생이 '더 사회적일 것 같다고 생각해서 더블 룸을 원했다'고 언급합니다."
       }
     ]
   }

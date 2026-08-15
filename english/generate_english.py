@@ -53,70 +53,70 @@ def format_conversations(conversations: list) -> str:
     return "\n".join(lines)
 
 def get_default_words(target_date: date) -> dict:
-    """사전 정의된 기본 영어 단어/표현"""
+    """API 3회 실패 시 비상 fallback — TOEFL B2~C1 수준 단어"""
     return {
         "date": str(target_date),
         "words": [
             {
-                "word": "vibe",
-                "part_of_speech": "명사",
-                "meaning_ko": "분위기, 느낌",
-                "explanation": "누군가나 무언가가 주는 느낌이나 분위기를 나타내요.",
-                "example_from_convo": "I'm getting a good vibe from this",
-                "example_ko": "이거 좋은 느낌이 드는데",
-                "tip": "SNS와 일상 대화에서 매우 자주 쓰이는 표현이에요.",
-                "emoji": "✨"
-            },
-            {
-                "word": "chill",
-                "part_of_speech": "동사/형용사",
-                "meaning_ko": "편하게 쉬다, 차분한",
-                "explanation": "긴장을 풀고 편하게 시간을 보낼 때 쓰여요.",
-                "example_from_convo": "Let's just chill at home",
-                "example_ko": "그냥 집에서 편하게 있자",
-                "tip": "'chill out'으로도 많이 쓰여요.",
-                "emoji": "😎"
-            },
-            {
-                "word": "vibe check",
-                "part_of_speech": "명사",
-                "meaning_ko": "분위기 확인",
-                "explanation": "누군가의 기분이나 상태를 확인하는 것을 말해요.",
-                "example_from_convo": "Vibe check: how are you feeling?",
-                "example_ko": "기분은 어때? 기분 체크 해볼게.",
-                "tip": "현대 영어에서 젊은 세대가 즐겨 쓰는 표현이에요.",
-                "emoji": "📊"
-            },
-            {
-                "word": "nail it",
+                "word": "exacerbate",
                 "part_of_speech": "동사",
-                "meaning_ko": "완벽하게 해내다",
-                "explanation": "어려운 일을 완벽하게 성공하는 것을 표현해요.",
-                "example_from_convo": "You really nailed that presentation",
-                "example_ko": "그 발표 완벽하게 해냈어",
-                "tip": "칭찬할 때 자주 쓰이는 긍정적인 표현이에요.",
-                "emoji": "🎯"
+                "meaning_ko": "악화시키다, 심화시키다",
+                "explanation": "이미 나쁜 상황을 더욱 심각하게 만드는 것. TOEFL Reading 환경·사회 지문에서 자주 등장해요.",
+                "example_from_convo": "Deforestation exacerbates climate change by reducing carbon absorption.",
+                "example_ko": "삼림 벌채는 탄소 흡수를 줄여 기후변화를 악화시켜요.",
+                "tip": "동의어: aggravate, worsen. 반의어: alleviate, mitigate. Reading·Writing 고빈출.",
+                "emoji": "📈"
             },
             {
-                "word": "hang out",
+                "word": "mitigate",
                 "part_of_speech": "동사",
-                "meaning_ko": "시간을 보내다, 어울리다",
-                "explanation": "친구들과 함께 시간을 보내거나 누군가와 어울리는 것을 의미해요.",
-                "example_from_convo": "Wanna hang out this weekend?",
-                "example_ko": "이번 주말에 같이 시간 보낼래?",
-                "tip": "일상 영어에서 매우 자연스럽고 자주 쓰이는 표현입니다.",
-                "emoji": "👋"
+                "meaning_ko": "완화시키다, 줄이다",
+                "explanation": "부정적인 영향이나 심각성을 줄이는 것. 정책·환경 지문에서 필수 어휘예요.",
+                "example_from_convo": "Governments must implement policies to mitigate the effects of inflation.",
+                "example_ko": "정부는 인플레이션의 영향을 완화할 정책을 시행해야 해요.",
+                "tip": "동의어: alleviate, reduce, lessen. 반의어: exacerbate, worsen. TOEFL 최빈출.",
+                "emoji": "⚖️"
+            },
+            {
+                "word": "pervasive",
+                "part_of_speech": "형용사",
+                "meaning_ko": "만연한, 널리 퍼진",
+                "explanation": "어떤 현상이나 영향이 광범위하게 퍼져 있는 상태. 사회·기술 지문에서 자주 나와요.",
+                "example_from_convo": "The pervasive influence of social media has reshaped modern communication.",
+                "example_ko": "소셜 미디어의 만연한 영향력이 현대 소통 방식을 바꿔놓았어요.",
+                "tip": "동의어: widespread, ubiquitous, prevalent. TOEFL Reading 빈출 형용사.",
+                "emoji": "🌐"
+            },
+            {
+                "word": "substantiate",
+                "part_of_speech": "동사",
+                "meaning_ko": "입증하다, 뒷받침하다",
+                "explanation": "주장이나 가설을 증거로 뒷받침하는 것. 학술 논문·과학 지문 필수 동사예요.",
+                "example_from_convo": "Researchers need empirical data to substantiate their theoretical claims.",
+                "example_ko": "연구자들은 이론적 주장을 입증하기 위해 실증 데이터가 필요해요.",
+                "tip": "동의어: corroborate, verify, validate. 반의어: refute, contradict.",
+                "emoji": "🔬"
+            },
+            {
+                "word": "ephemeral",
+                "part_of_speech": "형용사",
+                "meaning_ko": "덧없는, 단명하는",
+                "explanation": "매우 짧은 시간 동안만 존재하거나 지속되는 것. 철학·생물학 지문에 자주 등장해요.",
+                "example_from_convo": "The ephemeral nature of political popularity makes it difficult to sustain.",
+                "example_ko": "정치적 인기의 덧없는 특성 때문에 이를 유지하기가 어려워요.",
+                "tip": "동의어: transient, fleeting, transitory. 반의어: permanent, enduring.",
+                "emoji": "🌸"
             }
         ],
         "quiz": [
-            {"type": "meaning", "word": "vibe", "question": "'vibe'는 어떤 의미인가요?", "options": ["기계음", "분위기/느낌", "음악", "색상"], "answer": 1, "explanation": "vibe는 누군가나 무언가가 주는 분위기나 느낌을 나타내요."},
-            {"type": "fill_blank", "word": "vibe", "sentence": "I'm getting a really good _____ from this place.", "sentence_ko": "이 장소에서 정말 좋은 분위기가 느껴져.", "answer": "vibe", "hint": "분위기/느낌"},
-            {"type": "meaning", "word": "chill", "question": "'Let's chill'은 무엇을 의미하나요?", "options": ["춤을 추자", "편하게 쉬자", "달리자", "먹자"], "answer": 1, "explanation": "chill은 긴장을 풀고 편하게 시간을 보낸다는 뜻이에요."},
-            {"type": "fill_blank", "word": "chill", "sentence": "I don't want to go anywhere today, let's just _____ at home.", "sentence_ko": "오늘 어디 가기 싫어, 그냥 집에서 편하게 있자.", "answer": "chill", "hint": "편하게 쉬다"},
-            {"type": "meaning", "word": "nail it", "question": "'nail it'의 의미는?", "options": ["못을 박다", "실패하다", "완벽하게 해내다", "느리다"], "answer": 2, "explanation": "nail it은 어려운 일을 완벽하게 성공하는 것을 의미해요."},
-            {"type": "situation", "word": "nail it", "question": "친구가 어려운 시험을 잘 봤을 때 뭐라고 말할까요?", "options": ["You failed it", "You nailed it!", "You broke it", "You lost it"], "answer": 1, "explanation": "누군가가 뭔가를 완벽하게 해냈을 때 'You nailed it!'이라고 칭찬해요."},
-            {"type": "meaning", "word": "hang out", "question": "'hang out'은 뭘 할 때 쓰나요?", "options": ["공부할 때", "친구들과 시간을 보낼 때", "일할 때", "운동할 때"], "answer": 1, "explanation": "hang out은 친구들과 함께 시간을 보내는 것을 의미해요."},
-            {"type": "fill_blank", "word": "hang out", "sentence": "Do you want to _____ together this weekend?", "sentence_ko": "이번 주말에 함께 시간 보낼래?", "answer": "hang out", "hint": "시간을 보내다"}
+            {"type": "meaning", "word": "exacerbate", "question": "'exacerbate'의 의미로 가장 적절한 것은?", "options": ["나쁜 상황을 더욱 심화시키다", "문제를 점진적으로 완화하다", "상황을 근본적으로 해결하다", "변화를 일시적으로 억제하다"], "answer": 0, "explanation": "exacerbate는 이미 나쁜 상황을 '더 나쁘게' 만드는 것이에요."},
+            {"type": "fill_blank", "word": "exacerbate", "sentence": "Poor nutrition can _____ existing health conditions.", "sentence_ko": "불량한 영양 섭취는 기존 건강 상태를 악화시킬 수 있어요.", "answer": "exacerbate", "hint": "악화시키다"},
+            {"type": "meaning", "word": "mitigate", "question": "'mitigate'의 반의어에 가장 가까운 단어는?", "options": ["alleviate", "exacerbate", "substantiate", "permeate"], "answer": 1, "explanation": "mitigate(완화)의 반의어는 exacerbate(악화)예요."},
+            {"type": "fill_blank", "word": "mitigate", "sentence": "Wearing sunscreen can _____ the risk of skin cancer.", "sentence_ko": "선크림을 바르면 피부암 위험을 줄일 수 있어요.", "answer": "mitigate", "hint": "완화시키다"},
+            {"type": "meaning", "word": "pervasive", "question": "'pervasive'와 의미가 가장 유사한 단어는?", "options": ["scarce", "ubiquitous", "ephemeral", "substantive"], "answer": 1, "explanation": "pervasive와 ubiquitous 모두 '어디에나 만연한'을 의미해요."},
+            {"type": "situation", "word": "pervasive", "question": "스마트폰이 현대 사회 전반에 걸쳐 영향을 미친다고 표현할 때?", "options": ["Smartphones are rare", "Smartphones have a pervasive influence", "Smartphones are ephemeral", "Smartphones are mitigated"], "answer": 1, "explanation": "사회 전반에 퍼져 있는 영향 = pervasive influence."},
+            {"type": "meaning", "word": "substantiate", "question": "'substantiate a claim'의 의미는?", "options": ["주장을 철회하다", "주장을 증거로 뒷받침하다", "주장을 과장하다", "주장을 무시하다"], "answer": 1, "explanation": "substantiate = 증거·사실로 주장을 입증하는 것이에요."},
+            {"type": "meaning", "word": "ephemeral", "question": "'ephemeral trends'는 어떤 트렌드를 가리키나요?", "options": ["오래 지속되는 트렌드", "금방 사라지는 트렌드", "전 세계적인 트렌드", "과학적으로 검증된 트렌드"], "answer": 1, "explanation": "ephemeral = 짧은 시간 동안만 존재하는, 덧없는."}
         ]
     }
 
