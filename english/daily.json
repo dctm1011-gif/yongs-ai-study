@@ -56,10 +56,11 @@
     {
       "type": "meaning",
       "word": "acquiesce",
-      "question": "'acquiesce'의 의미로 가장 적절한 것은?",
-      "options": ["강하게 반발하다", "마지못해 동의하다", "적극적으로 제안하다", "완전히 무시하다"],
+      "question": "Which of the following best describes 'acquiesce'?",
+      "options": ["to strongly resist a decision", "to accept without protest despite disagreement", "to actively propose an idea", "to completely ignore a situation"],
       "answer": 1,
-      "explanation": "acquiesce = 불만이 있어도 저항 없이 받아들이는 것이에요."
+      "explanation": "acquiesce = 불만이 있어도 저항 없이 받아들이는 것이에요.",
+      "option_explanations": ["resist의 의미 — acquiesce의 반의어예요.", null, "propose(제안)는 전혀 다른 뉘앙스예요.", "ignore(무시)는 동의가 아니에요."]
     },
     {
       "type": "fill_blank",
@@ -67,15 +68,16 @@
       "sentence": "Although she disagreed, she chose to _____ to her supervisor's decision.",
       "sentence_ko": "그녀는 동의하지 않았지만 상사의 결정에 묵인하기로 했어요.",
       "answer": "acquiesce",
-      "hint": "묵인하다, 마지못해 동의하다"
+      "hint": "accept without protest"
     },
     {
       "type": "meaning",
       "word": "cogent",
-      "question": "'a cogent argument'는 어떤 논거인가요?",
-      "options": ["근거 없는 주장", "설득력 있고 논리적인 주장", "감정에 호소하는 주장", "복잡하고 이해하기 어려운 주장"],
+      "question": "What does 'cogent' mean?",
+      "options": ["emotionally appealing", "logically clear and convincing", "unnecessarily complex", "factually incorrect"],
       "answer": 1,
-      "explanation": "cogent = 논리적으로 명확하고 설득력이 강한 것이에요."
+      "explanation": "cogent = 논리적으로 명확하고 설득력이 강한 것이에요.",
+      "option_explanations": ["emotional appeal은 cogent와 다른 개념이에요.", null, "complex(복잡한)는 반의어에 가까워요.", "cogent는 사실 여부가 아닌 논리적 설득력을 말해요."]
     },
     {
       "type": "fill_blank",
@@ -83,39 +85,42 @@
       "sentence": "The scientist provided a _____ explanation for the unusual experiment results.",
       "sentence_ko": "과학자는 특이한 실험 결과에 대해 설득력 있는 설명을 제시했어요.",
       "answer": "cogent",
-      "hint": "설득력 있는"
+      "hint": "logically convincing"
     },
     {
       "type": "meaning",
       "word": "rampant",
-      "question": "'rampant'와 의미가 가장 유사한 단어는?",
+      "question": "Which word is closest in meaning to 'rampant'?",
       "options": ["scarce", "controlled", "uncontrolled", "diminishing"],
       "answer": 2,
-      "explanation": "rampant = 통제되지 않고 광범위하게 퍼진 것이에요."
+      "explanation": "rampant = 통제되지 않고 광범위하게 퍼진 것이에요.",
+      "option_explanations": ["scarce(희귀한)는 반대 의미예요.", "controlled(통제된)는 정반대예요.", null, "diminishing(줄어드는)도 반대 의미예요."]
     },
     {
       "type": "situation",
       "word": "rampant",
-      "question": "도시 전체에 범죄가 걷잡을 수 없이 퍼졌다고 할 때?",
-      "options": ["Crime is rare in the city", "Crime is rampant in the city", "Crime is lucid in the city", "Crime is cogent in the city"],
+      "question": "In a city where crime has spread completely out of control, which word best describes the situation?",
+      "options": ["Crime is scarce in the city", "Crime is rampant in the city", "Crime is lucid in the city", "Crime is cogent in the city"],
       "answer": 1,
       "explanation": "부정적 현상이 통제 불능으로 퍼진 상황 = rampant."
     },
     {
       "type": "meaning",
       "word": "lucid",
-      "question": "'lucid'의 반의어에 가장 가까운 단어는?",
+      "question": "Which word is the antonym of 'lucid'?",
       "options": ["clear", "coherent", "obscure", "persuasive"],
       "answer": 2,
-      "explanation": "lucid(명료한)의 반의어는 obscure(불명확한)예요."
+      "explanation": "lucid(명료한)의 반의어는 obscure(불명확한)예요.",
+      "option_explanations": ["clear = lucid의 동의어예요.", "coherent = 유사어예요.", null, "persuasive는 cogent와 관련된 단어예요."]
     },
     {
-      "type": "meaning",
+      "type": "situation",
       "word": "alacrity",
-      "question": "'responded with alacrity'는 어떻게 반응한 것인가요?",
-      "options": ["천천히 망설이며", "마지못해 억지로", "기꺼이 민첩하게", "화를 내며 거부"],
-      "answer": 2,
-      "explanation": "alacrity = 열정적으로 기꺼이 하는 태도예요."
+      "question": "A student immediately volunteers to help and starts working enthusiastically before being asked twice. Which word best describes their response?",
+      "options": ["with reluctance", "with alacrity", "with hesitation", "with indifference"],
+      "answer": 1,
+      "explanation": "alacrity = 열정적으로 기꺼이 하는 태도예요.",
+      "option_explanations": ["reluctance = alacrity의 반의어예요.", null, "hesitation(망설임)도 반의어예요.", "indifference(무관심)도 반대 의미예요."]
     }
   ]
 }

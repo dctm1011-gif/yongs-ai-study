@@ -173,10 +173,13 @@ JSON 외 다른 텍스트는 절대 포함하지 마세요.
 - 목표 난이도 예시: ameliorate, precipitate, exacerbate, tenuous, pervasive, coalesce, circumvent, ubiquitous, spurious, esoteric, cursory, ephemeral, mitigate, predatory, amalgamate, corroborate, substantiate, laconic, prolific, inundate
 
 JSON 형식:
-{{"date": "{target_date}", "words": [{{"word": "exacerbate", "part_of_speech": "동사", "meaning_ko": "악화시키다, 심화시키다", "explanation": "이미 나쁜 상황을 더욱 심각하게 만드는 것. TOEFL Reading 환경·사회 지문에서 자주 등장해요.", "example_from_convo": "Deforestation exacerbates climate change by reducing carbon absorption.", "example_ko": "삼림 벌채는 탄소 흡수를 줄여 기후변화를 악화시켜요.", "tip": "동의어: aggravate(악화), worsen(나빠지다). 반의어: alleviate(완화), mitigate(누그러뜨리다). Reading·Writing 고빈출.", "emoji": "📈"}}], "quiz": [{{"type": "meaning", "word": "exacerbate", "question": "'exacerbate'의 의미로 가장 적절한 것은?", "options": ["나쁜 상황을 더욱 심화시키다", "문제를 점진적으로 완화하다", "상황을 근본적으로 해결하다", "변화를 일시적으로 억제하다"], "answer": 0, "explanation": "exacerbate는 이미 나쁜 상황을 '더 나쁘게' 만드는 것이에요.", "option_explanations": [null, "alleviate(완화)의 의미로 exacerbate의 반의어예요.", "resolve(해결)와 혼동 — exacerbate는 해결이 아니라 악화예요.", "suppress(억제)는 다른 뉘앙스예요."]}}]}}
+{{"date": "{target_date}", "words": [{{"word": "exacerbate", "part_of_speech": "동사", "meaning_ko": "악화시키다, 심화시키다", "explanation": "이미 나쁜 상황을 더욱 심각하게 만드는 것. TOEFL Reading 환경·사회 지문에서 자주 등장해요.", "example_from_convo": "Deforestation exacerbates climate change by reducing carbon absorption.", "example_ko": "삼림 벌채는 탄소 흡수를 줄여 기후변화를 악화시켜요.", "tip": "동의어: aggravate(악화), worsen(나빠지다). 반의어: alleviate(완화), mitigate(누그러뜨리다). Reading·Writing 고빈출.", "emoji": "📈"}}], "quiz": [{{"type": "meaning", "word": "exacerbate", "question": "Which of the following best describes 'exacerbate'?", "options": ["to make a bad situation worse", "to gradually reduce a problem", "to resolve a situation fundamentally", "to temporarily suppress change"], "answer": 0, "explanation": "exacerbate는 이미 나쁜 상황을 '더 나쁘게' 만드는 것이에요.", "option_explanations": [null, "alleviate(완화)의 의미로 exacerbate의 반의어예요.", "resolve(해결)와 혼동 — exacerbate는 해결이 아니라 악화예요.", "suppress(억제)는 다른 뉘앙스예요."]}}, {{"type": "fill_blank", "word": "exacerbate", "sentence": "Poor nutrition can _____ existing health conditions.", "sentence_ko": "불량한 영양 섭취는 기존 건강 상태를 악화시킬 수 있어요.", "answer": "exacerbate", "hint": "make worse"}}, {{"type": "situation", "word": "exacerbate", "question": "A new policy causes a conflict that was already tense to become far more serious. Which word best describes what happened?", "options": ["alleviate", "exacerbate", "resolve", "suppress"], "answer": 1, "explanation": "갈등이 더 심각해졌으므로 exacerbate(악화)가 적절해요."}}]}}
 
 규칙:
 - 단어 5개, 퀴즈 8개 (meaning 3개, fill_blank 3개, situation 2개)
+- ⚠️ question 필드는 반드시 영어로 작성 (한국어 질문 절대 금지)
+- fill_blank의 sentence는 영어 문장, sentence_ko는 한국어 번역
+- situation의 question도 영어로 작성 — 상황 묘사도 영어로
 - tip: TOEFL 출제 영역 + 핵심 동의어/반의어 포함
 - 오답 선택지: 동의어(뉘앙스 차이)·관련 단어·반의어 활용 (무작위 distractor 금지)
 - option_explanations: 오답마다 한국어로 WHY 설명 필수 (정답은 null)
