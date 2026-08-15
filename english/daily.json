@@ -2,120 +2,120 @@
   "date": "2026-08-15",
   "words": [
     {
-      "word": "exacerbate",
+      "word": "acquiesce",
       "part_of_speech": "동사",
-      "meaning_ko": "악화시키다, 심화시키다",
-      "explanation": "이미 나쁜 상황을 더욱 심각하게 만드는 것. TOEFL Reading 환경·사회 지문에서 자주 등장해요.",
-      "example_from_convo": "Deforestation exacerbates climate change by reducing carbon absorption.",
-      "example_ko": "삼림 벌채는 탄소 흡수를 줄여 기후변화를 악화시켜요.",
-      "tip": "동의어: aggravate, worsen. 반의어: alleviate, mitigate. TOEFL Reading·Writing 고빈출.",
-      "emoji": "📈"
+      "meaning_ko": "묵인하다, 마지못해 동의하다",
+      "explanation": "불만이 있어도 저항 없이 받아들이거나 동의하는 것. 정치·사회 지문에서 자주 등장해요.",
+      "example_from_convo": "The minority party had no choice but to acquiesce to the new policy.",
+      "example_ko": "소수 정당은 새 정책에 마지못해 동의할 수밖에 없었어요.",
+      "tip": "동의어: comply, consent, yield. 반의어: resist, protest. TOEFL 정치·사회 지문 빈출.",
+      "emoji": "🤝"
     },
     {
-      "word": "mitigate",
-      "part_of_speech": "동사",
-      "meaning_ko": "완화시키다, 줄이다",
-      "explanation": "부정적인 영향이나 심각성을 줄이는 것. 정책·환경 지문에서 필수 어휘예요.",
-      "example_from_convo": "Governments must implement policies to mitigate the effects of inflation.",
-      "example_ko": "정부는 인플레이션의 영향을 완화할 정책을 시행해야 해요.",
-      "tip": "동의어: alleviate, reduce, lessen. 반의어: exacerbate, worsen. TOEFL 최빈출.",
-      "emoji": "⚖️"
-    },
-    {
-      "word": "pervasive",
+      "word": "cogent",
       "part_of_speech": "형용사",
-      "meaning_ko": "만연한, 널리 퍼진",
-      "explanation": "어떤 현상이나 영향이 광범위하게 퍼져 있는 상태. 사회·기술 지문에서 자주 나와요.",
-      "example_from_convo": "The pervasive influence of social media has reshaped modern communication.",
-      "example_ko": "소셜 미디어의 만연한 영향력이 현대 소통 방식을 바꿔놓았어요.",
-      "tip": "동의어: widespread, ubiquitous, prevalent. TOEFL Reading 빈출 형용사.",
-      "emoji": "🌐"
+      "meaning_ko": "설득력 있는, 논리적으로 타당한",
+      "explanation": "논거가 명확하고 설득력이 강한 것. TOEFL Writing 고득점 어휘예요.",
+      "example_from_convo": "The lawyer presented a cogent argument that convinced the entire jury.",
+      "example_ko": "변호사는 배심원 전원을 설득한 논리적인 논거를 제시했어요.",
+      "tip": "동의어: compelling, convincing, persuasive. Writing Task에서 쓰면 고득점 표현.",
+      "emoji": "💡"
     },
     {
-      "word": "substantiate",
-      "part_of_speech": "동사",
-      "meaning_ko": "입증하다, 뒷받침하다",
-      "explanation": "주장이나 가설을 증거로 뒷받침하는 것. 학술 논문·과학 지문 필수 동사예요.",
-      "example_from_convo": "Researchers need empirical data to substantiate their theoretical claims.",
-      "example_ko": "연구자들은 이론적 주장을 입증하기 위해 실증 데이터가 필요해요.",
-      "tip": "동의어: corroborate, verify, validate. 반의어: refute, contradict.",
-      "emoji": "🔬"
-    },
-    {
-      "word": "ephemeral",
+      "word": "rampant",
       "part_of_speech": "형용사",
-      "meaning_ko": "덧없는, 단명하는",
-      "explanation": "매우 짧은 시간 동안만 존재하거나 지속되는 것. 철학·생물학 지문에 자주 등장해요.",
-      "example_from_convo": "The ephemeral nature of political popularity makes it difficult to sustain.",
-      "example_ko": "정치적 인기의 덧없는 특성 때문에 이를 유지하기가 어려워요.",
-      "tip": "동의어: transient, fleeting, transitory. 반의어: permanent, enduring.",
-      "emoji": "🌸"
+      "meaning_ko": "만연한, 걷잡을 수 없이 퍼진",
+      "explanation": "부정적인 현상이 통제 불가능할 정도로 퍼져 있는 상태. 사회·환경 지문 필수 어휘예요.",
+      "example_from_convo": "Rampant corruption undermined public trust in the government.",
+      "example_ko": "만연한 부패가 정부에 대한 국민의 신뢰를 약화시켰어요.",
+      "tip": "동의어: widespread, uncontrolled, prevalent. pervasive와 달리 '부정적 확산'에 쓰여요.",
+      "emoji": "🔥"
+    },
+    {
+      "word": "lucid",
+      "part_of_speech": "형용사",
+      "meaning_ko": "명료한, 이해하기 쉬운",
+      "explanation": "생각이나 표현이 매우 명확하고 이해하기 쉬운 것. 학술 글쓰기 평가 어휘예요.",
+      "example_from_convo": "Her lucid explanation made the complex theory easy to understand.",
+      "example_ko": "그녀의 명료한 설명 덕분에 복잡한 이론을 쉽게 이해할 수 있었어요.",
+      "tip": "동의어: clear, coherent, intelligible. 반의어: obscure, opaque, convoluted.",
+      "emoji": "🔍"
+    },
+    {
+      "word": "alacrity",
+      "part_of_speech": "명사",
+      "meaning_ko": "기꺼이 하는 마음, 민첩한 의욕",
+      "explanation": "어떤 일을 열정적으로 기꺼이 하려는 태도. TOEFL 지문의 인물 묘사에 자주 나와요.",
+      "example_from_convo": "The volunteers responded to the call for help with remarkable alacrity.",
+      "example_ko": "자원봉사자들은 도움 요청에 눈에 띄는 의욕으로 응했어요.",
+      "tip": "동의어: eagerness, willingness, promptness. 반의어: reluctance, hesitation.",
+      "emoji": "⚡"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "exacerbate",
-      "question": "'exacerbate'의 의미로 가장 적절한 것은?",
-      "options": ["나쁜 상황을 더욱 심화시키다", "문제를 점진적으로 완화하다", "상황을 근본적으로 해결하다", "변화를 일시적으로 억제하다"],
-      "answer": 0,
-      "explanation": "exacerbate는 이미 나쁜 상황을 '더 나쁘게' 만드는 것이에요."
+      "word": "acquiesce",
+      "question": "'acquiesce'의 의미로 가장 적절한 것은?",
+      "options": ["강하게 반발하다", "마지못해 동의하다", "적극적으로 제안하다", "완전히 무시하다"],
+      "answer": 1,
+      "explanation": "acquiesce = 불만이 있어도 저항 없이 받아들이는 것이에요."
     },
     {
       "type": "fill_blank",
-      "word": "exacerbate",
-      "sentence": "Poor nutrition can _____ existing health conditions.",
-      "sentence_ko": "불량한 영양 섭취는 기존 건강 상태를 악화시킬 수 있어요.",
-      "answer": "exacerbate",
-      "hint": "악화시키다"
+      "word": "acquiesce",
+      "sentence": "Although she disagreed, she chose to _____ to her supervisor's decision.",
+      "sentence_ko": "그녀는 동의하지 않았지만 상사의 결정에 묵인하기로 했어요.",
+      "answer": "acquiesce",
+      "hint": "묵인하다, 마지못해 동의하다"
     },
     {
       "type": "meaning",
-      "word": "mitigate",
-      "question": "'mitigate'의 반의어에 가장 가까운 단어는?",
-      "options": ["alleviate", "exacerbate", "substantiate", "permeate"],
+      "word": "cogent",
+      "question": "'a cogent argument'는 어떤 논거인가요?",
+      "options": ["근거 없는 주장", "설득력 있고 논리적인 주장", "감정에 호소하는 주장", "복잡하고 이해하기 어려운 주장"],
       "answer": 1,
-      "explanation": "mitigate(완화)의 반의어는 exacerbate(악화)예요."
+      "explanation": "cogent = 논리적으로 명확하고 설득력이 강한 것이에요."
     },
     {
       "type": "fill_blank",
-      "word": "mitigate",
-      "sentence": "Wearing sunscreen can _____ the risk of skin cancer.",
-      "sentence_ko": "선크림을 바르면 피부암 위험을 줄일 수 있어요.",
-      "answer": "mitigate",
-      "hint": "완화시키다"
+      "word": "cogent",
+      "sentence": "The scientist provided a _____ explanation for the unusual experiment results.",
+      "sentence_ko": "과학자는 특이한 실험 결과에 대해 설득력 있는 설명을 제시했어요.",
+      "answer": "cogent",
+      "hint": "설득력 있는"
     },
     {
       "type": "meaning",
-      "word": "pervasive",
-      "question": "'pervasive'와 의미가 가장 유사한 단어는?",
-      "options": ["scarce", "ubiquitous", "ephemeral", "substantive"],
-      "answer": 1,
-      "explanation": "pervasive와 ubiquitous 모두 '어디에나 만연한'을 의미해요."
+      "word": "rampant",
+      "question": "'rampant'와 의미가 가장 유사한 단어는?",
+      "options": ["scarce", "controlled", "uncontrolled", "diminishing"],
+      "answer": 2,
+      "explanation": "rampant = 통제되지 않고 광범위하게 퍼진 것이에요."
     },
     {
       "type": "situation",
-      "word": "pervasive",
-      "question": "스마트폰이 현대 사회 전반에 걸쳐 영향을 미친다고 표현할 때?",
-      "options": ["Smartphones are rare", "Smartphones have a pervasive influence", "Smartphones are ephemeral", "Smartphones are mitigated"],
+      "word": "rampant",
+      "question": "도시 전체에 범죄가 걷잡을 수 없이 퍼졌다고 할 때?",
+      "options": ["Crime is rare in the city", "Crime is rampant in the city", "Crime is lucid in the city", "Crime is cogent in the city"],
       "answer": 1,
-      "explanation": "사회 전반에 퍼져 있는 영향 = pervasive influence."
+      "explanation": "부정적 현상이 통제 불능으로 퍼진 상황 = rampant."
     },
     {
       "type": "meaning",
-      "word": "substantiate",
-      "question": "'substantiate a claim'의 의미는?",
-      "options": ["주장을 철회하다", "주장을 증거로 뒷받침하다", "주장을 과장하다", "주장을 무시하다"],
-      "answer": 1,
-      "explanation": "substantiate = 증거·사실로 주장을 입증하는 것이에요."
+      "word": "lucid",
+      "question": "'lucid'의 반의어에 가장 가까운 단어는?",
+      "options": ["clear", "coherent", "obscure", "persuasive"],
+      "answer": 2,
+      "explanation": "lucid(명료한)의 반의어는 obscure(불명확한)예요."
     },
     {
       "type": "meaning",
-      "word": "ephemeral",
-      "question": "'ephemeral trends'는 어떤 트렌드를 가리키나요?",
-      "options": ["오래 지속되는 트렌드", "금방 사라지는 트렌드", "전 세계적인 트렌드", "과학적으로 검증된 트렌드"],
-      "answer": 1,
-      "explanation": "ephemeral = 짧은 시간 동안만 존재하는, 덧없는."
+      "word": "alacrity",
+      "question": "'responded with alacrity'는 어떻게 반응한 것인가요?",
+      "options": ["천천히 망설이며", "마지못해 억지로", "기꺼이 민첩하게", "화를 내며 거부"],
+      "answer": 2,
+      "explanation": "alacrity = 열정적으로 기꺼이 하는 태도예요."
     }
   ]
 }
