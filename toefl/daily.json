@@ -1,178 +1,114 @@
 {
   "date": "2026-08-16",
   "reading": {
-    "title": "Animal Behavior and Social Hierarchies in Primate Groups",
-    "passage": "Ethology, the scientific study of animal behavior, has revealed complex social structures among primates that challenge earlier assumptions about the simplicity of animal societies. Research conducted over the past three decades demonstrates that primates establish and maintain hierarchical systems through ritualized displays and strategic alliances. These hierarchies are not merely based on physical dominance; instead, they involve sophisticated cognitive processes and social manipulation. For instance, subordinate chimpanzees have been observed forming coalitions to challenge established leaders, suggesting that social rank depends on a dynamic interplay of strength, intelligence, and political acumen. Furthermore, studies of gorillas and bonobos indicate that maternal lineage and social bonds play crucial roles in determining an individual's position within the group hierarchy. The implications of these findings extend beyond academic interest, as understanding primate social behavior provides insights into the evolutionary origins of human social organization and the neurobiological mechanisms underlying social cognition.",
-    "vocabulary": [
-      {
-        "word": "ethology",
-        "meaning_ko": "동물행동학; 동물의 자연 환경에서의 행동을 과학적으로 연구하는 학문"
-      },
-      {
-        "word": "hierarchical",
-        "meaning_ko": "위계적인; 단계적 서열이나 순위 체계를 가진"
-      },
-      {
-        "word": "ritualized",
-        "meaning_ko": "의례화된; 정형화된 반복적 행동 패턴을 보이는"
-      },
-      {
-        "word": "subordinate",
-        "meaning_ko": "하위의, 종속적인; 지배를 받는 입장의"
-      },
-      {
-        "word": "coalition",
-        "meaning_ko": "연합, 동맹; 공통의 목표를 위해 연합한 집단"
-      },
-      {
-        "word": "acumen",
-        "meaning_ko": "총명함, 민첩한 판단력; 특정 분야에서의 날카로운 이해력"
-      },
-      {
-        "word": "neurobiological",
-        "meaning_ko": "신경생물학적인; 뇌와 신경계의 생물학적 기능과 관련된"
-      }
-    ],
+    "title": "The Evolution of Renewable Energy",
+    "passage": "Renewable energy sources have become increasingly important in addressing global climate change. Solar and wind power technologies have advanced significantly over the past decade, reducing costs and improving efficiency. Many countries now invest heavily in renewable infrastructure to decrease reliance on fossil fuels. The transition to clean energy not only benefits the environment but also creates new job opportunities in the green technology sector. However, challenges remain in energy storage and grid integration.",
     "questions": [
       {
-        "q": "According to the passage, what is one key factor that determines social rank among primates?",
+        "q": "According to the passage, what has happened to solar and wind power technologies?",
         "options": [
-          "Physical dominance alone",
-          "Maternal lineage and social bonds",
-          "Geographic location within habitat",
-          "Age of the individual"
+          "They have become more expensive",
+          "They have advanced and become more efficient",
+          "They are no longer used in most countries",
+          "They require more fossil fuels to operate"
         ],
         "answer": 1,
-        "explanation": "passage의 두 번째 단락에서 '형질적 우월성만이 아니라 고도화된 인지 과정과 사회적 조작이 관여'하며, 또한 '모계 계통과 사회적 유대가 개인의 위계 내 지위 결정에 중요한 역할을 한다'고 명시되어 있습니다."
+        "explanation": "본문에서 'Solar and wind power technologies have advanced significantly over the past decade, reducing costs and improving efficiency'라고 명확히 나와있습니다. 따라서 태양광과 풍력 기술이 발전하고 효율성이 개선되었다는 것이 정답입니다."
       },
       {
-        "q": "What can be inferred from the passage about subordinate chimpanzees forming coalitions?",
+        "q": "Which of the following is mentioned as a benefit of transitioning to clean energy?",
         "options": [
-          "They are physically stronger than their leaders",
-          "They demonstrate sophisticated cognitive and social strategies",
-          "They are unable to survive in the wild",
-          "They always succeed in changing the hierarchy"
+          "Lower transportation costs",
+          "Increased fossil fuel production",
+          "Creation of new job opportunities",
+          "Reduced electricity consumption"
         ],
-        "answer": 1,
-        "explanation": "종속적 지위의 침팬지들이 연합을 형성하여 확립된 지도자에게 도전한다는 사실은 그들이 단순한 본능이 아닌 정교한 인지 및 사회 전략을 사용한다는 것을 시사합니다."
+        "answer": 2,
+        "explanation": "'The transition to clean energy not only benefits the environment but also creates new job opportunities in the green technology sector'라는 문장에서 청정에너지로의 전환이 녹색 기술 부문에서 새로운 일자리 창출을 야기한다고 명시되어 있습니다."
       },
       {
-        "q": "The word 'dynamic' in the passage is closest in meaning to",
+        "q": "What challenges are mentioned in the passage?",
         "options": [
-          "Static and unchanging",
-          "Constantly changing and interactive",
-          "Physically powerful",
-          "Biologically determined"
+          "Government opposition to renewable energy",
+          "Energy storage and grid integration",
+          "International trade disputes",
+          "Lack of investment funding"
         ],
         "answer": 1,
-        "explanation": "'동적인 상호작용'이라는 표현은 사회적 지위가 시간에 따라 변하고 다양한 요소들이 상호작용한다는 의미로 '끊임없이 변하고 상호작용하는'이 가장 적절한 의미입니다."
-      },
-      {
-        "q": "Why does the author mention the study of gorillas and bonobos?",
-        "options": [
-          "To show that these species are more intelligent than chimpanzees",
-          "To provide additional evidence that maternal lineage and social bonds influence hierarchy",
-          "To explain why these species are endangered",
-          "To demonstrate that physical dominance is the only factor in hierarchy"
-        ],
-        "answer": 1,
-        "explanation": "고릴라와 보노보에 대한 연구 언급은 모계 계통과 사회적 유대가 위계 결정에 중요한 역할을 한다는 주요 주장을 여러 영장류 종을 통해 뒷받침하기 위한 것입니다."
+        "explanation": "마지막 문장에서 'However, challenges remain in energy storage and grid integration'이라고 직접 언급되어 있습니다. 에너지 저장과 그리드 통합이 남은 과제입니다."
       }
     ]
   },
   "writing": {
-    "title": "동물실험 규제에 관한 에세이 문단 작성 및 패러프레이징 연습",
-    "sentences": [
-      {
-        "original": "Research conducted over the past three decades demonstrates that primates establish and maintain hierarchical systems through ritualized displays and strategic alliances.",
-        "paraphrase": "Over the past thirty years, scientific investigations have shown that primates use formalized behavioral patterns and coordinated group relationships to develop and sustain systems of social ranking.",
-        "tip": "복잡한 동사구(establish and maintain)를 'develop and sustain'으로 동의어 치환하고, 'ritualized displays'를 'formalized behavioral patterns'으로 구체화하여 의미는 유지하되 표현을 다양하게 함"
-      },
-      {
-        "original": "These hierarchies are not merely based on physical dominance; instead, they involve sophisticated cognitive processes and social manipulation.",
-        "paraphrase": "The ranking systems within primate groups depend not simply on strength and power but rather on complex mental activities and interpersonal strategic behavior.",
-        "tip": "세미콜론 구조를 'depend not...but'으로 변환하고, 'physical dominance'를 'strength and power'로, 'sophisticated cognitive processes'를 'complex mental activities'로 각각 동의어로 치환"
-      },
-      {
-        "original": "Subordinate chimpanzees have been observed forming coalitions to challenge established leaders, suggesting that social rank depends on a dynamic interplay of strength, intelligence, and political acumen.",
-        "paraphrase": "Lower-ranking chimpanzees have been witnessed creating alliances aimed at opposing current authority figures, which indicates that an individual's social position is determined by the constant interaction of physical capability, intellectual ability, and shrewd decision-making.",
-        "tip": "수동태(have been observed) 유지, 'coalitions'을 'alliances'로 치환, 'dynamic interplay'를 'constant interaction'으로 바꾸고, 'political acumen'을 'shrewd decision-making'으로 풀어서 표현"
-      }
+    "prompt": "Do you agree or disagree with the statement: 'Countries should prioritize renewable energy development over other economic investments'?",
+    "structure": {
+      "intro": "먼저 주제를 명확히 하는 한 문장 정의 후, 자신의 입장을 분명하게 제시합니다. 예: 'While economic growth is important, I believe renewable energy should be prioritized...'",
+      "body1": "첫 번째 논거: 환경 보호의 필요성 - 기후변화, 대기오염 감소 등의 장기적 이점을 설명합니다.",
+      "body2": "두 번째 논거: 경제적 이점 - 신규 일자리 창출, 에너지 비용 절감, 기술 혁신 등을 구체적으로 제시합니다.",
+      "conclusion": "두 논거를 종합하여 재신입하고, 미래 세대를 위한 투자 관점에서 마무리합니다."
+    },
+    "useful_phrases": [
+      "In my opinion,",
+      "Furthermore,",
+      "It is clear that",
+      "One significant advantage is",
+      "In addition to",
+      "As a result,",
+      "To conclude,",
+      "From this perspective,"
     ]
   },
   "speaking": {
-    "prompt": "Some people are morning people who prefer to wake up early and be productive at the start of the day. Others are night people who feel more alert and creative in the evening. Which do you prefer, and why? Include specific reasons and details.",
-    "model_sentences": [
-      "Personally, I strongly prefer being a morning person because I find that I accomplish much more when I start my day early.",
-      "First of all, waking up early gives me several peaceful hours to focus on important tasks before other distractions begin.",
-      "For example, I can study for exams or complete assignments in the morning when my mind is fresh and clear, which helps me understand difficult concepts more easily.",
-      "Additionally, starting my day early allows me to exercise and eat a healthy breakfast, which improves my energy levels throughout the day.",
-      "In summary, being a morning person has made me more productive and healthier overall, so I definitely prefer this schedule to staying up late at night."
+    "prompt": "Some people prefer to work in traditional office environments. Others prefer to work remotely from home. Which do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer... because...",
+      "One reason is that...",
+      "Another advantage of... is that...",
+      "This is beneficial because...",
+      "From my perspective..."
+    ],
+    "sample_points": [
+      "원격근무의 장점: 시간 절약, 업무 집중력 향상, 생활-업무 균형 개선 등을 언급할 수 있습니다.",
+      "원격근무의 추가 이점: 교통비 절감, 유연한 일정 관리, 가족과의 시간 증가 등을 구체적으로 설명합니다."
     ]
   },
   "listening": {
-    "title": "Biology Lecture: Photosynthesis Process",
-    "type": "lecture",
-    "script": "Professor: Today, we're going to discuss photosynthesis, one of the most important biochemical processes on Earth. Photosynthesis is the process by which plants convert light energy from the sun into chemical energy stored in glucose. This process occurs in two main stages: the light-dependent reactions and the light-independent reactions, also called the Calvin cycle. In the light-dependent reactions, which happen in the thylakoid membranes, chlorophyll absorbs photons and releases electrons. These electrons move through the electron transport chain, generating ATP and NADPH. The second stage, the Calvin cycle, takes place in the stroma and doesn't require light directly. During this stage, carbon dioxide is fixed into glucose using the ATP and NADPH produced earlier. One critical aspect students often misunderstand is that both stages are equally important. Without the light reactions, there would be no ATP or NADPH to power the Calvin cycle. Conversely, without the Calvin cycle, the light reactions would have no purpose. Any questions so far?",
-    "vocabulary": [
-      {
-        "word": "photosynthesis",
-        "meaning_ko": "광합성; 식물이 빛을 이용해 이산화탄소와 물을 포도당으로 전환하는 생화학 과정"
-      },
-      {
-        "word": "thylakoid",
-        "meaning_ko": "틸라코이드; 엽록체 내에서 빛 반응이 일어나는 막 구조"
-      },
-      {
-        "word": "chlorophyll",
-        "meaning_ko": "엽록소; 식물이 태양빛을 흡수하는 광합성 색소"
-      },
-      {
-        "word": "electron transport chain",
-        "meaning_ko": "전자 전달계; 전자가 이동하면서 에너지를 방출하는 일련의 단백질 복합체"
-      },
-      {
-        "word": "stroma",
-        "meaning_ko": "스트로마; 엽록체의 액체 부분으로 캘빈 순환이 일어나는 곳"
-      },
-      {
-        "word": "glucose",
-        "meaning_ko": "포도당; 식물이 광합성으로 만드는 단순 당분"
-      }
-    ],
+    "title": "University Library Orientation",
+    "type": "conversation",
+    "script": "Librarian: Welcome to our university library. I'm here to help you get started. Student: Thank you! This is my first time here. Where should I begin? Librarian: Well, first you need a library card. It's free for all students. You just fill out this form with your student ID. Student: How long does that take? Librarian: Just a few minutes. After that, I can show you our computer databases. We have access to thousands of academic journals and research papers. Student: That's great! What about finding textbooks? Librarian: Textbooks are on the fourth floor in the reference section. You can search our online catalog to check availability. Most students reserve them for two-hour sessions to save costs. Student: I see. And what are the borrowing limits? Librarian: Students can borrow up to 20 books at a time for three weeks. However, reference materials cannot be borrowed; they must be used here in the library. Student: Got it. This is very helpful!",
     "questions": [
       {
-        "q": "What is the main topic of the lecture?",
+        "q": "What is the main purpose of this conversation?",
         "options": [
-          "The structure of chlorophyll molecules",
-          "The two main stages of photosynthesis and their functions",
-          "How plants absorb water from soil",
-          "The differences between various types of plants"
+          "To explain library borrowing fees",
+          "To orient a new student about library services",
+          "To discuss academic journal subscriptions",
+          "To register for a computer class"
         ],
         "answer": 1,
-        "explanation": "교수가 광합성의 두 가지 주요 단계인 명반응과 암반응(캘빈 순환)을 설명하고 각각의 기능을 상세히 설명하므로, 강의의 주요 주제는 광합성의 두 단계입니다."
+        "explanation": "대화의 전체 내용을 보면 사서가 처음 도서관에 방문한 학생에게 도서관 이용 방법, 자료 위치, 대출 규정 등을 설명하고 있습니다. 따라서 주된 목적은 신입생을 도서관 서비스에 대해 안내하는 것입니다."
       },
       {
-        "q": "According to the professor, what happens during the light-dependent reactions?",
+        "q": "Where are textbooks located in the library?",
         "options": [
-          "Carbon dioxide is converted into glucose",
-          "Chlorophyll absorbs photons and electrons are released and moved through the electron transport chain",
-          "ATP and NADPH are used to fix carbon dioxide",
-          "The stroma produces energy"
+          "On the first floor",
+          "On the second floor",
+          "On the fourth floor",
+          "In the online catalog"
         ],
-        "answer": 1,
-        "explanation": "교수는 '명반응이 틸라코이드 막에서 일어나며, 엽록소가 광자를 흡수하고 전자를 방출하며, 이 전자들이 전자 전달계를 통해 이동하면서 ATP와 NADPH를 생성한다'고 설명했습니다."
+        "answer": 2,
+        "explanation": "사서가 'Textbooks are on the fourth floor in the reference section'이라고 명확히 말했으므로, 교과서는 4층에 위치합니다."
       },
       {
-        "q": "What does the professor emphasize about the relationship between the light-dependent and light-independent reactions?",
+        "q": "What is the borrowing limit for students?",
         "options": [
-          "The light-dependent reactions are more important",
-          "Both stages are equally important and dependent on each other",
-          "The light-independent reactions are more complex",
-          "They can function independently"
+          "10 books for two weeks",
+          "15 books for three weeks",
+          "20 books for three weeks",
+          "Unlimited borrowing"
         ],
-        "answer": 1,
-        "explanation": "교수는 '두 단계가 모두 똑같이 중요하며, 명반응 없이는 캘빈 순환에 필요한 ATP와 NADPH가 없고, 캘빈 순환 없이는 명반응이 목적이 없다'고 강조했습니다."
+        "answer": 2,
+        "explanation": "사서가 'Students can borrow up to 20 books at a time for three weeks'라고 설명했으므로, 학생들은 한 번에 최대 20권을 3주일 동안 대출할 수 있습니다."
       }
     ]
   }
