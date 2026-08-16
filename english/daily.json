@@ -237,6 +237,62 @@
       "nuance": "빠르고 표면적인 검토만 했다는 뉘앙스. 시간이나 관심이 부족해서 제대로 보지 않았다는 부정적 함의가 있어요.",
       "context": "검토, 조사, 검사 등이 너무 급하게 대충 이뤄졌을 때. 'a cursory glance/review/inspection/reading'이 일반적 패턴이에요.",
       "everyday_usage": "'a cursory look/glance/review' — '대충 훑어보기'를 표현할 때. 'After only a cursory review, he approved the plan.' 뉴스·학술문에 자주 나와요."
+    },
+    {
+      "word": "spurious",
+      "sentence": "The company dismissed the spurious claims with evidence from independent auditors.",
+      "sentence_ko": "그 회사는 독립 감사인의 증거로 근거 없는 주장을 일축했어요.",
+      "nuance": "단순히 '틀렸다'가 아니라 겉으로는 그럴듯해 보이지만 실제로는 거짓이거나 논리적 근거가 없다는 뉘앙스. 의도적 기만이 내포될 때도 써요.",
+      "context": "논쟁, 법정, 학술 반박 등에서 상대 주장이 허위임을 지적할 때. 'spurious argument/claim/reasoning/correlation'이 흔한 조합이에요.",
+      "everyday_usage": "'That's a spurious argument.(그건 근거 없는 주장이야)' — 논쟁에서 상대 논리를 강하게 반박할 때 씁니다."
+    },
+    {
+      "word": "exacerbate",
+      "sentence": "Checking your phone right before bed exacerbates insomnia.",
+      "sentence_ko": "자기 직전에 폰을 확인하는 것은 불면증을 악화시켜요.",
+      "nuance": "이미 존재하는 나쁜 상황을 더 나쁘게 만드는 외부 요인에 초점. '악화'라는 결과보다 '촉진'하는 행동·원인을 강조할 때 딱 맞아요.",
+      "context": "건강, 갈등, 환경 문제 등 기존의 부정적 상황이 심화될 때. 'exacerbate the problem/situation/symptoms/crisis' 형태로 자주 나와요.",
+      "everyday_usage": "'This only exacerbates things.(이건 상황만 더 나쁘게 해)' — 일상 대화에서도 쓸 수 있는 강한 표현이에요."
+    },
+    {
+      "word": "esoteric",
+      "sentence": "His hobby of collecting ancient coins is a bit esoteric, but he loves it.",
+      "sentence_ko": "고대 동전 수집이라는 그의 취미는 좀 난해하지만, 그는 정말 좋아해요.",
+      "nuance": "소수만 이해하거나 관심 갖는 전문적·비밀스러운 느낌. '어렵다'보다는 '대중에게 알려지지 않은, 전문가만의 영역'에 가까워요.",
+      "context": "특수한 학문, 취미, 지식을 묘사할 때. 'esoteric knowledge/topic/interest/ritual' 패턴으로 씁니다. 비판보다는 중립·중립 이상의 뉘앙스.",
+      "everyday_usage": "'That's a bit esoteric for most people.(대부분의 사람들에게는 좀 생소한 주제야)' — 대화에서 전문적이거나 마니악한 분야를 설명할 때 써요."
+    },
+    {
+      "word": "corroborate",
+      "sentence": "Three separate witnesses corroborated the defendant's alibi.",
+      "sentence_ko": "세 명의 별개 증인이 피고의 알리바이를 뒷받침했어요.",
+      "nuance": "단순 확인(confirm)이 아니라 독립된 증거나 증언이 추가로 주장을 강화한다는 뉘앙스. 과학·법률에서 신뢰성을 높일 때 핵심 단어예요.",
+      "context": "법정, 과학 연구, 저널리즘 등 주장의 신뢰성을 독립적 증거로 확인할 때. 'corroborate a story/claim/evidence/finding'이 일반적 패턴이에요.",
+      "everyday_usage": "'Can you corroborate that?(그걸 뒷받침할 증거가 있어?)' — 상대 주장의 근거를 요청할 때 격식 있게 쓸 수 있어요."
+    },
+    {
+      "word": "pervasive",
+      "sentence": "A pervasive sense of anxiety settled over the office after the layoff announcement.",
+      "sentence_ko": "해고 발표 이후 사무실 전체에 만연한 불안감이 자리 잡았어요.",
+      "nuance": "'만연하다'는 뜻인데, 단순히 '많다'가 아니라 공간·집단·상황 전체에 스며들어 피할 수 없는 느낌이 핵심이에요.",
+      "context": "분위기, 문화, 영향력, 현상이 사회나 집단 전체에 깊이 퍼져 있을 때. 'pervasive influence/culture/problem/attitude'로 씁니다.",
+      "everyday_usage": "'It's become pervasive in modern culture.(현대 문화 전반에 만연해졌어)' — 사회 현상 분석할 때 자주 쓰는 표현이에요."
+    },
+    {
+      "word": "tenuous",
+      "sentence": "The connection between diet and mood is real, but still tenuous in the research.",
+      "sentence_ko": "식단과 기분 사이의 연관성은 실재하지만 연구에서는 아직 미약해요.",
+      "nuance": "물리적으로 '가늘고 약한'에서 나온 단어로, 논거·관계·근거가 약하거나 불확실하다는 뉘앙스. 완전히 틀렸다기보다 근거가 불충분한 느낌.",
+      "context": "주장의 근거, 연구 결과, 관계의 강도가 불충분하거나 확신하기 어려울 때. 'tenuous link/connection/grasp/argument'로 자주 씁니다.",
+      "everyday_usage": "'That logic is pretty tenuous.(그 논리는 좀 근거가 약한데)' — 상대 주장이 설득력 부족할 때 부드럽게 지적하는 표현이에요."
+    },
+    {
+      "word": "precipitate",
+      "sentence": "His hasty comments precipitated a social media backlash that lasted for weeks.",
+      "sentence_ko": "그의 성급한 발언은 몇 주간 이어진 소셜 미디어 역풍을 촉발시켰어요.",
+      "nuance": "사건이나 결과를 예상보다 빠르게, 갑작스럽게 일으킨다는 뉘앙스. '유발하다(cause)'보다 갑작스럽고 부주의한 느낌이 강해요.",
+      "context": "위기, 사건, 갈등이 어떤 행동으로 인해 갑자기 발생할 때. 'precipitate a crisis/conflict/collapse/reaction' 패턴이 빈출이에요.",
+      "everyday_usage": "'Don't precipitate a conflict.(갈등을 섣불리 일으키지 마)' — 성급한 행동을 경고할 때 쓸 수 있는 고급 표현이에요."
     }
   ]
 }

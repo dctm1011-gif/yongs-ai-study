@@ -183,7 +183,7 @@ JSON 형식:
 - tip: TOEFL 출제 영역 + 핵심 동의어/반의어 포함
 - 오답 선택지: 동의어(뉘앙스 차이)·관련 단어·반의어 활용 (무작위 distractor 금지)
 - option_explanations: 오답마다 한국어로 WHY 설명 필수 (정답은 null)
-- sentences: 오늘 단어 5개 + words_db 최근 3개 단어 = 총 8개 단어, 단어 하나당 문장 하나 (절대 한 단어에 두 문장 금지). 각 문장은 짧고 자연스러운 일상 영어 문장(하이쿠처럼 핵심만). nuance(어떤 느낌인지), context(어떤 상황에서), everyday_usage(실제 일상 표현 패턴)를 한국어로 상세 작성
+- sentences: 오늘 단어 5개 + words_db 최근 10개 단어 = 총 15개 단어, 단어 하나당 문장 하나 (절대 한 단어에 두 문장 금지). 각 문장은 짧고 자연스러운 일상 영어 문장(하이쿠처럼 핵심만). nuance(어떤 느낌인지), context(어떤 상황에서), everyday_usage(실제 일상 표현 패턴)를 한국어로 상세 작성
 - JSON만 반환"""
 
     used_lower = {w.lower() for w in used_words}
