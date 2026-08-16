@@ -1,114 +1,181 @@
 {
   "date": "2026-08-17",
   "reading": {
-    "title": "Artificial Intelligence in Healthcare",
-    "passage": "Artificial intelligence is revolutionizing the healthcare industry by improving diagnostic accuracy and patient care. AI algorithms can analyze medical images faster than human radiologists, detecting diseases like cancer at earlier stages. Additionally, AI-powered systems assist in drug discovery, reducing the time and cost of developing new medications. Machine learning models also help predict patient outcomes, enabling doctors to provide personalized treatment plans. However, concerns about data privacy and the need for proper regulation remain significant challenges in implementing AI within healthcare systems.",
+    "title": "Bioluminescence in Deep-Sea Organisms",
+    "passage": "Bioluminescence, the production and emission of light by living organisms, represents one of the most fascinating adaptations in marine biology. In the deep ocean, where sunlight cannot penetrate, numerous organisms have evolved the ability to generate their own light through chemical reactions. This phenomenon serves multiple biological functions, including communication, predation, and defense mechanisms. The process involves specialized proteins and chemical compounds that undergo oxidation, releasing energy in the form of visible light. Remarkably, approximately 90 percent of deep-sea creatures possess some form of bioluminescent capability, demonstrating its critical importance for survival in the abyssal zone. Marine scientists have identified over 1,000 species of bioluminescent organisms, ranging from microscopic dinoflagellates to large squid species. The luciferin-luciferase reaction, a well-documented biochemical process, explains how these organisms convert chemical energy into photons. Understanding bioluminescence not only illuminates the mysteries of deep-sea ecosystems but also provides valuable applications in medical research and biotechnology, where these proteins have become essential tools for cellular imaging and genetic studies.",
+    "vocabulary": [
+      {
+        "word": "bioluminescence",
+        "meaning_ko": "생물이 화학 반응을 통해 빛을 생산하고 방출하는 능력"
+      },
+      {
+        "word": "penetrate",
+        "meaning_ko": "통과하다, 침투하다"
+      },
+      {
+        "word": "oxidation",
+        "meaning_ko": "산화 반응"
+      },
+      {
+        "word": "abyssal zone",
+        "meaning_ko": "심해(바다의 가장 깊은 부분)"
+      },
+      {
+        "word": "dinoflagellates",
+        "meaning_ko": "와편모류(바다의 미생물)"
+      },
+      {
+        "word": "luciferin-luciferase reaction",
+        "meaning_ko": "루시페린-루시페라제 반응(생물 발광의 핵심 화학 반응)"
+      },
+      {
+        "word": "photons",
+        "meaning_ko": "광자(빛의 기본 입자)"
+      }
+    ],
     "questions": [
       {
-        "q": "According to the passage, what is one advantage of using AI in medical imaging?",
+        "q": "According to the passage, what is the primary purpose of bioluminescence in deep-sea organisms?",
         "options": [
-          "It completely replaces human radiologists",
-          "It can detect diseases like cancer at earlier stages",
-          "It eliminates the need for patient data",
-          "It reduces healthcare costs by eliminating hospitals"
+          "To regulate water temperature in the deep ocean",
+          "To serve communication, predation, and defense functions",
+          "To reduce the amount of oxygen consumed by marine life",
+          "To prevent other organisms from entering their territory"
         ],
         "answer": 1,
-        "explanation": "지문에서 AI 알고리즘이 의료 영상을 인간 방사선 의사보다 빠르게 분석하고 암과 같은 질병을 더 조기에 발견할 수 있다고 명시되어 있습니다."
+        "explanation": "본문의 두 번째 문장에서 bioluminescence의 목적이 'communication, predation, and defense mechanisms'라고 명시되어 있습니다."
       },
       {
-        "q": "What does the passage suggest about AI in drug discovery?",
+        "q": "What can be inferred from the passage about the prevalence of bioluminescence in the deep sea?",
         "options": [
-          "It increases the development time",
-          "It has no impact on medication costs",
-          "It reduces both time and cost of developing new medications",
-          "It is only used for experimental purposes"
-        ],
-        "answer": 2,
-        "explanation": "지문에서 AI 기반 시스템이 신약 개발의 시간과 비용을 줄일 수 있다고 명시되어 있습니다."
-      },
-      {
-        "q": "Which of the following is mentioned as a challenge in implementing AI in healthcare?",
-        "options": [
-          "Lack of technology",
-          "Data privacy concerns and need for proper regulation",
-          "Patient resistance to treatment",
-          "Inability to analyze patient data"
+          "It is a rare adaptation found only in a few species",
+          "It is an extremely common ability crucial for survival in deep-sea environments",
+          "It is a recent evolutionary development that organisms are still adapting to",
+          "It is more common in shallow waters than in the abyssal zone"
         ],
         "answer": 1,
-        "explanation": "지문의 마지막 부분에서 데이터 프라이버시 우려와 적절한 규제의 필요성이 AI 의료 구현의 중요한 과제라고 언급되어 있습니다."
+        "explanation": "'approximately 90 percent of deep-sea creatures possess some form of bioluminescent capability'라는 통계를 통해 이것이 매우 흔한 적응임을 알 수 있습니다."
+      },
+      {
+        "q": "The word 'convert' in the passage is closest in meaning to",
+        "options": [
+          "transport",
+          "transform",
+          "accumulate",
+          "distribute"
+        ],
+        "answer": 1,
+        "explanation": "'convert chemical energy into photons'에서 convert는 '(한 형태의) 것을 다른 형태로 변환하다'는 의미의 transform과 가장 가깝습니다."
+      },
+      {
+        "q": "Why does the author mention the luciferin-luciferase reaction?",
+        "options": [
+          "To explain the biochemical mechanism behind bioluminescence",
+          "To describe how deep-sea organisms communicate with each other",
+          "To provide evidence that bioluminescence is harmful to marine life",
+          "To suggest that artificial bioluminescence can be created in laboratories"
+        ],
+        "answer": 0,
+        "explanation": "저자는 '이 반응이 생물들이 화학 에너지를 광자로 어떻게 변환하는지 설명한다(explains how these organisms convert chemical energy into photons)'고 명시함으로써 생물 발광의 생화학적 메커니즘을 설명하기 위해 이를 언급합니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Technology has made human relationships weaker than before'?",
-    "structure": {
-      "intro": "자신의 입장(동의/불동의)을 명확하게 제시하고, 2-3개의 주요 이유를 간단히 소개합니다.",
-      "body1": "첫 번째 주요 이유에 대해 구체적인 예시와 함께 설명합니다. (예: 소셜 미디어의 영향)",
-      "body2": "두 번째 주요 이유에 대해 상세히 전개합니다. (예: 장거리 관계 유지의 용이성)",
-      "conclusion": "서론의 입장을 재확인하고, 제시한 이유들을 요약하여 마무리합니다."
-    },
-    "useful_phrases": [
-      "In my opinion,",
-      "I agree/disagree with this statement because",
-      "Furthermore,",
-      "For example,",
-      "On the other hand,",
-      "In conclusion,",
-      "This demonstrates that",
-      "It is clear that"
+    "sentences": [
+      {
+        "original": "In the deep ocean, where sunlight cannot penetrate, numerous organisms have evolved the ability to generate their own light through chemical reactions.",
+        "paraphrase": "Where sunlight is unable to reach in the deep ocean, many organisms have developed the capacity to produce light via chemical processes.",
+        "tip": "주요 어휘의 동의어 치환(evolved→developed, generate→produce, through→via) 및 문장 구조 재배열"
+      },
+      {
+        "original": "This phenomenon serves multiple biological functions, including communication, predation, and defense mechanisms.",
+        "paraphrase": "Multiple biological purposes are served by this phenomenon, such as communicating, hunting prey, and protecting themselves.",
+        "tip": "능동→수동 전환, 추상명사→동사형으로 변환(communication→communicating, predation→hunting prey)"
+      },
+      {
+        "original": "The luciferin-luciferase reaction, a well-documented biochemical process, explains how these organisms convert chemical energy into photons.",
+        "paraphrase": "A thoroughly studied biochemical mechanism known as the luciferin-luciferase reaction demonstrates the method by which these creatures transform chemical energy into light particles.",
+        "tip": "동의어 치환(well-documented→thoroughly studied, convert→transform, photons→light particles) 및 관계절 구조 변경"
+      },
+      {
+        "original": "Understanding bioluminescence not only illuminates the mysteries of deep-sea ecosystems but also provides valuable applications in medical research and biotechnology.",
+        "paraphrase": "Beyond revealing the secrets of deep-sea ecosystems, knowledge of bioluminescence offers practical uses for medical and biotechnological research.",
+        "tip": "이중 구조 재배열, illuminates의 비유적 의미를 revealing으로 단순화, applications→uses로 변환"
+      }
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to work in a large company with many employees. Others prefer to work in a small startup. Which do you prefer and why?",
-    "useful_expressions": [
-      "In my opinion, I prefer working in a...",
-      "One reason is that...",
-      "Another advantage/disadvantage is...",
-      "For instance,",
-      "This is important to me because..."
-    ],
-    "sample_points": [
-      "Small companies offer more opportunities for personal growth and learning diverse skills, while large companies provide job security and structured career development.",
-      "Startup environments foster creativity and innovation, but large companies offer better benefits, salary stability, and established work processes."
+    "prompt": "Some people prefer to travel and explore new places. Others prefer to save money for the future. Which do you prefer and why? Include specific reasons and details in your response.",
+    "model_sentences": [
+      "Personally, I believe traveling is more valuable than saving money because it provides irreplaceable experiences and personal growth.",
+      "When you travel, you gain firsthand knowledge about different cultures, historical sites, and ways of living that no textbook can teach you.",
+      "For example, visiting a new country allowed me to understand different perspectives and build friendships with people from around the world.",
+      "While saving money is important for security, the memories and skills you gain from traveling are investments that enrich your life in ways that money alone cannot."
     ]
   },
   "listening": {
-    "title": "University Library Resources",
-    "type": "conversation",
-    "script": "Student: Hi, I'm new here and I'm looking for information about the library's online resources. Librarian: Welcome! We have an extensive collection of digital databases, e-books, and academic journals available 24/7. You can access them from anywhere using your student ID. We also offer research consultation services where librarians help you find sources for your papers. Student: That sounds great. Are there any workshops available? Librarian: Yes, we conduct weekly workshops on database searching, citation management, and academic writing. These sessions are free for all students and you can sign up on our website. Additionally, we have a specialized section for science and engineering resources with equipment like computers and specialized software. Student: Perfect! I'm majoring in environmental science, so this will be very helpful. Librarian: Excellent. I'd recommend checking out our environmental studies collection. We have partnership agreements with several environmental organizations, so we get recent publications on climate change, conservation, and sustainability.",
+    "title": "The Impact of the Industrial Revolution on Society",
+    "type": "lecture",
+    "script": "Professor: Good morning, class. Today we're discussing the Industrial Revolution, which fundamentally transformed human civilization. The Industrial Revolution began in Britain during the late 18th century and spread throughout Europe and North America. It marked a shift from agrarian, handcraft economies to industrial, machine-based production. One significant consequence was rapid urbanization. Millions of people moved from rural farms to cities seeking employment in factories. This migration completely changed social structures and living conditions. Additionally, technological innovations like the steam engine revolutionized manufacturing and transportation. However, we must acknowledge the negative aspects as well. Factory workers, including children, often labored for 12 to 16 hours daily in dangerous conditions with minimal wages. Environmental pollution increased dramatically as coal-powered factories released massive amounts of smoke into the atmosphere. Despite these hardships, the Industrial Revolution ultimately increased production capacity, reduced product costs, and created new economic opportunities. It essentially laid the foundation for our modern industrial society. Any questions so far?",
+    "vocabulary": [
+      {
+        "word": "agrarian",
+        "meaning_ko": "농업의, 농촌의"
+      },
+      {
+        "word": "urbanization",
+        "meaning_ko": "도시화"
+      },
+      {
+        "word": "handcraft",
+        "meaning_ko": "수공예"
+      },
+      {
+        "word": "revolutionized",
+        "meaning_ko": "근본적으로 변화시켰다"
+      },
+      {
+        "word": "minimal",
+        "meaning_ko": "최소한의, 아주 적은"
+      },
+      {
+        "word": "atmosphere",
+        "meaning_ko": "대기"
+      }
+    ],
     "questions": [
       {
-        "q": "What is the main purpose of this conversation?",
+        "q": "What is the main topic of the lecture?",
         "options": [
-          "To discuss the student's major",
-          "To introduce the library's resources and services to a new student",
-          "To sign up for a research consultation",
-          "To register for workshops on citation management"
+          "The development of agricultural technology in the 18th century",
+          "The Industrial Revolution and its effects on society",
+          "How steam engines were invented and improved",
+          "Environmental protection policies during the Industrial Revolution"
         ],
         "answer": 1,
-        "explanation": "사서가 새로운 학생에게 도서관의 다양한 온라인 자원, 서비스, 워크숍 등을 소개하고 있으므로, 이 대화의 주요 목적은 새로운 학생에게 도서관의 자원과 서비스를 소개하는 것입니다."
+        "explanation": "교수는 강의를 '오늘 우리는 인간 문명을 근본적으로 변화시킨 산업혁명을 다룬다'는 말로 시작하며, 전체 강의는 산업혁명과 그것이 사회에 미친 영향에 대해 진행됩니다."
       },
       {
-        "q": "According to the librarian, what resources are available for students to access?",
+        "q": "According to the professor, what was one major negative consequence of the Industrial Revolution?",
         "options": [
-          "Only printed books and journals",
-          "Only computers and software",
-          "Digital databases, e-books, academic journals, and specialized equipment",
-          "Only environmental studies materials"
+          "Decrease in product availability",
+          "Reduced trade between countries",
+          "Poor working conditions and low wages for factory workers",
+          "Loss of all technological innovations"
         ],
         "answer": 2,
-        "explanation": "사서는 디지털 데이터베이스, 전자책, 학술 저널, 그리고 과학 및 공학 섹션의 전문 장비 등 다양한 자원을 언급했습니다."
+        "explanation": "교수가 명확하게 언급한 부정적 측면은 '공장 노동자들, 어린이 포함하여 하루 12~16시간 위험한 환경에서 최소한의 임금으로 일했다'는 것입니다."
       },
       {
-        "q": "What does the librarian suggest the student should check out?",
+        "q": "Why does the professor mention environmental pollution?",
         "options": [
-          "The weekly workshops schedule",
-          "The environmental studies collection",
-          "The research consultation services",
-          "The computer lab facilities"
+          "To explain how steam engines improved efficiency",
+          "To illustrate one of the negative effects of industrial development",
+          "To show that factories were more productive than farms",
+          "To describe new technologies for pollution control"
         ],
         "answer": 1,
-        "explanation": "사서는 학생이 환경과학을 전공하므로 도서관의 환경 연구 컬렉션을 확인하기를 권장했습니다."
+        "explanation": "교수는 '우리는 부정적 측면도 인정해야 한다'는 맥락에서 환경 오염을 언급하며, 이는 산업 발전의 부정적 결과를 구체적으로 보여주기 위함입니다."
       }
     ]
   }
