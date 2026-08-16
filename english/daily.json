@@ -2,150 +2,160 @@
   "date": "2026-08-17",
   "words": [
     {
-      "word": "acquiesce",
-      "part_of_speech": "동사",
-      "meaning_ko": "묵인하다, 마지못해 동의하다",
-      "explanation": "불만이 있어도 저항 없이 받아들이거나 동의하는 것. 정치·사회 지문에서 자주 등장해요.",
-      "example_from_convo": "The minority party had no choice but to acquiesce to the new policy.",
-      "example_ko": "소수 정당은 새 정책에 마지못해 동의할 수밖에 없었어요.",
-      "tip": "동의어: comply, consent, yield. 반의어: resist, protest. TOEFL 정치·사회 지문 빈출.",
-      "emoji": "🤝"
+      "word": "assiduous",
+      "part_of_speech": "형용사",
+      "meaning_ko": "부지런한, 열심인",
+      "explanation": "일에 꾸준하고 세심하게 집중하는 태도",
+      "example_from_convo": "The researcher's assiduous efforts led to groundbreaking discoveries.",
+      "example_ko": "그 연구자의 부지런한 노력이 획기적인 발견으로 이어졌어요.",
+      "tip": "동의어: diligent, industrious. 유사: meticulous(세심한)",
+      "emoji": "🔬"
     },
     {
-      "word": "cogent",
+      "word": "ostensible",
       "part_of_speech": "형용사",
-      "meaning_ko": "설득력 있는, 논리적으로 타당한",
-      "explanation": "논거가 명확하고 설득력이 강한 것. TOEFL Writing 고득점 어휘예요.",
-      "example_from_convo": "The lawyer presented a cogent argument that convinced the entire jury.",
-      "example_ko": "변호사는 배심원 전원을 설득한 논리적인 논거를 제시했어요.",
-      "tip": "동의어: compelling, convincing, persuasive. Writing Task에서 쓰면 고득점 표현.",
+      "meaning_ko": "표면상의, 겉으로는",
+      "explanation": "겉으로는 그래 보이지만 실제로는 다를 수 있는 상태",
+      "example_from_convo": "The ostensible reason for the meeting was budget review.",
+      "example_ko": "그 회의의 표면상의 이유는 예산 검토였어요.",
+      "tip": "동의어: apparent, seeming. 반의어: actual, genuine",
+      "emoji": "🎭"
+    },
+    {
+      "word": "propound",
+      "part_of_speech": "동사",
+      "meaning_ko": "제안하다, 제시하다",
+      "explanation": "이론이나 생각을 정식으로 제안하거나 소개하는 것",
+      "example_from_convo": "The scientist propounded a new theory about climate change.",
+      "example_ko": "그 과학자는 기후변화에 대한 새로운 이론을 제안했어요.",
+      "tip": "동의어: propose, put forward. 형식적 표현",
       "emoji": "💡"
     },
     {
-      "word": "rampant",
-      "part_of_speech": "형용사",
-      "meaning_ko": "만연한, 걷잡을 수 없이 퍼진",
-      "explanation": "부정적인 현상이 통제 불가능할 정도로 퍼져 있는 상태. 사회·환경 지문 필수 어휘예요.",
-      "example_from_convo": "Rampant corruption undermined public trust in the government.",
-      "example_ko": "만연한 부패가 정부에 대한 국민의 신뢰를 약화시켰어요.",
-      "tip": "동의어: widespread, uncontrolled, prevalent. pervasive와 달리 '부정적 확산'에 쓰여요.",
-      "emoji": "🔥"
-    },
-    {
-      "word": "lucid",
-      "part_of_speech": "형용사",
-      "meaning_ko": "명료한, 이해하기 쉬운",
-      "explanation": "생각이나 표현이 매우 명확하고 이해하기 쉬운 것. 학술 글쓰기 평가 어휘예요.",
-      "example_from_convo": "Her lucid explanation made the complex theory easy to understand.",
-      "example_ko": "그녀의 명료한 설명 덕분에 복잡한 이론을 쉽게 이해할 수 있었어요.",
-      "tip": "동의어: clear, coherent, intelligible. 반의어: obscure, opaque, convoluted.",
-      "emoji": "🔍"
-    },
-    {
-      "word": "alacrity",
+      "word": "verisimilitude",
       "part_of_speech": "명사",
-      "meaning_ko": "기꺼이 하는 마음, 민첩한 의욕",
-      "explanation": "어떤 일을 열정적으로 기꺼이 하려는 태도. TOEFL 지문의 인물 묘사에 자주 나와요.",
-      "example_from_convo": "The volunteers responded to the call for help with remarkable alacrity.",
-      "example_ko": "자원봉사자들은 도움 요청에 눈에 띄는 의욕으로 응했어요.",
-      "tip": "동의어: eagerness, willingness, promptness. 반의어: reluctance, hesitation.",
-      "emoji": "⚡"
+      "meaning_ko": "사실다움, 진실성",
+      "explanation": "무언가가 사실처럼 보이거나 실제로 진실에 가까운 정도",
+      "example_from_convo": "The novel's verisimilitude made readers believe the story.",
+      "example_ko": "그 소설의 사실다움이 독자들을 믿게 만들었어요.",
+      "tip": "동의어: authenticity, realism. 반의어: falsity",
+      "emoji": "✨"
+    },
+    {
+      "word": "delineate",
+      "part_of_speech": "동사",
+      "meaning_ko": "명확히 그리다, 설명하다",
+      "explanation": "무언가의 윤곽이나 특성을 명확하게 표현하거나 묘사하는 것",
+      "example_from_convo": "The researcher delineated the boundaries of the study area.",
+      "example_ko": "연구자는 연구 지역의 경계를 명확히 설정했다.",
+      "tip": "동의어: outline, describe, define. 명사형: delineation",
+      "emoji": "📐"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "acquiesce",
-      "question": "'acquiesce'의 의미로 가장 적절한 것은?",
+      "question": "What does 'assiduous' mean?",
+      "word": "assiduous",
       "options": [
-        "강하게 반발하다",
-        "마지못해 동의하다",
-        "적극적으로 제안하다",
-        "완전히 무시하다"
+        "diligent and persistent in effort",
+        "careless and negligent",
+        "arrogant and proud",
+        "timid and hesitant"
       ],
-      "answer": 1,
-      "explanation": "acquiesce = 불만이 있어도 저항 없이 받아들이는 것이에요."
-    },
-    {
-      "type": "fill_blank",
-      "word": "acquiesce",
-      "sentence": "Although she disagreed, she chose to _____ to her supervisor's decision.",
-      "sentence_ko": "그녀는 동의하지 않았지만 상사의 결정에 묵인하기로 했어요.",
-      "answer": "acquiesce",
-      "hint": "묵인하다, 마지못해 동의하다"
+      "answer": 0,
+      "explanation": "Assiduous means showing careful and persistent effort in one's work or duties."
     },
     {
       "type": "meaning",
-      "word": "cogent",
-      "question": "'a cogent argument'는 어떤 논거인가요?",
+      "question": "What is 'verisimilitude'?",
+      "word": "verisimilitude",
       "options": [
-        "근거 없는 주장",
-        "설득력 있고 논리적인 주장",
-        "감정에 호소하는 주장",
-        "복잡하고 이해하기 어려운 주장"
+        "a type of literary device",
+        "the quality of appearing to be true or real",
+        "a form of deception",
+        "similarity between two things"
       ],
       "answer": 1,
-      "explanation": "cogent = 논리적으로 명확하고 설득력이 강한 것이에요."
+      "explanation": "Verisimilitude refers to the quality of seeming true or realistic."
     },
     {
       "type": "fill_blank",
-      "word": "cogent",
-      "sentence": "The scientist provided a _____ explanation for the unusual experiment results.",
-      "sentence_ko": "과학자는 특이한 실험 결과에 대해 설득력 있는 설명을 제시했어요.",
-      "answer": "cogent",
-      "hint": "설득력 있는"
+      "question": "The politician's ___ reason for the policy change was economic growth, but critics suspected other motives.",
+      "word": "ostensible",
+      "options": [
+        "assiduous",
+        "ostensible",
+        "propounded",
+        "verisimilitude"
+      ],
+      "answer": 1,
+      "explanation": "Ostensible means appearing to be true or real on the surface, which fits the context of the sentence."
     },
     {
-      "type": "meaning",
-      "word": "rampant",
-      "question": "'rampant'와 의미가 가장 유사한 단어는?",
+      "type": "fill_blank",
+      "question": "The researcher conducted ___ studies over five years, examining every detail carefully.",
+      "word": "assiduous",
       "options": [
-        "scarce",
-        "controlled",
-        "uncontrolled",
-        "diminishing"
+        "propounded",
+        "assiduous",
+        "obfuscated",
+        "ostensible"
       ],
-      "answer": 2,
-      "explanation": "rampant = 통제되지 않고 광범위하게 퍼진 것이에요."
+      "answer": 1,
+      "explanation": "Assiduous means diligent and careful, describing thorough research efforts."
     },
     {
       "type": "situation",
-      "word": "rampant",
-      "question": "도시 전체에 범죄가 걷잡을 수 없이 퍼졌다고 할 때?",
+      "question": "A historian writes a novel set in the 1920s with accurate details about daily life, clothing, and dialogue. Which word best describes the quality of the writing?",
+      "word": "verisimilitude",
       "options": [
-        "Crime is rare in the city",
-        "Crime is rampant in the city",
-        "Crime is lucid in the city",
-        "Crime is cogent in the city"
+        "verisimilitude",
+        "obfuscation",
+        "propound",
+        "assiduous"
+      ],
+      "answer": 0,
+      "explanation": "Verisimilitude describes the quality of appearing authentic and true to life in the historical details."
+    },
+    {
+      "type": "situation",
+      "question": "A company states its new product is designed for 'consumer convenience,' but employees reveal it actually monitors user behavior. What term describes the company's stated reason?",
+      "word": "ostensible",
+      "options": [
+        "assiduous",
+        "obfuscate",
+        "ostensible",
+        "verisimilitude"
+      ],
+      "answer": 2,
+      "explanation": "Ostensible describes the company's outward or surface-level reason that masks the true purpose."
+    },
+    {
+      "type": "meaning",
+      "word": "delineate",
+      "question": "What does delineate mean?",
+      "options": [
+        "to describe or outline something clearly",
+        "to remove or eliminate",
+        "to criticize harshly",
+        "to combine or merge"
+      ],
+      "answer": 0,
+      "explanation": "delineate는 무언가를 명확하게 설명하거나 윤곽을 그리는 것을 의미한다."
+    },
+    {
+      "type": "fill_blank",
+      "word": "delineate",
+      "question": "The contract clearly _____ the responsibilities of each party.",
+      "options": [
+        "obfuscated",
+        "delineated",
+        "ignored",
+        "contradicted"
       ],
       "answer": 1,
-      "explanation": "부정적 현상이 통제 불능으로 퍼진 상황 = rampant."
-    },
-    {
-      "type": "meaning",
-      "word": "lucid",
-      "question": "'lucid'의 반의어에 가장 가까운 단어는?",
-      "options": [
-        "clear",
-        "coherent",
-        "obscure",
-        "persuasive"
-      ],
-      "answer": 2,
-      "explanation": "lucid(명료한)의 반의어는 obscure(불명확한)예요."
-    },
-    {
-      "type": "meaning",
-      "word": "alacrity",
-      "question": "'responded with alacrity'는 어떻게 반응한 것인가요?",
-      "options": [
-        "천천히 망설이며",
-        "마지못해 억지로",
-        "기꺼이 민첩하게",
-        "화를 내며 거부"
-      ],
-      "answer": 2,
-      "explanation": "alacrity = 열정적으로 기꺼이 하는 태도예요."
+      "explanation": "계약서는 각 당사자의 책임을 명확히 설정해야 하므로 delineated가 적절하다."
     }
   ]
 }
