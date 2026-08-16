@@ -51,7 +51,11 @@ export default async (req, context) => {
     const today = getKSTDateString();
 
     if (dailyData.date && dailyData.date !== today) {
-      console.warn(`⚠️ english daily.json date mismatch: file=${dailyData.date}, today=${today}. Writing anyway but data may be stale.`);
+      console.warn(`⚠️ english daily.json date mismatch: file=${dailyData.date}, today=${today}. Skipping to prevent duplicate words.`);
+      return new Response(
+        JSON.stringify({ success: false, message: 'Skipped: daily.json is stale', fileDate: dailyData.date, today }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      );
     }
 
     await set(ref(db, `english/words/${today}`), {
