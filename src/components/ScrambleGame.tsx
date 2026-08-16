@@ -3,7 +3,7 @@ import {
   View, Text, TouchableOpacity, StyleSheet, ActivityIndicator, Animated, ScrollView,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getDatabase, get, set as dbSet } from 'firebase/database';
+import { getDatabase, get, set as dbSet, update } from 'firebase/database';
 import { useAuth } from '../context/AuthContext';
 import { userRef } from '../utils/userDb';
 import { getFirebaseApp } from '../config/firebase';
@@ -22,6 +22,7 @@ interface ReviewWord {
   word: string;   // lowercase
   meaning: string;
   count: number;
+  lastReviewedDate?: string;
 }
 
 interface LetterTile {
@@ -98,14 +99,18 @@ export default function ScrambleGame() {
       const candidates: ReviewWord[] = Object.entries(pool)
         .map(([wordId, v]: [string, any]) => {
           countMap[wordId] = v.count ?? 0;
-          return { wordId, word: (v.word ?? '').toLowerCase(), meaning: v.meaning ?? '', count: v.count ?? 0 };
+          return { wordId, word: (v.word ?? '').toLowerCase(), meaning: v.meaning ?? '', count: v.count ?? 0, lastReviewedDate: v.lastReviewedDate };
         })
         .filter(w => /^[a-z]{3,}$/.test(w.word) && w.count < GRADUATE_AT);
 
       if (candidates.length === 0) { setGameState('empty'); return; }
 
       setWordCounts(countMap);
-      const selected = [...candidates].sort((a, b) => a.count - b.count).slice(0, ROUND_SIZE);
+      const selected = [...candidates].sort((a, b) => {
+        const aD = a.lastReviewedDate ? Math.floor((Date.parse(today) - Date.parse(a.lastReviewedDate)) / 86400000) : 999;
+        const bD = b.lastReviewedDate ? Math.floor((Date.parse(today) - Date.parse(b.lastReviewedDate)) / 86400000) : 999;
+        return (bD - b.count * 3) - (aD - a.count * 3);
+      }).slice(0, ROUND_SIZE);
       setWords(selected);
       setCurrentIndex(0);
       setSolvedWordIds([]);
@@ -206,7 +211,8 @@ export default function ScrambleGame() {
     if (synced) return;
     try {
       const db = getDatabase(getFirebaseApp());
-      // 오답·정답보기 단어: count 0, 자력으로 맞춘 단어만 count +1
+      // 오답·정답보기 단어: count 0, 자력으로 맞춘 단어만 count +1, lastReviewedDate 갱신
+      const today = getKSTDateString();
       const penaltyIds = new Set([...Array.from(wrongWordIds), ...Array.from(revealedWordIds)]);
       const cleanSolvedIds = solvedWordIds.filter(id => !penaltyIds.has(id));
       await Promise.all([
@@ -215,10 +221,9 @@ export default function ScrambleGame() {
         ),
         ...cleanSolvedIds.map(wordId => {
           const next = Math.min((wordCounts[wordId] ?? 0) + 1, GRADUATE_AT);
-          return dbSet(userRef(uid, `english/reviewPool/${wordId}/count`), next);
+          return update(userRef(uid, `english/reviewPool/${wordId}`), { count: next, lastReviewedDate: today });
         }),
       ]);
-      const today = getKSTDateString();
       await dbSet(userRef(uid, `completion/english_scramble/${today}`), true);
       setSynced(true);
       const saved = await AsyncStorage.getItem(DAILY_STATS_KEY);

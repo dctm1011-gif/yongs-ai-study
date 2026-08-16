@@ -9,6 +9,11 @@ import { useAuth } from '../context/AuthContext';
 import { userRef } from '../utils/userDb';
 import { getFirebaseApp } from '../config/firebase';
 
+function getKSTDateString(): string {
+  const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
+  return kst.toISOString().split('T')[0];
+}
+
 const NETLIFY_BASE = 'https://illustrious-cuchufli-7c4e58.netlify.app';
 const CACHE_PREFIX = 'sentence_quiz_v1_';
 const ROUND_SIZE = 8;
@@ -20,6 +25,7 @@ interface ReviewWord {
   meaning: string;
   pos?: string;
   count: number;
+  lastReviewedDate?: string;
 }
 
 interface QuizPair {
@@ -117,10 +123,12 @@ export default function SentenceQuizGame({ onComplete }: Props) {
 
       if (pool.length === 0) { setGameState('empty'); return; }
 
-      // 최근 복습 횟수 적은 것 우선, 랜덤 섞기
-      const sorted = [...pool].sort((a, b) => (a.count ?? 0) - (b.count ?? 0));
-      const candidates = sorted.slice(0, Math.min(ROUND_SIZE * 2, sorted.length));
-      const selected = candidates.sort(() => Math.random() - 0.5).slice(0, ROUND_SIZE);
+      const today = getKSTDateString();
+      const selected = [...pool].sort((a, b) => {
+        const aD = a.lastReviewedDate ? Math.floor((Date.parse(today) - Date.parse(a.lastReviewedDate)) / 86400000) : 999;
+        const bD = b.lastReviewedDate ? Math.floor((Date.parse(today) - Date.parse(b.lastReviewedDate)) / 86400000) : 999;
+        return (bD - (b.count ?? 0) * 3) - (aD - (a.count ?? 0) * 3);
+      }).slice(0, ROUND_SIZE);
 
       setLoadTotal(selected.length);
 
@@ -170,7 +178,8 @@ export default function SentenceQuizGame({ onComplete }: Props) {
     setAnswerState(correct ? 'correct' : 'wrong');
     if (correct) setScore(s => s + 1);
     const db = getDatabase(getFirebaseApp());
-    update(userRef(uid, `english/reviewPool/${item.id}`), { count: increment(1) }).catch(() => {});
+    const today = getKSTDateString();
+    update(userRef(uid, `english/reviewPool/${item.id}`), { count: increment(1), lastReviewedDate: today }).catch(() => {});
   }, [answerState, items, current, uid]);
 
   const handleNext = useCallback(() => {

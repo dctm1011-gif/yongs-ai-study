@@ -4,7 +4,7 @@ import {
   ActivityIndicator, Dimensions,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getDatabase, ref, get, set as dbSet } from 'firebase/database';
+import { getDatabase, ref, get, set as dbSet, update } from 'firebase/database';
 import { useAuth } from '../context/AuthContext';
 import { userRef } from '../utils/userDb';
 import { getFirebaseApp } from '../config/firebase';
@@ -237,9 +237,11 @@ export default function CrosswordGame() {
 
       const pool = snapshot.val() as Record<string, any>;
       const countMap: Record<string, number> = {};
+      const lastReviewedMap: Record<string, string | undefined> = {};
       const wordList: WordData[] = Object.entries(pool)
         .map(([wordId, v]: [string, any]) => {
           countMap[wordId] = v.count ?? 0;
+          lastReviewedMap[wordId] = v.lastReviewedDate;
           return { wordId, word: v.word ?? '', meaning: v.meaning ?? '' };
         })
         .filter(w => /^[a-zA-Z]{3,}$/.test(w.word));
@@ -247,7 +249,13 @@ export default function CrosswordGame() {
 
       if (wordList.length < 2) { setGameState('empty'); return; }
 
-      const shuffled = [...wordList].sort(() => Math.random() - 0.5).slice(0, MAX_WORDS);
+      const shuffled = [...wordList].sort((a, b) => {
+        const aC = countMap[a.wordId] ?? 0;
+        const bC = countMap[b.wordId] ?? 0;
+        const aD = lastReviewedMap[a.wordId] ? Math.floor((Date.parse(today) - Date.parse(lastReviewedMap[a.wordId]!)) / 86400000) : 999;
+        const bD = lastReviewedMap[b.wordId] ? Math.floor((Date.parse(today) - Date.parse(lastReviewedMap[b.wordId]!)) / 86400000) : 999;
+        return (bD - bC * 3) - (aD - aC * 3);
+      }).slice(0, MAX_WORDS);
       const { placed, grid: g } = generateCrossword(shuffled);
 
       if (placed.length < 2) { setGameState('empty'); return; }
@@ -368,14 +376,14 @@ export default function CrosswordGame() {
       const today = getKSTDateString();
       const db = getDatabase(getFirebaseApp());
 
-      // 자력으로 푼 단어(정답 보기 미사용)만 count +1
+      // 자력으로 푼 단어(정답 보기 미사용)만 count +1, lastReviewedDate 갱신
       const GRADUATE_AT = 10;
       await Promise.all(
         placedWords
           .filter(pw => !revealedWordIds.has(pw.wordId))
           .map(pw => {
             const next = Math.min((wordCountMap[pw.wordId] ?? 0) + 1, GRADUATE_AT);
-            return dbSet(userRef(uid, `english/reviewPool/${pw.wordId}/count`), next);
+            return update(userRef(uid, `english/reviewPool/${pw.wordId}`), { count: next, lastReviewedDate: today });
           })
       );
 
