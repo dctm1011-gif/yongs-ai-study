@@ -183,14 +183,6 @@
       "everyday_usage": "주로 be inundated with 형태로 씁니다. 'I'm inundated with work right now.' / 'The hotline was inundated with calls.'"
     },
     {
-      "word": "inundate",
-      "sentence": "Social media inundates us with information we never asked for.",
-      "sentence_ko": "소셜 미디어는 우리가 요청하지도 않은 정보들로 우리를 압도해요.",
-      "nuance": "능동태로 쓰면 무언가가 적극적으로 쏟아붓는 주체가 되는 뉘앙스. 정보 과부하(information overload)를 표현할 때 딱 맞아요.",
-      "context": "디지털 미디어, 광고, 알림 등이 원치 않게 쏟아지는 현대 생활 묘사. TOEFL Writing에서 technology 지문 쓸 때 유용해요.",
-      "everyday_usage": "'Social media/advertising inundates us with...' 패턴으로 쓰면 세련된 표현이에요."
-    },
-    {
       "word": "prolific",
       "sentence": "She is a prolific reader — she finishes two books a week.",
       "sentence_ko": "그녀는 다독가예요 — 일주일에 책을 두 권씩 다 읽어요.",
@@ -205,14 +197,6 @@
       "nuance": "단순히 '조심스럽다'가 아니라 '상황을 충분히 고려한 분별 있는 판단'을 강조해요. wise보다 더 계산적이고 실용적인 뉘앙스.",
       "context": "재정, 의사결정, 정책 평가 등 신중한 판단이 필요한 맥락. 'It's prudent to...' 패턴으로 조언할 때 자주 써요.",
       "everyday_usage": "'It would be prudent to...(~하는 것이 현명할 것이다)' 패턴이 가장 흔해요. 격식체 조언이나 글쓰기에서 유용합니다."
-    },
-    {
-      "word": "prudent",
-      "sentence": "A prudent investor diversifies instead of putting all money in one place.",
-      "sentence_ko": "신중한 투자자는 한 곳에 전부 넣는 대신 분산 투자를 해요.",
-      "nuance": "위험을 충분히 따져보고 행동하는 '분별력 있는 사람'을 묘사. reckless(무모한)의 정반대. 경제·비즈니스 글쓰기에서 칭찬 표현으로 자주 등장.",
-      "context": "투자, 경영 결정, 정책 등 리스크가 따르는 상황에서 신중한 태도를 칭찬할 때.",
-      "everyday_usage": "'a prudent decision/approach/measure/strategy' 형태로 명사 앞에 많이 씁니다."
     },
     {
       "word": "dichotomy",
@@ -231,12 +215,28 @@
       "everyday_usage": "'serve as a conduit for/between' 패턴이 핵심. 'The internet serves as a conduit for information.' 형태로 씁니다."
     },
     {
-      "word": "conduit",
-      "sentence": "He used his position as a conduit to pass information between the two departments.",
-      "sentence_ko": "그는 두 부서 사이에 정보를 전달하는 매개체로서 자신의 위치를 활용했어요.",
-      "nuance": "사람이 conduit가 될 때는 단순히 전달자 역할만 하는 뉘앙스. 자신의 의견 없이 정보나 자원을 연결시켜 주는 중간자.",
-      "context": "비즈니스·조직에서 부서 간, 집단 간 정보 전달자 역할을 묘사할 때. 외교나 협상에서도 'conduit for negotiations' 형태로 씁니다.",
-      "everyday_usage": "'act as/serve as a conduit between A and B' — 두 집단 사이의 연결 역할을 강조할 때 씁니다."
+      "word": "predatory",
+      "sentence": "The startup warned users about predatory subscription traps that are hard to cancel.",
+      "sentence_ko": "그 스타트업은 해지하기 어려운 약탈적 구독 함정에 대해 사용자들에게 경고했어요.",
+      "nuance": "동물이 먹이를 사냥하듯 타인을 착취하거나 이용하는 의도가 있다는 강한 부정적 뉘앙스. 단순히 '공격적인'보다 훨씬 강해요.",
+      "context": "비즈니스, 금융, 사회 문제에서 약자를 착취하는 행위를 비판할 때. 'predatory pricing/lending/behavior' 패턴이 자주 나와요.",
+      "everyday_usage": "'predatory pricing(약탈적 가격)' / 'predatory lending(약탈적 대출)' — 경제·언론 기사에서 자주 보이는 조합이에요."
+    },
+    {
+      "word": "amalgamate",
+      "sentence": "The two rival companies decided to amalgamate to compete with larger corporations.",
+      "sentence_ko": "두 경쟁 회사는 대기업과 경쟁하기 위해 합병하기로 결정했어요.",
+      "nuance": "단순한 합병(merge)보다 두 개의 독립적인 것이 하나로 융합·통합되는 뉘앙스. 결합 후 구별이 어려울 정도로 섞이는 이미지예요.",
+      "context": "기업 합병, 조직 통합, 문화 융합 등을 설명할 때. TOEFL 역사·경제 지문에서 'amalgamated into one' 형태로 자주 등장해요.",
+      "everyday_usage": "'amalgamate with/into' 패턴이 핵심. 'The departments were amalgamated into a single unit.' 비즈니스 글쓰기에서 유용해요."
+    },
+    {
+      "word": "cursory",
+      "sentence": "He gave the contract a cursory glance and signed without reading the fine print.",
+      "sentence_ko": "그는 계약서를 대충 훑어보고 세부 조항도 읽지 않은 채 서명했어요.",
+      "nuance": "빠르고 표면적인 검토만 했다는 뉘앙스. 시간이나 관심이 부족해서 제대로 보지 않았다는 부정적 함의가 있어요.",
+      "context": "검토, 조사, 검사 등이 너무 급하게 대충 이뤄졌을 때. 'a cursory glance/review/inspection/reading'이 일반적 패턴이에요.",
+      "everyday_usage": "'a cursory look/glance/review' — '대충 훑어보기'를 표현할 때. 'After only a cursory review, he approved the plan.' 뉴스·학술문에 자주 나와요."
     }
   ]
 }
