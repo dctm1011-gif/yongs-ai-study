@@ -1,185 +1,114 @@
 {
   "date": "2026-08-17",
   "reading": {
-    "title": "Marine Bioluminescence and Deep-Sea Ecosystems",
-    "passage": "Bioluminescence, the production of light by living organisms, represents one of the most fascinating phenomena in marine biology. Approximately 90% of deep-sea creatures possess bioluminescent capabilities, utilizing this ability for diverse purposes including prey attraction, predator defense, and species communication. The chemical reaction between luciferin and luciferase enzymes generates photons with minimal energy waste, making it an exceptionally efficient adaptation to the perpetually dark environment below 1,000 meters.\n\nThe ecological significance of bioluminescence extends beyond individual survival. Recent research indicates that bioluminescent displays create complex visual landscapes that fundamentally structure deep-sea food webs. For instance, many zooplankton species utilize counter-illumination, producing light on their ventral surfaces to eliminate their shadows and avoid detection by predators hunting from below. This sophisticated behavior demonstrates how bioluminescence shapes predator-prey interactions in ways previously underestimated by marine biologists.\n\nThe study of bioluminescent organisms has practical applications for biotechnology and medical research. Scientists have isolated green fluorescent proteins from jellyfish, leading to revolutionary advances in cellular imaging and disease detection. Understanding how marine creatures harness light production may ultimately provide insights into sustainable energy solutions and illuminate previously unknown aspects of ocean biochemistry.",
-    "vocabulary": [
-      {
-        "word": "bioluminescence",
-        "meaning_ko": "생물이 스스로 빛을 내는 현상"
-      },
-      {
-        "word": "luciferin",
-        "meaning_ko": "생물발광을 일으키는 화학 물질"
-      },
-      {
-        "word": "luciferase",
-        "meaning_ko": "루시페린을 산화시켜 빛을 생성하는 효소"
-      },
-      {
-        "word": "photons",
-        "meaning_ko": "빛의 입자"
-      },
-      {
-        "word": "counter-illumination",
-        "meaning_ko": "배쪽에 빛을 내어 자신의 그림자를 없애는 행동"
-      },
-      {
-        "word": "ventral surfaces",
-        "meaning_ko": "복부 표면"
-      },
-      {
-        "word": "fluorescent proteins",
-        "meaning_ko": "형광 단백질"
-      },
-      {
-        "word": "harness",
-        "meaning_ko": "효과적으로 이용하다"
-      }
-    ],
+    "title": "Artificial Intelligence in Healthcare",
+    "passage": "Artificial intelligence is revolutionizing the healthcare industry by improving diagnostic accuracy and patient care. AI algorithms can analyze medical images faster than human radiologists, detecting diseases like cancer at earlier stages. Additionally, AI-powered systems assist in drug discovery, reducing the time and cost of developing new medications. Machine learning models also help predict patient outcomes, enabling doctors to provide personalized treatment plans. However, concerns about data privacy and the need for proper regulation remain significant challenges in implementing AI within healthcare systems.",
     "questions": [
       {
-        "q": "According to the passage, what is the primary advantage of bioluminescence in deep-sea organisms?",
+        "q": "According to the passage, what is one advantage of using AI in medical imaging?",
         "options": [
-          "It provides heat energy for survival in cold temperatures",
-          "It produces light with minimal energy waste in a dark environment",
-          "It allows organisms to communicate only with their own species",
-          "It eliminates the need for other sensory organs"
+          "It completely replaces human radiologists",
+          "It can detect diseases like cancer at earlier stages",
+          "It eliminates the need for patient data",
+          "It reduces healthcare costs by eliminating hospitals"
         ],
         "answer": 1,
-        "explanation": "지문의 첫 번째 단락에서 'minimal energy waste'와 'perpetually dark environment below 1,000 meters'라고 명시되어 있습니다. 생물발광이 어두운 환경에서 효율적인 에너지 생산 방식임을 강조합니다."
+        "explanation": "지문에서 AI 알고리즘이 의료 영상을 인간 방사선 의사보다 빠르게 분석하고 암과 같은 질병을 더 조기에 발견할 수 있다고 명시되어 있습니다."
       },
       {
-        "q": "What can be inferred from the passage about counter-illumination?",
+        "q": "What does the passage suggest about AI in drug discovery?",
         "options": [
-          "It is used exclusively by fish species",
-          "It is an aggressive hunting technique",
-          "It helps organisms avoid being detected from below",
-          "It attracts larger predators to prey organisms"
+          "It increases the development time",
+          "It has no impact on medication costs",
+          "It reduces both time and cost of developing new medications",
+          "It is only used for experimental purposes"
         ],
         "answer": 2,
-        "explanation": "두 번째 단락에서 'producing light on their ventral surfaces to eliminate their shadows and avoid detection by predators hunting from below'라고 설명되어 있습니다. 이는 아래에서 올라오는 포식자로부터 자신의 그림자를 제거하여 피하는 방법입니다."
+        "explanation": "지문에서 AI 기반 시스템이 신약 개발의 시간과 비용을 줄일 수 있다고 명시되어 있습니다."
       },
       {
-        "q": "The word 'sophisticated' in paragraph 2 is closest in meaning to",
+        "q": "Which of the following is mentioned as a challenge in implementing AI in healthcare?",
         "options": [
-          "simple and straightforward",
-          "complex and highly developed",
-          "aggressive and dangerous",
-          "primitive and ancient"
+          "Lack of technology",
+          "Data privacy concerns and need for proper regulation",
+          "Patient resistance to treatment",
+          "Inability to analyze patient data"
         ],
         "answer": 1,
-        "explanation": "'sophisticated behavior'는 높은 수준의 복잡한 행동을 의미합니다. 역광 현상이 단순하지 않은, 진화된 적응 메커니즘임을 나타냅니다."
-      },
-      {
-        "q": "Why does the author mention green fluorescent proteins from jellyfish?",
-        "options": [
-          "To explain how jellyfish hunt in the deep sea",
-          "To demonstrate the practical applications of studying bioluminescence",
-          "To compare jellyfish with other deep-sea creatures",
-          "To argue that jellyfish are the most important marine organisms"
-        ],
-        "answer": 1,
-        "explanation": "세 번째 단락에서 저자는 생물발광 연구의 실용적 응용을 보여주기 위해 '형광 단백질이 세포 영상화와 질병 탐지에 혁명을 가져왔다'고 언급합니다. 이는 해양 생물의 빛 생산 메커니즘 이해의 실질적 가치를 입증합니다."
+        "explanation": "지문의 마지막 부분에서 데이터 프라이버시 우려와 적절한 규제의 필요성이 AI 의료 구현의 중요한 과제라고 언급되어 있습니다."
       }
     ]
   },
   "writing": {
-    "sentences": [
-      {
-        "original": "Approximately 90% of deep-sea creatures possess bioluminescent capabilities, utilizing this ability for diverse purposes including prey attraction, predator defense, and species communication.",
-        "paraphrase": "The vast majority of organisms inhabiting the deep ocean have evolved bioluminescence, employing it for multiple functions such as attracting food sources, protecting themselves from predators, and facilitating interaction with other members of their species.",
-        "tip": "명사구를 동사구로 변환하고 동의어(possess→have evolved, utilize→employ)를 사용하여 의미를 유지하면서 표현 다양화"
-      },
-      {
-        "original": "The chemical reaction between luciferin and luciferase enzymes generates photons with minimal energy waste, making it an exceptionally efficient adaptation to the perpetually dark environment below 1,000 meters.",
-        "paraphrase": "Because the interaction of luciferin and luciferase produces light particles while consuming very little energy, this process represents an exceptionally efficient evolutionary adaptation suited to the permanently dark conditions found in the ocean depths.",
-        "tip": "능동형 문장을 인과 관계 문장으로 재구성하고, 복합 문장을 더 간단한 구조로 분해"
-      },
-      {
-        "original": "Many zooplankton species utilize counter-illumination, producing light on their ventral surfaces to eliminate their shadows and avoid detection by predators hunting from below.",
-        "paraphrase": "Numerous zooplankton employ a defense mechanism whereby they generate luminescence along their undersides, thereby negating their silhouettes and escaping notice from predators approaching from beneath.",
-        "tip": "구체적 신체 부위(ventral surfaces→undersides)로 표현하고, '~하기 위해'를 '~함으로써'로 변경하여 인과 관계 재구성"
-      }
+    "prompt": "Do you agree or disagree with the statement: 'Technology has made human relationships weaker than before'?",
+    "structure": {
+      "intro": "자신의 입장(동의/불동의)을 명확하게 제시하고, 2-3개의 주요 이유를 간단히 소개합니다.",
+      "body1": "첫 번째 주요 이유에 대해 구체적인 예시와 함께 설명합니다. (예: 소셜 미디어의 영향)",
+      "body2": "두 번째 주요 이유에 대해 상세히 전개합니다. (예: 장거리 관계 유지의 용이성)",
+      "conclusion": "서론의 입장을 재확인하고, 제시한 이유들을 요약하여 마무리합니다."
+    },
+    "useful_phrases": [
+      "In my opinion,",
+      "I agree/disagree with this statement because",
+      "Furthermore,",
+      "For example,",
+      "On the other hand,",
+      "In conclusion,",
+      "This demonstrates that",
+      "It is clear that"
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to travel to new places and experience different cultures. Others prefer to save their money for the future and stay in their home country. Which do you prefer and why? Include specific reasons and details.",
-    "model_sentences": [
-      "Personally, I think traveling to new places is more valuable than saving money, because it provides unforgettable experiences and personal growth that money alone cannot buy.",
-      "First, when you travel, you encounter different cultures, traditions, and ways of thinking that broaden your perspective and make you more adaptable in life.",
-      "For example, I visited Japan last year, and staying with local families helped me understand their values and lifestyle, which changed how I view the world.",
-      "Additionally, traveling creates memories and stories that you can treasure forever, whereas money in the bank might be forgotten.",
-      "In conclusion, while saving is important, I believe that investing in travel experiences is a smarter choice for long-term happiness and personal development."
+    "prompt": "Some people prefer to work in a large company with many employees. Others prefer to work in a small startup. Which do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer working in a...",
+      "One reason is that...",
+      "Another advantage/disadvantage is...",
+      "For instance,",
+      "This is important to me because..."
+    ],
+    "sample_points": [
+      "Small companies offer more opportunities for personal growth and learning diverse skills, while large companies provide job security and structured career development.",
+      "Startup environments foster creativity and innovation, but large companies offer better benefits, salary stability, and established work processes."
     ]
   },
   "listening": {
-    "title": "Lecture: The Industrial Revolution and Social Change",
-    "type": "lecture",
-    "script": "Professor: Today we're examining the Industrial Revolution, which fundamentally transformed society between the 1760s and 1840s. This period witnessed the shift from agrarian economies to industrial manufacturing, particularly in Britain. The steam engine, developed by James Watt, became the revolutionary technology that powered factories and transportation. Student A: Professor, did the Industrial Revolution immediately improve workers' lives? Professor: That's an insightful question. Actually, initially, factory workers endured harsh conditions—long hours, low wages, and dangerous environments. Children as young as five worked in mines and mills. However, over time, industrialization did increase overall productivity and living standards. The emergence of the middle class also created new social hierarchies. Student B: How did industrialization spread beyond Britain? Professor: Excellent point. Technology diffused to continental Europe and North America through textile machinery and engineering knowledge. Entrepreneurs and engineers migrated, bringing expertise. By the mid-1800s, industrialization had become a global phenomenon, though unequally distributed across regions.",
-    "vocabulary": [
-      {
-        "word": "agrarian economies",
-        "meaning_ko": "농업 중심의 경제"
-      },
-      {
-        "word": "manufacturing",
-        "meaning_ko": "제조업"
-      },
-      {
-        "word": "endured",
-        "meaning_ko": "참고 견디다"
-      },
-      {
-        "word": "hierarchies",
-        "meaning_ko": "계층 구조"
-      },
-      {
-        "word": "diffused",
-        "meaning_ko": "퍼져나가다"
-      },
-      {
-        "word": "entrepreneurs",
-        "meaning_ko": "기업가"
-      },
-      {
-        "word": "unequally distributed",
-        "meaning_ko": "불균등하게 분배된"
-      }
-    ],
+    "title": "University Library Resources",
+    "type": "conversation",
+    "script": "Student: Hi, I'm new here and I'm looking for information about the library's online resources. Librarian: Welcome! We have an extensive collection of digital databases, e-books, and academic journals available 24/7. You can access them from anywhere using your student ID. We also offer research consultation services where librarians help you find sources for your papers. Student: That sounds great. Are there any workshops available? Librarian: Yes, we conduct weekly workshops on database searching, citation management, and academic writing. These sessions are free for all students and you can sign up on our website. Additionally, we have a specialized section for science and engineering resources with equipment like computers and specialized software. Student: Perfect! I'm majoring in environmental science, so this will be very helpful. Librarian: Excellent. I'd recommend checking out our environmental studies collection. We have partnership agreements with several environmental organizations, so we get recent publications on climate change, conservation, and sustainability.",
     "questions": [
       {
-        "q": "What is the main topic of the lecture?",
+        "q": "What is the main purpose of this conversation?",
         "options": [
-          "The invention of the steam engine",
-          "The Industrial Revolution and its impact on society",
-          "Child labor laws in 19th-century Britain",
-          "The comparison between agrarian and modern economies"
+          "To discuss the student's major",
+          "To introduce the library's resources and services to a new student",
+          "To sign up for a research consultation",
+          "To register for workshops on citation management"
         ],
         "answer": 1,
-        "explanation": "강의의 전체 내용은 산업혁명이 사회를 어떻게 변화시켰는지, 특히 노동 조건, 계층 구조, 그리고 세계적 확산을 다루고 있습니다."
+        "explanation": "사서가 새로운 학생에게 도서관의 다양한 온라인 자원, 서비스, 워크숍 등을 소개하고 있으므로, 이 대화의 주요 목적은 새로운 학생에게 도서관의 자원과 서비스를 소개하는 것입니다."
       },
       {
-        "q": "According to the professor, what was one of the negative effects of early industrialization?",
+        "q": "According to the librarian, what resources are available for students to access?",
         "options": [
-          "It reduced the population of Britain",
-          "Workers experienced harsh conditions including low wages and long hours",
-          "It prevented the development of new technologies",
-          "The steam engine became too expensive to produce"
+          "Only printed books and journals",
+          "Only computers and software",
+          "Digital databases, e-books, academic journals, and specialized equipment",
+          "Only environmental studies materials"
         ],
-        "answer": 1,
-        "explanation": "교수는 'initially, factory workers endured harsh conditions—long hours, low wages, and dangerous environments'라고 명확히 설명했습니다. 또한 어린이들도 광산과 공장에서 일했습니다."
+        "answer": 2,
+        "explanation": "사서는 디지털 데이터베이스, 전자책, 학술 저널, 그리고 과학 및 공학 섹션의 전문 장비 등 다양한 자원을 언급했습니다."
       },
       {
-        "q": "Why does the professor mention the migration of entrepreneurs and engineers?",
+        "q": "What does the librarian suggest the student should check out?",
         "options": [
-          "To explain why Britain opposed industrialization",
-          "To show how industrialization spread beyond Britain to other regions",
-          "To demonstrate that technology always moves from poor to rich countries",
-          "To argue that migration is harmful to industrial development"
+          "The weekly workshops schedule",
+          "The environmental studies collection",
+          "The research consultation services",
+          "The computer lab facilities"
         ],
         "answer": 1,
-        "explanation": "교수는 '기업가와 기술자들이 이주하면서 전문 지식을 가져갔고, 이를 통해 산업혁명이 대륙 유럽과 북미로 확산되었다'고 설명합니다. 이는 기술과 지식이 어떻게 국제적으로 퍼져나갔는지를 보여줍니다."
+        "explanation": "사서는 학생이 환경과학을 전공하므로 도서관의 환경 연구 컬렉션을 확인하기를 권장했습니다."
       }
     ]
   }
