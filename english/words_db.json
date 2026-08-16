@@ -2126,5 +2126,53 @@
     "explanation": "물이나 정보가 흐르는 통로, 또는 추상적으로 아이디어·영향력이 전달되는 매개 역할을 하는 것. TOEFL Reading 역사, 문화, 경제 지문에서 '~의 역할을 하다'를 설명할 때 고빈출.",
     "tip": "동의어: channel(채널), vehicle(매개), medium(매체). 관련 단어: conduct(전도하다), conductor(도체). Reading 인과관계·매개 역할 설명에서 자주 출제.",
     "emoji": "🚇"
+  },
+  {
+    "id": "acquiesce",
+    "word": "acquiesce",
+    "pos": "동사",
+    "date": "2026-08-17",
+    "meaning": "묵인하다, 마지못해 동의하다",
+    "example_ko": "소수 정당은 새 정책에 마지못해 동의할 수밖에 없었어요.",
+    "example_en": "The minority party had no choice but to acquiesce to the new policy.",
+    "explanation": "불만이 있어도 저항 없이 받아들이거나 동의하는 것. 정치·사회 지문에서 자주 등장해요.",
+    "tip": "동의어: comply, consent, yield. 반의어: resist, protest. TOEFL 정치·사회 지문 빈출.",
+    "emoji": "🤝"
+  },
+  {
+    "id": "cogent",
+    "word": "cogent",
+    "pos": "형용사",
+    "date": "2026-08-17",
+    "meaning": "설득력 있는, 논리적으로 타당한",
+    "example_ko": "변호사는 배심원 전원을 설득한 논리적인 논거를 제시했어요.",
+    "example_en": "The lawyer presented a cogent argument that convinced the entire jury.",
+    "explanation": "논거가 명확하고 설득력이 강한 것. TOEFL Writing 고득점 어휘예요.",
+    "tip": "동의어: compelling, convincing, persuasive. Writing Task에서 쓰면 고득점 표현.",
+    "emoji": "💡"
+  },
+  {
+    "id": "rampant",
+    "word": "rampant",
+    "pos": "형용사",
+    "date": "2026-08-17",
+    "meaning": "만연한, 걷잡을 수 없이 퍼진",
+    "example_ko": "만연한 부패가 정부에 대한 국민의 신뢰를 약화시켰어요.",
+    "example_en": "Rampant corruption undermined public trust in the government.",
+    "explanation": "부정적인 현상이 통제 불가능할 정도로 퍼져 있는 상태. 사회·환경 지문 필수 어휘예요.",
+    "tip": "동의어: widespread, uncontrolled, prevalent. pervasive와 달리 '부정적 확산'에 쓰여요.",
+    "emoji": "🔥"
+  },
+  {
+    "id": "alacrity",
+    "word": "alacrity",
+    "pos": "명사",
+    "date": "2026-08-17",
+    "meaning": "기꺼이 하는 마음, 민첩한 의욕",
+    "example_ko": "자원봉사자들은 도움 요청에 눈에 띄는 의욕으로 응했어요.",
+    "example_en": "The volunteers responded to the call for help with remarkable alacrity.",
+    "explanation": "어떤 일을 열정적으로 기꺼이 하려는 태도. TOEFL 지문의 인물 묘사에 자주 나와요.",
+    "tip": "동의어: eagerness, willingness, promptness. 반의어: reluctance, hesitation.",
+    "emoji": "⚡"
   }
 ]

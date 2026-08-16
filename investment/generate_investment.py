@@ -357,6 +357,9 @@ def generate_term(client: anthropic.Anthropic, target_date: date) -> dict:
             raise ValueError("JSON not found in response")
         term = json.loads(text[start:end])
         term["date"] = str(target_date)
+        for field in ("definition", "example", "relatedPolicy", "tip"):
+            if field in term:
+                term[field] = strip_citations(term[field])
         return term
     except Exception as e:
         print(f"[!] 용어 생성 실패 ({type(e).__name__}: {e}), fallback 사용")
@@ -392,6 +395,8 @@ def generate_news(client: anthropic.Anthropic, target_date: date) -> list[dict]:
         for i, a in enumerate(articles):
             a["id"] = f"news-{i + 1}-{target_date}"
             a.setdefault("publishedAt", str(target_date))
+            if "summary" in a:
+                a["summary"] = strip_citations(a["summary"])
         return articles
     except Exception as e:
         print(f"[!] 뉴스 생성 실패, fallback 사용: {e}")

@@ -1,114 +1,185 @@
 {
-  "date": "2026-08-16",
+  "date": "2026-08-17",
   "reading": {
-    "title": "The Evolution of Renewable Energy",
-    "passage": "Renewable energy sources have become increasingly important in addressing global climate change. Solar and wind power technologies have advanced significantly over the past decade, reducing costs and improving efficiency. Many countries now invest heavily in renewable infrastructure to decrease reliance on fossil fuels. The transition to clean energy not only benefits the environment but also creates new job opportunities in the green technology sector. However, challenges remain in energy storage and grid integration.",
+    "title": "Marine Bioluminescence and Deep-Sea Ecosystems",
+    "passage": "Bioluminescence, the production of light by living organisms, represents one of the most fascinating phenomena in marine biology. Approximately 90% of deep-sea creatures possess bioluminescent capabilities, utilizing this ability for diverse purposes including prey attraction, predator defense, and species communication. The chemical reaction between luciferin and luciferase enzymes generates photons with minimal energy waste, making it an exceptionally efficient adaptation to the perpetually dark environment below 1,000 meters.\n\nThe ecological significance of bioluminescence extends beyond individual survival. Recent research indicates that bioluminescent displays create complex visual landscapes that fundamentally structure deep-sea food webs. For instance, many zooplankton species utilize counter-illumination, producing light on their ventral surfaces to eliminate their shadows and avoid detection by predators hunting from below. This sophisticated behavior demonstrates how bioluminescence shapes predator-prey interactions in ways previously underestimated by marine biologists.\n\nThe study of bioluminescent organisms has practical applications for biotechnology and medical research. Scientists have isolated green fluorescent proteins from jellyfish, leading to revolutionary advances in cellular imaging and disease detection. Understanding how marine creatures harness light production may ultimately provide insights into sustainable energy solutions and illuminate previously unknown aspects of ocean biochemistry.",
+    "vocabulary": [
+      {
+        "word": "bioluminescence",
+        "meaning_ko": "생물이 스스로 빛을 내는 현상"
+      },
+      {
+        "word": "luciferin",
+        "meaning_ko": "생물발광을 일으키는 화학 물질"
+      },
+      {
+        "word": "luciferase",
+        "meaning_ko": "루시페린을 산화시켜 빛을 생성하는 효소"
+      },
+      {
+        "word": "photons",
+        "meaning_ko": "빛의 입자"
+      },
+      {
+        "word": "counter-illumination",
+        "meaning_ko": "배쪽에 빛을 내어 자신의 그림자를 없애는 행동"
+      },
+      {
+        "word": "ventral surfaces",
+        "meaning_ko": "복부 표면"
+      },
+      {
+        "word": "fluorescent proteins",
+        "meaning_ko": "형광 단백질"
+      },
+      {
+        "word": "harness",
+        "meaning_ko": "효과적으로 이용하다"
+      }
+    ],
     "questions": [
       {
-        "q": "According to the passage, what has happened to solar and wind power technologies?",
+        "q": "According to the passage, what is the primary advantage of bioluminescence in deep-sea organisms?",
         "options": [
-          "They have become more expensive",
-          "They have advanced and become more efficient",
-          "They are no longer used in most countries",
-          "They require more fossil fuels to operate"
+          "It provides heat energy for survival in cold temperatures",
+          "It produces light with minimal energy waste in a dark environment",
+          "It allows organisms to communicate only with their own species",
+          "It eliminates the need for other sensory organs"
         ],
         "answer": 1,
-        "explanation": "본문에서 'Solar and wind power technologies have advanced significantly over the past decade, reducing costs and improving efficiency'라고 명확히 나와있습니다. 따라서 태양광과 풍력 기술이 발전하고 효율성이 개선되었다는 것이 정답입니다."
+        "explanation": "지문의 첫 번째 단락에서 'minimal energy waste'와 'perpetually dark environment below 1,000 meters'라고 명시되어 있습니다. 생물발광이 어두운 환경에서 효율적인 에너지 생산 방식임을 강조합니다."
       },
       {
-        "q": "Which of the following is mentioned as a benefit of transitioning to clean energy?",
+        "q": "What can be inferred from the passage about counter-illumination?",
         "options": [
-          "Lower transportation costs",
-          "Increased fossil fuel production",
-          "Creation of new job opportunities",
-          "Reduced electricity consumption"
+          "It is used exclusively by fish species",
+          "It is an aggressive hunting technique",
+          "It helps organisms avoid being detected from below",
+          "It attracts larger predators to prey organisms"
         ],
         "answer": 2,
-        "explanation": "'The transition to clean energy not only benefits the environment but also creates new job opportunities in the green technology sector'라는 문장에서 청정에너지로의 전환이 녹색 기술 부문에서 새로운 일자리 창출을 야기한다고 명시되어 있습니다."
+        "explanation": "두 번째 단락에서 'producing light on their ventral surfaces to eliminate their shadows and avoid detection by predators hunting from below'라고 설명되어 있습니다. 이는 아래에서 올라오는 포식자로부터 자신의 그림자를 제거하여 피하는 방법입니다."
       },
       {
-        "q": "What challenges are mentioned in the passage?",
+        "q": "The word 'sophisticated' in paragraph 2 is closest in meaning to",
         "options": [
-          "Government opposition to renewable energy",
-          "Energy storage and grid integration",
-          "International trade disputes",
-          "Lack of investment funding"
+          "simple and straightforward",
+          "complex and highly developed",
+          "aggressive and dangerous",
+          "primitive and ancient"
         ],
         "answer": 1,
-        "explanation": "마지막 문장에서 'However, challenges remain in energy storage and grid integration'이라고 직접 언급되어 있습니다. 에너지 저장과 그리드 통합이 남은 과제입니다."
+        "explanation": "'sophisticated behavior'는 높은 수준의 복잡한 행동을 의미합니다. 역광 현상이 단순하지 않은, 진화된 적응 메커니즘임을 나타냅니다."
+      },
+      {
+        "q": "Why does the author mention green fluorescent proteins from jellyfish?",
+        "options": [
+          "To explain how jellyfish hunt in the deep sea",
+          "To demonstrate the practical applications of studying bioluminescence",
+          "To compare jellyfish with other deep-sea creatures",
+          "To argue that jellyfish are the most important marine organisms"
+        ],
+        "answer": 1,
+        "explanation": "세 번째 단락에서 저자는 생물발광 연구의 실용적 응용을 보여주기 위해 '형광 단백질이 세포 영상화와 질병 탐지에 혁명을 가져왔다'고 언급합니다. 이는 해양 생물의 빛 생산 메커니즘 이해의 실질적 가치를 입증합니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Countries should prioritize renewable energy development over other economic investments'?",
-    "structure": {
-      "intro": "먼저 주제를 명확히 하는 한 문장 정의 후, 자신의 입장을 분명하게 제시합니다. 예: 'While economic growth is important, I believe renewable energy should be prioritized...'",
-      "body1": "첫 번째 논거: 환경 보호의 필요성 - 기후변화, 대기오염 감소 등의 장기적 이점을 설명합니다.",
-      "body2": "두 번째 논거: 경제적 이점 - 신규 일자리 창출, 에너지 비용 절감, 기술 혁신 등을 구체적으로 제시합니다.",
-      "conclusion": "두 논거를 종합하여 재신입하고, 미래 세대를 위한 투자 관점에서 마무리합니다."
-    },
-    "useful_phrases": [
-      "In my opinion,",
-      "Furthermore,",
-      "It is clear that",
-      "One significant advantage is",
-      "In addition to",
-      "As a result,",
-      "To conclude,",
-      "From this perspective,"
+    "sentences": [
+      {
+        "original": "Approximately 90% of deep-sea creatures possess bioluminescent capabilities, utilizing this ability for diverse purposes including prey attraction, predator defense, and species communication.",
+        "paraphrase": "The vast majority of organisms inhabiting the deep ocean have evolved bioluminescence, employing it for multiple functions such as attracting food sources, protecting themselves from predators, and facilitating interaction with other members of their species.",
+        "tip": "명사구를 동사구로 변환하고 동의어(possess→have evolved, utilize→employ)를 사용하여 의미를 유지하면서 표현 다양화"
+      },
+      {
+        "original": "The chemical reaction between luciferin and luciferase enzymes generates photons with minimal energy waste, making it an exceptionally efficient adaptation to the perpetually dark environment below 1,000 meters.",
+        "paraphrase": "Because the interaction of luciferin and luciferase produces light particles while consuming very little energy, this process represents an exceptionally efficient evolutionary adaptation suited to the permanently dark conditions found in the ocean depths.",
+        "tip": "능동형 문장을 인과 관계 문장으로 재구성하고, 복합 문장을 더 간단한 구조로 분해"
+      },
+      {
+        "original": "Many zooplankton species utilize counter-illumination, producing light on their ventral surfaces to eliminate their shadows and avoid detection by predators hunting from below.",
+        "paraphrase": "Numerous zooplankton employ a defense mechanism whereby they generate luminescence along their undersides, thereby negating their silhouettes and escaping notice from predators approaching from beneath.",
+        "tip": "구체적 신체 부위(ventral surfaces→undersides)로 표현하고, '~하기 위해'를 '~함으로써'로 변경하여 인과 관계 재구성"
+      }
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to work in traditional office environments. Others prefer to work remotely from home. Which do you prefer and why?",
-    "useful_expressions": [
-      "In my opinion, I prefer... because...",
-      "One reason is that...",
-      "Another advantage of... is that...",
-      "This is beneficial because...",
-      "From my perspective..."
-    ],
-    "sample_points": [
-      "원격근무의 장점: 시간 절약, 업무 집중력 향상, 생활-업무 균형 개선 등을 언급할 수 있습니다.",
-      "원격근무의 추가 이점: 교통비 절감, 유연한 일정 관리, 가족과의 시간 증가 등을 구체적으로 설명합니다."
+    "prompt": "Some people prefer to travel to new places and experience different cultures. Others prefer to save their money for the future and stay in their home country. Which do you prefer and why? Include specific reasons and details.",
+    "model_sentences": [
+      "Personally, I think traveling to new places is more valuable than saving money, because it provides unforgettable experiences and personal growth that money alone cannot buy.",
+      "First, when you travel, you encounter different cultures, traditions, and ways of thinking that broaden your perspective and make you more adaptable in life.",
+      "For example, I visited Japan last year, and staying with local families helped me understand their values and lifestyle, which changed how I view the world.",
+      "Additionally, traveling creates memories and stories that you can treasure forever, whereas money in the bank might be forgotten.",
+      "In conclusion, while saving is important, I believe that investing in travel experiences is a smarter choice for long-term happiness and personal development."
     ]
   },
   "listening": {
-    "title": "University Library Orientation",
-    "type": "conversation",
-    "script": "Librarian: Welcome to our university library. I'm here to help you get started. Student: Thank you! This is my first time here. Where should I begin? Librarian: Well, first you need a library card. It's free for all students. You just fill out this form with your student ID. Student: How long does that take? Librarian: Just a few minutes. After that, I can show you our computer databases. We have access to thousands of academic journals and research papers. Student: That's great! What about finding textbooks? Librarian: Textbooks are on the fourth floor in the reference section. You can search our online catalog to check availability. Most students reserve them for two-hour sessions to save costs. Student: I see. And what are the borrowing limits? Librarian: Students can borrow up to 20 books at a time for three weeks. However, reference materials cannot be borrowed; they must be used here in the library. Student: Got it. This is very helpful!",
+    "title": "Lecture: The Industrial Revolution and Social Change",
+    "type": "lecture",
+    "script": "Professor: Today we're examining the Industrial Revolution, which fundamentally transformed society between the 1760s and 1840s. This period witnessed the shift from agrarian economies to industrial manufacturing, particularly in Britain. The steam engine, developed by James Watt, became the revolutionary technology that powered factories and transportation. Student A: Professor, did the Industrial Revolution immediately improve workers' lives? Professor: That's an insightful question. Actually, initially, factory workers endured harsh conditions—long hours, low wages, and dangerous environments. Children as young as five worked in mines and mills. However, over time, industrialization did increase overall productivity and living standards. The emergence of the middle class also created new social hierarchies. Student B: How did industrialization spread beyond Britain? Professor: Excellent point. Technology diffused to continental Europe and North America through textile machinery and engineering knowledge. Entrepreneurs and engineers migrated, bringing expertise. By the mid-1800s, industrialization had become a global phenomenon, though unequally distributed across regions.",
+    "vocabulary": [
+      {
+        "word": "agrarian economies",
+        "meaning_ko": "농업 중심의 경제"
+      },
+      {
+        "word": "manufacturing",
+        "meaning_ko": "제조업"
+      },
+      {
+        "word": "endured",
+        "meaning_ko": "참고 견디다"
+      },
+      {
+        "word": "hierarchies",
+        "meaning_ko": "계층 구조"
+      },
+      {
+        "word": "diffused",
+        "meaning_ko": "퍼져나가다"
+      },
+      {
+        "word": "entrepreneurs",
+        "meaning_ko": "기업가"
+      },
+      {
+        "word": "unequally distributed",
+        "meaning_ko": "불균등하게 분배된"
+      }
+    ],
     "questions": [
       {
-        "q": "What is the main purpose of this conversation?",
+        "q": "What is the main topic of the lecture?",
         "options": [
-          "To explain library borrowing fees",
-          "To orient a new student about library services",
-          "To discuss academic journal subscriptions",
-          "To register for a computer class"
+          "The invention of the steam engine",
+          "The Industrial Revolution and its impact on society",
+          "Child labor laws in 19th-century Britain",
+          "The comparison between agrarian and modern economies"
         ],
         "answer": 1,
-        "explanation": "대화의 전체 내용을 보면 사서가 처음 도서관에 방문한 학생에게 도서관 이용 방법, 자료 위치, 대출 규정 등을 설명하고 있습니다. 따라서 주된 목적은 신입생을 도서관 서비스에 대해 안내하는 것입니다."
+        "explanation": "강의의 전체 내용은 산업혁명이 사회를 어떻게 변화시켰는지, 특히 노동 조건, 계층 구조, 그리고 세계적 확산을 다루고 있습니다."
       },
       {
-        "q": "Where are textbooks located in the library?",
+        "q": "According to the professor, what was one of the negative effects of early industrialization?",
         "options": [
-          "On the first floor",
-          "On the second floor",
-          "On the fourth floor",
-          "In the online catalog"
+          "It reduced the population of Britain",
+          "Workers experienced harsh conditions including low wages and long hours",
+          "It prevented the development of new technologies",
+          "The steam engine became too expensive to produce"
         ],
-        "answer": 2,
-        "explanation": "사서가 'Textbooks are on the fourth floor in the reference section'이라고 명확히 말했으므로, 교과서는 4층에 위치합니다."
+        "answer": 1,
+        "explanation": "교수는 'initially, factory workers endured harsh conditions—long hours, low wages, and dangerous environments'라고 명확히 설명했습니다. 또한 어린이들도 광산과 공장에서 일했습니다."
       },
       {
-        "q": "What is the borrowing limit for students?",
+        "q": "Why does the professor mention the migration of entrepreneurs and engineers?",
         "options": [
-          "10 books for two weeks",
-          "15 books for three weeks",
-          "20 books for three weeks",
-          "Unlimited borrowing"
+          "To explain why Britain opposed industrialization",
+          "To show how industrialization spread beyond Britain to other regions",
+          "To demonstrate that technology always moves from poor to rich countries",
+          "To argue that migration is harmful to industrial development"
         ],
-        "answer": 2,
-        "explanation": "사서가 'Students can borrow up to 20 books at a time for three weeks'라고 설명했으므로, 학생들은 한 번에 최대 20권을 3주일 동안 대출할 수 있습니다."
+        "answer": 1,
+        "explanation": "교수는 '기업가와 기술자들이 이주하면서 전문 지식을 가져갔고, 이를 통해 산업혁명이 대륙 유럽과 북미로 확산되었다'고 설명합니다. 이는 기술과 지식이 어떻게 국제적으로 퍼져나갔는지를 보여줍니다."
       }
     ]
   }

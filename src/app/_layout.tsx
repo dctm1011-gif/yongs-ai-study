@@ -2,8 +2,10 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Updates from 'expo-updates';
+import { useUpdates } from 'expo-updates';
 import VocaScreen from './voca';
 import TOEFLScreen from './toefl';
 import InvestmentScreen from './investment';
@@ -19,6 +21,22 @@ import * as Notifications from 'expo-notifications';
 import { AuthProvider, useAuth } from '../context/AuthContext';
 
 export const NOTIF_LOG_KEY = 'debug_notif_received_log';
+
+const otaStyles = StyleSheet.create({
+  banner: {
+    backgroundColor: '#2563eb',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
+    gap: 8,
+  },
+  bannerText: {
+    color: '#fff',
+    fontSize: 13,
+    fontWeight: '600',
+  },
+});
 
 const Tab = createBottomTabNavigator();
 
@@ -45,7 +63,9 @@ export default function RootLayout() {
 function MainTabs() {
   const { user } = useAuth();
   const [showAnnouncements, setShowAnnouncements] = useState(false);
+  const [applying, setApplying] = useState(false);
   const navigationRef = useRef<any>(null);
+  const { isUpdatePending } = __DEV__ ? { isUpdatePending: false } : useUpdates();
   const {
     announcements,
     unreadCount,
@@ -92,8 +112,21 @@ function MainTabs() {
     }
   }, [loading, unreadCount]);
 
+  const applyUpdate = async () => {
+    setApplying(true);
+    await Updates.reloadAsync();
+  };
+
   return (
     <View style={{ flex: 1 }}>
+      {isUpdatePending && (
+        <TouchableOpacity style={otaStyles.banner} onPress={applyUpdate} activeOpacity={0.85} disabled={applying}>
+          <MaterialIcons name="system-update" size={16} color="#fff" />
+          <Text style={otaStyles.bannerText}>
+            {applying ? '적용 중...' : '업데이트 준비됨 — 탭하여 지금 적용'}
+          </Text>
+        </TouchableOpacity>
+      )}
       <NavigationContainer independent={true} ref={navigationRef}>
         <Tab.Navigator
         screenOptions={{

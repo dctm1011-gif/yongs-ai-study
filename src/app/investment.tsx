@@ -273,6 +273,9 @@ const HorizontalBarChart: React.FC<{
   );
 });
 
+const stripCite = (text: string): string =>
+  text ? text.replace(/<cite[^>]*>|<\/cite>/g, '') : text;
+
 const isBoxPlotData = (
   data: NonNullable<InvestmentColumn['chartData']>[number]['data'] | null | undefined
 ): data is BoxPlotPoint[] => Array.isArray(data) && data.length > 0 && 'median' in data[0];
@@ -553,7 +556,7 @@ const TermOfDayCard: React.FC<{ term: DailyTerm }> = React.memo(({ term }) => {
       )}
 
       <Text style={styles.termDefinition} numberOfLines={expanded ? undefined : 2}>
-        {term.definition}
+        {stripCite(term.definition)}
       </Text>
 
       {expanded && (
@@ -562,17 +565,17 @@ const TermOfDayCard: React.FC<{ term: DailyTerm }> = React.memo(({ term }) => {
             <MaterialIcons name="lightbulb-outline" size={14} color="#f59e0b" />
             <Text style={styles.termDetailLabel}>예시</Text>
           </View>
-          <Text style={styles.termDetailText}>{term.example}</Text>
+          <Text style={styles.termDetailText}>{stripCite(term.example)}</Text>
 
           <View style={styles.termDetailRow}>
             <MaterialIcons name="account-balance" size={14} color="#0095f6" />
             <Text style={styles.termDetailLabel}>관련 정책</Text>
           </View>
-          <Text style={styles.termDetailText}>{term.relatedPolicy}</Text>
+          <Text style={styles.termDetailText}>{stripCite(term.relatedPolicy)}</Text>
 
           <View style={[styles.termTipBox]}>
             <MaterialIcons name="stars" size={14} color="#0095f6" />
-            <Text style={styles.termTipText}>{term.tip}</Text>
+            <Text style={styles.termTipText}>{stripCite(term.tip)}</Text>
           </View>
         </>
       )}
@@ -626,7 +629,7 @@ const NewsCard: React.FC<{ articles: NewsArticle[] }> = React.memo(({ articles }
             <Text style={styles.newsSourceText}>{article.source}</Text>
           </View>
           <Text style={styles.newsTitle}>{article.title}</Text>
-          <Text style={styles.newsSummary}>{article.summary}</Text>
+          <Text style={styles.newsSummary}>{stripCite(article.summary)}</Text>
         </View>
       ))}
     </View>
@@ -1709,7 +1712,7 @@ const ColumnCard: React.FC<ColumnCardProps> = React.memo(
       </View>
 
       <Text style={styles.columnSummary} numberOfLines={2}>
-        {column.summary}
+        {stripCite(column.summary)}
       </Text>
 
       <View style={styles.columnFooter}>
@@ -1835,7 +1838,7 @@ const DetailModal: React.FC<DetailModalProps> = React.memo(
           {column.category === 'stocks' && column.sections?.map((section, idx) => (
             <View key={idx} style={styles.detailSection}>
               <Text style={styles.detailSectionTitle}>{section.heading}</Text>
-              <Text style={styles.detailSectionContent}>{section.body}</Text>
+              <Text style={styles.detailSectionContent}>{stripCite(section.body)}</Text>
             </View>
           ))}
 

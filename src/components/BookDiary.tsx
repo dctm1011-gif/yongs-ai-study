@@ -64,12 +64,30 @@ function SearchableText({ text, style }: { text: string; style?: any }) {
 
 const COVER_KEY = (id: string) => `bookCover_${id}`;
 
-async function saveCoverToStorage(bookId: string, base64: string): Promise<void> {
-  await AsyncStorage.setItem(COVER_KEY(bookId), `data:image/jpeg;base64,${base64}`);
+async function saveCover(uid: string, bookId: string, base64: string): Promise<void> {
+  const dataUri = `data:image/jpeg;base64,${base64}`;
+  await AsyncStorage.setItem(COVER_KEY(bookId), dataUri);
+  try {
+    await dbSet(ref(getDatabase(getFirebaseApp()), `users/${uid}/books/${bookId}/cover`), base64);
+  } catch (e) {
+    console.warn('Firebase 커버 저장 실패:', e);
+  }
 }
 
-async function loadCoverFromStorage(bookId: string): Promise<string | null> {
-  return AsyncStorage.getItem(COVER_KEY(bookId));
+async function loadCover(uid: string, bookId: string): Promise<string | null> {
+  const local = await AsyncStorage.getItem(COVER_KEY(bookId));
+  if (local) return local;
+  try {
+    const snap = await get(ref(getDatabase(getFirebaseApp()), `users/${uid}/books/${bookId}/cover`));
+    if (snap.exists()) {
+      const dataUri = `data:image/jpeg;base64,${snap.val()}`;
+      await AsyncStorage.setItem(COVER_KEY(bookId), dataUri);
+      return dataUri;
+    }
+  } catch (e) {
+    console.warn('Firebase 커버 로드 실패:', e);
+  }
+  return null;
 }
 
 interface BookInfo {
@@ -141,7 +159,7 @@ function AddBookModal({ visible, onClose, onAdd, uid }: AddBookModalProps) {
     try {
       const id = makeBookId();
       if (coverBase64) {
-        await saveCoverToStorage(id, coverBase64);
+        await saveCover(uid, id, coverBase64);
       }
       const createdAt = new Date(Date.now() + 9 * 3600000).toISOString();
       await dbSet(
@@ -256,7 +274,7 @@ function BookDiaryModal({ book, onClose }: BookDiaryModalProps) {
     if (!book) return;
     const uri = book.localCoverUri ?? null;
     if (uri) { setCoverData(uri); return; }
-    loadCoverFromStorage(book.id).then(setCoverData);
+    loadCover(uid, book.id).then(setCoverData);
   }, [book?.id]);
 
   const loadLogs = useCallback(async () => {
@@ -681,7 +699,7 @@ function BookCard({ book, uid, onPress, refreshKey }: BookCardProps) {
     };
     loadProgress();
     if (!book.localCoverUri) {
-      loadCoverFromStorage(book.id).then(data => { if (data) setCoverData(data); });
+      loadCover(uid, book.id).then(data => { if (data) setCoverData(data); });
     }
   }, [book.id, uid, refreshKey]);
 

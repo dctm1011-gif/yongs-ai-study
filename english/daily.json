@@ -1,298 +1,151 @@
 {
-  "date": "2026-08-16",
+  "date": "2026-08-17",
   "words": [
     {
-      "word": "inundate",
+      "word": "acquiesce",
       "part_of_speech": "동사",
-      "meaning_ko": "물로 넘치게 하다, 대량으로 쇄도하게 하다",
-      "explanation": "원래는 홍수로 뒤덮는다는 뜻이지만, TOEFL에서는 '(요청, 정보 등이) 대량으로 밀려오다'라는 의미로 자주 나와요. Academic Reading의 역사, 과학, 사회 지문에서 고빈출.",
-      "example_from_convo": "The harbor was inundated with ships during the trading season.",
-      "example_ko": "무역 시즌 동안 항구는 배들로 뒤덮였어요.",
-      "tip": "동의어: overwhelm(압도), flood(쇄도). 반의어: deplete(고갈), drain(빠지다). Reading·Writing 고빈출. 수동태(be inundated with)로도 자주 출제.",
-      "emoji": "🌊"
+      "meaning_ko": "묵인하다, 마지못해 동의하다",
+      "explanation": "불만이 있어도 저항 없이 받아들이거나 동의하는 것. 정치·사회 지문에서 자주 등장해요.",
+      "example_from_convo": "The minority party had no choice but to acquiesce to the new policy.",
+      "example_ko": "소수 정당은 새 정책에 마지못해 동의할 수밖에 없었어요.",
+      "tip": "동의어: comply, consent, yield. 반의어: resist, protest. TOEFL 정치·사회 지문 빈출.",
+      "emoji": "🤝"
     },
     {
-      "word": "prolific",
+      "word": "cogent",
       "part_of_speech": "형용사",
-      "meaning_ko": "다작의, 생산성 높은, 풍부한",
-      "explanation": "작가·예술가·과학자가 많은 작품/논문을 만들어낸다는 의미. 또는 무언가가 풍부하게 생산/증식된다는 뜻. TOEFL Biography, History, Science 지문의 주인공 설명에서 자주 등장.",
-      "example_from_convo": "Darwin was a prolific writer, publishing over 19 major works.",
-      "example_ko": "다윈은 다작의 작가였고 19개 이상의 주요 저작을 출판했어요.",
-      "tip": "동의어: productive(생산적인), fertile(비옥한), fecund(다작의). 반의어: barren(황량한), sterile(불모의). Listening 학구적 토론과 Reading 인물 전기에서 고빈출.",
-      "emoji": "📚"
+      "meaning_ko": "설득력 있는, 논리적으로 타당한",
+      "explanation": "논거가 명확하고 설득력이 강한 것. TOEFL Writing 고득점 어휘예요.",
+      "example_from_convo": "The lawyer presented a cogent argument that convinced the entire jury.",
+      "example_ko": "변호사는 배심원 전원을 설득한 논리적인 논거를 제시했어요.",
+      "tip": "동의어: compelling, convincing, persuasive. Writing Task에서 쓰면 고득점 표현.",
+      "emoji": "💡"
     },
     {
-      "word": "prudent",
+      "word": "rampant",
       "part_of_speech": "형용사",
-      "meaning_ko": "신중한, 분별 있는, 현명한",
-      "explanation": "신중하고 분별 있는 판단을 내리는 태도. TOEFL Reading 경제, 정책, 역사 지문에서 '현명한 결정', '신중한 조치'를 설명할 때 자주 나와요.",
-      "example_from_convo": "The government's prudent fiscal policy helped avoid economic collapse.",
-      "example_ko": "정부의 신중한 재정 정책이 경제 붕괴를 피하는 데 도움이 됐어요.",
-      "tip": "동의어: judicious(분별 있는), cautious(조심스러운), wise(현명한). 반의어: reckless(무모한), imprudent(분별 없는). Academic Writing에서 정책·전략 평가할 때 필수 어휘.",
-      "emoji": "🤔"
+      "meaning_ko": "만연한, 걷잡을 수 없이 퍼진",
+      "explanation": "부정적인 현상이 통제 불가능할 정도로 퍼져 있는 상태. 사회·환경 지문 필수 어휘예요.",
+      "example_from_convo": "Rampant corruption undermined public trust in the government.",
+      "example_ko": "만연한 부패가 정부에 대한 국민의 신뢰를 약화시켰어요.",
+      "tip": "동의어: widespread, uncontrolled, prevalent. pervasive와 달리 '부정적 확산'에 쓰여요.",
+      "emoji": "🔥"
     },
     {
-      "word": "dichotomy",
-      "part_of_speech": "명사",
-      "meaning_ko": "양분, 이분법, 대립",
-      "explanation": "두 개의 상충하거나 대조되는 것 사이의 분열. TOEFL Reading은 철학, 사회학, 문학 지문에서 대비·대립 구조를 설명할 때 이 단어를 자주 사용해요.",
-      "example_from_convo": "The dichotomy between tradition and modernity shaped 20th-century art.",
-      "example_ko": "전통과 현대성 사이의 이분법이 20세기 예술을 형성했어요.",
-      "tip": "동의어: contrast(대비), opposition(대립), dualism(이원론). 관련 단어: dichotomous(이분의), paradox(역설—더 모순적). Reading 개념 설명, Writing 비교·대조 에세이에서 필수.",
-      "emoji": "⚖️"
+      "word": "lucid",
+      "part_of_speech": "형용사",
+      "meaning_ko": "명료한, 이해하기 쉬운",
+      "explanation": "생각이나 표현이 매우 명확하고 이해하기 쉬운 것. 학술 글쓰기 평가 어휘예요.",
+      "example_from_convo": "Her lucid explanation made the complex theory easy to understand.",
+      "example_ko": "그녀의 명료한 설명 덕분에 복잡한 이론을 쉽게 이해할 수 있었어요.",
+      "tip": "동의어: clear, coherent, intelligible. 반의어: obscure, opaque, convoluted.",
+      "emoji": "🔍"
     },
     {
-      "word": "conduit",
+      "word": "alacrity",
       "part_of_speech": "명사",
-      "meaning_ko": "통로, 매개체, 수로",
-      "explanation": "물이나 정보가 흐르는 통로, 또는 추상적으로 아이디어·영향력이 전달되는 매개 역할을 하는 것. TOEFL Reading 역사, 문화, 경제 지문에서 '~의 역할을 하다'를 설명할 때 고빈출.",
-      "example_from_convo": "Trade routes served as a conduit for cultural exchange between civilizations.",
-      "example_ko": "무역로는 문명 간 문화 교류의 통로 역할을 했어요.",
-      "tip": "동의어: channel(채널), vehicle(매개), medium(매체). 관련 단어: conduct(전도하다), conductor(도체). Reading 인과관계·매개 역할 설명에서 자주 출제.",
-      "emoji": "🚇"
+      "meaning_ko": "기꺼이 하는 마음, 민첩한 의욕",
+      "explanation": "어떤 일을 열정적으로 기꺼이 하려는 태도. TOEFL 지문의 인물 묘사에 자주 나와요.",
+      "example_from_convo": "The volunteers responded to the call for help with remarkable alacrity.",
+      "example_ko": "자원봉사자들은 도움 요청에 눈에 띄는 의욕으로 응했어요.",
+      "tip": "동의어: eagerness, willingness, promptness. 반의어: reluctance, hesitation.",
+      "emoji": "⚡"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "inundate",
-      "question": "What does 'inundate' most closely mean?",
+      "word": "acquiesce",
+      "question": "'acquiesce'의 의미로 가장 적절한 것은?",
       "options": [
-        "to overwhelm or flood with a large quantity of something",
-        "to gradually decrease the supply of resources",
-        "to carefully organize information systematically",
-        "to transport goods across long distances"
-      ],
-      "answer": 0,
-      "explanation": "inundate는 '(물이나 정보 등이) 대량으로 밀려오다', '압도하다'는 의미예요.",
-      "option_explanations": [
-        null,
-        "deplete(고갈)의 의미로, inundate의 반의어예요.",
-        "organize systematically는 inundate와 무관한 의미예요.",
-        "transport는 물리적 이동이지만 inundate는 압도의 의미예요."
-      ]
-    },
-    {
-      "type": "meaning",
-      "word": "prolific",
-      "question": "A scientist who is described as 'prolific' is known for what?",
-      "options": [
-        "producing a large number of works or discoveries",
-        "winning prestigious international awards",
-        "leading experimental research in isolation",
-        "publishing papers only in elite journals"
-      ],
-      "answer": 0,
-      "explanation": "prolific는 '많은 작품/논문을 생산하는', '다작의'라는 의미예요.",
-      "option_explanations": [
-        null,
-        "winning awards는 prolific과 다른 성취 기준이에요.",
-        "isolation(고립)은 prolific과 무관해요.",
-        "elite journals는 다작성(prolific)과 다른 기준이에요."
-      ]
-    },
-    {
-      "type": "meaning",
-      "word": "prudent",
-      "question": "Which behavior would be considered 'prudent'?",
-      "options": [
-        "carefully weighing risks before making a major financial decision",
-        "immediately investing all savings in a single new venture",
-        "ignoring expert advice to pursue a bold strategy",
-        "taking shortcuts to achieve quick results"
-      ],
-      "answer": 0,
-      "explanation": "prudent는 '신중하고 분별 있는' 행동을 의미해요.",
-      "option_explanations": [
-        null,
-        "immediately investing without careful consideration는 reckless(무모한)해요.",
-        "ignoring expert advice는 prudent의 반대예요.",
-        "taking shortcuts는 분별 없는 행동이에요."
-      ]
-    },
-    {
-      "type": "fill_blank",
-      "word": "inundate",
-      "sentence": "During the annual sale, the store was _____ with customers seeking discounts.",
-      "sentence_ko": "연간 세일 기간 동안, 그 상점은 할인을 찾는 고객들로 뒤덮였어요.",
-      "answer": "inundated",
-      "hint": "overwhelm with large numbers"
-    },
-    {
-      "type": "fill_blank",
-      "word": "prolific",
-      "sentence": "The artist's _____ output over five decades resulted in over 3,000 paintings.",
-      "sentence_ko": "그 예술가의 50년간의 다작의 산출량은 3,000개 이상의 그림을 낳았어요.",
-      "answer": "prolific",
-      "hint": "producing many works"
-    },
-    {
-      "type": "fill_blank",
-      "word": "dichotomy",
-      "sentence": "The _____ between urban and rural development remains a central policy challenge.",
-      "sentence_ko": "도시 개발과 시골 개발 사이의 이분법은 여전히 중심적인 정책 과제로 남아 있어요.",
-      "answer": "dichotomy",
-      "hint": "contrast or division"
-    },
-    {
-      "type": "situation",
-      "word": "prudent",
-      "question": "An investor reviews financial statements for several months, consults with advisors, and carefully considers market conditions before deciding to invest. Which word best describes this approach?",
-      "options": [
-        "reckless",
-        "impulsive",
-        "prudent",
-        "speculative"
-      ],
-      "answer": 2,
-      "explanation": "신중하게 검토하고 조언을 구하며 신중히 결정하는 것은 prudent(분별 있는) 태도예요.",
-      "option_explanations": [
-        "reckless(무모한)는 위험을 무시하는 것이에요.",
-        "impulsive(충동적인)는 서두른 결정을 의미해요.",
-        null,
-        "speculative(투기적인)는 불확실한 수익을 노리는 것이에요."
-      ]
-    },
-    {
-      "type": "situation",
-      "word": "conduit",
-      "question": "A social media platform enables ideas to spread rapidly from one person to millions of others. What role does the platform serve?",
-      "options": [
-        "a barrier to communication",
-        "a conduit for information dissemination",
-        "a permanent storage system",
-        "an entertainment service exclusively"
+        "강하게 반발하다",
+        "마지못해 동의하다",
+        "적극적으로 제안하다",
+        "완전히 무시하다"
       ],
       "answer": 1,
-      "explanation": "정보가 흐르고 퍼져나가는 통로 역할을 하므로 conduit(통로)이 적절해요.",
-      "option_explanations": [
-        "barrier(장벽)는 정반대 개념이에요.",
-        null,
-        "permanent storage는 platform의 기능이지만 conduit의 의미는 아니에요.",
-        "entertainment service는 platform의 역할 중 일부일 뿐 정보 매개 기능과는 다르다예요."
-      ]
-    }
-  ],
-  "sentences": [
-    {
-      "word": "inundate",
-      "sentence": "After the product launch, the team was inundated with customer emails.",
-      "sentence_ko": "제품 출시 후 팀은 고객 이메일로 완전히 뒤덮였어요.",
-      "nuance": "'많이 받다'보다 훨씬 강한 표현. 감당이 안 될 정도로 쏟아진다는 압도감이 핵심. 수동태 'be inundated with'로 쓰면 피해자 뉘앙스가 살아나요.",
-      "context": "요청, 민원, 메일, 주문 등이 통제 불가능하게 밀려오는 상황. 언론에서 'inundated with calls/complaints/requests'가 자주 등장해요.",
-      "everyday_usage": "주로 be inundated with 형태로 씁니다. 'I'm inundated with work right now.' / 'The hotline was inundated with calls.'"
+      "explanation": "acquiesce = 불만이 있어도 저항 없이 받아들이는 것이에요."
     },
     {
-      "word": "prolific",
-      "sentence": "She is a prolific reader — she finishes two books a week.",
-      "sentence_ko": "그녀는 다독가예요 — 일주일에 책을 두 권씩 다 읽어요.",
-      "nuance": "단순히 '많이'가 아니라 '놀랄 만큼 많은 양을 꾸준히 생산하는' 인상. 작가·예술가·연구자에게 주로 쓰여요. 칭찬의 뉘앙스가 강해요.",
-      "context": "작가, 음악가, 과학자, 운동선수 등 무언가를 많이 만들어내는 사람을 묘사할 때. 'a prolific author/composer/inventor'",
-      "everyday_usage": "'He is a prolific writer.' / 'She had a prolific career.' / 'The band was prolific in the 90s.' 사람과 커리어 모두에 씁니다."
+      "type": "fill_blank",
+      "word": "acquiesce",
+      "sentence": "Although she disagreed, she chose to _____ to her supervisor's decision.",
+      "sentence_ko": "그녀는 동의하지 않았지만 상사의 결정에 묵인하기로 했어요.",
+      "answer": "acquiesce",
+      "hint": "묵인하다, 마지못해 동의하다"
     },
     {
-      "word": "prudent",
-      "sentence": "It's prudent to save at least three months of expenses before quitting your job.",
-      "sentence_ko": "직장을 그만두기 전에 최소 3개월치 생활비를 저축해두는 게 현명해요.",
-      "nuance": "단순히 '조심스럽다'가 아니라 '상황을 충분히 고려한 분별 있는 판단'을 강조해요. wise보다 더 계산적이고 실용적인 뉘앙스.",
-      "context": "재정, 의사결정, 정책 평가 등 신중한 판단이 필요한 맥락. 'It's prudent to...' 패턴으로 조언할 때 자주 써요.",
-      "everyday_usage": "'It would be prudent to...(~하는 것이 현명할 것이다)' 패턴이 가장 흔해요. 격식체 조언이나 글쓰기에서 유용합니다."
+      "type": "meaning",
+      "word": "cogent",
+      "question": "'a cogent argument'는 어떤 논거인가요?",
+      "options": [
+        "근거 없는 주장",
+        "설득력 있고 논리적인 주장",
+        "감정에 호소하는 주장",
+        "복잡하고 이해하기 어려운 주장"
+      ],
+      "answer": 1,
+      "explanation": "cogent = 논리적으로 명확하고 설득력이 강한 것이에요."
     },
     {
-      "word": "dichotomy",
-      "sentence": "There's a clear dichotomy between what politicians promise and what they actually do.",
-      "sentence_ko": "정치인들이 약속하는 것과 실제로 하는 것 사이에는 분명한 이분법이 있어요.",
-      "nuance": "단순한 '차이'(difference)가 아니라 서로 대립하는 두 개의 범주로 완전히 나뉜다는 뉘앙스. 타협이 없는 극단적 대비를 표현해요.",
-      "context": "철학·사회 논의에서 두 개의 상충하는 개념을 대조할 때. 'the dichotomy between A and B' 패턴으로 씁니다.",
-      "everyday_usage": "'There's a false dichotomy here.(여기서 이분법적으로 보는 건 틀렸어)' — 논쟁에서 상대방 논리를 반박할 때도 유용해요."
+      "type": "fill_blank",
+      "word": "cogent",
+      "sentence": "The scientist provided a _____ explanation for the unusual experiment results.",
+      "sentence_ko": "과학자는 특이한 실험 결과에 대해 설득력 있는 설명을 제시했어요.",
+      "answer": "cogent",
+      "hint": "설득력 있는"
     },
     {
-      "word": "conduit",
-      "sentence": "Music can serve as a conduit for emotions that are difficult to put into words.",
-      "sentence_ko": "음악은 말로 표현하기 어려운 감정을 전달하는 통로가 될 수 있어요.",
-      "nuance": "단순한 '통로'가 아니라 무언가가 한 곳에서 다른 곳으로 흘러가게 해주는 '매개체' 역할에 방점. 물리적 수로가 아닌 추상적 매개로 자주 써요.",
-      "context": "문화, 예술, 언어, 기술이 아이디어나 감정을 전달하는 매개체로 설명될 때. 역사·문화 지문에 자주 등장해요.",
-      "everyday_usage": "'serve as a conduit for/between' 패턴이 핵심. 'The internet serves as a conduit for information.' 형태로 씁니다."
+      "type": "meaning",
+      "word": "rampant",
+      "question": "'rampant'와 의미가 가장 유사한 단어는?",
+      "options": [
+        "scarce",
+        "controlled",
+        "uncontrolled",
+        "diminishing"
+      ],
+      "answer": 2,
+      "explanation": "rampant = 통제되지 않고 광범위하게 퍼진 것이에요."
     },
     {
-      "word": "predatory",
-      "sentence": "The startup warned users about predatory subscription traps that are hard to cancel.",
-      "sentence_ko": "그 스타트업은 해지하기 어려운 약탈적 구독 함정에 대해 사용자들에게 경고했어요.",
-      "nuance": "동물이 먹이를 사냥하듯 타인을 착취하거나 이용하는 의도가 있다는 강한 부정적 뉘앙스. 단순히 '공격적인'보다 훨씬 강해요.",
-      "context": "비즈니스, 금융, 사회 문제에서 약자를 착취하는 행위를 비판할 때. 'predatory pricing/lending/behavior' 패턴이 자주 나와요.",
-      "everyday_usage": "'predatory pricing(약탈적 가격)' / 'predatory lending(약탈적 대출)' — 경제·언론 기사에서 자주 보이는 조합이에요."
+      "type": "situation",
+      "word": "rampant",
+      "question": "도시 전체에 범죄가 걷잡을 수 없이 퍼졌다고 할 때?",
+      "options": [
+        "Crime is rare in the city",
+        "Crime is rampant in the city",
+        "Crime is lucid in the city",
+        "Crime is cogent in the city"
+      ],
+      "answer": 1,
+      "explanation": "부정적 현상이 통제 불능으로 퍼진 상황 = rampant."
     },
     {
-      "word": "amalgamate",
-      "sentence": "The two rival companies decided to amalgamate to compete with larger corporations.",
-      "sentence_ko": "두 경쟁 회사는 대기업과 경쟁하기 위해 합병하기로 결정했어요.",
-      "nuance": "단순한 합병(merge)보다 두 개의 독립적인 것이 하나로 융합·통합되는 뉘앙스. 결합 후 구별이 어려울 정도로 섞이는 이미지예요.",
-      "context": "기업 합병, 조직 통합, 문화 융합 등을 설명할 때. TOEFL 역사·경제 지문에서 'amalgamated into one' 형태로 자주 등장해요.",
-      "everyday_usage": "'amalgamate with/into' 패턴이 핵심. 'The departments were amalgamated into a single unit.' 비즈니스 글쓰기에서 유용해요."
+      "type": "meaning",
+      "word": "lucid",
+      "question": "'lucid'의 반의어에 가장 가까운 단어는?",
+      "options": [
+        "clear",
+        "coherent",
+        "obscure",
+        "persuasive"
+      ],
+      "answer": 2,
+      "explanation": "lucid(명료한)의 반의어는 obscure(불명확한)예요."
     },
     {
-      "word": "cursory",
-      "sentence": "He gave the contract a cursory glance and signed without reading the fine print.",
-      "sentence_ko": "그는 계약서를 대충 훑어보고 세부 조항도 읽지 않은 채 서명했어요.",
-      "nuance": "빠르고 표면적인 검토만 했다는 뉘앙스. 시간이나 관심이 부족해서 제대로 보지 않았다는 부정적 함의가 있어요.",
-      "context": "검토, 조사, 검사 등이 너무 급하게 대충 이뤄졌을 때. 'a cursory glance/review/inspection/reading'이 일반적 패턴이에요.",
-      "everyday_usage": "'a cursory look/glance/review' — '대충 훑어보기'를 표현할 때. 'After only a cursory review, he approved the plan.' 뉴스·학술문에 자주 나와요."
-    },
-    {
-      "word": "spurious",
-      "sentence": "The company dismissed the spurious claims with evidence from independent auditors.",
-      "sentence_ko": "그 회사는 독립 감사인의 증거로 근거 없는 주장을 일축했어요.",
-      "nuance": "단순히 '틀렸다'가 아니라 겉으로는 그럴듯해 보이지만 실제로는 거짓이거나 논리적 근거가 없다는 뉘앙스. 의도적 기만이 내포될 때도 써요.",
-      "context": "논쟁, 법정, 학술 반박 등에서 상대 주장이 허위임을 지적할 때. 'spurious argument/claim/reasoning/correlation'이 흔한 조합이에요.",
-      "everyday_usage": "'That's a spurious argument.(그건 근거 없는 주장이야)' — 논쟁에서 상대 논리를 강하게 반박할 때 씁니다."
-    },
-    {
-      "word": "exacerbate",
-      "sentence": "Checking your phone right before bed exacerbates insomnia.",
-      "sentence_ko": "자기 직전에 폰을 확인하는 것은 불면증을 악화시켜요.",
-      "nuance": "이미 존재하는 나쁜 상황을 더 나쁘게 만드는 외부 요인에 초점. '악화'라는 결과보다 '촉진'하는 행동·원인을 강조할 때 딱 맞아요.",
-      "context": "건강, 갈등, 환경 문제 등 기존의 부정적 상황이 심화될 때. 'exacerbate the problem/situation/symptoms/crisis' 형태로 자주 나와요.",
-      "everyday_usage": "'This only exacerbates things.(이건 상황만 더 나쁘게 해)' — 일상 대화에서도 쓸 수 있는 강한 표현이에요."
-    },
-    {
-      "word": "esoteric",
-      "sentence": "His hobby of collecting ancient coins is a bit esoteric, but he loves it.",
-      "sentence_ko": "고대 동전 수집이라는 그의 취미는 좀 난해하지만, 그는 정말 좋아해요.",
-      "nuance": "소수만 이해하거나 관심 갖는 전문적·비밀스러운 느낌. '어렵다'보다는 '대중에게 알려지지 않은, 전문가만의 영역'에 가까워요.",
-      "context": "특수한 학문, 취미, 지식을 묘사할 때. 'esoteric knowledge/topic/interest/ritual' 패턴으로 씁니다. 비판보다는 중립·중립 이상의 뉘앙스.",
-      "everyday_usage": "'That's a bit esoteric for most people.(대부분의 사람들에게는 좀 생소한 주제야)' — 대화에서 전문적이거나 마니악한 분야를 설명할 때 써요."
-    },
-    {
-      "word": "corroborate",
-      "sentence": "Three separate witnesses corroborated the defendant's alibi.",
-      "sentence_ko": "세 명의 별개 증인이 피고의 알리바이를 뒷받침했어요.",
-      "nuance": "단순 확인(confirm)이 아니라 독립된 증거나 증언이 추가로 주장을 강화한다는 뉘앙스. 과학·법률에서 신뢰성을 높일 때 핵심 단어예요.",
-      "context": "법정, 과학 연구, 저널리즘 등 주장의 신뢰성을 독립적 증거로 확인할 때. 'corroborate a story/claim/evidence/finding'이 일반적 패턴이에요.",
-      "everyday_usage": "'Can you corroborate that?(그걸 뒷받침할 증거가 있어?)' — 상대 주장의 근거를 요청할 때 격식 있게 쓸 수 있어요."
-    },
-    {
-      "word": "pervasive",
-      "sentence": "A pervasive sense of anxiety settled over the office after the layoff announcement.",
-      "sentence_ko": "해고 발표 이후 사무실 전체에 만연한 불안감이 자리 잡았어요.",
-      "nuance": "'만연하다'는 뜻인데, 단순히 '많다'가 아니라 공간·집단·상황 전체에 스며들어 피할 수 없는 느낌이 핵심이에요.",
-      "context": "분위기, 문화, 영향력, 현상이 사회나 집단 전체에 깊이 퍼져 있을 때. 'pervasive influence/culture/problem/attitude'로 씁니다.",
-      "everyday_usage": "'It's become pervasive in modern culture.(현대 문화 전반에 만연해졌어)' — 사회 현상 분석할 때 자주 쓰는 표현이에요."
-    },
-    {
-      "word": "tenuous",
-      "sentence": "The connection between diet and mood is real, but still tenuous in the research.",
-      "sentence_ko": "식단과 기분 사이의 연관성은 실재하지만 연구에서는 아직 미약해요.",
-      "nuance": "물리적으로 '가늘고 약한'에서 나온 단어로, 논거·관계·근거가 약하거나 불확실하다는 뉘앙스. 완전히 틀렸다기보다 근거가 불충분한 느낌.",
-      "context": "주장의 근거, 연구 결과, 관계의 강도가 불충분하거나 확신하기 어려울 때. 'tenuous link/connection/grasp/argument'로 자주 씁니다.",
-      "everyday_usage": "'That logic is pretty tenuous.(그 논리는 좀 근거가 약한데)' — 상대 주장이 설득력 부족할 때 부드럽게 지적하는 표현이에요."
-    },
-    {
-      "word": "precipitate",
-      "sentence": "His hasty comments precipitated a social media backlash that lasted for weeks.",
-      "sentence_ko": "그의 성급한 발언은 몇 주간 이어진 소셜 미디어 역풍을 촉발시켰어요.",
-      "nuance": "사건이나 결과를 예상보다 빠르게, 갑작스럽게 일으킨다는 뉘앙스. '유발하다(cause)'보다 갑작스럽고 부주의한 느낌이 강해요.",
-      "context": "위기, 사건, 갈등이 어떤 행동으로 인해 갑자기 발생할 때. 'precipitate a crisis/conflict/collapse/reaction' 패턴이 빈출이에요.",
-      "everyday_usage": "'Don't precipitate a conflict.(갈등을 섣불리 일으키지 마)' — 성급한 행동을 경고할 때 쓸 수 있는 고급 표현이에요."
+      "type": "meaning",
+      "word": "alacrity",
+      "question": "'responded with alacrity'는 어떻게 반응한 것인가요?",
+      "options": [
+        "천천히 망설이며",
+        "마지못해 억지로",
+        "기꺼이 민첩하게",
+        "화를 내며 거부"
+      ],
+      "answer": 2,
+      "explanation": "alacrity = 열정적으로 기꺼이 하는 태도예요."
     }
   ]
 }
