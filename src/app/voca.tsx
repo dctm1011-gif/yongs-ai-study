@@ -55,7 +55,16 @@ interface Quiz {
   selectedOption?: string; // FlatList 재마운트 후에도 선택값 복원을 위해 부모 상태에 저장
 }
 
-type ViewType = 'words' | 'quiz' | 'game' | 'stats';
+type ViewType = 'words' | 'review' | 'quiz' | 'game' | 'stats';
+
+interface ReviewSentence {
+  word: string;
+  sentence: string;
+  sentence_ko: string;
+  nuance: string;
+  context: string;
+  everyday_usage: string;
+}
 
 const ITEMS_PER_PAGE = 15; // Pagination size for FlatList
 
@@ -91,6 +100,11 @@ function shuffleArrayStatic<T>(array: T[]): T[] {
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
   return arr;
+}
+
+function mapFirebaseSentences(data: any): ReviewSentence[] {
+  const raw = Array.isArray(data.sentences) ? data.sentences : [];
+  return raw.filter((s: any) => s.word && s.sentence);
 }
 
 function mapFirebaseQuizzes(data: any): Quiz[] {
@@ -145,6 +159,7 @@ export default function VocaScreen() {
   const [view, setView] = useState<ViewType>('words');
   const [words, setWords] = useState<Word[]>([]);
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
+  const [reviewSentences, setReviewSentences] = useState<ReviewSentence[]>([]);
   const [stats, setStats] = useState({ totalWords: 0, readWords: 0, quizzesCorrect: 0, quizzesTotal: 0 });
   const [loading, setLoading] = useState(true);
   const [hideReadWords, setHideReadWords] = useState(true);
@@ -263,6 +278,10 @@ export default function VocaScreen() {
         const newQuizzes = fbQuizzes.length > 0 ? fbQuizzes : generateQuizzes(mergedWords);
         setQuizzes(newQuizzes);
         await AsyncStorage.setItem('english_quizzes', JSON.stringify(newQuizzes));
+
+        const fbSentences = mapFirebaseSentences(snapshot.val());
+        setReviewSentences(fbSentences);
+        await AsyncStorage.setItem('english_sentences', JSON.stringify(fbSentences));
       },
       error => {
         console.error('Firebase subscription error:', error);
@@ -306,6 +325,11 @@ export default function VocaScreen() {
         // (Firebase subscription will overwrite with proper data shortly)
         const hasNewFormat = Array.isArray(parsedQuizzes) && parsedQuizzes[0]?.id?.startsWith('fb_');
         setQuizzes(hasNewFormat ? parsedQuizzes : generateQuizzes(parsedWords));
+
+        const savedSentences = await AsyncStorage.getItem('english_sentences');
+        let parsedSentences: any = null;
+        try { parsedSentences = savedSentences ? JSON.parse(savedSentences) : null; } catch { parsedSentences = null; }
+        if (Array.isArray(parsedSentences)) setReviewSentences(parsedSentences);
       } else {
         // 캐시가 없거나 예전 형식(배열이 아님)으로 남아있으면 기본값으로 폴백
         loadedWords = getDefaultWords();
@@ -644,6 +668,10 @@ export default function VocaScreen() {
       setQuizzes(refreshedQuizzes);
       await AsyncStorage.setItem('english_quizzes', JSON.stringify(refreshedQuizzes));
 
+      const refreshedSentences = mapFirebaseSentences(snapshot.val());
+      setReviewSentences(refreshedSentences);
+      await AsyncStorage.setItem('english_sentences', JSON.stringify(refreshedSentences));
+
       ToastAndroid.show(
         isUpdated ? '✅ 새로운 단어가 추가되었습니다!' : '✓ 이미 최신 상태입니다',
         ToastAndroid.SHORT
@@ -712,6 +740,12 @@ export default function VocaScreen() {
           <Text style={[styles.tabButtonText, view === 'words' && styles.tabButtonTextActive]}>단어장</Text>
         </TouchableOpacity>
         <TouchableOpacity
+          style={[styles.tabButton, view === 'review' && styles.tabButtonActive]}
+          onPress={() => setView('review')}
+        >
+          <Text style={[styles.tabButtonText, view === 'review' && styles.tabButtonTextActive]}>문장복습</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           style={[styles.tabButton, view === 'quiz' && styles.tabButtonActive]}
           onPress={() => setView('quiz')}
         >
@@ -755,6 +789,7 @@ export default function VocaScreen() {
           />
         </View>
       )}
+      {view === 'review' && <SentenceReviewView sentences={reviewSentences} />}
       {view === 'stats' && <StatsView stats={stats} />}
       {view === 'quiz' && <QuizView quizzes={quizzes} words={words} onAnswer={answerQuiz} onComplete={() => {
         const correct = quizzes.filter(q => q.correct_answer).length;
@@ -1026,6 +1061,67 @@ const QuizCard = React.memo(({ quiz, wordName, onAnswer }: { quiz: Quiz, wordNam
         </>
       )}
     </View>
+  );
+});
+
+const SentenceReviewView = React.memo(({ sentences }: { sentences: ReviewSentence[] }) => {
+  const [expanded, setExpanded] = useState<Record<number, boolean>>({});
+
+  if (sentences.length === 0) {
+    return (
+      <View style={styles.reviewEmpty}>
+        <Text style={styles.reviewEmptyText}>오늘의 문장복습 데이터가 없습니다.{'\n'}내일 자동으로 업데이트됩니다.</Text>
+      </View>
+    );
+  }
+
+  return (
+    <ScrollView contentContainerStyle={styles.listContent}>
+      {sentences.map((item, idx) => {
+        const isOpen = expanded[idx] ?? false;
+        const highlighted = item.sentence.replace(
+          new RegExp(`\\b${item.word}(\\w*)`, 'gi'),
+          (m) => `【${m}】`
+        );
+        return (
+          <TouchableOpacity
+            key={idx}
+            style={styles.reviewCard}
+            onPress={() => setExpanded(prev => ({ ...prev, [idx]: !prev[idx] }))}
+            activeOpacity={0.85}
+          >
+            <View style={styles.reviewCardTop}>
+              <Text style={styles.reviewWord}>{item.word}</Text>
+              <Text style={styles.reviewToggle}>{isOpen ? '▲' : '▼'}</Text>
+            </View>
+            <Text style={styles.reviewSentence}>
+              {highlighted.split(/【|】/).map((part, i) =>
+                i % 2 === 1
+                  ? <Text key={i} style={styles.reviewWordHighlight}>{part}</Text>
+                  : <Text key={i}>{part}</Text>
+              )}
+            </Text>
+            <Text style={styles.reviewSentenceKo}>{item.sentence_ko}</Text>
+            {isOpen && (
+              <View style={styles.reviewDetails}>
+                <View style={styles.reviewDetailRow}>
+                  <Text style={styles.reviewDetailLabel}>💬 뉘앙스</Text>
+                  <Text style={styles.reviewDetailText}>{item.nuance}</Text>
+                </View>
+                <View style={styles.reviewDetailRow}>
+                  <Text style={styles.reviewDetailLabel}>📍 상황</Text>
+                  <Text style={styles.reviewDetailText}>{item.context}</Text>
+                </View>
+                <View style={styles.reviewDetailRow}>
+                  <Text style={styles.reviewDetailLabel}>🗣 일상표현</Text>
+                  <Text style={styles.reviewDetailText}>{item.everyday_usage}</Text>
+                </View>
+              </View>
+            )}
+          </TouchableOpacity>
+        );
+      })}
+    </ScrollView>
   );
 });
 
@@ -1475,6 +1571,78 @@ const styles = StyleSheet.create({
     color: '#64748b',
     lineHeight: 18,
     paddingLeft: 10,
+  },
+  reviewEmpty: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 32,
+  },
+  reviewEmptyText: {
+    fontSize: 14,
+    color: '#8e8e8e',
+    textAlign: 'center',
+    lineHeight: 22,
+  },
+  reviewCard: {
+    backgroundColor: '#fff',
+    marginVertical: 6,
+    padding: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#dbdbdb',
+  },
+  reviewCardTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  reviewWord: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#0095f6',
+  },
+  reviewToggle: {
+    fontSize: 12,
+    color: '#8e8e8e',
+  },
+  reviewSentence: {
+    fontSize: 15,
+    color: '#262626',
+    lineHeight: 24,
+    marginBottom: 4,
+  },
+  reviewWordHighlight: {
+    fontWeight: '700',
+    color: '#0095f6',
+    textDecorationLine: 'underline',
+  },
+  reviewSentenceKo: {
+    fontSize: 13,
+    color: '#8e8e8e',
+    lineHeight: 20,
+    marginTop: 2,
+  },
+  reviewDetails: {
+    marginTop: 12,
+    paddingTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: '#f0f0f0',
+    gap: 10,
+  },
+  reviewDetailRow: {
+    gap: 3,
+  },
+  reviewDetailLabel: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#0095f6',
+  },
+  reviewDetailText: {
+    fontSize: 13,
+    color: '#262626',
+    lineHeight: 20,
   },
   statsContent: {
     padding: 16,
