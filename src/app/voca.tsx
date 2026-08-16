@@ -160,6 +160,7 @@ export default function VocaScreen() {
   const [words, setWords] = useState<Word[]>([]);
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [reviewSentences, setReviewSentences] = useState<ReviewSentence[]>([]);
+  const [reviewLoading, setReviewLoading] = useState(false);
   const [stats, setStats] = useState({ totalWords: 0, readWords: 0, quizzesCorrect: 0, quizzesTotal: 0 });
   const [loading, setLoading] = useState(true);
   const [hideReadWords, setHideReadWords] = useState(true);
@@ -586,6 +587,38 @@ export default function VocaScreen() {
     }
   };
 
+  const loadReviewPoolSentences = async () => {
+    if (reviewLoading) return;
+    setReviewLoading(true);
+    try {
+      const db = getDatabase(getFirebaseApp());
+      const poolSnap = await get(userRef(uid, 'english/reviewPool'));
+      if (!poolSnap.exists()) { setReviewSentences([]); return; }
+
+      const pool: Record<string, any> = poolSnap.val();
+      const sorted = Object.values(pool)
+        .filter((v: any) => (v.count ?? 0) < 10)
+        .sort((a: any, b: any) => (a.count ?? 0) - (b.count ?? 0))
+        .slice(0, 15);
+
+      const sentences: ReviewSentence[] = [];
+      for (const entry of sorted) {
+        const key = (entry.word || '').toLowerCase().replace(/\s+/g, '_').replace(/-/g, '_');
+        if (!key) continue;
+        const snap = await get(ref(db, `english/sentences/${key}`));
+        if (snap.exists()) {
+          sentences.push({ word: entry.word, ...snap.val() });
+        }
+      }
+      setReviewSentences(sentences);
+      await AsyncStorage.setItem('english_sentences', JSON.stringify(sentences));
+    } catch (e) {
+      console.warn('reviewPool 문장 로드 실패:', e);
+    } finally {
+      setReviewLoading(false);
+    }
+  };
+
   const openDebug = async () => {
     const scheduled = await Notifications.getAllScheduledNotificationsAsync();
     const raw = await AsyncStorage.getItem(NOTIF_LOG_KEY);
@@ -741,7 +774,7 @@ export default function VocaScreen() {
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.tabButton, view === 'review' && styles.tabButtonActive]}
-          onPress={() => setView('review')}
+          onPress={() => { setView('review'); if (reviewSentences.length === 0) loadReviewPoolSentences(); }}
         >
           <Text style={[styles.tabButtonText, view === 'review' && styles.tabButtonTextActive]}>문장복습</Text>
         </TouchableOpacity>
@@ -789,7 +822,7 @@ export default function VocaScreen() {
           />
         </View>
       )}
-      {view === 'review' && <SentenceReviewView sentences={reviewSentences} />}
+      {view === 'review' && <SentenceReviewView sentences={reviewSentences} loading={reviewLoading} />}
       {view === 'stats' && <StatsView stats={stats} />}
       {view === 'quiz' && <QuizView quizzes={quizzes} words={words} onAnswer={answerQuiz} onComplete={() => {
         const correct = quizzes.filter(q => q.correct_answer).length;
@@ -1064,13 +1097,22 @@ const QuizCard = React.memo(({ quiz, wordName, onAnswer }: { quiz: Quiz, wordNam
   );
 });
 
-const SentenceReviewView = React.memo(({ sentences }: { sentences: ReviewSentence[] }) => {
+const SentenceReviewView = React.memo(({ sentences, loading }: { sentences: ReviewSentence[], loading: boolean }) => {
   const [expanded, setExpanded] = useState<Record<number, boolean>>({});
+
+  if (loading) {
+    return (
+      <View style={styles.reviewEmpty}>
+        <ActivityIndicator size="large" color="#0095f6" />
+        <Text style={[styles.reviewEmptyText, { marginTop: 12 }]}>복습 단어 불러오는 중...</Text>
+      </View>
+    );
+  }
 
   if (sentences.length === 0) {
     return (
       <View style={styles.reviewEmpty}>
-        <Text style={styles.reviewEmptyText}>오늘의 문장복습 데이터가 없습니다.{'\n'}내일 자동으로 업데이트됩니다.</Text>
+        <Text style={styles.reviewEmptyText}>복습할 단어가 없어요.{'\n'}단어장에서 단어를 읽음 처리하면 여기에 나타나요.</Text>
       </View>
     );
   }
