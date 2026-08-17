@@ -68,6 +68,7 @@ interface ReviewSentence {
   nuance: string;
   context: string;
   everyday_usage: string;
+  examples?: { en: string; ko: string }[];
 }
 
 const ITEMS_PER_PAGE = 15; // Pagination size for FlatList
@@ -1110,7 +1111,6 @@ const QuizCard = React.memo(({ quiz, wordName, onAnswer }: { quiz: Quiz, wordNam
 const SentenceReviewView = React.memo(({ sentences, loading }: { sentences: ReviewSentence[], loading: boolean }) => {
   const [expanded, setExpanded] = useState<Record<number, boolean>>({});
   const [speakingIdx, setSpeakingIdx] = useState<number | null>(null);
-  const [cardExamples, setCardExamples] = useState<Record<number, { en: string; ko: string }[]>>({});
   const currentSoundRef = React.useRef<Audio.Sound | null>(null);
   const playIdRef = React.useRef(0);
 
@@ -1148,15 +1148,6 @@ const SentenceReviewView = React.memo(({ sentences, loading }: { sentences: Revi
       });
     };
 
-    // 추가 예문 백그라운드 fetch (캐시 우선)
-    const examplesPromise: Promise<{ en: string; ko: string }[]> = cardExamples[idx]
-      ? Promise.resolve(cardExamples[idx])
-      : fetch(`${NETLIFY_BASE_URL}/api/review-examples`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ word: item.word, meaning: item.meaning, sentence: item.sentence }),
-        }).then(r => r.json()).then((d: any) => (d.examples ?? []) as { en: string; ko: string }[]).catch(() => []);
-
     // 단어: 30% → 1초 → 60% → 1초 → 90% → 1초
     const wordSpeeds = [0.3, 0.6, 0.9];
     let wordNext: Promise<{ sound: Audio.Sound } | null> | null = loadSnd(item.word, wordSpeeds[0]);
@@ -1179,13 +1170,10 @@ const SentenceReviewView = React.memo(({ sentences, loading }: { sentences: Revi
       await playSnd(result);
     }
 
-    // 추가 예문 대기 → UI 표시 → TTS 읽기
-    if (playIdRef.current !== prevId) return;
-    const examples = await examplesPromise;
-    if (examples.length && playIdRef.current === prevId) {
-      setCardExamples(prev => ({ ...prev, [idx]: examples }));
-      const exParts = examples.flatMap(ex => [ex.en, ex.ko]);
-      let exNext: Promise<{ sound: Audio.Sound } | null> | null = exParts.length ? loadSnd(exParts[0]) : null;
+    // 추가 예문 (generate_sentences_batch.py로 사전 생성된 것)
+    if (item.examples?.length) {
+      const exParts = item.examples.flatMap(ex => [ex.en, ex.ko]);
+      let exNext: Promise<{ sound: Audio.Sound } | null> | null = loadSnd(exParts[0]);
       for (let i = 0; i < exParts.length; i++) {
         if (playIdRef.current !== prevId) return;
         const result = await exNext;
@@ -1195,7 +1183,7 @@ const SentenceReviewView = React.memo(({ sentences, loading }: { sentences: Revi
     }
 
     if (playIdRef.current === prevId) setSpeakingIdx(null);
-  }, [speakingIdx, cardExamples]);
+  }, [speakingIdx]);
 
   if (loading) {
     return (
@@ -1265,10 +1253,10 @@ const SentenceReviewView = React.memo(({ sentences, loading }: { sentences: Revi
                   <Text style={styles.reviewDetailLabel}>🗣 일상표현</Text>
                   <Text style={styles.reviewDetailText}>{item.everyday_usage}</Text>
                 </View>
-                {cardExamples[idx] && (
+                {item.examples && (
                   <View style={styles.reviewDetailRow}>
                     <Text style={styles.reviewDetailLabel}>📝 추가 예문</Text>
-                    {cardExamples[idx].map((ex, i) => (
+                    {item.examples.map((ex, i) => (
                       <View key={i} style={{ marginTop: 8 }}>
                         <Text style={styles.reviewSentence}>{`${i + 1}. ${ex.en}`}</Text>
                         <Text style={styles.reviewSentenceKo}>{ex.ko}</Text>
