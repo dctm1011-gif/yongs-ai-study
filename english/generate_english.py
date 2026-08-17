@@ -1,6 +1,6 @@
 ﻿"""
 영어공부 Netlify 자동 업데이트
-lily 대화 JSON → Claude API 분석 → english/index.html 생성 → Netlify 배포
+TOEFL 빈출 어휘 생성 → english/index.html + daily.json → Netlify 배포
 매일 Task Scheduler로 자동 실행
 """
 import json
@@ -13,10 +13,8 @@ from datetime import date
 import anthropic
 
 ROOT = Path(__file__).parent.parent
-ENGLISH_BOT_DATA = Path(r"C:\Users\dctm1\english-bot\data")
 OUTPUT_HTML = ROOT / "english" / "index.html"
 WORDS_DB_JSON = ROOT / "english" / "words_db.json"
-PROFILE_JSON = Path(r"C:\Users\dctm1\english-bot\profile.json")
 TOEFL_OUTPUT_HTML = ROOT / "toefl" / "index.html"
 
 sys.path.insert(0, str(ROOT / "history"))
@@ -35,22 +33,6 @@ def load_used_words() -> list:
     except (json.JSONDecodeError, OSError):
         return []
 
-
-def load_conversations(target_date: date) -> list:
-    data_file = ENGLISH_BOT_DATA / f"{target_date}.json"
-    if not data_file.exists():
-        print(f"[!] 대화 파일 없음: {data_file}")
-        return []
-    data = json.loads(data_file.read_text(encoding="utf-8-sig"))
-    return data.get("lily_conversations", [])
-
-def format_conversations(conversations: list) -> str:
-    lines = []
-    for c in conversations:
-        lines.append(f"User: {c.get('user', '')}")
-        lines.append(f"Lily: {c.get('lily', '')}")
-        lines.append("")
-    return "\n".join(lines)
 
 def get_default_words(target_date: date) -> dict:
     """API 최대 실패 시 비상 fallback — words_db에 없는 단어를 동적으로 선택"""
@@ -361,87 +343,6 @@ JSON 형식:
         return data
     except (json.JSONDecodeError, anthropic.APIError):
         return None
-
-def analyze_with_claude(convo_text: str, target_date: date, client: anthropic.Anthropic) -> dict:
-    print("[*] Claude API 호출 중...")
-    used_words = load_used_words()
-    used_words_note = (
-        f"\n\n⚠️ 아래 단어들은 이전에 이미 다룬 단어이니, 대화에 등장하더라도 웬만하면 다른 표현을 우선 선택해주세요:\n{', '.join(used_words)}\n"
-        if used_words else ""
-    )
-    prompt = f"""다음은 영어 원어민 AI Lily와의 영어 학습 대화입니다. ({target_date})
-
-대화 기록:
-{convo_text}
-{used_words_note}
-
-이 대화에서 배울 수 있는 영어 단어/표현들을 분석하고 아래 JSON 형식으로만 응답해주세요.
-JSON 외 다른 텍스트는 절대 포함하지 마세요.
-
-{{
-  "date": "{target_date}",
-  "words": [
-    {{
-      "word": "lowkey",
-      "part_of_speech": "부사/형용사",
-      "meaning_ko": "은근히, 어느 정도",
-      "explanation": "일상 영어에서 자주 쓰이는 슬랭으로, 뭔가를 인정하지만 강하지 않게 표현할 때 씁니다. 'kind of'와 비슷한 느낌이에요.",
-      "example_from_convo": "I'm lowkey impressed when people actually stick with it",
-      "example_ko": "나는 사람들이 실제로 꾸준히 할 때 은근히 감동받아",
-      "tip": "SNS나 캐주얼한 대화에서 매우 자주 등장해요. 'I lowkey love this' (이거 은근히 좋아) 처럼 쓸 수 있어요.",
-      "emoji": "😏"
-    }}
-  ],
-  "quiz": [
-    {{
-      "type": "meaning",
-      "word": "lowkey",
-      "question": "\\"lowkey\\"가 사용된 상황은?",
-      "options": ["격식 있게 말할 때", "은근히, 살짝 인정할 때", "매우 강하게 표현할 때", "공식적으로 발표할 때"],
-      "answer": 1,
-      "explanation": "lowkey는 '은근히', '어느 정도'를 의미하는 캐주얼한 표현이에요."
-    }},
-    {{
-      "type": "fill_blank",
-      "word": "lowkey",
-      "sentence": "That movie was _____ good, I didn't expect to like it.",
-      "sentence_ko": "그 영화 은근히 좋았어, 기대 안 했는데.",
-      "answer": "lowkey",
-      "hint": "은근히, 어느 정도"
-    }},
-    {{
-      "type": "situation",
-      "question": "친구가 생각보다 잘 했을 때 '나 은근히 감동받았어'를 영어로 하면?",
-      "options": ["I'm absolutely impressed", "I'm lowkey impressed", "I'm formally impressed", "I'm secretly ashamed"],
-      "answer": 1,
-      "explanation": "lowkey는 완전하진 않지만 어느 정도 인정하는 느낌을 줘요."
-    }}
-  ]
-}}
-
-위 JSON 구조를 참고해서, 실제 대화에서 배울 수 있는 단어/표현 5-8개만 추출하고 각각 퀴즈 2개씩 만들어주세요. (단어 수를 8개 이하로 제한해서 JSON이 잘리지 않게 해주세요)
-
-emoji 필드에는 그 단어를 가장 잘 표현하는 이모지 1개를 넣어주세요.
-예: 'lowkey' → 😏, 'gripping' → 📚, 'clutch' → 🎯, 'parched' → 🏜️, 'grinding' → ⚙️"""
-
-    for attempt in range(2):
-        response = client.messages.create(
-            model="claude-haiku-4-5-20251001",
-            max_tokens=8000,
-            messages=[{"role": "user", "content": prompt}]
-        )
-        text = response.content[0].text.strip()
-        start = text.find("{")
-        end = text.rfind("}") + 1
-        if start == -1 or end == 0:
-            print(f"[!] JSON 없음, 재시도 {attempt+1}")
-            continue
-        try:
-            return json.loads(text[start:end])
-        except json.JSONDecodeError as e:
-            print(f"[!] JSON 파싱 실패 ({e}), 재시도 {attempt+1}")
-    raise RuntimeError("Claude API JSON 파싱 2회 실패")
-
 
 def generate_html(data: dict) -> str:
     words_json = json.dumps(data.get("words", []), ensure_ascii=False)
@@ -1048,53 +949,6 @@ function markVocabDone() {{
 </body>
 </html>
 """
-
-
-def update_profile_topics(conversations: list, target_date) -> None:
-    """대화에서 새 토픽을 추출해 profile.json recent_topics에 추가 (최대 10개 유지)"""
-    if not PROFILE_JSON.exists() or not conversations:
-        return
-    try:
-        profile = json.loads(PROFILE_JSON.read_text(encoding="utf-8"))
-        date_str = str(target_date)
-
-        # 이미 이 날짜 토픽이 있으면 스킵
-        existing = profile.get("recent_topics", [])
-        if any(date_str in t for t in existing):
-            return
-
-        # 대화에서 주제 키워드 간단 추출 (Claude API 안 씀 — 크레딧 절약)
-        all_text = " ".join(c.get("user", "") for c in conversations[:5])
-        topics = []
-
-        # 패턴 기반 토픽 감지
-        import re
-        if re.search(r"toefl|토플", all_text, re.I):
-            topics.append(f"{date_str}: TOEFL 공부 관련 대화")
-        if re.search(r"ut austin|석사|master", all_text, re.I):
-            topics.append(f"{date_str}: UT Austin 진학 고민")
-        if re.search(r"work|job|career|회사|직장", all_text, re.I):
-            topics.append(f"{date_str}: 직장/커리어 관련 대화")
-        if re.search(r"coffee|커피", all_text, re.I):
-            topics.append(f"{date_str}: 커피/건강 관련 대화")
-        if re.search(r"game|게임|tft|팀파이트", all_text, re.I):
-            topics.append(f"{date_str}: 게임 관련 대화")
-
-        # 첫 유저 메시지 요약을 토픽으로 추가
-        if conversations:
-            first_msg = conversations[0].get("user", "").strip()[:60]
-            if first_msg:
-                topics.append(f"{date_str}: \"{first_msg}...\"")
-
-        if not topics:
-            topics.append(f"{date_str}: 일상 영어 대화")
-
-        # 기존 목록에 추가 후 최근 10개만 유지
-        profile["recent_topics"] = (existing + topics)[-10:]
-        PROFILE_JSON.write_text(json.dumps(profile, ensure_ascii=False, indent=2), encoding="utf-8")
-        print(f"[+] profile.json recent_topics 업데이트 완료 ({date_str})")
-    except Exception as e:
-        print(f"[!] profile.json 업데이트 실패: {e}")
 
 
 def fetch_toefl_words_from_netlify() -> list:
@@ -2112,15 +1966,7 @@ def main(target_date: date = None):
     toefl_words_path = ROOT / "public" / "toefl" / "words_db.json"
     toefl_words = load_toefl_words(toefl_words_path)
 
-    conversations = load_conversations(target_date)
-
-    if not conversations:
-        print(f"[*] {target_date} 대화 없음. TOEFL 기반 콘텐츠 생성...")
-        data = generate_default_words(client, target_date, toefl_words)
-    else:
-        print(f"[+] 대화 {len(conversations)}개 로드 ({target_date})")
-        convo_text = format_conversations(conversations)
-        data = analyze_with_claude(convo_text, target_date, client)
+    data = generate_default_words(client, target_date, toefl_words)
 
     word_count = len(data.get('words', []))
     quiz_count = len(data.get('quiz', []))
@@ -2139,7 +1985,6 @@ def main(target_date: date = None):
     print(f"[+] daily.json 저장: {english_daily_json}")
 
     update_words_db(data.get("words", []), target_date)
-    update_profile_topics(conversations, target_date)
 
     try:
         toefl_data = generate_toefl_content(client, target_date)
