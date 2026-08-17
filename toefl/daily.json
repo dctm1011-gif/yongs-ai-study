@@ -1,113 +1,182 @@
 {
   "date": "2026-08-18",
   "reading": {
-    "title": "The Impact of Artificial Intelligence on Modern Education",
-    "passage": "Artificial intelligence is revolutionizing education by personalizing learning experiences for individual students. AI-powered systems can analyze student performance data and adapt teaching methods in real-time, helping struggling learners catch up while allowing advanced students to progress faster. Moreover, AI tutoring systems are available 24/7, providing instant feedback and reducing the burden on teachers. However, concerns about data privacy and over-reliance on technology remain significant challenges that educators must address carefully.",
+    "title": "The Decline of the Indus Valley Civilization",
+    "passage": "The Indus Valley Civilization, which flourished from approximately 2600 to 1900 BCE, represents one of the most sophisticated urban societies of the ancient world. Spanning over 1.25 million square kilometers across present-day Pakistan and India, this civilization developed advanced drainage systems, standardized weights and measures, and planned city layouts that rivaled contemporary Egyptian and Mesopotamian societies. However, the sudden collapse of this thriving culture around 1900 BCE remains one of archaeology's most compelling mysteries.\n\nScholars have proposed multiple theories to explain the civilization's decline. Seismic activity and tectonic shifts may have diverted the Indus River's course, devastating agricultural productivity that sustained approximately five million inhabitants. Alternatively, climate data suggests a prolonged drought lasting several centuries disrupted monsoon patterns essential for agriculture. Some researchers propose that nomadic Indo-Aryan invasions from the north destabilized existing trade networks and political structures, though archaeological evidence for this remains contested. Additionally, environmental degradation through deforestation for brick production may have exacerbated soil erosion and reduced agricultural yields.\n\nThe Indus Valley Civilization's disappearance, rather than a catastrophic event, likely resulted from a combination of environmental pressures, economic disruption, and demographic shifts. This multifactorial approach helps explain why the civilization gradually declined over centuries rather than vanishing abruptly.",
+    "vocabulary": [
+      {
+        "word": "flourished",
+        "meaning_ko": "번영하다, 융성하다"
+      },
+      {
+        "word": "sophisticated",
+        "meaning_ko": "정교한, 고도로 발달된"
+      },
+      {
+        "word": "drainage",
+        "meaning_ko": "배수 시스템, 수로"
+      },
+      {
+        "word": "tectonic",
+        "meaning_ko": "지질학적 구조와 관련된"
+      },
+      {
+        "word": "monsoon",
+        "meaning_ko": "몬순, 계절풍"
+      },
+      {
+        "word": "degradation",
+        "meaning_ko": "악화, 품질 저하"
+      },
+      {
+        "word": "multifactorial",
+        "meaning_ko": "여러 요인이 작용하는"
+      }
+    ],
     "questions": [
       {
-        "q": "What is one advantage of AI-powered systems in education?",
+        "q": "According to the passage, which of the following is true about the Indus Valley Civilization?",
         "options": [
-          "A) They completely replace traditional teachers",
-          "B) They can personalize learning and provide real-time adaptation",
-          "C) They eliminate the need for student motivation",
-          "D) They guarantee all students will excel"
+          "It was smaller in area than Egyptian civilization",
+          "It developed advanced infrastructure comparable to contemporary societies",
+          "It collapsed suddenly due to a single catastrophic event",
+          "It was primarily located in northern India"
         ],
         "answer": 1,
-        "explanation": "지문에서 AI 시스템이 학생의 성과를 분석하고 교수 방법을 실시간으로 조정할 수 있다고 명시되어 있습니다. 정답은 B입니다."
+        "explanation": "지문의 첫 번째 단락에서 'advanced drainage systems, standardized weights and measures, and planned city layouts that rivaled contemporary Egyptian and Mesopotamian societies'라고 명시되어 있습니다."
       },
       {
-        "q": "According to the passage, what is a significant concern about AI in education?",
+        "q": "What can be inferred from the passage about why the Indus Valley Civilization disappeared?",
         "options": [
-          "A) It costs too much money",
-          "B) It makes learning too easy",
-          "C) Data privacy and over-reliance on technology",
-          "D) It works only for advanced students"
+          "A single invasion by Indo-Aryan peoples definitively caused its collapse",
+          "Drought was the only significant environmental factor",
+          "Multiple interconnected factors likely contributed to its gradual decline",
+          "The civilization did not actually decline but simply relocated"
         ],
         "answer": 2,
-        "explanation": "지문의 마지막 문장에서 'concerns about data privacy and over-reliance on technology'이 중요한 과제라고 언급되어 있습니다. 정답은 C입니다."
+        "explanation": "마지막 단락에서 'likely resulted from a combination of environmental pressures, economic disruption, and demographic shifts'라고 명시되어 있으며, 이는 다중 요인 접근을 시사합니다."
       },
       {
-        "q": "What does the passage suggest about AI tutoring systems?",
+        "q": "The word 'diverted' in the second paragraph is closest in meaning to",
         "options": [
-          "A) They are only available during school hours",
-          "B) They provide continuous support without time limitations",
-          "C) They cannot provide feedback to students",
-          "D) They are too complicated for teachers to use"
+          "polluted",
+          "redirected the flow of",
+          "deepened",
+          "evaporated"
         ],
         "answer": 1,
-        "explanation": "지문에서 'AI tutoring systems are available 24/7, providing instant feedback'이라고 명확히 표시되어 있습니다. 정답은 B입니다."
+        "explanation": "'divert'는 '방향을 바꾸다' 또는 '돌리다'는 의미이므로, 강의 흐름을 '다른 방향으로 돌렸다'는 뜻의 'redirected the flow of'가 가장 적절한 의미입니다."
+      },
+      {
+        "q": "Why does the author mention deforestation in the final paragraph?",
+        "options": [
+          "To prove that Indo-Aryan invasions occurred",
+          "To demonstrate that the civilization was environmentally careless",
+          "To provide an example of environmental degradation that may have contributed to the civilization's decline",
+          "To show that brick production was not important to the civilization"
+        ],
+        "answer": 2,
+        "explanation": "저자는 삼림 벌채가 환경 악화의 예로서 농업 생산성 감소에 기여했을 수 있는 요인으로 언급하고 있습니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Some people believe that online learning is superior to traditional classroom learning. Do you agree or disagree with this statement?",
-    "structure": {
-      "intro": "도입부에서는 온라인 학습과 전통적 교실 학습에 대한 명확한 입장을 제시하고, 주요 이유 2-3가지를 간단히 소개합니다.",
-      "body1": "첫 번째 본론: 온라인 학습의 장점(유연성, 접근성) 또는 단점(사회적 상호작용 부족)을 구체적인 예시와 함께 설명합니다.",
-      "body2": "두 번째 본론: 전통적 교실 학습의 가치(직접 상호작용, 즉시 피드백) 또는 제한점(시간/공간 제약)을 논의합니다.",
-      "conclusion": "결론부에서는 두 학습 방식의 보완적 역할을 인정하면서 자신의 최종 입장을 재확인합니다."
-    },
-    "useful_phrases": [
-      "In my opinion, I believe that...",
-      "First and foremost, ...",
-      "Furthermore, ...",
-      "On the other hand, ...",
-      "To illustrate this point, ...",
-      "In conclusion, ...",
-      "I would argue that..."
+    "sentences": [
+      {
+        "original": "Spanning over 1.25 million square kilometers across present-day Pakistan and India, this civilization developed advanced drainage systems, standardized weights and measures, and planned city layouts that rivaled contemporary Egyptian and Mesopotamian societies.",
+        "paraphrase": "This civilization, which extended across 1.25 million square kilometers in what is now Pakistan and India, was characterized by sophisticated infrastructure including advanced drainage, standardized systems of measurement, and strategically designed urban centers comparable to those of Egypt and Mesopotamia during the same period.",
+        "tip": "관계사절의 위치 이동(spanning → which extended)과 능동형→수동형 전환을 통한 다양한 표현. 구체적 명사들을 더 일반적인 용어(infrastructure, urban centers)로 통합"
+      },
+      {
+        "original": "However, the sudden collapse of this thriving culture around 1900 BCE remains one of archaeology's most compelling mysteries.",
+        "paraphrase": "Yet despite its prosperity, the relatively abrupt disappearance of this advanced society approximately 1900 BCE continues to perplex archaeologists and remains among the discipline's most intriguing unsolved questions.",
+        "tip": "concession 구조 유지하면서 동의어 치환(sudden → abrupt, collapse → disappearance, mysteries → unsolved questions) 및 수식어 재배치로 문장 다양화"
+      },
+      {
+        "original": "Seismic activity and tectonic shifts may have diverted the Indus River's course, devastating agricultural productivity that sustained approximately five million inhabitants.",
+        "paraphrase": "The redirection of the Indus River caused by earthquakes and geological movements could have destroyed the agricultural output upon which a population of roughly five million people depended.",
+        "tip": "명사화 구조 제거(Seismic activity → earthquakes, tectonic shifts → geological movements) 및 능동→수동 구조 활용. 복합 동사 'diverted'를 'redirection'으로 명사화"
+      },
+      {
+        "original": "The Indus Valley Civilization's disappearance, rather than a catastrophic event, likely resulted from a combination of environmental pressures, economic disruption, and demographic shifts.",
+        "paraphrase": "Rather than occurring as a sudden disaster, the civilization's decline was probably caused by multiple concurrent factors, including environmental stress, disruption to economic systems, and changes in population distribution.",
+        "tip": "병렬 구조 유지하면서 more academic한 표현 선택(pressures → stress, shifts → changes in population distribution) 및 전치사 활용으로 문장 재구성"
+      }
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer studying alone in a quiet environment. Others prefer studying in groups with peers. Which study method do you prefer and why?",
-    "useful_expressions": [
-      "Personally, I prefer studying in groups because...",
-      "One reason is that group study helps me...",
-      "Furthermore, when studying with others, I can...",
-      "In contrast, studying alone allows me to...",
-      "Overall, I believe that... is more beneficial because..."
-    ],
-    "sample_points": [
-      "그룹 스터디는 다양한 관점을 배울 수 있고, 어려운 부분을 함께 해결할 수 있는 장점이 있습니다.",
-      "혼자 공부하면 자신의 속도대로 집중할 수 있고, 방해 없이 깊이 있는 학습이 가능합니다."
+    "prompt": "Some people believe students should freely choose their major based on personal interest and passion. Others argue that students should select majors with strong employment prospects. Which perspective do you prefer and why? Include specific reasons and details in your response.",
+    "model_sentences": [
+      "I believe that students should prioritize their passion when choosing a major, even though job prospects are important to consider.",
+      "First, when students study subjects they genuinely love, they are more likely to excel academically and engage deeply with the material, which actually leads to better career outcomes in the long run.",
+      "For example, a student passionate about environmental science might initially worry about job availability, but their enthusiasm could lead them to discover innovative career paths or even create their own opportunities in growing fields like renewable energy or sustainability consulting.",
+      "Additionally, spending four years studying a subject you're uninterested in just because it's marketable can result in burnout and dissatisfaction, ultimately making career success difficult even if jobs are available.",
+      "Therefore, I believe that following your passion should be the primary consideration, because genuine interest tends to lead to both academic success and fulfilling career opportunities."
     ]
   },
   "listening": {
-    "title": "Student Advising Session",
-    "type": "conversation",
-    "script": "Student: Hi Professor, I'm struggling with my course load this semester. I'm taking five classes and working part-time, and I'm running out of time. Advisor: I see. Let's look at your schedule. It sounds like you're overcommitted. Have you considered reducing your course load? Student: I'm worried about falling behind in my degree program. Advisor: That's understandable, but your academic performance is more important than speed. Many students find that taking four classes allows them to maintain better grades and actually makes progress more meaningful. Additionally, you could adjust your work schedule or look for campus jobs that are more flexible with student schedules. Student: That makes sense. What about online classes? Could those help? Advisor: Yes, online classes can be flexible, but they still require the same amount of work. The key is balancing quality learning with your personal capacity. Would you like to meet again next week to plan your next semester?",
+    "title": "Lecture on Memory Formation and Cognitive Processing",
+    "type": "lecture",
+    "script": "Professor: Today, we're going to explore one of the most fascinating topics in cognitive psychology: how memories are actually formed. Now, when we experience something, the information doesn't just automatically get stored in our brains like a video recording. Instead, our brains engage in a complex process. Student: So what happens first? Professor: Excellent question. First comes encoding. This is when our sensory experiences are converted into a form our brain can process and store. Then, during consolidation—which can take hours, even days—the brain physically alters neural pathways, strengthening connections between neurons. This is crucial because without consolidation, information remains fragile and can be easily lost. Student: What about retrieval? Professor: Good observation. Retrieval is when we access stored memories. Interestingly, each time we retrieve a memory, it undergoes reconsolidation. This means the memory can be modified or even strengthened through this process. This is why studying material repeatedly, or teaching it to others, actually improves memory retention. It's not just about retrieving; it's about reactivating and reinforcing the neural patterns that represent that memory.",
+    "vocabulary": [
+      {
+        "word": "encoding",
+        "meaning_ko": "부호화, 정보를 뇌가 처리할 수 있는 형태로 변환하는 과정"
+      },
+      {
+        "word": "consolidation",
+        "meaning_ko": "공고화, 단기 기억을 장기 기억으로 변환하는 과정"
+      },
+      {
+        "word": "neural pathways",
+        "meaning_ko": "신경 경로, 뉴런 간의 연결"
+      },
+      {
+        "word": "retrieval",
+        "meaning_ko": "인출, 저장된 기억에 접근하는 과정"
+      },
+      {
+        "word": "reconsolidation",
+        "meaning_ko": "재공고화, 기억을 인출할 때 다시 공고화되는 과정"
+      },
+      {
+        "word": "retention",
+        "meaning_ko": "기억 유지, 정보를 장기간 보유하는 능력"
+      }
+    ],
     "questions": [
       {
-        "q": "What is the main problem the student is facing?",
+        "q": "What is the main topic of the lecture?",
         "options": [
-          "A) Poor grades in all classes",
-          "B) Overcommitment with five classes and part-time work",
-          "C) Lack of interest in their major",
-          "D) Inability to find campus resources"
+          "The different types of sensory experiences",
+          "How memories are formed and processed in the brain",
+          "The history of cognitive psychology research",
+          "Techniques for improving short-term memory only"
         ],
         "answer": 1,
-        "explanation": "학생이 5개의 수업과 파트타임 일을 하고 있으며 시간이 부족하다고 언급했습니다. 정답은 B입니다."
+        "explanation": "교수는 기억 형성의 복잡한 과정, 즉 부호화, 공고화, 인출을 포함한 기억 형성 메커니즘에 대해 강의합니다."
       },
       {
-        "q": "What solution does the advisor primarily suggest?",
+        "q": "According to the professor, what does consolidation involve?",
         "options": [
-          "A) Transfer to a different university",
-          "B) Drop out of work completely",
-          "C) Reduce the course load to maintain better academic performance",
-          "D) Take only online classes"
+          "Converting sensory experiences into stored information",
+          "Retrieving information from long-term memory",
+          "Physical alteration of neural pathways and strengthening of neural connections over time",
+          "Teaching material to other people"
         ],
         "answer": 2,
-        "explanation": "교수는 학생에게 수강 과목을 줄이면 더 나은 성적을 유지할 수 있다고 제안합니다. 정답은 C입니다."
+        "explanation": "교수는 공고화가 '뇌가 신경 경로를 물리적으로 변경하고 뉴런 간의 연결을 강화하는 것'이라고 명시합니다."
       },
       {
-        "q": "What does the advisor say about online classes?",
+        "q": "Why does the professor mention reconsolidation?",
         "options": [
-          "A) They are easier than traditional classes",
-          "B) They require the same amount of work despite being flexible",
-          "C) They are the best solution for all students",
-          "D) They don't count toward the degree"
+          "To explain why encoding is the most important step",
+          "To demonstrate how memory retrieval can modify and strengthen memories, which improves retention through repetition or teaching",
+          "To show that memories become weaker each time they are retrieved",
+          "To prove that consolidation happens instantly"
         ],
         "answer": 1,
-        "explanation": "교수는 온라인 수업이 유연하지만 같은 양의 노력이 필요하다고 설명합니다. 정답은 B입니다."
+        "explanation": "교수는 재공고화를 언급하면서 기억 인출 과정에서 기억이 재활성화되고 강화될 수 있으며, 반복 학습이나 타인에게 가르치는 것이 기억 유지를 향상시킨다고 설명합니다."
       }
     ]
   }

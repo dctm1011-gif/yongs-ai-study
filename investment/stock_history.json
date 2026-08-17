@@ -1,10 +1,5 @@
 [
   {
-    "date": "2026-08-09",
-    "name": "SK하이닉스",
-    "ticker": "SKHY"
-  },
-  {
     "date": "2026-08-10",
     "name": "삼성전자",
     "ticker": "005930.KS"
@@ -48,5 +43,10 @@
     "date": "2026-08-17",
     "name": "Yum! Brands",
     "ticker": "YUM"
+  },
+  {
+    "date": "2026-08-18",
+    "name": "Walmart",
+    "ticker": "WMT"
   }
 ]
