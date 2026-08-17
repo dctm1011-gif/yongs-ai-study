@@ -1,182 +1,174 @@
 {
   "date": "2026-08-18",
   "reading": {
-    "title": "The Decline of the Indus Valley Civilization",
-    "passage": "The Indus Valley Civilization, which flourished from approximately 2600 to 1900 BCE, represents one of the most sophisticated urban societies of the ancient world. Spanning over 1.25 million square kilometers across present-day Pakistan and India, this civilization developed advanced drainage systems, standardized weights and measures, and planned city layouts that rivaled contemporary Egyptian and Mesopotamian societies. However, the sudden collapse of this thriving culture around 1900 BCE remains one of archaeology's most compelling mysteries.\n\nScholars have proposed multiple theories to explain the civilization's decline. Seismic activity and tectonic shifts may have diverted the Indus River's course, devastating agricultural productivity that sustained approximately five million inhabitants. Alternatively, climate data suggests a prolonged drought lasting several centuries disrupted monsoon patterns essential for agriculture. Some researchers propose that nomadic Indo-Aryan invasions from the north destabilized existing trade networks and political structures, though archaeological evidence for this remains contested. Additionally, environmental degradation through deforestation for brick production may have exacerbated soil erosion and reduced agricultural yields.\n\nThe Indus Valley Civilization's disappearance, rather than a catastrophic event, likely resulted from a combination of environmental pressures, economic disruption, and demographic shifts. This multifactorial approach helps explain why the civilization gradually declined over centuries rather than vanishing abruptly.",
+    "title": "The Rise and Fall of the Minoan Civilization",
+    "passage": "The Minoan civilization, which flourished on the island of Crete from approximately 3000 to 1100 BCE, represented one of the most sophisticated societies of the ancient Mediterranean world. Archaeological evidence suggests that the Minoans developed an advanced system of writing, constructed elaborate palaces, and established extensive trade networks that connected them to Egypt, the Levant, and mainland Greece. The civilization's prosperity was largely attributed to its maritime dominance, which allowed Minoans to accumulate considerable wealth through commercial activities and cultural exchange. However, the civilization's decline remains a subject of considerable scholarly debate. While some researchers attribute the collapse to the catastrophic eruption of Thera around 1600 BCE, others argue that a combination of factors, including invasive populations from the mainland and economic disruption, contributed to the gradual weakening of Minoan influence. Regardless of the exact cause, the archaeological record clearly demonstrates that by 1100 BCE, the distinctive characteristics of Minoan culture had largely disappeared, replaced by the emerging Mycenaean civilization that would eventually develop into classical Greek society.",
     "vocabulary": [
       {
         "word": "flourished",
-        "meaning_ko": "번영하다, 융성하다"
+        "meaning_ko": "번성하다, 융성하다"
       },
       {
         "word": "sophisticated",
-        "meaning_ko": "정교한, 고도로 발달된"
+        "meaning_ko": "정교한, 세련된"
       },
       {
-        "word": "drainage",
-        "meaning_ko": "배수 시스템, 수로"
+        "word": "maritime dominance",
+        "meaning_ko": "해상 지배력, 해양 패권"
       },
       {
-        "word": "tectonic",
-        "meaning_ko": "지질학적 구조와 관련된"
+        "word": "catastrophic eruption",
+        "meaning_ko": "대규모 분화"
       },
       {
-        "word": "monsoon",
-        "meaning_ko": "몬순, 계절풍"
-      },
-      {
-        "word": "degradation",
-        "meaning_ko": "악화, 품질 저하"
-      },
-      {
-        "word": "multifactorial",
-        "meaning_ko": "여러 요인이 작용하는"
+        "word": "attributable to",
+        "meaning_ko": "~에 기인하다, ~의 결과로"
       }
     ],
     "questions": [
       {
-        "q": "According to the passage, which of the following is true about the Indus Valley Civilization?",
+        "q": "According to the passage, what was the primary source of Minoan wealth?",
         "options": [
-          "It was smaller in area than Egyptian civilization",
-          "It developed advanced infrastructure comparable to contemporary societies",
-          "It collapsed suddenly due to a single catastrophic event",
-          "It was primarily located in northern India"
+          "Agricultural production",
+          "Maritime trade and commercial activities",
+          "Mining operations",
+          "Religious taxation"
         ],
         "answer": 1,
-        "explanation": "지문의 첫 번째 단락에서 'advanced drainage systems, standardized weights and measures, and planned city layouts that rivaled contemporary Egyptian and Mesopotamian societies'라고 명시되어 있습니다."
+        "explanation": "지문에서 'the civilization's prosperity was largely attributed to its maritime dominance, which allowed Minoans to accumulate considerable wealth through commercial activities'라고 명시되어 있습니다."
       },
       {
-        "q": "What can be inferred from the passage about why the Indus Valley Civilization disappeared?",
+        "q": "What can be inferred from the passage about the decline of Minoan civilization?",
         "options": [
-          "A single invasion by Indo-Aryan peoples definitively caused its collapse",
-          "Drought was the only significant environmental factor",
-          "Multiple interconnected factors likely contributed to its gradual decline",
-          "The civilization did not actually decline but simply relocated"
+          "It was caused by a single catastrophic event",
+          "Scholars agree on its exact cause",
+          "Multiple factors may have contributed to its decline",
+          "It occurred suddenly within a single generation"
         ],
         "answer": 2,
-        "explanation": "마지막 단락에서 'likely resulted from a combination of environmental pressures, economic disruption, and demographic shifts'라고 명시되어 있으며, 이는 다중 요인 접근을 시사합니다."
+        "explanation": "지문에서 'the civilization's decline remains a subject of considerable scholarly debate'이고 '일부는 화산 폭발을, 다른 일부는 다양한 요인들의 조합을 언급'하므로, 쇠퇴에는 여러 요인이 작용했을 가능성이 있습니다."
       },
       {
-        "q": "The word 'diverted' in the second paragraph is closest in meaning to",
+        "q": "The word 'disruption' in the second paragraph is closest in meaning to",
         "options": [
-          "polluted",
-          "redirected the flow of",
-          "deepened",
-          "evaporated"
+          "Improvement",
+          "Disturbance or interruption of normal activities",
+          "Enhancement",
+          "Preservation"
         ],
         "answer": 1,
-        "explanation": "'divert'는 '방향을 바꾸다' 또는 '돌리다'는 의미이므로, 강의 흐름을 '다른 방향으로 돌렸다'는 뜻의 'redirected the flow of'가 가장 적절한 의미입니다."
+        "explanation": "'disruption'은 경제적 흐름을 방해하는 상태를 의미하므로, '정상적인 활동의 방해나 중단'이 가장 적절한 의미입니다."
       },
       {
-        "q": "Why does the author mention deforestation in the final paragraph?",
+        "q": "Why does the author mention the Mycenaean civilization at the end of the passage?",
         "options": [
-          "To prove that Indo-Aryan invasions occurred",
-          "To demonstrate that the civilization was environmentally careless",
-          "To provide an example of environmental degradation that may have contributed to the civilization's decline",
-          "To show that brick production was not important to the civilization"
+          "To suggest it caused the Minoan collapse",
+          "To provide contrast with Minoan achievements",
+          "To show the historical succession of civilizations",
+          "To criticize Mycenaean culture"
         ],
         "answer": 2,
-        "explanation": "저자는 삼림 벌채가 환경 악화의 예로서 농업 생산성 감소에 기여했을 수 있는 요인으로 언급하고 있습니다."
+        "explanation": "저자는 Mycenaean 문명이 Minoan 문명을 대체했고 고전 그리스 사회로 발전했다고 언급하여 문명의 역사적 계승 관계를 보여주고 있습니다."
       }
     ]
   },
   "writing": {
+    "topic": "Should governments prioritize spending on space exploration?",
     "sentences": [
       {
-        "original": "Spanning over 1.25 million square kilometers across present-day Pakistan and India, this civilization developed advanced drainage systems, standardized weights and measures, and planned city layouts that rivaled contemporary Egyptian and Mesopotamian societies.",
-        "paraphrase": "This civilization, which extended across 1.25 million square kilometers in what is now Pakistan and India, was characterized by sophisticated infrastructure including advanced drainage, standardized systems of measurement, and strategically designed urban centers comparable to those of Egypt and Mesopotamia during the same period.",
-        "tip": "관계사절의 위치 이동(spanning → which extended)과 능동형→수동형 전환을 통한 다양한 표현. 구체적 명사들을 더 일반적인 용어(infrastructure, urban centers)로 통합"
+        "original": "The Minoan civilization, which flourished on the island of Crete from approximately 3000 to 1100 BCE, represented one of the most sophisticated societies of the ancient Mediterranean world.",
+        "paraphrase": "From roughly 3000 to 1100 BCE, Crete was home to the Minoan civilization, a remarkably advanced society that epitomized sophistication throughout the ancient Mediterranean region.",
+        "tip": "문장 구조 재배열: 시간 표현을 문두로 이동하고, 관계절을 독립 문장으로 분리하여 가독성 향상"
       },
       {
-        "original": "However, the sudden collapse of this thriving culture around 1900 BCE remains one of archaeology's most compelling mysteries.",
-        "paraphrase": "Yet despite its prosperity, the relatively abrupt disappearance of this advanced society approximately 1900 BCE continues to perplex archaeologists and remains among the discipline's most intriguing unsolved questions.",
-        "tip": "concession 구조 유지하면서 동의어 치환(sudden → abrupt, collapse → disappearance, mysteries → unsolved questions) 및 수식어 재배치로 문장 다양화"
+        "original": "The civilization's prosperity was largely attributed to its maritime dominance, which allowed Minoans to accumulate considerable wealth through commercial activities and cultural exchange.",
+        "paraphrase": "Maritime supremacy served as the foundation for Minoan prosperity, enabling this civilization to amass substantial riches via trade and cultural interactions.",
+        "tip": "수동형을 능동형으로 변환: 'was attributed to' → 'served as'; 명사 치환: 'dominance' → 'supremacy'; 동사 추상명사화 단순화"
       },
       {
-        "original": "Seismic activity and tectonic shifts may have diverted the Indus River's course, devastating agricultural productivity that sustained approximately five million inhabitants.",
-        "paraphrase": "The redirection of the Indus River caused by earthquakes and geological movements could have destroyed the agricultural output upon which a population of roughly five million people depended.",
-        "tip": "명사화 구조 제거(Seismic activity → earthquakes, tectonic shifts → geological movements) 및 능동→수동 구조 활용. 복합 동사 'diverted'를 'redirection'으로 명사화"
-      },
-      {
-        "original": "The Indus Valley Civilization's disappearance, rather than a catastrophic event, likely resulted from a combination of environmental pressures, economic disruption, and demographic shifts.",
-        "paraphrase": "Rather than occurring as a sudden disaster, the civilization's decline was probably caused by multiple concurrent factors, including environmental stress, disruption to economic systems, and changes in population distribution.",
-        "tip": "병렬 구조 유지하면서 more academic한 표현 선택(pressures → stress, shifts → changes in population distribution) 및 전치사 활용으로 문장 재구성"
+        "original": "However, the civilization's decline remains a subject of considerable scholarly debate.",
+        "paraphrase": "Despite this success, scholars continue to dispute the precise factors responsible for the civilization's eventual collapse.",
+        "tip": "접속사 교체 및 의미 확장: 'However' → 'Despite this success'; '주제' → '정확한 원인들'; 과거 상태를 현재 진행형으로 표현"
       }
     ]
   },
   "speaking": {
-    "prompt": "Some people believe students should freely choose their major based on personal interest and passion. Others argue that students should select majors with strong employment prospects. Which perspective do you prefer and why? Include specific reasons and details in your response.",
+    "prompt": "Some people believe students should choose university majors based on personal interest, regardless of job market demand. Others argue students should prioritize majors that offer strong career prospects. Which approach do you prefer and why? Include specific reasons and examples.",
     "model_sentences": [
-      "I believe that students should prioritize their passion when choosing a major, even though job prospects are important to consider.",
-      "First, when students study subjects they genuinely love, they are more likely to excel academically and engage deeply with the material, which actually leads to better career outcomes in the long run.",
-      "For example, a student passionate about environmental science might initially worry about job availability, but their enthusiasm could lead them to discover innovative career paths or even create their own opportunities in growing fields like renewable energy or sustainability consulting.",
-      "Additionally, spending four years studying a subject you're uninterested in just because it's marketable can result in burnout and dissatisfaction, ultimately making career success difficult even if jobs are available.",
-      "Therefore, I believe that following your passion should be the primary consideration, because genuine interest tends to lead to both academic success and fulfilling career opportunities."
+      "I believe students should prioritize personal interest when choosing a major, even if the job market for that field is competitive.",
+      "First, pursuing a subject you're genuinely passionate about leads to higher motivation and better academic performance, which ultimately makes you more attractive to employers.",
+      "For example, a student who loves computer science will work harder, develop stronger skills, and engage in more projects than someone who studied it only for job security.",
+      "Additionally, personal fulfillment and happiness in your career should not be sacrificed for short-term financial gains.",
+      "In conclusion, I think following your passion is both more rewarding and actually more career-effective than choosing based solely on job prospects."
     ]
   },
   "listening": {
-    "title": "Lecture on Memory Formation and Cognitive Processing",
+    "title": "Psychology Lecture: Memory Formation and Retention",
     "type": "lecture",
-    "script": "Professor: Today, we're going to explore one of the most fascinating topics in cognitive psychology: how memories are actually formed. Now, when we experience something, the information doesn't just automatically get stored in our brains like a video recording. Instead, our brains engage in a complex process. Student: So what happens first? Professor: Excellent question. First comes encoding. This is when our sensory experiences are converted into a form our brain can process and store. Then, during consolidation—which can take hours, even days—the brain physically alters neural pathways, strengthening connections between neurons. This is crucial because without consolidation, information remains fragile and can be easily lost. Student: What about retrieval? Professor: Good observation. Retrieval is when we access stored memories. Interestingly, each time we retrieve a memory, it undergoes reconsolidation. This means the memory can be modified or even strengthened through this process. This is why studying material repeatedly, or teaching it to others, actually improves memory retention. It's not just about retrieving; it's about reactivating and reinforcing the neural patterns that represent that memory.",
+    "script": "Professor: Today we're discussing how memories actually form in our brains. It's a fascinating process involving three main stages. First, there's encoding—this is when your brain receives information and converts it into a form that can be stored. When you read a textbook, your sensory neurons are encoding that visual information. Second, consolidation occurs, where the brain strengthens these neural connections. This is crucial because it transfers information from short-term memory to long-term storage. Sleep plays a vital role here; during REM sleep, your brain replays experiences and solidifies memories. Finally, there's retrieval—when you recall information during an exam or conversation. Student: So you're saying memory isn't just about storing information? Professor: Exactly right. Each stage is essential. Many students fail exams not because they don't learn material, but because they don't allow time for consolidation. That's why cramming is ineffective. Your brain needs time to process and strengthen those neural pathways. Student: What about forgetting? Is that a failure of these stages? Professor: Good question. Forgetting is actually a normal part of memory function. Ebbinghaus discovered that we forget most information quickly unless we review it periodically. This is called the forgetting curve. The key is spaced repetition—reviewing material at increasing intervals strengthens long-term retention.",
     "vocabulary": [
       {
         "word": "encoding",
-        "meaning_ko": "부호화, 정보를 뇌가 처리할 수 있는 형태로 변환하는 과정"
+        "meaning_ko": "부호화, 정보를 저장 가능한 형태로 전환하는 과정"
       },
       {
         "word": "consolidation",
-        "meaning_ko": "공고화, 단기 기억을 장기 기억으로 변환하는 과정"
+        "meaning_ko": "공고화, 신경 연결을 강화하는 과정"
       },
       {
-        "word": "neural pathways",
-        "meaning_ko": "신경 경로, 뉴런 간의 연결"
+        "word": "REM sleep",
+        "meaning_ko": "렘수면, 빠른 안구 운동이 특징인 깊은 수면 단계"
       },
       {
         "word": "retrieval",
-        "meaning_ko": "인출, 저장된 기억에 접근하는 과정"
+        "meaning_ko": "인출, 저장된 정보를 회상하는 과정"
       },
       {
-        "word": "reconsolidation",
-        "meaning_ko": "재공고화, 기억을 인출할 때 다시 공고화되는 과정"
+        "word": "spaced repetition",
+        "meaning_ko": "간격 반복, 증가하는 간격으로 정보를 반복 검토하는 학습법"
       },
       {
-        "word": "retention",
-        "meaning_ko": "기억 유지, 정보를 장기간 보유하는 능력"
+        "word": "Ebbinghaus",
+        "meaning_ko": "에빙하우스, 기억과 망각에 대한 연구로 유명한 심리학자"
+      },
+      {
+        "word": "forgetting curve",
+        "meaning_ko": "망각곡선, 시간이 지남에 따라 기억이 감소하는 패턴"
       }
     ],
     "questions": [
       {
-        "q": "What is the main topic of the lecture?",
+        "q": "What is the main topic of this lecture?",
         "options": [
-          "The different types of sensory experiences",
-          "How memories are formed and processed in the brain",
-          "The history of cognitive psychology research",
-          "Techniques for improving short-term memory only"
+          "Different types of sleep and their effects on learning",
+          "The three stages of memory formation and how each contributes to learning",
+          "Why students fail exams despite studying",
+          "The history of memory research"
         ],
         "answer": 1,
-        "explanation": "교수는 기억 형성의 복잡한 과정, 즉 부호화, 공고화, 인출을 포함한 기억 형성 메커니즘에 대해 강의합니다."
+        "explanation": "교수는 기억의 형성 과정을 encoding, consolidation, retrieval 세 단계로 설명하며 각 단계의 역할을 강조하고 있습니다."
       },
       {
-        "q": "According to the professor, what does consolidation involve?",
+        "q": "What does the professor suggest about cramming for exams?",
         "options": [
-          "Converting sensory experiences into stored information",
-          "Retrieving information from long-term memory",
-          "Physical alteration of neural pathways and strengthening of neural connections over time",
-          "Teaching material to other people"
+          "It is an effective short-term strategy",
+          "It is ineffective because the brain needs time for consolidation",
+          "It should be combined with spaced repetition",
+          "It prevents the forgetting curve from occurring"
+        ],
+        "answer": 1,
+        "explanation": "교수는 'cramming is ineffective'이고 '뇌가 신경 연결을 강화할 시간이 필요하다'고 명시적으로 언급합니다."
+      },
+      {
+        "q": "Why does the professor mention REM sleep?",
+        "options": [
+          "To explain why students need to sleep before studying",
+          "To show that sleep deprivation improves memory",
+          "To illustrate the consolidation stage where memories are strengthened",
+          "To contrast it with other sleep stages"
         ],
         "answer": 2,
-        "explanation": "교수는 공고화가 '뇌가 신경 경로를 물리적으로 변경하고 뉴런 간의 연결을 강화하는 것'이라고 명시합니다."
-      },
-      {
-        "q": "Why does the professor mention reconsolidation?",
-        "options": [
-          "To explain why encoding is the most important step",
-          "To demonstrate how memory retrieval can modify and strengthen memories, which improves retention through repetition or teaching",
-          "To show that memories become weaker each time they are retrieved",
-          "To prove that consolidation happens instantly"
-        ],
-        "answer": 1,
-        "explanation": "교수는 재공고화를 언급하면서 기억 인출 과정에서 기억이 재활성화되고 강화될 수 있으며, 반복 학습이나 타인에게 가르치는 것이 기억 유지를 향상시킨다고 설명합니다."
+        "explanation": "교수는 consolidation 단계에서 '렘수면 동안 뇌가 경험을 재생하고 기억을 고정시킨다'고 설명하여 렘수면의 역할을 consolidation 과정과 연결시킵니다."
       }
     ]
   }

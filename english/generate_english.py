@@ -53,72 +53,176 @@ def format_conversations(conversations: list) -> str:
     return "\n".join(lines)
 
 def get_default_words(target_date: date) -> dict:
-    """API 3회 실패 시 비상 fallback — TOEFL B2~C1 수준 단어 (words_db 미등록 단어로 선정)"""
-    return {
-        "date": str(target_date),
-        "words": [
-            {
-                "word": "acquiesce",
-                "part_of_speech": "동사",
-                "meaning_ko": "묵인하다, 마지못해 동의하다",
-                "explanation": "불만이 있어도 저항 없이 받아들이거나 동의하는 것. 정치·사회 지문에서 자주 등장해요.",
-                "example_from_convo": "The minority party had no choice but to acquiesce to the new policy.",
-                "example_ko": "소수 정당은 새 정책에 마지못해 동의할 수밖에 없었어요.",
-                "tip": "동의어: comply, consent, yield. 반의어: resist, protest. TOEFL 정치·사회 지문 빈출.",
-                "emoji": "🤝"
-            },
-            {
-                "word": "cogent",
-                "part_of_speech": "형용사",
-                "meaning_ko": "설득력 있는, 논리적으로 타당한",
-                "explanation": "논거가 명확하고 설득력이 강한 것. TOEFL Writing 고득점 어휘예요.",
-                "example_from_convo": "The lawyer presented a cogent argument that convinced the entire jury.",
-                "example_ko": "변호사는 배심원 전원을 설득한 논리적인 논거를 제시했어요.",
-                "tip": "동의어: compelling, convincing, persuasive. Writing Task에서 쓰면 고득점 표현.",
-                "emoji": "💡"
-            },
-            {
-                "word": "rampant",
-                "part_of_speech": "형용사",
-                "meaning_ko": "만연한, 걷잡을 수 없이 퍼진",
-                "explanation": "부정적인 현상이 통제 불가능할 정도로 퍼져 있는 상태. 사회·환경 지문 필수 어휘예요.",
-                "example_from_convo": "Rampant corruption undermined public trust in the government.",
-                "example_ko": "만연한 부패가 정부에 대한 국민의 신뢰를 약화시켰어요.",
-                "tip": "동의어: widespread, uncontrolled, prevalent. pervasive와 달리 '부정적 확산'에 쓰여요.",
-                "emoji": "🔥"
-            },
-            {
-                "word": "lucid",
-                "part_of_speech": "형용사",
-                "meaning_ko": "명료한, 이해하기 쉬운",
-                "explanation": "생각이나 표현이 매우 명확하고 이해하기 쉬운 것. 학술 글쓰기 평가 어휘예요.",
-                "example_from_convo": "Her lucid explanation made the complex theory easy to understand.",
-                "example_ko": "그녀의 명료한 설명 덕분에 복잡한 이론을 쉽게 이해할 수 있었어요.",
-                "tip": "동의어: clear, coherent, intelligible. 반의어: obscure, opaque, convoluted.",
-                "emoji": "🔍"
-            },
-            {
-                "word": "alacrity",
-                "part_of_speech": "명사",
-                "meaning_ko": "기꺼이 하는 마음, 민첩한 의욕",
-                "explanation": "어떤 일을 열정적으로 기꺼이 하려는 태도. TOEFL 지문의 인물 묘사에 자주 나와요.",
-                "example_from_convo": "The volunteers responded to the call for help with remarkable alacrity.",
-                "example_ko": "자원봉사자들은 도움 요청에 눈에 띄는 의욕으로 응했어요.",
-                "tip": "동의어: eagerness, willingness, promptness. 반의어: reluctance, hesitation.",
-                "emoji": "⚡"
-            }
-        ],
-        "quiz": [
-            {"type": "meaning", "word": "acquiesce", "question": "'acquiesce'의 의미로 가장 적절한 것은?", "options": ["강하게 반발하다", "마지못해 동의하다", "적극적으로 제안하다", "완전히 무시하다"], "answer": 1, "explanation": "acquiesce = 불만이 있어도 저항 없이 받아들이는 것이에요."},
-            {"type": "fill_blank", "word": "acquiesce", "sentence": "Although she disagreed, she chose to _____ to her supervisor's decision.", "sentence_ko": "그녀는 동의하지 않았지만 상사의 결정에 묵인하기로 했어요.", "answer": "acquiesce", "hint": "묵인하다, 마지못해 동의하다"},
-            {"type": "meaning", "word": "cogent", "question": "'a cogent argument'는 어떤 논거인가요?", "options": ["근거 없는 주장", "설득력 있고 논리적인 주장", "감정에 호소하는 주장", "복잡하고 이해하기 어려운 주장"], "answer": 1, "explanation": "cogent = 논리적으로 명확하고 설득력이 강한 것이에요."},
-            {"type": "fill_blank", "word": "cogent", "sentence": "The scientist provided a _____ explanation for the unusual experiment results.", "sentence_ko": "과학자는 특이한 실험 결과에 대해 설득력 있는 설명을 제시했어요.", "answer": "cogent", "hint": "설득력 있는"},
-            {"type": "meaning", "word": "rampant", "question": "'rampant'와 의미가 가장 유사한 단어는?", "options": ["scarce", "controlled", "uncontrolled", "diminishing"], "answer": 2, "explanation": "rampant = 통제되지 않고 광범위하게 퍼진 것이에요."},
-            {"type": "situation", "word": "rampant", "question": "도시 전체에 범죄가 걷잡을 수 없이 퍼졌다고 할 때?", "options": ["Crime is rare in the city", "Crime is rampant in the city", "Crime is lucid in the city", "Crime is cogent in the city"], "answer": 1, "explanation": "부정적 현상이 통제 불능으로 퍼진 상황 = rampant."},
-            {"type": "meaning", "word": "lucid", "question": "'lucid'의 반의어에 가장 가까운 단어는?", "options": ["clear", "coherent", "obscure", "persuasive"], "answer": 2, "explanation": "lucid(명료한)의 반의어는 obscure(불명확한)예요."},
-            {"type": "meaning", "word": "alacrity", "question": "'responded with alacrity'는 어떻게 반응한 것인가요?", "options": ["천천히 망설이며", "마지못해 억지로", "기꺼이 민첩하게", "화를 내며 거부"], "answer": 2, "explanation": "alacrity = 열정적으로 기꺼이 하는 태도예요."}
-        ]
-    }
+    """API 최대 실패 시 비상 fallback — words_db에 없는 단어를 동적으로 선택"""
+    used_lower = {w.lower() for w in load_used_words()}
+
+    # 충분히 큰 후보 풀에서 미사용 단어를 골라 fallback 구성
+    candidate_pool = [
+        {
+            "word": "recalcitrant", "part_of_speech": "형용사",
+            "meaning_ko": "반항적인, 다루기 힘든",
+            "explanation": "권위나 규율에 완강히 저항하는 것. TOEFL 사회·정치 지문 필수 어휘예요.",
+            "example_from_convo": "The recalcitrant student refused to follow any school rules.",
+            "example_ko": "반항적인 학생은 어떤 학칙도 따르지 않으려 했어요.",
+            "tip": "동의어: defiant, unruly, obstinate. 반의어: compliant, obedient.",
+            "emoji": "😤"
+        },
+        {
+            "word": "perfidious", "part_of_speech": "형용사",
+            "meaning_ko": "배신적인, 불성실한",
+            "explanation": "믿음이나 충성심을 저버리는 것. TOEFL 역사·문학 지문에 등장해요.",
+            "example_from_convo": "The perfidious ally betrayed the alliance at a critical moment.",
+            "example_ko": "배신적인 동맹국이 결정적인 순간에 동맹을 배반했어요.",
+            "tip": "동의어: treacherous, disloyal, deceitful. 반의어: loyal, faithful.",
+            "emoji": "🗡️"
+        },
+        {
+            "word": "sanguine", "part_of_speech": "형용사",
+            "meaning_ko": "낙관적인, 희망에 찬",
+            "explanation": "어려운 상황에서도 긍정적인 결과를 기대하는 것. TOEFL Writing 고득점 어휘예요.",
+            "example_from_convo": "Despite the setbacks, the team remained sanguine about the project outcome.",
+            "example_ko": "좌절에도 불구하고 팀은 프로젝트 결과에 대해 낙관적이었어요.",
+            "tip": "동의어: optimistic, hopeful, positive. 반의어: pessimistic, gloomy.",
+            "emoji": "🌟"
+        },
+        {
+            "word": "obsequious", "part_of_speech": "형용사",
+            "meaning_ko": "아첨하는, 굽실거리는",
+            "explanation": "지나치게 복종적이거나 아첨하는 태도. 문학·사회 지문에서 인물 묘사에 자주 써요.",
+            "example_from_convo": "His obsequious behavior toward the boss made colleagues uncomfortable.",
+            "example_ko": "상사에게 굽실거리는 그의 태도가 동료들을 불편하게 만들었어요.",
+            "tip": "동의어: servile, fawning, sycophantic. 반의어: assertive, confident.",
+            "emoji": "🙇"
+        },
+        {
+            "word": "veracious", "part_of_speech": "형용사",
+            "meaning_ko": "진실된, 정직한",
+            "explanation": "사실에 충실하고 거짓이 없는 것. TOEFL 학술 글쓰기·읽기 지문 핵심 어휘예요.",
+            "example_from_convo": "A veracious account of events is essential in historical research.",
+            "example_ko": "역사 연구에서 사건의 진실된 기술은 필수적이에요.",
+            "tip": "동의어: truthful, honest, candid. 반의어: mendacious, deceitful.",
+            "emoji": "✅"
+        },
+        {
+            "word": "insipid", "part_of_speech": "형용사",
+            "meaning_ko": "밍밍한, 재미없는, 무미건조한",
+            "explanation": "맛이나 흥미가 없는 것. 문학·예술 지문에서 비판적 평가에 쓰여요.",
+            "example_from_convo": "The film's insipid dialogue made it difficult to stay engaged.",
+            "example_ko": "영화의 무미건조한 대사 때문에 집중하기 어려웠어요.",
+            "tip": "동의어: bland, dull, vapid. 반의어: vivid, stimulating, engaging.",
+            "emoji": "😑"
+        },
+        {
+            "word": "querulous", "part_of_speech": "형용사",
+            "meaning_ko": "불평이 많은, 투덜거리는",
+            "explanation": "사소한 것에도 불만을 표현하는 성향. TOEFL 문학·인물 묘사 지문에 나와요.",
+            "example_from_convo": "The querulous customer complained about every minor detail.",
+            "example_ko": "불평이 많은 고객은 사소한 세부 사항마다 불만을 표했어요.",
+            "tip": "동의어: complaining, grumbling, peevish. 반의어: content, easygoing.",
+            "emoji": "😒"
+        },
+        {
+            "word": "precipitous", "part_of_speech": "형용사",
+            "meaning_ko": "가파른, 급격한",
+            "explanation": "물리적 경사가 매우 가파르거나 변화가 갑작스러운 것. TOEFL 지리·경제 지문에 자주 나와요.",
+            "example_from_convo": "The precipitous decline in stock prices alarmed investors.",
+            "example_ko": "주가의 급격한 하락이 투자자들을 불안하게 만들었어요.",
+            "tip": "동의어: steep, abrupt, sudden. 반의어: gradual, gentle. 물리적·추상적 모두 사용 가능.",
+            "emoji": "📉"
+        },
+        {
+            "word": "garrulous", "part_of_speech": "형용사",
+            "meaning_ko": "수다스러운, 말이 너무 많은",
+            "explanation": "필요 이상으로 말을 많이 하는 성향. 문학·심리 지문 인물 묘사에 등장해요.",
+            "example_from_convo": "The garrulous professor often went off-topic during lectures.",
+            "example_ko": "말이 많은 교수는 강의 중에 자주 주제를 벗어났어요.",
+            "tip": "동의어: talkative, verbose, loquacious. 반의어: taciturn, reticent.",
+            "emoji": "🗣️"
+        },
+        {
+            "word": "truculent", "part_of_speech": "형용사",
+            "meaning_ko": "공격적인, 시비를 거는",
+            "explanation": "쉽게 적대적이 되거나 싸우려 드는 성향. TOEFL 사회·심리 지문에 나와요.",
+            "example_from_convo": "The truculent negotiator made the peace talks difficult.",
+            "example_ko": "공격적인 협상가가 평화 회담을 어렵게 만들었어요.",
+            "tip": "동의어: aggressive, combative, belligerent. 반의어: peaceable, docile.",
+            "emoji": "😡"
+        },
+        {
+            "word": "penurious", "part_of_speech": "형용사",
+            "meaning_ko": "몹시 가난한, 인색한",
+            "explanation": "극도로 가난하거나 지나치게 돈을 아끼는 것. 경제·사회 지문에 등장해요.",
+            "example_from_convo": "The penurious conditions of the workers led to a major strike.",
+            "example_ko": "노동자들의 극빈한 환경이 대규모 파업으로 이어졌어요.",
+            "tip": "동의어: destitute, impoverished, miserly. 반의어: wealthy, generous.",
+            "emoji": "💸"
+        },
+        {
+            "word": "loquacious", "part_of_speech": "형용사",
+            "meaning_ko": "말이 많은, 수다스러운",
+            "explanation": "매우 말이 많은 성향. garrulous보다 더 중립적 뉘앙스로 쓰여요.",
+            "example_from_convo": "Her loquacious nature made her the life of every social gathering.",
+            "example_ko": "말 많은 성격 덕분에 그녀는 모든 모임의 중심이 되었어요.",
+            "tip": "동의어: talkative, garrulous, verbose. 반의어: taciturn, reserved.",
+            "emoji": "💬"
+        },
+        {
+            "word": "mendacious", "part_of_speech": "형용사",
+            "meaning_ko": "거짓말하는, 불성실한",
+            "explanation": "습관적으로 거짓말하는 성향. TOEFL 윤리·법 지문에 등장해요.",
+            "example_from_convo": "The mendacious politician was eventually exposed by investigative journalists.",
+            "example_ko": "거짓말하는 정치인은 결국 탐사 언론인들에게 폭로되었어요.",
+            "tip": "동의어: dishonest, untruthful, deceitful. 반의어: honest, truthful, veracious.",
+            "emoji": "🤥"
+        },
+        {
+            "word": "perspicacious", "part_of_speech": "형용사",
+            "meaning_ko": "통찰력 있는, 날카로운",
+            "explanation": "상황을 빠르고 정확하게 이해하는 능력. TOEFL 학술 지문 고급 어휘예요.",
+            "example_from_convo": "The perspicacious analyst predicted the market crash months in advance.",
+            "example_ko": "통찰력 있는 분석가는 몇 달 전에 시장 붕괴를 예측했어요.",
+            "tip": "동의어: astute, shrewd, perceptive. 반의어: obtuse, unperceptive.",
+            "emoji": "🔭"
+        },
+        {
+            "word": "intransigent", "part_of_speech": "형용사",
+            "meaning_ko": "타협하지 않는, 완고한",
+            "explanation": "자신의 입장을 절대 바꾸지 않는 것. 정치·협상 지문 핵심 어휘예요.",
+            "example_from_convo": "The intransigent union refused to accept any compromise during negotiations.",
+            "example_ko": "완고한 노동조합은 협상 중 어떤 타협도 받아들이지 않았어요.",
+            "tip": "동의어: inflexible, uncompromising, stubborn. 반의어: flexible, conciliatory.",
+            "emoji": "🧱"
+        },
+    ]
+
+    used_lower_set = {w.lower() for w in load_used_words()}
+    available = [c for c in candidate_pool if c["word"].lower() not in used_lower_set]
+
+    # 미사용 단어가 5개 미만이면 전체 풀에서 선택
+    if len(available) < 5:
+        available = candidate_pool
+
+    selected = available[:5]
+    words = selected
+
+    quiz = []
+    for w in words:
+        quiz.append({
+            "type": "meaning", "word": w["word"],
+            "question": f"'{w['word']}'의 의미로 가장 적절한 것은?",
+            "options": [w["meaning_ko"], "강하게 반발하다", "무관심한", "일시적인"],
+            "answer": 0,
+            "explanation": f"{w['word']} = {w['meaning_ko']}."
+        })
+        quiz.append({
+            "type": "fill_blank", "word": w["word"],
+            "sentence": w["example_from_convo"].replace(w["word"], "_____"),
+            "sentence_ko": w["example_ko"],
+            "answer": w["word"],
+            "hint": w["meaning_ko"]
+        })
+
+    return {"date": str(target_date), "words": words, "quiz": quiz}
 
 def load_toefl_words(toefl_path: Path = None) -> list:
     """TOEFL 단어 로드 (API 또는 로컬 파일)"""
@@ -187,7 +291,7 @@ JSON 형식:
 - JSON만 반환"""
 
     used_lower = {w.lower() for w in used_words}
-    max_attempts = 3
+    max_attempts = 8
     for attempt in range(max_attempts):
         response = client.messages.create(
             model="claude-haiku-4-5-20251001",
