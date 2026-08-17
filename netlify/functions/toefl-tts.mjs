@@ -37,6 +37,8 @@ export default async (req) => {
   }
 
   const voice = VOICE_MAP[speaker] || 'alloy';
+  const speedRaw = parseFloat(url.searchParams.get('speed') || '1.0');
+  const speed = isNaN(speedRaw) ? 1.0 : Math.max(0.25, Math.min(4.0, speedRaw));
 
   const ttsResponse = await fetch('https://api.openai.com/v1/audio/speech', {
     method: 'POST',
@@ -44,7 +46,7 @@ export default async (req) => {
       Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ model: 'tts-1-hd', input: text, voice }),
+    body: JSON.stringify({ model: 'tts-1-hd', input: text, voice, speed }),
   });
 
   if (!ttsResponse.ok) {

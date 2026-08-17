@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useScreenFade } from '../hooks/useScreenFade';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Speech from 'expo-speech';
+import { Audio } from 'expo-av';
 import { cacheManager } from '../utils/CacheManager';
 import { performanceMonitor } from '../utils/PerformanceMonitor';
 import { getDatabase, ref, onValue, get, set as dbSet } from 'firebase/database';
@@ -14,6 +15,8 @@ import { getFirebaseApp } from '../config/firebase';
 import { useAuth } from '../context/AuthContext';
 import { userRef } from '../utils/userDb';
 import GameHub from '../components/GameHub';
+
+const NETLIFY_BASE_URL = 'https://illustrious-cuchufli-7c4e58.netlify.app';
 
 // Firebase Functions run in UTC; KST (UTC+9) doesn't roll to the next
 // calendar day until 09:00 UTC, so a plain UTC date lags KST by a day
@@ -59,6 +62,7 @@ type ViewType = 'words' | 'review' | 'quiz' | 'game' | 'stats';
 
 interface ReviewSentence {
   word: string;
+  meaning?: string;
   sentence: string;
   sentence_ko: string;
   nuance: string;
@@ -607,7 +611,7 @@ export default function VocaScreen() {
         if (!key) continue;
         const snap = await get(ref(db, `english/sentences/${key}`));
         if (snap.exists()) {
-          sentences.push({ word: entry.word, ...snap.val() });
+          sentences.push({ word: entry.word, meaning: entry.meaning, ...snap.val() });
         }
       }
       setReviewSentences(sentences);
@@ -640,6 +644,12 @@ export default function VocaScreen() {
       const graduated = poolVals.filter(w => (w.count ?? 0) >= 10).length;
       const playDays = playSnap.exists() ? Object.keys(playSnap.val()).length : 0;
       setDebugPoolStats({ total, graduated, playDays });
+
+      // 정리 스크립트용 임시 내보내기 (english/_tmp_pool_export)
+      const wordKeys = poolVals
+        .map((w: any) => (w.word || '').toLowerCase().replace(/[\s-]+/g, '_'))
+        .filter((k: string) => k.length > 0);
+      await dbSet(ref(db, 'english/_tmp_pool_export'), { words: wordKeys, count: wordKeys.length, ts: Date.now() });
     } catch {
       setDebugPoolStats(null);
     }
@@ -1099,6 +1109,93 @@ const QuizCard = React.memo(({ quiz, wordName, onAnswer }: { quiz: Quiz, wordNam
 
 const SentenceReviewView = React.memo(({ sentences, loading }: { sentences: ReviewSentence[], loading: boolean }) => {
   const [expanded, setExpanded] = useState<Record<number, boolean>>({});
+  const [speakingIdx, setSpeakingIdx] = useState<number | null>(null);
+  const [cardExamples, setCardExamples] = useState<Record<number, { en: string; ko: string }[]>>({});
+  const currentSoundRef = React.useRef<Audio.Sound | null>(null);
+  const playIdRef = React.useRef(0);
+
+  const playReview = useCallback(async (idx: number, item: ReviewSentence) => {
+    const prevId = ++playIdRef.current;
+    Speech.stop();
+    if (currentSoundRef.current) {
+      await currentSoundRef.current.stopAsync().catch(() => {});
+      await currentSoundRef.current.unloadAsync().catch(() => {});
+      currentSoundRef.current = null;
+    }
+    if (speakingIdx === idx) { setSpeakingIdx(null); return; }
+
+    setSpeakingIdx(idx);
+    setExpanded(prev => ({ ...prev, [idx]: true }));
+    try { await Audio.setAudioModeAsync({ playsInSilentModeIOS: true }); } catch {}
+
+    const ttsUrl = (text: string, speed?: number) =>
+      `${NETLIFY_BASE_URL}/api/toefl-tts?speaker=Professor&text=${encodeURIComponent(text)}${speed != null ? `&speed=${speed}` : ''}`;
+    const loadSnd = (text: string, speed?: number) =>
+      Audio.Sound.createAsync({ uri: ttsUrl(text, speed) }, { shouldPlay: false }).catch(() => null);
+    const playSnd = async (result: { sound: Audio.Sound } | null) => {
+      if (!result || playIdRef.current !== prevId) return;
+      const { sound } = result;
+      currentSoundRef.current = sound;
+      await sound.playAsync().catch(() => {});
+      await new Promise<void>(resolve => {
+        sound.setOnPlaybackStatusUpdate(status => {
+          if (status.isLoaded && (status.didJustFinish || playIdRef.current !== prevId)) {
+            sound.unloadAsync().catch(() => {});
+            currentSoundRef.current = null;
+            resolve();
+          }
+        });
+      });
+    };
+
+    // 추가 예문 백그라운드 fetch (캐시 우선)
+    const examplesPromise: Promise<{ en: string; ko: string }[]> = cardExamples[idx]
+      ? Promise.resolve(cardExamples[idx])
+      : fetch(`${NETLIFY_BASE_URL}/api/review-examples`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ word: item.word, meaning: item.meaning, sentence: item.sentence }),
+        }).then(r => r.json()).then((d: any) => (d.examples ?? []) as { en: string; ko: string }[]).catch(() => []);
+
+    // 단어: 30% → 1초 → 60% → 1초 → 90% → 1초
+    const wordSpeeds = [0.3, 0.6, 0.9];
+    let wordNext: Promise<{ sound: Audio.Sound } | null> | null = loadSnd(item.word, wordSpeeds[0]);
+    for (let wi = 0; wi < wordSpeeds.length; wi++) {
+      if (playIdRef.current !== prevId) return;
+      const result = await wordNext;
+      wordNext = wi + 1 < wordSpeeds.length ? loadSnd(item.word, wordSpeeds[wi + 1]) : null;
+      await playSnd(result);
+      if (playIdRef.current !== prevId) return;
+      await new Promise(r => setTimeout(r, 1000));
+    }
+
+    // 예문+번역+설명: 룩어헤드 프리로드로 공백 최소화
+    const mainParts = [item.sentence, item.sentence_ko, item.nuance, item.context, item.everyday_usage];
+    let nextP: Promise<{ sound: Audio.Sound } | null> | null = loadSnd(mainParts[0]);
+    for (let i = 0; i < mainParts.length; i++) {
+      if (playIdRef.current !== prevId) return;
+      const result = await nextP;
+      nextP = i + 1 < mainParts.length ? loadSnd(mainParts[i + 1]) : null;
+      await playSnd(result);
+    }
+
+    // 추가 예문 대기 → UI 표시 → TTS 읽기
+    if (playIdRef.current !== prevId) return;
+    const examples = await examplesPromise;
+    if (examples.length && playIdRef.current === prevId) {
+      setCardExamples(prev => ({ ...prev, [idx]: examples }));
+      const exParts = examples.flatMap(ex => [ex.en, ex.ko]);
+      let exNext: Promise<{ sound: Audio.Sound } | null> | null = exParts.length ? loadSnd(exParts[0]) : null;
+      for (let i = 0; i < exParts.length; i++) {
+        if (playIdRef.current !== prevId) return;
+        const result = await exNext;
+        exNext = i + 1 < exParts.length ? loadSnd(exParts[i + 1]) : null;
+        await playSnd(result);
+      }
+    }
+
+    if (playIdRef.current === prevId) setSpeakingIdx(null);
+  }, [speakingIdx, cardExamples]);
 
   if (loading) {
     return (
@@ -1134,7 +1231,17 @@ const SentenceReviewView = React.memo(({ sentences, loading }: { sentences: Revi
           >
             <View style={styles.reviewCardTop}>
               <Text style={styles.reviewWord}>{item.word}</Text>
-              <Text style={styles.reviewToggle}>{isOpen ? '▲' : '▼'}</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                <TouchableOpacity
+                  onPress={() => playReview(idx, item)}
+                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                >
+                  <Text style={[styles.reviewTtsBtn, speakingIdx === idx && styles.reviewTtsBtnActive]}>
+                    {speakingIdx === idx ? '⏹' : '🔊'}
+                  </Text>
+                </TouchableOpacity>
+                <Text style={styles.reviewToggle}>{isOpen ? '▲' : '▼'}</Text>
+              </View>
             </View>
             <Text style={styles.reviewSentence}>
               {highlighted.split(/【|】/).map((part, i) =>
@@ -1158,6 +1265,17 @@ const SentenceReviewView = React.memo(({ sentences, loading }: { sentences: Revi
                   <Text style={styles.reviewDetailLabel}>🗣 일상표현</Text>
                   <Text style={styles.reviewDetailText}>{item.everyday_usage}</Text>
                 </View>
+                {cardExamples[idx] && (
+                  <View style={styles.reviewDetailRow}>
+                    <Text style={styles.reviewDetailLabel}>📝 추가 예문</Text>
+                    {cardExamples[idx].map((ex, i) => (
+                      <View key={i} style={{ marginTop: 8 }}>
+                        <Text style={styles.reviewSentence}>{`${i + 1}. ${ex.en}`}</Text>
+                        <Text style={styles.reviewSentenceKo}>{ex.ko}</Text>
+                      </View>
+                    ))}
+                  </View>
+                )}
               </View>
             )}
           </TouchableOpacity>
@@ -1648,6 +1766,12 @@ const styles = StyleSheet.create({
   reviewToggle: {
     fontSize: 12,
     color: '#8e8e8e',
+  },
+  reviewTtsBtn: {
+    fontSize: 16,
+  },
+  reviewTtsBtnActive: {
+    opacity: 0.4,
   },
   reviewSentence: {
     fontSize: 15,
