@@ -1,181 +1,191 @@
 {
-  "date": "2026-08-17",
+  "date": "2026-08-18",
   "reading": {
-    "title": "Bioluminescence in Deep-Sea Organisms",
-    "passage": "Bioluminescence, the production and emission of light by living organisms, represents one of the most fascinating adaptations in marine biology. In the deep ocean, where sunlight cannot penetrate, numerous organisms have evolved the ability to generate their own light through chemical reactions. This phenomenon serves multiple biological functions, including communication, predation, and defense mechanisms. The process involves specialized proteins and chemical compounds that undergo oxidation, releasing energy in the form of visible light. Remarkably, approximately 90 percent of deep-sea creatures possess some form of bioluminescent capability, demonstrating its critical importance for survival in the abyssal zone. Marine scientists have identified over 1,000 species of bioluminescent organisms, ranging from microscopic dinoflagellates to large squid species. The luciferin-luciferase reaction, a well-documented biochemical process, explains how these organisms convert chemical energy into photons. Understanding bioluminescence not only illuminates the mysteries of deep-sea ecosystems but also provides valuable applications in medical research and biotechnology, where these proteins have become essential tools for cellular imaging and genetic studies.",
+    "title": "The Rise and Fall of the Minoan Civilization",
+    "passage": "The Minoan civilization, flourishing on the island of Crete from approximately 3000 to 1100 BCE, represents one of antiquity's most sophisticated societies. Archaeological evidence reveals that Minoans developed an advanced system of writing, constructed elaborate palaces with sophisticated plumbing systems, and engaged in extensive maritime trade throughout the Mediterranean. Their economic prosperity stemmed primarily from agricultural production and commercial exchange, enabling them to accumulate considerable wealth and cultural refinement. However, the civilization's decline remains a subject of scholarly debate. While some researchers attribute the collapse to a catastrophic volcanic eruption on the nearby island of Thera around 1600 BCE, others argue that gradual environmental degradation and subsequent invasions by Mycenaean Greeks precipitated the civilization's demise. The archaeological record indicates that following the volcanic catastrophe, Minoan settlements experienced significant destruction, yet recovery occurred in subsequent centuries. Nevertheless, by 1100 BCE, the distinctive Minoan culture had been assimilated into the emerging Mycenaean civilization, effectively terminating the Bronze Age Aegean's most enigmatic culture.",
     "vocabulary": [
       {
-        "word": "bioluminescence",
-        "meaning_ko": "생물이 화학 반응을 통해 빛을 생산하고 방출하는 능력"
+        "word": "flourishing",
+        "meaning_ko": "번성하는, 융성하는"
       },
       {
-        "word": "penetrate",
-        "meaning_ko": "통과하다, 침투하다"
+        "word": "plumbing",
+        "meaning_ko": "배관 시스템"
       },
       {
-        "word": "oxidation",
-        "meaning_ko": "산화 반응"
+        "word": "maritime",
+        "meaning_ko": "해양의, 선박 관련의"
       },
       {
-        "word": "abyssal zone",
-        "meaning_ko": "심해(바다의 가장 깊은 부분)"
+        "word": "prosperity",
+        "meaning_ko": "번영, 풍요"
       },
       {
-        "word": "dinoflagellates",
-        "meaning_ko": "와편모류(바다의 미생물)"
+        "word": "precipitated",
+        "meaning_ko": "촉발하다, 야기하다"
       },
       {
-        "word": "luciferin-luciferase reaction",
-        "meaning_ko": "루시페린-루시페라제 반응(생물 발광의 핵심 화학 반응)"
+        "word": "assimilated",
+        "meaning_ko": "흡수되다, 동화되다"
       },
       {
-        "word": "photons",
-        "meaning_ko": "광자(빛의 기본 입자)"
+        "word": "enigmatic",
+        "meaning_ko": "수수께끼 같은, 신비로운"
       }
     ],
     "questions": [
       {
-        "q": "According to the passage, what is the primary purpose of bioluminescence in deep-sea organisms?",
+        "q": "According to the passage, what was the primary source of Minoan economic wealth?",
         "options": [
-          "To regulate water temperature in the deep ocean",
-          "To serve communication, predation, and defense functions",
-          "To reduce the amount of oxygen consumed by marine life",
-          "To prevent other organisms from entering their territory"
+          "Military conquests and territorial expansion",
+          "Agricultural production and commercial exchange",
+          "Mining of precious metals and gemstones",
+          "Religious taxation and temple tributes"
         ],
         "answer": 1,
-        "explanation": "본문의 두 번째 문장에서 bioluminescence의 목적이 'communication, predation, and defense mechanisms'라고 명시되어 있습니다."
+        "explanation": "지문의 두 번째 문장에서 'Their economic prosperity stemmed primarily from agricultural production and commercial exchange'라고 명시하고 있습니다."
       },
       {
-        "q": "What can be inferred from the passage about the prevalence of bioluminescence in the deep sea?",
+        "q": "What can be inferred from the passage about the cause of the Minoan civilization's decline?",
         "options": [
-          "It is a rare adaptation found only in a few species",
-          "It is an extremely common ability crucial for survival in deep-sea environments",
-          "It is a recent evolutionary development that organisms are still adapting to",
-          "It is more common in shallow waters than in the abyssal zone"
+          "There is a single, universally accepted explanation for its collapse",
+          "Scholars disagree about whether the volcanic eruption was the sole cause",
+          "Environmental degradation was the only significant factor",
+          "The Mycenaean invasion occurred before the volcanic eruption"
         ],
         "answer": 1,
-        "explanation": "'approximately 90 percent of deep-sea creatures possess some form of bioluminescent capability'라는 통계를 통해 이것이 매우 흔한 적응임을 알 수 있습니다."
+        "explanation": "지문에서 '의견이 분분하다'는 'remains a subject of scholarly debate'와 'While some researchers...others argue' 표현으로 학자들 간의 의견 불일치를 명확히 보여줍니다."
       },
       {
-        "q": "The word 'convert' in the passage is closest in meaning to",
+        "q": "The word 'precipitated' in the third sentence is closest in meaning to",
         "options": [
-          "transport",
-          "transform",
-          "accumulate",
-          "distribute"
+          "delayed or postponed",
+          "caused or triggered",
+          "predicted or forecasted",
+          "documented or recorded"
         ],
         "answer": 1,
-        "explanation": "'convert chemical energy into photons'에서 convert는 '(한 형태의) 것을 다른 형태로 변환하다'는 의미의 transform과 가장 가깝습니다."
+        "explanation": "'precipitated'는 '촉발하다', '야기하다'는 의미의 동사로, 여기서는 '야기했다'는 뜻입니다. 즉 'caused or triggered'가 가장 가까운 의미입니다."
       },
       {
-        "q": "Why does the author mention the luciferin-luciferase reaction?",
+        "q": "Why does the author mention the sophisticated plumbing systems in Minoan palaces?",
         "options": [
-          "To explain the biochemical mechanism behind bioluminescence",
-          "To describe how deep-sea organisms communicate with each other",
-          "To provide evidence that bioluminescence is harmful to marine life",
-          "To suggest that artificial bioluminescence can be created in laboratories"
+          "To explain why the civilization was destroyed by water damage",
+          "To support the claim that Minoans possessed advanced engineering knowledge",
+          "To contrast Minoan technology with later Greek civilizations",
+          "To indicate that Minoans had developed written records"
         ],
-        "answer": 0,
-        "explanation": "저자는 '이 반응이 생물들이 화학 에너지를 광자로 어떻게 변환하는지 설명한다(explains how these organisms convert chemical energy into photons)'고 명시함으로써 생물 발광의 생화학적 메커니즘을 설명하기 위해 이를 언급합니다."
+        "answer": 1,
+        "explanation": "저자는 정교한 배관 시스템을 언급함으로써 미노아 문명의 발전된 기술 수준과 정교함을 입증하려고 합니다. 이는 '가장 정교한 사회 중 하나'라는 주제 문장을 뒷받침합니다."
       }
     ]
   },
   "writing": {
     "sentences": [
       {
-        "original": "In the deep ocean, where sunlight cannot penetrate, numerous organisms have evolved the ability to generate their own light through chemical reactions.",
-        "paraphrase": "Where sunlight is unable to reach in the deep ocean, many organisms have developed the capacity to produce light via chemical processes.",
-        "tip": "주요 어휘의 동의어 치환(evolved→developed, generate→produce, through→via) 및 문장 구조 재배열"
+        "original": "The Minoan civilization, flourishing on the island of Crete from approximately 3000 to 1100 BCE, represents one of antiquity's most sophisticated societies.",
+        "paraphrase": "One of the ancient world's most advanced civilizations, the Minoan culture thrived on Crete for roughly three millennia, between 3000 and 1100 BCE.",
+        "tip": "복잡한 앞치사 구문을 주어로 이동하고, 시간 표현을 다시 표현하여 문장 구조 변환"
       },
       {
-        "original": "This phenomenon serves multiple biological functions, including communication, predation, and defense mechanisms.",
-        "paraphrase": "Multiple biological purposes are served by this phenomenon, such as communicating, hunting prey, and protecting themselves.",
-        "tip": "능동→수동 전환, 추상명사→동사형으로 변환(communication→communicating, predation→hunting prey)"
+        "original": "Their economic prosperity stemmed primarily from agricultural production and commercial exchange, enabling them to accumulate considerable wealth and cultural refinement.",
+        "paraphrase": "Because Minoans depended chiefly on farming and trade for their economic success, they were able to gather abundant riches and achieve high cultural standards.",
+        "tip": "명사구(economic prosperity stemmed from)를 인과 접속사(Because)를 사용한 절로 변환하고 동의어로 치환"
       },
       {
-        "original": "The luciferin-luciferase reaction, a well-documented biochemical process, explains how these organisms convert chemical energy into photons.",
-        "paraphrase": "A thoroughly studied biochemical mechanism known as the luciferin-luciferase reaction demonstrates the method by which these creatures transform chemical energy into light particles.",
-        "tip": "동의어 치환(well-documented→thoroughly studied, convert→transform, photons→light particles) 및 관계절 구조 변경"
+        "original": "While some researchers attribute the collapse to a catastrophic volcanic eruption on the nearby island of Thera around 1600 BCE, others argue that gradual environmental degradation and subsequent invasions by Mycenaean Greeks precipitated the civilization's demise.",
+        "paraphrase": "Scholars present competing theories: some blame a massive volcanic explosion on Thera near 1600 BCE for ending the civilization, whereas others contend that slow ecological deterioration combined with Mycenaean military conquest caused its downfall.",
+        "tip": "양보절 구문(While...others)을 동등 절(Scholars present theories: some...whereas others) 구조로 재구성하고 어휘 단순화"
       },
       {
-        "original": "Understanding bioluminescence not only illuminates the mysteries of deep-sea ecosystems but also provides valuable applications in medical research and biotechnology.",
-        "paraphrase": "Beyond revealing the secrets of deep-sea ecosystems, knowledge of bioluminescence offers practical uses for medical and biotechnological research.",
-        "tip": "이중 구조 재배열, illuminates의 비유적 의미를 revealing으로 단순화, applications→uses로 변환"
+        "original": "The archaeological record indicates that following the volcanic catastrophe, Minoan settlements experienced significant destruction, yet recovery occurred in subsequent centuries.",
+        "paraphrase": "Evidence from excavations shows that although the volcano caused widespread damage to Minoan communities, these settlements were reconstructed over the following centuries.",
+        "tip": "능동 구문 유지하되, 'yet recovery occurred'를 능동 동사 'were reconstructed'로 변환하여 흐름 개선"
+      },
+      {
+        "original": "Nevertheless, by 1100 BCE, the distinctive Minoan culture had been assimilated into the emerging Mycenaean civilization, effectively terminating the Bronze Age Aegean's most enigmatic culture.",
+        "paraphrase": "By the year 1100 BCE, however, the unique Minoan way of life had been absorbed by the rising Mycenaean society, thereby ending what was perhaps the Bronze Age Mediterranean's most mysterious civilization.",
+        "tip": "수동태 유지하고, 부사(distinctly→unique)와 명사(enigmatic culture→mysterious civilization)로 어휘 다양화"
       }
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to travel and explore new places. Others prefer to save money for the future. Which do you prefer and why? Include specific reasons and details in your response.",
+    "prompt": "Some people believe students should freely choose their major based on personal interest and passion. Others think students should pursue majors that offer better job prospects and financial security. Which position do you agree with more, and why? Please provide specific reasons and examples to support your answer.",
     "model_sentences": [
-      "Personally, I believe traveling is more valuable than saving money because it provides irreplaceable experiences and personal growth.",
-      "When you travel, you gain firsthand knowledge about different cultures, historical sites, and ways of living that no textbook can teach you.",
-      "For example, visiting a new country allowed me to understand different perspectives and build friendships with people from around the world.",
-      "While saving money is important for security, the memories and skills you gain from traveling are investments that enrich your life in ways that money alone cannot."
+      "I personally believe that students should prioritize choosing a major based on their genuine interests rather than purely job market considerations.",
+      "First, when students study subjects they're passionate about, they're naturally more motivated and tend to perform better academically, which ultimately leads to stronger job prospects anyway.",
+      "For example, my friend Sarah chose psychology because she was genuinely fascinated by understanding human behavior, even though her parents suggested business; her enthusiasm led her to excel in her courses, and she was actually recruited by a top consulting firm because of her excellent grades and research experience.",
+      "Additionally, pursuing your passion makes your career more fulfilling and sustainable long-term, since you'll spend decades in your profession.",
+      "In conclusion, while job market demand matters, I believe that choosing a major aligned with your interests creates a better foundation for both academic success and career satisfaction."
     ]
   },
   "listening": {
-    "title": "The Impact of the Industrial Revolution on Society",
+    "title": "Psychology Lecture: The Formation of Memory",
     "type": "lecture",
-    "script": "Professor: Good morning, class. Today we're discussing the Industrial Revolution, which fundamentally transformed human civilization. The Industrial Revolution began in Britain during the late 18th century and spread throughout Europe and North America. It marked a shift from agrarian, handcraft economies to industrial, machine-based production. One significant consequence was rapid urbanization. Millions of people moved from rural farms to cities seeking employment in factories. This migration completely changed social structures and living conditions. Additionally, technological innovations like the steam engine revolutionized manufacturing and transportation. However, we must acknowledge the negative aspects as well. Factory workers, including children, often labored for 12 to 16 hours daily in dangerous conditions with minimal wages. Environmental pollution increased dramatically as coal-powered factories released massive amounts of smoke into the atmosphere. Despite these hardships, the Industrial Revolution ultimately increased production capacity, reduced product costs, and created new economic opportunities. It essentially laid the foundation for our modern industrial society. Any questions so far?",
+    "script": "Professor: Good morning, everyone. Today we're going to discuss how memories are actually formed in our brains. This is a fascinating process. So, let's start with the basic concept: memory formation involves three key stages. First, there's encoding, which is when your brain takes in new information and converts it into a form that can be stored. This happens through sensory perception. Next comes consolidation, where the brain literally reorganizes and stabilizes these encoded memories, often through sleep and repetition. This is why cramming the night before an exam isn't ideal—your brain needs time to consolidate. Finally, there's retrieval, which is simply recalling the information when you need it. Now, here's something important: the hippocampus, a small region deep in your brain, plays a crucial role in consolidating new memories into long-term storage. Research has shown that damage to the hippocampus severely impairs the ability to form new memories. However, interestingly, long-term memories that were already formed before the injury remain relatively intact. This tells us that once memories are consolidated and distributed throughout the cortex, they don't depend on the hippocampus anymore. Any questions so far?",
     "vocabulary": [
       {
-        "word": "agrarian",
-        "meaning_ko": "농업의, 농촌의"
+        "word": "encoding",
+        "meaning_ko": "정보를 저장 가능한 형태로 변환하는 과정"
       },
       {
-        "word": "urbanization",
-        "meaning_ko": "도시화"
+        "word": "consolidation",
+        "meaning_ko": "기억을 뇌에 안정화시키는 과정"
       },
       {
-        "word": "handcraft",
-        "meaning_ko": "수공예"
+        "word": "retrieval",
+        "meaning_ko": "저장된 정보를 불러오는 과정"
       },
       {
-        "word": "revolutionized",
-        "meaning_ko": "근본적으로 변화시켰다"
+        "word": "hippocampus",
+        "meaning_ko": "뇌의 해마 부위 (기억 형성에 중요한 역할)"
       },
       {
-        "word": "minimal",
-        "meaning_ko": "최소한의, 아주 적은"
+        "word": "consolidate",
+        "meaning_ko": "통합하다, 안정화시키다"
       },
       {
-        "word": "atmosphere",
-        "meaning_ko": "대기"
+        "word": "cortex",
+        "meaning_ko": "뇌피질 (뇌의 바깥층)"
+      },
+      {
+        "word": "impairs",
+        "meaning_ko": "손상시키다, 약화시키다"
       }
     ],
     "questions": [
       {
-        "q": "What is the main topic of the lecture?",
+        "q": "According to the professor, what is the main function of encoding in memory formation?",
         "options": [
-          "The development of agricultural technology in the 18th century",
-          "The Industrial Revolution and its effects on society",
-          "How steam engines were invented and improved",
-          "Environmental protection policies during the Industrial Revolution"
+          "To stabilize memories through sleep and repetition",
+          "To convert new information into a storable form through sensory perception",
+          "To retrieve stored memories when needed",
+          "To reorganize memories in the hippocampus"
         ],
         "answer": 1,
-        "explanation": "교수는 강의를 '오늘 우리는 인간 문명을 근본적으로 변화시킨 산업혁명을 다룬다'는 말로 시작하며, 전체 강의는 산업혁명과 그것이 사회에 미친 영향에 대해 진행됩니다."
+        "explanation": "교수는 강의에서 'encoding, which is when your brain takes in new information and converts it into a form that can be stored'라고 명시했습니다."
       },
       {
-        "q": "According to the professor, what was one major negative consequence of the Industrial Revolution?",
+        "q": "Why does the professor mention that cramming the night before an exam isn't ideal?",
         "options": [
-          "Decrease in product availability",
-          "Reduced trade between countries",
-          "Poor working conditions and low wages for factory workers",
-          "Loss of all technological innovations"
+          "Because students won't have time to attend class",
+          "Because the brain needs time to consolidate memories, which cramming doesn't allow",
+          "Because the hippocampus is less active at night",
+          "Because encoding is impossible without proper sleep"
+        ],
+        "answer": 1,
+        "explanation": "교수는 consolidation 단계를 설명하며 'your brain needs time to consolidate. This is why cramming the night before an exam isn't ideal'라고 직접 언급했습니다."
+      },
+      {
+        "q": "What does the professor imply about memories after they have been consolidated and distributed throughout the cortex?",
+        "options": [
+          "They become more dependent on the hippocampus",
+          "They can be retrieved more quickly but become less accurate",
+          "They no longer require the hippocampus for storage and recall",
+          "They are vulnerable to being lost during sleep"
         ],
         "answer": 2,
-        "explanation": "교수가 명확하게 언급한 부정적 측면은 '공장 노동자들, 어린이 포함하여 하루 12~16시간 위험한 환경에서 최소한의 임금으로 일했다'는 것입니다."
-      },
-      {
-        "q": "Why does the professor mention environmental pollution?",
-        "options": [
-          "To explain how steam engines improved efficiency",
-          "To illustrate one of the negative effects of industrial development",
-          "To show that factories were more productive than farms",
-          "To describe new technologies for pollution control"
-        ],
-        "answer": 1,
-        "explanation": "교수는 '우리는 부정적 측면도 인정해야 한다'는 맥락에서 환경 오염을 언급하며, 이는 산업 발전의 부정적 결과를 구체적으로 보여주기 위함입니다."
+        "explanation": "교수는 'once memories are consolidated and distributed throughout the cortex, they don't depend on the hippocampus anymore'라고 명시적으로 설명했습니다."
       }
     ]
   }

@@ -179,7 +179,12 @@ export default function VocaScreen() {
   const [debugPoolStats, setDebugPoolStats] = useState<{ total: number; graduated: number; playDays: number } | null>(null);
   const [lastUpdateTime, setLastUpdateTime] = useState<string | null>(null);
   const [cacheTimeLeft, setCacheTimeLeft] = useState<string>('캐시 정보 로딩 중...');
-  const [speakingWordId, setSpeakingWordId] = useState<string | null>(null);
+  const [playAllWordId, setPlayAllWordId] = useState<string | null>(null);
+  // ref mirror of playAllWordId — the toggle check must read the *current*
+  // value, not the value captured when the useCallback was created, otherwise a
+  // fast double-tap runs the stale (null) branch twice and re-starts playback.
+  const playAllWordIdRef = React.useRef<string | null>(null);
+  React.useEffect(() => { playAllWordIdRef.current = playAllWordId; }, [playAllWordId]);
   const { opacity, translateY } = useScreenFade();
 
   // Performance monitoring
@@ -226,6 +231,20 @@ export default function VocaScreen() {
 
   useEffect(() => {
     loadData();
+  }, []);
+
+  // 화면을 완전히 벗어날 때 진행 중인 playAllWords 루프 취소 + 사운드 해제.
+  // 다음 _wcPlayId !== myId 체크에서 루프가 멈춘다.
+  useEffect(() => {
+    return () => {
+      ++_wcPlayId;
+      if (_wcSound) {
+        _wcSound.stopAsync().catch(() => {});
+        _wcSound.unloadAsync().catch(() => {});
+        _wcSound = null;
+      }
+      Speech.stop();
+    };
   }, []);
 
   // Live Firebase subscription — stays connected for as long as the screen is
@@ -543,17 +562,86 @@ export default function VocaScreen() {
     }
   };
 
-  const playWordAudio = useCallback((wordId: string, text: string) => {
-    setSpeakingWordId(wordId);
-    Speech.speak(text, {
-      language: 'en',
-      rate: 0.85,
-      pitch: 1,
-      onDone: () => setSpeakingWordId(null),
-      onStopped: () => setSpeakingWordId(null),
-      onError: () => setSpeakingWordId(null),
-    });
-  }, []);
+
+  const playAllWords = useCallback(async () => {
+    if (playAllWordIdRef.current !== null) {
+      ++_wcPlayId;
+      playAllWordIdRef.current = null;
+      if (_wcSound) { await _wcSound.stopAsync().catch(() => {}); await _wcSound.unloadAsync().catch(() => {}); _wcSound = null; }
+      Speech.stop();
+      setPlayAllWordId(null);
+      return;
+    }
+    // Mark active synchronously so a second tap in the same tick hits the
+    // stop branch above instead of starting a duplicate loop.
+    playAllWordIdRef.current = '__starting__';
+    const myId = ++_wcPlayId;
+    const wordsToPlay = hideReadWords ? words.filter(w => !w.isRead) : words;
+    try { await Audio.setAudioModeAsync({ staysActiveInBackground: true, playsInSilentModeIOS: true }); } catch {}
+    const ttsUrl = (text: string, speed?: number) =>
+      `${NETLIFY_BASE_URL}/api/toefl-tts?speaker=Professor&text=${encodeURIComponent(text)}${speed != null ? `&speed=${speed}` : ''}`;
+    const loadSnd = (text: string, speed?: number) => {
+      const p = Audio.Sound.createAsync({ uri: ttsUrl(text, speed) }, { shouldPlay: false }).catch(() => null);
+      return Promise.race([p, new Promise<null>(r => setTimeout(() => r(null), 15000))])
+        .then(r => { if (!r) p.then(s => s?.sound.unloadAsync().catch(() => {})); return r; });
+    };
+    const playSnd = async (result: { sound: Audio.Sound } | null): Promise<void> => {
+      if (!result) return;
+      if (_wcPlayId !== myId) { result.sound.unloadAsync().catch(() => {}); return; }
+      _wcSound = result.sound;
+      const played = await result.sound.playAsync().then(() => true).catch(() => false);
+      if (!played || _wcPlayId !== myId) {
+        await result.sound.unloadAsync().catch(() => {});
+        if (_wcSound === result.sound) _wcSound = null;
+        return;
+      }
+      let natural = false;
+      await Promise.race([
+        new Promise<void>(resolve => {
+          result.sound.setOnPlaybackStatusUpdate(status => {
+            if (status.isLoaded && status.didJustFinish) { natural = true; result.sound.setOnPlaybackStatusUpdate(null); resolve(); }
+            else if (!status.isLoaded) { result.sound.setOnPlaybackStatusUpdate(null); resolve(); }
+            else if (_wcPlayId !== myId) { result.sound.setOnPlaybackStatusUpdate(null); resolve(); }
+          });
+        }),
+        new Promise<void>(r => setTimeout(r, 300000)),
+      ]);
+      if (natural) await new Promise(r => setTimeout(r, 800));
+      await result.sound.unloadAsync().catch(() => {});
+      if (_wcSound === result.sound) _wcSound = null;
+    };
+    for (const word of wordsToPlay) {
+      if (_wcPlayId !== myId) break;
+      setPlayAllWordId(word.id);
+      let sd: ReviewSentence | null = null;
+      try {
+        const db = getDatabase(getFirebaseApp());
+        const key = word.word.toLowerCase().replace(/\s+/g, '_').replace(/-/g, '_');
+        const snap = await get(ref(db, `english/sentences/${key}`));
+        if (snap.exists()) sd = { word: word.word, ...snap.val() };
+      } catch {}
+      if (_wcPlayId !== myId) break;
+      // EN TTS: word × 3 + example_en + ex.en
+      const enSegs = [
+        `${word.word}... ${word.word}... ${word.word}.`,
+        word.example_en,
+        ...(sd?.examples?.map(ex => ex.en).filter(Boolean) ?? []),
+      ].filter((p): p is string => typeof p === 'string' && p.trim().length > 0);
+      await playSnd(await loadSnd(enSegs.join(' ')));
+      // KO TTS: sentence_ko + nuance + context + everyday_usage + ex.ko
+      if (_wcPlayId !== myId) break;
+      if (sd) {
+        const koSegs = [
+          sd.sentence_ko, sd.nuance, sd.context, sd.everyday_usage,
+          ...(sd.examples?.map(ex => ex.ko).filter(Boolean) ?? []),
+        ].filter((p): p is string => typeof p === 'string' && p.trim().length > 0);
+        if (koSegs.length > 0) await playSnd(await loadSnd(koSegs.join(' ')));
+      }
+      if (_wcPlayId === myId) await new Promise(res => setTimeout(res, 800));
+    }
+    playAllWordIdRef.current = null;
+    setPlayAllWordId(null);
+  }, [words, hideReadWords]);
 
   const answerQuiz = (quizId: string, selectedOption: string) => {
     const updated = quizzes.map(q => {
@@ -664,9 +752,8 @@ export default function VocaScreen() {
         title: '🧪 테스트 알림',
         body: '이 알림이 보이면 백그라운드 알림이 정상 동작합니다!',
         sound: 'default',
-        channelId: 'study-reminder',
       },
-      trigger: { type: SchedulableTriggerInputTypes.TIME_INTERVAL, seconds: 5, repeats: false },
+      trigger: { type: SchedulableTriggerInputTypes.TIME_INTERVAL, seconds: 5, repeats: false, channelId: 'study-reminder' },
     });
     Alert.alert('✅ 테스트 알림 예약', '5초 후 알림이 옵니다. 앱을 홈으로 내리고 기다려보세요.');
   };
@@ -822,14 +909,21 @@ export default function VocaScreen() {
                 {hideReadWords ? '✓ 미읽음만' : '○ 모두 보기'}
               </Text>
             </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.filterButton, playAllWordId !== null && styles.filterButtonActive]}
+              onPress={playAllWords}
+            >
+              <Text style={[styles.filterButtonText, playAllWordId !== null && styles.filterButtonTextActive]}>
+                {playAllWordId !== null ? '⏹ 정지' : '▶ 모두 재생'}
+              </Text>
+            </TouchableOpacity>
           </View>
           <WordsView
             words={hideReadWords ? words.filter(w => !w.isRead) : words}
             onToggleRead={toggleWordRead}
-            onPlayAudio={playWordAudio}
-            speakingWordId={speakingWordId}
             onRefresh={refreshFromNetlify}
             refreshing={refreshing}
+            playAllWordId={playAllWordId}
           />
         </View>
       )}
@@ -916,14 +1010,17 @@ function formatDate(dateStr: string): string {
   }
 }
 
+// Shared audio coordination across all WordCard instances
+let _wcPlayId = 0;
+let _wcSound: Audio.Sound | null = null;
+
 // Memoized component to prevent unnecessary re-renders
-const WordsView = React.memo(({ words, onToggleRead, onPlayAudio, speakingWordId, onRefresh, refreshing }: {
+const WordsView = React.memo(({ words, onToggleRead, onRefresh, refreshing, playAllWordId }: {
   words: Word[],
   onToggleRead: (id: string) => void,
-  onPlayAudio: (id: string, text: string) => void,
-  speakingWordId: string | null,
   onRefresh: () => void,
   refreshing: boolean,
+  playAllWordId: string | null,
 }) => {
   return (
     <FlatList
@@ -940,56 +1037,226 @@ const WordsView = React.memo(({ words, onToggleRead, onPlayAudio, speakingWordId
         <WordCard
           word={item}
           onToggleRead={onToggleRead}
-          onPlayAudio={onPlayAudio}
-          isSpeaking={speakingWordId === item.id}
+          isPlayingAll={playAllWordId === item.id}
         />
       )}
     />
   );
 });
 
-// Memoized word card component
-const WordCard = React.memo(({ word, onToggleRead, onPlayAudio, isSpeaking }: {
+// Memoized word card component with expand + OpenAI TTS
+const WordCard = React.memo(({ word, onToggleRead, isPlayingAll }: {
   word: Word,
   onToggleRead: (id: string) => void,
-  onPlayAudio: (id: string, text: string) => void,
-  isSpeaking: boolean,
-}) => (
-  <TouchableOpacity
-    style={[styles.card, word.isRead && styles.cardRead]}
-    onPress={() => onToggleRead(word.id)}
-  >
-    <View style={styles.cardHeader}>
-      <View style={styles.wordInfo}>
-        <Text style={styles.emoji}>{word.emoji}</Text>
-        <View style={styles.wordDetails}>
-          <Text style={styles.word}>{word.word}</Text>
-          <Text style={styles.pos}>{word.pos}</Text>
-        </View>
-        <TouchableOpacity
-          style={styles.speakerButton}
-          onPress={() => onPlayAudio(word.id, word.word)}
-          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-        >
-          <Text style={styles.speakerIcon}>{isSpeaking ? '🔊' : '🔈'}</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.cardHeaderRight}>
-        <Text style={styles.updateDate}>{formatDate(word.date)}</Text>
-        <Text style={styles.readBadge}>{word.isRead ? '✓' : '○'}</Text>
-      </View>
-    </View>
-    <Text style={styles.meaning}>{word.meaning}</Text>
-    <Text style={styles.explanation}>{word.explanation}</Text>
-    <Text style={styles.example}>예: {word.example_en}</Text>
+  isPlayingAll?: boolean,
+}) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [sentenceData, setSentenceData] = useState<ReviewSentence | null>(null);
+  const [sentenceLoading, setSentenceLoading] = useState(false);
+  const sentenceDataRef = React.useRef<ReviewSentence | null>(null);
+  const sentenceLoadingRef = React.useRef(false);
+  const isPlayingRef = React.useRef(false);
+  React.useEffect(() => { isPlayingRef.current = isPlaying; }, [isPlaying]);
+
+  // 언마운트 시 이 카드가 개별 재생 중이었다면 자신의 재생만 취소
+  // (playAllWords 재생 중인 카드는 isPlayingRef.current=false 이므로 영향 없음)
+  React.useEffect(() => {
+    return () => {
+      if (isPlayingRef.current) {
+        ++_wcPlayId;
+        // playSnd가 ID 불일치를 감지해 스스로 unload함
+      }
+    };
+  }, []);
+
+  const loadSentenceData = useCallback(async () => {
+    if (sentenceDataRef.current || sentenceLoadingRef.current) return;
+    sentenceLoadingRef.current = true;
+    setSentenceLoading(true);
+    try {
+      const db = getDatabase(getFirebaseApp());
+      const key = word.word.toLowerCase().replace(/\s+/g, '_').replace(/-/g, '_');
+      const snap = await get(ref(db, `english/sentences/${key}`));
+      if (snap.exists()) {
+        const data: ReviewSentence = { word: word.word, ...snap.val() };
+        sentenceDataRef.current = data;
+        setSentenceData(data);
+      }
+    } catch {} finally {
+      sentenceLoadingRef.current = false;
+      setSentenceLoading(false);
+    }
+  }, [word.word]);
+
+  const handleExpand = useCallback(() => {
+    setIsExpanded(prev => {
+      if (!prev) loadSentenceData();
+      return !prev;
+    });
+  }, [loadSentenceData]);
+
+  const playWordTts = useCallback(async () => {
+    const prevId = ++_wcPlayId;
+    if (_wcSound) {
+      await _wcSound.stopAsync().catch(() => {});
+      await _wcSound.unloadAsync().catch(() => {});
+      _wcSound = null;
+    }
+    Speech.stop();
+    if (isPlayingRef.current) { isPlayingRef.current = false; setIsPlaying(false); return; }
+    isPlayingRef.current = true;
+    setIsPlaying(true);
+    setIsExpanded(true);
+    loadSentenceData();
+
+    try { await Audio.setAudioModeAsync({ staysActiveInBackground: true, playsInSilentModeIOS: true }); } catch {}
+
+    // sentenceData 최대 3초 대기
+    if (!sentenceDataRef.current && sentenceLoadingRef.current) {
+      let waited = 0;
+      while (sentenceLoadingRef.current && waited < 3000) {
+        if (_wcPlayId !== prevId) { isPlayingRef.current = false; setIsPlaying(false); return; }
+        await new Promise(r => setTimeout(r, 100));
+        waited += 100;
+      }
+    }
+    if (_wcPlayId !== prevId) { isPlayingRef.current = false; setIsPlaying(false); return; }
+
+    const makeTtsUrl = (text: string) =>
+      `${NETLIFY_BASE_URL}/api/toefl-tts?speaker=Professor&text=${encodeURIComponent(text)}`;
+    const loadSnd = (text: string) => {
+      const p = Audio.Sound.createAsync({ uri: makeTtsUrl(text) }, { shouldPlay: false }).catch(() => null);
+      return Promise.race([p, new Promise<null>(r => setTimeout(() => r(null), 15000))])
+        .then(r => { if (!r) p.then(s => s?.sound.unloadAsync().catch(() => {})); return r; });
+    };
+    const playSnd = async (result: { sound: Audio.Sound } | null): Promise<void> => {
+      if (!result) return;
+      if (_wcPlayId !== prevId) { result.sound.unloadAsync().catch(() => {}); return; }
+      _wcSound = result.sound;
+      const played = await result.sound.playAsync().then(() => true).catch(() => false);
+      if (!played || _wcPlayId !== prevId) {
+        await result.sound.unloadAsync().catch(() => {});
+        if (_wcSound === result.sound) _wcSound = null;
+        return;
+      }
+      let natural = false;
+      await Promise.race([
+        new Promise<void>(resolve => {
+          result.sound.setOnPlaybackStatusUpdate(status => {
+            if (status.isLoaded && status.didJustFinish) { natural = true; result.sound.setOnPlaybackStatusUpdate(null); resolve(); }
+            else if (!status.isLoaded) { result.sound.setOnPlaybackStatusUpdate(null); resolve(); }
+            else if (_wcPlayId !== prevId) { result.sound.setOnPlaybackStatusUpdate(null); resolve(); }
+          });
+        }),
+        new Promise<void>(r => setTimeout(r, 300000)),
+      ]);
+      if (natural) await new Promise(r => setTimeout(r, 500));
+      await result.sound.unloadAsync().catch(() => {});
+      if (_wcSound === result.sound) _wcSound = null;
+    };
+
+    const sd = sentenceDataRef.current;
+
+    // EN TTS: word × 3 + example_en + ex.en (영어만 모아서 1번 호출)
+    const enParts = [
+      `${word.word}... ${word.word}... ${word.word}.`,
+      word.example_en,
+      ...(sd?.examples?.map(ex => ex.en).filter(Boolean) ?? []),
+    ].filter((p): p is string => typeof p === 'string' && p.trim().length > 0);
+    await playSnd(await loadSnd(enParts.join(' ')));
+
+    // KO TTS: sentence_ko + nuance + context + everyday_usage + ex.ko (한국어만 모아서 1번 호출)
+    if (_wcPlayId !== prevId) { isPlayingRef.current = false; setIsPlaying(false); return; }
+    if (sd) {
+      const koParts = [
+        sd.sentence_ko, sd.nuance, sd.context, sd.everyday_usage,
+        ...(sd.examples?.map(ex => ex.ko).filter(Boolean) ?? []),
+      ].filter((p): p is string => typeof p === 'string' && p.trim().length > 0);
+      if (koParts.length > 0) await playSnd(await loadSnd(koParts.join(' ')));
+    }
+
+    if (_wcPlayId === prevId) { isPlayingRef.current = false; setIsPlaying(false); }
+  }, [word.word, word.example_en, loadSentenceData]);
+
+  return (
     <TouchableOpacity
-      style={styles.googleSearchBtn}
-      onPress={() => Linking.openURL(`https://www.google.com/search?q=${encodeURIComponent(word.word + ' 뜻')}&hl=ko&gl=KR&lr=lang_ko`)}
+      style={[styles.card, word.isRead && styles.cardRead]}
+      onPress={() => onToggleRead(word.id)}
+      activeOpacity={0.85}
     >
-      <Text style={styles.googleSearchBtnText}>🔍 구글 검색</Text>
+      <View style={styles.cardHeader}>
+        <View style={styles.wordInfo}>
+          <Text style={styles.emoji}>{word.emoji}</Text>
+          <View style={styles.wordDetails}>
+            <Text style={styles.word}>{word.word}</Text>
+            <Text style={styles.pos}>{word.pos}</Text>
+          </View>
+          <TouchableOpacity
+            style={styles.speakerButton}
+            onPress={playWordTts}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+          >
+            <Text style={styles.speakerIcon}>{(isPlaying || isPlayingAll) ? '🔊' : '🔈'}</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.cardHeaderRight}>
+          <Text style={styles.updateDate}>{formatDate(word.date)}</Text>
+          <Text style={styles.readBadge}>{word.isRead ? '✓' : '○'}</Text>
+        </View>
+      </View>
+      <Text style={styles.meaning}>{word.meaning}</Text>
+      <Text style={styles.explanation}>{word.explanation}</Text>
+      <Text style={styles.example}>예: {word.example_en}</Text>
+      <TouchableOpacity onPress={handleExpand} hitSlop={{ top: 6, bottom: 6, left: 0, right: 0 }}>
+        <Text style={styles.reviewToggle}>{isExpanded ? '▲ 접기' : '▼ 뉘앙스 더 보기'}</Text>
+      </TouchableOpacity>
+      {isExpanded && (
+        <View style={styles.reviewDetails}>
+          {sentenceLoading && !sentenceData && (
+            <ActivityIndicator size="small" color="#0095f6" style={{ marginVertical: 8 }} />
+          )}
+          {sentenceData && (
+            <>
+              <View style={styles.reviewDetailRow}>
+                <Text style={styles.reviewDetailLabel}>💬 뉘앙스</Text>
+                <Text style={styles.reviewDetailText}>{sentenceData.nuance}</Text>
+              </View>
+              <View style={styles.reviewDetailRow}>
+                <Text style={styles.reviewDetailLabel}>📍 상황</Text>
+                <Text style={styles.reviewDetailText}>{sentenceData.context}</Text>
+              </View>
+              <View style={styles.reviewDetailRow}>
+                <Text style={styles.reviewDetailLabel}>🗣 일상표현</Text>
+                <Text style={styles.reviewDetailText}>{sentenceData.everyday_usage}</Text>
+              </View>
+              {sentenceData.examples && (
+                <View style={styles.reviewDetailRow}>
+                  <Text style={styles.reviewDetailLabel}>📝 추가 예문</Text>
+                  {sentenceData.examples.map((ex, i) => (
+                    <View key={i} style={{ marginTop: 8 }}>
+                      <Text style={styles.reviewSentence}>{`${i + 1}. ${ex.en}`}</Text>
+                      <Text style={styles.reviewSentenceKo}>{ex.ko}</Text>
+                    </View>
+                  ))}
+                </View>
+              )}
+            </>
+          )}
+          {!sentenceLoading && !sentenceData && (
+            <Text style={styles.reviewDetailText}>데이터 없음</Text>
+          )}
+        </View>
+      )}
+      <TouchableOpacity
+        style={styles.googleSearchBtn}
+        onPress={() => Linking.openURL(`https://www.google.com/search?q=${encodeURIComponent(word.word + ' 뜻')}&hl=ko&gl=KR&lr=lang_ko`)}
+      >
+        <Text style={styles.googleSearchBtnText}>🔍 구글 검색</Text>
+      </TouchableOpacity>
     </TouchableOpacity>
-  </TouchableOpacity>
-));
+  );
+});
 
 // Memoized quiz view
 const QuizView = React.memo(({ quizzes, words, onAnswer, onComplete }: {
@@ -1111,79 +1378,197 @@ const QuizCard = React.memo(({ quiz, wordName, onAnswer }: { quiz: Quiz, wordNam
 const SentenceReviewView = React.memo(({ sentences, loading }: { sentences: ReviewSentence[], loading: boolean }) => {
   const [expanded, setExpanded] = useState<Record<number, boolean>>({});
   const [speakingIdx, setSpeakingIdx] = useState<number | null>(null);
-  const currentSoundRef = React.useRef<Audio.Sound | null>(null);
-  const playIdRef = React.useRef(0);
+  const [isPlayingAll, setIsPlayingAll] = useState(false);
+  const speakingIdxRef = React.useRef<number | null>(null);
+  React.useEffect(() => { speakingIdxRef.current = speakingIdx; }, [speakingIdx]);
+  // ref mirror of isPlayingAll — toggle check must read the current value so a
+  // fast double-tap doesn't run the stale (false) branch twice and re-start.
+  const isPlayingAllRef = React.useRef(false);
+  React.useEffect(() => { isPlayingAllRef.current = isPlayingAll; }, [isPlayingAll]);
+
+  // 언마운트 시 진행 중인 재생 루프를 통합 변수로 취소하고 사운드 해제
+  React.useEffect(() => {
+    return () => {
+      ++_wcPlayId;
+      if (_wcSound) {
+        _wcSound.stopAsync().catch(() => {});
+        _wcSound.unloadAsync().catch(() => {});
+        _wcSound = null;
+      }
+      Speech.stop();
+    };
+  }, []);
 
   const playReview = useCallback(async (idx: number, item: ReviewSentence) => {
-    const prevId = ++playIdRef.current;
+    const prevId = ++_wcPlayId;
     Speech.stop();
-    if (currentSoundRef.current) {
-      await currentSoundRef.current.stopAsync().catch(() => {});
-      await currentSoundRef.current.unloadAsync().catch(() => {});
-      currentSoundRef.current = null;
+    if (_wcSound) {
+      await _wcSound.stopAsync().catch(() => {});
+      await _wcSound.unloadAsync().catch(() => {});
+      _wcSound = null;
     }
-    if (speakingIdx === idx) { setSpeakingIdx(null); return; }
+    isPlayingAllRef.current = false;
+    setIsPlayingAll(false);
+    if (speakingIdxRef.current === idx) { setSpeakingIdx(null); return; }
 
     setSpeakingIdx(idx);
     setExpanded(prev => ({ ...prev, [idx]: true }));
-    try { await Audio.setAudioModeAsync({ playsInSilentModeIOS: true }); } catch {}
+    try { await Audio.setAudioModeAsync({ staysActiveInBackground: true, playsInSilentModeIOS: true }); } catch {}
 
     const ttsUrl = (text: string, speed?: number) =>
       `${NETLIFY_BASE_URL}/api/toefl-tts?speaker=Professor&text=${encodeURIComponent(text)}${speed != null ? `&speed=${speed}` : ''}`;
-    const loadSnd = (text: string, speed?: number) =>
-      Audio.Sound.createAsync({ uri: ttsUrl(text, speed) }, { shouldPlay: false }).catch(() => null);
+    const loadSnd = (text: string, speed?: number) => {
+      const p = Audio.Sound.createAsync({ uri: ttsUrl(text, speed) }, { shouldPlay: false }).catch(() => null);
+      return Promise.race([p, new Promise<null>(r => setTimeout(() => r(null), 15000))])
+        .then(r => { if (!r) p.then(s => s?.sound.unloadAsync().catch(() => {})); return r; });
+    };
     const playSnd = async (result: { sound: Audio.Sound } | null) => {
-      if (!result || playIdRef.current !== prevId) return;
+      if (!result) return;
+      if (_wcPlayId !== prevId) { result.sound.unloadAsync().catch(() => {}); return; }
       const { sound } = result;
-      currentSoundRef.current = sound;
-      await sound.playAsync().catch(() => {});
-      await new Promise<void>(resolve => {
-        sound.setOnPlaybackStatusUpdate(status => {
-          if (status.isLoaded && (status.didJustFinish || playIdRef.current !== prevId)) {
-            sound.unloadAsync().catch(() => {});
-            currentSoundRef.current = null;
-            resolve();
-          }
-        });
-      });
+      _wcSound = sound;
+      const played = await sound.playAsync().then(() => true).catch(() => false);
+      if (!played || _wcPlayId !== prevId) {
+        await sound.unloadAsync().catch(() => {});
+        if (_wcSound === sound) _wcSound = null;
+        return;
+      }
+      let natural = false;
+      await Promise.race([
+        new Promise<void>(resolve => {
+          sound.setOnPlaybackStatusUpdate(status => {
+            if (status.isLoaded && status.didJustFinish) { natural = true; sound.setOnPlaybackStatusUpdate(null); resolve(); }
+            else if (!status.isLoaded) { sound.setOnPlaybackStatusUpdate(null); resolve(); }
+            else if (_wcPlayId !== prevId) { sound.setOnPlaybackStatusUpdate(null); resolve(); }
+          });
+        }),
+        new Promise<void>(r => setTimeout(r, 30000)),
+      ]);
+      if (natural) await new Promise(r => setTimeout(r, 500));
+      await sound.unloadAsync().catch(() => {});
+      if (_wcSound === sound) _wcSound = null;
     };
 
-    // 단어: 30% → 1초 → 60% → 1초 → 90% → 1초
-    const wordSpeeds = [0.3, 0.6, 0.9];
-    let wordNext: Promise<{ sound: Audio.Sound } | null> | null = loadSnd(item.word, wordSpeeds[0]);
-    for (let wi = 0; wi < wordSpeeds.length; wi++) {
-      if (playIdRef.current !== prevId) return;
-      const result = await wordNext;
-      wordNext = wi + 1 < wordSpeeds.length ? loadSnd(item.word, wordSpeeds[wi + 1]) : null;
-      await playSnd(result);
-      if (playIdRef.current !== prevId) return;
+    // 취소(다른 재생/정지/언마운트가 _wcPlayId를 올림) 시 이 호출이 켜 둔
+    // 스피너가 남지 않도록 정리한다. 단, 다른 playReview가 이어받아 자신의
+    // speakingIdx를 이미 세팅했다면 그 값을 덮어쓰면 안 되므로, 아직 이 idx를
+    // 소유 중일 때만 null로 되돌린다.
+    const cancelled = () => {
+      if (_wcPlayId === prevId) return false;
+      if (speakingIdxRef.current === idx) setSpeakingIdx(null);
+      return true;
+    };
+
+    // 단어 기본 속도로 3번
+    for (let wi = 0; wi < 3; wi++) {
+      if (cancelled()) return;
+      await playSnd(await loadSnd(item.word));
+      if (cancelled()) return;
       await new Promise(r => setTimeout(r, 1000));
     }
 
-    // 예문+번역+설명: 룩어헤드 프리로드로 공백 최소화
-    const mainParts = [item.sentence, item.sentence_ko, item.nuance, item.context, item.everyday_usage];
-    let nextP: Promise<{ sound: Audio.Sound } | null> | null = loadSnd(mainParts[0]);
-    for (let i = 0; i < mainParts.length; i++) {
-      if (playIdRef.current !== prevId) return;
-      const result = await nextP;
-      nextP = i + 1 < mainParts.length ? loadSnd(mainParts[i + 1]) : null;
-      await playSnd(result);
+    // 예문+번역+설명 순차 재생
+    const mainParts = [item.sentence, item.sentence_ko, item.nuance, item.context, item.everyday_usage]
+      .filter((p): p is string => typeof p === 'string' && p.trim().length > 0);
+    for (const part of mainParts) {
+      if (cancelled()) return;
+      await playSnd(await loadSnd(part));
     }
 
-    // 추가 예문 (generate_sentences_batch.py로 사전 생성된 것)
+    // 추가 예문
     if (item.examples?.length) {
-      const exParts = item.examples.flatMap(ex => [ex.en, ex.ko]);
-      let exNext: Promise<{ sound: Audio.Sound } | null> | null = loadSnd(exParts[0]);
-      for (let i = 0; i < exParts.length; i++) {
-        if (playIdRef.current !== prevId) return;
-        const result = await exNext;
-        exNext = i + 1 < exParts.length ? loadSnd(exParts[i + 1]) : null;
-        await playSnd(result);
+      for (const ex of item.examples) {
+        if (cancelled()) return;
+        if (ex.en?.trim()) await playSnd(await loadSnd(ex.en));
+        if (cancelled()) return;
+        if (ex.ko?.trim()) await playSnd(await loadSnd(ex.ko));
       }
     }
 
-    if (playIdRef.current === prevId) setSpeakingIdx(null);
-  }, [speakingIdx]);
+    if (_wcPlayId === prevId) setSpeakingIdx(null);
+  }, []);
+
+  const playAllSentences = useCallback(async () => {
+    if (isPlayingAllRef.current) {
+      ++_wcPlayId;
+      isPlayingAllRef.current = false;
+      Speech.stop();
+      if (_wcSound) { await _wcSound.stopAsync().catch(() => {}); await _wcSound.unloadAsync().catch(() => {}); _wcSound = null; }
+      setIsPlayingAll(false);
+      setSpeakingIdx(null);
+      return;
+    }
+    // Mark active synchronously so a second tap in the same tick hits the
+    // stop branch above instead of starting a duplicate loop.
+    isPlayingAllRef.current = true;
+    setIsPlayingAll(true);
+    const myId = ++_wcPlayId;
+    try { await Audio.setAudioModeAsync({ staysActiveInBackground: true, playsInSilentModeIOS: true }); } catch {}
+    const ttsUrl = (text: string, speed?: number) =>
+      `${NETLIFY_BASE_URL}/api/toefl-tts?speaker=Professor&text=${encodeURIComponent(text)}${speed != null ? `&speed=${speed}` : ''}`;
+    const loadSnd = (text: string, speed?: number) => {
+      const p = Audio.Sound.createAsync({ uri: ttsUrl(text, speed) }, { shouldPlay: false }).catch(() => null);
+      return Promise.race([p, new Promise<null>(r => setTimeout(() => r(null), 15000))])
+        .then(r => { if (!r) p.then(s => s?.sound.unloadAsync().catch(() => {})); return r; });
+    };
+    const playSnd = async (result: { sound: Audio.Sound } | null): Promise<void> => {
+      if (!result) return;
+      if (_wcPlayId !== myId) { result.sound.unloadAsync().catch(() => {}); return; }
+      const { sound } = result;
+      _wcSound = sound;
+      const played = await sound.playAsync().then(() => true).catch(() => false);
+      if (!played || _wcPlayId !== myId) {
+        await sound.unloadAsync().catch(() => {});
+        if (_wcSound === sound) _wcSound = null;
+        return;
+      }
+      let natural = false;
+      await Promise.race([
+        new Promise<void>(resolve => {
+          sound.setOnPlaybackStatusUpdate(status => {
+            if (status.isLoaded && status.didJustFinish) { natural = true; sound.setOnPlaybackStatusUpdate(null); resolve(); }
+            else if (!status.isLoaded) { sound.setOnPlaybackStatusUpdate(null); resolve(); }
+            else if (_wcPlayId !== myId) { sound.setOnPlaybackStatusUpdate(null); resolve(); }
+          });
+        }),
+        new Promise<void>(r => setTimeout(r, 30000)),
+      ]);
+      if (natural) await new Promise(r => setTimeout(r, 500));
+      await sound.unloadAsync().catch(() => {});
+      if (_wcSound === sound) _wcSound = null;
+    };
+    for (let si = 0; si < sentences.length; si++) {
+      if (_wcPlayId !== myId) break;
+      const item = sentences[si];
+      setSpeakingIdx(si);
+      setExpanded(prev => ({ ...prev, [si]: true }));
+      for (let wi = 0; wi < 3; wi++) {
+        if (_wcPlayId !== myId) break;
+        await playSnd(await loadSnd(item.word));
+        if (_wcPlayId !== myId) break;
+        await new Promise(res => setTimeout(res, 1000));
+      }
+      if (_wcPlayId !== myId) break;
+      const mainParts = [item.sentence, item.sentence_ko, item.nuance, item.context, item.everyday_usage]
+        .filter((p): p is string => typeof p === 'string' && p.trim().length > 0);
+      for (const part of mainParts) {
+        if (_wcPlayId !== myId) break;
+        await playSnd(await loadSnd(part));
+      }
+      if (item.examples?.length) {
+        for (const ex of item.examples) {
+          if (_wcPlayId !== myId) break;
+          if (ex.en?.trim()) await playSnd(await loadSnd(ex.en));
+          if (_wcPlayId !== myId) break;
+          if (ex.ko?.trim()) await playSnd(await loadSnd(ex.ko));
+        }
+      }
+      if (_wcPlayId === myId) await new Promise(res => setTimeout(res, 800));
+    }
+    isPlayingAllRef.current = false;
+    setSpeakingIdx(null);
+    setIsPlayingAll(false);
+  }, [sentences]);
 
   if (loading) {
     return (
@@ -1203,7 +1588,18 @@ const SentenceReviewView = React.memo(({ sentences, loading }: { sentences: Revi
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.listContent}>
+    <View style={{ flex: 1 }}>
+      <View style={styles.filterBar}>
+        <TouchableOpacity
+          style={[styles.filterButton, isPlayingAll && styles.filterButtonActive]}
+          onPress={playAllSentences}
+        >
+          <Text style={[styles.filterButtonText, isPlayingAll && styles.filterButtonTextActive]}>
+            {isPlayingAll ? '⏹ 정지' : '▶ 모두 재생'}
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <ScrollView contentContainerStyle={styles.listContent}>
       {sentences.map((item, idx) => {
         const isOpen = expanded[idx] ?? false;
         const highlighted = item.sentence.replace(
@@ -1269,7 +1665,8 @@ const SentenceReviewView = React.memo(({ sentences, loading }: { sentences: Revi
           </TouchableOpacity>
         );
       })}
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 });
 

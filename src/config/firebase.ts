@@ -1,6 +1,10 @@
 import { initializeApp, getApps } from 'firebase/app';
 import { getDatabase } from 'firebase/database';
-import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
+import { initializeAuth } from 'firebase/auth';
+// Metro resolves @firebase/auth to the RN bundle which exports this.
+// TypeScript resolves to browser types first (exports map order), so we use require.
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const { getReactNativePersistence } = require('@firebase/auth');
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const firebaseConfig = {
