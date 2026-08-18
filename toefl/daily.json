@@ -1,178 +1,118 @@
 {
   "date": "2026-08-19",
   "reading": {
-    "title": "Cognitive Load Theory and Memory Limitations",
-    "passage": "Cognitive load theory, proposed by psychologist John Sweller in the 1980s, explains how the human mind processes and retains information. The theory posits that working memory has a limited capacity, typically able to hold only five to nine pieces of information simultaneously. When educational materials or tasks exceed this capacity, learners experience cognitive overload, which significantly impairs their ability to encode information into long-term memory. Research has demonstrated that excessive cognitive load leads to decreased performance and retention rates. For instance, students learning complex mathematical procedures while simultaneously memorizing formulas experience greater difficulty than those who focus on one task at a time. Instructional designers now apply cognitive load theory to create more effective learning environments. By reducing extraneous information, organizing content hierarchically, and breaking complex tasks into manageable segments, educators can facilitate better information processing. Furthermore, multimedia principles derived from this theory suggest that combining verbal and visual information optimally enhances comprehension. Understanding these principles has revolutionized educational psychology, making learning more efficient and accessible across diverse populations.",
-    "vocabulary": [
-      {
-        "word": "cognitive load",
-        "meaning_ko": "인지 부하, 정신적 처리 작업량"
-      },
-      {
-        "word": "working memory",
-        "meaning_ko": "작업 기억, 단기 기억"
-      },
-      {
-        "word": "encode",
-        "meaning_ko": "정보를 부호화하다, 기억에 저장하다"
-      },
-      {
-        "word": "extraneous",
-        "meaning_ko": "외부의, 불필요한"
-      },
-      {
-        "word": "hierarchically",
-        "meaning_ko": "계층적으로, 단계별로"
-      },
-      {
-        "word": "multimedia principles",
-        "meaning_ko": "멀티미디어 원칙"
-      },
-      {
-        "word": "impairs",
-        "meaning_ko": "손상하다, 저해하다"
-      }
-    ],
+    "title": "The Impact of Renewable Energy on Modern Society",
+    "passage": "Renewable energy sources such as solar and wind power have revolutionized the global energy landscape in recent years. Countries worldwide are increasingly investing in these sustainable alternatives to reduce carbon emissions and combat climate change. Solar panels convert sunlight directly into electricity, while wind turbines harness kinetic energy from moving air. These technologies not only decrease dependence on fossil fuels but also create numerous job opportunities in installation and maintenance sectors. Despite initial high costs, the long-term economic and environmental benefits make renewable energy a viable solution for future generations.",
     "questions": [
       {
-        "q": "According to the passage, what is the typical capacity of working memory?",
+        "q": "According to the passage, what are two main types of renewable energy mentioned?",
         "options": [
-          "Two to four pieces of information",
-          "Five to nine pieces of information",
-          "Ten to fifteen pieces of information",
-          "More than twenty pieces of information"
+          "A) Hydroelectric and geothermal",
+          "B) Solar and wind power",
+          "C) Nuclear and coal",
+          "D) Natural gas and biomass"
         ],
         "answer": 1,
-        "explanation": "지문 첫 번째 문장에서 'working memory has a limited capacity, typically able to hold only five to nine pieces of information simultaneously'라고 명시되어 있습니다."
+        "explanation": "본문에서 'Solar panels'과 'wind turbines'이 명시적으로 언급되었습니다. 따라서 태양광과 풍력이 두 가지 재생에너지 유형입니다."
       },
       {
-        "q": "What can be inferred from the passage about students learning mathematical procedures?",
+        "q": "Which of the following is NOT mentioned as a benefit of renewable energy?",
         "options": [
-          "They should memorize all formulas before solving problems",
-          "They perform better when focusing on one task at a time",
-          "Mathematics is too difficult for most learners",
-          "Cognitive load theory does not apply to mathematics"
+          "A) Reducing carbon emissions",
+          "B) Creating job opportunities",
+          "C) Decreasing energy costs immediately",
+          "D) Reducing dependence on fossil fuels"
         ],
-        "answer": 1,
-        "explanation": "지문에서 '학생들이 수학 절차를 배우면서 동시에 공식을 암기할 때 더 어려움을 경험한다'고 했으므로, 한 번에 한 과제에 집중할 때 더 잘 수행한다는 것을 추론할 수 있습니다."
+        "answer": 2,
+        "explanation": "본문에서 '초기 높은 비용'과 '장기적 경제적 이점'이 언급되어 있으므로, 즉시적인 에너지 비용 감소는 혜택으로 제시되지 않았습니다."
       },
       {
-        "q": "The word 'impairs' in the first paragraph is closest in meaning to",
+        "q": "What does the passage suggest about the future of renewable energy?",
         "options": [
-          "improves",
-          "damages or weakens",
-          "explains",
-          "supports"
+          "A) It will never replace fossil fuels",
+          "B) It is too expensive to implement",
+          "C) It provides viable long-term solutions",
+          "D) It creates only temporary jobs"
         ],
-        "answer": 1,
-        "explanation": "'impairs'는 '손상하다' 또는 '저해하다'라는 뜻으로, 이 맥락에서는 인지 과부하가 기억력을 '약하게 한다'는 의미입니다."
-      },
-      {
-        "q": "Why does the author mention the example of students learning mathematical procedures?",
-        "options": [
-          "To criticize mathematics education",
-          "To illustrate the negative effects of excessive cognitive load",
-          "To suggest that formulas are unnecessary",
-          "To prove that cognitive load theory is incorrect"
-        ],
-        "answer": 1,
-        "explanation": "저자는 이 예시를 통해 인지 과부하가 실제로 학습 능력에 부정적인 영향을 미친다는 것을 구체적으로 보여주고 있습니다."
+        "answer": 2,
+        "explanation": "'long-term economic and environmental benefits make renewable energy a viable solution for future generations'라는 문장에서 재생에너지의 미래가 긍정적임을 암시하고 있습니다."
       }
     ]
   },
   "writing": {
-    "topic": "저출산 대응 정책의 효과성",
-    "sentences": [
-      {
-        "original": "When educational materials or tasks exceed this capacity, learners experience cognitive overload, which significantly impairs their ability to encode information into long-term memory.",
-        "paraphrase": "The capacity to absorb educational content is substantially damaged when individuals are presented with materials or assignments that surpass their cognitive capabilities, resulting in overload.",
-        "tip": "원인-결과 구조 유지하면서 능동태→수동태로 변환하고, 'exceed'를 'surpass'로 동의어 치환함"
-      },
-      {
-        "original": "Instructional designers now apply cognitive load theory to create more effective learning environments.",
-        "paraphrase": "Contemporary educational professionals utilize principles of cognitive load theory in designing learning spaces that enhance instructional effectiveness.",
-        "tip": "동사구 'apply ~ to create'를 명사구 'utilize ~ in designing'으로 재구성하여 표현 다양화"
-      },
-      {
-        "original": "By reducing extraneous information, organizing content hierarchically, and breaking complex tasks into manageable segments, educators can facilitate better information processing.",
-        "paraphrase": "Educators achieve improved information processing when they remove unnecessary details, arrange material in sequential order, and divide complicated assignments into smaller portions.",
-        "tip": "병렬 구조의 전치사구를 절 구조로 재구성하고, 'extraneous'를 'unnecessary'로 단순화"
-      }
+    "prompt": "Do you agree or disagree with the statement that remote work is more productive than working in a traditional office? Support your opinion with specific reasons and examples.",
+    "structure": {
+      "intro": "의견을 명확하게 제시하는 도입문 작성. 찬성 또는 반대 입장을 직접적으로 표현합니다. (2-3문장)",
+      "body1": "첫 번째 주요 이유를 구체적인 예시와 함께 설명. 주제문으로 시작하고 증거 또는 구체적 사례 포함 (4-5문장)",
+      "body2": "두 번째 주요 이유를 추가적인 설명과 함께 전개. 첫 번째 본론과 상이한 관점 제시 (4-5문장)",
+      "conclusion": "의견을 재정리하고 전체 주제를 요약. 미래의 영향 또는 일반화된 결론으로 마무리 (2-3문장)"
+    },
+    "useful_phrases": [
+      "In my opinion,",
+      "I strongly believe that",
+      "Furthermore,",
+      "In addition,",
+      "For example,",
+      "To illustrate this point,",
+      "On the other hand,",
+      "However,",
+      "In conclusion,",
+      "Therefore,"
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer spending more time with friends. Others prefer spending more time with family. Which do you prefer and why? Include specific reasons and details.",
-    "model_sentences": [
-      "I definitely prefer spending more time with my family because family relationships form the foundation of my life.",
-      "First, my family provides unconditional support during difficult times, which friends sometimes cannot offer to the same extent.",
-      "For example, when I failed my college entrance exam, my parents encouraged me and helped me prepare for the next attempt without judgment.",
-      "Additionally, family bonds are permanent and irreplaceable, whereas friendships can change as we move or enter different life stages.",
-      "In conclusion, while friends are important for social development, family is the most essential relationship to prioritize in my life."
+    "prompt": "Some people prefer learning new skills through online courses. Others prefer learning through traditional classroom settings. Which do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer... because...",
+      "One reason is that...",
+      "Another advantage is...",
+      "For example,",
+      "I believe this is important because...",
+      "In addition to that,",
+      "Let me explain why I think this way."
+    ],
+    "sample_points": [
+      "온라인 학습은 시간과 장소의 제약이 없어 바쁜 일정을 가진 사람들에게 유연성을 제공합니다.",
+      "전통 교실 학습은 강사와의 직접 상호작용과 동료 학생들과의 협력을 통해 더 깊이 있는 이해를 돕습니다."
     ]
   },
   "listening": {
-    "title": "경제학 강의: 공급과 수요의 기본 원리",
-    "type": "lecture",
-    "script": "Professor: Today, we're going to discuss one of the most fundamental concepts in economics: supply and demand. The law of demand states that when the price of a good increases, the quantity demanded by consumers decreases, assuming all other factors remain constant. Conversely, the law of supply indicates that when prices rise, suppliers are willing to produce more goods. Now, let's consider a practical example. Imagine the price of coffee increases dramatically. What happens? First, consumers reduce their coffee purchases because it becomes more expensive. Simultaneously, coffee producers see higher profits and increase production. Eventually, these two forces interact at what we call the equilibrium point, where the quantity supplied equals the quantity demanded. At this point, the market clears, and there's no tendency for prices to change further. This fundamental principle explains price fluctuations in virtually every market, from housing to technology. Understanding supply and demand helps us predict market behavior and make informed economic decisions.",
-    "vocabulary": [
-      {
-        "word": "law of demand",
-        "meaning_ko": "수요의 법칙"
-      },
-      {
-        "word": "quantity demanded",
-        "meaning_ko": "수요량"
-      },
-      {
-        "word": "equilibrium point",
-        "meaning_ko": "균형점"
-      },
-      {
-        "word": "market clears",
-        "meaning_ko": "시장이 청산되다"
-      },
-      {
-        "word": "fluctuations",
-        "meaning_ko": "변동, 변화"
-      },
-      {
-        "word": "converge",
-        "meaning_ko": "수렴하다, 만나다"
-      }
-    ],
+    "title": "Student-Professor Conference about Research Project",
+    "type": "conversation",
+    "script": "Professor: Hi Sarah, I reviewed your research proposal for the environmental science project. Overall, it's quite impressive, but I have some suggestions. Sarah: Thank you, Professor. I'd appreciate your feedback. Professor: Well, your topic about urban green spaces is excellent, but your methodology section needs more detail. You should specify exactly how you'll collect data and which areas you'll study. Also, consider adding more recent studies to your literature review. Sarah: I see. So you want me to be more specific about my research methods and include newer sources? Professor: Exactly. Additionally, your timeline seems a bit ambitious. You've planned to complete interviews with 50 residents in just three weeks. Maybe increase that to five weeks and focus on quality over quantity. Sarah: That makes sense. I'll revise the proposal and submit it next week. Professor: Excellent. I'm confident your revised version will be much stronger.",
     "questions": [
       {
-        "q": "What is the main topic of the lecture?",
+        "q": "What is the main purpose of this conversation?",
         "options": [
-          "The history of coffee prices",
-          "How supply and demand determine market prices",
-          "Methods for increasing consumer spending",
-          "Strategies for producers to reduce costs"
+          "A) To discuss the professor's research experience",
+          "B) To provide feedback on Sarah's research proposal",
+          "C) To explain environmental science concepts",
+          "D) To recruit participants for a study"
         ],
         "answer": 1,
-        "explanation": "교수는 경제학의 기본 개념인 공급과 수요에 대해 설명하고 있습니다. 이것이 강의의 주요 주제입니다."
+        "explanation": "교수가 Sarah의 연구 제안서를 검토하고 피드백을 제공하는 것이 대화의 주요 목적입니다."
       },
       {
-        "q": "According to the professor, what happens at the equilibrium point?",
+        "q": "According to the professor, which aspect of Sarah's proposal needs the most improvement?",
         "options": [
-          "Consumers stop buying products",
-          "Producers stop making goods",
-          "The quantity supplied equals the quantity demanded",
-          "Prices increase indefinitely"
+          "A) The topic selection",
+          "B) The data collection methodology and timeline",
+          "C) The introduction section",
+          "D) The conclusion"
+        ],
+        "answer": 1,
+        "explanation": "교수는 methodology 섹션을 더 상세하게 작성할 필요가 있고, 타임라인이 너무 야심차다고 지적했습니다."
+      },
+      {
+        "q": "What does the professor suggest Sarah should do regarding the timeline?",
+        "options": [
+          "A) Complete the project in two weeks",
+          "B) Keep the original three-week schedule",
+          "C) Extend it to five weeks and focus on quality",
+          "D) Interview 50 residents in one week"
         ],
         "answer": 2,
-        "explanation": "교수가 명시적으로 '균형점에서 공급량과 수요량이 같다'고 설명했습니다."
-      },
-      {
-        "q": "Why does the professor use coffee as an example?",
-        "options": [
-          "To show that coffee is the most important commodity",
-          "To illustrate how supply and demand principles work in a practical market situation",
-          "To argue that coffee prices are too high",
-          "To demonstrate that producers always make profits"
-        ],
-        "answer": 1,
-        "explanation": "교수는 커피 가격 상승이라는 구체적인 예시를 통해 공급과 수요의 원리가 실제로 어떻게 작동하는지 설명하고 있습니다."
+        "explanation": "교수는 3주를 5주로 연장하고, 양보다 질을 중시하라고 조언했습니다."
       }
     ]
   }
