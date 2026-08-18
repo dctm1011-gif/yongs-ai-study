@@ -2234,5 +2234,65 @@
     "explanation": "어떤 일을 열정적으로 기꺼이 하려는 태도. TOEFL 지문의 인물 묘사에 자주 나와요.",
     "tip": "동의어: eagerness, willingness, promptness. 반의어: reluctance, hesitation.",
     "emoji": "⚡"
+  },
+  {
+    "id": "perfidious",
+    "word": "perfidious",
+    "pos": "형용사",
+    "date": "2026-08-19",
+    "meaning": "배신적인, 불성실한",
+    "example_ko": "배신적인 동맹국이 결정적인 순간에 동맹을 배반했어요.",
+    "example_en": "The perfidious ally betrayed the alliance at a critical moment.",
+    "explanation": "믿음이나 충성심을 저버리는 것. TOEFL 역사·문학 지문에 등장해요.",
+    "tip": "동의어: treacherous, disloyal, deceitful. 반의어: loyal, faithful.",
+    "emoji": "🗡️"
+  },
+  {
+    "id": "obsequious",
+    "word": "obsequious",
+    "pos": "형용사",
+    "date": "2026-08-19",
+    "meaning": "아첨하는, 굽실거리는",
+    "example_ko": "상사에게 굽실거리는 그의 태도가 동료들을 불편하게 만들었어요.",
+    "example_en": "His obsequious behavior toward the boss made colleagues uncomfortable.",
+    "explanation": "지나치게 복종적이거나 아첨하는 태도. 문학·사회 지문에서 인물 묘사에 자주 써요.",
+    "tip": "동의어: servile, fawning, sycophantic. 반의어: assertive, confident.",
+    "emoji": "🙇"
+  },
+  {
+    "id": "veracious",
+    "word": "veracious",
+    "pos": "형용사",
+    "date": "2026-08-19",
+    "meaning": "진실된, 정직한",
+    "example_ko": "역사 연구에서 사건의 진실된 기술은 필수적이에요.",
+    "example_en": "A veracious account of events is essential in historical research.",
+    "explanation": "사실에 충실하고 거짓이 없는 것. TOEFL 학술 글쓰기·읽기 지문 핵심 어휘예요.",
+    "tip": "동의어: truthful, honest, candid. 반의어: mendacious, deceitful.",
+    "emoji": "✅"
+  },
+  {
+    "id": "querulous",
+    "word": "querulous",
+    "pos": "형용사",
+    "date": "2026-08-19",
+    "meaning": "불평이 많은, 투덜거리는",
+    "example_ko": "불평이 많은 고객은 사소한 세부 사항마다 불만을 표했어요.",
+    "example_en": "The querulous customer complained about every minor detail.",
+    "explanation": "사소한 것에도 불만을 표현하는 성향. TOEFL 문학·인물 묘사 지문에 나와요.",
+    "tip": "동의어: complaining, grumbling, peevish. 반의어: content, easygoing.",
+    "emoji": "😒"
+  },
+  {
+    "id": "precipitous",
+    "word": "precipitous",
+    "pos": "형용사",
+    "date": "2026-08-19",
+    "meaning": "가파른, 급격한",
+    "example_ko": "주가의 급격한 하락이 투자자들을 불안하게 만들었어요.",
+    "example_en": "The precipitous decline in stock prices alarmed investors.",
+    "explanation": "물리적 경사가 매우 가파르거나 변화가 갑작스러운 것. TOEFL 지리·경제 지문에 자주 나와요.",
+    "tip": "동의어: steep, abrupt, sudden. 반의어: gradual, gentle. 물리적·추상적 모두 사용 가능.",
+    "emoji": "📉"
   }
 ]
