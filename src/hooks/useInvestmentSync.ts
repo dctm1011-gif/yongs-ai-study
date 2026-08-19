@@ -82,6 +82,13 @@ export interface DongEntry {
   yearlyData: BoxPlotPoint[]; // 10년 시계열 (label = "2016년" 등)
 }
 
+export interface JukjeonComplex {
+  name: string;
+  medianPrice: number; // 억원
+  tradeCount: number;
+  refMonth: string;    // "26.07" 형식
+}
+
 export interface DongChartEntry {
   area: string;   // "수지" | "동탄"
   title: string;
@@ -241,6 +248,7 @@ export function useInvestmentSync() {
   const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
   const [dongCharts, setDongCharts] = useState<DongChartEntry[]>([]);
   const [regionCharts, setRegionCharts] = useState<RegionChartEntry[]>([]);
+  const [jukjeonComplexes, setJukjeonComplexes] = useState<JukjeonComplex[]>([]);
   const [taxPolicySummary, setTaxPolicySummary] = useState<{ text: string; updatedAt: string } | null>(null);
   const [jongbuseSummary, setJongbuseSummary] = useState<{ text: string; updatedAt: string } | null>(null);
   const [bookmarks, setBookmarks] = useState<string[]>([]);
@@ -304,6 +312,22 @@ export function useInvestmentSync() {
     return () => unsubscribe();
   }, []);
 
+  // 죽전동 단지별 데이터는 별도 경로에서 독립적으로 읽음 (daily 갱신과 무관)
+  useEffect(() => {
+    const db = getDatabase(getFirebaseApp());
+    const unsubscribe = onValue(
+      ref(db, 'investment/jukjeonComplexes'),
+      snapshot => {
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          if (Array.isArray(data)) setJukjeonComplexes(data);
+        }
+      },
+      err => console.error('[useInvestmentSync] jukjeonComplexes error:', err)
+    );
+    return () => unsubscribe();
+  }, []);
+
   const syncData = useCallback(async () => {
     const db = getDatabase(getFirebaseApp());
     const today = getKSTDateString();
@@ -358,6 +382,7 @@ export function useInvestmentSync() {
     newsArticles,
     dongCharts,
     regionCharts,
+    jukjeonComplexes,
     taxPolicySummary,
     jongbuseSummary,
     bookmarks,

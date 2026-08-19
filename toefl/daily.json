@@ -1,118 +1,173 @@
 {
-  "date": "2026-08-19",
+  "date": "2026-08-20",
   "reading": {
-    "title": "The Impact of Renewable Energy on Modern Society",
-    "passage": "Renewable energy sources such as solar and wind power have revolutionized the global energy landscape in recent years. Countries worldwide are increasingly investing in these sustainable alternatives to reduce carbon emissions and combat climate change. Solar panels convert sunlight directly into electricity, while wind turbines harness kinetic energy from moving air. These technologies not only decrease dependence on fossil fuels but also create numerous job opportunities in installation and maintenance sectors. Despite initial high costs, the long-term economic and environmental benefits make renewable energy a viable solution for future generations.",
+    "title": "Plate Tectonics and Mountain Formation",
+    "passage": "The Earth's crust is divided into several large plates that constantly move at rates of centimeters per year, a process known as plate tectonics. When two continental plates converge, they create enormous compressional forces that push rock layers upward, forming mountain ranges. The Himalayas, for instance, have been rising for over 40 million years due to the collision between the Indian and Eurasian plates. This collision continues today, causing the mountains to grow at approximately 5 millimeters annually. Beyond mountain formation, plate tectonics profoundly influences global climate patterns and the distribution of natural resources. When plates diverge at mid-ocean ridges, new oceanic crust is generated, while subduction zones, where plates collide and one descends beneath the other, recycle crustal material back into the mantle. These dynamic processes have shaped our planet's surface and continue to drive geological change. Understanding plate tectonics is essential for geologists to predict earthquakes, volcanic eruptions, and to explain the distribution of mineral deposits worldwide.",
+    "vocabulary": [
+      {
+        "word": "converge",
+        "meaning_ko": "수렴하다, 모여들다"
+      },
+      {
+        "word": "compressional",
+        "meaning_ko": "압축의, 압력을 가하는"
+      },
+      {
+        "word": "subduction",
+        "meaning_ko": "섭입, 한 판이 다른 판 아래로 밀려 내려가는 과정"
+      },
+      {
+        "word": "crustal",
+        "meaning_ko": "지각의, 지표면의"
+      },
+      {
+        "word": "mantle",
+        "meaning_ko": "맨틀, 지각 아래의 암석층"
+      },
+      {
+        "word": "diverge",
+        "meaning_ko": "벌어지다, 갈라지다"
+      },
+      {
+        "word": "profoundly",
+        "meaning_ko": "깊이 있게, 크게"
+      }
+    ],
     "questions": [
       {
-        "q": "According to the passage, what are two main types of renewable energy mentioned?",
+        "q": "According to the passage, what happens when two continental plates converge?",
         "options": [
-          "A) Hydroelectric and geothermal",
-          "B) Solar and wind power",
-          "C) Nuclear and coal",
-          "D) Natural gas and biomass"
+          "They slide horizontally past each other.",
+          "They create compressional forces that push rock layers upward.",
+          "They separate and form new oceanic crust.",
+          "They sink into the mantle together."
         ],
         "answer": 1,
-        "explanation": "본문에서 'Solar panels'과 'wind turbines'이 명시적으로 언급되었습니다. 따라서 태양광과 풍력이 두 가지 재생에너지 유형입니다."
+        "explanation": "지문에서 'When two continental plates converge, they create enormous compressional forces that push rock layers upward'라고 명시되어 있습니다."
       },
       {
-        "q": "Which of the following is NOT mentioned as a benefit of renewable energy?",
+        "q": "What can be inferred from the passage about the Himalayas?",
         "options": [
-          "A) Reducing carbon emissions",
-          "B) Creating job opportunities",
-          "C) Decreasing energy costs immediately",
-          "D) Reducing dependence on fossil fuels"
+          "They stopped growing 40 million years ago.",
+          "They are no longer affected by plate collision.",
+          "They are still in the process of rising.",
+          "They formed due to oceanic plate divergence."
         ],
         "answer": 2,
-        "explanation": "본문에서 '초기 높은 비용'과 '장기적 경제적 이점'이 언급되어 있으므로, 즉시적인 에너지 비용 감소는 혜택으로 제시되지 않았습니다."
+        "explanation": "지문에서 '이 충돌이 오늘날도 계속되고 있으며, 산들이 연간 약 5밀리미터 성장하고 있다'고 나와있어 현재도 상승 중임을 알 수 있습니다."
       },
       {
-        "q": "What does the passage suggest about the future of renewable energy?",
+        "q": "The word 'recycle' in the passage is closest in meaning to",
         "options": [
-          "A) It will never replace fossil fuels",
-          "B) It is too expensive to implement",
-          "C) It provides viable long-term solutions",
-          "D) It creates only temporary jobs"
+          "Create new material",
+          "Destroy permanently",
+          "Return to and use again",
+          "Store for future use"
         ],
         "answer": 2,
-        "explanation": "'long-term economic and environmental benefits make renewable energy a viable solution for future generations'라는 문장에서 재생에너지의 미래가 긍정적임을 암시하고 있습니다."
+        "explanation": "'Recycle'은 '다시 사용하다' 또는 '순환시키다'는 의미로, 섭입대에서 지각물질이 맨틀로 돌아가는 과정을 설명합니다."
+      },
+      {
+        "q": "Why does the author mention that plate tectonics influences the distribution of mineral deposits?",
+        "options": [
+          "To explain why mountains form in specific locations",
+          "To demonstrate the practical importance of understanding plate tectonics",
+          "To show that minerals only form at divergent boundaries",
+          "To argue that mineral resources are equally distributed globally"
+        ],
+        "answer": 1,
+        "explanation": "지문의 마지막 부분에서 광물 자원 분포를 포함하여 지구과학적 현상을 예측하고 설명하는 판구조론의 실질적 중요성을 강조합니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement that remote work is more productive than working in a traditional office? Support your opinion with specific reasons and examples.",
-    "structure": {
-      "intro": "의견을 명확하게 제시하는 도입문 작성. 찬성 또는 반대 입장을 직접적으로 표현합니다. (2-3문장)",
-      "body1": "첫 번째 주요 이유를 구체적인 예시와 함께 설명. 주제문으로 시작하고 증거 또는 구체적 사례 포함 (4-5문장)",
-      "body2": "두 번째 주요 이유를 추가적인 설명과 함께 전개. 첫 번째 본론과 상이한 관점 제시 (4-5문장)",
-      "conclusion": "의견을 재정리하고 전체 주제를 요약. 미래의 영향 또는 일반화된 결론으로 마무리 (2-3문장)"
-    },
-    "useful_phrases": [
-      "In my opinion,",
-      "I strongly believe that",
-      "Furthermore,",
-      "In addition,",
-      "For example,",
-      "To illustrate this point,",
-      "On the other hand,",
-      "However,",
-      "In conclusion,",
-      "Therefore,"
+    "sentences": [
+      {
+        "original": "The Earth's crust is divided into several large plates that constantly move at rates of centimeters per year, a process known as plate tectonics.",
+        "paraphrase": "Plate tectonics, the movement of several large crustal divisions at centimeter-per-year rates, causes the Earth's surface to undergo constant change.",
+        "tip": "관계절(that constantly move) → 동명사구(the movement of)로 변환하고 주어를 구체화했습니다."
+      },
+      {
+        "original": "When two continental plates converge, they create enormous compressional forces that push rock layers upward, forming mountain ranges.",
+        "paraphrase": "Mountain ranges are formed as a result of enormous compressional forces generated by converging continental plates, which push rock layers upward.",
+        "tip": "능동→수동 변환 (형성의 원인을 명확히 하며 주어를 'Mountain ranges'로 이동)"
+      },
+      {
+        "original": "These dynamic processes have shaped our planet's surface and continue to drive geological change.",
+        "paraphrase": "The ongoing shaping of our planet's surface and the continuous driving of geological change are attributable to these dynamic processes.",
+        "tip": "동사(shaped, drive) → 명사(shaping, driving)로 명사화하여 학술적 톤을 강화했습니다."
+      }
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer learning new skills through online courses. Others prefer learning through traditional classroom settings. Which do you prefer and why?",
-    "useful_expressions": [
-      "In my opinion, I prefer... because...",
-      "One reason is that...",
-      "Another advantage is...",
-      "For example,",
-      "I believe this is important because...",
-      "In addition to that,",
-      "Let me explain why I think this way."
-    ],
-    "sample_points": [
-      "온라인 학습은 시간과 장소의 제약이 없어 바쁜 일정을 가진 사람들에게 유연성을 제공합니다.",
-      "전통 교실 학습은 강사와의 직접 상호작용과 동료 학생들과의 협력을 통해 더 깊이 있는 이해를 돕습니다."
+    "prompt": "Some people prefer to study alone, while others prefer to study in groups. Which do you prefer and why? Include specific reasons and details.",
+    "model_sentences": [
+      "Personally, I prefer studying in groups because I think collaborative learning is more effective than studying alone.",
+      "First, when I study with others, I can explain difficult concepts to my classmates, which helps me understand the material better.",
+      "For example, last semester I studied for my biology exam with two friends, and by teaching them about photosynthesis, I realized gaps in my own knowledge that I was able to fill.",
+      "Additionally, group study keeps me motivated and accountable because I don't want to let my study partners down.",
+      "Therefore, I believe that studying in groups not only improves academic performance but also develops important collaborative skills."
     ]
   },
   "listening": {
-    "title": "Student-Professor Conference about Research Project",
+    "title": "Course Registration Problem",
     "type": "conversation",
-    "script": "Professor: Hi Sarah, I reviewed your research proposal for the environmental science project. Overall, it's quite impressive, but I have some suggestions. Sarah: Thank you, Professor. I'd appreciate your feedback. Professor: Well, your topic about urban green spaces is excellent, but your methodology section needs more detail. You should specify exactly how you'll collect data and which areas you'll study. Also, consider adding more recent studies to your literature review. Sarah: I see. So you want me to be more specific about my research methods and include newer sources? Professor: Exactly. Additionally, your timeline seems a bit ambitious. You've planned to complete interviews with 50 residents in just three weeks. Maybe increase that to five weeks and focus on quality over quantity. Sarah: That makes sense. I'll revise the proposal and submit it next week. Professor: Excellent. I'm confident your revised version will be much stronger.",
+    "script": "Student: Professor Kim, I'm really stressed about my course schedule. I registered for your Advanced Economics class, but it conflicts with my Physics lab, which is required for my major.\n\nProfessor: I see. That's a difficult situation. Have you tried contacting the Physics department to see if there's an alternative lab section available?\n\nStudent: I checked, and all the other sections are full. I really need to take your class this semester because it's a prerequisite for next year's courses.\n\nProfessor: Well, I have a few suggestions. First, you could talk to the Physics department chair directly and explain your situation. Sometimes they can make exceptions for students in this predicament. Second, I have a few online materials and recordings from my lectures, which might help if you occasionally miss class.\n\nStudent: That's helpful, but I'm worried about falling behind. What if I drop one course and take it later?\n\nProfessor: That's certainly an option. However, I'd strongly recommend speaking with your academic advisor first. They can help you plan your course sequence so you don't delay graduation. They might also have other solutions you haven't considered.",
+    "vocabulary": [
+      {
+        "word": "prerequisite",
+        "meaning_ko": "선수과목, 필수조건"
+      },
+      {
+        "word": "predicament",
+        "meaning_ko": "곤경, 어려운 상황"
+      },
+      {
+        "word": "exception",
+        "meaning_ko": "예외, 특례"
+      },
+      {
+        "word": "academic advisor",
+        "meaning_ko": "학업 지도 교수, 학사 지도자"
+      },
+      {
+        "word": "course sequence",
+        "meaning_ko": "과목 수강 순서, 교과과정 순서"
+      }
+    ],
     "questions": [
       {
-        "q": "What is the main purpose of this conversation?",
+        "q": "What is the main problem the student is facing?",
         "options": [
-          "A) To discuss the professor's research experience",
-          "B) To provide feedback on Sarah's research proposal",
-          "C) To explain environmental science concepts",
-          "D) To recruit participants for a study"
+          "The Advanced Economics class is full and she cannot register.",
+          "She has a course scheduling conflict between Economics and Physics lab.",
+          "She wants to change her major from Physics to Economics.",
+          "The Physics department will not let her drop the required lab."
         ],
         "answer": 1,
-        "explanation": "교수가 Sarah의 연구 제안서를 검토하고 피드백을 제공하는 것이 대화의 주요 목적입니다."
+        "explanation": "학생은 등록한 경제학 클래스가 필수 물리학 실습과 시간이 겹쳐서 곤경에 처해 있습니다."
       },
       {
-        "q": "According to the professor, which aspect of Sarah's proposal needs the most improvement?",
+        "q": "What does the professor suggest as the first solution?",
         "options": [
-          "A) The topic selection",
-          "B) The data collection methodology and timeline",
-          "C) The introduction section",
-          "D) The conclusion"
+          "Drop the Physics lab and take it next semester.",
+          "Contact the Physics department to find an alternative lab section.",
+          "Attend only the Economics class and skip Physics lab.",
+          "Request a grade exception from the Physics department."
         ],
         "answer": 1,
-        "explanation": "교수는 methodology 섹션을 더 상세하게 작성할 필요가 있고, 타임라인이 너무 야심차다고 지적했습니다."
+        "explanation": "교수는 먼저 물리학 부서에 연락하여 다른 실습 섹션이 있는지 확인해보도록 제안합니다."
       },
       {
-        "q": "What does the professor suggest Sarah should do regarding the timeline?",
+        "q": "Why does the professor recommend talking to an academic advisor?",
         "options": [
-          "A) Complete the project in two weeks",
-          "B) Keep the original three-week schedule",
-          "C) Extend it to five weeks and focus on quality",
-          "D) Interview 50 residents in one week"
+          "To get permission to attend both classes simultaneously.",
+          "To help plan a course sequence and find alternative solutions.",
+          "To request an extension on assignment deadlines.",
+          "To withdraw from the university without penalty."
         ],
-        "answer": 2,
-        "explanation": "교수는 3주를 5주로 연장하고, 양보다 질을 중시하라고 조언했습니다."
+        "answer": 1,
+        "explanation": "교수는 학사 지도자가 학생의 교과과정 순서를 계획하고 졸업 지연을 방지하며 다른 해결책을 제시할 수 있다고 조언합니다."
       }
     ]
   }

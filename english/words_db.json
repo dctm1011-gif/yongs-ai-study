@@ -2294,5 +2294,65 @@
     "explanation": "물리적 경사가 매우 가파르거나 변화가 갑작스러운 것. TOEFL 지리·경제 지문에 자주 나와요.",
     "tip": "동의어: steep, abrupt, sudden. 반의어: gradual, gentle. 물리적·추상적 모두 사용 가능.",
     "emoji": "📉"
+  },
+  {
+    "id": "attenuate",
+    "word": "attenuate",
+    "pos": "동사",
+    "date": "2026-08-20",
+    "meaning": "약화시키다, 감소시키다, 희박하게 하다",
+    "example_ko": "백신은 감염자의 COVID-19 증상의 심각도를 약화시켜요.",
+    "example_en": "The vaccine attenuates the severity of COVID-19 symptoms in infected individuals.",
+    "explanation": "신호, 영향력, 강도 등을 점진적으로 약하게 만드는 것. 과학·의학·경제학 지문에서 자주 출제돼요.",
+    "tip": "동의어: diminish(감소), weaken(약해지다), reduce(줄이다). 반의어: amplify(증폭), intensify(강화). Reading·Listening 고빈출. 의학/물리학 용어.",
+    "emoji": "📉"
+  },
+  {
+    "id": "antithetical",
+    "word": "antithetical",
+    "pos": "형용사",
+    "date": "2026-08-20",
+    "meaning": "정반대의, 모순되는, 양립할 수 없는",
+    "example_ko": "개인주의는 문화철학에서 집단주의와 정반대예요.",
+    "example_en": "Individualism is antithetical to collectivism in cultural philosophy.",
+    "explanation": "두 개념이나 입장이 근본적으로 대립하고 양립 불가능한 상태. 비교·대조 문제에서 필수 어휘예요.",
+    "tip": "동의어: contradictory(모순적인), contrary(반대의), opposing(대립적인). 반의어: compatible(양립 가능한). Writing·Reading 비교 구조 단골.",
+    "emoji": "⚔️"
+  },
+  {
+    "id": "aver",
+    "word": "aver",
+    "pos": "동사",
+    "date": "2026-08-20",
+    "meaning": "단호히 주장하다, 확언하다, 단정짓다",
+    "example_ko": "연구자는 데이터가 가설을 명백히 입증한다고 단호히 주장했어요.",
+    "example_en": "The researcher averred that the data conclusively supported the hypothesis.",
+    "explanation": "강한 확신을 가지고 어떤 사실을 단호하게 주장하거나 선언하는 것. 학술 논문·법률문 지문에서 빈출.",
+    "tip": "동의어: assert(주장), avow(맹세하다), maintain(유지하다), claim(주장). 반의어: deny(부인), disclaim(거부). Formal/Academic 문맥에서만 사용. Reading 고난이도 지문.",
+    "emoji": "🗣️"
+  },
+  {
+    "id": "byzantine",
+    "word": "byzantine",
+    "pos": "형용사",
+    "date": "2026-08-20",
+    "meaning": "복잡하고 헷갈리는, 미로 같은, (역사) 비잔틴의",
+    "example_ko": "그 회사의 복잡한 관료 체계는 빠른 승인을 거의 불가능하게 했어요.",
+    "example_en": "The company's byzantine bureaucracy made it nearly impossible to get approval quickly.",
+    "explanation": "매우 복잡하고 이해하기 어려운 체계나 과정을 묘사. 통상·정치·조직 구조 지문에서 자주 나와요.",
+    "tip": "동의어: labyrinthine(미로 같은), convoluted(복잡한), intricate(정교한). 대문자 Byzantine(비잔틴 제국)와 구별. Reading·Writing 고난도.",
+    "emoji": "🌀"
+  },
+  {
+    "id": "casuistry",
+    "word": "casuistry",
+    "pos": "명사",
+    "date": "2026-08-20",
+    "meaning": "궤변, 교묘한 논법, 핑계 찾기",
+    "example_ko": "그 정치인의 궤변은 모순된 발언을 위선처럼 보이지 않게 정당화했어요.",
+    "example_en": "The politician's casuistry allowed him to justify contradictory statements without appearing hypocritical.",
+    "explanation": "도덕적·논리적 문제를 교묘한 논증으로 정당화하려는 행위. 철학·윤리학·정치학 지문에서 고난도 어휘.",
+    "tip": "동의어: sophistry(궤변), equivocation(애매한 표현), rationalization(합리화). 부정적 뉘앙스. Reading 최상위 난도 지문.",
+    "emoji": "🤥"
   }
 ]

@@ -784,6 +784,78 @@ def get_all_regions_chart_data(target_date: date, service_key: str) -> list[dict
     return chart_data
 
 
+def fetch_jukjeon_complex_prices(service_key: str, months: int = 3) -> list[dict]:
+    """수지구 죽전동 아파트 단지별 최근 실거래가 집계.
+    최근 months개월치 거래를 수집해 단지별 중앙값(억원)과 거래건수를 반환한다.
+    거래 없는 단지는 제외. 결과는 medianPrice 내림차순 정렬.
+    """
+    lawd_cd = "41465"
+    umd_target = "죽전동"
+    today = date.today()
+
+    # 단지별 거래금액 목록 + 가장 최근 거래월 추적
+    prices_by_apt: dict[str, list[int]] = {}
+    latest_month_by_apt: dict[str, str] = {}
+
+    for m in range(months):
+        # months개월 전부터 최근 순으로 탐색
+        year = today.year
+        month = today.month - m
+        while month <= 0:
+            month += 12
+            year -= 1
+        deal_ymd = f"{year}{month:02d}"
+        ref_label = f"{str(year)[2:]}.{month:02d}"
+
+        try:
+            page_no = 1
+            while True:
+                root = _fetch_page(lawd_cd, deal_ymd, service_key, page_no)
+                result_code = root.findtext(".//resultCode")
+                if result_code not in (None, "00", "000"):
+                    break
+                items = root.findall(".//item")
+                for item in items:
+                    umd = (item.findtext("umdNm") or "").strip()
+                    if umd != umd_target:
+                        continue
+                    apt_nm = (item.findtext("aptNm") or "").strip()
+                    amount_raw = (item.findtext("dealAmount") or "").replace(",", "").strip()
+                    if not apt_nm or not amount_raw:
+                        continue
+                    try:
+                        amount = int(amount_raw)
+                    except ValueError:
+                        continue
+                    prices_by_apt.setdefault(apt_nm, []).append(amount)
+                    if apt_nm not in latest_month_by_apt:
+                        latest_month_by_apt[apt_nm] = ref_label
+                total_count = int(root.findtext(".//totalCount", default="0") or 0)
+                if page_no * 1000 >= total_count:
+                    break
+                page_no += 1
+        except Exception as e:
+            print(f"[!] 죽전동 단지 조회 실패 ({deal_ymd}): {e}")
+
+    results = []
+    for apt_nm, prices in prices_by_apt.items():
+        sorted_prices = sorted(prices)
+        n = len(sorted_prices)
+        if n == 0:
+            continue
+        mid = n // 2
+        median_price = sorted_prices[mid] if n % 2 == 1 else (sorted_prices[mid - 1] + sorted_prices[mid]) // 2
+        results.append({
+            "name": apt_nm,
+            "medianPrice": round(median_price / 10000, 2),  # 만원 → 억원
+            "tradeCount": n,
+            "refMonth": latest_month_by_apt.get(apt_nm, ""),
+        })
+
+    results.sort(key=lambda x: x["medianPrice"], reverse=True)
+    return results
+
+
 if __name__ == "__main__":
     key = get_molit_api_key()
     data = get_all_areas_chart_data(date.today(), key)

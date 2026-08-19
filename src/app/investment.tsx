@@ -19,7 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as ScreenOrientation from 'expo-screen-orientation';
-import { useInvestmentSync, InvestmentColumn, BoxPlotPoint, DongChartEntry, DongEntry, DailyTerm, NewsArticle, RegionChartEntry } from '../hooks/useInvestmentSync';
+import { useInvestmentSync, InvestmentColumn, BoxPlotPoint, DongChartEntry, DongEntry, DailyTerm, NewsArticle, RegionChartEntry, JukjeonComplex } from '../hooks/useInvestmentSync';
 import { getDatabase, ref, set as dbSet, get } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
 import { useAuth } from '../context/AuthContext';
@@ -1938,6 +1938,36 @@ const FilterModal: React.FC<FilterModalProps> = React.memo(
   }
 );
 
+const JukjeonComplexBar: React.FC<{ complexes: JukjeonComplex[] }> = React.memo(({ complexes }) => {
+  if (complexes.length === 0) return null;
+
+  return (
+    <View style={{ backgroundColor: '#fff', marginHorizontal: 12, marginVertical: 8, borderRadius: 16, padding: 16, borderWidth: 1, borderColor: '#dbdbdb' }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+        <Text style={{ fontSize: 15, fontWeight: '600', color: '#262626' }}>죽전동 단지별 최신 매매가</Text>
+        <Text style={{ fontSize: 10, color: '#8e8e8e' }}>국토부 실거래 · 중앙값</Text>
+      </View>
+      <View style={{ borderWidth: 1, borderColor: '#dbdbdb', borderRadius: 8, overflow: 'hidden' }}>
+        <View style={{ flexDirection: 'row', backgroundColor: '#fafafa', paddingVertical: 7, paddingHorizontal: 10 }}>
+          <Text style={{ flex: 1, fontSize: 11, fontWeight: '600', color: '#8e8e8e' }}>단지명</Text>
+          <Text style={{ width: 52, fontSize: 11, fontWeight: '600', color: '#8e8e8e', textAlign: 'right' }}>중앙값</Text>
+          <Text style={{ width: 36, fontSize: 11, fontWeight: '600', color: '#8e8e8e', textAlign: 'right' }}>건수</Text>
+          <Text style={{ width: 36, fontSize: 11, fontWeight: '600', color: '#8e8e8e', textAlign: 'right' }}>기준월</Text>
+        </View>
+        {complexes.map((c, idx) => (
+          <View key={idx} style={{ flexDirection: 'row', paddingVertical: 7, paddingHorizontal: 10, backgroundColor: idx % 2 === 1 ? '#fafafa' : '#fff', borderTopWidth: 1, borderTopColor: '#f0f0f0' }}>
+            <Text style={{ flex: 1, fontSize: 12, color: '#262626' }} numberOfLines={1}>{c.name}</Text>
+            <Text style={{ width: 52, fontSize: 12, fontWeight: '600', color: '#0095f6', textAlign: 'right' }}>{c.medianPrice}억</Text>
+            <Text style={{ width: 36, fontSize: 11, color: '#8e8e8e', textAlign: 'right' }}>{c.tradeCount}건</Text>
+            <Text style={{ width: 36, fontSize: 10, color: '#8e8e8e', textAlign: 'right' }}>{c.refMonth}</Text>
+          </View>
+        ))}
+      </View>
+      <Text style={{ fontSize: 9, color: '#8e8e8e', marginTop: 6 }}>출처: 국토교통부 실거래가 · 최근 3개월 기준</Text>
+    </View>
+  );
+});
+
 export default function InvestmentScreen() {
   const { user } = useAuth();
   const uid = user!.uid;
@@ -1947,6 +1977,7 @@ export default function InvestmentScreen() {
     newsArticles,
     dongCharts,
     regionCharts,
+    jukjeonComplexes,
     taxPolicySummary,
     jongbuseSummary,
     bookmarks,
@@ -2071,6 +2102,7 @@ export default function InvestmentScreen() {
         >
           {termOfDay && <TermOfDayCard term={termOfDay} />}
           {regionCharts.length > 0 && <RegionBrowser regionCharts={regionCharts} />}
+          <JukjeonComplexBar complexes={jukjeonComplexes} />
           <View style={styles.footer}>
             <Text style={styles.footerText}>모든 정보는 {footerText} 기준입니다</Text>
           </View>
