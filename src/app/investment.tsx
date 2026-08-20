@@ -28,7 +28,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as ScreenOrientation from 'expo-screen-orientation';
-import { useInvestmentSync, InvestmentColumn, BoxPlotPoint, DongChartEntry, DongEntry, DailyTerm, NewsArticle, RegionChartEntry, JukjeonComplex } from '../hooks/useInvestmentSync';
+import { useInvestmentSync, InvestmentColumn, BoxPlotPoint, DongChartEntry, DongEntry, DailyTerm, NewsArticle, RegionChartEntry, JukjeonComplex, RateChart, RateDataPoint } from '../hooks/useInvestmentSync';
 import { getDatabase, ref, set as dbSet, get } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
 import { useAuth } from '../context/AuthContext';
@@ -2099,7 +2099,7 @@ const RegionBrowserModal: React.FC<{
   </Modal>
 ));
 
-const GU_ORDER = ['수지구', '기흥구', '동탄구'] as const;
+const GU_ORDER = ['수지구', '기흥구', '동탄구', '마포구', '용산구', '성동구'] as const;
 type GuName = typeof GU_ORDER[number];
 const SUJI_DONG_NAMES = ['죽전동', '풍덕천동', '신봉동', '동천동'];
 
@@ -2123,9 +2123,21 @@ function computeDongStat(dong: string, complexes: JukjeonComplex[]) {
   return { dong, dongMedian: Math.round(dongMedian * 10) / 10, monthlyMedians, monthlyTradeCounts, totalCount, refMonth };
 }
 
-const DongTableRow: React.FC<{ stat: NonNullable<ReturnType<typeof computeDongStat>>; idx: number }> = React.memo(({ stat, idx }) => (
+const DongTableRow: React.FC<{ stat: NonNullable<ReturnType<typeof computeDongStat>>; idx: number }> = React.memo(({ stat, idx }) => {
+  const half = Math.floor(stat.monthlyMedians.length / 2);
+  const avg = (arr: number[]) => { const v = arr.filter(x => x > 0); return v.length ? v.reduce((s, x) => s + x, 0) / v.length : 0; };
+  const priceFirst = avg(stat.monthlyMedians.slice(0, half));
+  const priceLast = avg(stat.monthlyMedians.slice(-half));
+  const countFirst = stat.monthlyTradeCounts.slice(0, half).reduce((s, v) => s + v, 0);
+  const countLast = stat.monthlyTradeCounts.slice(-half).reduce((s, v) => s + v, 0);
+  const isDown = priceLast < priceFirst;
+  const dongColor = (priceLast > priceFirst && countLast < countFirst) ? '#ef4444'
+    : (isDown && countLast > countFirst) ? '#1d4ed8'
+    : isDown ? '#60a5fa'
+    : '#262626';
+  return (
   <View style={{ flexDirection: 'row', paddingVertical: 8, paddingHorizontal: 10, backgroundColor: idx % 2 === 1 ? '#fafafa' : '#fff', borderTopWidth: 1, borderTopColor: '#f0f0f0', alignItems: 'center' }}>
-    <Text style={{ width: 72, fontSize: 13, fontWeight: '500', color: '#262626' }}>{stat.dong}</Text>
+    <Text style={{ width: 72, fontSize: 13, fontWeight: '500', color: dongColor }}>{stat.dong}</Text>
     <Text style={{ width: 56, fontSize: 13, fontWeight: '700', color: '#0095f6', textAlign: 'right' }}>{stat.dongMedian.toFixed(1)}억</Text>
     <View style={{ width: 68, alignItems: 'flex-end' }}>
       <MiniSparkBars values={stat.monthlyMedians} activeColor="#7c3aed" inactiveColor="#c4b5fd" />
@@ -2136,7 +2148,8 @@ const DongTableRow: React.FC<{ stat: NonNullable<ReturnType<typeof computeDongSt
     </View>
     <Text style={{ width: 38, fontSize: 10, color: '#8e8e8e', textAlign: 'right' }}>{stat.refMonth}</Text>
   </View>
-));
+  );
+});
 
 const GuSection: React.FC<{
   guName: GuName;
@@ -2185,6 +2198,118 @@ const GuSection: React.FC<{
   );
 });
 
+// ── 금리 바 차트 ──────────────────────────────────────────────────────
+const RateBarChart: React.FC<{
+  data: { label: string; value: number }[];
+  color?: string;
+  highlightColor?: string;
+  showEveryN?: number;
+}> = React.memo(({ data, color = '#93c5fd', highlightColor = '#1d4ed8', showEveryN = 1 }) => {
+  const { width: screenW } = useWindowDimensions();
+  const n = data.length;
+  const GAP = 3;
+  const CHART_H = 72;
+  const availW = screenW - 80;
+  const barW = Math.max(4, Math.floor((availW - GAP * (n - 1)) / n));
+  const vals = data.map(d => d.value);
+  const minV = Math.min(...vals);
+  const maxV = Math.max(...vals);
+  const range = maxV - minV || 0.01;
+  const MIN_BAR = 6;
+  return (
+    <View>
+      <View style={{ height: CHART_H, flexDirection: 'row', alignItems: 'flex-end', width: availW }}>
+        {data.map((d, i) => {
+          const isLast = i === n - 1;
+          const fillH = MIN_BAR + Math.round(((d.value - minV) / range) * (CHART_H - MIN_BAR - 16));
+          return (
+            <View key={i} style={{ width: barW, marginRight: i < n - 1 ? GAP : 0, alignItems: 'center', justifyContent: 'flex-end' }}>
+              {isLast && (
+                <Text style={{ fontSize: 8.5, color: highlightColor, fontWeight: '700', marginBottom: 2 }}>
+                  {d.value.toFixed(2)}
+                </Text>
+              )}
+              <View style={{ height: fillH, width: barW, backgroundColor: isLast ? highlightColor : color, borderRadius: 2 }} />
+            </View>
+          );
+        })}
+      </View>
+      <View style={{ flexDirection: 'row', marginTop: 4, width: availW }}>
+        {data.map((d, i) => (
+          <View key={i} style={{ width: barW, marginRight: i < n - 1 ? GAP : 0 }}>
+            {(i % showEveryN === 0 || i === n - 1) && (
+              <Text style={{ fontSize: 7.5, color: '#9ca3af', textAlign: 'center' }}>{d.label}</Text>
+            )}
+          </View>
+        ))}
+      </View>
+    </View>
+  );
+});
+
+// ── 지표분석 모달 ─────────────────────────────────────────────────────
+const RateAnalysisModal: React.FC<{
+  visible: boolean;
+  onClose: () => void;
+  rateCharts: RateChart[];
+}> = React.memo(({ visible, onClose, rateCharts }) => (
+  <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fafafa' }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 14, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#efefef' }}>
+        <View>
+          <Text style={{ fontSize: 17, fontWeight: '700', color: '#262626' }}>지표분석</Text>
+          <Text style={{ fontSize: 12, color: '#8e8e8e', marginTop: 2 }}>기준금리 · 주택담보대출금리</Text>
+        </View>
+        <TouchableOpacity onPress={onClose} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+          <MaterialIcons name="close" size={24} color="#262626" />
+        </TouchableOpacity>
+      </View>
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingBottom: 40 }} keyboardShouldPersistTaps="handled">
+        {rateCharts.length === 0 ? (
+          <View style={{ padding: 32, alignItems: 'center' }}>
+            <MaterialIcons name="show-chart" size={40} color="#d1d5db" />
+            <Text style={{ color: '#8e8e8e', marginTop: 12 }}>데이터 로딩 중...</Text>
+          </View>
+        ) : rateCharts.map(chart => {
+          const changeColor = chart.change < 0 ? '#1d4ed8' : chart.change > 0 ? '#ef4444' : '#8e8e8e';
+          const changeLabel = `${chart.change >= 0 ? '▲' : '▼'} ${Math.abs(chart.change).toFixed(2)}%p 전월比`;
+          return (
+            <View key={chart.id} style={{ backgroundColor: '#fff', borderRadius: 16, marginHorizontal: 16, marginTop: 16, borderWidth: 1, borderColor: '#e5e7eb', padding: 16 }}>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
+                <View>
+                  <Text style={{ fontSize: 16, fontWeight: '700', color: '#262626' }}>{chart.name}</Text>
+                  <Text style={{ fontSize: 11, color: '#8e8e8e', marginTop: 2 }}>{chart.subtitle}</Text>
+                </View>
+                <View style={{ alignItems: 'flex-end' }}>
+                  <Text style={{ fontSize: 24, fontWeight: '800', color: '#262626' }}>{chart.current.toFixed(2)}%</Text>
+                  <Text style={{ fontSize: 11, color: changeColor, fontWeight: '600', marginTop: 2 }}>{changeLabel}</Text>
+                </View>
+              </View>
+              <Text style={{ fontSize: 12, fontWeight: '600', color: '#374151', marginBottom: 8 }}>연도별 추이</Text>
+              <RateBarChart
+                data={chart.yearlyData.map(d => ({ label: d.year ?? '', value: d.value }))}
+                color="#bfdbfe"
+                highlightColor="#1d4ed8"
+                showEveryN={2}
+              />
+              <Text style={{ fontSize: 12, fontWeight: '600', color: '#374151', marginTop: 16, marginBottom: 8 }}>월별 추이</Text>
+              <RateBarChart
+                data={chart.monthlyData.map(d => ({ label: d.month ?? '', value: d.value }))}
+                color="#93c5fd"
+                highlightColor="#1d4ed8"
+                showEveryN={4}
+              />
+            </View>
+          );
+        })}
+        <Text style={{ fontSize: 10, color: '#9ca3af', textAlign: 'center', marginTop: 20, marginHorizontal: 16 }}>
+          한국은행 공시 기준 · {rateCharts[0]?.updatedAt ?? ''} 기준 업데이트
+        </Text>
+      </ScrollView>
+    </SafeAreaView>
+  </Modal>
+));
+
 const SujiDongCard: React.FC<{ sujiComplexes: Record<string, Record<string, JukjeonComplex[]>> }> = React.memo(({ sujiComplexes }) => {
   const hasAny = GU_ORDER.some(gu => Object.keys(sujiComplexes[gu] ?? {}).length > 0);
   if (!hasAny) return null;
@@ -2192,7 +2317,7 @@ const SujiDongCard: React.FC<{ sujiComplexes: Record<string, Record<string, Jukj
     <View style={{ marginHorizontal: 12, marginTop: 12, backgroundColor: '#fff', borderRadius: 16, borderWidth: 1, borderColor: '#dbdbdb', overflow: 'hidden' }}>
       <View style={{ paddingHorizontal: 16, paddingTop: 14, paddingBottom: 10 }}>
         <Text style={{ fontSize: 15, fontWeight: '600', color: '#262626' }}>동별 매매가</Text>
-        <Text style={{ fontSize: 11, color: '#8e8e8e', marginTop: 2 }}>수지구 · 기흥구 · 동탄구</Text>
+        <Text style={{ fontSize: 11, color: '#8e8e8e', marginTop: 2 }}>수지·기흥·동탄·마포·용산·성동구</Text>
       </View>
       {GU_ORDER.map((gu, i) => (
         <GuSection key={gu} guName={gu} guData={sujiComplexes[gu] ?? {}} isFirst={i === 0} />
@@ -2212,7 +2337,7 @@ const SujiDongModal: React.FC<{
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 14, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#efefef' }}>
         <View>
           <Text style={{ fontSize: 17, fontWeight: '700', color: '#262626' }}>동별 매매가</Text>
-          <Text style={{ fontSize: 12, color: '#8e8e8e', marginTop: 2 }}>수지구 · 기흥구 · 동탄구</Text>
+          <Text style={{ fontSize: 12, color: '#8e8e8e', marginTop: 2 }}>수지·기흥·동탄·마포·용산·성동구</Text>
         </View>
         <PressableScale onPress={onClose} contentStyle={{ padding: 4 }} scaleTo={0.85}>
           <MaterialIcons name="close" size={24} color="#262626" />
@@ -2281,8 +2406,10 @@ const DongComplexTable: React.FC<{ dongName: string; complexes: JukjeonComplex[]
                 const priceFirst = avgP(firstHalf), priceLast = avgP(lastHalf);
                 const countFirst = firstHalf.reduce((s, d) => s + d.count, 0);
                 const countLast = lastHalf.reduce((s, d) => s + d.count, 0);
+                const isDown = priceLast < priceFirst;
                 const nameColor = (priceLast > priceFirst && countLast < countFirst) ? '#ef4444'
-                  : (priceLast < priceFirst && countLast > countFirst) ? '#0095f6'
+                  : (isDown && countLast > countFirst) ? '#1d4ed8'
+                  : isDown ? '#60a5fa'
                   : '#262626';
                 return (
                   <PressableScale
@@ -2373,6 +2500,8 @@ export default function InvestmentScreen() {
     regionCharts,
     sujiComplexes,
     complexUpdateReminder,
+    rateUpdateReminder,
+    rateCharts,
     taxPolicySummary,
     jongbuseSummary,
     bookmarks,
@@ -2392,6 +2521,7 @@ export default function InvestmentScreen() {
   const [sujiModalVisible, setSujiModalVisible] = useState(false);
   const [regionModalVisible, setRegionModalVisible] = useState(false);
   const [dongModalVisible, setDongModalVisible] = useState(false);
+  const [rateModalVisible, setRateModalVisible] = useState(false);
 
   const handleRefresh = useCallback(async () => {
     setRefreshing(true);
@@ -2539,7 +2669,7 @@ export default function InvestmentScreen() {
                 >
                   <View>
                     <Text style={{ fontSize: 15, fontWeight: '600', color: '#262626' }}>동별 매매가</Text>
-                    <Text style={{ fontSize: 12, color: '#8e8e8e', marginTop: 3 }}>수지구 · 기흥구 · 동탄구</Text>
+                    <Text style={{ fontSize: 12, color: '#8e8e8e', marginTop: 3 }}>수지·기흥·동탄·마포·용산·성동구</Text>
                   </View>
                   <MaterialIcons name="chevron-right" size={22} color="#8e8e8e" />
                 </PressableScale>
@@ -2565,6 +2695,54 @@ export default function InvestmentScreen() {
               </FloatingCard>
             </AnimatedCard>
           )}
+          {rateUpdateReminder?.active && (
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => {}}
+              style={{ marginHorizontal: 12, marginTop: 12, backgroundColor: '#eff6ff', borderRadius: 12, borderWidth: 1, borderColor: '#3b82f6', flexDirection: 'row', alignItems: 'center', paddingHorizontal: 14, paddingVertical: 10, gap: 10 }}
+            >
+              <MaterialIcons name="trending-up" size={18} color="#3b82f6" />
+              <View style={{ flex: 1 }}>
+                <Text style={{ fontSize: 13, fontWeight: '600', color: '#1e40af' }}>금리 데이터 업데이트 필요</Text>
+                <Text style={{ fontSize: 11, color: '#3b82f6', marginTop: 2 }}>{rateUpdateReminder.targetMonth} 기준 · fetch_interest_rates.py 실행</Text>
+              </View>
+            </TouchableOpacity>
+          )}
+          {rateCharts.length > 0 && (
+            <AnimatedCard delay={420}>
+              <FloatingCard>
+                <PressableScale
+                  onPress={() => setRateModalVisible(true)}
+                  style={{ marginHorizontal: 12, marginTop: 12 }}
+                  contentStyle={{ backgroundColor: '#fff', borderRadius: 16, borderWidth: 1, borderColor: '#dbdbdb', paddingHorizontal: 16, paddingVertical: 14 }}
+                >
+                  <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <View style={{ flex: 1 }}>
+                      <Text style={{ fontSize: 15, fontWeight: '600', color: '#262626' }}>지표분석</Text>
+                      {rateCharts.map(chart => {
+                        const changeColor = chart.change < 0 ? '#1d4ed8' : chart.change > 0 ? '#ef4444' : '#8e8e8e';
+                        return (
+                          <View key={chart.id} style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5, gap: 6 }}>
+                            <Text style={{ fontSize: 11, color: '#8e8e8e', width: 80 }}>{chart.name}</Text>
+                            <Text style={{ fontSize: 12, fontWeight: '700', color: '#262626' }}>{chart.current.toFixed(2)}%</Text>
+                            <Text style={{ fontSize: 10, color: changeColor }}>
+                              {chart.change < 0 ? '▼' : '▲'}{Math.abs(chart.change).toFixed(2)}
+                            </Text>
+                            <MiniSparkBars
+                              values={chart.monthlyData.slice(-8).map(d => d.value - Math.min(...chart.monthlyData.map(x => x.value)) + 0.01)}
+                              activeColor="#1d4ed8"
+                              inactiveColor="#bfdbfe"
+                            />
+                          </View>
+                        );
+                      })}
+                    </View>
+                    <MaterialIcons name="chevron-right" size={22} color="#8e8e8e" />
+                  </View>
+                </PressableScale>
+              </FloatingCard>
+            </AnimatedCard>
+          )}
           <SujiDongModal
             visible={dongModalVisible}
             onClose={() => setDongModalVisible(false)}
@@ -2574,6 +2752,11 @@ export default function InvestmentScreen() {
             visible={sujiModalVisible}
             onClose={() => setSujiModalVisible(false)}
             sujiComplexes={sujiComplexes}
+          />
+          <RateAnalysisModal
+            visible={rateModalVisible}
+            onClose={() => setRateModalVisible(false)}
+            rateCharts={rateCharts}
           />
           <RegionBrowserModal
             visible={regionModalVisible}

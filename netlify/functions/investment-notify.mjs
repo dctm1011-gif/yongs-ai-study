@@ -27,6 +27,12 @@ export default async () => {
     createdAt: kst.toISOString(),
   });
 
+  await set(ref(db, 'investment/rateUpdateReminder'), {
+    active: true,
+    targetMonth: twoMonthsAgo,
+    createdAt: kst.toISOString(),
+  });
+
   console.log(`[+] 업데이트 알림 설정 완료: ${twoMonthsAgo} 기준`);
   return new Response('ok', { status: 200 });
 };

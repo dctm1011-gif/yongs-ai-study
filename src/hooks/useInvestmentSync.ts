@@ -89,6 +89,24 @@ export interface JukjeonComplex {
   refMonth: string;    // "26.07" 형식
 }
 
+export interface RateDataPoint {
+  month?: string;  // "24.01" (monthly)
+  year?: string;   // "24" (yearly)
+  value: number;
+}
+
+export interface RateChart {
+  id: string;
+  name: string;
+  subtitle: string;
+  current: number;
+  change: number;
+  unit: string;
+  yearlyData: RateDataPoint[];
+  monthlyData: RateDataPoint[];
+  updatedAt: string;
+}
+
 export interface DongChartEntry {
   area: string;   // "수지" | "동탄"
   title: string;
@@ -250,6 +268,8 @@ export function useInvestmentSync() {
   const [regionCharts, setRegionCharts] = useState<RegionChartEntry[]>([]);
   const [sujiComplexes, setSujiComplexes] = useState<Record<string, Record<string, JukjeonComplex[]>>>({});
   const [complexUpdateReminder, setComplexUpdateReminder] = useState<{ active: boolean; targetMonth: string; message: string } | null>(null);
+  const [rateUpdateReminder, setRateUpdateReminder] = useState<{ active: boolean; targetMonth: string } | null>(null);
+  const [rateCharts, setRateCharts] = useState<RateChart[]>([]);
   const [taxPolicySummary, setTaxPolicySummary] = useState<{ text: string; updatedAt: string } | null>(null);
   const [jongbuseSummary, setJongbuseSummary] = useState<{ text: string; updatedAt: string } | null>(null);
   const [bookmarks, setBookmarks] = useState<string[]>([]);
@@ -332,7 +352,20 @@ export function useInvestmentSync() {
         setComplexUpdateReminder(snapshot.exists() ? snapshot.val() : null);
       }
     );
-    return () => { unsubSuji(); unsubReminder(); };
+    const unsubRateReminder = onValue(
+      ref(db, 'investment/rateUpdateReminder'),
+      snapshot => { setRateUpdateReminder(snapshot.exists() ? snapshot.val() : null); }
+    );
+    const unsubRates = onValue(
+      ref(db, 'investment/rateCharts'),
+      snapshot => {
+        if (snapshot.exists()) {
+          const val = snapshot.val();
+          setRateCharts(Array.isArray(val) ? val : Object.values(val));
+        }
+      }
+    );
+    return () => { unsubSuji(); unsubReminder(); unsubRateReminder(); unsubRates(); };
   }, []);
 
   const syncData = useCallback(async () => {
@@ -391,6 +424,8 @@ export function useInvestmentSync() {
     regionCharts,
     sujiComplexes,
     complexUpdateReminder,
+    rateUpdateReminder,
+    rateCharts,
     taxPolicySummary,
     jongbuseSummary,
     bookmarks,
