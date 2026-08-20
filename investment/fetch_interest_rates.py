@@ -1,97 +1,153 @@
 """
-기준금리 / 주택담보대출 금리 데이터 생성 및 Firebase 업로드.
-- 하드코딩 데이터: 2015~2025-08 (정확, 한국은행 공식 발표 기준)
-- 추후 BOK ECOS API 키(ecos.bok.or.kr) 발급 시 자동 갱신 가능
+기준금리 / 주택담보대출 금리 데이터 자동 수집 및 Firebase 업로드.
+- 기준금리:      BOK ECOS API (SAMPLE 키, 무료)  — StatCode 722Y001, ItemCode 0101000
+- 주택담보대출:   KOSIS API (기존 키)              — OrgId 301, TblId DT_121Y006
 Firebase 경로: investment/rateCharts
 """
 import json
 import os
 import subprocess
+import urllib.request
+import urllib.parse
+from datetime import date, timedelta
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMP_JSON = os.path.join(os.path.dirname(os.path.abspath(__file__)), "_rates_tmp.json")
 
+ECOS_SAMPLE_KEY = "sample"
+ECOS_BASE_RATE_STAT = "722Y001"
+ECOS_BASE_RATE_ITEM = "0101000"
 
-def build_rate_data() -> list[dict]:
-    # ── 기준금리 (한국은행 기준금리, 연말 기준) ─────────────────────────────
-    base_yearly = [
-        {"year": "15", "value": 1.50},
-        {"year": "16", "value": 1.25},
-        {"year": "17", "value": 1.50},
-        {"year": "18", "value": 1.75},
-        {"year": "19", "value": 1.25},
-        {"year": "20", "value": 0.50},
-        {"year": "21", "value": 1.00},
-        {"year": "22", "value": 3.25},
-        {"year": "23", "value": 3.50},
-        {"year": "24", "value": 3.00},
-        {"year": "25", "value": 2.50},
-    ]
-    base_monthly = [
-        {"month": "24.01", "value": 3.50},
-        {"month": "24.02", "value": 3.50},
-        {"month": "24.03", "value": 3.50},
-        {"month": "24.04", "value": 3.50},
-        {"month": "24.05", "value": 3.50},
-        {"month": "24.06", "value": 3.50},
-        {"month": "24.07", "value": 3.50},
-        {"month": "24.08", "value": 3.50},
-        {"month": "24.09", "value": 3.50},
-        {"month": "24.10", "value": 3.25},
-        {"month": "24.11", "value": 3.00},
-        {"month": "24.12", "value": 3.00},
-        {"month": "25.01", "value": 3.00},
-        {"month": "25.02", "value": 2.75},
-        {"month": "25.03", "value": 2.75},
-        {"month": "25.04", "value": 2.75},
-        {"month": "25.05", "value": 2.50},
-        {"month": "25.06", "value": 2.50},
-        {"month": "25.07", "value": 2.50},
-        {"month": "25.08", "value": 2.50},
-    ]
+KOSIS_LOAN_ORG = "301"
+KOSIS_LOAN_TBL = "DT_121Y006"
+KOSIS_LOAN_ITM = "13103134553999"
+KOSIS_LOAN_C1  = "13102134553ACC_ITEM.BECBLA0302"
 
-    # ── 주택담보대출 가중평균금리 (예금은행, 신규취급액 기준) ─────────────────
-    loan_yearly = [
-        {"year": "15", "value": 3.10},
-        {"year": "16", "value": 2.90},
-        {"year": "17", "value": 3.30},
-        {"year": "18", "value": 3.70},
-        {"year": "19", "value": 2.85},
-        {"year": "20", "value": 2.55},
-        {"year": "21", "value": 3.40},
-        {"year": "22", "value": 5.20},
-        {"year": "23", "value": 4.90},
-        {"year": "24", "value": 4.30},
-        {"year": "25", "value": 3.85},
-    ]
-    loan_monthly = [
-        {"month": "24.01", "value": 4.72},
-        {"month": "24.02", "value": 4.65},
-        {"month": "24.03", "value": 4.59},
-        {"month": "24.04", "value": 4.53},
-        {"month": "24.05", "value": 4.48},
-        {"month": "24.06", "value": 4.44},
-        {"month": "24.07", "value": 4.40},
-        {"month": "24.08", "value": 4.36},
-        {"month": "24.09", "value": 4.31},
-        {"month": "24.10", "value": 4.22},
-        {"month": "24.11", "value": 4.13},
-        {"month": "24.12", "value": 4.08},
-        {"month": "25.01", "value": 4.04},
-        {"month": "25.02", "value": 3.95},
-        {"month": "25.03", "value": 3.90},
-        {"month": "25.04", "value": 3.85},
-        {"month": "25.05", "value": 3.78},
-        {"month": "25.06", "value": 3.73},
-        {"month": "25.07", "value": 3.68},
-        {"month": "25.08", "value": 3.65},
-    ]
 
-    def current(monthly: list[dict]) -> float:
-        return monthly[-1]["value"]
+def get_kosis_key() -> str:
+    env_path = os.path.join(ROOT, ".env")
+    if os.path.exists(env_path):
+        with open(env_path, encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line.startswith("KOSIS_API_KEY="):
+                    return line.split("=", 1)[1].strip()
+    return os.environ.get("KOSIS_API_KEY", "")
 
-    def change(monthly: list[dict]) -> float:
-        return round(monthly[-1]["value"] - monthly[-2]["value"], 2)
+
+def _ym_add(ym: str, months: int) -> str:
+    """'202501' + 3개월 → '202504' (연도 넘김 처리)."""
+    y, m = int(ym[:4]), int(ym[4:6])
+    m += months
+    while m > 12:
+        m -= 12
+        y += 1
+    while m < 1:
+        m += 12
+        y -= 1
+    return f"{y}{m:02d}"
+
+
+def fetch_ecos_base_rate_all(start_year: int) -> list[dict]:
+    """ECOS SAMPLE 키(최대 10행/요청)로 기준금리 전체 수집 — 10개월 청크 분할."""
+    today = date.today()
+    start_ym = f"{start_year}01"
+    end_ym = f"{today.year}{today.month:02d}"
+    results = []
+    chunk_start = start_ym
+    while chunk_start <= end_ym:
+        chunk_end = _ym_add(chunk_start, 9)  # 10개월 (start 포함)
+        if chunk_end > end_ym:
+            chunk_end = end_ym
+        url = (
+            f"https://ecos.bok.or.kr/api/StatisticSearch/{ECOS_SAMPLE_KEY}/json/kr"
+            f"/1/10/{ECOS_BASE_RATE_STAT}/M/{chunk_start}/{chunk_end}/{ECOS_BASE_RATE_ITEM}"
+        )
+        try:
+            with urllib.request.urlopen(url, timeout=10) as r:
+                data = json.loads(r.read().decode())
+            rows = data.get("StatisticSearch", {}).get("row", [])
+            results.extend({"ym": row["TIME"], "value": float(row["DATA_VALUE"])} for row in rows)
+        except Exception as e:
+            print(f"  [ECOS] {chunk_start}~{chunk_end} 조회 실패: {e}")
+        chunk_start = _ym_add(chunk_end, 1)
+    return results
+
+
+def fetch_kosis_loan_rate(start_ym: str, end_ym: str, kosis_key: str) -> list[dict]:
+    """KOSIS API로 주택담보대출 금리 월별 데이터 fetch."""
+    params = {
+        "method": "getList",
+        "apiKey": kosis_key,
+        "itmId": KOSIS_LOAN_ITM,
+        "objL1": KOSIS_LOAN_C1,
+        "format": "json",
+        "jsonVD": "Y",
+        "prdSe": "M",
+        "startPrdDe": start_ym,
+        "endPrdDe": end_ym,
+        "orgId": KOSIS_LOAN_ORG,
+        "tblId": KOSIS_LOAN_TBL,
+    }
+    url = "https://kosis.kr/openapi/Param/statisticsParameterData.do?" + urllib.parse.urlencode(params)
+    with urllib.request.urlopen(url, timeout=15) as r:
+        rows = json.loads(r.read().decode())
+    if isinstance(rows, dict):
+        raise RuntimeError(f"KOSIS 오류: {rows}")
+    return [{"ym": row["PRD_DE"], "value": float(row["DT"])} for row in rows if row.get("DT")]
+
+
+def ym_to_label(ym: str, mode: str) -> str:
+    """'202601' → '26.01' (monthly) 또는 연도 레이블 생성."""
+    if mode == "monthly":
+        return f"{ym[2:4]}.{ym[4:6]}"
+    return ym[2:4]  # yearly: '26'
+
+
+def make_yearly(monthly: list[dict]) -> list[dict]:
+    """월별 데이터에서 연도별 데이터 생성 (각 연도의 마지막 월 기준)."""
+    by_year: dict[str, float] = {}
+    for item in monthly:
+        year = item["ym"][:4]
+        by_year[year] = item["value"]  # 마지막 월 값으로 덮어씀
+    return [{"year": y[2:4], "value": v} for y, v in sorted(by_year.items())]
+
+
+def make_monthly_labels(monthly: list[dict]) -> list[dict]:
+    return [{"month": ym_to_label(item["ym"], "monthly"), "value": item["value"]} for item in monthly]
+
+
+def build_rate_data(kosis_key: str) -> list[dict]:
+    today = date.today()
+    start_year = 2015
+    start_ym = f"{start_year}01"
+    end_ym = f"{today.year}{today.month:02d}"
+
+    print(f"[1/2] 기준금리 수집 (ECOS SAMPLE, {start_year}~{today.year})...")
+    base_monthly_raw = fetch_ecos_base_rate_all(start_year)
+    if not base_monthly_raw:
+        raise RuntimeError("기준금리 데이터 없음")
+    print(f"  → {len(base_monthly_raw)}개월 수집")
+
+    print(f"[2/2] 주택담보대출 금리 수집 (KOSIS, {start_ym}~{end_ym})...")
+    loan_monthly_raw = fetch_kosis_loan_rate(start_ym, end_ym, kosis_key)
+    if not loan_monthly_raw:
+        raise RuntimeError("주택담보대출 금리 데이터 없음")
+    print(f"  → {len(loan_monthly_raw)}개월 수집")
+
+    base_monthly = make_monthly_labels(base_monthly_raw)
+    base_yearly = make_yearly(base_monthly_raw)
+    loan_monthly = make_monthly_labels(loan_monthly_raw)
+    loan_yearly = make_yearly(loan_monthly_raw)
+
+    # 최근 24개월만 월별 차트에 표시
+    base_monthly = base_monthly[-24:]
+    loan_monthly = loan_monthly[-24:]
+
+    updated_at = base_monthly_raw[-1]["ym"][:4] + "." + base_monthly_raw[-1]["ym"][4:6]
+
+    def current(m): return m[-1]["value"]
+    def change(m): return round(m[-1]["value"] - m[-2]["value"], 2) if len(m) >= 2 else 0.0
 
     return [
         {
@@ -103,7 +159,7 @@ def build_rate_data() -> list[dict]:
             "unit": "%",
             "yearlyData": base_yearly,
             "monthlyData": base_monthly,
-            "updatedAt": "2025-08",
+            "updatedAt": updated_at,
         },
         {
             "id": "loan-rate",
@@ -114,7 +170,7 @@ def build_rate_data() -> list[dict]:
             "unit": "%",
             "yearlyData": loan_yearly,
             "monthlyData": loan_monthly,
-            "updatedAt": "2025-08",
+            "updatedAt": updated_at,
         },
     ]
 
@@ -136,7 +192,7 @@ def push_to_firebase(data: list[dict]) -> None:
     tmp_path = TEMP_JSON.replace("\\", "/")
     script = f"""
 const {{ initializeApp, getApps }} = require('firebase/app');
-const {{ getDatabase, ref, set }} = require('firebase/database');
+const {{ getDatabase, ref, set, remove }} = require('firebase/database');
 const fs = require('fs');
 const config = {{
   apiKey: '{env.get("EXPO_PUBLIC_FIREBASE_API_KEY", "")}',
@@ -147,13 +203,15 @@ const config = {{
 const app = getApps().length ? getApps()[0] : initializeApp(config);
 const db = getDatabase(app);
 const data = JSON.parse(fs.readFileSync('{tmp_path}', 'utf-8'));
-const {{ remove }} = require('firebase/database');
 set(ref(db, 'investment/rateCharts'), data)
   .then(() => remove(ref(db, 'investment/rateUpdateReminder')))
   .then(() => {{ console.log('[+] rateCharts 업로드 완료: ' + data.length + '개 지표'); process.exit(0); }})
   .catch(e => {{ console.error('[!] 업로드 실패:', e.message); process.exit(1); }});
 """
-    result = subprocess.run(["node", "-e", script], cwd=ROOT, capture_output=True, encoding="utf-8", errors="replace", timeout=20)
+    result = subprocess.run(
+        ["node", "-e", script], cwd=ROOT,
+        capture_output=True, encoding="utf-8", errors="replace", timeout=20
+    )
     print(result.stdout.strip() if result.returncode == 0 else f"[!] Firebase 업로드 실패: {result.stderr.strip()}")
     try:
         os.remove(TEMP_JSON)
@@ -162,7 +220,12 @@ set(ref(db, 'investment/rateCharts'), data)
 
 
 if __name__ == "__main__":
-    data = build_rate_data()
+    kosis_key = get_kosis_key()
+    if not kosis_key:
+        print("[!] KOSIS_API_KEY 없음. .env 파일을 확인하세요.")
+        exit(1)
+
+    data = build_rate_data(kosis_key)
     for r in data:
-        print(f"  {r['name']}: 현재 {r['current']}% (전월比 {r['change']:+.2f}%)")
+        print(f"  {r['name']}: {r['current']}% (전월比 {r['change']:+.2f}%) | {r['updatedAt']} 기준 | 연도별 {len(r['yearlyData'])}개 월별 {len(r['monthlyData'])}개")
     push_to_firebase(data)

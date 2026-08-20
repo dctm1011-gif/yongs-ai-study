@@ -2207,43 +2207,49 @@ const RateBarChart: React.FC<{
 }> = React.memo(({ data, color = '#93c5fd', highlightColor = '#1d4ed8', showEveryN = 1 }) => {
   const { width: screenW } = useWindowDimensions();
   const n = data.length;
-  const GAP = 3;
-  const CHART_H = 72;
-  const availW = screenW - 80;
-  const barW = Math.max(4, Math.floor((availW - GAP * (n - 1)) / n));
+  const GAP = 4;
+  const CHART_H = 100;
+  const LABEL_FONT = 9;
+  const VALUE_FONT = 10;
+  const availW = screenW - 64;
+  const barW = Math.max(8, Math.floor((availW - GAP * (n - 1)) / n));
+  const chartTotalW = barW * n + GAP * (n - 1);
   const vals = data.map(d => d.value);
   const minV = Math.min(...vals);
   const maxV = Math.max(...vals);
   const range = maxV - minV || 0.01;
-  const MIN_BAR = 6;
+  const MIN_BAR = 8;
+  const LABEL_AREA = VALUE_FONT + 4;
   return (
-    <View>
-      <View style={{ height: CHART_H, flexDirection: 'row', alignItems: 'flex-end', width: availW }}>
-        {data.map((d, i) => {
-          const isLast = i === n - 1;
-          const fillH = MIN_BAR + Math.round(((d.value - minV) / range) * (CHART_H - MIN_BAR - 16));
-          return (
-            <View key={i} style={{ width: barW, marginRight: i < n - 1 ? GAP : 0, alignItems: 'center', justifyContent: 'flex-end' }}>
-              {isLast && (
-                <Text style={{ fontSize: 8.5, color: highlightColor, fontWeight: '700', marginBottom: 2 }}>
-                  {d.value.toFixed(2)}
-                </Text>
+    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      <View style={{ width: chartTotalW }}>
+        <View style={{ height: CHART_H, flexDirection: 'row', alignItems: 'flex-end' }}>
+          {data.map((d, i) => {
+            const isLast = i === n - 1;
+            const fillH = MIN_BAR + Math.round(((d.value - minV) / range) * (CHART_H - MIN_BAR - LABEL_AREA));
+            return (
+              <View key={i} style={{ width: barW, marginRight: i < n - 1 ? GAP : 0, alignItems: 'center', justifyContent: 'flex-end' }}>
+                {isLast && (
+                  <Text style={{ fontSize: VALUE_FONT, color: highlightColor, fontWeight: '700', marginBottom: 2 }}>
+                    {d.value.toFixed(2)}
+                  </Text>
+                )}
+                <View style={{ height: fillH, width: barW, backgroundColor: isLast ? highlightColor : color, borderRadius: 3 }} />
+              </View>
+            );
+          })}
+        </View>
+        <View style={{ flexDirection: 'row', marginTop: 5 }}>
+          {data.map((d, i) => (
+            <View key={i} style={{ width: barW, marginRight: i < n - 1 ? GAP : 0 }}>
+              {(i % showEveryN === 0 || i === n - 1) && (
+                <Text style={{ fontSize: LABEL_FONT, color: '#6b7280', textAlign: 'center' }}>{d.label}</Text>
               )}
-              <View style={{ height: fillH, width: barW, backgroundColor: isLast ? highlightColor : color, borderRadius: 2 }} />
             </View>
-          );
-        })}
+          ))}
+        </View>
       </View>
-      <View style={{ flexDirection: 'row', marginTop: 4, width: availW }}>
-        {data.map((d, i) => (
-          <View key={i} style={{ width: barW, marginRight: i < n - 1 ? GAP : 0 }}>
-            {(i % showEveryN === 0 || i === n - 1) && (
-              <Text style={{ fontSize: 7.5, color: '#9ca3af', textAlign: 'center' }}>{d.label}</Text>
-            )}
-          </View>
-        ))}
-      </View>
-    </View>
+    </ScrollView>
   );
 });
 
