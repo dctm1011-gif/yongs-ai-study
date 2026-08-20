@@ -11,7 +11,7 @@ import os
 import sys
 import time
 import xml.etree.ElementTree as ET
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 import requests
@@ -784,29 +784,38 @@ def get_all_regions_chart_data(target_date: date, service_key: str) -> list[dict
     return chart_data
 
 
-def fetch_jukjeon_complex_prices(service_key: str, months: int = 3) -> list[dict]:
-    """수지구 죽전동 아파트 단지별 최근 실거래가 집계.
-    최근 months개월치 거래를 수집해 단지별 중앙값(억원)과 거래건수를 반환한다.
-    거래 없는 단지는 제외. 결과는 medianPrice 내림차순 정렬.
+def fetch_suji_dong_complex_prices(
+    dong_name: str,
+    service_key: str,
+    months: int = 5,
+    lawd_cd: str = "41465",
+    umd_filter: str | None = None,
+) -> list[dict]:
+    """특정 시군구 내 아파트 단지별 최근 실거래가 집계.
+    dong_name: Firebase 키로 사용되는 레이블. umd_filter=None이면 구 전체 수집.
+    monthlyData는 오래된 순(왼쪽=과거, 오른쪽=최근) 리스트.
+    medianPrice = 가장 최근 거래 월의 중앙값. 결과는 medianPrice 내림차순 정렬.
     """
-    lawd_cd = "41465"
-    umd_target = "죽전동"
-    today = date.today()
+    umd_target = umd_filter if umd_filter is not None else dong_name
+    _filter_by_umd = umd_filter is not None or lawd_cd == "41465"
+    _prev = date.today().replace(day=1) - timedelta(days=1)
+    today = _prev.replace(day=1) - timedelta(days=1)  # 두달 전 기준 (신고기한 30일 경과로 데이터 완성)
 
-    # 단지별 거래금액 목록 + 가장 최근 거래월 추적
-    prices_by_apt: dict[str, list[int]] = {}
-    latest_month_by_apt: dict[str, str] = {}
-
-    for m in range(months):
-        # months개월 전부터 최근 순으로 탐색
+    # 월 슬롯: 오래된 순 (spark bar 왼쪽→오른쪽)
+    month_slots: list[tuple[str, str]] = []  # (deal_ymd, ref_label)
+    for m in range(months - 1, -1, -1):
         year = today.year
         month = today.month - m
         while month <= 0:
             month += 12
             year -= 1
-        deal_ymd = f"{year}{month:02d}"
-        ref_label = f"{str(year)[2:]}.{month:02d}"
+        month_slots.append((f"{year}{month:02d}", f"{str(year)[2:]}.{month:02d}"))
 
+    # 단지별·월별 거래금액 목록
+    prices_by_apt_month: dict[str, dict[str, list[int]]] = {}
+    latest_month_by_apt: dict[str, str] = {}
+
+    for deal_ymd, ref_label in month_slots:
         try:
             page_no = 1
             while True:
@@ -817,7 +826,7 @@ def fetch_jukjeon_complex_prices(service_key: str, months: int = 3) -> list[dict
                 items = root.findall(".//item")
                 for item in items:
                     umd = (item.findtext("umdNm") or "").strip()
-                    if umd != umd_target:
+                    if _filter_by_umd and umd != umd_target:
                         continue
                     apt_nm = (item.findtext("aptNm") or "").strip()
                     amount_raw = (item.findtext("dealAmount") or "").replace(",", "").strip()
@@ -827,28 +836,44 @@ def fetch_jukjeon_complex_prices(service_key: str, months: int = 3) -> list[dict
                         amount = int(amount_raw)
                     except ValueError:
                         continue
-                    prices_by_apt.setdefault(apt_nm, []).append(amount)
-                    if apt_nm not in latest_month_by_apt:
-                        latest_month_by_apt[apt_nm] = ref_label
+                    prices_by_apt_month.setdefault(apt_nm, {}).setdefault(ref_label, []).append(amount)
+                    latest_month_by_apt[apt_nm] = ref_label  # 마지막 할당 = 가장 최근 월
                 total_count = int(root.findtext(".//totalCount", default="0") or 0)
                 if page_no * 1000 >= total_count:
                     break
                 page_no += 1
         except Exception as e:
-            print(f"[!] 죽전동 단지 조회 실패 ({deal_ymd}): {e}")
+            print(f"[!] 단지 조회 실패 ({lawd_cd} {deal_ymd}): {e}")
+
+    def _median(prices: list[int]) -> float:
+        if not prices:
+            return 0.0
+        sp = sorted(prices)
+        n = len(sp)
+        mid = n // 2
+        val = sp[mid] if n % 2 == 1 else (sp[mid - 1] + sp[mid]) // 2
+        return round(val / 10000, 2)
 
     results = []
-    for apt_nm, prices in prices_by_apt.items():
-        sorted_prices = sorted(prices)
-        n = len(sorted_prices)
-        if n == 0:
+    for apt_nm, month_prices in prices_by_apt_month.items():
+        monthly_data = [
+            {"month": label, "count": len(month_prices.get(label, [])), "median": _median(month_prices.get(label, []))}
+            for _, label in month_slots
+        ]
+        # 거래 없는 달은 직전 알려진 중앙값으로 forward-fill
+        last_known = 0.0
+        for d in monthly_data:
+            if d["median"] > 0:
+                last_known = d["median"]
+            elif last_known > 0:
+                d["median"] = last_known
+        recent_median = next((d["median"] for d in reversed(monthly_data) if d["median"] > 0), 0.0)
+        if recent_median == 0:
             continue
-        mid = n // 2
-        median_price = sorted_prices[mid] if n % 2 == 1 else (sorted_prices[mid - 1] + sorted_prices[mid]) // 2
         results.append({
             "name": apt_nm,
-            "medianPrice": round(median_price / 10000, 2),  # 만원 → 억원
-            "tradeCount": n,
+            "medianPrice": recent_median,
+            "monthlyData": monthly_data,
             "refMonth": latest_month_by_apt.get(apt_nm, ""),
         })
 
@@ -856,9 +881,103 @@ def fetch_jukjeon_complex_prices(service_key: str, months: int = 3) -> list[dict
     return results
 
 
+def fetch_gu_complexes_by_dong(
+    lawd_cd: str,
+    service_key: str,
+    months: int = 5,
+    min_complexes: int = 3,
+) -> dict[str, list[dict]]:
+    """구 전체 아파트 단지 실거래가를 수집해 동(umdNm)별로 그룹핑하여 반환.
+    min_complexes: 단지 수가 이보다 적은 동은 노이즈로 간주해 제외.
+    Returns: { 동이름: [complex_dict, ...], ... }
+    """
+    _prev = date.today().replace(day=1) - timedelta(days=1)
+    today = _prev.replace(day=1) - timedelta(days=1)  # 두달 전 기준 (신고기한 30일 경과로 데이터 완성)
+    month_slots: list[tuple[str, str]] = []
+    for m in range(months - 1, -1, -1):
+        year = today.year
+        month = today.month - m
+        while month <= 0:
+            month += 12
+            year -= 1
+        month_slots.append((f"{year}{month:02d}", f"{str(year)[2:]}.{month:02d}"))
+
+    # dong → apt → ref_label → [prices]
+    raw: dict[str, dict[str, dict[str, list[int]]]] = {}
+    latest_month_by_dong_apt: dict[str, dict[str, str]] = {}
+
+    for deal_ymd, ref_label in month_slots:
+        try:
+            page_no = 1
+            while True:
+                root = _fetch_page(lawd_cd, deal_ymd, service_key, page_no)
+                result_code = root.findtext(".//resultCode")
+                if result_code not in (None, "00", "000"):
+                    break
+                items = root.findall(".//item")
+                for item in items:
+                    umd = (item.findtext("umdNm") or "").strip()
+                    apt_nm = (item.findtext("aptNm") or "").strip()
+                    amount_raw = (item.findtext("dealAmount") or "").replace(",", "").strip()
+                    if not umd or not apt_nm or not amount_raw:
+                        continue
+                    try:
+                        amount = int(amount_raw)
+                    except ValueError:
+                        continue
+                    raw.setdefault(umd, {}).setdefault(apt_nm, {}).setdefault(ref_label, []).append(amount)
+                    latest_month_by_dong_apt.setdefault(umd, {})[apt_nm] = ref_label
+                total_count = int(root.findtext(".//totalCount", default="0") or 0)
+                if page_no * 1000 >= total_count:
+                    break
+                page_no += 1
+        except Exception as e:
+            print(f"[!] 단지 조회 실패 ({lawd_cd} {deal_ymd}): {e}")
+
+    def _median(prices: list[int]) -> float:
+        if not prices:
+            return 0.0
+        sp = sorted(prices)
+        n = len(sp)
+        mid = n // 2
+        val = sp[mid] if n % 2 == 1 else (sp[mid - 1] + sp[mid]) // 2
+        return round(val / 10000, 2)
+
+    result: dict[str, list[dict]] = {}
+    for dong, apt_month_data in raw.items():
+        complexes: list[dict] = []
+        for apt_nm, month_prices in apt_month_data.items():
+            monthly_data = [
+                {"month": label, "count": len(month_prices.get(label, [])), "median": _median(month_prices.get(label, []))}
+                for _, label in month_slots
+            ]
+            last_known = 0.0
+            for d in monthly_data:
+                if d["median"] > 0:
+                    last_known = d["median"]
+                elif last_known > 0:
+                    d["median"] = last_known
+            recent_median = next((d["median"] for d in reversed(monthly_data) if d["median"] > 0), 0.0)
+            if recent_median == 0:
+                continue
+            complexes.append({
+                "name": apt_nm,
+                "medianPrice": recent_median,
+                "monthlyData": monthly_data,
+                "refMonth": latest_month_by_dong_apt.get(dong, {}).get(apt_nm, ""),
+            })
+        if len(complexes) < min_complexes:
+            continue
+        complexes.sort(key=lambda x: x["medianPrice"], reverse=True)
+        result[dong] = complexes
+
+    return result
+
+
 if __name__ == "__main__":
     key = get_molit_api_key()
-    data = get_all_areas_chart_data(date.today(), key)
+    _prev = date.today().replace(day=1) - timedelta(days=1)
+    data = get_all_areas_chart_data(_prev.replace(day=1) - timedelta(days=1), key)
     for entry in data:
         print(entry["area"], "월별:", entry["data"])
         print(entry["area"], "연도별:", entry["yearlyData"])

@@ -9,7 +9,7 @@ import os
 import re
 import subprocess
 import sys
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -515,6 +515,7 @@ const data = {{
   termOfDay: daily.termOfDay || null,
   newsArticles: daily.newsArticles || [],
   dongCharts: daily.dongCharts || [],
+  regionCharts: daily.regionCharts || [],
   timestamp: new Date().toISOString(),
   date: '{target_date}',
   count: daily.columns.length,
@@ -556,20 +557,23 @@ def deploy(target_date: date) -> None:
 def main(target_date: date = None):
     if target_date is None:
         target_date = date.today()
+    # 실거래가 신고기한(계약 후 30일)을 고려해 두달 전 기준으로 조회
+    _prev = target_date.replace(day=1) - timedelta(days=1)
+    api_date = _prev.replace(day=1) - timedelta(days=1)
 
     molit_key = get_molit_api_key()
-    print(f"[*] {target_date} 경기도 20개 지역 실거래가 조회 중 (국토교통부 API)...")
-    real_estate_chart_data = get_all_areas_chart_data(target_date, molit_key)
+    print(f"[*] {api_date} 기준 경기도 20개 지역 실거래가 조회 중 (국토교통부 API)...")
+    real_estate_chart_data = get_all_areas_chart_data(api_date, molit_key)
     if not real_estate_chart_data:
         raise RuntimeError("국토교통부 API에서 실거래 데이터를 하나도 가져오지 못했습니다")
     print(f"[+] 실거래 데이터 확보: {len(real_estate_chart_data)}개 지역")
 
-    print(f"[*] {target_date} 수지/동탄 동별 실거래가 조회 중...")
-    dong_charts = get_dong_comparison_data(target_date, molit_key)
+    print(f"[*] {api_date} 기준 수지/동탄 동별 실거래가 조회 중...")
+    dong_charts = get_dong_comparison_data(api_date, molit_key)
     print(f"[+] 동별 데이터 확보: {len(dong_charts)}개 지역")
 
-    print(f"[*] {target_date} 경기도 전체 지역별(시/구) 실거래가 조회 중...")
-    region_charts = get_all_regions_chart_data(target_date, molit_key)
+    print(f"[*] {api_date} 기준 경기도 전체 지역별(시/구) 실거래가 조회 중...")
+    region_charts = get_all_regions_chart_data(api_date, molit_key)
     print(f"[+] 지역 탐색 데이터 확보: {len(region_charts)}개 구/시")
 
     client = anthropic.Anthropic(api_key=get_api_key())

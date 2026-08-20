@@ -84,8 +84,8 @@ export interface DongEntry {
 
 export interface JukjeonComplex {
   name: string;
-  medianPrice: number; // 억원
-  tradeCount: number;
+  medianPrice: number; // 억원 (가장 최근 거래월 기준)
+  monthlyData: { month: string; count: number; median: number }[]; // 오래된 순
   refMonth: string;    // "26.07" 형식
 }
 
@@ -248,7 +248,7 @@ export function useInvestmentSync() {
   const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
   const [dongCharts, setDongCharts] = useState<DongChartEntry[]>([]);
   const [regionCharts, setRegionCharts] = useState<RegionChartEntry[]>([]);
-  const [jukjeonComplexes, setJukjeonComplexes] = useState<JukjeonComplex[]>([]);
+  const [sujiComplexes, setSujiComplexes] = useState<Record<string, Record<string, JukjeonComplex[]>>>({});
   const [taxPolicySummary, setTaxPolicySummary] = useState<{ text: string; updatedAt: string } | null>(null);
   const [jongbuseSummary, setJongbuseSummary] = useState<{ text: string; updatedAt: string } | null>(null);
   const [bookmarks, setBookmarks] = useState<string[]>([]);
@@ -312,18 +312,18 @@ export function useInvestmentSync() {
     return () => unsubscribe();
   }, []);
 
-  // 죽전동 단지별 데이터는 별도 경로에서 독립적으로 읽음 (daily 갱신과 무관)
+  // 수지구 동별 단지 데이터는 별도 경로에서 독립적으로 읽음 (daily 갱신과 무관)
   useEffect(() => {
     const db = getDatabase(getFirebaseApp());
     const unsubscribe = onValue(
-      ref(db, 'investment/jukjeonComplexes'),
+      ref(db, 'investment/sujiComplexes'),
       snapshot => {
         if (snapshot.exists()) {
           const data = snapshot.val();
-          if (Array.isArray(data)) setJukjeonComplexes(data);
+          if (data && typeof data === 'object') setSujiComplexes(data);
         }
       },
-      err => console.error('[useInvestmentSync] jukjeonComplexes error:', err)
+      err => console.error('[useInvestmentSync] sujiComplexes error:', err)
     );
     return () => unsubscribe();
   }, []);
@@ -382,7 +382,7 @@ export function useInvestmentSync() {
     newsArticles,
     dongCharts,
     regionCharts,
-    jukjeonComplexes,
+    sujiComplexes,
     taxPolicySummary,
     jongbuseSummary,
     bookmarks,

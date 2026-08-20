@@ -14,7 +14,16 @@ import {
   useWindowDimensions,
   ToastAndroid,
   Animated,
+  Linking,
+  LayoutAnimation,
+  Platform,
+  UIManager,
+  Easing,
 } from 'react-native';
+
+if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -1938,33 +1947,418 @@ const FilterModal: React.FC<FilterModalProps> = React.memo(
   }
 );
 
-const JukjeonComplexBar: React.FC<{ complexes: JukjeonComplex[] }> = React.memo(({ complexes }) => {
+// ── 애니메이션 공통 컴포넌트 ──────────────────────────────
+
+// 섹션 진입 시 페이드 + 슬라이드업
+const AnimatedCard: React.FC<{ children: React.ReactNode; delay?: number }> = ({ children, delay = 0 }) => {
+  const opacity = useRef(new Animated.Value(0)).current;
+  const translateY = useRef(new Animated.Value(22)).current;
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(opacity, { toValue: 1, duration: 480, delay, useNativeDriver: true }),
+      Animated.spring(translateY, { toValue: 0, delay, tension: 70, friction: 9, useNativeDriver: true }),
+    ]).start();
+  }, []);
+  return <Animated.View style={{ opacity, transform: [{ translateY }] }}>{children}</Animated.View>;
+};
+
+// 스프링 스케일 버튼 피드백
+const PressableScale: React.FC<{
+  children: React.ReactNode;
+  onPress?: () => void;
+  style?: any;
+  contentStyle?: any;
+  scaleTo?: number;
+}> = ({ children, onPress, style, contentStyle, scaleTo = 0.95 }) => {
+  const scale = useRef(new Animated.Value(1)).current;
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      onPressIn={() => Animated.spring(scale, { toValue: scaleTo, tension: 400, friction: 10, useNativeDriver: true }).start()}
+      onPressOut={() => Animated.spring(scale, { toValue: 1, tension: 400, friction: 10, useNativeDriver: true }).start()}
+      activeOpacity={1}
+      style={style}
+    >
+      <Animated.View style={[contentStyle, { transform: [{ scale }] }]}>{children}</Animated.View>
+    </TouchableOpacity>
+  );
+};
+
+// 강조 텍스트 펄스
+const PulseText: React.FC<{ style?: any; numberOfLines?: number; children: React.ReactNode }> = ({ style, numberOfLines, children }) => {
+  const opacity = useRef(new Animated.Value(1)).current;
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(opacity, { toValue: 0.35, duration: 750, useNativeDriver: true }),
+        Animated.timing(opacity, { toValue: 1, duration: 750, useNativeDriver: true }),
+      ])
+    ).start();
+  }, []);
+  return <Animated.Text style={[style, { opacity }]} numberOfLines={numberOfLines}>{children}</Animated.Text>;
+};
+
+// 상하 부유 (진입 카드용)
+const FloatingCard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const translateY = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(translateY, { toValue: -5, duration: 1600, useNativeDriver: true, easing: Easing.inOut(Easing.sin) }),
+        Animated.timing(translateY, { toValue: 0, duration: 1600, useNativeDriver: true, easing: Easing.inOut(Easing.sin) }),
+      ])
+    ).start();
+  }, []);
+  return <Animated.View style={{ transform: [{ translateY }] }}>{children}</Animated.View>;
+};
+
+// 로딩 바운싱 점
+const DOT_COLORS = ['#1d4ed8', '#0ea5e9', '#10b981', '#f59e0b'];
+const LoadingDots: React.FC = () => {
+  const anims = useRef(DOT_COLORS.map(() => new Animated.Value(0))).current;
+  useEffect(() => {
+    const seq = DOT_COLORS.map((_, i) =>
+      Animated.sequence([
+        Animated.delay(i * 120),
+        Animated.loop(
+          Animated.sequence([
+            Animated.timing(anims[i], { toValue: -18, duration: 350, useNativeDriver: true }),
+            Animated.timing(anims[i], { toValue: 0, duration: 350, useNativeDriver: true }),
+            Animated.delay(DOT_COLORS.length * 120),
+          ])
+        ),
+      ])
+    );
+    Animated.parallel(seq).start();
+  }, []);
+  return (
+    <View style={{ flexDirection: 'row', alignItems: 'flex-end', gap: 10, height: 50 }}>
+      {DOT_COLORS.map((color, i) => (
+        <Animated.View key={i} style={{ width: 14, height: 14, borderRadius: 7, backgroundColor: color, transform: [{ translateY: anims[i] }] }} />
+      ))}
+    </View>
+  );
+};
+
+// 스파크 바 (진입 시 페이드+슬라이드)
+const MiniSparkBars: React.FC<{
+  values: number[];
+  activeColor?: string;
+  inactiveColor?: string;
+  emptyColor?: string;
+}> = ({ values, activeColor = '#0095f6', inactiveColor = '#bfdbfe', emptyColor = '#e5e7eb' }) => {
+  if (!values || values.length === 0) return null;
+  const maxVal = Math.max(...values, 0.001);
+  const BAR_H = 14;
+  const BAR_W = 5;
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const slideAnim = useRef(new Animated.Value(6)).current;
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(fadeAnim, { toValue: 1, duration: 350, useNativeDriver: true }),
+      Animated.spring(slideAnim, { toValue: 0, tension: 100, friction: 10, useNativeDriver: true }),
+    ]).start();
+  }, []);
+  return (
+    <Animated.View style={{ flexDirection: 'row', alignItems: 'flex-end', height: BAR_H, gap: 2, opacity: fadeAnim, transform: [{ translateY: slideAnim }] }}>
+      {values.map((v, i) => (
+        <View
+          key={i}
+          style={{
+            width: BAR_W,
+            height: v > 0 ? Math.max(2, Math.round((v / maxVal) * BAR_H)) : 2,
+            backgroundColor: v === 0 ? emptyColor : (i === values.length - 1 ? activeColor : inactiveColor),
+            borderRadius: 1,
+          }}
+        />
+      ))}
+    </Animated.View>
+  );
+};
+
+const RegionBrowserModal: React.FC<{
+  visible: boolean;
+  onClose: () => void;
+  regionCharts: RegionChartEntry[];
+}> = React.memo(({ visible, onClose, regionCharts }) => (
+  <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fafafa' }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 14, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#efefef' }}>
+        <View>
+          <Text style={{ fontSize: 17, fontWeight: '700', color: '#262626' }}>지역별 매매가 비교</Text>
+          <Text style={{ fontSize: 12, color: '#8e8e8e', marginTop: 2 }}>경기도 · {regionCharts.length}개 지역</Text>
+        </View>
+        <PressableScale onPress={onClose} contentStyle={{ padding: 4 }} scaleTo={0.85}>
+          <MaterialIcons name="close" size={24} color="#262626" />
+        </PressableScale>
+      </View>
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingBottom: 32 }} keyboardShouldPersistTaps="handled">
+        <RegionBrowser regionCharts={regionCharts} />
+      </ScrollView>
+    </SafeAreaView>
+  </Modal>
+));
+
+const GU_ORDER = ['수지구', '기흥구', '동탄구'] as const;
+type GuName = typeof GU_ORDER[number];
+const SUJI_DONG_NAMES = ['죽전동', '풍덕천동', '신봉동', '동천동'];
+
+function computeDongStat(dong: string, complexes: JukjeonComplex[]) {
   if (complexes.length === 0) return null;
+  const prices = [...complexes.map(c => c.medianPrice)].sort((a, b) => a - b);
+  const n = prices.length, mid = Math.floor(n / 2);
+  const dongMedian = n % 2 === 1 ? prices[mid] : (prices[mid - 1] + prices[mid]) / 2;
+  const monthCount = complexes[0]?.monthlyData?.length ?? 0;
+  const monthlyMedians = Array.from({ length: monthCount }, (_, mi) => {
+    const mp = complexes.map(c => c.monthlyData[mi]?.median ?? 0).filter(v => v > 0).sort((a, b) => a - b);
+    if (!mp.length) return 0;
+    const mn = mp.length, mm = Math.floor(mn / 2);
+    return mn % 2 === 1 ? mp[mm] : (mp[mm - 1] + mp[mm]) / 2;
+  });
+  const monthlyTradeCounts = Array.from({ length: monthCount }, (_, mi) =>
+    complexes.reduce((s, c) => s + (c.monthlyData[mi]?.count ?? 0), 0)
+  );
+  const totalCount = monthlyTradeCounts.reduce((s, v) => s + v, 0);
+  const refMonth = complexes[0]?.monthlyData[monthCount - 1]?.month ?? '';
+  return { dong, dongMedian: Math.round(dongMedian * 10) / 10, monthlyMedians, monthlyTradeCounts, totalCount, refMonth };
+}
+
+const DongTableRow: React.FC<{ stat: NonNullable<ReturnType<typeof computeDongStat>>; idx: number }> = React.memo(({ stat, idx }) => (
+  <View style={{ flexDirection: 'row', paddingVertical: 8, paddingHorizontal: 10, backgroundColor: idx % 2 === 1 ? '#fafafa' : '#fff', borderTopWidth: 1, borderTopColor: '#f0f0f0', alignItems: 'center' }}>
+    <Text style={{ width: 72, fontSize: 13, fontWeight: '500', color: '#262626' }}>{stat.dong}</Text>
+    <Text style={{ width: 56, fontSize: 13, fontWeight: '700', color: '#0095f6', textAlign: 'right' }}>{stat.dongMedian.toFixed(1)}억</Text>
+    <View style={{ width: 68, alignItems: 'flex-end' }}>
+      <MiniSparkBars values={stat.monthlyMedians} activeColor="#7c3aed" inactiveColor="#c4b5fd" />
+    </View>
+    <View style={{ width: 60, alignItems: 'flex-end', gap: 2 }}>
+      <Text style={{ fontSize: 10, color: '#8e8e8e' }}>{stat.totalCount}건</Text>
+      <MiniSparkBars values={stat.monthlyTradeCounts} />
+    </View>
+    <Text style={{ width: 38, fontSize: 10, color: '#8e8e8e', textAlign: 'right' }}>{stat.refMonth}</Text>
+  </View>
+));
+
+const GuSection: React.FC<{
+  guName: GuName;
+  guData: Record<string, JukjeonComplex[]>;
+  isFirst: boolean;
+}> = React.memo(({ guName, guData, isFirst }) => {
+  const [expanded, setExpanded] = useState(true);
+  const dongNames = Object.keys(guData).sort((a, b) => (guData[b][0]?.medianPrice ?? 0) - (guData[a][0]?.medianPrice ?? 0));
+  const dongStats = useMemo(() =>
+    dongNames.map(d => computeDongStat(d, guData[d] ?? [])).filter((d): d is NonNullable<typeof d> => d !== null),
+    [guData, dongNames]
+  );
+  if (dongStats.length === 0) return null;
+
+  const toggle = () => {
+    LayoutAnimation.configureNext({ duration: 260, create: { type: 'easeInEaseOut', property: 'opacity' }, update: { type: 'spring', springDamping: 0.8 }, delete: { type: 'easeInEaseOut', property: 'opacity' } });
+    setExpanded(v => !v);
+  };
 
   return (
-    <View style={{ backgroundColor: '#fff', marginHorizontal: 12, marginVertical: 8, borderRadius: 16, padding: 16, borderWidth: 1, borderColor: '#dbdbdb' }}>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-        <Text style={{ fontSize: 15, fontWeight: '600', color: '#262626' }}>죽전동 단지별 최신 매매가</Text>
-        <Text style={{ fontSize: 10, color: '#8e8e8e' }}>국토부 실거래 · 중앙값</Text>
-      </View>
-      <View style={{ borderWidth: 1, borderColor: '#dbdbdb', borderRadius: 8, overflow: 'hidden' }}>
-        <View style={{ flexDirection: 'row', backgroundColor: '#fafafa', paddingVertical: 7, paddingHorizontal: 10 }}>
-          <Text style={{ flex: 1, fontSize: 11, fontWeight: '600', color: '#8e8e8e' }}>단지명</Text>
-          <Text style={{ width: 52, fontSize: 11, fontWeight: '600', color: '#8e8e8e', textAlign: 'right' }}>중앙값</Text>
-          <Text style={{ width: 36, fontSize: 11, fontWeight: '600', color: '#8e8e8e', textAlign: 'right' }}>건수</Text>
-          <Text style={{ width: 36, fontSize: 11, fontWeight: '600', color: '#8e8e8e', textAlign: 'right' }}>기준월</Text>
+    <View style={{ borderTopWidth: isFirst ? 0 : 1, borderTopColor: '#f0f0f0' }}>
+      <TouchableOpacity onPress={toggle} activeOpacity={0.7} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 14, paddingVertical: 10, backgroundColor: '#f7f7f7' }}>
+        <Text style={{ fontSize: 13, fontWeight: '700', color: '#262626' }}>{guName}</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+          <Text style={{ fontSize: 11, color: '#8e8e8e' }}>{dongStats.length}개 동</Text>
+          <MaterialIcons name={expanded ? 'keyboard-arrow-up' : 'keyboard-arrow-down'} size={18} color="#8e8e8e" />
         </View>
-        {complexes.map((c, idx) => (
-          <View key={idx} style={{ flexDirection: 'row', paddingVertical: 7, paddingHorizontal: 10, backgroundColor: idx % 2 === 1 ? '#fafafa' : '#fff', borderTopWidth: 1, borderTopColor: '#f0f0f0' }}>
-            <Text style={{ flex: 1, fontSize: 12, color: '#262626' }} numberOfLines={1}>{c.name}</Text>
-            <Text style={{ width: 52, fontSize: 12, fontWeight: '600', color: '#0095f6', textAlign: 'right' }}>{c.medianPrice}억</Text>
-            <Text style={{ width: 36, fontSize: 11, color: '#8e8e8e', textAlign: 'right' }}>{c.tradeCount}건</Text>
-            <Text style={{ width: 36, fontSize: 10, color: '#8e8e8e', textAlign: 'right' }}>{c.refMonth}</Text>
-          </View>
-        ))}
-      </View>
-      <Text style={{ fontSize: 9, color: '#8e8e8e', marginTop: 6 }}>출처: 국토교통부 실거래가 · 최근 3개월 기준</Text>
+      </TouchableOpacity>
+      {expanded && (
+        <View style={{ paddingHorizontal: 12, paddingBottom: 8 }}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} nestedScrollEnabled={true}>
+            <View style={{ borderWidth: 1, borderColor: '#dbdbdb', borderRadius: 8, overflow: 'hidden', minWidth: 352 }}>
+              <View style={{ flexDirection: 'row', backgroundColor: '#fafafa', paddingVertical: 7, paddingHorizontal: 10, alignItems: 'center' }}>
+                <Text style={{ width: 72, fontSize: 11, fontWeight: '600', color: '#8e8e8e' }}>동</Text>
+                <Text style={{ width: 56, fontSize: 11, fontWeight: '600', color: '#8e8e8e', textAlign: 'right' }}>현재가</Text>
+                <View style={{ width: 68, alignItems: 'flex-end' }}><Text style={{ fontSize: 11, fontWeight: '600', color: '#8e8e8e' }}>가격추세</Text></View>
+                <View style={{ width: 60, alignItems: 'flex-end' }}><Text style={{ fontSize: 11, fontWeight: '600', color: '#8e8e8e' }}>거래건수</Text></View>
+                <Text style={{ width: 38, fontSize: 11, fontWeight: '600', color: '#8e8e8e', textAlign: 'right' }}>기준</Text>
+              </View>
+              {dongStats.map((stat, idx) => <DongTableRow key={stat.dong} stat={stat} idx={idx} />)}
+            </View>
+          </ScrollView>
+        </View>
+      )}
     </View>
+  );
+});
+
+const SujiDongCard: React.FC<{ sujiComplexes: Record<string, Record<string, JukjeonComplex[]>> }> = React.memo(({ sujiComplexes }) => {
+  const hasAny = GU_ORDER.some(gu => Object.keys(sujiComplexes[gu] ?? {}).length > 0);
+  if (!hasAny) return null;
+  return (
+    <View style={{ marginHorizontal: 12, marginTop: 12, backgroundColor: '#fff', borderRadius: 16, borderWidth: 1, borderColor: '#dbdbdb', overflow: 'hidden' }}>
+      <View style={{ paddingHorizontal: 16, paddingTop: 14, paddingBottom: 10 }}>
+        <Text style={{ fontSize: 15, fontWeight: '600', color: '#262626' }}>동별 매매가</Text>
+        <Text style={{ fontSize: 11, color: '#8e8e8e', marginTop: 2 }}>수지구 · 기흥구 · 동탄구</Text>
+      </View>
+      {GU_ORDER.map((gu, i) => (
+        <GuSection key={gu} guName={gu} guData={sujiComplexes[gu] ?? {}} isFirst={i === 0} />
+      ))}
+      <Text style={{ fontSize: 9, color: '#8e8e8e', marginHorizontal: 12, marginBottom: 10, marginTop: 4 }}>국토부 실거래가 · 단지 중앙값의 중앙값 · 최근 5개월</Text>
+    </View>
+  );
+});
+
+const SujiDongModal: React.FC<{
+  visible: boolean;
+  onClose: () => void;
+  sujiComplexes: Record<string, Record<string, JukjeonComplex[]>>;
+}> = React.memo(({ visible, onClose, sujiComplexes }) => (
+  <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fafafa' }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 14, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#efefef' }}>
+        <View>
+          <Text style={{ fontSize: 17, fontWeight: '700', color: '#262626' }}>동별 매매가</Text>
+          <Text style={{ fontSize: 12, color: '#8e8e8e', marginTop: 2 }}>수지구 · 기흥구 · 동탄구</Text>
+        </View>
+        <PressableScale onPress={onClose} contentStyle={{ padding: 4 }} scaleTo={0.85}>
+          <MaterialIcons name="close" size={24} color="#262626" />
+        </PressableScale>
+      </View>
+      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingBottom: 32 }} keyboardShouldPersistTaps="handled">
+        {GU_ORDER.map((gu, i) => (
+          <GuSection key={gu} guName={gu} guData={sujiComplexes[gu] ?? {}} isFirst={i === 0} />
+        ))}
+        <Text style={{ fontSize: 9, color: '#8e8e8e', marginHorizontal: 16, marginTop: 12 }}>국토부 실거래가 · 단지 중앙값의 중앙값 · 최근 5개월</Text>
+      </ScrollView>
+    </SafeAreaView>
+  </Modal>
+));
+
+const DongComplexTable: React.FC<{ dongName: string; complexes: JukjeonComplex[] }> = React.memo(({ dongName, complexes }) => {
+  const [expanded, setExpanded] = useState(false);
+  if (complexes.length === 0) return null;
+
+  const toggle = () => {
+    LayoutAnimation.configureNext({
+      duration: 280,
+      create: { type: 'easeInEaseOut', property: 'opacity' },
+      update: { type: 'spring', springDamping: 0.75 },
+      delete: { type: 'easeInEaseOut', property: 'opacity' },
+    });
+    setExpanded(v => !v);
+  };
+
+  return (
+    <View style={{ backgroundColor: '#fff', marginHorizontal: 12, marginTop: 8, borderRadius: 16, borderWidth: 1, borderColor: '#dbdbdb', overflow: 'hidden' }}>
+      <TouchableOpacity onPress={toggle} activeOpacity={0.7} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 16 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+          <Text style={{ fontSize: 15, fontWeight: '600', color: '#262626' }}>{dongName} 단지별 매매가</Text>
+          <Text style={{ fontSize: 11, color: '#8e8e8e' }}>{complexes.length}개</Text>
+        </View>
+        <MaterialIcons name={expanded ? 'keyboard-arrow-up' : 'keyboard-arrow-down'} size={20} color="#8e8e8e" />
+      </TouchableOpacity>
+
+      {expanded && (
+        <View style={{ paddingHorizontal: 12, paddingBottom: 12 }}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} nestedScrollEnabled={true}>
+            <View style={{ borderWidth: 1, borderColor: '#dbdbdb', borderRadius: 8, overflow: 'hidden', minWidth: 380 }}>
+              {/* 헤더 */}
+              <View style={{ flexDirection: 'row', backgroundColor: '#fafafa', paddingVertical: 7, paddingHorizontal: 10, alignItems: 'center' }}>
+                <Text style={{ width: 130, fontSize: 11, fontWeight: '600', color: '#8e8e8e' }}>단지명</Text>
+                <Text style={{ width: 56, fontSize: 11, fontWeight: '600', color: '#8e8e8e', textAlign: 'right' }}>현재가</Text>
+                <View style={{ width: 68, alignItems: 'flex-end' }}>
+                  <Text style={{ fontSize: 11, fontWeight: '600', color: '#8e8e8e' }}>가격추세</Text>
+                </View>
+                <View style={{ width: 60, alignItems: 'flex-end' }}>
+                  <Text style={{ fontSize: 11, fontWeight: '600', color: '#8e8e8e' }}>거래건수</Text>
+                </View>
+                <Text style={{ width: 38, fontSize: 11, fontWeight: '600', color: '#8e8e8e', textAlign: 'right' }}>기준</Text>
+              </View>
+              {/* 데이터 행 */}
+              {complexes.map((c, idx) => {
+                const priceValues = c.monthlyData.map(d => d.median);
+                const countValues = c.monthlyData.map(d => d.count);
+                const totalCount = countValues.reduce((s, v) => s + v, 0);
+                // 전반부 vs 후반부 비교로 추세 판단
+                const half = Math.floor(c.monthlyData.length / 2);
+                const firstHalf = c.monthlyData.slice(0, half);
+                const lastHalf = c.monthlyData.slice(-half);
+                const avgP = (arr: typeof firstHalf) => { const v = arr.filter(d => d.median > 0); return v.length ? v.reduce((s, d) => s + d.median, 0) / v.length : 0; };
+                const priceFirst = avgP(firstHalf), priceLast = avgP(lastHalf);
+                const countFirst = firstHalf.reduce((s, d) => s + d.count, 0);
+                const countLast = lastHalf.reduce((s, d) => s + d.count, 0);
+                const nameColor = (priceLast > priceFirst && countLast < countFirst) ? '#ef4444'
+                  : (priceLast < priceFirst && countLast > countFirst) ? '#0095f6'
+                  : '#262626';
+                return (
+                  <PressableScale
+                    key={idx}
+                    onPress={() => Linking.openURL(`https://land.naver.com/search?query=${encodeURIComponent(c.name)}`)}
+                    contentStyle={{ flexDirection: 'row', paddingVertical: 7, paddingHorizontal: 10, backgroundColor: idx % 2 === 1 ? '#fafafa' : '#fff', borderTopWidth: 1, borderTopColor: '#f0f0f0', alignItems: 'center' }}
+                    scaleTo={0.97}
+                  >
+                    {nameColor !== '#262626'
+                      ? <PulseText style={{ width: 130, fontSize: 12, color: nameColor, fontWeight: '600' }} numberOfLines={1}>{c.name}</PulseText>
+                      : <Text style={{ width: 130, fontSize: 12, color: '#262626' }} numberOfLines={1}>{c.name}</Text>
+                    }
+                    <Text style={{ width: 56, fontSize: 12, fontWeight: '600', color: '#0095f6', textAlign: 'right' }}>{c.medianPrice}억</Text>
+                    <View style={{ width: 68, alignItems: 'flex-end' }}>
+                      <MiniSparkBars values={priceValues} activeColor="#7c3aed" inactiveColor="#c4b5fd" />
+                    </View>
+                    <View style={{ width: 60, alignItems: 'flex-end', gap: 2 }}>
+                      <Text style={{ fontSize: 10, color: '#8e8e8e' }}>{totalCount}건</Text>
+                      <MiniSparkBars values={countValues} />
+                    </View>
+                    <Text style={{ width: 38, fontSize: 10, color: '#8e8e8e', textAlign: 'right' }}>{c.refMonth}</Text>
+                  </PressableScale>
+                );
+              })}
+            </View>
+          </ScrollView>
+          <Text style={{ fontSize: 9, color: '#8e8e8e', marginTop: 6 }}>국토부 실거래가 · 최근 5개월 · 탭하면 네이버 부동산 검색</Text>
+        </View>
+      )}
+    </View>
+  );
+});
+
+const SUJI_DONG_ORDER = ['죽전동', '풍덕천동', '신봉동', '동천동', '기흥구', '동탄구'] as const;
+
+const SujiComplexModal: React.FC<{
+  visible: boolean;
+  onClose: () => void;
+  sujiComplexes: Record<string, Record<string, JukjeonComplex[]>>;
+}> = React.memo(({ visible, onClose, sujiComplexes }) => {
+  const totalCount = GU_ORDER.reduce((s, gu) =>
+    s + Object.values(sujiComplexes[gu] ?? {}).reduce((s2, arr) => s2 + arr.length, 0), 0);
+  return (
+    <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#fafafa' }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 14, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#efefef' }}>
+          <View>
+            <Text style={{ fontSize: 17, fontWeight: '700', color: '#262626' }}>아파트 단지 매매가</Text>
+            <Text style={{ fontSize: 12, color: '#8e8e8e', marginTop: 2 }}>{totalCount}개 단지 · 최근 5개월</Text>
+          </View>
+          <PressableScale onPress={onClose} contentStyle={{ padding: 4 }} scaleTo={0.85}>
+            <MaterialIcons name="close" size={24} color="#262626" />
+          </PressableScale>
+        </View>
+        <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingBottom: 32, paddingTop: 8 }} keyboardShouldPersistTaps="handled">
+          {GU_ORDER.map(gu => {
+            const guData = sujiComplexes[gu] ?? {};
+            const dongs = Object.keys(guData).sort((a, b) => (guData[b][0]?.medianPrice ?? 0) - (guData[a][0]?.medianPrice ?? 0));
+            const validDongs = dongs.filter(d => (guData[d]?.length ?? 0) > 0);
+            if (validDongs.length === 0) return null;
+            return (
+              <View key={gu}>
+                <View style={{ paddingHorizontal: 16, paddingTop: 16, paddingBottom: 4 }}>
+                  <Text style={{ fontSize: 14, fontWeight: '700', color: '#8e8e8e' }}>{gu}</Text>
+                </View>
+                {validDongs.map((dong, i) => (
+                  <AnimatedCard key={dong} delay={i * 60}>
+                    <DongComplexTable dongName={dong} complexes={guData[dong]} />
+                  </AnimatedCard>
+                ))}
+              </View>
+            );
+          })}
+        </ScrollView>
+      </SafeAreaView>
+    </Modal>
   );
 });
 
@@ -1977,7 +2371,7 @@ export default function InvestmentScreen() {
     newsArticles,
     dongCharts,
     regionCharts,
-    jukjeonComplexes,
+    sujiComplexes,
     taxPolicySummary,
     jongbuseSummary,
     bookmarks,
@@ -1994,6 +2388,9 @@ export default function InvestmentScreen() {
   const [detailVisible, setDetailVisible] = useState(false);
   const [filterVisible, setFilterVisible] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'real-estate' | 'stocks'>('all');
+  const [sujiModalVisible, setSujiModalVisible] = useState(false);
+  const [regionModalVisible, setRegionModalVisible] = useState(false);
+  const [dongModalVisible, setDongModalVisible] = useState(false);
 
   const handleRefresh = useCallback(async () => {
     setRefreshing(true);
@@ -2090,7 +2487,7 @@ export default function InvestmentScreen() {
 
       {loading && !termOfDay && !regionCharts.length ? (
         <View style={styles.centerContainer}>
-          <ActivityIndicator size="large" color="#0095f6" />
+          <LoadingDots />
           <Text style={styles.loadingText}>투자 분석을 불러오는 중...</Text>
         </View>
       ) : (
@@ -2100,9 +2497,75 @@ export default function InvestmentScreen() {
             <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
           }
         >
-          {termOfDay && <TermOfDayCard term={termOfDay} />}
-          {regionCharts.length > 0 && <RegionBrowser regionCharts={regionCharts} />}
-          <JukjeonComplexBar complexes={jukjeonComplexes} />
+          {termOfDay && <AnimatedCard delay={0}><TermOfDayCard term={termOfDay} /></AnimatedCard>}
+          {regionCharts.length > 0 && (
+            <AnimatedCard delay={120}>
+              <FloatingCard>
+                <PressableScale
+                  onPress={() => setRegionModalVisible(true)}
+                  style={{ marginHorizontal: 12, marginTop: 12 }}
+                  contentStyle={{ backgroundColor: '#fff', borderRadius: 16, borderWidth: 1, borderColor: '#dbdbdb', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 14 }}
+                >
+                  <View>
+                    <Text style={{ fontSize: 15, fontWeight: '600', color: '#262626' }}>지역별 매매가 비교</Text>
+                    <Text style={{ fontSize: 12, color: '#8e8e8e', marginTop: 3 }}>경기도 · {regionCharts.length}개 지역</Text>
+                  </View>
+                  <MaterialIcons name="chevron-right" size={22} color="#8e8e8e" />
+                </PressableScale>
+              </FloatingCard>
+            </AnimatedCard>
+          )}
+          {Object.keys(sujiComplexes).length > 0 && (
+            <AnimatedCard delay={220}>
+              <FloatingCard>
+                <PressableScale
+                  onPress={() => setDongModalVisible(true)}
+                  style={{ marginHorizontal: 12, marginTop: 12 }}
+                  contentStyle={{ backgroundColor: '#fff', borderRadius: 16, borderWidth: 1, borderColor: '#dbdbdb', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 14 }}
+                >
+                  <View>
+                    <Text style={{ fontSize: 15, fontWeight: '600', color: '#262626' }}>동별 매매가</Text>
+                    <Text style={{ fontSize: 12, color: '#8e8e8e', marginTop: 3 }}>수지구 · 기흥구 · 동탄구</Text>
+                  </View>
+                  <MaterialIcons name="chevron-right" size={22} color="#8e8e8e" />
+                </PressableScale>
+              </FloatingCard>
+            </AnimatedCard>
+          )}
+          {Object.keys(sujiComplexes).length > 0 && (
+            <AnimatedCard delay={320}>
+              <FloatingCard>
+                <PressableScale
+                  onPress={() => setSujiModalVisible(true)}
+                  style={{ marginHorizontal: 12, marginTop: 12 }}
+                  contentStyle={{ backgroundColor: '#fff', borderRadius: 16, borderWidth: 1, borderColor: '#dbdbdb', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 14 }}
+                >
+                  <View>
+                    <Text style={{ fontSize: 15, fontWeight: '600', color: '#262626' }}>아파트 단지 매매가</Text>
+                    <Text style={{ fontSize: 12, color: '#8e8e8e', marginTop: 3 }}>
+                      {GU_ORDER.filter(gu => Object.keys(sujiComplexes[gu] ?? {}).length > 0).length}개 구 · {GU_ORDER.reduce((s, gu) => s + Object.values(sujiComplexes[gu] ?? {}).reduce((s2, arr) => s2 + arr.length, 0), 0)}개 단지
+                    </Text>
+                  </View>
+                  <MaterialIcons name="chevron-right" size={22} color="#8e8e8e" />
+                </PressableScale>
+              </FloatingCard>
+            </AnimatedCard>
+          )}
+          <SujiDongModal
+            visible={dongModalVisible}
+            onClose={() => setDongModalVisible(false)}
+            sujiComplexes={sujiComplexes}
+          />
+          <SujiComplexModal
+            visible={sujiModalVisible}
+            onClose={() => setSujiModalVisible(false)}
+            sujiComplexes={sujiComplexes}
+          />
+          <RegionBrowserModal
+            visible={regionModalVisible}
+            onClose={() => setRegionModalVisible(false)}
+            regionCharts={regionCharts}
+          />
           <View style={styles.footer}>
             <Text style={styles.footerText}>모든 정보는 {footerText} 기준입니다</Text>
           </View>

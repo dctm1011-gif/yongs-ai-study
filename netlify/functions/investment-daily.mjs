@@ -140,6 +140,7 @@ export default async (req, context) => {
     let termOfDay = null;
     let newsArticles = [];
     let dongCharts = [];
+    let regionCharts = [];
     let taxPolicySummary = null;
     let jongbuseSummary = null;
     try {
@@ -149,6 +150,7 @@ export default async (req, context) => {
       termOfDay = parsed.termOfDay || null;
       newsArticles = parsed.newsArticles || [];
       dongCharts = parsed.dongCharts || [];
+      regionCharts = parsed.regionCharts || [];
       taxPolicySummary = parsed.taxPolicySummary || null;
       jongbuseSummary = parsed.jongbuseSummary || null;
       log.log('✅ investment/daily.json 사용');
@@ -182,6 +184,7 @@ export default async (req, context) => {
       termOfDay,
       newsArticles,
       dongCharts,
+      regionCharts,
       taxPolicySummary,
       jongbuseSummary,
       timestamp: new Date().toISOString(),
