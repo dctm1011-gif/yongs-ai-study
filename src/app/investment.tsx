@@ -2372,6 +2372,7 @@ export default function InvestmentScreen() {
     dongCharts,
     regionCharts,
     sujiComplexes,
+    complexUpdateReminder,
     taxPolicySummary,
     jongbuseSummary,
     bookmarks,
@@ -2497,6 +2498,19 @@ export default function InvestmentScreen() {
             <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
           }
         >
+          {complexUpdateReminder?.active && (
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => {}}
+              style={{ marginHorizontal: 12, marginTop: 12, backgroundColor: '#fff8e1', borderRadius: 12, borderWidth: 1, borderColor: '#f59e0b', flexDirection: 'row', alignItems: 'center', paddingHorizontal: 14, paddingVertical: 10, gap: 10 }}
+            >
+              <MaterialIcons name="update" size={18} color="#f59e0b" />
+              <View style={{ flex: 1 }}>
+                <Text style={{ fontSize: 13, fontWeight: '600', color: '#92400e' }}>부동산 데이터 업데이트 필요</Text>
+                <Text style={{ fontSize: 11, color: '#b45309', marginTop: 2 }}>{complexUpdateReminder.targetMonth} 기준 · push_jukjeon_complexes.py 실행</Text>
+              </View>
+            </TouchableOpacity>
+          )}
           {termOfDay && <AnimatedCard delay={0}><TermOfDayCard term={termOfDay} /></AnimatedCard>}
           {regionCharts.length > 0 && (
             <AnimatedCard delay={120}>

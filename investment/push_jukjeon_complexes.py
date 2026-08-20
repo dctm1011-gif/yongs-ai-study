@@ -60,7 +60,9 @@ const config = {{
 const app = getApps().length ? getApps()[0] : initializeApp(config);
 const db = getDatabase(app);
 const data = JSON.parse(fs.readFileSync('{tmp_path}', 'utf-8'));
+const {{ remove }} = require('firebase/database');
 set(ref(db, 'investment/sujiComplexes'), data)
+  .then(() => remove(ref(db, 'investment/complexUpdateReminder')))
   .then(() => {{
     let total = 0;
     for (const gu of Object.values(data)) {{

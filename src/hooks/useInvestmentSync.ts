@@ -249,6 +249,7 @@ export function useInvestmentSync() {
   const [dongCharts, setDongCharts] = useState<DongChartEntry[]>([]);
   const [regionCharts, setRegionCharts] = useState<RegionChartEntry[]>([]);
   const [sujiComplexes, setSujiComplexes] = useState<Record<string, Record<string, JukjeonComplex[]>>>({});
+  const [complexUpdateReminder, setComplexUpdateReminder] = useState<{ active: boolean; targetMonth: string; message: string } | null>(null);
   const [taxPolicySummary, setTaxPolicySummary] = useState<{ text: string; updatedAt: string } | null>(null);
   const [jongbuseSummary, setJongbuseSummary] = useState<{ text: string; updatedAt: string } | null>(null);
   const [bookmarks, setBookmarks] = useState<string[]>([]);
@@ -315,7 +316,7 @@ export function useInvestmentSync() {
   // 수지구 동별 단지 데이터는 별도 경로에서 독립적으로 읽음 (daily 갱신과 무관)
   useEffect(() => {
     const db = getDatabase(getFirebaseApp());
-    const unsubscribe = onValue(
+    const unsubSuji = onValue(
       ref(db, 'investment/sujiComplexes'),
       snapshot => {
         if (snapshot.exists()) {
@@ -325,7 +326,13 @@ export function useInvestmentSync() {
       },
       err => console.error('[useInvestmentSync] sujiComplexes error:', err)
     );
-    return () => unsubscribe();
+    const unsubReminder = onValue(
+      ref(db, 'investment/complexUpdateReminder'),
+      snapshot => {
+        setComplexUpdateReminder(snapshot.exists() ? snapshot.val() : null);
+      }
+    );
+    return () => { unsubSuji(); unsubReminder(); };
   }, []);
 
   const syncData = useCallback(async () => {
@@ -383,6 +390,7 @@ export function useInvestmentSync() {
     dongCharts,
     regionCharts,
     sujiComplexes,
+    complexUpdateReminder,
     taxPolicySummary,
     jongbuseSummary,
     bookmarks,
