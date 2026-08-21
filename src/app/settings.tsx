@@ -4,7 +4,6 @@ import { useScreenFade } from '../hooks/useScreenFade';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LAST_BUILD_TIME } from '../constants/buildInfo';
-import { enableStudyNotifications, disableStudyNotifications } from '../utils/studyNotifications';
 import { useAuth } from '../context/AuthContext';
 
 interface FeedbackItem {
@@ -20,12 +19,10 @@ export default function SettingsScreen() {
   const { opacity, translateY } = useScreenFade();
   const [feedback, setFeedback] = useState('');
   const [feedbackList, setFeedbackList] = useState<FeedbackItem[]>([]);
-  const [remindersEnabled, setRemindersEnabled] = useState(false);
   const [buildTime, setBuildTime] = useState<string>('');
 
   useEffect(() => {
     loadFeedback();
-    loadReminderStatus();
     loadBuildTime();
   }, []);
 
@@ -70,36 +67,6 @@ export default function SettingsScreen() {
     });
   };
 
-  const loadReminderStatus = async () => {
-    try {
-      const status = await AsyncStorage.getItem('reminders_enabled');
-      setRemindersEnabled(status === 'true');
-    } catch (error) {
-      console.error('알림 상태 로드 실패:', error);
-    }
-  };
-
-  const toggleStudyReminders = async () => {
-    try {
-      if (!remindersEnabled) {
-        const ok = await enableStudyNotifications(user?.uid);
-        if (!ok) {
-          Alert.alert('권한 거부', '알림 권한을 허용해주세요.');
-          return;
-        }
-        setRemindersEnabled(true);
-        Alert.alert('✅ 활성화됨', '8시~22시 매시간 복습 단어 알림을 받게 됩니다!');
-      } else {
-        await disableStudyNotifications();
-        setRemindersEnabled(false);
-        Alert.alert('❌ 비활성화됨', '학습 알림이 꺼졌습니다.');
-      }
-    } catch (error) {
-      Alert.alert('❌ 오류', '알림 설정 실패');
-      console.error('알림 설정 실패:', error);
-    }
-  };
-
   const deleteFeedback = async (id: string) => {
     try {
       const newList = feedbackList.filter(item => item.id !== id);
@@ -123,23 +90,6 @@ export default function SettingsScreen() {
             <Text style={styles.buildInfoTime}>{buildTime}</Text>
           </View>
         )}
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>알림 설정</Text>
-          <Text style={styles.feedbackDesc}>
-            08:00~22:00, 매시간 학습 알림을 받습니다.
-          </Text>
-          <TouchableOpacity
-            style={[styles.testButton, remindersEnabled && styles.testButtonActive]}
-            onPress={toggleStudyReminders}
-          >
-            <Text style={styles.testButtonText}>
-              {remindersEnabled ? '🔔 학습 알림 ON' : '🔕 학습 알림 OFF'}
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.divider} />
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>피드백</Text>

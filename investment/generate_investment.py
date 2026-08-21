@@ -148,6 +148,15 @@ JSON 형식 (정확히 이 스키마를 따를 것, chartData/source 필드는 �
 def get_api_key() -> str:
     key = os.environ.get("ANTHROPIC_API_KEY", "")
     if not key:
+        # fallback: .env 파일에서 로드 (YongStudyApp/.env)
+        env_file = ROOT / ".env"
+        if env_file.exists():
+            for line in env_file.read_text(encoding="utf-8").splitlines():
+                if line.startswith("ANTHROPIC_API_KEY="):
+                    key = line.split("=", 1)[1].strip()
+                    os.environ["ANTHROPIC_API_KEY"] = key
+                    break
+    if not key:
         print("[!] ANTHROPIC_API_KEY를 찾을 수 없습니다.")
         sys.exit(1)
     return key

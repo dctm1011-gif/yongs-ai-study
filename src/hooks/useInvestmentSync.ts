@@ -135,6 +135,9 @@ export interface RegionChartEntry {
 }
 
 const BOOKMARKS_KEY = 'investment_bookmarks';
+const CACHE_DAILY = 'inv_daily_v1';
+const CACHE_SUJI  = 'inv_suji_v1';
+const CACHE_RATE  = 'inv_rate_v1';
 
 // 통계청 주택소유통계 기반 정적 폴백 데이터 (실측치)
 // Python 스크립트(realestate_api.py)가 업데이트되면 Firebase 데이터가 우선 적용됨
@@ -274,18 +277,49 @@ export function useInvestmentSync() {
   const [jongbuseSummary, setJongbuseSummary] = useState<{ text: string; updatedAt: string } | null>(null);
   const [bookmarks, setBookmarks] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
+  const [syncing, setSyncing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastSyncTime, setLastSyncTime] = useState<Date | null>(null);
 
-  // Load bookmarks from local storage once
+  // Load bookmarks + cached data before Firebase connects
   useEffect(() => {
     (async () => {
       try {
         const saved = await AsyncStorage.getItem(BOOKMARKS_KEY);
         if (saved) setBookmarks(JSON.parse(saved));
-      } catch (err) {
-        console.error('[useInvestmentSync] Error loading bookmarks:', err);
-      }
+      } catch {}
+
+      try {
+        const today = getKSTDateString();
+        const results = await AsyncStorage.multiGet([CACHE_DAILY, CACHE_SUJI, CACHE_RATE]);
+        const dailyRaw = results[0][1];
+        const sujiRaw  = results[1][1];
+        const rateRaw  = results[2][1];
+
+        if (dailyRaw) {
+          const c = JSON.parse(dailyRaw);
+          if (c.date === today) {
+            setColumns(c.columns ?? []);
+            setTermOfDay(c.termOfDay ?? null);
+            setNewsArticles(c.newsArticles ?? []);
+            setDongCharts(c.dongCharts ?? []);
+            setRegionCharts(c.regionCharts ?? []);
+            setTaxPolicySummary(c.taxPolicySummary ?? null);
+            setJongbuseSummary(c.jongbuseSummary ?? null);
+            if (c.cachedAt) setLastSyncTime(new Date(c.cachedAt));
+            setLoading(false);
+            setSyncing(true);
+          }
+        }
+        if (sujiRaw) {
+          const c = JSON.parse(sujiRaw);
+          if (c.data) setSujiComplexes(c.data);
+        }
+        if (rateRaw) {
+          const c = JSON.parse(rateRaw);
+          if (Array.isArray(c.data)) setRateCharts(c.data);
+        }
+      } catch {}
     })();
   }, []);
 
@@ -302,31 +336,46 @@ export function useInvestmentSync() {
         if (snapshot.exists()) {
           const data = snapshot.val();
           if (data.columns && Array.isArray(data.columns)) {
-            setColumns(injectRatioIntoColumns(data.columns));
-            setTermOfDay(data.termOfDay || null);
-            setNewsArticles(data.newsArticles || []);
-            setDongCharts(injectRatioFallback(data.dongCharts || []));
+            const cols = injectRatioIntoColumns(data.columns);
+            const term = data.termOfDay || null;
+            const news = data.newsArticles || [];
+            const dong = injectRatioFallback(data.dongCharts || []);
             const regionChartsData = (Array.isArray(data.regionCharts) && data.regionCharts.length > 0)
               ? data.regionCharts
               : await fetchFallbackRegionCharts(db);
+            const tax  = data.taxPolicySummary || null;
+            const jong = data.jongbuseSummary || null;
+            const ts   = new Date(data.timestamp || Date.now());
+            setColumns(cols);
+            setTermOfDay(term);
+            setNewsArticles(news);
+            setDongCharts(dong);
             setRegionCharts(regionChartsData);
-            setTaxPolicySummary(data.taxPolicySummary || null);
-            setJongbuseSummary(data.jongbuseSummary || null);
-            setLastSyncTime(new Date(data.timestamp || Date.now()));
+            setTaxPolicySummary(tax);
+            setJongbuseSummary(jong);
+            setLastSyncTime(ts);
             setError(null);
+            try {
+              await AsyncStorage.setItem(CACHE_DAILY, JSON.stringify({
+                date: today, columns: cols, termOfDay: term, newsArticles: news,
+                dongCharts: dong, regionCharts: regionChartsData,
+                taxPolicySummary: tax, jongbuseSummary: jong, cachedAt: ts.getTime(),
+              }));
+            } catch {}
           }
         } else {
-          console.log('[useInvestmentSync] No Firebase data for today, using mock');
           setColumns(getMockInvestmentColumns());
           setError('오늘자 데이터가 아직 없습니다 - 기본 데이터 표시');
         }
         setLoading(false);
+        setSyncing(false);
       },
       err => {
         console.error('[useInvestmentSync] Firebase subscription error:', err);
         setColumns(getMockInvestmentColumns());
         setError('Firebase 연결 실패 - 기본 데이터 표시');
         setLoading(false);
+        setSyncing(false);
       }
     );
 
@@ -341,7 +390,10 @@ export function useInvestmentSync() {
       snapshot => {
         if (snapshot.exists()) {
           const data = snapshot.val();
-          if (data && typeof data === 'object') setSujiComplexes(data);
+          if (data && typeof data === 'object') {
+            setSujiComplexes(data);
+            AsyncStorage.setItem(CACHE_SUJI, JSON.stringify({ data })).catch(() => {});
+          }
         }
       },
       err => console.error('[useInvestmentSync] sujiComplexes error:', err)
@@ -361,7 +413,9 @@ export function useInvestmentSync() {
       snapshot => {
         if (snapshot.exists()) {
           const val = snapshot.val();
-          setRateCharts(Array.isArray(val) ? val : Object.values(val));
+          const rates = Array.isArray(val) ? val : Object.values(val);
+          setRateCharts(rates as RateChart[]);
+          AsyncStorage.setItem(CACHE_RATE, JSON.stringify({ data: rates })).catch(() => {});
         }
       }
     );
@@ -430,6 +484,7 @@ export function useInvestmentSync() {
     jongbuseSummary,
     bookmarks,
     loading,
+    syncing,
     error,
     lastSyncTime,
     syncData,

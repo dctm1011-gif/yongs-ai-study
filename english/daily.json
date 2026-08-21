@@ -1,286 +1,286 @@
 {
-  "date": "2026-08-20",
+  "date": "2026-08-22",
   "words": [
     {
-      "word": "attenuate",
-      "part_of_speech": "동사",
-      "meaning_ko": "약화시키다, 감소시키다, 희박하게 하다",
-      "explanation": "신호, 영향력, 강도 등을 점진적으로 약하게 만드는 것. 과학·의학·경제학 지문에서 자주 출제돼요.",
-      "example_from_convo": "The vaccine attenuates the severity of COVID-19 symptoms in infected individuals.",
-      "example_ko": "백신은 감염자의 COVID-19 증상의 심각도를 약화시켜요.",
-      "tip": "동의어: diminish(감소), weaken(약해지다), reduce(줄이다). 반의어: amplify(증폭), intensify(강화). Reading·Listening 고빈출. 의학/물리학 용어.",
+      "word": "dialectical",
+      "part_of_speech": "형용사",
+      "meaning_ko": "변증법적인, 대립과 통합을 통한",
+      "explanation": "서로 대립하는 두 개념이나 주장이 충돌하고 통합되면서 새로운 진리에 도달하는 과정을 설명해요. 철학, 역사, 사회학 지문에서 자주 등장합니다.",
+      "example_from_convo": "Marx used dialectical materialism to analyze class conflict and social evolution.",
+      "example_ko": "마르크스는 변증법적 유물론을 통해 계급 갈등과 사회 진화를 분석했어요.",
+      "tip": "동의어: oppositional(대립적), synthetic(통합적). TOEFL Reading History·Philosophy·Social Science에서 고빈출. Listening 강의에서도 자주 들어요.",
+      "emoji": "⚖️"
+    },
+    {
+      "word": "obfuscatory",
+      "part_of_speech": "형용사",
+      "meaning_ko": "혼동시키는, 모호하게 하는, 의도적으로 불명확한",
+      "explanation": "obfuscate의 형용사형. 의도적으로 또는 실수로 무언가를 복잡하고 이해하기 어렵게 만드는 특성을 나타내요. 비판적 독해 맥락에서 문제 있는 논리나 표현을 지칭할 때 씁니다.",
+      "example_from_convo": "The politician's obfuscatory language avoided direct answers to the reporter's questions.",
+      "example_ko": "그 정치인의 모호한 언어는 기자의 직접적인 질문에 명확하게 답하지 않았어요.",
+      "tip": "동의어: ambiguous(모호한), evasive(회피적인), cryptic(수수께끼 같은). 반의어: pellucid(명확한), transparent(투명한). TOEFL Writing에서 논리 비판할 때 유용.",
+      "emoji": "🌫️"
+    },
+    {
+      "word": "ameliorative",
+      "part_of_speech": "형용사",
+      "meaning_ko": "개선시키는, 호전시키는",
+      "explanation": "ameliorate의 형용사형. 어떤 상황이나 조건을 더 나은 상태로 개선하는 특성을 나타내요. 정책, 의료, 교육 등 발전적 맥락에서 사용됩니다.",
+      "example_from_convo": "The government implemented ameliorative policies to reduce poverty and inequality.",
+      "example_ko": "정부는 빈곤과 불평등을 줄이기 위한 개선 정책을 시행했어요.",
+      "tip": "동의어: remedial(치료적), restorative(회복시키는), constructive(건설적). 반의어: exacerbatory(악화시키는). TOEFL Reading 사회과학 지문에서 정책 효과 설명할 때 자주 출현.",
+      "emoji": "📈"
+    },
+    {
+      "word": "antecedent",
+      "part_of_speech": "명사/형용사",
+      "meaning_ko": "(명사) 선행하는 것, 전조; (형용사) 앞서는, 이전의",
+      "explanation": "어떤 것이 일어나기 전에 그것을 가능하게 하거나 야기하는 것. 인과관계, 역사적 배경, 논리적 선행 조건을 설명할 때 씁니다.",
+      "example_from_convo": "The French Revolution was an antecedent to the rise of nationalism across Europe.",
+      "example_ko": "프랑스 혁명은 유럽 전역에서의 민족주의 상승의 전조였어요.",
+      "tip": "동의어: predecessor(선행자), precursor(전조), prior condition(선행 조건). TOEFL Reading 역사·사회 지문에서 인과관계 파악에 필수. Listening 강의에서도 시간 순서 설명할 때 자주 나와요.",
+      "emoji": "⏮️"
+    },
+    {
+      "word": "reductive",
+      "part_of_speech": "형용사",
+      "meaning_ko": "축약적인, 단순화하는, 환원주의적인",
+      "explanation": "복잡한 현상이나 문제를 지나치게 단순하게 설명하거나, 여러 요소를 하나로 축소하는 것. 비판적 맥락에서 논리의 약점을 지적할 때 쓰입니다.",
+      "example_from_convo": "Saying poverty is purely caused by laziness is a reductive argument that ignores systemic factors.",
+      "example_ko": "빈곤이 순전히 게으름 때문이라고 말하는 것은 체계적 요인을 무시하는 단순화된 주장이에요.",
+      "tip": "동의어: oversimplified(과도하게 단순화된), reductionist(환원주의적). TOEFL Writing에서 상대방 주장의 한계를 지적할 때 강력해요. Reading 비판적 지문 분석에 필수.",
       "emoji": "📉"
-    },
-    {
-      "word": "antithetical",
-      "part_of_speech": "형용사",
-      "meaning_ko": "정반대의, 모순되는, 양립할 수 없는",
-      "explanation": "두 개념이나 입장이 근본적으로 대립하고 양립 불가능한 상태. 비교·대조 문제에서 필수 어휘예요.",
-      "example_from_convo": "Individualism is antithetical to collectivism in cultural philosophy.",
-      "example_ko": "개인주의는 문화철학에서 집단주의와 정반대예요.",
-      "tip": "동의어: contradictory(모순적인), contrary(반대의), opposing(대립적인). 반의어: compatible(양립 가능한). Writing·Reading 비교 구조 단골.",
-      "emoji": "⚔️"
-    },
-    {
-      "word": "aver",
-      "part_of_speech": "동사",
-      "meaning_ko": "단호히 주장하다, 확언하다, 단정짓다",
-      "explanation": "강한 확신을 가지고 어떤 사실을 단호하게 주장하거나 선언하는 것. 학술 논문·법률문 지문에서 빈출.",
-      "example_from_convo": "The researcher averred that the data conclusively supported the hypothesis.",
-      "example_ko": "연구자는 데이터가 가설을 명백히 입증한다고 단호히 주장했어요.",
-      "tip": "동의어: assert(주장), avow(맹세하다), maintain(유지하다), claim(주장). 반의어: deny(부인), disclaim(거부). Formal/Academic 문맥에서만 사용. Reading 고난이도 지문.",
-      "emoji": "🗣️"
-    },
-    {
-      "word": "byzantine",
-      "part_of_speech": "형용사",
-      "meaning_ko": "복잡하고 헷갈리는, 미로 같은, (역사) 비잔틴의",
-      "explanation": "매우 복잡하고 이해하기 어려운 체계나 과정을 묘사. 통상·정치·조직 구조 지문에서 자주 나와요.",
-      "example_from_convo": "The company's byzantine bureaucracy made it nearly impossible to get approval quickly.",
-      "example_ko": "그 회사의 복잡한 관료 체계는 빠른 승인을 거의 불가능하게 했어요.",
-      "tip": "동의어: labyrinthine(미로 같은), convoluted(복잡한), intricate(정교한). 대문자 Byzantine(비잔틴 제국)와 구별. Reading·Writing 고난도.",
-      "emoji": "🌀"
-    },
-    {
-      "word": "casuistry",
-      "part_of_speech": "명사",
-      "meaning_ko": "궤변, 교묘한 논법, 핑계 찾기",
-      "explanation": "도덕적·논리적 문제를 교묘한 논증으로 정당화하려는 행위. 철학·윤리학·정치학 지문에서 고난도 어휘.",
-      "example_from_convo": "The politician's casuistry allowed him to justify contradictory statements without appearing hypocritical.",
-      "example_ko": "그 정치인의 궤변은 모순된 발언을 위선처럼 보이지 않게 정당화했어요.",
-      "tip": "동의어: sophistry(궤변), equivocation(애매한 표현), rationalization(합리화). 부정적 뉘앙스. Reading 최상위 난도 지문.",
-      "emoji": "🤥"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "attenuate",
-      "question": "What does 'attenuate' mean in a scientific context?",
+      "word": "dialectical",
+      "question": "Which of the following best describes 'dialectical' in an academic context?",
       "options": [
-        "to gradually weaken or reduce in strength or intensity",
-        "to completely eliminate something",
-        "to reinforce or amplify a signal",
-        "to maintain a constant level unchanged"
+        "a process where opposing ideas interact and synthesis creates new understanding",
+        "a simple disagreement between two people with no resolution",
+        "the act of speaking fluently in multiple dialects",
+        "a method of avoiding conflict through silence"
       ],
       "answer": 0,
-      "explanation": "attenuate는 강도나 영향을 '점진적으로' 약하게 만드는 것이에요.",
+      "explanation": "dialectical은 대립하는 개념들이 상호작용하여 새로운 이해를 창출하는 변증법적 과정을 나타내요.",
       "option_explanations": [
         null,
-        "eliminate(완전히 제거)는 너무 급진적이에요. attenuate는 '약화'이지 '제거'가 아니에요.",
-        "amplify(증폭)는 attenuate의 정반대 의미예요.",
-        "maintain(유지)는 변화가 없다는 뜻이므로 attenuate와 모순돼요."
+        "단순한 의견 불일치는 dialectical이 아니라 일반적 disagreement예요.",
+        "dialect(방언) 발음과 혼동 — dialectical은 논리적·철학적 개념이에요.",
+        "synthesis와 발전적 상호작용이 전혀 없으므로 틀렸어요."
       ]
     },
     {
       "type": "meaning",
-      "word": "antithetical",
-      "question": "Which statement best defines 'antithetical'?",
+      "word": "obfuscatory",
+      "question": "What is the primary effect of using obfuscatory language in communication?",
       "options": [
-        "fundamentally opposed and contradictory in nature",
-        "somewhat similar in key respects",
-        "gradually developing over time",
-        "unclear or difficult to interpret"
+        "to make the meaning unclear or confusing intentionally or unintentionally",
+        "to clarify a complex topic for a general audience",
+        "to provide detailed evidence and support for an argument",
+        "to express ideas in a poetic and artistic manner"
       ],
       "answer": 0,
-      "explanation": "antithetical은 두 개념이 '근본적으로 대립'하는 상태를 의미해요.",
+      "explanation": "obfuscatory는 의도적 또는 실수로 의사소통을 불명확하고 혼동스럽게 만드는 특성을 나타내요.",
       "option_explanations": [
         null,
-        "somewhat similar(어느 정도 유사)는 antithetical과 완전히 반대예요.",
-        "gradually developing(점진적 발전)은 관계없는 개념이에요.",
-        "unclear(불명확)은 antithetical의 의미가 아니에요."
+        "clarify(명확히)는 obfuscatory의 정반대 효과예요.",
+        "obfuscatory는 명확한 증거·지지와는 무관해요.",
+        "poetic(시적)은 obfuscatory의 원인이 될 수 있지만 주요 의미는 아니에요."
       ]
     },
     {
       "type": "meaning",
-      "word": "aver",
-      "question": "In 'The witness averred that she saw the suspect flee the scene,' what does 'aver' convey?",
+      "word": "antecedent",
+      "question": "In the sentence 'Economic inequality was an antecedent to social unrest,' what does 'antecedent' mean?",
       "options": [
-        "a strong, confident assertion or declaration",
-        "a hesitant suggestion or guess",
-        "a question posed for clarification",
-        "a refusal to participate in testimony"
+        "something that comes before and leads to or enables what follows",
+        "a direct consequence or result of an event",
+        "an accompanying condition that occurs simultaneously",
+        "a theoretical prediction about future events"
       ],
       "answer": 0,
-      "explanation": "aver는 '강한 확신을 가지고 단호하게 주장'하는 것을 의미해요.",
+      "explanation": "antecedent는 어떤 것이 일어나기 전에 그것을 가능하게 하거나 야기하는 선행 조건을 의미해요.",
       "option_explanations": [
         null,
-        "hesitant(망설이는) suggestion(제안)은 aver의 강한 확신과 맞지 않아요.",
-        "question(질문)은 aver와 무관해요.",
-        "refusal(거부)은 aver의 의미와 정반대예요."
+        "consequence(결과)는 antecedent의 정반대예요. 이것은 선행하는 것이 아니라 따라오는 것이에요.",
+        "simultaneous(동시의) 조건은 antecedent가 아니라 concomitant(수반)라고 해요.",
+        "prediction(예측)은 논리적 원인-결과 관계와는 다른 개념이에요."
       ]
     },
     {
       "type": "fill_blank",
-      "word": "attenuate",
-      "sentence": "Regular exercise can _____ the risk of cardiovascular disease.",
-      "sentence_ko": "규칙적인 운동은 심혈관 질환의 위험을 감소시킬 수 있어요.",
-      "answer": "attenuate",
-      "hint": "weaken or reduce gradually"
+      "word": "dialectical",
+      "sentence": "The author employs a _____ approach to examine how thesis and antithesis eventually merge into synthesis.",
+      "sentence_ko": "저자는 정제와 반정제가 어떻게 최종적으로 종합으로 통합되는지를 검토하기 위해 변증법적 접근을 사용해요.",
+      "answer": "dialectical",
+      "hint": "related to opposing ideas that create new understanding through interaction"
     },
     {
       "type": "fill_blank",
-      "word": "antithetical",
-      "sentence": "The two political ideologies are _____ in their fundamental principles and goals.",
-      "sentence_ko": "두 정치 이념은 근본적인 원칙과 목표에서 정반대예요.",
-      "answer": "antithetical",
-      "hint": "opposed, contradictory"
+      "word": "obfuscatory",
+      "sentence": "Critics argued that the report's _____ presentation of data made it difficult for the public to understand the actual findings.",
+      "sentence_ko": "비평가들은 그 보고서의 모호한 데이터 제시가 대중이 실제 발견을 이해하기 어렵게 만들었다고 주장했어요.",
+      "answer": "obfuscatory",
+      "hint": "adjective meaning deliberately or confusingly unclear"
     },
     {
       "type": "fill_blank",
-      "word": "casuistry",
-      "sentence": "Critics accused the negotiator of using _____ to justify the unfavorable terms of the treaty.",
-      "sentence_ko": "비평가들은 협상가가 불리한 조약 조건을 정당화하기 위해 궤변을 사용했다고 비난했어요.",
-      "answer": "casuistry",
-      "hint": "clever but misleading reasoning"
+      "word": "antecedent",
+      "sentence": "Understanding the _____ causes of climate change requires examining historical industrial development patterns.",
+      "sentence_ko": "기후변화의 선행하는 원인을 이해하려면 역사적 산업 발전 패턴을 검토해야 해요.",
+      "answer": "antecedent",
+      "hint": "something that precedes and leads to what follows"
     },
     {
       "type": "situation",
-      "word": "byzantine",
-      "question": "A company has so many approval layers, committees, and obscure regulations that employees spend weeks just getting one project started. Which word best describes this system?",
+      "word": "ameliorative",
+      "question": "A country introduces new educational programs designed to reduce literacy gaps among disadvantaged communities. Which word best describes the nature of these programs?",
       "options": [
-        "streamlined",
-        "byzantine",
-        "transparent",
-        "efficient"
+        "exacerbatory",
+        "ameliorative",
+        "obfuscatory",
+        "ancillary"
       ],
       "answer": 1,
-      "explanation": "byzantine은 매우 복잡하고 이해하기 어려운 시스템을 묘사해요."
+      "explanation": "ameliorative 프로그램은 문제 상황(문해력 격차)을 개선하고 호전시키는 것이 목표예요."
     },
     {
       "type": "situation",
-      "word": "aver",
-      "question": "A professor, based on decades of research, formally declares in front of the university board that a particular scientific principle is true. What does the professor do?",
+      "word": "reductive",
+      "question": "A politician claims that 'unemployment is entirely caused by workers lacking work ethic,' ignoring structural economic factors, labor market changes, and education gaps. What type of argument is this?",
       "options": [
-        "hypothesizes cautiously about the principle",
-        "avers the validity of the principle",
-        "questions whether the principle exists",
-        "refuses to comment on the principle"
+        "a comprehensive analysis",
+        "a dialectical examination",
+        "a reductive oversimplification",
+        "an ameliorative solution"
       ],
-      "answer": 1,
-      "explanation": "aver는 강한 확신을 가지고 공식적으로 단호히 주장하는 행위예요."
+      "answer": 2,
+      "explanation": "이 주장은 실업의 복잡한 원인들을 무시하고 단 하나의 요소(일할 의욕)로 모든 것을 축약하려 하므로 reductive 논리예요."
     }
   ],
   "sentences": [
     {
-      "word": "attenuate",
-      "sentence": "Sunscreen attenuates the harmful ultraviolet rays penetrating your skin.",
-      "sentence_ko": "자외선차단제는 피부에 침투하는 해로운 자외선을 약화시켜요.",
-      "nuance": "점진적으로 또는 부분적으로 강도를 줄이되, 완전히 제거하지는 않는 뉘앙스. 신호, 영향, 심각도 등이 '약해지는' 과정.",
-      "context": "과학·의학·물리학·통신학에서 빈출. 백신, 약물, 기술적 감쇠 등을 설명할 때 쓰여요.",
-      "everyday_usage": "risk/severity/signal/effect를 목적어로 자주 사용. 'attenuate the impact' / 'attenuate symptoms' 패턴."
+      "word": "dialectical",
+      "sentence": "Hegel's dialectical method traces how historical contradictions resolve into higher synthesis.",
+      "sentence_ko": "헤겔의 변증법적 방법은 역사적 모순이 어떻게 더 높은 통합으로 해결되는지를 추적해요.",
+      "nuance": "단순한 대립이 아니라 대립 → 통합 → 새로운 이해로 발전하는 동적 과정을 강조해요. 철학적·이론적이고 진보적입니다.",
+      "context": "철학, 역사, 사회학, 정치학 강의와 지문. 마르크스주의, 헤겔, 논리적 발전 과정을 다루는 학술 텍스트.",
+      "everyday_usage": "formal & academic only. '...을 통해 어떤 새로운 이해가 나온다'는 발전적 논의 맥락에서만 씁니다."
     },
     {
-      "word": "antithetical",
-      "sentence": "Freedom and censorship are antithetical concepts in democratic theory.",
-      "sentence_ko": "자유와 검열은 민주주의 이론에서 정반대 개념이에요.",
-      "nuance": "단순히 '다르다'가 아니라 '근본적으로 양립 불가능하다'는 강한 대립 의미. 논리적·철학적 모순.",
-      "context": "철학·정치학·윤리학 지문에서 개념 비교. 이념, 가치관, 원칙의 충돌을 설명할 때.",
-      "everyday_usage": "형용사로만 사용. 'X is antithetical to Y' 구조. '~와 정반대의'라는 뜻으로 논쟁적 주제를 설명."
+      "word": "obfuscatory",
+      "sentence": "The company's obfuscatory financial statements obscured their actual profit margins from investors.",
+      "sentence_ko": "그 회사의 모호한 재무 명세서는 투자자들로부터 실제 이윤율을 가렸어요.",
+      "nuance": "의도적 또는 비의도적 혼란을 일으키는 특성. '의도적으로 감춘다'는 뉘앙스가 짙어요.",
+      "context": "비판적 언론 기사, 학술 논문에서 문제있는 커뮤니케이션을 지칭할 때. 정치·경제·법률 담론.",
+      "everyday_usage": "'...language/statement/explanation'을 주로 수식합니다. '그것은 obfuscatory야' (상황을 모호하게 만든다는 비판)."
     },
     {
-      "word": "aver",
-      "sentence": "The defendant averred his innocence despite overwhelming evidence to the contrary.",
-      "sentence_ko": "피고인은 반대 증거에도 불구하고 자신의 무죄를 단호히 주장했어요.",
-      "nuance": "단순한 주장(claim)이 아니라 '강한 확신과 단호함'을 가지고 무언가를 선언·확언하는 느낌. 공식적이고 무게감 있어요.",
-      "context": "법정·공식 진술·학술 논문에서 한 사람이 강력하게 입장을 표명할 때. 뉴스나 역사 지문.",
-      "everyday_usage": "formal/academic 맥락에서만 사용. 'aver that + 절' 구조. 과거형 averred도 자주 보여요."
+      "word": "ameliorative",
+      "sentence": "The hospital's ameliorative care program helped reduce patient suffering during end-of-life treatment.",
+      "sentence_ko": "병원의 증상 완화 치료 프로그램은 생명 말기 치료 중 환자의 고통을 줄이는 데 도움이 됐어요.",
+      "nuance": "상황을 '더 나은 상태'로 만드는 긍정적·건설적 행동. 근본적 해결보다는 개선에 초점.",
+      "context": "의료, 사회정책, 교육 개혁, 환경 보호 논의. 점진적 개선 효과를 설명할 때.",
+      "everyday_usage": "'...policy/care/measures' 같은 구체적 시스템·프로그램을 수식해요."
     },
     {
-      "word": "byzantine",
-      "sentence": "The company's byzantine organizational structure confuses even senior managers.",
-      "sentence_ko": "그 회사의 복잡한 조직 구조는 심지어 고위 관리자도 혼란스럽게 해요.",
-      "nuance": "겹겹이 복잡하고, 비효율적이며, 이해하거나 탐색하기 어려운 상태. 음의 평가가 함축돼요.",
-      "context": "관료 체계·정치·비즈니스·역사에서 복잡한 시스템을 비판할 때. 정부·기업 지문에서 빈출.",
-      "everyday_usage": "bureaucracy/system/process/rules를 꾸밀 때. 'a byzantine system' / 'byzantine procedures' 패턴으로 쓰여요."
+      "word": "antecedent",
+      "sentence": "The printing press was a technological antecedent that enabled the spread of Enlightenment ideas.",
+      "sentence_ko": "인쇄기는 계몽주의 사상의 확산을 가능하게 한 기술적 선행 조건이었어요.",
+      "nuance": "단순한 '이전'이 아니라 '이후의 것을 야기하거나 가능하게 하는 것'. 인과적·선행적 중요성을 강조.",
+      "context": "역사, 과학, 철학 지문에서 발전의 근원을 추적할 때. 'antecedent to' 형태로 인과관계 표현.",
+      "everyday_usage": "formal contexts. '...의 antecedent는' (선행 원인/전조), 또는 'X is antecedent to Y' (X는 Y의 선행 조건)."
     },
     {
-      "word": "casuistry",
-      "sentence": "The lawyer's casuistry allowed him to argue both sides of the legal dispute persuasively.",
-      "sentence_ko": "그 변호사의 궤변은 법적 분쟁의 양쪽을 모두 설득력 있게 주장할 수 있게 했어요.",
-      "nuance": "도덕적으로 의심스럽거나 교묘하게 조작된 논리. 겉으로는 그럴듯하지만 근본적으로 부정직한 추론.",
-      "context": "철학·윤리학·정치·법학 지문에서 논리적 결함이나 조작을 비판할 때. 고난도 학술 텍스트.",
-      "everyday_usage": "명사로만 사용. 'resort to casuistry' / 'use casuistry' 패턴. 항상 부정적 의미를 담아요."
+      "word": "reductive",
+      "sentence": "Blaming crime solely on poverty is a reductive argument that ignores psychological and social factors.",
+      "sentence_ko": "범죄를 오직 빈곤 때문으로 돌리는 것은 심리적·사회적 요인을 무시하는 단순화된 주장이에요.",
+      "nuance": "의도적 또는 무의식적 단순화. 복잡한 현상을 한 가지 원인으로 축소하려는 시도. 비판적 뉘앙스 강함.",
+      "context": "TOEFL Writing에서 상대 주장의 약점 지적. 학술 토론, 비평 텍스트에서 논리 검증.",
+      "everyday_usage": "'...argument/explanation/view/approach'를 수식. '그것은 너무 reductive해' (너무 단순화됐다는 비판)."
     },
     {
       "word": "exacerbate",
-      "sentence": "Sleep deprivation exacerbates emotional instability in teenagers.",
-      "sentence_ko": "수면 부족은 청소년의 정서 불안정성을 악화시켜요.",
-      "nuance": "이미 존재하는 부정적 상황을 능동적으로 '더 나쁘게' 만드는 것. 외부 요인이 문제를 증폭.",
-      "context": "의학·심리학·환경·사회 문제 지문에서 부정적 추세를 설명할 때. 뉴스·정책 비판 문맥.",
-      "everyday_usage": "problem/situation/condition/symptoms를 목적어로 자주 사용. 'Don't exacerbate the situation' / 'This only exacerbates the issue'."
+      "sentence": "Sleep deprivation tends to exacerbate symptoms of depression and anxiety disorders.",
+      "sentence_ko": "수면 부족은 우울증과 불안장애 증상을 악화시키는 경향이 있어요.",
+      "nuance": "이미 존재하는 부정적 상태를 의도적이지 않게 더 나쁘게 만드는 외부 요인. 악화의 동적 과정.",
+      "context": "의료, 심리학, 환경, 사회 문제. '...을 악화시키다'는 부정적 결과 설명.",
+      "everyday_usage": "'exacerbate + [부정적 상황/증상/조건]' 패턴. '이것은 문제를 exacerbate할 것이다.'"
     },
     {
       "word": "ameliorate",
-      "sentence": "New technologies can ameliorate the effects of climate change on agricultural productivity.",
-      "sentence_ko": "새로운 기술은 기후변화가 농업 생산성에 미치는 영향을 개선할 수 있어요.",
-      "nuance": "나쁜 상황을 '더 나은 상태로' 개선하거나 완화시키는 능동적 행위. 긍정적 결과 함축.",
-      "context": "정책·환경·사회학·의학 지문에서 문제 해결 방안을 설명할 때. Reading 중상위 난도.",
-      "everyday_usage": "conditions/effects/situation을 목적어로 사용. exacerbate의 정반대. 'measures to ameliorate' 패턴."
+      "sentence": "New irrigation techniques helped ameliorate the effects of prolonged drought in the region.",
+      "sentence_ko": "새로운 관개 기술은 지역의 장기 가뭄의 영향을 완화하는 데 도움이 됐어요.",
+      "nuance": "어려운 상황을 부분적으로 더 나은 상태로 개선하는 것. 근본 해결은 아니지만 상당한 호전.",
+      "context": "정책 성과, 환경 보호, 사회 개혁, 의료 개입 설명. positive impact 강조.",
+      "everyday_usage": "'ameliorate + [부정적 상황/문제/고통]' 형태로 개선 효과 나타내요."
     },
     {
       "word": "corroborate",
-      "sentence": "Multiple eyewitnesses corroborated the victim's account of the accident.",
-      "sentence_ko": "여러 목격자가 피해자의 사건 진술을 입증했어요.",
-      "nuance": "독립적인 증거나 증인이 어떤 주장이나 설명이 참임을 확인·증명하는 것. 신뢰성 증대.",
-      "context": "법학·과학·역사 지문에서 증거나 이론의 타당성을 입증할 때. 논쟁의 신뢰도를 높일 때.",
-      "everyday_usage": "account/evidence/claim/theory를 목적어로 사용. 'corroborate findings' / 'corroborate testimony' 패턴."
+      "sentence": "Multiple studies corroborate the finding that exercise improves cognitive function in aging adults.",
+      "sentence_ko": "여러 연구가 운동이 노화 성인의 인지 기능을 개선한다는 발견을 뒷받침해요.",
+      "nuance": "단독의 주장이 아니라 여러 독립적 증거·출처가 같은 결론을 지지하는 것. 신뢰성·타당성 강화.",
+      "context": "TOEFL Reading 과학·의료 지문. 연구 결과의 신뢰성 검증. Academic 글쓰기에서 주장 강화.",
+      "everyday_usage": "'corroborate + 발견/이론/주장' 패턴. 또는 'evidence corroborates X' (증거가 X를 뒷받침한다)."
     },
     {
-      "word": "ephemeral",
-      "sentence": "The beauty of cherry blossoms is ephemeral, lasting only a few weeks each spring.",
-      "sentence_ko": "벚꽃의 아름다움은 일시적이며, 매년 봄에 단 몇 주만 지속돼요.",
-      "nuance": "매우 짧은 시간 동안만 존재하거나 유효한 상태. '찰나의', '순간적인' 느낌.",
-      "context": "문학·환경·철학·미학 지문에서 일시적 현상이나 순간을 표현할 때. 시간의 무상함을 강조.",
-      "everyday_usage": "beauty/moment/trend/success를 꾸밀 때. 시적이고 우아한 톤. '一期一会(icigo ichie)' 같은 뉘앙스."
+      "word": "substantiate",
+      "sentence": "The lawyer worked to substantiate her client's claims with concrete documentary evidence.",
+      "sentence_ko": "그 변호사는 의뢰인의 주장을 구체적 문서 증거로 입증하려고 노력했어요.",
+      "nuance": "추상적·주장에 그칠 수 있는 것을 구체적 증거로 '증명하고 확실하게 하는 것'. 논리적 근거 제시.",
+      "context": "법률, 학술 논문, 비즈니스 리포트. '주장을 증거로 뒷받침한다'는 의미.",
+      "everyday_usage": "'substantiate + 주장/클레임/이론' 패턴. 또는 'substantiate with evidence' (증거로 입증하다)."
     },
     {
-      "word": "perspicacious",
-      "sentence": "The detective's perspicacious analysis revealed details others had completely overlooked.",
-      "sentence_ko": "그 탐정의 통찰력 있는 분석은 다른 사람들이 완전히 놓친 세부 사항을 드러냈어요.",
-      "nuance": "뛰어난 판단력, 신틀한 이해력, 깊은 통찰. 단순한 머리 좋음이 아니라 '이면을 꿰뚫는' 능력.",
-      "context": "문학·심리학·역사 분석·철학 지문에서 인물의 탁월한 지성을 묘사할 때. 고난도 어휘.",
-      "everyday_usage": "analysis/observation/insight/judgment를 꾸밀 때. 존경의 톤. sagacious와 동의어지만 더 구체적 분석 능력."
+      "word": "pragmatic",
+      "sentence": "Rather than pursuing idealistic solutions, the committee took a pragmatic approach focused on feasible outcomes.",
+      "sentence_ko": "위원회는 이상주의적 해결책을 추구하기보다는 실현 가능한 결과에 초점을 맞춘 실용적 접근을 취했어요.",
+      "nuance": "이상·이념보다는 실제 가능성과 결과 중심. 현실적이고 실행 가능한 방식.",
+      "context": "정책 결정, 비즈니스 전략, 일상적 문제 해결. Listening 강의에서도 자주 나와요.",
+      "everyday_usage": "'pragmatic approach/solution/strategy' 패턴. idealistic·theoretical과 대비될 때 자주 씁니다."
     },
     {
-      "word": "precipitate",
-      "sentence": "The political scandal precipitated the minister's resignation within days.",
-      "sentence_ko": "그 정치 스캔들은 며칠 안에 장관의 사직을 야기했어요.",
-      "nuance": "어떤 사건이나 결정이 '갑작스럽게' 혹은 '즉시' 다른 결과를 초래하는 것. 연쇄 반응.",
-      "context": "정치·역사·경제 지문에서 사건의 직접적 인과관계를 설명할 때. Reading 중상위 난도.",
-      "everyday_usage": "변수로 'precipitate + crisis/conflict/change' 패턴. 비슷하게 보이지만 cause(원인)보다 '직접적·급격한' 결과를 강조."
+      "word": "juxtapose",
+      "sentence": "The exhibition juxtaposes medieval manuscripts with contemporary digital art to show the evolution of human expression.",
+      "sentence_ko": "그 전시회는 인간 표현의 진화를 보여주기 위해 중세 필사본을 현대 디지털 아트와 나란히 배치해요.",
+      "nuance": "단순히 나란히 두는 것이 아니라 대조·비교를 통해 의미를 강화하는 배치. 시각적·개념적 충돌.",
+      "context": "미술, 문학 분석, 역사 비교. '대비를 통해 드러내다'는 학술적 기법.",
+      "everyday_usage": "'juxtapose + 두 대상' 또는 'juxtaposed with' (나란히 배치되어 대조되다) 형태."
+    },
+    {
+      "word": "tangible",
+      "sentence": "The project delivered tangible benefits: reduced commute times and lower transportation costs for the community.",
+      "sentence_ko": "그 프로젝트는 구체적 이점을 제공했어요: 통근 시간 단축과 지역사회의 낮은 교통 비용.",
+      "nuance": "추상적이 아니라 손으로 만지거나 명확하게 측정할 수 있는 것. 구체적이고 실제적.",
+      "context": "프로젝트 평가, 비즈니스 결과, 정책 효과 측정. '눈에 띄는 결과'를 강조.",
+      "everyday_usage": "'tangible results/benefits/evidence' 패턴. 'intangible(무형의)'과 자주 대비됩니다."
     },
     {
       "word": "recondite",
-      "sentence": "The professor's recondite knowledge of medieval philosophy impressed even advanced scholars.",
-      "sentence_ko": "그 교수의 중세 철학에 대한 심오한 지식은 고급 학자들도 감탄하게 했어요.",
-      "nuance": "깊고 어려운 지식이나 이해. '난해한', '고도로 학술적인'. 일반인이 접근하기 어려운 영역.",
-      "context": "학술·철학·역사·문학 비평 지문에서 전문가적 깊이를 강조할 때. 고난도 어휘.",
-      "everyday_usage": "knowledge/subject/text를 꾸밀 때. 존경과 경외의 톤. esoteric과 유사하지만 'esoteric'은 '숨겨진/비공개'의 뜻 포함."
+      "sentence": "The professor's lecture on recondite philosophical concepts left many undergraduate students confused.",
+      "sentence_ko": "그 교수의 난해한 철학적 개념에 대한 강의는 많은 학부 학생들을 혼란스럽게 했어요.",
+      "nuance": "깊은 학문적 지식이나 특수 분야 전문 용어로 인해 이해하기 어려운 것. 난해함과 깊이를 동시에 나타내요.",
+      "context": "학술 텍스트, 강의 내용 난이도 설명. esoteric(비공개적)과는 다르게 '어렵다'는 의미 강함.",
+      "everyday_usage": "'recondite knowledge/subject/text' 패턴. 일반인이 접근하기 어려운 전문 영역을 지칭."
     },
     {
-      "word": "temerity",
-      "sentence": "Only someone with great temerity would dare to challenge the CEO directly in a board meeting.",
-      "sentence_ko": "이사회 회의에서 CEO에게 직접 도전할 용기(또는 무모함)는 매우 드문 것이에요.",
-      "nuance": "용감함을 넘어선 '무모한 담대함', '대담함'. 위험을 무릅쓴 무분별한 용기.",
-      "context": "비즈니스·문학·역사 지문에서 무분별한 도전이나 위험한 행동을 묘사할 때. 부정적 톤.",
-      "everyday_usage": "'have the temerity to + verb' 구조. 비난과 경외가 섞인 톤. 용기(courage)와 달리 '너무 앞뒤를 안 본다'는 뉘앙스."
+      "word": "perspicacious",
+      "sentence": "The perspicacious critic immediately grasped the subtle symbolism embedded throughout the novel.",
+      "sentence_ko": "그 통찰력 있는 비평가는 소설 전체에 내재된 미묘한 상징을 즉시 파악했어요.",
+      "nuance": "단순한 이해를 넘어 미세한 뉘앙스와 숨겨진 의미를 날카롭게 감지하는 능력. 지적 예리함.",
+      "context": "문학 비평, 예술 분석, 역사 해석. '예리한 통찰력'을 칭찬할 때.",
+      "everyday_usage": "'perspicacious + [사람/분석/관찰]' 패턴. perspicacity(통찰력)로도 명사화됩니다."
     },
     {
-      "word": "indolent",
-      "sentence": "The tropical heat made even the most diligent worker feel indolent and unmotivated.",
-      "sentence_ko": "열대 날씨는 가장 근면한 일꾼도 게으르고 의욕 없게 만들었어요.",
-      "nuance": "게으름, 활동성의 부족, 노력을 기울이지 않으려는 경향. 성격적 또는 일시적 나태.",
-      "context": "문학·심리학·사회학 지문에서 인물의 태도나 사회 현상을 평가할 때. 부정적 평가.",
-      "everyday_usage": "person/society/life를 꾸밀 때. sluggish(느린)와 유사하지만 '게으른 심리' 강조. 'indolent character' / 'indolent lifestyle' 패턴."
-    },
-    {
-      "word": "pellucid",
-      "sentence": "The author's pellucid prose style makes complex scientific concepts accessible to general readers.",
-      "sentence_ko": "그 저자의 명확한 산문 스타일은 복잡한 과학 개념을 일반 독자도 이해할 수 있게 해요.",
-      "nuance": "매우 명확하고 투명한 표현이나 이해. 혼란의 여지가 없는 선명함.",
-      "context": "문학 비평·언어학·교육학 지문에서 글쓰기나 설명의 품질을 칭찬할 때. 긍정적 톤.",
-      "everyday_usage": "prose/explanation/writing/style을 꾸밀 때. pellucidity(명료함)도 명사로 사용. lucid와 동의어지만 '투명성'이 더 강해요."
+      "word": "tenuous",
+      "sentence": "The connection between the two theories was tenuous at best, relying on questionable assumptions.",
+      "sentence_ko": "두 이론 사이의 연결은 기껏해야 미약했으며, 의심스러운 가정에 의존했어요.",
+      "nuance": "물리적으로 얇거나 약할 뿐 아니라 논리적·관계적으로 불안정하고 깨지기 쉬운 상태.",
+      "context": "논리 비판, 연구 방법론 검토, 관계 설명. '약한 근거'를 강조.",
+      "everyday_usage": "'tenuous + [관계/증거/연결/논거]' 패턴. tenacious(끈기 있는)와 발음 유사하니 주의!"
     }
   ]
 }

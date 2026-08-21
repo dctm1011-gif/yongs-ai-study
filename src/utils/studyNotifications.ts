@@ -9,7 +9,8 @@ import { Alert, Linking, Platform } from 'react-native';
 // 8시부터 22시까지 매시간 1개
 const START_HOUR = 8;
 const END_HOUR = 22;
-const LAST_REFRESH_KEY = 'notif_last_refresh_v3'; // v3: 8~22시 매시간
+const LAST_REFRESH_KEY = 'notif_last_refresh_v3';
+const BATTERY_ALERTED_KEY = 'notif_battery_alerted';
 
 function getKSTDateString(): string {
   const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
@@ -22,14 +23,31 @@ function getKSTDateString(): string {
  */
 export async function refreshStudyNotifications(uid?: string): Promise<void> {
   try {
-    const enabled = await AsyncStorage.getItem('reminders_enabled');
-    if (enabled !== 'true') return;
+    if (!uid) return;
+
+    // 권한 확인 및 자동 요청
+    const { status } = await Notifications.getPermissionsAsync();
+    let granted = status === 'granted';
+    if (!granted) {
+      const { status: newStatus } = await Notifications.requestPermissionsAsync();
+      granted = newStatus === 'granted';
+    }
+    if (!granted) return;
+
+    // 알림 채널 설정 (Android)
+    if (typeof Notifications.setNotificationChannelAsync === 'function') {
+      await Notifications.setNotificationChannelAsync('study-reminder', {
+        name: 'study-reminder',
+        importance: Notifications.AndroidImportance.HIGH,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#2563eb',
+        sound: 'default',
+      });
+    }
 
     const today = getKSTDateString();
     const lastRefresh = await AsyncStorage.getItem(LAST_REFRESH_KEY);
     if (lastRefresh === today) return;
-
-    if (!uid) return; // uid 없으면 스케줄 불가 (로그인 후 재시도)
 
     const snap = await get(userRef(uid, 'english/reviewPool'));
     const raw = snap.exists() ? snap.val() : null;
@@ -77,54 +95,27 @@ export async function refreshStudyNotifications(uid?: string): Promise<void> {
 
     await AsyncStorage.setItem(LAST_REFRESH_KEY, today);
     console.log(`[notif] 알림 갱신 완료: ${today} 리뷰풀 ${words.length}개 → ${hours.length}슬롯`);
+
+    // 배터리 최적화 안내 — 최초 1회만
+    if (Platform.OS === 'android') {
+      const alerted = await AsyncStorage.getItem(BATTERY_ALERTED_KEY);
+      if (!alerted) {
+        await AsyncStorage.setItem(BATTERY_ALERTED_KEY, 'true');
+        Alert.alert(
+          '⚠️ 백그라운드 알림 설정',
+          '앱이 닫혀있을 때도 알림을 받으려면:\n\n' +
+          '1. 설정 → 앱 → YongStudy\n' +
+          '2. 배터리 → 제한 없음 선택\n\n' +
+          '지금 설정으로 이동할까요?',
+          [
+            { text: '나중에', style: 'cancel' },
+            { text: '설정 열기', onPress: () => Linking.openSettings() },
+          ]
+        );
+      }
+    }
   } catch (e) {
     console.warn('[notif] 알림 갱신 실패:', e);
   }
 }
 
-/**
- * 알림을 처음 활성화할 때 호출. 권한·채널 설정 후 스케줄링.
- * lastRefreshDate를 리셋해서 오늘치 갱신을 강제 실행한다.
- */
-export async function enableStudyNotifications(uid?: string): Promise<boolean> {
-  const { status } = await Notifications.requestPermissionsAsync();
-  if (status !== 'granted') return false;
-
-  if (typeof Notifications.setNotificationChannelAsync === 'function') {
-    await Notifications.setNotificationChannelAsync('study-reminder', {
-      name: 'study-reminder',
-      importance: Notifications.AndroidImportance.HIGH,
-      vibrationPattern: [0, 250, 250, 250],
-      lightColor: '#2563eb',
-      sound: 'default',
-    });
-  }
-
-  await AsyncStorage.setItem('reminders_enabled', 'true');
-  await AsyncStorage.removeItem(LAST_REFRESH_KEY); // 강제 갱신
-  await refreshStudyNotifications(uid);
-
-  // Android: 배터리 최적화 제외 안내 (앱이 백그라운드에서도 알림을 받으려면 필요)
-  if (Platform.OS === 'android') {
-    Alert.alert(
-      '⚠️ 백그라운드 알림 설정',
-      '앱이 닫혀있을 때도 알림을 받으려면:\n\n' +
-      '1. 설정 → 앱 → YongStudy\n' +
-      '2. 배터리 → 제한 없음 선택\n' +
-      '3. 알람 및 리마인더 → 허용\n\n' +
-      '지금 설정으로 이동할까요?',
-      [
-        { text: '나중에', style: 'cancel' },
-        { text: '설정 열기', onPress: () => Linking.openSettings() },
-      ]
-    );
-  }
-
-  return true;
-}
-
-export async function disableStudyNotifications(): Promise<void> {
-  await Notifications.cancelAllScheduledNotificationsAsync();
-  await AsyncStorage.setItem('reminders_enabled', 'false');
-  await AsyncStorage.removeItem(LAST_REFRESH_KEY);
-}

@@ -1,7 +1,8 @@
 """
-기준금리 / 주택담보대출 금리 데이터 자동 수집 및 Firebase 업로드.
+기준금리 / 주택담보대출 / 신용대출 금리 데이터 자동 수집 및 Firebase 업로드.
 - 기준금리:      BOK ECOS API (SAMPLE 키, 무료)  — StatCode 722Y001, ItemCode 0101000
-- 주택담보대출:   KOSIS API (기존 키)              — OrgId 301, TblId DT_121Y006
+- 주택담보대출:   KOSIS API (기존 키)              — OrgId 301, TblId DT_121Y006, BECBLA0302
+- 신용대출:      KOSIS API (기존 키)              — OrgId 301, TblId DT_121Y006, BECBLA0304
 Firebase 경로: investment/rateCharts
 """
 import json
@@ -18,10 +19,11 @@ ECOS_SAMPLE_KEY = "sample"
 ECOS_BASE_RATE_STAT = "722Y001"
 ECOS_BASE_RATE_ITEM = "0101000"
 
-KOSIS_LOAN_ORG = "301"
-KOSIS_LOAN_TBL = "DT_121Y006"
-KOSIS_LOAN_ITM = "13103134553999"
-KOSIS_LOAN_C1  = "13102134553ACC_ITEM.BECBLA0302"
+KOSIS_LOAN_ORG    = "301"
+KOSIS_LOAN_TBL    = "DT_121Y006"
+KOSIS_LOAN_ITM    = "13103134553999"
+KOSIS_MORTGAGE_C1 = "13102134553ACC_ITEM.BECBLA0302"  # 주택담보대출
+KOSIS_CREDIT_C1   = "13102134553ACC_ITEM.BECBLA0304"  # 신용대출
 
 
 def get_kosis_key() -> str:
@@ -74,13 +76,13 @@ def fetch_ecos_base_rate_all(start_year: int) -> list[dict]:
     return results
 
 
-def fetch_kosis_loan_rate(start_ym: str, end_ym: str, kosis_key: str) -> list[dict]:
-    """KOSIS API로 주택담보대출 금리 월별 데이터 fetch."""
+def fetch_kosis_loan_rate(start_ym: str, end_ym: str, kosis_key: str, c1: str) -> list[dict]:
+    """KOSIS API로 대출금리 월별 데이터 fetch. c1으로 대출 종류 구분."""
     params = {
         "method": "getList",
         "apiKey": kosis_key,
         "itmId": KOSIS_LOAN_ITM,
-        "objL1": KOSIS_LOAN_C1,
+        "objL1": c1,
         "format": "json",
         "jsonVD": "Y",
         "prdSe": "M",
@@ -123,29 +125,37 @@ def build_rate_data(kosis_key: str) -> list[dict]:
     start_ym = f"{start_year}01"
     end_ym = f"{today.year}{today.month:02d}"
 
-    print(f"[1/2] 기준금리 수집 (ECOS SAMPLE, {start_year}~{today.year})...")
+    print(f"[1/3] 기준금리 수집 (ECOS SAMPLE, {start_year}~{today.year})...")
     base_monthly_raw = fetch_ecos_base_rate_all(start_year)
     if not base_monthly_raw:
         raise RuntimeError("기준금리 데이터 없음")
     print(f"  → {len(base_monthly_raw)}개월 수집")
 
-    print(f"[2/2] 주택담보대출 금리 수집 (KOSIS, {start_ym}~{end_ym})...")
-    loan_monthly_raw = fetch_kosis_loan_rate(start_ym, end_ym, kosis_key)
-    if not loan_monthly_raw:
+    print(f"[2/3] 주택담보대출 금리 수집 (KOSIS, {start_ym}~{end_ym})...")
+    mortgage_monthly_raw = fetch_kosis_loan_rate(start_ym, end_ym, kosis_key, KOSIS_MORTGAGE_C1)
+    if not mortgage_monthly_raw:
         raise RuntimeError("주택담보대출 금리 데이터 없음")
-    print(f"  → {len(loan_monthly_raw)}개월 수집")
+    print(f"  → {len(mortgage_monthly_raw)}개월 수집")
+
+    print(f"[3/3] 신용대출 금리 수집 (KOSIS, {start_ym}~{end_ym})...")
+    credit_monthly_raw = fetch_kosis_loan_rate(start_ym, end_ym, kosis_key, KOSIS_CREDIT_C1)
+    if not credit_monthly_raw:
+        raise RuntimeError("신용대출 금리 데이터 없음")
+    print(f"  → {len(credit_monthly_raw)}개월 수집")
 
     base_monthly = make_monthly_labels(base_monthly_raw)
     base_yearly = make_yearly(base_monthly_raw)
-    loan_monthly = make_monthly_labels(loan_monthly_raw)
-    loan_yearly = make_yearly(loan_monthly_raw)
+    mortgage_monthly = make_monthly_labels(mortgage_monthly_raw)
+    mortgage_yearly = make_yearly(mortgage_monthly_raw)
+    credit_monthly = make_monthly_labels(credit_monthly_raw)
+    credit_yearly = make_yearly(credit_monthly_raw)
 
     # 최근 24개월만 월별 차트에 표시
     base_monthly = base_monthly[-24:]
-    loan_monthly = loan_monthly[-24:]
+    mortgage_monthly = mortgage_monthly[-24:]
+    credit_monthly = credit_monthly[-24:]
 
-    updated_at = base_monthly_raw[-1]["ym"][:4] + "." + base_monthly_raw[-1]["ym"][4:6]
-
+    def ym_to_updated(raw): return raw[-1]["ym"][:4] + "." + raw[-1]["ym"][4:6]
     def current(m): return m[-1]["value"]
     def change(m): return round(m[-1]["value"] - m[-2]["value"], 2) if len(m) >= 2 else 0.0
 
@@ -159,18 +169,29 @@ def build_rate_data(kosis_key: str) -> list[dict]:
             "unit": "%",
             "yearlyData": base_yearly,
             "monthlyData": base_monthly,
-            "updatedAt": updated_at,
+            "updatedAt": ym_to_updated(base_monthly_raw),
         },
         {
             "id": "loan-rate",
             "name": "주택담보대출",
             "subtitle": "예금은행 신규취급액 가중평균",
-            "current": current(loan_monthly),
-            "change": change(loan_monthly),
+            "current": current(mortgage_monthly),
+            "change": change(mortgage_monthly),
             "unit": "%",
-            "yearlyData": loan_yearly,
-            "monthlyData": loan_monthly,
-            "updatedAt": updated_at,
+            "yearlyData": mortgage_yearly,
+            "monthlyData": mortgage_monthly,
+            "updatedAt": ym_to_updated(mortgage_monthly_raw),
+        },
+        {
+            "id": "credit-rate",
+            "name": "시중은행 신용대출",
+            "subtitle": "예금은행 신규취급액 가중평균",
+            "current": current(credit_monthly),
+            "change": change(credit_monthly),
+            "unit": "%",
+            "yearlyData": credit_yearly,
+            "monthlyData": credit_monthly,
+            "updatedAt": ym_to_updated(credit_monthly_raw),
         },
     ]
 

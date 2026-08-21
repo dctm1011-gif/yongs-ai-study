@@ -2354,5 +2354,65 @@
     "explanation": "도덕적·논리적 문제를 교묘한 논증으로 정당화하려는 행위. 철학·윤리학·정치학 지문에서 고난도 어휘.",
     "tip": "동의어: sophistry(궤변), equivocation(애매한 표현), rationalization(합리화). 부정적 뉘앙스. Reading 최상위 난도 지문.",
     "emoji": "🤥"
+  },
+  {
+    "id": "dialectical",
+    "word": "dialectical",
+    "pos": "형용사",
+    "date": "2026-08-22",
+    "meaning": "변증법적인, 대립과 통합을 통한",
+    "example_ko": "마르크스는 변증법적 유물론을 통해 계급 갈등과 사회 진화를 분석했어요.",
+    "example_en": "Marx used dialectical materialism to analyze class conflict and social evolution.",
+    "explanation": "서로 대립하는 두 개념이나 주장이 충돌하고 통합되면서 새로운 진리에 도달하는 과정을 설명해요. 철학, 역사, 사회학 지문에서 자주 등장합니다.",
+    "tip": "동의어: oppositional(대립적), synthetic(통합적). TOEFL Reading History·Philosophy·Social Science에서 고빈출. Listening 강의에서도 자주 들어요.",
+    "emoji": "⚖️"
+  },
+  {
+    "id": "obfuscatory",
+    "word": "obfuscatory",
+    "pos": "형용사",
+    "date": "2026-08-22",
+    "meaning": "혼동시키는, 모호하게 하는, 의도적으로 불명확한",
+    "example_ko": "그 정치인의 모호한 언어는 기자의 직접적인 질문에 명확하게 답하지 않았어요.",
+    "example_en": "The politician's obfuscatory language avoided direct answers to the reporter's questions.",
+    "explanation": "obfuscate의 형용사형. 의도적으로 또는 실수로 무언가를 복잡하고 이해하기 어렵게 만드는 특성을 나타내요. 비판적 독해 맥락에서 문제 있는 논리나 표현을 지칭할 때 씁니다.",
+    "tip": "동의어: ambiguous(모호한), evasive(회피적인), cryptic(수수께끼 같은). 반의어: pellucid(명확한), transparent(투명한). TOEFL Writing에서 논리 비판할 때 유용.",
+    "emoji": "🌫️"
+  },
+  {
+    "id": "ameliorative",
+    "word": "ameliorative",
+    "pos": "형용사",
+    "date": "2026-08-22",
+    "meaning": "개선시키는, 호전시키는",
+    "example_ko": "정부는 빈곤과 불평등을 줄이기 위한 개선 정책을 시행했어요.",
+    "example_en": "The government implemented ameliorative policies to reduce poverty and inequality.",
+    "explanation": "ameliorate의 형용사형. 어떤 상황이나 조건을 더 나은 상태로 개선하는 특성을 나타내요. 정책, 의료, 교육 등 발전적 맥락에서 사용됩니다.",
+    "tip": "동의어: remedial(치료적), restorative(회복시키는), constructive(건설적). 반의어: exacerbatory(악화시키는). TOEFL Reading 사회과학 지문에서 정책 효과 설명할 때 자주 출현.",
+    "emoji": "📈"
+  },
+  {
+    "id": "antecedent",
+    "word": "antecedent",
+    "pos": "명사/형용사",
+    "date": "2026-08-22",
+    "meaning": "(명사) 선행하는 것, 전조; (형용사) 앞서는, 이전의",
+    "example_ko": "프랑스 혁명은 유럽 전역에서의 민족주의 상승의 전조였어요.",
+    "example_en": "The French Revolution was an antecedent to the rise of nationalism across Europe.",
+    "explanation": "어떤 것이 일어나기 전에 그것을 가능하게 하거나 야기하는 것. 인과관계, 역사적 배경, 논리적 선행 조건을 설명할 때 씁니다.",
+    "tip": "동의어: predecessor(선행자), precursor(전조), prior condition(선행 조건). TOEFL Reading 역사·사회 지문에서 인과관계 파악에 필수. Listening 강의에서도 시간 순서 설명할 때 자주 나와요.",
+    "emoji": "⏮️"
+  },
+  {
+    "id": "reductive",
+    "word": "reductive",
+    "pos": "형용사",
+    "date": "2026-08-22",
+    "meaning": "축약적인, 단순화하는, 환원주의적인",
+    "example_ko": "빈곤이 순전히 게으름 때문이라고 말하는 것은 체계적 요인을 무시하는 단순화된 주장이에요.",
+    "example_en": "Saying poverty is purely caused by laziness is a reductive argument that ignores systemic factors.",
+    "explanation": "복잡한 현상이나 문제를 지나치게 단순하게 설명하거나, 여러 요소를 하나로 축소하는 것. 비판적 맥락에서 논리의 약점을 지적할 때 쓰입니다.",
+    "tip": "동의어: oversimplified(과도하게 단순화된), reductionist(환원주의적). TOEFL Writing에서 상대방 주장의 한계를 지적할 때 강력해요. Reading 비판적 지문 분석에 필수.",
+    "emoji": "📉"
   }
 ]

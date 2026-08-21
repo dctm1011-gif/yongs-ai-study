@@ -179,9 +179,9 @@ function MainTabs() {
             name="Investment"
             component={InvestmentScreen}
             options={{
-              title: 'Investment',
+              title: 'Markets',
               tabBarIcon: ({ color }) => (
-                <MaterialIcons name="trending-up" size={26} color={color} />
+                <MaterialIcons name="bar-chart" size={26} color={color} />
               ),
             }}
           />

@@ -15,15 +15,8 @@ import {
   ToastAndroid,
   Animated,
   Linking,
-  LayoutAnimation,
-  Platform,
-  UIManager,
   Easing,
 } from 'react-native';
-
-if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
-  UIManager.setLayoutAnimationEnabledExperimental(true);
-}
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -1998,19 +1991,11 @@ const PulseText: React.FC<{ style?: any; numberOfLines?: number; children: React
   return <Animated.Text style={[style, { opacity }]} numberOfLines={numberOfLines}>{children}</Animated.Text>;
 };
 
-// 상하 부유 (진입 카드용)
-const FloatingCard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const translateY = useRef(new Animated.Value(0)).current;
-  useEffect(() => {
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(translateY, { toValue: -5, duration: 1600, useNativeDriver: true, easing: Easing.inOut(Easing.sin) }),
-        Animated.timing(translateY, { toValue: 0, duration: 1600, useNativeDriver: true, easing: Easing.inOut(Easing.sin) }),
-      ])
-    ).start();
-  }, []);
-  return <Animated.View style={{ transform: [{ translateY }] }}>{children}</Animated.View>;
-};
+// 상하 부유 애니메이션 제거 — Android ScrollView에서 useNativeDriver loop transform이
+// scroll gesture responder를 영구적으로 가로채는 문제로 인해 단순 wrapper로 대체
+const FloatingCard: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <View>{children}</View>
+);
 
 // 로딩 바운싱 점
 const DOT_COLORS = ['#1d4ed8', '#0ea5e9', '#10b981', '#f59e0b'];
@@ -2029,7 +2014,9 @@ const LoadingDots: React.FC = () => {
         ),
       ])
     );
-    Animated.parallel(seq).start();
+    const anim = Animated.parallel(seq);
+    anim.start();
+    return () => anim.stop();
   }, []);
   return (
     <View style={{ flexDirection: 'row', alignItems: 'flex-end', gap: 10, height: 50 }}>
@@ -2052,15 +2039,11 @@ const MiniSparkBars: React.FC<{
   const BAR_H = 14;
   const BAR_W = 5;
   const fadeAnim = useRef(new Animated.Value(0)).current;
-  const slideAnim = useRef(new Animated.Value(6)).current;
   useEffect(() => {
-    Animated.parallel([
-      Animated.timing(fadeAnim, { toValue: 1, duration: 350, useNativeDriver: true }),
-      Animated.spring(slideAnim, { toValue: 0, tension: 100, friction: 10, useNativeDriver: true }),
-    ]).start();
+    Animated.timing(fadeAnim, { toValue: 1, duration: 300, useNativeDriver: true }).start();
   }, []);
   return (
-    <Animated.View style={{ flexDirection: 'row', alignItems: 'flex-end', height: BAR_H, gap: 2, opacity: fadeAnim, transform: [{ translateY: slideAnim }] }}>
+    <Animated.View style={{ flexDirection: 'row', alignItems: 'flex-end', height: BAR_H, gap: 2, opacity: fadeAnim }}>
       {values.map((v, i) => (
         <View
           key={i}
@@ -2099,7 +2082,31 @@ const RegionBrowserModal: React.FC<{
   </Modal>
 ));
 
-const GU_ORDER = ['수지구', '기흥구', '동탄구', '마포구', '용산구', '성동구'] as const;
+const GU_ORDER = ['수지구', '기흥구', '동탄구', '마포구', '용산구', '성동구', '영통구'] as const;
+// 통계청 가계동향조사 전체가구 분기별 월평균 경상소득 (만원/월)
+const QUARTERLY_INCOME_MAN: Record<string, number> = {
+  '23Q1': 486, '23Q2': 499, '23Q3': 514, '23Q4': 558,
+  '24Q1': 502, '24Q2': 516, '24Q3': 531, '24Q4': 576,
+  '25Q1': 520, '25Q2': 535, '25Q3': 551, '25Q4': 596,
+  '26Q1': 539, '26Q2': 555, '26Q3': 572, '26Q4': 617,
+};
+const KHAI_RATE_DEFAULT = 4.36;
+
+function getMonthlyIncomeMAN(monthLabel: string): number {
+  const parts = monthLabel.split('.');
+  if (parts.length < 2) return 520;
+  const q = Math.ceil(parseInt(parts[1], 10) / 3);
+  return QUARTERLY_INCOME_MAN[`${parts[0]}Q${q}`] ?? 520;
+}
+
+function computeKHAI(price억: number, ratePercent = KHAI_RATE_DEFAULT, incomeMAN = 520): number {
+  if (price억 <= 0) return 0;
+  const loan = price억 * 10000 * 0.7; // 70% LTV, 만원 단위
+  const r = ratePercent / 100 / 12;
+  const n = 240; // 20년 원리금균등
+  const monthly = r > 0 ? loan * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1) : loan / n;
+  return Math.round(monthly / incomeMAN * 100);
+}
 type GuName = typeof GU_ORDER[number];
 const SUJI_DONG_NAMES = ['죽전동', '풍덕천동', '신봉동', '동천동'];
 
@@ -2165,7 +2172,6 @@ const GuSection: React.FC<{
   if (dongStats.length === 0) return null;
 
   const toggle = () => {
-    LayoutAnimation.configureNext({ duration: 260, create: { type: 'easeInEaseOut', property: 'opacity' }, update: { type: 'spring', springDamping: 0.8 }, delete: { type: 'easeInEaseOut', property: 'opacity' } });
     setExpanded(v => !v);
   };
 
@@ -2221,39 +2227,119 @@ const RateBarChart: React.FC<{
   const MIN_BAR = 8;
   const LABEL_AREA = VALUE_FONT + 4;
   return (
-    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-      <View style={{ width: chartTotalW }}>
-        <View style={{ height: CHART_H, flexDirection: 'row', alignItems: 'flex-end' }}>
-          {data.map((d, i) => {
-            const isLast = i === n - 1;
-            const fillH = MIN_BAR + Math.round(((d.value - minV) / range) * (CHART_H - MIN_BAR - LABEL_AREA));
-            return (
-              <View key={i} style={{ width: barW, marginRight: i < n - 1 ? GAP : 0, alignItems: 'center', justifyContent: 'flex-end' }}>
-                {isLast && (
-                  <Text style={{ fontSize: VALUE_FONT, color: highlightColor, fontWeight: '700', marginBottom: 2 }}>
-                    {d.value.toFixed(2)}
-                  </Text>
-                )}
-                <View style={{ height: fillH, width: barW, backgroundColor: isLast ? highlightColor : color, borderRadius: 3 }} />
-              </View>
-            );
-          })}
-        </View>
-        <View style={{ flexDirection: 'row', marginTop: 5 }}>
-          {data.map((d, i) => (
-            <View key={i} style={{ width: barW, marginRight: i < n - 1 ? GAP : 0 }}>
-              {(i % showEveryN === 0 || i === n - 1) && (
-                <Text style={{ fontSize: LABEL_FONT, color: '#6b7280', textAlign: 'center' }}>{d.label}</Text>
+    <View style={{ width: chartTotalW }}>
+      <View style={{ height: CHART_H, flexDirection: 'row', alignItems: 'flex-end' }}>
+        {data.map((d, i) => {
+          const isLast = i === n - 1;
+          const fillH = MIN_BAR + Math.round(((d.value - minV) / range) * (CHART_H - MIN_BAR - LABEL_AREA));
+          return (
+            <View key={i} style={{ width: barW, marginRight: i < n - 1 ? GAP : 0, alignItems: 'center', justifyContent: 'flex-end' }}>
+              {isLast && (
+                <Text style={{ fontSize: VALUE_FONT, color: highlightColor, fontWeight: '700', marginBottom: 2 }}>
+                  {d.value.toFixed(2)}
+                </Text>
               )}
+              <View style={{ height: fillH, width: barW, backgroundColor: isLast ? highlightColor : color, borderRadius: 3 }} />
             </View>
-          ))}
-        </View>
+          );
+        })}
       </View>
-    </ScrollView>
+      <View style={{ flexDirection: 'row', marginTop: 5 }}>
+        {data.map((d, i) => (
+          <View key={i} style={{ width: barW, marginRight: i < n - 1 ? GAP : 0 }}>
+            {(i % showEveryN === 0 || i === n - 1) && (
+              <Text style={{ fontSize: LABEL_FONT, color: '#6b7280', textAlign: 'center' }}>{d.label}</Text>
+            )}
+          </View>
+        ))}
+      </View>
+    </View>
+  );
+});
+
+// ── 금리 가로 바 차트 (월별 전용) ────────────────────────────────────
+const RateHBarChart: React.FC<{
+  data: { label: string; value: number }[];
+  color?: string;
+  highlightColor?: string;
+}> = React.memo(({ data, color = '#93c5fd', highlightColor = '#1d4ed8' }) => {
+  const { width: screenW } = useWindowDimensions();
+  const LABEL_W = 38;
+  const VALUE_W = 38;
+  const H_GAP = 8;
+  const BAR_H = 13;
+  const ROW_GAP = 4;
+  const maxBarW = screenW - 64 - LABEL_W - VALUE_W - H_GAP * 2;
+  const vals = data.map(d => d.value);
+  const minV = Math.min(...vals);
+  const maxV = Math.max(...vals);
+  const range = maxV - minV || 0.01;
+  return (
+    <View style={{ gap: ROW_GAP }}>
+      {data.map((d, i) => {
+        const isLast = i === data.length - 1;
+        const barW = Math.max(4, Math.round(((d.value - minV) / range) * maxBarW));
+        return (
+          <View key={i} style={{ flexDirection: 'row', alignItems: 'center', gap: H_GAP }}>
+            <Text style={{ width: LABEL_W, fontSize: 10, color: isLast ? highlightColor : '#6b7280', textAlign: 'right', fontWeight: isLast ? '700' : '400' }}>
+              {d.label}
+            </Text>
+            <View style={{ flex: 1, height: BAR_H, justifyContent: 'center' }}>
+              <View style={{ height: BAR_H, width: barW, backgroundColor: isLast ? highlightColor : color, borderRadius: 3 }} />
+            </View>
+            <Text style={{ width: VALUE_W, fontSize: 10, color: isLast ? highlightColor : '#374151', fontWeight: isLast ? '700' : '400' }}>
+              {d.value.toFixed(2)}%
+            </Text>
+          </View>
+        );
+      })}
+    </View>
   );
 });
 
 // ── 지표분석 모달 ─────────────────────────────────────────────────────
+const RateChartSection: React.FC<{ chart: RateChart }> = React.memo(({ chart }) => {
+  const [expanded, setExpanded] = useState(true);
+  const changeColor = chart.change < 0 ? '#1d4ed8' : chart.change > 0 ? '#ef4444' : '#8e8e8e';
+  const changeLabel = `${chart.change >= 0 ? '▲' : '▼'} ${Math.abs(chart.change).toFixed(2)}%p 전월比`;
+  return (
+    <View style={{ backgroundColor: '#fff', borderRadius: 16, marginHorizontal: 16, marginTop: 16, borderWidth: 1, borderColor: '#e5e7eb', overflow: 'hidden' }}>
+      <TouchableOpacity onPress={() => setExpanded(v => !v)} activeOpacity={0.7} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 16 }}>
+        <View>
+          <Text style={{ fontSize: 16, fontWeight: '700', color: '#262626' }}>{chart.name}</Text>
+          <Text style={{ fontSize: 11, color: '#8e8e8e', marginTop: 2 }}>{chart.subtitle}</Text>
+        </View>
+        <View style={{ alignItems: 'flex-end' }}>
+          <Text style={{ fontSize: 24, fontWeight: '800', color: '#262626' }}>{chart.current.toFixed(2)}%</Text>
+          <Text style={{ fontSize: 11, color: changeColor, fontWeight: '600', marginTop: 2 }}>{changeLabel}</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2, marginTop: 4 }}>
+            <Text style={{ fontSize: 11, color: '#8e8e8e' }}>{expanded ? '접기' : '펼치기'}</Text>
+            <MaterialIcons name={expanded ? 'keyboard-arrow-up' : 'keyboard-arrow-down'} size={16} color="#8e8e8e" />
+          </View>
+        </View>
+      </TouchableOpacity>
+      {expanded && (
+        <View style={{ paddingHorizontal: 16, paddingBottom: 16, borderTopWidth: 1, borderTopColor: '#f5f5f5' }}>
+          <Text style={{ fontSize: 12, fontWeight: '600', color: '#374151', marginTop: 12, marginBottom: 8 }}>연도별 추이</Text>
+          <RateBarChart
+            data={chart.yearlyData.map(d => ({ label: d.year ?? '', value: d.value }))}
+            color="#bfdbfe"
+            highlightColor="#1d4ed8"
+            showEveryN={2}
+          />
+          <Text style={{ fontSize: 12, fontWeight: '600', color: '#374151', marginTop: 16, marginBottom: 8 }}>월별 추이</Text>
+          <RateHBarChart
+            data={chart.monthlyData.map(d => ({ label: d.month ?? '', value: d.value }))}
+            color="#93c5fd"
+            highlightColor="#1d4ed8"
+          />
+          <Text style={{ fontSize: 10, color: '#9ca3af', marginTop: 12, textAlign: 'right' }}>{chart.updatedAt} 기준</Text>
+        </View>
+      )}
+    </View>
+  );
+});
+
 const RateAnalysisModal: React.FC<{
   visible: boolean;
   onClose: () => void;
@@ -2276,41 +2362,10 @@ const RateAnalysisModal: React.FC<{
             <MaterialIcons name="show-chart" size={40} color="#d1d5db" />
             <Text style={{ color: '#8e8e8e', marginTop: 12 }}>데이터 로딩 중...</Text>
           </View>
-        ) : rateCharts.map(chart => {
-          const changeColor = chart.change < 0 ? '#1d4ed8' : chart.change > 0 ? '#ef4444' : '#8e8e8e';
-          const changeLabel = `${chart.change >= 0 ? '▲' : '▼'} ${Math.abs(chart.change).toFixed(2)}%p 전월比`;
-          return (
-            <View key={chart.id} style={{ backgroundColor: '#fff', borderRadius: 16, marginHorizontal: 16, marginTop: 16, borderWidth: 1, borderColor: '#e5e7eb', padding: 16 }}>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
-                <View>
-                  <Text style={{ fontSize: 16, fontWeight: '700', color: '#262626' }}>{chart.name}</Text>
-                  <Text style={{ fontSize: 11, color: '#8e8e8e', marginTop: 2 }}>{chart.subtitle}</Text>
-                </View>
-                <View style={{ alignItems: 'flex-end' }}>
-                  <Text style={{ fontSize: 24, fontWeight: '800', color: '#262626' }}>{chart.current.toFixed(2)}%</Text>
-                  <Text style={{ fontSize: 11, color: changeColor, fontWeight: '600', marginTop: 2 }}>{changeLabel}</Text>
-                </View>
-              </View>
-              <Text style={{ fontSize: 12, fontWeight: '600', color: '#374151', marginBottom: 8 }}>연도별 추이</Text>
-              <RateBarChart
-                data={chart.yearlyData.map(d => ({ label: d.year ?? '', value: d.value }))}
-                color="#bfdbfe"
-                highlightColor="#1d4ed8"
-                showEveryN={2}
-              />
-              <Text style={{ fontSize: 12, fontWeight: '600', color: '#374151', marginTop: 16, marginBottom: 8 }}>월별 추이</Text>
-              <RateBarChart
-                data={chart.monthlyData.map(d => ({ label: d.month ?? '', value: d.value }))}
-                color="#93c5fd"
-                highlightColor="#1d4ed8"
-                showEveryN={4}
-              />
-            </View>
-          );
-        })}
-        <Text style={{ fontSize: 10, color: '#9ca3af', textAlign: 'center', marginTop: 20, marginHorizontal: 16 }}>
-          한국은행 공시 기준 · {rateCharts[0]?.updatedAt ?? ''} 기준 업데이트
-        </Text>
+        ) : rateCharts.map(chart => (
+          <RateChartSection key={chart.id} chart={chart} />
+        ))}
+        <View style={{ height: 20 }} />
       </ScrollView>
     </SafeAreaView>
   </Modal>
@@ -2359,17 +2414,28 @@ const SujiDongModal: React.FC<{
   </Modal>
 ));
 
-const DongComplexTable: React.FC<{ dongName: string; complexes: JukjeonComplex[] }> = React.memo(({ dongName, complexes }) => {
+async function openNaverLand(aptName: string): Promise<void> {
+  const encoded = encodeURIComponent(aptName);
+  try {
+    const res = await fetch(
+      `https://new.land.naver.com/api/complexes/autocomplete?query=${encoded}`,
+      { headers: { Referer: 'https://new.land.naver.com/' } }
+    );
+    const data = await res.json();
+    const complexNo = data?.complexes?.[0]?.complexNo;
+    if (complexNo) {
+      Linking.openURL(`https://fin.land.naver.com/complexes/${complexNo}?tab=transaction`);
+      return;
+    }
+  } catch {}
+  Linking.openURL(`https://m.land.naver.com/search/result?query=${encoded}`);
+}
+
+const DongComplexTable: React.FC<{ dongName: string; complexes: JukjeonComplex[]; mortgageRateByMonth: Record<string, number> }> = React.memo(({ dongName, complexes, mortgageRateByMonth }) => {
   const [expanded, setExpanded] = useState(false);
   if (complexes.length === 0) return null;
 
   const toggle = () => {
-    LayoutAnimation.configureNext({
-      duration: 280,
-      create: { type: 'easeInEaseOut', property: 'opacity' },
-      update: { type: 'spring', springDamping: 0.75 },
-      delete: { type: 'easeInEaseOut', property: 'opacity' },
-    });
     setExpanded(v => !v);
   };
 
@@ -2386,11 +2452,15 @@ const DongComplexTable: React.FC<{ dongName: string; complexes: JukjeonComplex[]
       {expanded && (
         <View style={{ paddingHorizontal: 12, paddingBottom: 12 }}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false} nestedScrollEnabled={true}>
-            <View style={{ borderWidth: 1, borderColor: '#dbdbdb', borderRadius: 8, overflow: 'hidden', minWidth: 380 }}>
+            <View style={{ borderWidth: 1, borderColor: '#dbdbdb', borderRadius: 8, overflow: 'hidden', minWidth: 476 }}>
               {/* 헤더 */}
               <View style={{ flexDirection: 'row', backgroundColor: '#fafafa', paddingVertical: 7, paddingHorizontal: 10, alignItems: 'center' }}>
                 <Text style={{ width: 130, fontSize: 11, fontWeight: '600', color: '#8e8e8e' }}>단지명</Text>
                 <Text style={{ width: 56, fontSize: 11, fontWeight: '600', color: '#8e8e8e', textAlign: 'right' }}>현재가</Text>
+                <View style={{ width: 68, alignItems: 'flex-end' }}>
+                  <Text style={{ fontSize: 11, fontWeight: '600', color: '#8e8e8e' }}>PIR추세</Text>
+                </View>
+                <Text style={{ width: 44, fontSize: 11, fontWeight: '600', color: '#8e8e8e', textAlign: 'right' }}>K-HAI</Text>
                 <View style={{ width: 68, alignItems: 'flex-end' }}>
                   <Text style={{ fontSize: 11, fontWeight: '600', color: '#8e8e8e' }}>가격추세</Text>
                 </View>
@@ -2420,7 +2490,7 @@ const DongComplexTable: React.FC<{ dongName: string; complexes: JukjeonComplex[]
                 return (
                   <PressableScale
                     key={idx}
-                    onPress={() => Linking.openURL(`https://land.naver.com/search?query=${encodeURIComponent(c.name)}`)}
+                    onPress={() => openNaverLand(c.name)}
                     contentStyle={{ flexDirection: 'row', paddingVertical: 7, paddingHorizontal: 10, backgroundColor: idx % 2 === 1 ? '#fafafa' : '#fff', borderTopWidth: 1, borderTopColor: '#f0f0f0', alignItems: 'center' }}
                     scaleTo={0.97}
                   >
@@ -2429,6 +2499,26 @@ const DongComplexTable: React.FC<{ dongName: string; complexes: JukjeonComplex[]
                       : <Text style={{ width: 130, fontSize: 12, color: '#262626' }} numberOfLines={1}>{c.name}</Text>
                     }
                     <Text style={{ width: 56, fontSize: 12, fontWeight: '600', color: '#0095f6', textAlign: 'right' }}>{c.medianPrice}억</Text>
+                    <View style={{ width: 68, alignItems: 'flex-end' }}>
+                      <MiniSparkBars
+                        values={c.monthlyData.map(d => {
+                          if (d.median <= 0) return 0;
+                          const annualInc = getMonthlyIncomeMAN(d.month) * 12;
+                          return Math.round(d.median * 10000 / annualInc * 10) / 10;
+                        })}
+                        activeColor="#f97316" inactiveColor="#fed7aa"
+                      />
+                      <Text style={{ fontSize: 9, color: '#f97316', marginTop: 1 }}>
+                        {(Math.round(c.medianPrice * 10000 / (getMonthlyIncomeMAN(c.refMonth) * 12) * 10) / 10).toFixed(1)}배
+                      </Text>
+                    </View>
+                    {(() => {
+                      const rate = mortgageRateByMonth[c.refMonth] ?? KHAI_RATE_DEFAULT;
+                      const income = getMonthlyIncomeMAN(c.refMonth);
+                      const khai = computeKHAI(c.medianPrice, rate, income);
+                      const khaiColor = khai < 100 ? '#16a34a' : khai < 150 ? '#f97316' : '#ef4444';
+                      return <Text style={{ width: 44, fontSize: 12, fontWeight: '600', color: khaiColor, textAlign: 'right' }}>{khai}</Text>;
+                    })()}
                     <View style={{ width: 68, alignItems: 'flex-end' }}>
                       <MiniSparkBars values={priceValues} activeColor="#7c3aed" inactiveColor="#c4b5fd" />
                     </View>
@@ -2455,7 +2545,8 @@ const SujiComplexModal: React.FC<{
   visible: boolean;
   onClose: () => void;
   sujiComplexes: Record<string, Record<string, JukjeonComplex[]>>;
-}> = React.memo(({ visible, onClose, sujiComplexes }) => {
+  mortgageRateByMonth: Record<string, number>;
+}> = React.memo(({ visible, onClose, sujiComplexes, mortgageRateByMonth }) => {
   const totalCount = GU_ORDER.reduce((s, gu) =>
     s + Object.values(sujiComplexes[gu] ?? {}).reduce((s2, arr) => s2 + arr.length, 0), 0);
   return (
@@ -2481,10 +2572,8 @@ const SujiComplexModal: React.FC<{
                 <View style={{ paddingHorizontal: 16, paddingTop: 16, paddingBottom: 4 }}>
                   <Text style={{ fontSize: 14, fontWeight: '700', color: '#8e8e8e' }}>{gu}</Text>
                 </View>
-                {validDongs.map((dong, i) => (
-                  <AnimatedCard key={dong} delay={i * 60}>
-                    <DongComplexTable dongName={dong} complexes={guData[dong]} />
-                  </AnimatedCard>
+                {validDongs.map((dong) => (
+                  <DongComplexTable key={dong} dongName={dong} complexes={guData[dong]} mortgageRateByMonth={mortgageRateByMonth} />
                 ))}
               </View>
             );
@@ -2512,11 +2601,23 @@ export default function InvestmentScreen() {
     jongbuseSummary,
     bookmarks,
     loading,
+    syncing,
     error,
     lastSyncTime,
     syncData,
     toggleBookmark,
   } = useInvestmentSync();
+
+  const mortgageRateByMonth = useMemo(() => {
+    const map: Record<string, number> = {};
+    const loanChart = rateCharts.find(c => c.id === 'loan-rate');
+    if (loanChart) {
+      for (const dp of loanChart.monthlyData) {
+        if (dp.month) map[dp.month] = dp.value;
+      }
+    }
+    return map;
+  }, [rateCharts]);
 
   const { opacity, translateY } = useScreenFade();
   const [refreshing, setRefreshing] = useState(false);
@@ -2599,10 +2700,10 @@ export default function InvestmentScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Animated.View style={{ flex: 1, opacity, transform: [{ translateY }] }}>
+      <Animated.View style={{ flex: 1, opacity }}>
       <View style={styles.header}>
         <View style={styles.headerTitleSection}>
-          <Text style={styles.headerTitle}>💼 투자 분석</Text>
+          <Text style={styles.headerTitle}>📈 Markets</Text>
           <View style={styles.syncStatus}>
             <MaterialIcons
               name="cloud-done"
@@ -2622,14 +2723,21 @@ export default function InvestmentScreen() {
         </View>
       )}
 
+      {syncing && (
+        <View style={{ height: 2, backgroundColor: '#eff6ff' }}>
+          <View style={{ height: 2, width: '60%', backgroundColor: '#3b82f6', borderRadius: 1 }} />
+        </View>
+      )}
+
       {loading && !termOfDay && !regionCharts.length ? (
         <View style={styles.centerContainer}>
-          <LoadingDots />
-          <Text style={styles.loadingText}>투자 분석을 불러오는 중...</Text>
+          <ActivityIndicator size="large" color="#3b82f6" />
+          <Text style={[styles.loadingText, { marginTop: 16 }]}>Markets 불러오는 중...</Text>
         </View>
       ) : (
         <ScrollView
           contentContainerStyle={styles.listContent}
+          keyboardShouldPersistTaps="handled"
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
           }
@@ -2749,32 +2857,33 @@ export default function InvestmentScreen() {
               </FloatingCard>
             </AnimatedCard>
           )}
-          <SujiDongModal
-            visible={dongModalVisible}
-            onClose={() => setDongModalVisible(false)}
-            sujiComplexes={sujiComplexes}
-          />
-          <SujiComplexModal
-            visible={sujiModalVisible}
-            onClose={() => setSujiModalVisible(false)}
-            sujiComplexes={sujiComplexes}
-          />
-          <RateAnalysisModal
-            visible={rateModalVisible}
-            onClose={() => setRateModalVisible(false)}
-            rateCharts={rateCharts}
-          />
-          <RegionBrowserModal
-            visible={regionModalVisible}
-            onClose={() => setRegionModalVisible(false)}
-            regionCharts={regionCharts}
-          />
           <View style={styles.footer}>
             <Text style={styles.footerText}>모든 정보는 {footerText} 기준입니다</Text>
           </View>
         </ScrollView>
       )}
 
+      <SujiDongModal
+        visible={dongModalVisible}
+        onClose={() => setDongModalVisible(false)}
+        sujiComplexes={sujiComplexes}
+      />
+      <SujiComplexModal
+        visible={sujiModalVisible}
+        onClose={() => setSujiModalVisible(false)}
+        sujiComplexes={sujiComplexes}
+        mortgageRateByMonth={mortgageRateByMonth}
+      />
+      <RateAnalysisModal
+        visible={rateModalVisible}
+        onClose={() => setRateModalVisible(false)}
+        rateCharts={rateCharts}
+      />
+      <RegionBrowserModal
+        visible={regionModalVisible}
+        onClose={() => setRegionModalVisible(false)}
+        regionCharts={regionCharts}
+      />
       <DetailModal column={selectedColumn} visible={detailVisible} onClose={() => setDetailVisible(false)} dongCharts={dongCharts} taxPolicySummary={taxPolicySummary} jongbuseSummary={jongbuseSummary} newsArticles={newsArticles} />
       <FilterModal
         visible={filterVisible}

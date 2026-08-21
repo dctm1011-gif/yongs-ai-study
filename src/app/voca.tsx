@@ -621,9 +621,9 @@ export default function VocaScreen() {
         if (snap.exists()) sd = { word: word.word, ...snap.val() };
       } catch {}
       if (_wcPlayId !== myId) break;
-      // EN TTS: word × 3 + example_en + ex.en
+      // EN TTS: word × 1 + example_en + ex.en
       const enSegs = [
-        `${word.word}... ${word.word}... ${word.word}.`,
+        `${word.word}.`,
         word.example_en,
         ...(sd?.examples?.map(ex => ex.en).filter(Boolean) ?? []),
       ].filter((p): p is string => typeof p === 'string' && p.trim().length > 0);
@@ -1050,23 +1050,18 @@ const WordCard = React.memo(({ word, onToggleRead, isPlayingAll }: {
   onToggleRead: (id: string) => void,
   isPlayingAll?: boolean,
 }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [sentenceData, setSentenceData] = useState<ReviewSentence | null>(null);
   const [sentenceLoading, setSentenceLoading] = useState(false);
+  const [generating, setGenerating] = useState(false);
   const sentenceDataRef = React.useRef<ReviewSentence | null>(null);
   const sentenceLoadingRef = React.useRef(false);
   const isPlayingRef = React.useRef(false);
   React.useEffect(() => { isPlayingRef.current = isPlaying; }, [isPlaying]);
 
-  // 언마운트 시 이 카드가 개별 재생 중이었다면 자신의 재생만 취소
-  // (playAllWords 재생 중인 카드는 isPlayingRef.current=false 이므로 영향 없음)
   React.useEffect(() => {
     return () => {
-      if (isPlayingRef.current) {
-        ++_wcPlayId;
-        // playSnd가 ID 불일치를 감지해 스스로 unload함
-      }
+      if (isPlayingRef.current) { ++_wcPlayId; }
     };
   }, []);
 
@@ -1082,19 +1077,42 @@ const WordCard = React.memo(({ word, onToggleRead, isPlayingAll }: {
         const data: ReviewSentence = { word: word.word, ...snap.val() };
         sentenceDataRef.current = data;
         setSentenceData(data);
+        return;
       }
+      // 데이터 없으면 Netlify로 자동 생성
+      sentenceLoadingRef.current = false;
+      setSentenceLoading(false);
+      setGenerating(true);
+      try {
+        const res = await fetch(`${NETLIFY_BASE_URL}/api/generate-word-sentence`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            word: word.word,
+            meaning: word.meaning,
+            example_en: word.example_en,
+            explanation: word.explanation,
+          }),
+        });
+        if (res.ok) {
+          const json = await res.json();
+          if (json.data) {
+            const generated: ReviewSentence = { word: word.word, ...json.data };
+            sentenceDataRef.current = generated;
+            setSentenceData(generated);
+          }
+        }
+      } catch {}
+      setGenerating(false);
+      return;
     } catch {} finally {
       sentenceLoadingRef.current = false;
       setSentenceLoading(false);
     }
-  }, [word.word]);
+  }, [word.word, word.meaning, word.example_en, word.explanation]);
 
-  const handleExpand = useCallback(() => {
-    setIsExpanded(prev => {
-      if (!prev) loadSentenceData();
-      return !prev;
-    });
-  }, [loadSentenceData]);
+  // 마운트 시 즉시 로드
+  React.useEffect(() => { loadSentenceData(); }, [loadSentenceData]);
 
   const playWordTts = useCallback(async () => {
     const prevId = ++_wcPlayId;
@@ -1107,7 +1125,6 @@ const WordCard = React.memo(({ word, onToggleRead, isPlayingAll }: {
     if (isPlayingRef.current) { isPlayingRef.current = false; setIsPlaying(false); return; }
     isPlayingRef.current = true;
     setIsPlaying(true);
-    setIsExpanded(true);
     loadSentenceData();
 
     try { await Audio.setAudioModeAsync({ staysActiveInBackground: true, playsInSilentModeIOS: true }); } catch {}
@@ -1158,15 +1175,15 @@ const WordCard = React.memo(({ word, onToggleRead, isPlayingAll }: {
 
     const sd = sentenceDataRef.current;
 
-    // EN TTS: word × 3 + example_en + ex.en (영어만 모아서 1번 호출)
+    // EN TTS: word × 1 + example_en + ex.en (영어만 모아서 1번 호출)
     const enParts = [
-      `${word.word}... ${word.word}... ${word.word}.`,
+      `${word.word}.`,
       word.example_en,
       ...(sd?.examples?.map(ex => ex.en).filter(Boolean) ?? []),
     ].filter((p): p is string => typeof p === 'string' && p.trim().length > 0);
     await playSnd(await loadSnd(enParts.join(' ')));
 
-    // KO TTS: sentence_ko + nuance + context + everyday_usage + ex.ko (한국어만 모아서 1번 호출)
+    // KO TTS: 상세 데이터 있으면 사용, 없으면 기본 meaning/explanation 읽기
     if (_wcPlayId !== prevId) { isPlayingRef.current = false; setIsPlaying(false); return; }
     if (sd) {
       const koParts = [
@@ -1174,10 +1191,14 @@ const WordCard = React.memo(({ word, onToggleRead, isPlayingAll }: {
         ...(sd.examples?.map(ex => ex.ko).filter(Boolean) ?? []),
       ].filter((p): p is string => typeof p === 'string' && p.trim().length > 0);
       if (koParts.length > 0) await playSnd(await loadSnd(koParts.join(' ')));
+    } else {
+      const fallbackParts = [word.meaning, word.explanation]
+        .filter((p): p is string => typeof p === 'string' && p.trim().length > 0);
+      if (fallbackParts.length > 0) await playSnd(await loadSnd(fallbackParts.join('. ')));
     }
 
     if (_wcPlayId === prevId) { isPlayingRef.current = false; setIsPlaying(false); }
-  }, [word.word, word.example_en, loadSentenceData]);
+  }, [word.word, word.meaning, word.explanation, word.example_en, loadSentenceData]);
 
   return (
     <TouchableOpacity
@@ -1208,46 +1229,41 @@ const WordCard = React.memo(({ word, onToggleRead, isPlayingAll }: {
       <Text style={styles.meaning}>{word.meaning}</Text>
       <Text style={styles.explanation}>{word.explanation}</Text>
       <Text style={styles.example}>예: {word.example_en}</Text>
-      <TouchableOpacity onPress={handleExpand} hitSlop={{ top: 6, bottom: 6, left: 0, right: 0 }}>
-        <Text style={styles.reviewToggle}>{isExpanded ? '▲ 접기' : '▼ 뉘앙스 더 보기'}</Text>
-      </TouchableOpacity>
-      {isExpanded && (
-        <View style={styles.reviewDetails}>
-          {sentenceLoading && !sentenceData && (
-            <ActivityIndicator size="small" color="#0095f6" style={{ marginVertical: 8 }} />
-          )}
-          {sentenceData && (
-            <>
+      <View style={styles.reviewDetails}>
+        {(sentenceLoading || generating) && !sentenceData && (
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, marginVertical: 8 }}>
+            <ActivityIndicator size="small" color="#0095f6" />
+            <Text style={{ fontSize: 12, color: '#8e8e8e' }}>{generating ? '설명 생성 중...' : '불러오는 중...'}</Text>
+          </View>
+        )}
+        {sentenceData && (
+          <>
+            <View style={styles.reviewDetailRow}>
+              <Text style={styles.reviewDetailLabel}>💬 뉘앙스</Text>
+              <Text style={styles.reviewDetailText}>{sentenceData.nuance}</Text>
+            </View>
+            <View style={styles.reviewDetailRow}>
+              <Text style={styles.reviewDetailLabel}>📍 상황</Text>
+              <Text style={styles.reviewDetailText}>{sentenceData.context}</Text>
+            </View>
+            <View style={styles.reviewDetailRow}>
+              <Text style={styles.reviewDetailLabel}>🗣 일상표현</Text>
+              <Text style={styles.reviewDetailText}>{sentenceData.everyday_usage}</Text>
+            </View>
+            {sentenceData.examples && (
               <View style={styles.reviewDetailRow}>
-                <Text style={styles.reviewDetailLabel}>💬 뉘앙스</Text>
-                <Text style={styles.reviewDetailText}>{sentenceData.nuance}</Text>
+                <Text style={styles.reviewDetailLabel}>📝 추가 예문</Text>
+                {sentenceData.examples.map((ex, i) => (
+                  <View key={i} style={{ marginTop: 8 }}>
+                    <Text style={styles.reviewSentence}>{`${i + 1}. ${ex.en}`}</Text>
+                    <Text style={styles.reviewSentenceKo}>{ex.ko}</Text>
+                  </View>
+                ))}
               </View>
-              <View style={styles.reviewDetailRow}>
-                <Text style={styles.reviewDetailLabel}>📍 상황</Text>
-                <Text style={styles.reviewDetailText}>{sentenceData.context}</Text>
-              </View>
-              <View style={styles.reviewDetailRow}>
-                <Text style={styles.reviewDetailLabel}>🗣 일상표현</Text>
-                <Text style={styles.reviewDetailText}>{sentenceData.everyday_usage}</Text>
-              </View>
-              {sentenceData.examples && (
-                <View style={styles.reviewDetailRow}>
-                  <Text style={styles.reviewDetailLabel}>📝 추가 예문</Text>
-                  {sentenceData.examples.map((ex, i) => (
-                    <View key={i} style={{ marginTop: 8 }}>
-                      <Text style={styles.reviewSentence}>{`${i + 1}. ${ex.en}`}</Text>
-                      <Text style={styles.reviewSentenceKo}>{ex.ko}</Text>
-                    </View>
-                  ))}
-                </View>
-              )}
-            </>
-          )}
-          {!sentenceLoading && !sentenceData && (
-            <Text style={styles.reviewDetailText}>데이터 없음</Text>
-          )}
-        </View>
-      )}
+            )}
+          </>
+        )}
+      </View>
       <TouchableOpacity
         style={styles.googleSearchBtn}
         onPress={() => Linking.openURL(`https://www.google.com/search?q=${encodeURIComponent(word.word + ' 뜻')}&hl=ko&gl=KR&lr=lang_ko`)}
@@ -1376,7 +1392,7 @@ const QuizCard = React.memo(({ quiz, wordName, onAnswer }: { quiz: Quiz, wordNam
 });
 
 const SentenceReviewView = React.memo(({ sentences, loading }: { sentences: ReviewSentence[], loading: boolean }) => {
-  const [expanded, setExpanded] = useState<Record<number, boolean>>({});
+  const [expanded, setExpanded] = useState<Record<number, boolean>>({});  // true=open, false=collapsed; undefined=open(default)
   const [speakingIdx, setSpeakingIdx] = useState<number | null>(null);
   const [isPlayingAll, setIsPlayingAll] = useState(false);
   const speakingIdxRef = React.useRef<number | null>(null);
@@ -1601,7 +1617,8 @@ const SentenceReviewView = React.memo(({ sentences, loading }: { sentences: Revi
       </View>
       <ScrollView contentContainerStyle={styles.listContent}>
       {sentences.map((item, idx) => {
-        const isOpen = expanded[idx] ?? false;
+        // undefined = 기본 펼침, false = 접힘, true = 명시적 펼침
+        const isOpen = expanded[idx] !== false;
         const highlighted = item.sentence.replace(
           new RegExp(`\\b${item.word}(\\w*)`, 'gi'),
           (m) => `【${m}】`
@@ -1610,7 +1627,7 @@ const SentenceReviewView = React.memo(({ sentences, loading }: { sentences: Revi
           <TouchableOpacity
             key={idx}
             style={styles.reviewCard}
-            onPress={() => setExpanded(prev => ({ ...prev, [idx]: !prev[idx] }))}
+            onPress={() => setExpanded(prev => ({ ...prev, [idx]: !isOpen }))}
             activeOpacity={0.85}
           >
             <View style={styles.reviewCardTop}>

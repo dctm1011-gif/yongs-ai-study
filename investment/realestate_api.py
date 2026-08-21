@@ -867,6 +867,11 @@ def fetch_suji_dong_complex_prices(
                 last_known = d["median"]
             elif last_known > 0:
                 d["median"] = last_known
+        # 맨 앞 달이 비어있으면 첫 유효 값으로 backward-fill
+        first_known = next((d["median"] for d in monthly_data if d["median"] > 0), 0.0)
+        for d in monthly_data:
+            if d["median"] == 0:
+                d["median"] = first_known
         recent_median = next((d["median"] for d in reversed(monthly_data) if d["median"] > 0), 0.0)
         if recent_median == 0:
             continue
@@ -957,6 +962,11 @@ def fetch_gu_complexes_by_dong(
                     last_known = d["median"]
                 elif last_known > 0:
                     d["median"] = last_known
+            # 맨 앞 달이 비어있으면 첫 유효 값으로 backward-fill
+            first_known = next((d["median"] for d in monthly_data if d["median"] > 0), 0.0)
+            for d in monthly_data:
+                if d["median"] == 0:
+                    d["median"] = first_known
             recent_median = next((d["median"] for d in reversed(monthly_data) if d["median"] > 0), 0.0)
             if recent_median == 0:
                 continue

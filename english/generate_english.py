@@ -1941,13 +1941,14 @@ def get_api_key() -> str:
     key = os.environ.get("ANTHROPIC_API_KEY", "")
     if key:
         return key
-    # fallback: english-bot index.js 에서 읽기
-    index_js = Path(r"C:\Users\dctm1\english-bot\index.js")
-    if index_js.exists():
-        import re
-        m = re.search(r"ANTHROPIC_KEY\s*=\s*['\"]([^'\"]+)['\"]", index_js.read_text(encoding="utf-8"))
-        if m:
-            return m.group(1)
+    # fallback: .env 파일에서 로드 (YongStudyApp/.env)
+    env_file = Path(__file__).parent.parent / ".env"
+    if env_file.exists():
+        for line in env_file.read_text(encoding="utf-8").splitlines():
+            if line.startswith("ANTHROPIC_API_KEY="):
+                key = line.split("=", 1)[1].strip()
+                os.environ["ANTHROPIC_API_KEY"] = key
+                return key
     return ""
 
 
