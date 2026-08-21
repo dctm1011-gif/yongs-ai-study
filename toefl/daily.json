@@ -1,183 +1,118 @@
 {
   "date": "2026-08-22",
   "reading": {
-    "title": "Marine Acidification and Coral Reef Ecosystems",
-    "passage": "Ocean acidification, caused primarily by the absorption of atmospheric carbon dioxide, represents one of the most significant environmental threats to marine ecosystems in the twenty-first century. When CO2 dissolves in seawater, it forms carbonic acid, which lowers the pH of the ocean and reduces the concentration of carbonate ions essential for shell and skeleton formation. Coral reefs, often called the rainforests of the sea, are particularly vulnerable to this chemical transformation. The symbiotic algae living within coral tissues require specific pH levels to photosynthesize efficiently, and acidification disrupts this delicate balance, causing corals to expel their algal partners in a process known as bleaching. Recent studies indicate that if current emission trajectories continue, coral reefs could decline by 90 percent within this century. Additionally, acidification affects pteropods and other planktonic organisms that form the foundation of marine food webs, potentially destabilizing entire oceanic systems. Scientists emphasize that mitigating ocean acidification requires immediate reduction in greenhouse gas emissions and international cooperation to preserve these irreplaceable ecosystems.",
-    "vocabulary": [
-      {
-        "word": "acidification",
-        "meaning_ko": "산성화"
-      },
-      {
-        "word": "carbonic acid",
-        "meaning_ko": "탄산"
-      },
-      {
-        "word": "carbonate ions",
-        "meaning_ko": "탄산염 이온"
-      },
-      {
-        "word": "symbiotic",
-        "meaning_ko": "공생의"
-      },
-      {
-        "word": "bleaching",
-        "meaning_ko": "백화 현상"
-      },
-      {
-        "word": "pteropods",
-        "meaning_ko": "익족류(날개발 연체동물)"
-      },
-      {
-        "word": "trajectories",
-        "meaning_ko": "궤적, 추이"
-      }
-    ],
+    "title": "Bioluminescence in Marine Organisms",
+    "passage": "Bioluminescence, the production of light by living organisms, is a fascinating phenomenon found predominantly in marine environments. Deep-sea creatures utilize this ability for various purposes including communication, hunting, and defense. The process involves a chemical reaction where luciferin, a light-emitting compound, reacts with oxygen in the presence of the enzyme luciferase. Approximately 90% of deep-sea organisms produce bioluminescence, making it one of nature's most common adaptations in extreme environments. This remarkable feature allows creatures to thrive in complete darkness where sunlight cannot penetrate.",
     "questions": [
       {
-        "q": "According to the passage, what is the primary cause of ocean acidification?",
+        "q": "According to the passage, what is the primary environment where bioluminescence is found?",
         "options": [
-          "The decomposition of organic matter on the ocean floor",
-          "The absorption of atmospheric carbon dioxide by seawater",
-          "The volcanic activity beneath the ocean",
-          "The runoff of industrial chemicals from coastal regions"
+          "Tropical rainforests",
+          "Marine environments",
+          "Underground caves",
+          "Arctic regions"
         ],
         "answer": 1,
-        "explanation": "지문에서 '산성화는 주로 대기 중 이산화탄소의 흡수로 인해 발생한다'고 명시했습니다. 정답은 B입니다."
+        "explanation": "본문에서 '주로 해양 환경에서 발견되는' 현상이라고 명시하고 있습니다. 정답은 B (Marine environments)입니다."
       },
       {
-        "q": "What can be inferred from the passage about the relationship between pH levels and coral health?",
+        "q": "Which enzyme is mentioned as essential for bioluminescence?",
         "options": [
-          "Corals thrive in acidic environments with low pH",
-          "Specific pH levels are necessary for the symbiotic algae within corals to function properly",
-          "pH fluctuations have minimal impact on coral reproduction",
-          "Corals can easily adapt to any pH level in the ocean"
+          "Photosynthase",
+          "Luciferase",
+          "Protease",
+          "Lipase"
         ],
         "answer": 1,
-        "explanation": "지문에서 공생 조류가 효율적으로 광합성하기 위해 특정 pH 수준을 필요로 한다고 설명했습니다. 산성화가 이 균형을 방해한다고 했으므로 정답은 B입니다."
+        "explanation": "본문에서 루시페린이 산소와 루시퍼라제 효소의 존재 하에 반응한다고 설명합니다. 정답은 B (Luciferase)입니다."
       },
       {
-        "q": "The word 'vulnerable' in the first paragraph is closest in meaning to...",
+        "q": "What percentage of deep-sea organisms produce bioluminescence?",
         "options": [
-          "Resistant to damage",
-          "Easily harmed or damaged",
-          "Capable of rapid recovery",
-          "Located in deep ocean waters"
-        ],
-        "answer": 1,
-        "explanation": "'Vulnerable'은 '손상에 쉽게 노출된, 약한'이라는 뜻입니다. 산호초가 산성화에 '특히 취약하다'는 맥락에서 B가 정답입니다."
-      },
-      {
-        "q": "Why does the author mention pteropods and planktonic organisms?",
-        "options": [
-          "To show that small organisms are not affected by acidification",
-          "To explain that these organisms are the only food source for large fish",
-          "To illustrate how acidification affects marine food webs beyond corals",
-          "To prove that ocean acidification only occurs in shallow waters"
+          "Approximately 50%",
+          "Approximately 70%",
+          "Approximately 90%",
+          "Approximately 99%"
         ],
         "answer": 2,
-        "explanation": "저자는 익족류와 플랑크톤이 해양 먹이사슬의 기초를 형성하며, 산성화가 이들을 영향주어 전체 해양 시스템을 불안정하게 할 수 있다는 점을 보여주기 위해 언급했습니다. 정답은 C입니다."
+        "explanation": "본문의 마지막 문장에서 '심해 생물의 약 90%가 생물발광을 생성한다'고 명시하고 있습니다. 정답은 C (Approximately 90%)입니다."
       }
     ]
   },
   "writing": {
-    "task": "대학 등록금 정책",
-    "paraphrase_sentences": [
-      {
-        "original": "Ocean acidification, caused primarily by the absorption of atmospheric carbon dioxide, represents one of the most significant environmental threats to marine ecosystems in the twenty-first century.",
-        "paraphrase": "The primary driver of ocean acidification—the absorption of atmospheric carbon dioxide—poses one of the most critical challenges to marine ecosystems in this century.",
-        "tip": "능동 구문의 '~로 인한'을 대시를 사용한 appositive로 재구성하여 강조 효과 증대"
-      },
-      {
-        "original": "When CO2 dissolves in seawater, it forms carbonic acid, which lowers the pH of the ocean and reduces the concentration of carbonate ions essential for shell and skeleton formation.",
-        "paraphrase": "The dissolution of CO2 in seawater results in the formation of carbonic acid, leading to decreased ocean pH and diminished carbonate ion levels—elements critical for the development of shells and skeletal structures.",
-        "tip": "동사 dissolves→명사 dissolution, lowers/reduces→decreased/diminished로 동사→명사 변환하고 essential for를 elements critical for로 synonyms 사용"
-      },
-      {
-        "original": "Coral reefs, often called the rainforests of the sea, are particularly vulnerable to this chemical transformation.",
-        "paraphrase": "The sensitivity of coral reefs, commonly referred to as the rainforests of the sea, to this chemical transformation cannot be overstated.",
-        "tip": "수동형 are vulnerable을 능동형 cannot be overstated로 변환하여 강조하고 appositive는 유지"
-      },
-      {
-        "original": "Recent studies indicate that if current emission trajectories continue, coral reefs could decline by 90 percent within this century.",
-        "paraphrase": "According to recent research, maintaining present emission patterns would likely result in a 90-percent reduction in coral reef populations by century's end.",
-        "tip": "주어 역할의 동사구 studies indicate that을 전치사구 According to로 시작하도록 재구성, could decline을 reduction으로 명사화"
-      }
+    "prompt": "Do you agree or disagree with the following statement? Technology has made human relationships less meaningful. Use specific reasons and examples to support your answer.",
+    "structure": {
+      "intro": "명확한 입장 표현 (동의 또는 불동의) + 논문의 주요 논거 미리 제시 (2-3개). 예: '저는 기술이 인간관계를 덜 의미있게 만든다는 주장에 동의하지 않습니다. 오히려 기술은 관계를 유지하고 깊이 있는 소통을 가능하게 합니다.'",
+      "body1": "첫 번째 논거 개발: 기술이 장거리 관계 유지에 어떻게 도움이 되는지 구체적 예시 제시 (화상통화, SNS를 통한 지속적 연락 등)",
+      "body2": "두 번째 논거 개발: 기술이 새로운 관계 형성을 가능하게 하는 방식 설명 (온라인 커뮤니티, 관심사 기반 연결 등) + 구체적 사례",
+      "conclusion": "주요 주장 재강조 + 기술 사용의 책임감 있는 방식 언급 + 마무리 문장으로 전체 주제 종합"
+    },
+    "useful_phrases": [
+      "In my opinion,",
+      "I strongly believe that",
+      "To illustrate this point,",
+      "For example,",
+      "Furthermore,",
+      "Additionally,",
+      "In conclusion,",
+      "Therefore,",
+      "On the other hand,",
+      "This is because"
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer reading books to understand stories and ideas. Others prefer watching movies for the same purpose. Which do you prefer and why? Include specific reasons and details.",
-    "model_sentences": [
-      "I definitely prefer reading books over watching movies because books offer a much deeper and more immersive experience.",
-      "When you read a book, you engage your imagination and create vivid mental images of the characters and settings, which makes the story more personal and memorable.",
-      "For example, when I read the novel 'The Great Gatsby,' I was able to visualize each scene in my own unique way, and the detailed descriptions helped me understand the author's intentions more clearly than watching a film adaptation would have.",
-      "Movies, on the other hand, present a fixed visual interpretation that may not align with your personal imagination.",
-      "Therefore, I believe that reading books provides a superior intellectual and emotional experience compared to watching movies."
+    "prompt": "Some people believe that reading books is more beneficial than watching videos. Others think watching videos is a more effective way to learn. Which do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer reading books because",
+      "One reason is that reading allows for deeper comprehension",
+      "For example, when I read a novel, I can",
+      "Furthermore, books provide detailed information that",
+      "Another advantage is that reading develops critical thinking skills",
+      "On the other hand, videos are useful for visual learners",
+      "In conclusion, I believe reading is more beneficial overall"
+    ],
+    "sample_points": [
+      "첫 번째 이유: 독서는 개인의 속도에 맞춰 학습할 수 있으며, 복잡한 개념을 깊이 있게 이해할 수 있습니다. 예를 들어, 과학 교과서를 읽을 때 어려운 부분을 여러 번 반복해서 읽을 수 있습니다.",
+      "두 번째 이유: 책은 더 자세한 정보와 다양한 관점을 제공하며, 비판적 사고력 발달에 도움이 됩니다. 또한 독서는 어휘력 증진과 상상력을 자극합니다."
     ]
   },
   "listening": {
-    "title": "Graduate Student Meeting with Thesis Advisor",
+    "title": "University Library Orientation",
     "type": "conversation",
-    "script": "Professor: Good morning, Sarah. How is your thesis research progressing? Student: Hi Professor. It's going well overall, but I've been struggling with my methodology. I initially planned to conduct surveys only, but I'm wondering if I should include interviews as well. Professor: That's a thoughtful consideration. Combining surveys with interviews could strengthen your data significantly. Surveys give you broad quantitative data, while interviews provide deeper qualitative insights. What aspect of your research would benefit most from interview data? Student: I'm studying coral reef conservation efforts in Southeast Asia. The surveys would measure awareness levels, but interviews with local fishermen and marine biologists might reveal the real obstacles they face. Professor: Exactly. Those personal narratives would add credibility to your findings. However, this means a tighter timeline. You'd need to finish data collection by the end of next month. Student: I think I can manage that if I prioritize. Should I modify my chapter outline? Professor: Yes, let's schedule another meeting next week to revise your framework. Bring your current outline and a list of potential interviewees. This combined approach will make your thesis much more compelling.",
-    "vocabulary": [
-      {
-        "word": "methodology",
-        "meaning_ko": "연구 방법론"
-      },
-      {
-        "word": "quantitative",
-        "meaning_ko": "정량적인"
-      },
-      {
-        "word": "qualitative",
-        "meaning_ko": "정성적인"
-      },
-      {
-        "word": "credibility",
-        "meaning_ko": "신뢰성"
-      },
-      {
-        "word": "narratives",
-        "meaning_ko": "이야기, 서술"
-      },
-      {
-        "word": "framework",
-        "meaning_ko": "틀, 구조"
-      }
-    ],
+    "script": "Librarian: Welcome to our university library! I'm glad you're here for the orientation. Let me show you around. This is the main reading area where students can study quietly. We have computers available for research, and over there is our digital collection section. Student: This is impressive! Where would I find academic journals? Librarian: Great question! Academic journals are primarily accessed through our online database. You can search from home using your university login. We also have physical copies of popular journals in this section. Additionally, I recommend visiting our research help desk on the second floor. The librarians there specialize in helping students locate and evaluate sources for their papers. Student: That's really helpful. Do you have any workshops? Librarian: Yes! We offer weekly workshops on citation styles, database searching, and academic writing. You can sign up online on our website. I also suggest attending our beginner's research session next Tuesday at 3 PM. Many students find it invaluable for starting their research projects.",
     "questions": [
       {
-        "q": "What is the main topic of the conversation?",
+        "q": "What is the main purpose of this conversation?",
         "options": [
-          "Sarah's difficulties in finding interviewees for her research",
-          "The professor's recommendations for improving Sarah's thesis methodology",
-          "The differences between survey and interview data collection methods",
-          "The deadline for submitting thesis chapters to the graduate office"
+          "To discuss the library's budget",
+          "To provide a library orientation for new students",
+          "To recruit volunteers for the library",
+          "To explain the library's history"
         ],
         "answer": 1,
-        "explanation": "교수와 대학원생이 논문의 연구 방법론을 개선하는 방법에 대해 논의하고 있습니다. 교수가 설문조사와 인터뷰를 결합하도록 제안합니다. 정답은 B입니다."
+        "explanation": "대화 전반을 통해 사서가 새로운 학생을 도서관 시설, 자료 접근 방법, 제공되는 서비스에 대해 안내하고 있습니다. 정답은 B (To provide a library orientation for new students)입니다."
       },
       {
-        "q": "What does the professor suggest as a benefit of combining surveys with interviews?",
+        "q": "According to the librarian, how can students primarily access academic journals?",
         "options": [
-          "It will reduce the total time needed for data collection",
-          "Surveys provide quantitative data while interviews provide qualitative insights",
-          "It will eliminate the need for statistical analysis",
-          "Interviews are more reliable than surveys for all types of research"
+          "Only through physical copies in the library",
+          "Through the online database using university login",
+          "By visiting the research help desk",
+          "Through weekly workshops"
         ],
         "answer": 1,
-        "explanation": "교수는 설문조사가 광범위한 정량적 데이터를 제공하고 인터뷰는 더 깊은 정성적 통찰력을 제공한다고 설명합니다. 정답은 B입니다."
+        "explanation": "사서는 '학술 저널은 주로 온라인 데이터베이스를 통해 접근되며, 대학 로그인을 사용하여 집에서도 검색할 수 있다'고 명시했습니다. 정답은 B (Through the online database using university login)입니다."
       },
       {
-        "q": "Why does the professor recommend that Sarah interview local fishermen and marine biologists?",
+        "q": "What does the librarian recommend the student do next Tuesday?",
         "options": [
-          "Because they are easier to find than other potential interviewees",
-          "Because their personal narratives would provide deeper insights into real obstacles in coral reef conservation",
-          "Because the professor has a personal connection with these groups",
-          "Because quantitative surveys alone are insufficient for any thesis"
+          "Visit the research help desk on the second floor",
+          "Attend a citation styles workshop",
+          "Attend a beginner's research session at 3 PM",
+          "Complete the online database training"
         ],
-        "answer": 1,
-        "explanation": "Sarah가 설명했듯이, 현지 어부와 해양 생물학자들과의 인터뷰는 그들이 직면한 실질적인 장애물을 드러낼 수 있기 때문입니다. 이러한 개인적 서술이 그녀의 연구 결과에 신뢰성을 더합니다. 정답은 B입니다."
+        "answer": 2,
+        "explanation": "사서는 학생에게 '다음 주 화요일 오후 3시의 초급자 연구 세션에 참석할 것을 권장한다'고 명시했습니다. 정답은 C (Attend a beginner's research session at 3 PM)입니다."
       }
     ]
   }
