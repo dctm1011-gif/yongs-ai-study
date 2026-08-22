@@ -1,177 +1,115 @@
 {
   "date": "2026-08-23",
   "reading": {
-    "title": "The Evolution of Mercantilism and Its Economic Impact",
-    "passage": "Mercantilism, an economic theory that dominated European thought from the sixteenth to eighteenth centuries, fundamentally shaped the development of global trade and colonial expansion. Proponents of mercantilism believed that a nation's wealth was directly proportional to its accumulation of precious metals, particularly gold and silver. This ideology prompted governments to implement protectionist policies, including high tariffs and trade restrictions, to maximize exports while minimizing imports. Consequently, nations competed fiercely to establish monopolies over trade routes and colonial territories, leading to intense geopolitical rivalries.\n\nThe mercantilist system, though economically flawed by modern standards, catalyzed significant institutional and technological innovations. Governments invested heavily in naval development and infrastructure to facilitate commerce, inadvertently advancing maritime technology and establishing banking systems. However, the excessive focus on bullion accumulation created artificial scarcity and distorted international trade patterns. By the late eighteenth century, economists such as Adam Smith critiqued mercantilism's fundamental assumptions, arguing that wealth derived from productive capacity and specialization rather than metal hoarding. This intellectual shift precipitated the transition toward free-market capitalism and laissez-faire economics.",
-    "vocabulary": [
-      {
-        "word": "mercantilism",
-        "meaning_ko": "중상주의; 국가의 부를 귀금속 축적으로 측정하는 경제 이론"
-      },
-      {
-        "word": "protectionist",
-        "meaning_ko": "보호주의적인; 국내 산업을 외국 경쟁으로부터 보호하는"
-      },
-      {
-        "word": "monopolies",
-        "meaning_ko": "독점권; 특정 상품이나 서비스에 대한 배타적 통제권"
-      },
-      {
-        "word": "catalyzed",
-        "meaning_ko": "촉발했다; 무언가를 일어나게 하는 원인이 되다"
-      },
-      {
-        "word": "bullion",
-        "meaning_ko": "귀금속 괴; 금이나 은의 덩어리"
-      },
-      {
-        "word": "laissez-faire",
-        "meaning_ko": "자유방임주의; 정부가 경제에 최소한으로 개입하는 경제 체제"
-      },
-      {
-        "word": "precipitated",
-        "meaning_ko": "야기했다; 어떤 상황을 급격히 일으키다"
-      }
-    ],
+    "title": "The Impact of Remote Work on Urban Development",
+    "passage": "The rise of remote work has fundamentally changed how cities develop and grow. As more companies allow employees to work from home, the demand for large downtown office spaces has decreased significantly. This shift has prompted urban planners to repurpose vacant office buildings into residential apartments and creative spaces. Additionally, remote work enables professionals to live in smaller cities or suburban areas with lower costs of living, leading to more distributed population growth. However, this trend also raises concerns about reduced foot traffic in downtown areas, potentially affecting local restaurants and retail businesses that depend on commuting workers.",
     "questions": [
       {
-        "q": "According to the passage, what did mercantilist economists believe determined a nation's wealth?",
+        "q": "According to the passage, what is one effect of decreased demand for office spaces?",
         "options": [
-          "Its productive capacity and specialization",
-          "The accumulation of precious metals like gold and silver",
-          "The establishment of free-market capitalism",
-          "Its investment in banking systems"
+          "A) More people moving to downtown areas",
+          "B) Repurposing of office buildings into residential spaces",
+          "C) Increased traffic congestion",
+          "D) Higher costs of living in cities"
         ],
         "answer": 1,
-        "explanation": "두 번째 단락에서 '중상주의자들은 국가의 부가 귀금속, 특히 금과 은의 축적에 정확히 비례한다고 믿었다'고 명시되어 있습니다."
+        "explanation": "본문에서 'urban planners to repurpose vacant office buildings into residential apartments and creative spaces'라고 명시되어 있습니다. 따라서 정답은 B번입니다."
       },
       {
-        "q": "What can be inferred from the passage about the long-term effects of mercantilism?",
+        "q": "What concern is mentioned about remote work's impact on downtown areas?",
         "options": [
-          "It successfully prevented all international trade conflicts",
-          "It led to technological advances but ultimately was replaced by competing economic theories",
-          "It remains the dominant economic system in modern Europe",
-          "It had no significant impact on institutional development"
-        ],
-        "answer": 1,
-        "explanation": "지문은 중상주의가 기술 혁신을 촉발했지만, 결국 아담 스미스 같은 경제학자들의 비판으로 자유 시장 자본주의로의 전환을 초래했다고 설명합니다."
-      },
-      {
-        "q": "The word 'catalyzed' in paragraph 2 is closest in meaning to",
-        "options": [
-          "Prevented",
-          "Triggered or brought about",
-          "Analyzed",
-          "Rejected"
-        ],
-        "answer": 1,
-        "explanation": "'Catalyzed'는 '촉발했다' 또는 '일어나게 했다'는 의미이며, 이 문맥에서 중상주의가 기술 혁신을 '야기했다'는 뜻입니다."
-      },
-      {
-        "q": "Why does the author mention Adam Smith in the passage?",
-        "options": [
-          "To show that he invented mercantilism",
-          "To demonstrate that he supported protectionist policies",
-          "To illustrate how economic thinkers challenged mercantilist assumptions and contributed to the shift toward free-market economics",
-          "To explain why mercantilism was the most effective economic system"
+          "A) Increased pollution from fewer commuters",
+          "B) Rise in property taxes",
+          "C) Reduced foot traffic affecting local businesses",
+          "D) Shortage of housing"
         ],
         "answer": 2,
-        "explanation": "아담 스미스는 중상주의의 기본 가정을 비판하고 부의 원천을 다시 정의함으로써 자유 시장 경제로의 전환을 이끈 인물로 제시됩니다."
+        "explanation": "마지막 문장에서 'reduced foot traffic in downtown areas, potentially affecting local restaurants and retail businesses that depend on commuting workers'라고 언급하고 있습니다."
+      },
+      {
+        "q": "Which of the following is implied about professionals working remotely?",
+        "options": [
+          "A) They prefer urban environments",
+          "B) They can choose to live in areas with lower living costs",
+          "C) They are less productive than office workers",
+          "D) They create more job opportunities downtown"
+        ],
+        "answer": 1,
+        "explanation": "'remote work enables professionals to live in smaller cities or suburban areas with lower costs of living'이라는 문장에서 원격근무자들이 더 저렴한 지역에 살 수 있다는 것을 암시하고 있습니다."
       }
     ]
   },
   "writing": {
-    "sentences": [
-      {
-        "original": "Mercantilism, an economic theory that dominated European thought from the sixteenth to eighteenth centuries, fundamentally shaped the development of global trade and colonial expansion.",
-        "paraphrase": "From the sixteenth through eighteenth centuries, mercantilism—a prevailing economic ideology in Europe—exerted profound influence over how global commerce and overseas territories developed.",
-        "tip": "명사구를 전치사구로 변환하고 동사 'shaped'를 'exerted influence over'로 대체하여 표현을 다양화"
-      },
-      {
-        "original": "Proponents of mercantilism believed that a nation's wealth was directly proportional to its accumulation of precious metals, particularly gold and silver.",
-        "paraphrase": "Those who supported mercantilist principles held the conviction that precious metal accumulation—chiefly gold and silver—determined the extent of a country's economic prosperity.",
-        "tip": "능동형 'believed'에서 명사형 'conviction'으로 변환하고 'proportional to'를 'determined'로 치환"
-      },
-      {
-        "original": "This ideology prompted governments to implement protectionist policies, including high tariffs and trade restrictions, to maximize exports while minimizing imports.",
-        "paraphrase": "Driven by this conviction, government authorities adopted protective trade measures such as steep tariffs and import controls designed to boost outgoing commerce and reduce incoming goods.",
-        "tip": "동사 'implement'를 'adopt'로, 'maximize/minimize'를 'boost/reduce'로 동의어 치환하고 목적 표현을 변경"
-      }
+    "prompt": "Do you agree or disagree with the statement that remote work has more benefits than drawbacks for society?",
+    "structure": {
+      "intro": "서론에서 자신의 입장을 명확히 제시하세요. 예: 'I strongly agree that remote work has more benefits than drawbacks for society because...'",
+      "body1": "첫 번째 주장: 원격근무의 경제적 이점 (개인의 생활비 절감, 기업의 부동산 비용 감소 등)을 구체적인 예시와 함께 설명",
+      "body2": "두 번째 주장: 환경적 이점 (출퇴근 감소로 인한 탄소배출 감소) 또는 일과 삶의 균형 개선 언급",
+      "conclusion": "재진술과 함께 전체 주장을 요약하고, 사회 전체에 미치는 긍정적 영향으로 마무리"
+    },
+    "useful_phrases": [
+      "In my opinion,",
+      "First and foremost,",
+      "Furthermore,",
+      "Additionally,",
+      "In conclusion,",
+      "The evidence shows that,",
+      "It is clear that,",
+      "To illustrate this point,"
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to shop online. Others prefer to shop in physical stores. Which do you prefer and why? Include specific reasons and details.",
-    "model_sentences": [
-      "I prefer shopping in physical stores because I believe it offers several distinct advantages over online shopping.",
-      "First, when I shop in person, I can immediately inspect products, touch the materials, and verify quality before making a purchase decision.",
-      "For example, when buying clothes at a store, I can try them on to ensure the fit is perfect, unlike online shopping where returns can be inconvenient and time-consuming.",
-      "Additionally, in-store shopping allows me to interact with knowledgeable staff members who can provide instant recommendations tailored to my needs.",
-      "Therefore, despite the convenience of online platforms, I believe the tangible benefits and personalized service of physical retail make it the superior shopping experience."
+    "prompt": "Some people prefer working in a traditional office environment. Others prefer remote work. Which do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer... because...",
+      "One reason is that...",
+      "Another advantage is...",
+      "For example,",
+      "This is important to me because...",
+      "I believe that..."
+    ],
+    "sample_points": [
+      "원격근무의 유연성 - 업무 시간과 장소를 선택할 수 있으며, 출퇴근 시간을 절약할 수 있습니다. 이는 개인의 생산성을 높이고 스트레스를 감소시킵니다.",
+      "비용 효율성 - 출퇴근 비용, 식사비, 옷값 등을 절약할 수 있으며, 더 저렴한 지역에 거주할 수 있습니다. 이는 장기적으로 경제적 이득을 제공합니다."
     ]
   },
   "listening": {
-    "title": "Student Inquiry About Dormitory Housing Assignment",
+    "title": "University Career Services Office Discussion",
     "type": "conversation",
-    "script": "Student A: Hi, I'm here to ask about my dormitory assignment. I submitted my housing application three weeks ago, but I haven't received a confirmation yet.\n\nHousing Officer: I understand your concern. Let me check our system. May I have your student ID number?\n\nStudent A: Sure, it's 2847593.\n\nHousing Officer: Thank you. I see here that your application is still pending review. We typically process assignments within four to six weeks from the submission date. Since you're right at the three-week mark, you should expect a notification by email within the next week or two.\n\nStudent A: Okay, that's helpful. One more thing—I requested a double room on the west campus. Is there any way to ensure that preference is considered?\n\nHousing Officer: We certainly take student preferences into account. However, availability depends on demand and remaining capacity. The west campus is quite popular, so I cannot guarantee placement there. But your preference is documented in your file.\n\nStudent A: Got it. Thanks so much for your assistance!\n\nHousing Officer: You're welcome. If you don't receive confirmation within two weeks, feel free to visit us again.",
-    "vocabulary": [
-      {
-        "word": "dormitory assignment",
-        "meaning_ko": "기숙사 배정; 학생에게 기숙사 방을 할당하는 것"
-      },
-      {
-        "word": "pending",
-        "meaning_ko": "진행 중인, 미결정의; 아직 해결되지 않은 상태"
-      },
-      {
-        "word": "notification",
-        "meaning_ko": "통지, 알림; 공식적인 소식"
-      },
-      {
-        "word": "preference",
-        "meaning_ko": "선호도, 희망사항; 좋아하는 것을 선택하는 경향"
-      },
-      {
-        "word": "capacity",
-        "meaning_ko": "수용 능력; 할 수 있는 최대 범위"
-      },
-      {
-        "word": "documented",
-        "meaning_ko": "기록된; 공식 문서에 남겨진"
-      }
-    ],
+    "script": "Student: Hi, I'm interested in learning about internship opportunities. I'm graduating next year and want to gain professional experience. Advisor: That's great! We have connections with many companies across different industries. Are you thinking about any particular field? Student: Well, I've been considering technology and finance sectors. The experience would really help my career prospects. Advisor: Excellent choices. Both sectors are competitive, but we have strong relationships with employers in these fields. I'd recommend updating your resume and practicing interview skills. We also host company information sessions every month where you can network directly with recruiters. Student: That sounds helpful. When is the next session? Advisor: The next one is in three weeks. I'll send you the schedule and registration information. In the meantime, come back and let's work on polishing your resume.",
     "questions": [
       {
-        "q": "What is the main purpose of Student A's visit?",
+        "q": "What is the main purpose of the student's visit?",
         "options": [
-          "To change his dormitory preference to east campus",
-          "To inquire about the status of his housing application",
-          "To complain about the slow processing of applications",
-          "To request a single room instead of a double room"
+          "A) To register for a class",
+          "B) To learn about internship opportunities",
+          "C) To schedule an appointment",
+          "D) To complain about a course"
         ],
         "answer": 1,
-        "explanation": "학생 A는 3주 전에 기숙사 신청을 했는데 아직 확인을 받지 못해서 신청 상태를 문의하기 위해 온 것입니다."
+        "explanation": "대화의 시작에서 학생이 'I'm interested in learning about internship opportunities'라고 명확하게 말하고 있습니다."
       },
       {
-        "q": "What does the housing officer suggest about the student's west campus preference?",
+        "q": "What two sectors does the student mention as career interests?",
         "options": [
-          "It is guaranteed to be approved",
-          "It will definitely be rejected due to high demand",
-          "It is recorded in the file, but availability is not certain",
-          "He should submit a new preference form immediately"
+          "A) Healthcare and education",
+          "B) Retail and hospitality",
+          "C) Technology and finance",
+          "D) Manufacturing and agriculture"
         ],
         "answer": 2,
-        "explanation": "주택 담당자는 학생의 선호도가 기록되어 있지만, 웨스트 캠퍼스는 인기가 많아서 배치를 보장할 수 없다고 말합니다."
+        "explanation": "학생이 'I've been considering technology and finance sectors'라고 명시적으로 언급하고 있습니다."
       },
       {
-        "q": "Why does the housing officer mention that the west campus is quite popular?",
+        "q": "What does the advisor recommend the student do before the information session?",
         "options": [
-          "To encourage the student to change his preference",
-          "To explain that the student's request may not be fulfilled due to high demand",
-          "To suggest that the student should have applied earlier",
-          "To indicate that all dormitory assignments are completed"
+          "A) Complete an internship application",
+          "B) Update resume and practice interview skills",
+          "C) Take a professional certification exam",
+          "D) Apply directly to companies"
         ],
         "answer": 1,
-        "explanation": "담당자는 웨스트 캠퍼스가 인기 있다는 점을 언급함으로써 학생의 선호가 충족되지 않을 수 있음을 설명합니다."
+        "explanation": "조언자가 'I'd recommend updating your resume and practicing interview skills'라고 제안하고 있습니다."
       }
     ]
   }
