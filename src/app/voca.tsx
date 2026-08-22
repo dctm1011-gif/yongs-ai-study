@@ -83,6 +83,18 @@ async function fetchReadStatusFromFirebase(uid: string, today: string): Promise<
   }
 }
 
+async function fetchQuizStatusFromFirebase(
+  uid: string, today: string
+): Promise<Record<string, { answered: boolean; correct_answer: boolean; selectedOption: string }>> {
+  try {
+    const snapshot = await get(userRef(uid, `english/quizStatus/${today}`));
+    return snapshot.exists() ? snapshot.val() : {};
+  } catch (error) {
+    console.warn('퀴즈 상태 Firebase 조회 실패:', error);
+    return {};
+  }
+}
+
 function mapFirebaseWords(data: any, today: string): NetlifyWord[] {
   const rawWords = Array.isArray(data.words) ? data.words : [data];
   return rawWords.map((w: any) => ({
@@ -115,10 +127,19 @@ function mapFirebaseSentences(data: any): ReviewSentence[] {
 function mapFirebaseQuizzes(data: any): Quiz[] {
   const rawQuizzes = Array.isArray(data.quiz) ? data.quiz : [];
   if (rawQuizzes.length === 0) return [];
+  const allWords: string[] = Array.isArray(data.words)
+    ? data.words.map((w: any) => w.word).filter(Boolean)
+    : [];
   return rawQuizzes.map((q: any, idx: number) => {
     const wordId = (q.word || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
     const type: Quiz['type'] = q.type === 'fill_blank' ? 'blanks' : (q.type === 'situation' ? 'situation' : 'meaning');
-    const rawOptions: string[] = Array.isArray(q.options) ? q.options : [];
+    let rawOptions: string[] = Array.isArray(q.options) ? q.options : [];
+    // fill_blank quizzes in daily.json omit options — generate from today's word list
+    if (type === 'blanks' && rawOptions.length === 0) {
+      const correctWord: string = typeof q.answer === 'string' ? q.answer : (q.word ?? '');
+      const wrongs = shuffleArrayStatic(allWords.filter(w => w !== correctWord)).slice(0, 3);
+      rawOptions = [correctWord, ...wrongs];
+    }
     const correct = typeof q.answer === 'number' ? (rawOptions[q.answer] ?? '') : (q.answer ?? '');
     const options = shuffleArrayStatic(rawOptions);
     return {
@@ -161,12 +182,13 @@ async function syncReadWordsToPool(uid: string, readWords: Word[]): Promise<void
 export default function VocaScreen() {
   const { user } = useAuth();
   const uid = user!.uid;
-  const [view, setView] = useState<ViewType>('words');
+  const [view, setView] = useState<ViewType>('game');
   const [words, setWords] = useState<Word[]>([]);
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [reviewSentences, setReviewSentences] = useState<ReviewSentence[]>([]);
   const [reviewLoading, setReviewLoading] = useState(false);
   const [stats, setStats] = useState({ totalWords: 0, readWords: 0, quizzesCorrect: 0, quizzesTotal: 0 });
+  const [completionToday, setCompletionToday] = useState<Record<string, boolean>>({});
   const [loading, setLoading] = useState(true);
   const [hideReadWords, setHideReadWords] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -200,6 +222,23 @@ export default function VocaScreen() {
       console.log(`📚 Voca tab loaded in ${loadTime}ms (cached: ${isCached})`);
     }
   }, [loading, isCached, loadStartTime]);
+
+  // Listen to today's game completion for tab unlocking
+  useEffect(() => {
+    if (!uid) return;
+    const today = getKSTDateString();
+    const db = getDatabase(getFirebaseApp());
+    const unsub = onValue(ref(db, `users/${uid}/completion`), snap => {
+      const data = snap.val() ?? {};
+      const result: Record<string, boolean> = {};
+      for (const key of Object.keys(data)) {
+        const val = data[key]?.[today];
+        result[key] = val === true || (typeof val === 'number' && val > 0);
+      }
+      setCompletionToday(result);
+    });
+    return () => unsub();
+  }, [uid]);
 
   // Update cache time display
   useEffect(() => {
@@ -280,7 +319,15 @@ export default function VocaScreen() {
         const oldWordIds = localWords.map(w => w.id).sort().join(',');
 
         if (newWordIds === oldWordIds && localWords.length > 0) {
-          return; // already up to date
+          // Words are up-to-date, but check if quizzes have stale fill_blank entries (no options).
+          // This happens when the cached quiz data was generated before the options fix.
+          const savedQuizzes = await AsyncStorage.getItem('english_quizzes');
+          let cachedQuizzes: any = null;
+          try { cachedQuizzes = savedQuizzes ? JSON.parse(savedQuizzes) : null; } catch {}
+          const hasStaleQuizzes = Array.isArray(cachedQuizzes) && cachedQuizzes.some(
+            (q: any) => q.type === 'blanks' && (!q.options || q.options.length === 0)
+          );
+          if (!hasStaleQuizzes) return; // already up to date
         }
 
         const savedReadStatus = localWords.reduce(
@@ -300,7 +347,15 @@ export default function VocaScreen() {
         syncReadWordsToPool(uid, mergedWords.filter(w => w.isRead));
 
         const fbQuizzes = mapFirebaseQuizzes(snapshot.val());
-        const newQuizzes = fbQuizzes.length > 0 ? fbQuizzes : generateQuizzes(mergedWords);
+        const baseQuizzes = fbQuizzes.length > 0 ? fbQuizzes : generateQuizzes(mergedWords);
+        const remoteQuizStatus = await fetchQuizStatusFromFirebase(uid, today);
+        const newQuizzes = baseQuizzes.map(q => {
+          const saved = remoteQuizStatus[q.id];
+          if (saved?.answered) {
+            return { ...q, answered: true, correct_answer: saved.correct_answer, selectedOption: saved.selectedOption };
+          }
+          return q;
+        });
         setQuizzes(newQuizzes);
         await AsyncStorage.setItem('english_quizzes', JSON.stringify(newQuizzes));
 
@@ -647,6 +702,14 @@ export default function VocaScreen() {
     const updated = quizzes.map(q => {
       if (q.id === quizId) {
         const isCorrect = selectedOption === q.correct;
+        if (uid) {
+          const today = getKSTDateString();
+          dbSet(userRef(uid, `english/quizStatus/${today}/${quizId}`), {
+            answered: true,
+            correct_answer: isCorrect,
+            selectedOption,
+          }).catch(() => {});
+        }
         if (!isCorrect && uid) {
           // 오답 단어를 reviewPool에서 count=0으로 리셋 → 알림/게임 최우선 복습
           const word = words.find(w => w.id === q.wordId);
@@ -863,39 +926,40 @@ export default function VocaScreen() {
       </View>
 
       {/* Tab buttons */}
-      <View style={styles.tabButtons}>
-        <TouchableOpacity
-          style={[styles.tabButton, view === 'words' && styles.tabButtonActive]}
-          onPress={() => setView('words')}
-        >
-          <Text style={[styles.tabButtonText, view === 'words' && styles.tabButtonTextActive]}>단어장</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.tabButton, view === 'review' && styles.tabButtonActive]}
-          onPress={() => { setView('review'); if (reviewSentences.length === 0) loadReviewPoolSentences(); }}
-        >
-          <Text style={[styles.tabButtonText, view === 'review' && styles.tabButtonTextActive]}>문장복습</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.tabButton, view === 'quiz' && styles.tabButtonActive]}
-          onPress={() => setView('quiz')}
-        >
-          <Text style={[styles.tabButtonText, view === 'quiz' && styles.tabButtonTextActive]}>퀴즈</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.tabButton, view === 'game' && styles.tabButtonActive]}
-          onPress={() => setView('game')}
-        >
-          <Text style={[styles.tabButtonText, view === 'game' && styles.tabButtonTextActive]}>게임</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.tabButton, view === 'stats' && styles.tabButtonActive]}
-          onPress={() => setView('stats')}
-        >
-          <Text style={[styles.tabButtonText, view === 'stats' && styles.tabButtonTextActive]}>통계</Text>
-        </TouchableOpacity>
+      {(() => {
+        const GAME_KEYS = ['english_word_match', 'english_crossword', 'english_scramble', 'english_sentence'];
+        const gamesAllDone = GAME_KEYS.every(k => completionToday[k]);
+        const allWordsRead = !loading && words.length > 0 && words.every(w => w.isRead);
+        const quizAllDone = quizzes.length > 0 && quizzes.every(q => q.answered);
 
-      </View>
+        const tabDefs: { key: ViewType; label: string; unlocked: boolean; hint: string; onPress: () => void }[] = [
+          { key: 'game',   label: '게임',    unlocked: true,          hint: '',                          onPress: () => setView('game') },
+          { key: 'words',  label: '단어장',  unlocked: gamesAllDone,  hint: '게임을 모두 완료하세요',      onPress: () => setView('words') },
+          { key: 'quiz',   label: '퀴즈',    unlocked: allWordsRead,  hint: '단어장을 모두 읽으세요',      onPress: () => setView('quiz') },
+          { key: 'review', label: '문장복습', unlocked: quizAllDone,   hint: '퀴즈를 먼저 완료하세요',     onPress: () => { setView('review'); if (reviewSentences.length === 0) loadReviewPoolSentences(); } },
+          { key: 'stats',  label: '통계',    unlocked: true,          hint: '',                          onPress: () => setView('stats') },
+        ];
+
+        return (
+          <View style={styles.tabButtons}>
+            {tabDefs.map(tab => (
+              <TouchableOpacity
+                key={tab.key}
+                style={[styles.tabButton, view === tab.key && styles.tabButtonActive, !tab.unlocked && styles.tabButtonLocked]}
+                onPress={() => {
+                  if (!tab.unlocked) { ToastAndroid.show(tab.hint, ToastAndroid.SHORT); return; }
+                  tab.onPress();
+                }}
+                activeOpacity={tab.unlocked ? 0.7 : 1}
+              >
+                <Text style={[styles.tabButtonText, view === tab.key && styles.tabButtonTextActive, !tab.unlocked && styles.tabButtonTextLocked]}>
+                  {tab.unlocked ? tab.label : `🔒 ${tab.label}`}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        );
+      })()}
 
       {/* Content */}
       {view === 'words' && (
@@ -924,11 +988,13 @@ export default function VocaScreen() {
             onRefresh={refreshFromNetlify}
             refreshing={refreshing}
             playAllWordId={playAllWordId}
+            allWordsRead={!loading && words.length > 0 && words.every(w => w.isRead)}
+            onComplete={() => setView('quiz')}
           />
         </View>
       )}
-      {view === 'review' && <SentenceReviewView sentences={reviewSentences} loading={reviewLoading} />}
-      {view === 'stats' && <StatsView stats={stats} />}
+      {view === 'review' && <SentenceReviewView sentences={reviewSentences} loading={reviewLoading} uid={uid} onComplete={() => ToastAndroid.show('문장복습 완료!', ToastAndroid.SHORT)} />}
+      {view === 'stats' && <ReviewPoolView uid={uid} />}
       {view === 'quiz' && <QuizView quizzes={quizzes} words={words} onAnswer={answerQuiz} onComplete={() => {
         const correct = quizzes.filter(q => q.correct_answer).length;
         ToastAndroid.show(`완료! ${correct}/${quizzes.length} 정답 저장됨`, ToastAndroid.SHORT);
@@ -1015,13 +1081,26 @@ let _wcPlayId = 0;
 let _wcSound: Audio.Sound | null = null;
 
 // Memoized component to prevent unnecessary re-renders
-const WordsView = React.memo(({ words, onToggleRead, onRefresh, refreshing, playAllWordId }: {
+const WordsView = React.memo(({ words, onToggleRead, onRefresh, refreshing, playAllWordId, allWordsRead, onComplete }: {
   words: Word[],
   onToggleRead: (id: string) => void,
   onRefresh: () => void,
   refreshing: boolean,
   playAllWordId: string | null,
+  allWordsRead: boolean,
+  onComplete: () => void,
 }) => {
+  const footer = (
+    <TouchableOpacity
+      style={[styles.completeButton, !allWordsRead && styles.completeButtonDim]}
+      onPress={onComplete}
+    >
+      <Text style={styles.completeButtonText}>
+        {allWordsRead ? '✅ 완료 — 퀴즈로 이동' : '완료'}
+      </Text>
+    </TouchableOpacity>
+  );
+
   return (
     <FlatList
       data={words}
@@ -1040,6 +1119,7 @@ const WordsView = React.memo(({ words, onToggleRead, onRefresh, refreshing, play
           isPlayingAll={playAllWordId === item.id}
         />
       )}
+      ListFooterComponent={footer}
     />
   );
 });
@@ -1328,7 +1408,6 @@ const QuizCard = React.memo(({ quiz, wordName, onAnswer }: { quiz: Quiz, wordNam
 
   return (
     <View style={styles.quizCard}>
-      {quiz.type !== 'blanks' && <Text style={styles.quizWord}>{wordName}</Text>}
       <Text style={styles.quizQuestion}>{quiz.question}</Text>
       <View style={styles.optionsContainer}>
         {quiz.options.map((option, idx) => {
@@ -1391,7 +1470,7 @@ const QuizCard = React.memo(({ quiz, wordName, onAnswer }: { quiz: Quiz, wordNam
   );
 });
 
-const SentenceReviewView = React.memo(({ sentences, loading }: { sentences: ReviewSentence[], loading: boolean }) => {
+const SentenceReviewView = React.memo(({ sentences, loading, uid, onComplete }: { sentences: ReviewSentence[], loading: boolean, uid: string, onComplete: () => void }) => {
   const [expanded, setExpanded] = useState<Record<number, boolean>>({});  // true=open, false=collapsed; undefined=open(default)
   const [speakingIdx, setSpeakingIdx] = useState<number | null>(null);
   const [isPlayingAll, setIsPlayingAll] = useState(false);
@@ -1683,33 +1762,101 @@ const SentenceReviewView = React.memo(({ sentences, loading }: { sentences: Revi
         );
       })}
       </ScrollView>
+      <TouchableOpacity
+        style={styles.completeButton}
+        onPress={() => {
+          const today = getKSTDateString();
+          const db = getDatabase(getFirebaseApp());
+          dbSet(userRef(uid, `completion/english_review/${today}`), {
+            done: true, count: sentences.length, ts: Date.now(),
+          }).catch(() => {});
+          onComplete();
+        }}
+      >
+        <Text style={styles.completeButtonText}>✅ 문장복습 완료</Text>
+      </TouchableOpacity>
     </View>
   );
 });
 
-// Memoized stats view
-const StatsView = React.memo(({ stats }: { stats: any }) => (
-  <ScrollView contentContainerStyle={styles.statsContent}>
-    <View style={styles.statCard}>
-      <Text style={styles.statLabel}>총 단어 수</Text>
-      <Text style={styles.statValue}>{stats.totalWords}</Text>
-    </View>
-    <View style={styles.statCard}>
-      <Text style={styles.statLabel}>읽은 단어</Text>
-      <Text style={styles.statValue}>{stats.readWords} / {stats.totalWords}</Text>
-    </View>
-    <View style={styles.statCard}>
-      <Text style={styles.statLabel}>퀴즈 정답</Text>
-      <Text style={styles.statValue}>{stats.quizzesCorrect} / {stats.quizzesTotal}</Text>
-    </View>
-    <View style={styles.statCard}>
-      <Text style={styles.statLabel}>정답률</Text>
-      <Text style={styles.statValue}>
-        {stats.quizzesTotal > 0 ? ((stats.quizzesCorrect / stats.quizzesTotal) * 100).toFixed(1) : 0}%
-      </Text>
-    </View>
-  </ScrollView>
-));
+interface PoolWord { id: string; word: string; meaning: string; count: number; }
+
+const ReviewPoolView = React.memo(({ uid }: { uid: string }) => {
+  const [loading, setLoading] = useState(true);
+  const [poolWords, setPoolWords] = useState<PoolWord[]>([]);
+
+  useEffect(() => {
+    if (!uid) return;
+    const db = getDatabase(getFirebaseApp());
+    get(ref(db, `users/${uid}/english/reviewPool`)).then(snap => {
+      if (!snap.exists()) { setLoading(false); return; }
+      const vals: PoolWord[] = Object.entries(snap.val()).map(([id, v]: [string, any]) => ({
+        id,
+        word: v.word ?? '',
+        meaning: v.meaning ?? '',
+        count: v.count ?? 0,
+      }));
+      vals.sort((a, b) => a.count - b.count);
+      setPoolWords(vals);
+      setLoading(false);
+    }).catch(() => setLoading(false));
+  }, [uid]);
+
+  if (loading) {
+    return (
+      <View style={styles.statsContent}>
+        <ActivityIndicator size="large" color="#0095f6" style={{ marginTop: 40 }} />
+      </View>
+    );
+  }
+
+  if (poolWords.length === 0) {
+    return (
+      <View style={[styles.statsContent, { alignItems: 'center', justifyContent: 'center', flex: 1 }]}>
+        <Text style={{ fontSize: 14, color: '#8e8e8e' }}>reviewPool에 단어가 없습니다</Text>
+      </View>
+    );
+  }
+
+  const active = poolWords.filter(w => w.count < 10);
+  const graduated = poolWords.filter(w => w.count >= 10);
+
+  const renderWord = ({ item }: { item: PoolWord }) => {
+    const pct = Math.min(item.count / 10, 1);
+    const isGraduated = item.count >= 10;
+    return (
+      <View style={styles.poolRow}>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.poolWord}>{item.word}</Text>
+          <Text style={styles.poolMeaning}>{item.meaning}</Text>
+        </View>
+        <View style={styles.poolCountCol}>
+          <Text style={[styles.poolCount, isGraduated && styles.poolCountGraduated]}>
+            {item.count}/10
+          </Text>
+          <View style={styles.poolBar}>
+            <View style={[styles.poolBarFill, { width: `${pct * 100}%` as any }, isGraduated && styles.poolBarGraduated]} />
+          </View>
+        </View>
+      </View>
+    );
+  };
+
+  return (
+    <FlatList
+      data={poolWords}
+      keyExtractor={item => item.id}
+      renderItem={renderWord}
+      contentContainerStyle={{ paddingVertical: 8, paddingBottom: 80 }}
+      ListHeaderComponent={
+        <Text style={styles.poolHeader}>
+          복습 중 {active.length}개 · 졸업 {graduated.length}개
+        </Text>
+      }
+      ItemSeparatorComponent={() => <View style={{ height: 1, backgroundColor: '#f0f0f0', marginHorizontal: 16 }} />}
+    />
+  );
+});
 
 const styles = StyleSheet.create({
   screen: {
@@ -1829,6 +1976,13 @@ const styles = StyleSheet.create({
   },
   tabButtonTextActive: {
     color: '#fff',
+  },
+  tabButtonLocked: {
+    opacity: 0.4,
+  },
+  tabButtonTextLocked: {
+    color: '#aaa',
+    fontSize: 10,
   },
   listContent: {
     padding: 12,
@@ -2235,5 +2389,57 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: '600',
     color: '#0095f6',
+  },
+  poolHeader: {
+    fontSize: 12,
+    color: '#8e8e8e',
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    fontWeight: '600',
+  },
+  poolRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: '#fff',
+  },
+  poolWord: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#262626',
+    marginBottom: 2,
+  },
+  poolMeaning: {
+    fontSize: 12,
+    color: '#8e8e8e',
+  },
+  poolCountCol: {
+    alignItems: 'flex-end',
+    minWidth: 56,
+  },
+  poolCount: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#0095f6',
+    marginBottom: 4,
+  },
+  poolCountGraduated: {
+    color: '#16a34a',
+  },
+  poolBar: {
+    width: 48,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: '#e5e5e5',
+    overflow: 'hidden',
+  },
+  poolBarFill: {
+    height: '100%',
+    borderRadius: 2,
+    backgroundColor: '#0095f6',
+  },
+  poolBarGraduated: {
+    backgroundColor: '#16a34a',
   },
 });

@@ -23,6 +23,7 @@ const GROUPS: { title: string; items: CheckItem[] }[] = [
       { key: 'english_crossword',  label: '낱말 퍼즐',  emoji: '📝' },
       { key: 'english_scramble',   label: '스크램블',   emoji: '🔀' },
       { key: 'english_sentence',   label: '예문 OX',    emoji: '🔍' },
+      { key: 'english_review',     label: '문장복습',   emoji: '📋' },
     ],
   },
   {

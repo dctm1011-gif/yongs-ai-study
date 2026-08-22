@@ -2414,5 +2414,65 @@
     "explanation": "복잡한 현상이나 문제를 지나치게 단순하게 설명하거나, 여러 요소를 하나로 축소하는 것. 비판적 맥락에서 논리의 약점을 지적할 때 쓰입니다.",
     "tip": "동의어: oversimplified(과도하게 단순화된), reductionist(환원주의적). TOEFL Writing에서 상대방 주장의 한계를 지적할 때 강력해요. Reading 비판적 지문 분석에 필수.",
     "emoji": "📉"
+  },
+  {
+    "id": "deleterious",
+    "word": "deleterious",
+    "pos": "형용사",
+    "date": "2026-08-23",
+    "meaning": "해로운, 유해한, 악영향을 끼치는",
+    "example_ko": "과도한 화면 노출은 아이들의 시력에 해로운 영향을 끼칠 수 있어요.",
+    "example_en": "Excessive screen time can have deleterious effects on children's eyesight.",
+    "explanation": "어떤 것이 건강, 성능, 상황 등에 부정적인 영향을 미치는 것을 의미해요. TOEFL Reading의 과학·의학·환경 지문에서 매우 자주 등장합니다.",
+    "tip": "동의어: harmful(해로운), detrimental(악영향을 끼치는), adverse(역작용의). 반의어: beneficial(유익한), advantageous(유리한). Reading·Listening 고빈출 — 특히 건강·환경·정책 평가 맥락에서 등장.",
+    "emoji": "⚠️"
+  },
+  {
+    "id": "obfuscation",
+    "word": "obfuscation",
+    "pos": "명사",
+    "date": "2026-08-23",
+    "meaning": "난독화, 의도적 혼동, 애매하게 만듦",
+    "example_ko": "그 회사가 기술 용어를 사용한 것은 자신들의 과실을 숨기기 위한 순수한 의도적 혼동이었어요.",
+    "example_en": "The company's use of technical jargon was pure obfuscation to hide their negligence.",
+    "explanation": "의도적으로 또는 부주의로 어떤 것을 복잡하고 이해하기 어렵게 만드는 행위. TOEFL Reading에서 비판적 텍스트 분석, 정치·미디어 지문에서 등장해요.",
+    "tip": "동의어: obscuration(모호함), ambiguity(애매함). 관련 형용사: obfuscatory(난독화하는). Writing Task 1에서 '저자의 의도 비판' 시 유용. 'deliberate obfuscation(의도적 혼동)'이 자주 쓰여요.",
+    "emoji": "🌫️"
+  },
+  {
+    "id": "enervate",
+    "word": "enervate",
+    "pos": "동사",
+    "date": "2026-08-23",
+    "meaning": "기력을 빼앗다, 약하게 만들다, 무기력하게 하다",
+    "example_ko": "수십 년의 경제적 어려움은 그 나라의 결단력을 약화시켰어요.",
+    "example_en": "Decades of economic hardship had enervated the nation's resolve.",
+    "explanation": "육체적·정신적·도덕적 힘을 약화시키거나 제거하는 것. 단순한 '피곤'이 아니라 '정신적·신체적 에너지 고갈'을 의미해요. TOEFL Reading 역사·문학·사회학 지문에서 등장합니다.",
+    "tip": "동의어: weaken(약하게 하다), sap(활력을 빼다), exhaust(소진). 반의어: invigorate(활력을 주다), strengthen(강화). 과거분사 'enervated(무기력한, 기진맥진한)' 형용사로도 자주 사용. Listening·Reading 모두 고빈출.",
+    "emoji": "💤"
+  },
+  {
+    "id": "venal",
+    "word": "venal",
+    "pos": "형용사",
+    "date": "2026-08-23",
+    "meaning": "뇌물에 응하는, 부패한, 돈에 매수될 수 있는",
+    "example_ko": "그 판사의 부패한 판결은 부유한 피고인들로부터 뇌물을 받은 것이 드러났을 때 폭로되었어요.",
+    "example_en": "The judge's venal decisions were exposed when he accepted bribes from wealthy defendants.",
+    "explanation": "윤리적 원칙을 돈이나 자기 이익을 위해 포기할 수 있는 사람이나 행동을 말해요. TOEFL Reading의 정치·역사·윤리 지문에서 정부 부패나 도덕적 타락 비판 시 사용됩니다.",
+    "tip": "동의어: corrupt(부패한), mercenary(돈을 좋아하는), bribable(뇌물을 받을 수 있는). 혼동하기 쉬운 단어: venial(용서할 수 있는 — 죄의 정도에 대해). Reading·Writing 모두 출제 가능 — 특히 비판적 텍스트 분석에서 '저자의 부패 비판' 표현.",
+    "emoji": "💰"
+  },
+  {
+    "id": "inchoate",
+    "word": "inchoate",
+    "pos": "형용사",
+    "date": "2026-08-23",
+    "meaning": "미완성의, 막 시작된, 불완전한, 초기 단계의",
+    "example_ko": "그 운동의 미완성 이념은 그것의 장기적 목표를 예측하기 어렵게 만들었어요.",
+    "example_en": "The movement's inchoate ideology made it difficult to predict its long-term goals.",
+    "explanation": "아직 완전히 형성되거나 발전하지 않은 상태를 의미해요. 추상적인 아이디어, 계획, 움직임 등이 '아직 진행 중이고 명확하지 않은' 뉘앙스. TOEFL Reading의 과학·역사·정책 지문에서 '초기 단계' 표현에 자주 등장합니다.",
+    "tip": "동의어: nascent(초기의), embryonic(태아 같은), rudimentary(기초적인), formative(형성 중인). 반의어: mature(성숙한), developed(발달한), complete(완성된). Reading·Listening 고빈출 — 학자적이고 정교한 표현이라 고난도 지문에서 반복 출제.",
+    "emoji": "🌱"
   }
 ]

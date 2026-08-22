@@ -170,6 +170,12 @@ export default function SentenceQuizGame({ onComplete }: Props) {
 
   useEffect(() => { loadGame(); }, [loadGame]);
 
+  useEffect(() => {
+    if (gameState !== 'complete' || !uid) return;
+    const today = getKSTDateString();
+    dbSet(userRef(uid, `completion/english_sentence/${today}`), true).catch(() => {});
+  }, [gameState, uid]);
+
   const handleAnswer = useCallback((pickedO: boolean) => {
     if (answerState !== 'waiting') return;
     const item = items[current];
@@ -228,10 +234,6 @@ export default function SentenceQuizGame({ onComplete }: Props) {
     const pct = Math.round((score / items.length) * 100);
     const emoji = pct >= 80 ? '🎯' : pct >= 60 ? '💪' : '📖';
     const handleComplete = () => {
-      if (uid) {
-        const today = new Date(Date.now() + 9 * 3600000).toISOString().split('T')[0];
-        dbSet(userRef(uid, `completion/english_sentence/${today}`), true).catch(() => {});
-      }
       (onComplete ?? loadGame)();
     };
     return (

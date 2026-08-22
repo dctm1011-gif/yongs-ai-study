@@ -1,118 +1,177 @@
 {
-  "date": "2026-08-22",
+  "date": "2026-08-23",
   "reading": {
-    "title": "Bioluminescence in Marine Organisms",
-    "passage": "Bioluminescence, the production of light by living organisms, is a fascinating phenomenon found predominantly in marine environments. Deep-sea creatures utilize this ability for various purposes including communication, hunting, and defense. The process involves a chemical reaction where luciferin, a light-emitting compound, reacts with oxygen in the presence of the enzyme luciferase. Approximately 90% of deep-sea organisms produce bioluminescence, making it one of nature's most common adaptations in extreme environments. This remarkable feature allows creatures to thrive in complete darkness where sunlight cannot penetrate.",
+    "title": "The Evolution of Mercantilism and Its Economic Impact",
+    "passage": "Mercantilism, an economic theory that dominated European thought from the sixteenth to eighteenth centuries, fundamentally shaped the development of global trade and colonial expansion. Proponents of mercantilism believed that a nation's wealth was directly proportional to its accumulation of precious metals, particularly gold and silver. This ideology prompted governments to implement protectionist policies, including high tariffs and trade restrictions, to maximize exports while minimizing imports. Consequently, nations competed fiercely to establish monopolies over trade routes and colonial territories, leading to intense geopolitical rivalries.\n\nThe mercantilist system, though economically flawed by modern standards, catalyzed significant institutional and technological innovations. Governments invested heavily in naval development and infrastructure to facilitate commerce, inadvertently advancing maritime technology and establishing banking systems. However, the excessive focus on bullion accumulation created artificial scarcity and distorted international trade patterns. By the late eighteenth century, economists such as Adam Smith critiqued mercantilism's fundamental assumptions, arguing that wealth derived from productive capacity and specialization rather than metal hoarding. This intellectual shift precipitated the transition toward free-market capitalism and laissez-faire economics.",
+    "vocabulary": [
+      {
+        "word": "mercantilism",
+        "meaning_ko": "중상주의; 국가의 부를 귀금속 축적으로 측정하는 경제 이론"
+      },
+      {
+        "word": "protectionist",
+        "meaning_ko": "보호주의적인; 국내 산업을 외국 경쟁으로부터 보호하는"
+      },
+      {
+        "word": "monopolies",
+        "meaning_ko": "독점권; 특정 상품이나 서비스에 대한 배타적 통제권"
+      },
+      {
+        "word": "catalyzed",
+        "meaning_ko": "촉발했다; 무언가를 일어나게 하는 원인이 되다"
+      },
+      {
+        "word": "bullion",
+        "meaning_ko": "귀금속 괴; 금이나 은의 덩어리"
+      },
+      {
+        "word": "laissez-faire",
+        "meaning_ko": "자유방임주의; 정부가 경제에 최소한으로 개입하는 경제 체제"
+      },
+      {
+        "word": "precipitated",
+        "meaning_ko": "야기했다; 어떤 상황을 급격히 일으키다"
+      }
+    ],
     "questions": [
       {
-        "q": "According to the passage, what is the primary environment where bioluminescence is found?",
+        "q": "According to the passage, what did mercantilist economists believe determined a nation's wealth?",
         "options": [
-          "Tropical rainforests",
-          "Marine environments",
-          "Underground caves",
-          "Arctic regions"
+          "Its productive capacity and specialization",
+          "The accumulation of precious metals like gold and silver",
+          "The establishment of free-market capitalism",
+          "Its investment in banking systems"
         ],
         "answer": 1,
-        "explanation": "본문에서 '주로 해양 환경에서 발견되는' 현상이라고 명시하고 있습니다. 정답은 B (Marine environments)입니다."
+        "explanation": "두 번째 단락에서 '중상주의자들은 국가의 부가 귀금속, 특히 금과 은의 축적에 정확히 비례한다고 믿었다'고 명시되어 있습니다."
       },
       {
-        "q": "Which enzyme is mentioned as essential for bioluminescence?",
+        "q": "What can be inferred from the passage about the long-term effects of mercantilism?",
         "options": [
-          "Photosynthase",
-          "Luciferase",
-          "Protease",
-          "Lipase"
+          "It successfully prevented all international trade conflicts",
+          "It led to technological advances but ultimately was replaced by competing economic theories",
+          "It remains the dominant economic system in modern Europe",
+          "It had no significant impact on institutional development"
         ],
         "answer": 1,
-        "explanation": "본문에서 루시페린이 산소와 루시퍼라제 효소의 존재 하에 반응한다고 설명합니다. 정답은 B (Luciferase)입니다."
+        "explanation": "지문은 중상주의가 기술 혁신을 촉발했지만, 결국 아담 스미스 같은 경제학자들의 비판으로 자유 시장 자본주의로의 전환을 초래했다고 설명합니다."
       },
       {
-        "q": "What percentage of deep-sea organisms produce bioluminescence?",
+        "q": "The word 'catalyzed' in paragraph 2 is closest in meaning to",
         "options": [
-          "Approximately 50%",
-          "Approximately 70%",
-          "Approximately 90%",
-          "Approximately 99%"
+          "Prevented",
+          "Triggered or brought about",
+          "Analyzed",
+          "Rejected"
+        ],
+        "answer": 1,
+        "explanation": "'Catalyzed'는 '촉발했다' 또는 '일어나게 했다'는 의미이며, 이 문맥에서 중상주의가 기술 혁신을 '야기했다'는 뜻입니다."
+      },
+      {
+        "q": "Why does the author mention Adam Smith in the passage?",
+        "options": [
+          "To show that he invented mercantilism",
+          "To demonstrate that he supported protectionist policies",
+          "To illustrate how economic thinkers challenged mercantilist assumptions and contributed to the shift toward free-market economics",
+          "To explain why mercantilism was the most effective economic system"
         ],
         "answer": 2,
-        "explanation": "본문의 마지막 문장에서 '심해 생물의 약 90%가 생물발광을 생성한다'고 명시하고 있습니다. 정답은 C (Approximately 90%)입니다."
+        "explanation": "아담 스미스는 중상주의의 기본 가정을 비판하고 부의 원천을 다시 정의함으로써 자유 시장 경제로의 전환을 이끈 인물로 제시됩니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the following statement? Technology has made human relationships less meaningful. Use specific reasons and examples to support your answer.",
-    "structure": {
-      "intro": "명확한 입장 표현 (동의 또는 불동의) + 논문의 주요 논거 미리 제시 (2-3개). 예: '저는 기술이 인간관계를 덜 의미있게 만든다는 주장에 동의하지 않습니다. 오히려 기술은 관계를 유지하고 깊이 있는 소통을 가능하게 합니다.'",
-      "body1": "첫 번째 논거 개발: 기술이 장거리 관계 유지에 어떻게 도움이 되는지 구체적 예시 제시 (화상통화, SNS를 통한 지속적 연락 등)",
-      "body2": "두 번째 논거 개발: 기술이 새로운 관계 형성을 가능하게 하는 방식 설명 (온라인 커뮤니티, 관심사 기반 연결 등) + 구체적 사례",
-      "conclusion": "주요 주장 재강조 + 기술 사용의 책임감 있는 방식 언급 + 마무리 문장으로 전체 주제 종합"
-    },
-    "useful_phrases": [
-      "In my opinion,",
-      "I strongly believe that",
-      "To illustrate this point,",
-      "For example,",
-      "Furthermore,",
-      "Additionally,",
-      "In conclusion,",
-      "Therefore,",
-      "On the other hand,",
-      "This is because"
+    "sentences": [
+      {
+        "original": "Mercantilism, an economic theory that dominated European thought from the sixteenth to eighteenth centuries, fundamentally shaped the development of global trade and colonial expansion.",
+        "paraphrase": "From the sixteenth through eighteenth centuries, mercantilism—a prevailing economic ideology in Europe—exerted profound influence over how global commerce and overseas territories developed.",
+        "tip": "명사구를 전치사구로 변환하고 동사 'shaped'를 'exerted influence over'로 대체하여 표현을 다양화"
+      },
+      {
+        "original": "Proponents of mercantilism believed that a nation's wealth was directly proportional to its accumulation of precious metals, particularly gold and silver.",
+        "paraphrase": "Those who supported mercantilist principles held the conviction that precious metal accumulation—chiefly gold and silver—determined the extent of a country's economic prosperity.",
+        "tip": "능동형 'believed'에서 명사형 'conviction'으로 변환하고 'proportional to'를 'determined'로 치환"
+      },
+      {
+        "original": "This ideology prompted governments to implement protectionist policies, including high tariffs and trade restrictions, to maximize exports while minimizing imports.",
+        "paraphrase": "Driven by this conviction, government authorities adopted protective trade measures such as steep tariffs and import controls designed to boost outgoing commerce and reduce incoming goods.",
+        "tip": "동사 'implement'를 'adopt'로, 'maximize/minimize'를 'boost/reduce'로 동의어 치환하고 목적 표현을 변경"
+      }
     ]
   },
   "speaking": {
-    "prompt": "Some people believe that reading books is more beneficial than watching videos. Others think watching videos is a more effective way to learn. Which do you prefer and why?",
-    "useful_expressions": [
-      "In my opinion, I prefer reading books because",
-      "One reason is that reading allows for deeper comprehension",
-      "For example, when I read a novel, I can",
-      "Furthermore, books provide detailed information that",
-      "Another advantage is that reading develops critical thinking skills",
-      "On the other hand, videos are useful for visual learners",
-      "In conclusion, I believe reading is more beneficial overall"
-    ],
-    "sample_points": [
-      "첫 번째 이유: 독서는 개인의 속도에 맞춰 학습할 수 있으며, 복잡한 개념을 깊이 있게 이해할 수 있습니다. 예를 들어, 과학 교과서를 읽을 때 어려운 부분을 여러 번 반복해서 읽을 수 있습니다.",
-      "두 번째 이유: 책은 더 자세한 정보와 다양한 관점을 제공하며, 비판적 사고력 발달에 도움이 됩니다. 또한 독서는 어휘력 증진과 상상력을 자극합니다."
+    "prompt": "Some people prefer to shop online. Others prefer to shop in physical stores. Which do you prefer and why? Include specific reasons and details.",
+    "model_sentences": [
+      "I prefer shopping in physical stores because I believe it offers several distinct advantages over online shopping.",
+      "First, when I shop in person, I can immediately inspect products, touch the materials, and verify quality before making a purchase decision.",
+      "For example, when buying clothes at a store, I can try them on to ensure the fit is perfect, unlike online shopping where returns can be inconvenient and time-consuming.",
+      "Additionally, in-store shopping allows me to interact with knowledgeable staff members who can provide instant recommendations tailored to my needs.",
+      "Therefore, despite the convenience of online platforms, I believe the tangible benefits and personalized service of physical retail make it the superior shopping experience."
     ]
   },
   "listening": {
-    "title": "University Library Orientation",
+    "title": "Student Inquiry About Dormitory Housing Assignment",
     "type": "conversation",
-    "script": "Librarian: Welcome to our university library! I'm glad you're here for the orientation. Let me show you around. This is the main reading area where students can study quietly. We have computers available for research, and over there is our digital collection section. Student: This is impressive! Where would I find academic journals? Librarian: Great question! Academic journals are primarily accessed through our online database. You can search from home using your university login. We also have physical copies of popular journals in this section. Additionally, I recommend visiting our research help desk on the second floor. The librarians there specialize in helping students locate and evaluate sources for their papers. Student: That's really helpful. Do you have any workshops? Librarian: Yes! We offer weekly workshops on citation styles, database searching, and academic writing. You can sign up online on our website. I also suggest attending our beginner's research session next Tuesday at 3 PM. Many students find it invaluable for starting their research projects.",
+    "script": "Student A: Hi, I'm here to ask about my dormitory assignment. I submitted my housing application three weeks ago, but I haven't received a confirmation yet.\n\nHousing Officer: I understand your concern. Let me check our system. May I have your student ID number?\n\nStudent A: Sure, it's 2847593.\n\nHousing Officer: Thank you. I see here that your application is still pending review. We typically process assignments within four to six weeks from the submission date. Since you're right at the three-week mark, you should expect a notification by email within the next week or two.\n\nStudent A: Okay, that's helpful. One more thing—I requested a double room on the west campus. Is there any way to ensure that preference is considered?\n\nHousing Officer: We certainly take student preferences into account. However, availability depends on demand and remaining capacity. The west campus is quite popular, so I cannot guarantee placement there. But your preference is documented in your file.\n\nStudent A: Got it. Thanks so much for your assistance!\n\nHousing Officer: You're welcome. If you don't receive confirmation within two weeks, feel free to visit us again.",
+    "vocabulary": [
+      {
+        "word": "dormitory assignment",
+        "meaning_ko": "기숙사 배정; 학생에게 기숙사 방을 할당하는 것"
+      },
+      {
+        "word": "pending",
+        "meaning_ko": "진행 중인, 미결정의; 아직 해결되지 않은 상태"
+      },
+      {
+        "word": "notification",
+        "meaning_ko": "통지, 알림; 공식적인 소식"
+      },
+      {
+        "word": "preference",
+        "meaning_ko": "선호도, 희망사항; 좋아하는 것을 선택하는 경향"
+      },
+      {
+        "word": "capacity",
+        "meaning_ko": "수용 능력; 할 수 있는 최대 범위"
+      },
+      {
+        "word": "documented",
+        "meaning_ko": "기록된; 공식 문서에 남겨진"
+      }
+    ],
     "questions": [
       {
-        "q": "What is the main purpose of this conversation?",
+        "q": "What is the main purpose of Student A's visit?",
         "options": [
-          "To discuss the library's budget",
-          "To provide a library orientation for new students",
-          "To recruit volunteers for the library",
-          "To explain the library's history"
+          "To change his dormitory preference to east campus",
+          "To inquire about the status of his housing application",
+          "To complain about the slow processing of applications",
+          "To request a single room instead of a double room"
         ],
         "answer": 1,
-        "explanation": "대화 전반을 통해 사서가 새로운 학생을 도서관 시설, 자료 접근 방법, 제공되는 서비스에 대해 안내하고 있습니다. 정답은 B (To provide a library orientation for new students)입니다."
+        "explanation": "학생 A는 3주 전에 기숙사 신청을 했는데 아직 확인을 받지 못해서 신청 상태를 문의하기 위해 온 것입니다."
       },
       {
-        "q": "According to the librarian, how can students primarily access academic journals?",
+        "q": "What does the housing officer suggest about the student's west campus preference?",
         "options": [
-          "Only through physical copies in the library",
-          "Through the online database using university login",
-          "By visiting the research help desk",
-          "Through weekly workshops"
-        ],
-        "answer": 1,
-        "explanation": "사서는 '학술 저널은 주로 온라인 데이터베이스를 통해 접근되며, 대학 로그인을 사용하여 집에서도 검색할 수 있다'고 명시했습니다. 정답은 B (Through the online database using university login)입니다."
-      },
-      {
-        "q": "What does the librarian recommend the student do next Tuesday?",
-        "options": [
-          "Visit the research help desk on the second floor",
-          "Attend a citation styles workshop",
-          "Attend a beginner's research session at 3 PM",
-          "Complete the online database training"
+          "It is guaranteed to be approved",
+          "It will definitely be rejected due to high demand",
+          "It is recorded in the file, but availability is not certain",
+          "He should submit a new preference form immediately"
         ],
         "answer": 2,
-        "explanation": "사서는 학생에게 '다음 주 화요일 오후 3시의 초급자 연구 세션에 참석할 것을 권장한다'고 명시했습니다. 정답은 C (Attend a beginner's research session at 3 PM)입니다."
+        "explanation": "주택 담당자는 학생의 선호도가 기록되어 있지만, 웨스트 캠퍼스는 인기가 많아서 배치를 보장할 수 없다고 말합니다."
+      },
+      {
+        "q": "Why does the housing officer mention that the west campus is quite popular?",
+        "options": [
+          "To encourage the student to change his preference",
+          "To explain that the student's request may not be fulfilled due to high demand",
+          "To suggest that the student should have applied earlier",
+          "To indicate that all dormitory assignments are completed"
+        ],
+        "answer": 1,
+        "explanation": "담당자는 웨스트 캠퍼스가 인기 있다는 점을 언급함으로써 학생의 선호가 충족되지 않을 수 있음을 설명합니다."
       }
     ]
   }

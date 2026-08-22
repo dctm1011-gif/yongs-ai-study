@@ -61,3 +61,4 @@ deploy.json
 # Release signing credentials (passwords must NOT be committed)
 credentials.json
 android/app/release.keystore
+android/keystore.properties

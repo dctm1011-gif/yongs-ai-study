@@ -62,6 +62,40 @@ function SearchableText({ text, style }: { text: string; style?: any }) {
   );
 }
 
+function NoteText({ note, style }: { note: string; style?: any }) {
+  const lines = note.split('\n');
+  const hasBullets = lines.some(l => /^-+ /.test(l));
+  if (!hasBullets) {
+    return <SearchableText text={note} style={style} />;
+  }
+  const BULLETS = ['•', '–', '·', '‣'];
+  const lineHeight = Array.isArray(style) ? 20 : (style?.lineHeight ?? 20);
+  return (
+    <View style={{ marginTop: 2 }}>
+      {lines.filter(Boolean).map((line, i) => {
+        const match = line.match(/^(-+) (.*)$/);
+        if (!match) {
+          return <SearchableText key={i} text={line} style={[style, { marginBottom: 2 }]} />;
+        }
+        const level = match[1].length;
+        const content = match[2];
+        const indent = (level - 1) * 14;
+        const bullet = BULLETS[Math.min(level - 1, BULLETS.length - 1)];
+        return (
+          <View key={i} style={{ flexDirection: 'row', alignItems: 'flex-start', marginLeft: indent, marginBottom: 2 }}>
+            <Text style={[style, { fontStyle: 'normal', marginRight: 5, lineHeight }]}>
+              {bullet}
+            </Text>
+            <View style={{ flex: 1 }}>
+              <SearchableText text={content} style={[style, { fontStyle: 'normal' }]} />
+            </View>
+          </View>
+        );
+      })}
+    </View>
+  );
+}
+
 const COVER_KEY = (id: string) => `bookCover_${id}`;
 
 async function saveCover(uid: string, bookId: string, base64: string): Promise<void> {
@@ -261,6 +295,7 @@ function BookDiaryModal({ book, onClose }: BookDiaryModalProps) {
   const [editPageInput, setEditPageInput] = useState('');
   const [editNoteInput, setEditNoteInput] = useState('');
   const [editSaving, setEditSaving] = useState(false);
+  const [updatingCover, setUpdatingCover] = useState(false);
 
   const [pageInput, setPageInput] = useState('');
   const [noteInput, setNoteInput] = useState('');
@@ -388,6 +423,27 @@ function BookDiaryModal({ book, onClose }: BookDiaryModalProps) {
     }
   };
 
+  const pickNewCover = async () => {
+    if (!book || updatingCover) return;
+    const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!perm.granted) { Alert.alert('권한 필요', '갤러리 접근 권한이 필요합니다.'); return; }
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'], allowsEditing: true, aspect: [2, 3], quality: 0.7, base64: true,
+    });
+    if (result.canceled || !result.assets[0]) return;
+    const { uri, base64 } = result.assets[0];
+    if (!base64) return;
+    setUpdatingCover(true);
+    try {
+      await saveCover(uid, book.id, base64);
+      setCoverData(uri);
+    } catch {
+      Alert.alert('오류', '표지 저장에 실패했습니다.');
+    } finally {
+      setUpdatingCover(false);
+    }
+  };
+
   const handleTotalPagesSave = async () => {
     if (!book) return;
     const val = parseInt(newTotalInput, 10);
@@ -423,9 +479,20 @@ function BookDiaryModal({ book, onClose }: BookDiaryModalProps) {
             <TouchableOpacity onPress={onClose} style={d.backBtn} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
               <MaterialIcons name="arrow-back" size={24} color="#111827" />
             </TouchableOpacity>
-            {coverData && (
-              <Image source={{ uri: coverData }} style={d.headerCover} resizeMode="cover" />
-            )}
+            <TouchableOpacity onPress={pickNewCover} disabled={updatingCover} activeOpacity={0.8}>
+              {coverData ? (
+                <Image source={{ uri: coverData }} style={d.headerCover} resizeMode="cover" />
+              ) : (
+                <View style={[d.headerCover, d.headerCoverPlaceholder]}>
+                  <MaterialIcons name="add-photo-alternate" size={20} color="#9ca3af" />
+                </View>
+              )}
+              {updatingCover && (
+                <View style={d.headerCoverLoading}>
+                  <ActivityIndicator size="small" color="#fff" />
+                </View>
+              )}
+            </TouchableOpacity>
             <View style={d.headerInfo}>
               <Text style={d.headerTitle} numberOfLines={2}>{book.title}</Text>
               {editingTotal ? (
@@ -476,7 +543,7 @@ function BookDiaryModal({ book, onClose }: BookDiaryModalProps) {
                     <MaterialIcons name="check-circle" size={18} color="#16a34a" />
                     <Text style={d.savedPage}>{logs[today]?.endPage}페이지까지 읽음</Text>
                   </View>
-                  <SearchableText text={`"${logs[today]?.note}"`} style={d.savedNote} />
+                  <NoteText note={logs[today]?.note ?? ''} style={d.savedNote} />
                   <TouchableOpacity style={d.editBtn} onPress={() => setTodaySaved(false)}>
                     <MaterialIcons name="edit" size={14} color="#6b7280" />
                     <Text style={d.editBtnText}>수정</Text>
@@ -505,10 +572,9 @@ function BookDiaryModal({ book, onClose }: BookDiaryModalProps) {
                     placeholder="짧게 한 줄로..."
                     placeholderTextColor="#9ca3af"
                     multiline
-                    maxLength={200}
                     blurOnSubmit={false}
                   />
-                  <Text style={d.charCount}>{noteInput.length}/200</Text>
+                  <Text style={d.charCount}>{noteInput.length}자</Text>
                   <TouchableOpacity
                     style={[d.saveBtn, saving && d.btnDisabled]}
                     onPress={handleSave}
@@ -586,17 +652,23 @@ function BookDiaryModal({ book, onClose }: BookDiaryModalProps) {
                           value={editNoteInput}
                           onChangeText={setEditNoteInput}
                           multiline
-                          maxLength={200}
                           blurOnSubmit={false}
                         />
                       </View>
                     ) : (
-                      <SearchableText text={`"${logs[date].note}"`} style={d.entryNote} />
+                      <NoteText note={logs[date].note} style={d.entryNote} />
                     )}
                   </View>
                 );
               })
             )}
+            {/* 표지 변경 */}
+            <TouchableOpacity style={d.coverUpdateBtn} onPress={pickNewCover} disabled={updatingCover} activeOpacity={0.8}>
+              {updatingCover
+                ? <ActivityIndicator size="small" color="#6b7280" />
+                : <MaterialIcons name="add-photo-alternate" size={16} color="#6b7280" />}
+              <Text style={d.coverUpdateText}>{coverData ? '표지 이미지 변경' : '표지 이미지 추가'}</Text>
+            </TouchableOpacity>
           </ScrollView>
         </KeyboardAvoidingView>
       </SafeAreaView>
@@ -771,6 +843,8 @@ const d = StyleSheet.create({
   },
   backBtn: { padding: 2 },
   headerCover: { width: 44, height: 66, borderRadius: 6 },
+  headerCoverPlaceholder: { backgroundColor: '#f3f4f6', alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: '#e5e7eb' },
+  headerCoverLoading: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, borderRadius: 6, backgroundColor: 'rgba(0,0,0,0.4)', alignItems: 'center', justifyContent: 'center' },
   headerInfo: { flex: 1 },
   headerTitle: { fontSize: 16, fontWeight: '700', color: '#111827', marginBottom: 2 },
   headerProgress: { fontSize: 12, color: '#6b7280', marginBottom: 6 },
@@ -791,7 +865,7 @@ const d = StyleSheet.create({
   todayLabel: { fontSize: 12, fontWeight: '600', color: '#2563eb', marginBottom: 12, letterSpacing: 0.5 },
   savedRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 6 },
   savedPage: { fontSize: 15, fontWeight: '700', color: '#16a34a' },
-  savedNote: { fontSize: 14, color: '#374151', lineHeight: 20, fontStyle: 'italic' },
+  savedNote: { fontSize: 14, color: '#374151', lineHeight: 20 },
   editBtn: { flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 10, alignSelf: 'flex-end' },
   editBtnText: { fontSize: 13, color: '#6b7280' },
   inputLabel: { fontSize: 13, fontWeight: '600', color: '#374151', marginBottom: 6, marginTop: 4 },
@@ -827,7 +901,7 @@ const d = StyleSheet.create({
   readBadgeText: { fontSize: 12, fontWeight: '700', color: '#16a34a' },
   pageBadge: { backgroundColor: '#eff6ff', borderRadius: 6, paddingHorizontal: 7, paddingVertical: 2 },
   pageBadgeText: { fontSize: 12, fontWeight: '700', color: '#2563eb' },
-  entryNote: { fontSize: 14, color: '#374151', lineHeight: 20, fontStyle: 'italic' },
+  entryNote: { fontSize: 14, color: '#374151', lineHeight: 20 },
   entryEditForm: { marginTop: 8, gap: 6 },
   entryEditRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   entryEditLabel: { fontSize: 12, fontWeight: '600', color: '#6b7280', marginBottom: 2 },
@@ -840,6 +914,12 @@ const d = StyleSheet.create({
     paddingHorizontal: 10, paddingVertical: 8, fontSize: 14, color: '#111827',
     backgroundColor: '#f9fafb', minHeight: 60, textAlignVertical: 'top',
   },
+  coverUpdateBtn: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6,
+    marginTop: 24, marginBottom: 8, paddingVertical: 10, borderRadius: 8,
+    borderWidth: 1, borderColor: '#e5e7eb', borderStyle: 'dashed',
+  },
+  coverUpdateText: { fontSize: 13, color: '#6b7280' },
 });
 
 const bs = StyleSheet.create({

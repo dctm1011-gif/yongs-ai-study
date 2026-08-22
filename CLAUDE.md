@@ -27,6 +27,15 @@
 
 ## 빌드 명령
 
+### ✅ JS 변경 시 — OTA 업데이트 (기본, 항상 우선)
+JS/TS/스타일 변경(네이티브 모듈 추가 없음)은 전부 OTA로 배포한다. APK 빌드 불필요.
+```bash
+cd /c/Users/dctm1/YongStudyApp
+eas update --channel production --message "변경 내용 한 줄 요약"
+```
+- 앱 재시작 시 자동 적용 (runtimeVersion 1.0.0 → Android production 채널)
+- 네이티브 변경(새 패키지 설치, android/ 수정 등)은 아래 APK 빌드 필요
+
 ### ⚠️ 로컬 빌드 주의사항
 - `android/local.properties`는 반드시 **슬래시** 경로 사용 (`C:/Users/...` ← 맞음, `C:\Users\...` ← 틀림)
 - 역슬래시는 Java properties 파서가 이스케이프로 처리해 SDK 경로를 깨뜨림 → Gradle 설정 단계 실패
