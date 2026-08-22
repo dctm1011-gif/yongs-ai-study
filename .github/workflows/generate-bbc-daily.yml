@@ -1,0 +1,28 @@
+name: Generate Daily BBC News Content
+
+on:
+  workflow_dispatch:  # 수동 실행 전용 (자동 스케줄은 generate-english-daily.yml에 통합)
+
+concurrency:
+  group: generate-bbc-daily
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install anthropic
+
+      - name: Generate BBC daily content
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/generate_bbc_daily.py

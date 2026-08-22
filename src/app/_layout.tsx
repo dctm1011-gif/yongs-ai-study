@@ -11,6 +11,7 @@ import TOEFLScreen from './toefl';
 import InvestmentScreen from './investment';
 import CultureScreen from './culture';
 import ChecklistScreen from './checklist';
+import BBCScreen from './bbc';
 
 const APP_VARIANT = process.env.EXPO_PUBLIC_APP_VARIANT ?? 'full';
 import LoginScreen from './login';
@@ -193,6 +194,16 @@ function MainTabs() {
             title: 'Korean',
             tabBarIcon: ({ color }) => (
               <MaterialIcons name="menu-book" size={26} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="BBC"
+          component={BBCScreen}
+          options={{
+            title: 'BBC',
+            tabBarIcon: ({ color }) => (
+              <MaterialIcons name="rss-feed" size={26} color={color} />
             ),
           }}
         />
