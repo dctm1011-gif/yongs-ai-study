@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   View, Text, ScrollView, TouchableOpacity, StyleSheet,
-  ActivityIndicator, Linking,
+  ActivityIndicator, Linking, Alert,
 } from 'react-native';
 import { Audio, AVPlaybackStatus } from 'expo-av';
 import { getDatabase, get, ref } from 'firebase/database';
@@ -84,8 +84,8 @@ function RssPodcastView({ episode, onBack }: { episode: PodcastEpisode; onBack: 
       );
       soundRef.current = sound;
       setPlaying(true);
-    } catch {
-      /* silent */
+    } catch (e: any) {
+      Alert.alert('재생 오류', `오디오를 불러올 수 없습니다.\n${e?.message ?? '알 수 없는 오류'}`);
     } finally {
       setLoading(false);
     }

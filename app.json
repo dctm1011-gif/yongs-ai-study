@@ -48,7 +48,8 @@
           "android": {
             "enableHermes": true,
             "debuggable": false,
-            "newArchEnabled": false
+            "newArchEnabled": false,
+            "usesCleartextTraffic": true
           },
           "ios": {
             "enableHermes": true,
