@@ -4,7 +4,7 @@ import { initializeApp, getApps } from 'firebase/app';
 import { getDatabase, ref, set } from 'firebase/database';
 
 export const config = {
-  schedule: '0 21 * * *',
+  schedule: '10 20 * * *',
 };
 
 const firebaseConfig = {
