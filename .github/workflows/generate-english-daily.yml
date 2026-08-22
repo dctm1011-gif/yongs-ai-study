@@ -31,14 +31,17 @@ jobs:
           python -m pip install anthropic
 
       - name: Generate daily English content
+        continue-on-error: true
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python scripts/generate_english_daily.py
 
       - name: Push English to Firebase
+        continue-on-error: true
         run: python english/push_daily_to_firebase.py
 
       - name: Generate daily BBC content
+        continue-on-error: true
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python scripts/generate_bbc_daily.py
