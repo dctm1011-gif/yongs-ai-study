@@ -48,7 +48,7 @@ def fetch(url: str, timeout: int = 15) -> bytes | None:
 
 def strip_html(s: str) -> str:
     s = re.sub(r"<[^>]+>", " ", s)
-    for ent, ch in [("&amp;","&"),("&nbsp;"," "),("&#39;","'"),("&lt;","<"),
+    for ent, ch in [("&amp;","&"),("&nbsp;"," "),("&#39;","'"),("&apos;","'"),("&lt;","<"),
                     ("&gt;",">"),("&quot;",'"'),("&lsquo;","'"),("&rsquo;","'"),
                     ("&ldquo;",'"'),("&rdquo;",'"')]:
         s = s.replace(ent, ch)
@@ -448,7 +448,7 @@ def fetch_korea_herald():
     # 첫 번째 유효한 기사만 처리
     article = None
     for item in root.findall(".//item"):
-        title = item.findtext("title", "").strip()
+        title = strip_html(item.findtext("title", "").strip())
         link = item.findtext("link", "").strip()
         cat = item.findtext("category", "").strip()
         if title and link:
@@ -500,7 +500,7 @@ def fetch_kbs_news():
     # 첫 번째 유효한 기사만 처리
     article = None
     for item in root.findall(".//item"):
-        title = item.findtext("title", "").strip()
+        title = strip_html(item.findtext("title", "").strip())
         link = item.findtext("link", "").strip()
         desc_raw = item.findtext("description", "") or ""
         desc = re.sub(r"<[^>]+>", " ", desc_raw)
