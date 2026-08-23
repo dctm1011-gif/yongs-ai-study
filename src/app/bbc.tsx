@@ -36,19 +36,19 @@ interface PodcastEpisode {
 }
 
 const PODCAST_SOURCES = [
-  { key: 'bbc_learning', label: 'BBC Learning English', color: '#dc2626', limit: 5 },
-  { key: 'npr_upfirst',  label: 'NPR Up First',         color: '#1a56db', limit: 5 },
-  { key: 'voa',          label: 'VOA Learning English',  color: '#059669', limit: 5 },
+  { key: 'bbc_learning', label: 'BBC Learning English', color: '#dc2626' },
+  { key: 'npr_upfirst',  label: 'NPR Up First',         color: '#1a56db' },
+  { key: 'voa',          label: 'VOA Learning English',  color: '#059669' },
 ] as const;
 
-// ─── BBC Reading view ─────────────────────────────────────────────────────
+// ─── BBC Reading detail view ───────────────────────────────────────────────
 function ReadingView({ data, onBack }: { data: ReadingData; onBack: () => void }) {
   const [expandedQ, setExpandedQ] = useState<number | null>(null);
   return (
     <ScrollView style={styles.detailContainer} contentContainerStyle={styles.detailContent}>
       <TouchableOpacity onPress={onBack} style={styles.backRow}>
         <MaterialIcons name="arrow-back" size={20} color="#262626" />
-        <Text style={styles.backText}>BBC</Text>
+        <Text style={styles.backText}>Reading</Text>
       </TouchableOpacity>
       <View style={styles.categoryBadge}>
         <Text style={styles.categoryText}>{data.category}</Text>
@@ -61,9 +61,9 @@ function ReadingView({ data, onBack }: { data: ReadingData; onBack: () => void }
         <Text style={styles.summaryLabel}>한국어 요약</Text>
         <Text style={styles.summaryText}>{data.summary_ko}</Text>
       </View>
-      <Text style={styles.sectionTitle}>Article</Text>
+      <Text style={styles.sectionSubtitle}>Article</Text>
       {data.paragraphs.map((p, i) => <Text key={i} style={styles.paragraph}>{p}</Text>)}
-      <Text style={styles.sectionTitle}>Vocabulary</Text>
+      <Text style={styles.sectionSubtitle}>Vocabulary</Text>
       {data.vocabulary.map((v, i) => (
         <View key={i} style={styles.vocabCard}>
           <Text style={styles.vocabWord}>{v.word}</Text>
@@ -71,7 +71,7 @@ function ReadingView({ data, onBack }: { data: ReadingData; onBack: () => void }
           <Text style={styles.vocabKo}>{v.meaning_ko}</Text>
         </View>
       ))}
-      <Text style={styles.sectionTitle}>Comprehension Check</Text>
+      <Text style={styles.sectionSubtitle}>Comprehension Check</Text>
       {data.comprehension_questions.map((q, i) => (
         <TouchableOpacity key={i} style={styles.questionCard}
           onPress={() => setExpandedQ(expandedQ === i ? null : i)} activeOpacity={0.8}>
@@ -87,14 +87,14 @@ function ReadingView({ data, onBack }: { data: ReadingData; onBack: () => void }
   );
 }
 
-// ─── Episode card ─────────────────────────────────────────────────────────
-function EpisodeCard({ ep, color }: { ep: PodcastEpisode; color: string }) {
+// ─── Podcast episode card ─────────────────────────────────────────────────
+function EpisodeCard({ ep, color, label }: { ep: PodcastEpisode; color: string; label: string }) {
   const soundRef = useRef<Audio.Sound | null>(null);
   const [playing, setPlaying] = useState(false);
   const [loading, setLoading] = useState(false);
   const [positionSec, setPositionSec] = useState(0);
   const [durationSec, setDurationSec] = useState(ep.duration_sec || 0);
-  const [scriptExpanded, setScriptExpanded] = useState(false);
+  const [scriptOpen, setScriptOpen] = useState(false);
   const [scriptFull, setScriptFull] = useState(false);
 
   useEffect(() => {
@@ -130,21 +130,32 @@ function EpisodeCard({ ep, color }: { ep: PodcastEpisode; color: string }) {
     setPlaying(false); setPositionSec(0);
   };
 
-  const progressPct = durationSec > 0 ? (positionSec / durationSec) * 100 : 0;
-  const SCRIPT_PREVIEW = 300;
-  const hasLongScript = ep.script && ep.script.length > SCRIPT_PREVIEW;
-  const displayScript = scriptFull ? ep.script : ep.script?.slice(0, SCRIPT_PREVIEW);
+  const pct = durationSec > 0 ? (positionSec / durationSec) * 100 : 0;
+  const PREVIEW = 300;
+  const hasMore = ep.script?.length > PREVIEW;
+  const displayScript = scriptFull ? ep.script : ep.script?.slice(0, PREVIEW);
 
   return (
     <View style={[styles.episodeCard, { borderLeftColor: color }]}>
-      {/* 날짜 + 제목 */}
-      <Text style={styles.epDate}>{ep.pub_date}</Text>
+      {/* 소스 배지 + 날짜 */}
+      <View style={styles.epHeader}>
+        <View style={[styles.sourceBadge, { backgroundColor: color }]}>
+          <Text style={styles.sourceBadgeText}>{label}</Text>
+        </View>
+        <Text style={styles.epDate}>{ep.pub_date}</Text>
+        {ep.episode_url ? (
+          <TouchableOpacity onPress={() => Linking.openURL(ep.episode_url)}>
+            <MaterialIcons name="open-in-new" size={14} color="#9ca3af" />
+          </TouchableOpacity>
+        ) : null}
+      </View>
+
       <Text style={styles.epTitle}>{ep.title}</Text>
 
       {/* 플레이어 */}
       <View style={styles.playerRow}>
         <TouchableOpacity
-          style={[styles.playBtn, { backgroundColor: color }, loading && styles.playBtnLoading]}
+          style={[styles.playBtn, { backgroundColor: loading ? '#4b5563' : color }]}
           onPress={handlePlayPause} disabled={loading}
         >
           {loading
@@ -153,99 +164,40 @@ function EpisodeCard({ ep, color }: { ep: PodcastEpisode; color: string }) {
         </TouchableOpacity>
         <View style={styles.playerCenter}>
           <View style={styles.progressBg}>
-            <View style={[styles.progressFill, { width: `${progressPct}%` as any, backgroundColor: color }]} />
+            <View style={[styles.progressFill, { width: `${pct}%` as any, backgroundColor: color }]} />
           </View>
           <Text style={styles.playerTime}>
             {positionSec > 0 ? `${formatDuration(positionSec)} / ` : ''}{formatDuration(durationSec)}
           </Text>
         </View>
         {(playing || positionSec > 0) && (
-          <TouchableOpacity onPress={handleStop} style={styles.stopBtn}>
+          <TouchableOpacity onPress={handleStop} style={styles.iconBtn}>
             <MaterialIcons name="stop" size={18} color="#6b7280" />
           </TouchableOpacity>
         )}
-        {ep.episode_url ? (
-          <TouchableOpacity onPress={() => Linking.openURL(ep.episode_url)} style={styles.stopBtn}>
-            <MaterialIcons name="open-in-new" size={16} color="#9ca3af" />
-          </TouchableOpacity>
-        ) : null}
       </View>
 
       {/* 스크립트 */}
       {ep.script ? (
         <>
-          <TouchableOpacity
-            style={styles.scriptToggle}
-            onPress={() => setScriptExpanded(v => !v)} activeOpacity={0.7}
-          >
+          <TouchableOpacity style={styles.scriptToggle} onPress={() => setScriptOpen(v => !v)}>
             <Text style={[styles.scriptToggleText, { color }]}>SCRIPT</Text>
-            <MaterialIcons name={scriptExpanded ? 'expand-less' : 'expand-more'} size={18} color={color} />
+            <MaterialIcons name={scriptOpen ? 'expand-less' : 'expand-more'} size={18} color={color} />
           </TouchableOpacity>
-          {scriptExpanded && (
-            <View>
-              <Text style={styles.scriptText}>{displayScript}</Text>
-              {hasLongScript && (
-                <TouchableOpacity onPress={() => setScriptFull(v => !v)} style={styles.scriptMoreBtn}>
+          {scriptOpen && (
+            <>
+              <Text style={styles.scriptText}>{displayScript}{!scriptFull && hasMore ? '…' : ''}</Text>
+              {hasMore && (
+                <TouchableOpacity onPress={() => setScriptFull(v => !v)}>
                   <Text style={[styles.scriptMoreText, { color }]}>
                     {scriptFull ? '접기 ▲' : `전체 보기 (${ep.script.length.toLocaleString()}자) ▼`}
                   </Text>
                 </TouchableOpacity>
               )}
-            </View>
+            </>
           )}
         </>
       ) : null}
-    </View>
-  );
-}
-
-// ─── Podcast section (소스별) ─────────────────────────────────────────────
-function PodcastSection({ sourceKey, label, color, limit }: {
-  sourceKey: string; label: string; color: string; limit: number;
-}) {
-  const [episodes, setEpisodes] = useState<PodcastEpisode[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [showAll, setShowAll] = useState(false);
-
-  useEffect(() => {
-    const db = getDatabase(getFirebaseApp());
-    get(query(ref(db, `english/podcasts/${sourceKey}`), orderByKey(), limitToLast(20)))
-      .then(snap => {
-        if (snap.exists()) {
-          const vals = Object.values(snap.val() as Record<string, PodcastEpisode>)
-            .sort((a, b) => b.pub_date.localeCompare(a.pub_date));
-          setEpisodes(vals);
-        }
-      })
-      .catch(e => console.error(`${sourceKey} load error:`, e?.message))
-      .finally(() => setLoading(false));
-  }, [sourceKey]);
-
-  const displayed = showAll ? episodes : episodes.slice(0, limit);
-
-  return (
-    <View style={styles.sourceSection}>
-      <View style={[styles.sourceTitleRow, { borderLeftColor: color }]}>
-        <Text style={[styles.sourceTitle, { color }]}>{label}</Text>
-        {loading && <ActivityIndicator size="small" color={color} />}
-        {!loading && <Text style={styles.sourceCount}>{episodes.length}개</Text>}
-      </View>
-
-      {!loading && episodes.length === 0 && (
-        <Text style={styles.emptyText}>에피소드가 없습니다</Text>
-      )}
-
-      {displayed.map(ep => (
-        <EpisodeCard key={ep.pub_date + ep.title} ep={ep} color={color} />
-      ))}
-
-      {!showAll && episodes.length > limit && (
-        <TouchableOpacity style={styles.showMoreBtn} onPress={() => setShowAll(true)}>
-          <Text style={[styles.showMoreText, { color }]}>
-            더 보기 ({episodes.length - limit}개 더) ▼
-          </Text>
-        </TouchableOpacity>
-      )}
     </View>
   );
 }
@@ -254,6 +206,8 @@ function PodcastSection({ sourceKey, label, color, limit }: {
 export default function BBCScreen() {
   const [reading, setReading] = useState<ReadingData | null>(null);
   const [loadingReading, setLoadingReading] = useState(true);
+  const [podcasts, setPodcasts] = useState<Record<string, PodcastEpisode | null>>({});
+  const [loadingPodcasts, setLoadingPodcasts] = useState(true);
   const [view, setView] = useState<'home' | 'reading'>('home');
   const today = getKSTDateString();
 
@@ -261,8 +215,27 @@ export default function BBCScreen() {
     const db = getDatabase(getFirebaseApp());
     get(ref(db, `english/bbc/${today}`))
       .then(snap => { if (snap.exists()) setReading(snap.val().reading as ReadingData); })
-      .catch(e => console.error('BBC reading error:', e?.message))
+      .catch(e => console.error('BBC reading:', e?.message))
       .finally(() => setLoadingReading(false));
+  }, [today]);
+
+  useEffect(() => {
+    const db = getDatabase(getFirebaseApp());
+    Promise.all(
+      PODCAST_SOURCES.map(src =>
+        get(query(ref(db, `english/podcasts/${src.key}`), orderByKey(), limitToLast(1)))
+          .then(snap => {
+            if (!snap.exists()) return [src.key, null] as const;
+            const vals = Object.values(snap.val() as Record<string, PodcastEpisode>);
+            return [src.key, vals[0]] as const;
+          })
+          .catch(() => [src.key, null] as const)
+      )
+    ).then(results => {
+      const map: Record<string, PodcastEpisode | null> = {};
+      results.forEach(([k, v]) => { map[k] = v; });
+      setPodcasts(map);
+    }).finally(() => setLoadingPodcasts(false));
   }, [today]);
 
   if (view === 'reading' && reading) {
@@ -273,19 +246,27 @@ export default function BBCScreen() {
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <Text style={styles.dateLabel}>{today}</Text>
 
-      {/* BBC News Reading 카드 */}
+      {/* ── Reading ────────────────────────────────── */}
+      <View style={styles.sectionHeader}>
+        <MaterialIcons name="menu-book" size={18} color="#111827" />
+        <Text style={styles.sectionTitle}>Reading</Text>
+      </View>
+
       {loadingReading ? (
-        <View style={[styles.readingCard, { opacity: 0.6 }]}>
-          <ActivityIndicator size="small" color="#1d4ed8" style={{ marginRight: 12 }} />
-          <Text style={styles.readingCardTitle}>뉴스 리딩 불러오는 중...</Text>
+        <View style={styles.skeleton}>
+          <ActivityIndicator size="small" color="#9ca3af" />
+          <Text style={styles.skeletonText}>불러오는 중...</Text>
         </View>
       ) : reading ? (
-        <TouchableOpacity style={styles.readingCard} onPress={() => setView('reading')} activeOpacity={0.85}>
-          <View style={styles.readingCardLeft}>
-            <View style={styles.bbcBadge}><Text style={styles.bbcBadgeText}>BBC</Text></View>
+        <TouchableOpacity style={[styles.readingCard, { borderLeftColor: '#1d4ed8' }]}
+          onPress={() => setView('reading')} activeOpacity={0.85}>
+          <View style={styles.readingCardInner}>
+            <View style={[styles.sourceBadge, { backgroundColor: '#1d4ed8' }]}>
+              <Text style={styles.sourceBadgeText}>BBC</Text>
+            </View>
             <View style={{ flex: 1 }}>
-              <Text style={styles.readingCardTitle} numberOfLines={2}>{reading.title}</Text>
-              <Text style={styles.readingCardSub}>
+              <Text style={styles.readingTitle} numberOfLines={2}>{reading.title}</Text>
+              <Text style={styles.readingSub}>
                 어휘 {reading.vocabulary?.length ?? 0}개 · 이해확인 {reading.comprehension_questions?.length ?? 0}문항
               </Text>
             </View>
@@ -293,26 +274,37 @@ export default function BBCScreen() {
           <MaterialIcons name="chevron-right" size={22} color="#9ca3af" />
         </TouchableOpacity>
       ) : (
-        <View style={[styles.readingCard, { opacity: 0.4 }]}>
-          <View style={styles.readingCardLeft}>
-            <View style={[styles.bbcBadge, { backgroundColor: '#9ca3af' }]}>
-              <Text style={styles.bbcBadgeText}>BBC</Text>
-            </View>
-            <Text style={styles.readingCardTitle}>05:00 KST에 자동 생성됩니다</Text>
-          </View>
+        <View style={[styles.skeleton, { borderLeftWidth: 3, borderLeftColor: '#bfdbfe' }]}>
+          <Text style={styles.skeletonText}>오늘의 뉴스 리딩이 아직 생성되지 않았습니다 (05:00 KST)</Text>
         </View>
       )}
 
-      {/* 팟캐스트 섹션들 */}
-      {PODCAST_SOURCES.map(src => (
-        <PodcastSection
-          key={src.key}
-          sourceKey={src.key}
-          label={src.label}
-          color={src.color}
-          limit={src.limit}
-        />
-      ))}
+      {/* ── Listening ──────────────────────────────── */}
+      <View style={[styles.sectionHeader, { marginTop: 28 }]}>
+        <MaterialIcons name="headphones" size={18} color="#111827" />
+        <Text style={styles.sectionTitle}>Listening</Text>
+      </View>
+
+      {loadingPodcasts ? (
+        <View style={styles.skeleton}>
+          <ActivityIndicator size="small" color="#9ca3af" />
+          <Text style={styles.skeletonText}>팟캐스트 불러오는 중...</Text>
+        </View>
+      ) : (
+        PODCAST_SOURCES.map(src => {
+          const ep = podcasts[src.key];
+          return ep ? (
+            <EpisodeCard key={src.key} ep={ep} color={src.color} label={src.label} />
+          ) : (
+            <View key={src.key} style={[styles.skeleton, { borderLeftWidth: 3, borderLeftColor: src.color }]}>
+              <View style={[styles.sourceBadge, { backgroundColor: src.color }]}>
+                <Text style={styles.sourceBadgeText}>{src.label}</Text>
+              </View>
+              <Text style={styles.skeletonText}>오늘의 에피소드 준비 중</Text>
+            </View>
+          );
+        })
+      )}
 
       <View style={{ height: 60 }} />
     </ScrollView>
@@ -323,67 +315,64 @@ export default function BBCScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
   content: { padding: 20, paddingTop: 56 },
-  dateLabel: { fontSize: 11, color: '#9ca3af', fontWeight: '600', marginBottom: 16, letterSpacing: 1 },
+  dateLabel: { fontSize: 11, color: '#9ca3af', fontWeight: '600', marginBottom: 20, letterSpacing: 1 },
 
-  // BBC Reading card
+  sectionHeader: {
+    flexDirection: 'row', alignItems: 'center', gap: 8,
+    marginBottom: 12,
+  },
+  sectionTitle: { fontSize: 17, fontWeight: '800', color: '#111827' },
+
+  skeleton: {
+    flexDirection: 'row', alignItems: 'center', gap: 10,
+    backgroundColor: '#f9fafb', borderRadius: 12, padding: 16,
+    marginBottom: 10, borderWidth: 1, borderColor: '#e5e7eb',
+  },
+  skeletonText: { fontSize: 13, color: '#9ca3af' },
+
+  // Reading card
   readingCard: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
-    padding: 16, borderRadius: 14, marginBottom: 24,
-    backgroundColor: '#f0f4ff', borderWidth: 1, borderColor: '#bfdbfe',
-    borderLeftWidth: 4, borderLeftColor: '#1d4ed8',
+    backgroundColor: '#f0f4ff', borderRadius: 14, padding: 16,
+    marginBottom: 8, borderWidth: 1, borderColor: '#bfdbfe', borderLeftWidth: 4,
   },
-  readingCardLeft: { flexDirection: 'row', alignItems: 'flex-start', gap: 12, flex: 1 },
-  bbcBadge: { backgroundColor: '#1d4ed8', paddingHorizontal: 8, paddingVertical: 3, borderRadius: 5, marginTop: 1 },
-  bbcBadgeText: { fontSize: 11, fontWeight: '800', color: '#fff', letterSpacing: 0.5 },
-  readingCardTitle: { fontSize: 14, fontWeight: '700', color: '#111827', lineHeight: 20, marginBottom: 4 },
-  readingCardSub: { fontSize: 12, color: '#4b5563' },
-
-  // Podcast source section
-  sourceSection: { marginBottom: 24 },
-  sourceTitleRow: {
-    flexDirection: 'row', alignItems: 'center', gap: 8,
-    borderLeftWidth: 3, paddingLeft: 10, marginBottom: 12,
-  },
-  sourceTitle: { fontSize: 14, fontWeight: '800', flex: 1 },
-  sourceCount: { fontSize: 12, color: '#9ca3af' },
-  emptyText: { fontSize: 13, color: '#9ca3af', paddingLeft: 10 },
-
-  showMoreBtn: { alignItems: 'center', paddingVertical: 10 },
-  showMoreText: { fontSize: 13, fontWeight: '600' },
+  readingCardInner: { flexDirection: 'row', alignItems: 'flex-start', gap: 12, flex: 1 },
+  readingTitle: { fontSize: 14, fontWeight: '700', color: '#111827', lineHeight: 20, marginBottom: 4 },
+  readingSub: { fontSize: 12, color: '#4b5563' },
 
   // Episode card
   episodeCard: {
-    backgroundColor: '#fafafa', borderRadius: 12, padding: 14,
-    marginBottom: 10, borderWidth: 1, borderColor: '#e5e7eb',
-    borderLeftWidth: 4,
+    backgroundColor: '#fafafa', borderRadius: 14, padding: 16,
+    marginBottom: 12, borderWidth: 1, borderColor: '#e5e7eb', borderLeftWidth: 4,
   },
-  epDate: { fontSize: 10, color: '#9ca3af', fontWeight: '600', marginBottom: 4 },
-  epTitle: { fontSize: 14, fontWeight: '700', color: '#111827', lineHeight: 20, marginBottom: 10 },
+  epHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 8 },
+  sourceBadge: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 5 },
+  sourceBadgeText: { fontSize: 10, fontWeight: '800', color: '#fff', letterSpacing: 0.3 },
+  epDate: { fontSize: 11, color: '#9ca3af', fontWeight: '600', flex: 1 },
+  epTitle: { fontSize: 14, fontWeight: '700', color: '#111827', lineHeight: 20, marginBottom: 12 },
 
   playerRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   playBtn: { width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center' },
-  playBtnLoading: { backgroundColor: '#4b5563' },
   playerCenter: { flex: 1 },
   progressBg: { height: 3, backgroundColor: '#e5e7eb', borderRadius: 2, overflow: 'hidden', marginBottom: 3 },
   progressFill: { height: 3, borderRadius: 2 },
   playerTime: { fontSize: 10, color: '#9ca3af' },
-  stopBtn: { padding: 4 },
+  iconBtn: { padding: 4 },
 
   scriptToggle: {
     flexDirection: 'row', alignItems: 'center', gap: 4,
-    marginTop: 10, paddingTop: 8, borderTopWidth: 1, borderTopColor: '#f0f0f0',
+    marginTop: 12, paddingTop: 10, borderTopWidth: 1, borderTopColor: '#f0f0f0',
   },
   scriptToggleText: { fontSize: 11, fontWeight: '700', letterSpacing: 0.5 },
   scriptText: { fontSize: 13, color: '#374151', lineHeight: 20, marginTop: 8 },
-  scriptMoreBtn: { marginTop: 8, alignSelf: 'flex-start' },
-  scriptMoreText: { fontSize: 12, fontWeight: '600' },
+  scriptMoreText: { fontSize: 12, fontWeight: '600', marginTop: 8 },
 
   // Reading detail
   detailContainer: { flex: 1, backgroundColor: '#fff' },
   detailContent: { padding: 20, paddingTop: 56 },
   backRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 20, gap: 6 },
   backText: { fontSize: 15, color: '#262626', fontWeight: '500' },
-  sectionTitle: { fontSize: 13, fontWeight: '700', color: '#262626', marginTop: 28, marginBottom: 12, letterSpacing: 0.3 },
+  sectionSubtitle: { fontSize: 13, fontWeight: '700', color: '#262626', marginTop: 28, marginBottom: 12 },
   categoryBadge: { alignSelf: 'flex-start', backgroundColor: '#dbeafe', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 6, marginBottom: 10 },
   categoryText: { fontSize: 11, fontWeight: '700', color: '#1d4ed8', letterSpacing: 0.5 },
   articleTitle: { fontSize: 20, fontWeight: '800', color: '#111827', lineHeight: 28, marginBottom: 10 },
