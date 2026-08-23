@@ -41,139 +41,139 @@ def get_default_words(target_date: date) -> dict:
     # 충분히 큰 후보 풀에서 미사용 단어를 골라 fallback 구성
     candidate_pool = [
         {
-            "word": "recalcitrant", "part_of_speech": "형용사",
-            "meaning_ko": "반항적인, 다루기 힘든",
-            "explanation": "권위나 규율에 완강히 저항하는 것. TOEFL 사회·정치 지문 필수 어휘예요.",
-            "example_from_convo": "The recalcitrant student refused to follow any school rules.",
-            "example_ko": "반항적인 학생은 어떤 학칙도 따르지 않으려 했어요.",
-            "tip": "동의어: defiant, unruly, obstinate. 반의어: compliant, obedient.",
-            "emoji": "😤"
+            "word": "mitigate", "part_of_speech": "동사",
+            "meaning_ko": "완화하다, 경감하다",
+            "explanation": "부정적인 영향이나 심각성을 줄이는 것. TOEFL 환경·정책 지문 최빈출 동사예요.",
+            "example_from_convo": "Building seawalls can help mitigate the effects of rising sea levels.",
+            "example_ko": "방파제 건설은 해수면 상승의 영향을 완화하는 데 도움이 돼요.",
+            "tip": "동의어: alleviate, reduce, lessen. 반의어: exacerbate, worsen. TOEFL Reading·Writing 필수.",
+            "emoji": "🛡️"
         },
         {
-            "word": "perfidious", "part_of_speech": "형용사",
-            "meaning_ko": "배신적인, 불성실한",
-            "explanation": "믿음이나 충성심을 저버리는 것. TOEFL 역사·문학 지문에 등장해요.",
-            "example_from_convo": "The perfidious ally betrayed the alliance at a critical moment.",
-            "example_ko": "배신적인 동맹국이 결정적인 순간에 동맹을 배반했어요.",
-            "tip": "동의어: treacherous, disloyal, deceitful. 반의어: loyal, faithful.",
-            "emoji": "🗡️"
+            "word": "proliferate", "part_of_speech": "동사",
+            "meaning_ko": "급속히 늘어나다, 확산되다",
+            "explanation": "수나 양이 빠르게 증가하는 것. TOEFL 과학·기술·사회 지문에 자주 나와요.",
+            "example_from_convo": "Social media platforms have proliferated over the past decade.",
+            "example_ko": "소셜 미디어 플랫폼은 지난 10년간 급속히 늘어났어요.",
+            "tip": "동의어: multiply, expand, spread. 반의어: diminish, decline. 명사형: proliferation.",
+            "emoji": "📈"
         },
         {
-            "word": "sanguine", "part_of_speech": "형용사",
-            "meaning_ko": "낙관적인, 희망에 찬",
-            "explanation": "어려운 상황에서도 긍정적인 결과를 기대하는 것. TOEFL Writing 고득점 어휘예요.",
-            "example_from_convo": "Despite the setbacks, the team remained sanguine about the project outcome.",
-            "example_ko": "좌절에도 불구하고 팀은 프로젝트 결과에 대해 낙관적이었어요.",
-            "tip": "동의어: optimistic, hopeful, positive. 반의어: pessimistic, gloomy.",
-            "emoji": "🌟"
+            "word": "sustain", "part_of_speech": "동사",
+            "meaning_ko": "유지하다, 지속하다",
+            "explanation": "상태·노력을 계속 유지하는 것. TOEFL 전 영역 최빈출 동사 중 하나예요.",
+            "example_from_convo": "The ecosystem requires clean water to sustain biodiversity.",
+            "example_ko": "생태계는 생물 다양성을 유지하기 위해 깨끗한 물이 필요해요.",
+            "tip": "동의어: maintain, support, preserve. 형용사형: sustainable(지속 가능한). TOEFL 핵심 어휘.",
+            "emoji": "♻️"
         },
         {
-            "word": "obsequious", "part_of_speech": "형용사",
-            "meaning_ko": "아첨하는, 굽실거리는",
-            "explanation": "지나치게 복종적이거나 아첨하는 태도. 문학·사회 지문에서 인물 묘사에 자주 써요.",
-            "example_from_convo": "His obsequious behavior toward the boss made colleagues uncomfortable.",
-            "example_ko": "상사에게 굽실거리는 그의 태도가 동료들을 불편하게 만들었어요.",
-            "tip": "동의어: servile, fawning, sycophantic. 반의어: assertive, confident.",
-            "emoji": "🙇"
+            "word": "undermine", "part_of_speech": "동사",
+            "meaning_ko": "약화시키다, 훼손하다",
+            "explanation": "기반이나 신뢰를 서서히 약하게 만드는 것. TOEFL 사회·정치 지문에 매우 자주 나와요.",
+            "example_from_convo": "Corruption can severely undermine public trust in government.",
+            "example_ko": "부패는 정부에 대한 국민의 신뢰를 심각하게 약화시킬 수 있어요.",
+            "tip": "동의어: weaken, erode, sabotage. 반의어: strengthen, bolster. 비유적 표현으로 자주 써요.",
+            "emoji": "⚠️"
         },
         {
-            "word": "veracious", "part_of_speech": "형용사",
-            "meaning_ko": "진실된, 정직한",
-            "explanation": "사실에 충실하고 거짓이 없는 것. TOEFL 학술 글쓰기·읽기 지문 핵심 어휘예요.",
-            "example_from_convo": "A veracious account of events is essential in historical research.",
-            "example_ko": "역사 연구에서 사건의 진실된 기술은 필수적이에요.",
-            "tip": "동의어: truthful, honest, candid. 반의어: mendacious, deceitful.",
-            "emoji": "✅"
+            "word": "inherent", "part_of_speech": "형용사",
+            "meaning_ko": "고유한, 내재된",
+            "explanation": "어떤 것의 본질적인 특성으로 처음부터 존재하는 것. TOEFL 학술 지문 전반에 등장해요.",
+            "example_from_convo": "There are inherent risks in any scientific experiment.",
+            "example_ko": "모든 과학 실험에는 내재된 위험이 있어요.",
+            "tip": "동의어: intrinsic, innate, built-in. 부사형: inherently. 'inherent in/to ~'로 자주 써요.",
+            "emoji": "🧬"
         },
         {
-            "word": "insipid", "part_of_speech": "형용사",
-            "meaning_ko": "밍밍한, 재미없는, 무미건조한",
-            "explanation": "맛이나 흥미가 없는 것. 문학·예술 지문에서 비판적 평가에 쓰여요.",
-            "example_from_convo": "The film's insipid dialogue made it difficult to stay engaged.",
-            "example_ko": "영화의 무미건조한 대사 때문에 집중하기 어려웠어요.",
-            "tip": "동의어: bland, dull, vapid. 반의어: vivid, stimulating, engaging.",
-            "emoji": "😑"
+            "word": "ambiguous", "part_of_speech": "형용사",
+            "meaning_ko": "모호한, 불분명한",
+            "explanation": "두 가지 이상의 의미로 해석될 수 있는 것. TOEFL Reading·Writing 논리 전개에 핵심이에요.",
+            "example_from_convo": "The contract's wording was ambiguous and led to misunderstandings.",
+            "example_ko": "계약서 문구가 모호해서 오해가 생겼어요.",
+            "tip": "동의어: vague, unclear, equivocal. 반의어: clear, explicit. 명사: ambiguity.",
+            "emoji": "❓"
         },
         {
-            "word": "querulous", "part_of_speech": "형용사",
-            "meaning_ko": "불평이 많은, 투덜거리는",
-            "explanation": "사소한 것에도 불만을 표현하는 성향. TOEFL 문학·인물 묘사 지문에 나와요.",
-            "example_from_convo": "The querulous customer complained about every minor detail.",
-            "example_ko": "불평이 많은 고객은 사소한 세부 사항마다 불만을 표했어요.",
-            "tip": "동의어: complaining, grumbling, peevish. 반의어: content, easygoing.",
-            "emoji": "😒"
+            "word": "subsequent", "part_of_speech": "형용사",
+            "meaning_ko": "그 후의, 뒤이은",
+            "explanation": "어떤 사건 뒤에 일어나는 것. TOEFL Reading 지문 흐름 파악에 필수 어휘예요.",
+            "example_from_convo": "The initial study was flawed, but subsequent research corrected the errors.",
+            "example_ko": "초기 연구는 결함이 있었지만, 이후 연구가 오류를 수정했어요.",
+            "tip": "동의어: following, ensuing, later. 부사형: subsequently(이후에). TOEFL 시간 흐름 표현.",
+            "emoji": "➡️"
         },
         {
-            "word": "precipitous", "part_of_speech": "형용사",
-            "meaning_ko": "가파른, 급격한",
-            "explanation": "물리적 경사가 매우 가파르거나 변화가 갑작스러운 것. TOEFL 지리·경제 지문에 자주 나와요.",
-            "example_from_convo": "The precipitous decline in stock prices alarmed investors.",
-            "example_ko": "주가의 급격한 하락이 투자자들을 불안하게 만들었어요.",
-            "tip": "동의어: steep, abrupt, sudden. 반의어: gradual, gentle. 물리적·추상적 모두 사용 가능.",
+            "word": "advocate", "part_of_speech": "동사/명사",
+            "meaning_ko": "지지하다, 옹호하다 / 지지자",
+            "explanation": "어떤 원인·정책·사람을 공개적으로 지지하는 것. TOEFL Writing·Speaking 핵심 어휘예요.",
+            "example_from_convo": "Scientists advocate for stronger measures to address climate change.",
+            "example_ko": "과학자들은 기후변화 대응을 위한 더 강력한 조치를 지지해요.",
+            "tip": "동의어: support, promote, champion. 명사: advocacy(지지 활동). 'advocate for ~'가 일반적.",
+            "emoji": "📢"
+        },
+        {
+            "word": "deteriorate", "part_of_speech": "동사",
+            "meaning_ko": "악화되다, 나빠지다",
+            "explanation": "상태나 품질이 점점 나빠지는 것. TOEFL 환경·건강·경제 지문에 빈출해요.",
+            "example_from_convo": "Air quality tends to deteriorate during hot summer months.",
+            "example_ko": "대기 질은 더운 여름철에 악화되는 경향이 있어요.",
+            "tip": "동의어: worsen, decline, degrade. 반의어: improve, recover. 명사: deterioration.",
             "emoji": "📉"
         },
         {
-            "word": "garrulous", "part_of_speech": "형용사",
-            "meaning_ko": "수다스러운, 말이 너무 많은",
-            "explanation": "필요 이상으로 말을 많이 하는 성향. 문학·심리 지문 인물 묘사에 등장해요.",
-            "example_from_convo": "The garrulous professor often went off-topic during lectures.",
-            "example_ko": "말이 많은 교수는 강의 중에 자주 주제를 벗어났어요.",
-            "tip": "동의어: talkative, verbose, loquacious. 반의어: taciturn, reticent.",
-            "emoji": "🗣️"
+            "word": "constitute", "part_of_speech": "동사",
+            "meaning_ko": "구성하다, ~에 해당하다",
+            "explanation": "전체의 일부를 이루거나 어떤 것으로 간주되는 것. TOEFL 학술 지문 전반에 등장해요.",
+            "example_from_convo": "Women constitute over half of the university's student population.",
+            "example_ko": "여성이 대학 학생의 절반 이상을 구성해요.",
+            "tip": "동의어: make up, comprise, form. '~% constitute ...' 또는 '... constitutes ~%' 패턴 기억.",
+            "emoji": "🧩"
         },
         {
-            "word": "truculent", "part_of_speech": "형용사",
-            "meaning_ko": "공격적인, 시비를 거는",
-            "explanation": "쉽게 적대적이 되거나 싸우려 드는 성향. TOEFL 사회·심리 지문에 나와요.",
-            "example_from_convo": "The truculent negotiator made the peace talks difficult.",
-            "example_ko": "공격적인 협상가가 평화 회담을 어렵게 만들었어요.",
-            "tip": "동의어: aggressive, combative, belligerent. 반의어: peaceable, docile.",
-            "emoji": "😡"
+            "word": "compelling", "part_of_speech": "형용사",
+            "meaning_ko": "설득력 있는, 강렬한",
+            "explanation": "강한 관심이나 확신을 불러일으키는 것. TOEFL Writing 고득점 표현으로 자주 써요.",
+            "example_from_convo": "The documentary presented a compelling argument for renewable energy.",
+            "example_ko": "그 다큐멘터리는 재생에너지에 대한 설득력 있는 주장을 제시했어요.",
+            "tip": "동의어: convincing, persuasive, powerful. 반의어: weak, unconvincing. 'compelling evidence/reason'으로 자주 써요.",
+            "emoji": "💡"
         },
         {
-            "word": "penurious", "part_of_speech": "형용사",
-            "meaning_ko": "몹시 가난한, 인색한",
-            "explanation": "극도로 가난하거나 지나치게 돈을 아끼는 것. 경제·사회 지문에 등장해요.",
-            "example_from_convo": "The penurious conditions of the workers led to a major strike.",
-            "example_ko": "노동자들의 극빈한 환경이 대규모 파업으로 이어졌어요.",
-            "tip": "동의어: destitute, impoverished, miserly. 반의어: wealthy, generous.",
-            "emoji": "💸"
+            "word": "facilitate", "part_of_speech": "동사",
+            "meaning_ko": "촉진하다, 용이하게 하다",
+            "explanation": "어떤 과정이나 행동을 더 쉽게 만드는 것. TOEFL 학술·비즈니스 지문 핵심 동사예요.",
+            "example_from_convo": "Technology can facilitate communication across different time zones.",
+            "example_ko": "기술은 서로 다른 시간대 간의 소통을 촉진할 수 있어요.",
+            "tip": "동의어: enable, promote, aid. 명사: facilitation. 'facilitate + 명사' 패턴으로 자주 써요.",
+            "emoji": "🤝"
         },
         {
-            "word": "loquacious", "part_of_speech": "형용사",
-            "meaning_ko": "말이 많은, 수다스러운",
-            "explanation": "매우 말이 많은 성향. garrulous보다 더 중립적 뉘앙스로 쓰여요.",
-            "example_from_convo": "Her loquacious nature made her the life of every social gathering.",
-            "example_ko": "말 많은 성격 덕분에 그녀는 모든 모임의 중심이 되었어요.",
-            "tip": "동의어: talkative, garrulous, verbose. 반의어: taciturn, reserved.",
-            "emoji": "💬"
+            "word": "inevitable", "part_of_speech": "형용사",
+            "meaning_ko": "불가피한, 피할 수 없는",
+            "explanation": "막을 수 없거나 반드시 일어날 수밖에 없는 것. TOEFL 논증 지문에 자주 등장해요.",
+            "example_from_convo": "Technological change is inevitable in a globalized economy.",
+            "example_ko": "세계화된 경제에서 기술 변화는 불가피해요.",
+            "tip": "동의어: unavoidable, certain, inescapable. 부사: inevitably. 반의어: avoidable, preventable.",
+            "emoji": "⚡"
         },
         {
-            "word": "mendacious", "part_of_speech": "형용사",
-            "meaning_ko": "거짓말하는, 불성실한",
-            "explanation": "습관적으로 거짓말하는 성향. TOEFL 윤리·법 지문에 등장해요.",
-            "example_from_convo": "The mendacious politician was eventually exposed by investigative journalists.",
-            "example_ko": "거짓말하는 정치인은 결국 탐사 언론인들에게 폭로되었어요.",
-            "tip": "동의어: dishonest, untruthful, deceitful. 반의어: honest, truthful, veracious.",
-            "emoji": "🤥"
+            "word": "predominant", "part_of_speech": "형용사",
+            "meaning_ko": "지배적인, 가장 두드러진",
+            "explanation": "특정 집단이나 상황에서 가장 중요하거나 눈에 띄는 것. TOEFL 학술 지문 핵심 어휘예요.",
+            "example_from_convo": "Agriculture remains the predominant industry in many rural regions.",
+            "example_ko": "농업은 많은 농촌 지역에서 여전히 지배적인 산업으로 남아있어요.",
+            "tip": "동의어: dominant, primary, leading. 부사: predominantly(주로). 'predominantly' 형태가 더 자주 나와요.",
+            "emoji": "🏆"
         },
         {
-            "word": "perspicacious", "part_of_speech": "형용사",
-            "meaning_ko": "통찰력 있는, 날카로운",
-            "explanation": "상황을 빠르고 정확하게 이해하는 능력. TOEFL 학술 지문 고급 어휘예요.",
-            "example_from_convo": "The perspicacious analyst predicted the market crash months in advance.",
-            "example_ko": "통찰력 있는 분석가는 몇 달 전에 시장 붕괴를 예측했어요.",
-            "tip": "동의어: astute, shrewd, perceptive. 반의어: obtuse, unperceptive.",
-            "emoji": "🔭"
-        },
-        {
-            "word": "intransigent", "part_of_speech": "형용사",
-            "meaning_ko": "타협하지 않는, 완고한",
-            "explanation": "자신의 입장을 절대 바꾸지 않는 것. 정치·협상 지문 핵심 어휘예요.",
-            "example_from_convo": "The intransigent union refused to accept any compromise during negotiations.",
-            "example_ko": "완고한 노동조합은 협상 중 어떤 타협도 받아들이지 않았어요.",
-            "tip": "동의어: inflexible, uncompromising, stubborn. 반의어: flexible, conciliatory.",
-            "emoji": "🧱"
+            "word": "exacerbate", "part_of_speech": "동사",
+            "meaning_ko": "악화시키다, 심화시키다",
+            "explanation": "이미 나쁜 상황을 더욱 심각하게 만드는 것. TOEFL Reading 환경·사회 지문에서 자주 등장해요.",
+            "example_from_convo": "Deforestation exacerbates climate change by reducing carbon absorption.",
+            "example_ko": "삼림 벌채는 탄소 흡수를 줄여 기후변화를 악화시켜요.",
+            "tip": "동의어: aggravate, worsen. 반의어: alleviate, mitigate. Reading·Writing 고빈출.",
+            "emoji": "🔥"
         },
     ]
 
@@ -253,10 +253,11 @@ def generate_default_words(client: anthropic.Anthropic, target_date: date, toefl
 JSON 외 다른 텍스트는 절대 포함하지 마세요.
 {used_words_block}
 단어 선정 기준 (반드시 준수):
-- 난이도: TOEFL iBT 고득점(25점 이상) 목표 수험생 기준 — B2~C1 수준 중상급·고급 어휘
-- 너무 쉬운 기초 학술 어휘 금지: analyze, indicate, require, suggest, significant, provide, increase, develop, create, include 등은 제외
+- 난이도: TOEFL iBT B2~C1 수준 — 실제 TOEFL 시험에 출제되는 학술 어휘
+- GRE 전용 고난도 어휘 절대 금지: perspicacious, mendacious, obsequious, truculent, veracious, penurious, recalcitrant, perfidious, intransigent, garrulous, loquacious, querulous, sanguine, laconic, esoteric, spurious, tendentious 등 GRE 수준은 제외
+- 너무 쉬운 기초 어휘도 금지: analyze, indicate, require, suggest, significant, provide, increase, develop, create, include 등
 - 슬랭·구어체·일상 표현 절대 금지
-- 목표 난이도 예시: ameliorate, precipitate, exacerbate, tenuous, pervasive, coalesce, circumvent, ubiquitous, spurious, esoteric, cursory, ephemeral, mitigate, predatory, amalgamate, corroborate, substantiate, laconic, prolific, inundate
+- 목표 난이도 예시: mitigate, exacerbate, proliferate, pervasive, advocate, undermine, constitute, sustain, subsequent, inevitable, ambiguous, compelling, facilitate, deteriorate, predominant, diverse, inherent, coincide, attribute, preliminary
 
 JSON 형식:
 {{"date": "{target_date}", "words": [{{"word": "exacerbate", "part_of_speech": "동사", "meaning_ko": "악화시키다, 심화시키다", "explanation": "이미 나쁜 상황을 더욱 심각하게 만드는 것. TOEFL Reading 환경·사회 지문에서 자주 등장해요.", "example_from_convo": "Deforestation exacerbates climate change by reducing carbon absorption.", "example_ko": "삼림 벌채는 탄소 흡수를 줄여 기후변화를 악화시켜요.", "tip": "동의어: aggravate(악화), worsen(나빠지다). 반의어: alleviate(완화), mitigate(누그러뜨리다). Reading·Writing 고빈출.", "emoji": "📈"}}], "quiz": [{{"type": "meaning", "word": "exacerbate", "question": "Which of the following best describes 'exacerbate'?", "options": ["to make a bad situation worse", "to gradually reduce a problem", "to resolve a situation fundamentally", "to temporarily suppress change"], "answer": 0, "explanation": "exacerbate는 이미 나쁜 상황을 '더 나쁘게' 만드는 것이에요.", "option_explanations": [null, "alleviate(완화)의 의미로 exacerbate의 반의어예요.", "resolve(해결)와 혼동 — exacerbate는 해결이 아니라 악화예요.", "suppress(억제)는 다른 뉘앙스예요."]}}, {{"type": "fill_blank", "word": "exacerbate", "sentence": "Poor nutrition can _____ existing health conditions.", "sentence_ko": "불량한 영양 섭취는 기존 건강 상태를 악화시킬 수 있어요.", "answer": "exacerbate", "hint": "make worse"}}, {{"type": "situation", "word": "exacerbate", "question": "A new policy causes a conflict that was already tense to become far more serious. Which word best describes what happened?", "options": ["alleviate", "exacerbate", "resolve", "suppress"], "answer": 1, "explanation": "갈등이 더 심각해졌으므로 exacerbate(악화)가 적절해요."}}], "sentences": [{{"word": "exacerbate", "sentence": "Skipping sleep only exacerbates the anxiety you already feel before an exam.", "sentence_ko": "수면 부족은 시험 전에 느끼는 불안을 더욱 악화시킬 뿐이에요.", "nuance": "단순히 '나빠진다'가 아니라 이미 존재하는 부정적 상황을 능동적으로 더 심화시키는 뉘앙스. 외부 요인이 문제를 증폭시킬 때 씁니다.", "context": "환경, 건강, 사회 문제, 갈등 등 부정적 상황이 더 나빠지는 맥락. 뉴스·학술문에서 정책 비판할 때 자주 등장.", "everyday_usage": "stress/situation/problem을 목적어로 자주 씁니다. 'This only exacerbates the problem.' / 'Don't exacerbate the situation.'"}}]}}

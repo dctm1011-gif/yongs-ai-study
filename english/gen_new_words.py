@@ -15,7 +15,7 @@ prompt = (
     "TOEFL iBT 빈출 학술 어휘 5개를 선정하고 학습 자료를 JSON으로만 생성해주세요. (2026-08-17)\n"
     "JSON 외 다른 텍스트는 절대 포함하지 마세요.\n\n"
     f"아래 단어는 이미 다뤘으니 반드시 제외하세요:\n{', '.join(used)}\n\n"
-    "단어 선정 기준: TOEFL iBT B2~C1 수준, 슬랭/구어체 금지, 위 제외 목록에 없는 단어만.\n\n"
+    "단어 선정 기준: TOEFL iBT B2~C1 수준 실제 출제 어휘. GRE 전용 고난도(perspicacious, mendacious, obsequious 등) 절대 금지. 슬랭/구어체 금지, 위 제외 목록에 없는 단어만.\n\n"
     '{"date":"2026-08-17","words":[{"word":"ameliorate","part_of_speech":"동사","meaning_ko":"개선하다","explanation":"상황을 더 나아지게 만드는 것","example_from_convo":"Policy changes can ameliorate poverty.","example_ko":"정책 변화는 빈곤을 개선할 수 있어요.","tip":"동의어: improve, alleviate. 반의어: worsen, exacerbate.","emoji":"📈"}],"quiz":[{"type":"meaning","word":"ameliorate","question":"Which best defines ameliorate?","options":["to improve a bad situation","to make worse","to ignore","to prevent"],"answer":0,"explanation":"ameliorate=개선하다"}]}\n\n'
     "규칙: 단어 5개, 퀴즈 8개(meaning 3, fill_blank 3, situation 2), JSON만 반환"
 )
