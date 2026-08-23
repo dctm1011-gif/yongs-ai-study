@@ -8,6 +8,14 @@ import { getDatabase, get, ref, query, orderByKey, limitToLast } from 'firebase/
 import { getFirebaseApp } from '../config/firebase';
 import { MaterialIcons } from '@expo/vector-icons';
 
+function stripHtml(s: string): string {
+  return s
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&amp;/g, '&').replace(/&nbsp;/g, ' ').replace(/&#39;/g, "'")
+    .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
+    .replace(/\s+/g, ' ').trim();
+}
+
 function getKSTDateString(): string {
   const now = new Date();
   const kst = new Date(now.getTime() + 9 * 3600_000);
@@ -131,9 +139,10 @@ function EpisodeCard({ ep, color, label }: { ep: PodcastEpisode; color: string; 
   };
 
   const pct = durationSec > 0 ? (positionSec / durationSec) * 100 : 0;
+  const cleanScript = ep.script ? stripHtml(ep.script) : '';
   const PREVIEW = 300;
-  const hasMore = ep.script?.length > PREVIEW;
-  const displayScript = scriptFull ? ep.script : ep.script?.slice(0, PREVIEW);
+  const hasMore = cleanScript.length > PREVIEW;
+  const displayScript = scriptFull ? cleanScript : cleanScript.slice(0, PREVIEW);
 
   return (
     <View style={[styles.episodeCard, { borderLeftColor: color }]}>
@@ -178,7 +187,7 @@ function EpisodeCard({ ep, color, label }: { ep: PodcastEpisode; color: string; 
       </View>
 
       {/* 스크립트 */}
-      {ep.script ? (
+      {cleanScript ? (
         <>
           <TouchableOpacity style={styles.scriptToggle} onPress={() => setScriptOpen(v => !v)}>
             <Text style={[styles.scriptToggleText, { color }]}>SCRIPT</Text>
@@ -190,7 +199,7 @@ function EpisodeCard({ ep, color, label }: { ep: PodcastEpisode; color: string; 
               {hasMore && (
                 <TouchableOpacity onPress={() => setScriptFull(v => !v)}>
                   <Text style={[styles.scriptMoreText, { color }]}>
-                    {scriptFull ? '접기 ▲' : `전체 보기 (${ep.script.length.toLocaleString()}자) ▼`}
+                    {scriptFull ? '접기 ▲' : `전체 보기 (${cleanScript.length.toLocaleString()}자) ▼`}
                   </Text>
                 </TouchableOpacity>
               )}

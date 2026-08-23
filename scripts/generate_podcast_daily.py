@@ -88,9 +88,15 @@ def parse_rss(raw: bytes, max_items: int) -> list[dict]:
         if not audio_url:
             continue
 
+        def strip_html(s: str) -> str:
+            s = re.sub(r"<[^>]+>", "", s)
+            s = s.replace("&amp;", "&").replace("&nbsp;", " ").replace("&#39;", "'").replace("&lt;", "<").replace("&gt;", ">")
+            return re.sub(r"\s+", " ", s).strip()
+
         pub = item.findtext("pubDate", "").strip()
-        desc = re.sub(r"<[^>]+>", "", item.findtext("description", "") or "").strip()
-        summary = item.findtext(f"{{{ITUNES_NS}}}summary", "").strip() or desc
+        desc = strip_html(item.findtext("description", "") or "")
+        raw_summary = (item.findtext(f"{{{ITUNES_NS}}}summary", "") or "").strip()
+        summary = strip_html(raw_summary) if raw_summary else desc
 
         results.append({
             "title": item.findtext("title", "").strip(),
