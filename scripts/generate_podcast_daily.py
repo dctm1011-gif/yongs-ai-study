@@ -155,8 +155,40 @@ def scrape_bbc_script(bbc_transcript_url: str) -> str:
 
 
 # ── 뉴스 기사 본문 스크래핑 ──────────────────────────────────────────────────
+def scrape_kbs_article(url: str) -> str:
+    """KBS World 기사 → 본문 텍스트 (X-PJAX + <br/> 파싱)"""
+    req = urllib.request.Request(url, headers={
+        "User-Agent": "Mozilla/5.0",
+        "X-PJAX": "true",
+        "X-Requested-With": "XMLHttpRequest",
+    })
+    try:
+        with urllib.request.urlopen(req, timeout=15) as r:
+            html = r.read().decode("utf-8", errors="ignore")
+    except Exception as e:
+        print(f"  [!] KBS 스크래핑 실패: {e}")
+        return ""
+
+    # 사진 캡션 div 이후 ~ 다음 div 이전 구간이 기사 본문
+    m = re.search(r'<p[^>]*class="cap[^"]*"[^>]*>.*?</p>\s*(.*?)\s*<div', html, re.DOTALL)
+    if not m:
+        return ""
+
+    body = m.group(1)
+    paras = re.split(r'<br\s*/?\s*>\s*<br\s*/?\s*>', body)
+    clean = []
+    for p in paras:
+        t = re.sub(r"<[^>]+>", "", p)
+        for ent, ch in [("&#039;", "'"), ("&quot;", '"'), ("&amp;", "&"), ("&nbsp;", " ")]:
+            t = t.replace(ent, ch)
+        t = re.sub(r"\s+", " ", t).strip()
+        if len(t) > 30:
+            clean.append(t)
+    return "\n".join(clean)
+
+
 def scrape_news_article(url: str) -> str:
-    """뉴스 기사 URL → 본문 텍스트 (범용)"""
+    """뉴스 기사 URL → 본문 텍스트 (범용, Korea Herald 등)"""
     raw = fetch(url)
     if not raw:
         return ""
@@ -468,7 +500,7 @@ def fetch_kbs_news():
         return
 
     print(f"  스크래핑: {article['title'][:50]}")
-    body = scrape_news_article(article["url"])
+    body = scrape_kbs_article(article["url"])
     if not body:
         print("  [!] 스크래핑 실패")
         return
