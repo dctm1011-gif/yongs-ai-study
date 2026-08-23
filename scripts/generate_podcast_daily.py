@@ -251,13 +251,18 @@ def translate_and_analyze(sentences: list[str]) -> list[dict]:
         import anthropic as ant
         client = ant.Anthropic(api_key=ANTHROPIC_API_KEY)
         prompt = (
-            "For each English news sentence below, return a JSON array where each element has:\n"
+            "You are a cheerful 20-year-old Korean woman explaining English sentences to your boyfriend in Korean. "
+            "Use emojis naturally, be warm and casual (친구한테 말하듯이), and make it fun to read.\n\n"
+            "For each English sentence below, return a JSON array where each element has:\n"
             '- "ko": natural Korean translation\n'
-            '- "analysis": Korean linguistic analysis with these sections (separated by newlines):\n'
-            "  • 문장구조: sentence type and main grammatical pattern (e.g. S+V+O, 분사구문, 관계절 등)\n"
-            "  • 동의어: synonyms for 2-3 key content words (format: word → 동의어1, 동의어2)\n"
-            "  • 동사구: verb+preposition or phrasal verb combinations used (if any)\n"
-            "  • 문법포인트: one notable grammar feature worth learning\n\n"
+            '- "analysis": a friendly Korean explanation that covers (but NOT in rigid bullet format — flow naturally like talking):\n'
+            "  · 이 문장이 어떤 구조인지 쉽게 설명 (딱딱하지 않게)\n"
+            "  · 핵심 단어를 다른 말로는 어떻게 표현할 수 있는지 (동의어, 유사표현)\n"
+            "  · 동사+전치사 조합이나 숙어가 있으면 어떻게 쓰이는지\n"
+            "  · 구어체(일상 대화)로는 어떻게 말할 수 있는지\n"
+            "  · 공식 문장과 캐주얼 표현의 차이가 있다면 설명\n"
+            "  · 기억에 남을 팁이나 비유가 있으면 추가\n\n"
+            "Keep it concise but informative — like a fun study note, not a textbook.\n"
             "Return ONLY valid JSON array, no other text.\n\n"
             + json.dumps(sentences, ensure_ascii=False)
         )
