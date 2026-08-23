@@ -9,7 +9,7 @@
 import json
 import re
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from email.utils import parsedate
 from xml.etree import ElementTree
 
@@ -314,6 +314,65 @@ def process_source(source_key: str, config: dict, scraper=None):
     print(f"  → 신규 {new_count}개, 재시도 업데이트 {retry_count}개")
 
 
+def fetch_kbs_news():
+    """KBS World Radio 영어 뉴스 → Firebase english/korea_news/{date}"""
+    print("\n[KBS World Korea News]")
+    rss_url = "https://world.kbs.co.kr/rss/rss_news.htm?lang=e"
+    raw = fetch(rss_url)
+    if not raw:
+        return
+
+    try:
+        root = ElementTree.fromstring(raw)
+    except Exception as e:
+        print(f"  RSS 파싱 실패: {e}")
+        return
+
+    today = datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d")
+    articles = []
+
+    for item in root.findall(".//item")[:15]:
+        title = item.findtext("title", "").strip()
+        link = item.findtext("link", "").strip()
+        desc_raw = item.findtext("description", "") or ""
+        desc = re.sub(r"<[^>]+>", " ", desc_raw)
+        for ent, ch in [("&quot;", '"'), ("&amp;", "&"), ("&nbsp;", " "), ("&#39;", "'")]:
+            desc = desc.replace(ent, ch)
+        desc = re.sub(r"\s+", " ", desc).strip()
+
+        # [Category] : 텍스트 분리
+        cat = ""
+        m = re.match(r"\[([^\]]+)\]\s*:?\s*", desc)
+        if m:
+            cat = m.group(1)
+            desc = desc[m.end():].strip()
+
+        if not title or len(desc) < 30:
+            continue
+
+        articles.append({
+            "title": title,
+            "category": cat,
+            "summary": desc,
+            "url": link,
+        })
+
+    if not articles:
+        print("  기사 없음")
+        return
+
+    payload = json.dumps(articles, ensure_ascii=False).encode("utf-8")
+    url = f"{DB_URL}/english/korea_news/{today}.json"
+    req = urllib.request.Request(url, data=payload, method="PUT",
+                                  headers={"Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=15) as r:
+            r.read()
+        print(f"  ✓ {today} — {len(articles)}개 기사 저장")
+    except Exception as e:
+        print(f"  [!] Firebase 저장 실패: {e}")
+
+
 def main():
     print(f"[*] 팟캐스트 수집 — {datetime.now(timezone.utc).isoformat()[:19]} UTC")
 
@@ -329,6 +388,7 @@ def main():
         "npr_consider", SOURCES["npr_consider"],
         scraper=lambda ep: scrape_npr_transcript(ep.get("link", ""))
     )
+    fetch_kbs_news()
 
     print("\n[*] 완료")
 

@@ -42,6 +42,15 @@ interface PodcastEpisode {
   audio_url: string; duration_sec: number;
   pub_date: string; episode_url: string;
 }
+interface KoreaNewsArticle {
+  title: string; category: string; summary: string; url: string;
+}
+
+const CATEGORY_COLORS: Record<string, string> = {
+  Politics: '#dc2626', Economy: '#059669', Society: '#7c3aed',
+  Culture: '#d97706', Science: '#0891b2', Sports: '#ea580c',
+  World: '#1d4ed8', North: '#b45309',
+};
 
 const PODCAST_SOURCES = [
   { key: 'bbc_learning',  label: 'BBC Learning English', color: '#dc2626' },
@@ -217,6 +226,8 @@ export default function BBCScreen() {
   const [loadingReading, setLoadingReading] = useState(true);
   const [podcasts, setPodcasts] = useState<Record<string, PodcastEpisode | null>>({});
   const [loadingPodcasts, setLoadingPodcasts] = useState(true);
+  const [koreaNews, setKoreaNews] = useState<KoreaNewsArticle[]>([]);
+  const [loadingKorea, setLoadingKorea] = useState(true);
   const [view, setView] = useState<'home' | 'reading'>('home');
   const today = getKSTDateString();
 
@@ -226,6 +237,19 @@ export default function BBCScreen() {
       .then(snap => { if (snap.exists()) setReading(snap.val().reading as ReadingData); })
       .catch(e => console.error('BBC reading:', e?.message))
       .finally(() => setLoadingReading(false));
+  }, [today]);
+
+  useEffect(() => {
+    const db = getDatabase(getFirebaseApp());
+    get(ref(db, `english/korea_news/${today}`))
+      .then(snap => {
+        if (snap.exists()) {
+          const val = snap.val();
+          setKoreaNews(Array.isArray(val) ? val : Object.values(val));
+        }
+      })
+      .catch(e => console.error('Korea news:', e?.message))
+      .finally(() => setLoadingKorea(false));
   }, [today]);
 
   useEffect(() => {
@@ -285,6 +309,40 @@ export default function BBCScreen() {
       ) : (
         <View style={[styles.skeleton, { borderLeftWidth: 3, borderLeftColor: '#bfdbfe' }]}>
           <Text style={styles.skeletonText}>오늘의 뉴스 리딩이 아직 생성되지 않았습니다 (05:00 KST)</Text>
+        </View>
+      )}
+
+      {/* ── Korea News ─────────────────────────────── */}
+      <View style={[styles.sectionHeader, { marginTop: 28 }]}>
+        <MaterialIcons name="language" size={18} color="#111827" />
+        <Text style={styles.sectionTitle}>Korea News</Text>
+      </View>
+
+      {loadingKorea ? (
+        <View style={styles.skeleton}>
+          <ActivityIndicator size="small" color="#9ca3af" />
+          <Text style={styles.skeletonText}>뉴스 불러오는 중...</Text>
+        </View>
+      ) : koreaNews.length > 0 ? (
+        koreaNews.map((article, i) => {
+          const catColor = CATEGORY_COLORS[article.category] ?? '#6b7280';
+          return (
+            <TouchableOpacity key={i} style={styles.koreaCard}
+              onPress={() => Linking.openURL(article.url)} activeOpacity={0.8}>
+              {article.category ? (
+                <View style={[styles.sourceBadge, { backgroundColor: catColor, marginBottom: 8, alignSelf: 'flex-start' }]}>
+                  <Text style={styles.sourceBadgeText}>{article.category}</Text>
+                </View>
+              ) : null}
+              <Text style={styles.koreaTitle}>{article.title}</Text>
+              <Text style={styles.koreaSummary}>{article.summary}</Text>
+              <Text style={styles.koreaLink}>원문 보기 →</Text>
+            </TouchableOpacity>
+          );
+        })
+      ) : (
+        <View style={[styles.skeleton, { borderLeftWidth: 3, borderLeftColor: '#ef4444' }]}>
+          <Text style={styles.skeletonText}>오늘의 한국 뉴스가 아직 없습니다 (05:00 KST)</Text>
         </View>
       )}
 
@@ -398,4 +456,13 @@ const styles = StyleSheet.create({
   questionRow: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' },
   questionText: { fontSize: 14, color: '#111827', lineHeight: 20, flex: 1, paddingRight: 8, fontWeight: '500' },
   answerText: { fontSize: 14, color: '#059669', lineHeight: 20, marginTop: 10, paddingTop: 10, borderTopWidth: 1, borderTopColor: '#d1fae5' },
+
+  // Korea News cards
+  koreaCard: {
+    backgroundColor: '#fafafa', borderRadius: 14, padding: 16,
+    marginBottom: 10, borderWidth: 1, borderColor: '#e5e7eb',
+  },
+  koreaTitle: { fontSize: 14, fontWeight: '700', color: '#111827', lineHeight: 20, marginBottom: 6 },
+  koreaSummary: { fontSize: 13, color: '#4b5563', lineHeight: 19, marginBottom: 4 },
+  koreaLink: { fontSize: 12, color: '#1d4ed8', marginTop: 4 },
 });
