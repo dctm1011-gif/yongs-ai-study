@@ -22,19 +22,13 @@ SOURCES = {
         "rss": "https://podcasts.files.bbci.co.uk/p02pc9zn.rss",
         "name": "BBC Learning English",
         "max": 20,
-        "min_script_len": 2000,  # 대화 스크립트 전문 기준
+        "min_script_len": 2000,
     },
-    "npr_upfirst": {
-        "rss": "https://feeds.npr.org/510318/podcast.xml",
-        "name": "NPR Up First",
+    "all_ears_english": {
+        "rss": "https://feeds.megaphone.fm/allearsenglish",
+        "name": "All Ears English",
         "max": 7,
-        "min_script_len": 2000,  # transcript 전문 기준
-    },
-    "npr_consider": {
-        "rss": "https://feeds.npr.org/510355/podcast.xml",
-        "name": "NPR Consider This",
-        "max": 7,
-        "min_script_len": 2000,  # NPR transcript 전문 기준
+        "min_script_len": 0,  # transcript 없음, description 사용
     },
 }
 
@@ -430,14 +424,7 @@ def main():
         "bbc_learning", SOURCES["bbc_learning"],
         scraper=lambda ep: scrape_bbc_script(ep.get("bbc_transcript_url", ""))
     )
-    process_source(
-        "npr_upfirst", SOURCES["npr_upfirst"],
-        scraper=lambda ep: scrape_npr_transcript(ep.get("link", ""))
-    )
-    process_source(
-        "npr_consider", SOURCES["npr_consider"],
-        scraper=lambda ep: scrape_npr_transcript(ep.get("link", ""))
-    )
+    process_source("all_ears_english", SOURCES["all_ears_english"])
     fetch_kbs_news()
     fetch_korea_herald()
 

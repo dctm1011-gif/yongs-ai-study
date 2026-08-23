@@ -48,9 +48,8 @@ const CATEGORY_COLORS: Record<string, string> = {
 };
 
 const PODCAST_SOURCES = [
-  { key: 'bbc_learning',  label: 'BBC Learning English', color: '#dc2626' },
-  { key: 'npr_upfirst',   label: 'NPR Up First',         color: '#1a56db' },
-  { key: 'npr_consider',  label: 'NPR Consider This',    color: '#7c3aed' },
+  { key: 'bbc_learning',    label: 'BBC Learning English', color: '#dc2626' },
+  { key: 'all_ears_english', label: 'All Ears English',    color: '#059669' },
 ] as const;
 
 // ─── Podcast episode card ─────────────────────────────────────────────────
@@ -333,7 +332,7 @@ export default function BBCScreen() {
         <MaterialIcons name="headphones" size={36} color="#7c3aed" />
         <View style={styles.hubCardBody}>
           <Text style={styles.hubCardName}>Listening</Text>
-          <Text style={styles.hubCardDesc}>BBC · NPR Up First · NPR Consider This</Text>
+          <Text style={styles.hubCardDesc}>BBC Learning English · All Ears English</Text>
         </View>
         <Text style={styles.hubArrow}>›</Text>
       </TouchableOpacity>
