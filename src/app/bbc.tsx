@@ -79,8 +79,11 @@ function EpisodeCard({ ep, color, label }: { ep: PodcastEpisode; color: string; 
     if (soundRef.current) { await soundRef.current.playAsync(); setPlaying(true); return; }
     setLoading(true);
     try {
+      const safeUrl = ep.audio_url
+        .replace(/^http:\/\//, 'https://')
+        .replace('/proto/http/', '/proto/https/');
       const { sound } = await Audio.Sound.createAsync(
-        { uri: ep.audio_url }, { shouldPlay: true }, onStatus
+        { uri: safeUrl }, { shouldPlay: true }, onStatus
       );
       soundRef.current = sound;
       setPlaying(true);

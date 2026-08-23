@@ -93,6 +93,7 @@ def parse_rss(raw: bytes, max_items: int) -> list[dict]:
         audio_url = enc.get("url", "")
         if not audio_url:
             continue
+        audio_url = audio_url.replace("http://", "https://").replace("/proto/http/", "/proto/https/")
 
         pub = item.findtext("pubDate", "").strip()
         desc_raw = item.findtext("description", "") or ""
