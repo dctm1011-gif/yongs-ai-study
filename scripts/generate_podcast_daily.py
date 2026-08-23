@@ -187,6 +187,26 @@ def scrape_kbs_article(url: str) -> str:
     return "\n".join(clean)
 
 
+def scrape_herald_article(url: str) -> str:
+    """Korea Herald 기사 → 본문 텍스트 (id=articleText 파싱)"""
+    raw = fetch(url)
+    if not raw:
+        return ""
+    html = raw.decode("utf-8", errors="ignore")
+
+    m = re.search(r'id="articleText"[^>]*>(.*?)</article>', html, re.DOTALL)
+    if not m:
+        return ""
+
+    paras = re.findall(r'<p[^>]*>(.*?)</p>', m.group(1), re.DOTALL)
+    clean = []
+    for p in paras:
+        t = strip_html(p)
+        if len(t) > 40:  # 짧은 바이라인("Korea Herald correspondent" 등) 제외
+            clean.append(t)
+    return "\n".join(clean)
+
+
 def scrape_news_article(url: str) -> str:
     """뉴스 기사 URL → 본문 텍스트 (범용, Korea Herald 등)"""
     raw = fetch(url)
@@ -440,7 +460,7 @@ def fetch_korea_herald():
         return
 
     print(f"  스크래핑: {article['title'][:50]}")
-    body = scrape_news_article(article["url"])
+    body = scrape_herald_article(article["url"])
     if not body:
         print("  [!] 스크래핑 실패")
         return
