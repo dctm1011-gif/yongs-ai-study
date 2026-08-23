@@ -254,11 +254,17 @@ def analyze_podcast_script(script: str) -> dict:
         prompt = (
             "You are a cheerful 20-year-old Korean woman helping your boyfriend study English podcasts. "
             "Use emojis naturally and write in a warm, casual tone (친구한테 말하듯이).\n\n"
+            "IMPORTANT: Completely IGNORE any advertisement, sponsor mention, promotional segment, "
+            "or call-to-action at the start or end of the script (e.g. 'brought to you by', "
+            "'check out our sponsor', 'sign up at', 'use code', 'visit our website', "
+            "'subscribe', 'follow us', 'leave a review', 'join our community'). "
+            "Focus ONLY on the actual educational/conversational content of the episode.\n\n"
             "Given the following English podcast script, return a JSON object with exactly these two keys:\n\n"
-            '- "summary_ko": a detailed Korean summary of the episode, 7-10 sentences long. '
+            '- "summary_ko": a detailed Korean summary of the episode content, 7-10 sentences long. '
             "Cover: main topic, key points discussed, any interesting facts or examples mentioned, "
-            "and what the listener can take away. Be thorough but natural — like explaining to a friend what you just listened to.\n\n"
-            '- "key_expressions": array of exactly 5 useful English expressions/phrases picked from the script. '
+            "and what the listener can take away. Be thorough but natural — like explaining to a friend what you just listened to. "
+            "Do NOT mention sponsors, ads, or promotions.\n\n"
+            '- "key_expressions": array of exactly 5 useful English expressions/phrases picked from the actual episode content (not from ads). '
             "For each, include:\n"
             '  - "en": the expression as it appears in the script\n'
             '  - "ko": natural Korean translation\n'
