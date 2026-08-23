@@ -243,21 +243,27 @@ def split_into_sentences(text: str, max_count: int = 25) -> list[str]:
     return sents[:max_count]
 
 
-def translate_sentences(sentences: list[str]) -> list[str]:
-    """Claude Haiku로 영어 문장 배열 → 한국어 번역 배열"""
+def translate_and_analyze(sentences: list[str]) -> list[dict]:
+    """Claude Haiku로 영어 문장 배열 → 번역 + 문장 분석"""
     if not ANTHROPIC_API_KEY or not sentences:
-        return [""] * len(sentences)
+        return [{"ko": "", "analysis": ""} for _ in sentences]
     try:
         import anthropic as ant
         client = ant.Anthropic(api_key=ANTHROPIC_API_KEY)
         prompt = (
-            "Translate each English sentence to natural Korean. "
-            "Return ONLY a JSON array of Korean strings (same count, same order, no extra text).\n\n"
+            "For each English news sentence below, return a JSON array where each element has:\n"
+            '- "ko": natural Korean translation\n'
+            '- "analysis": Korean linguistic analysis with these sections (separated by newlines):\n'
+            "  • 문장구조: sentence type and main grammatical pattern (e.g. S+V+O, 분사구문, 관계절 등)\n"
+            "  • 동의어: synonyms for 2-3 key content words (format: word → 동의어1, 동의어2)\n"
+            "  • 동사구: verb+preposition or phrasal verb combinations used (if any)\n"
+            "  • 문법포인트: one notable grammar feature worth learning\n\n"
+            "Return ONLY valid JSON array, no other text.\n\n"
             + json.dumps(sentences, ensure_ascii=False)
         )
         msg = client.messages.create(
             model="claude-haiku-4-5-20251001",
-            max_tokens=2048,
+            max_tokens=6000,
             messages=[{"role": "user", "content": prompt}],
         )
         txt = msg.content[0].text.strip()
@@ -265,10 +271,11 @@ def translate_sentences(sentences: list[str]) -> list[str]:
         if m:
             result = json.loads(m.group())
             if isinstance(result, list) and len(result) == len(sentences):
-                return [str(r) for r in result]
+                return [{"ko": str(r.get("ko", "")), "analysis": str(r.get("analysis", ""))}
+                        for r in result]
     except Exception as e:
-        print(f"  [!] 번역 실패: {e}")
-    return [""] * len(sentences)
+        print(f"  [!] 번역/분석 실패: {e}")
+    return [{"ko": "", "analysis": ""} for _ in sentences]
 
 
 # ── NPR transcript 스크래핑 ──────────────────────────────────────────────────
@@ -466,8 +473,8 @@ def fetch_korea_herald():
         return
 
     sents_en = split_into_sentences(body)
-    sents_ko = translate_sentences(sents_en)
-    article["sentences"] = [{"en": e, "ko": k} for e, k in zip(sents_en, sents_ko)]
+    analyzed = translate_and_analyze(sents_en)
+    article["sentences"] = [{"en": e, **a} for e, a in zip(sents_en, analyzed)]
 
     payload = json.dumps([article], ensure_ascii=False).encode("utf-8")
     url = f"{DB_URL}/english/korea_herald/{today}.json"
@@ -526,8 +533,8 @@ def fetch_kbs_news():
         return
 
     sents_en = split_into_sentences(body)
-    sents_ko = translate_sentences(sents_en)
-    article["sentences"] = [{"en": e, "ko": k} for e, k in zip(sents_en, sents_ko)]
+    analyzed = translate_and_analyze(sents_en)
+    article["sentences"] = [{"en": e, **a} for e, a in zip(sents_en, analyzed)]
 
     payload = json.dumps([article], ensure_ascii=False).encode("utf-8")
     url = f"{DB_URL}/english/korea_news/{today}.json"
