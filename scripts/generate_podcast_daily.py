@@ -378,7 +378,7 @@ def process_source(source_key: str, config: dict, scraper=None):
 
 
 def fetch_korea_herald():
-    """Korea Herald 뉴스 → 문장별 번역 포함 Firebase english/korea_herald/{date}"""
+    """Korea Herald 최신 기사 1개 → 스크래핑+번역 → Firebase english/korea_herald/{date}"""
     print("\n[Korea Herald]")
     rss_url = "https://www.koreaherald.com/rss/newsAll"
     raw = fetch(rss_url)
@@ -392,48 +392,45 @@ def fetch_korea_herald():
         return
 
     today = datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d")
-    articles = []
 
-    for i, item in enumerate(root.findall(".//item")[:25]):
+    # 첫 번째 유효한 기사만 처리
+    article = None
+    for item in root.findall(".//item"):
         title = item.findtext("title", "").strip()
         link = item.findtext("link", "").strip()
-        desc_raw = item.findtext("description", "") or ""
-        desc = strip_html(desc_raw).strip()
         cat = item.findtext("category", "").strip()
+        if title and link:
+            article = {"title": title, "category": cat, "url": link}
+            break
 
-        if not title or len(desc) < 20:
-            continue
-
-        if i == 0:
-            # 첫 번째 기사만 전문 스크래핑 + 번역
-            print(f"  스크래핑: {title[:50]}")
-            full_text = scrape_news_article(link) if link else ""
-            body = full_text if len(full_text) > len(desc) + 100 else desc
-            sents_en = split_into_sentences(body) or [desc]
-            sents_ko = translate_sentences(sents_en)
-            sentences = [{"en": e, "ko": k} for e, k in zip(sents_en, sents_ko)]
-            articles.append({"title": title, "category": cat, "sentences": sentences, "url": link})
-        else:
-            articles.append({"title": title, "category": cat, "summary": desc, "url": link})
-
-    if not articles:
+    if not article:
         print("  기사 없음")
         return
 
-    payload = json.dumps(articles, ensure_ascii=False).encode("utf-8")
+    print(f"  스크래핑: {article['title'][:50]}")
+    body = scrape_news_article(article["url"])
+    if not body:
+        print("  [!] 스크래핑 실패")
+        return
+
+    sents_en = split_into_sentences(body)
+    sents_ko = translate_sentences(sents_en)
+    article["sentences"] = [{"en": e, "ko": k} for e, k in zip(sents_en, sents_ko)]
+
+    payload = json.dumps([article], ensure_ascii=False).encode("utf-8")
     url = f"{DB_URL}/english/korea_herald/{today}.json"
     req = urllib.request.Request(url, data=payload, method="PUT",
                                   headers={"Content-Type": "application/json"})
     try:
         with urllib.request.urlopen(req, timeout=15) as r:
             r.read()
-        print(f"  ✓ {today} — {len(articles)}개 기사 저장")
+        print(f"  ✓ {today} — {article['title'][:50]} ({len(sents_en)}문장)")
     except Exception as e:
         print(f"  [!] Firebase 저장 실패: {e}")
 
 
 def fetch_kbs_news():
-    """KBS World Radio 영어 뉴스 → 문장별 번역 포함 Firebase english/korea_news/{date}"""
+    """KBS World 최신 기사 1개 → 스크래핑+번역 → Firebase english/korea_news/{date}"""
     print("\n[KBS World Korea News]")
     rss_url = "https://world.kbs.co.kr/rss/rss_news.htm?lang=e"
     raw = fetch(rss_url)
@@ -447,9 +444,10 @@ def fetch_kbs_news():
         return
 
     today = datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d")
-    articles = []
 
-    for i, item in enumerate(root.findall(".//item")[:15]):
+    # 첫 번째 유효한 기사만 처리
+    article = None
+    for item in root.findall(".//item"):
         title = item.findtext("title", "").strip()
         link = item.findtext("link", "").strip()
         desc_raw = item.findtext("description", "") or ""
@@ -457,41 +455,36 @@ def fetch_kbs_news():
         for ent, ch in [("&quot;", '"'), ("&amp;", "&"), ("&nbsp;", " "), ("&#39;", "'")]:
             desc = desc.replace(ent, ch)
         desc = re.sub(r"\s+", " ", desc).strip()
-
-        # [Category] : 텍스트 분리
         cat = ""
         m = re.match(r"\[([^\]]+)\]\s*:?\s*", desc)
         if m:
             cat = m.group(1)
-            desc = desc[m.end():].strip()
+        if title and link:
+            article = {"title": title, "category": cat, "url": link}
+            break
 
-        if not title or len(desc) < 30:
-            continue
-
-        if i == 0:
-            # 첫 번째 기사만 전문 스크래핑 + 번역
-            print(f"  스크래핑: {title[:50]}")
-            full_text = scrape_news_article(link) if link else ""
-            body = full_text if len(full_text) > len(desc) + 100 else desc
-            sents_en = split_into_sentences(body) or [desc]
-            sents_ko = translate_sentences(sents_en)
-            sentences = [{"en": e, "ko": k} for e, k in zip(sents_en, sents_ko)]
-            articles.append({"title": title, "category": cat, "sentences": sentences, "url": link})
-        else:
-            articles.append({"title": title, "category": cat, "summary": desc, "url": link})
-
-    if not articles:
+    if not article:
         print("  기사 없음")
         return
 
-    payload = json.dumps(articles, ensure_ascii=False).encode("utf-8")
+    print(f"  스크래핑: {article['title'][:50]}")
+    body = scrape_news_article(article["url"])
+    if not body:
+        print("  [!] 스크래핑 실패")
+        return
+
+    sents_en = split_into_sentences(body)
+    sents_ko = translate_sentences(sents_en)
+    article["sentences"] = [{"en": e, "ko": k} for e, k in zip(sents_en, sents_ko)]
+
+    payload = json.dumps([article], ensure_ascii=False).encode("utf-8")
     url = f"{DB_URL}/english/korea_news/{today}.json"
     req = urllib.request.Request(url, data=payload, method="PUT",
                                   headers={"Content-Type": "application/json"})
     try:
         with urllib.request.urlopen(req, timeout=15) as r:
             r.read()
-        print(f"  ✓ {today} — {len(articles)}개 기사 저장")
+        print(f"  ✓ {today} — {article['title'][:50]} ({len(sents_en)}문장)")
     except Exception as e:
         print(f"  [!] Firebase 저장 실패: {e}")
 
