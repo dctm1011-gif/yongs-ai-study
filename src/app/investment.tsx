@@ -133,6 +133,40 @@ const GYEONGGI_HIGH_SCHOOLS: SchoolEntry[] = [
   { rank: 30, name: '신봉고등학교',       city: '용인시',   gu: '수지구', dong: '신봉동'   },
 ];
 
+// 특목고(과학고·외국어고·자사고) 진학률 기준 경기도 중학교
+// 출처: 학교알리미 졸업생 진로현황 기반 (blog.allinfo.today) · 2024년 기준
+type SpecialSchoolEntry = SchoolEntry & { rate: number };
+const GYEONGGI_MIDDLE_SPECIAL_SCHOOLS: SpecialSchoolEntry[] = [
+  { rank: 1,  name: '문원중학교',       city: '과천시', gu: '',       dong: '문원동',   rate: 22.19 },
+  { rank: 2,  name: '범계중학교',       city: '안양시', gu: '동안구', dong: '범계동',   rate: 16.50 },
+  { rank: 3,  name: '귀인중학교',       city: '안양시', gu: '동안구', dong: '귀인동',   rate: 13.55 },
+  { rank: 4,  name: '서원중학교',       city: '용인시', gu: '수지구', dong: '상현동',   rate: 11.45 },
+  { rank: 5,  name: '과천중학교',       city: '과천시', gu: '',       dong: '별양동',   rate: 11.36 },
+  { rank: 6,  name: '이현중학교',       city: '용인시', gu: '수지구', dong: '풍덕천동', rate: 10.82 },
+  { rank: 7,  name: '성복중학교',       city: '용인시', gu: '수지구', dong: '성복동',   rate: 10.68 },
+  { rank: 8,  name: '용인신촌중학교',   city: '용인시', gu: '기흥구', dong: '신촌동',   rate: 10.64 },
+  { rank: 9,  name: '백현중학교',       city: '성남시', gu: '분당구', dong: '정자동',   rate:  8.39 },
+  { rank: 10, name: '보평중학교',       city: '성남시', gu: '분당구', dong: '판교동',   rate:  8.15 },
+  { rank: 11, name: '광교중학교',       city: '수원시', gu: '영통구', dong: '이의동',   rate:  8.13 },
+  { rank: 12, name: '평촌중학교',       city: '안양시', gu: '동안구', dong: '평촌동',   rate:  8.10 },
+  { rank: 13, name: '운중중학교',       city: '성남시', gu: '분당구', dong: '운중동',   rate:  8.02 },
+  { rank: 14, name: '양영중학교',       city: '성남시', gu: '분당구', dong: '서현동',   rate:  7.84 },
+  { rank: 15, name: '이매중학교',       city: '성남시', gu: '분당구', dong: '이매동',   rate:  7.10 },
+  { rank: 16, name: '수내중학교',       city: '성남시', gu: '분당구', dong: '수내동',   rate:  6.85 },
+  { rank: 17, name: '수지중학교',       city: '용인시', gu: '수지구', dong: '풍덕천동', rate:  6.25 },
+  { rank: 18, name: '신봉중학교',       city: '용인시', gu: '수지구', dong: '신봉동',   rate:  5.70 },
+  { rank: 19, name: '상현중학교',       city: '용인시', gu: '수지구', dong: '상현동',   rate:  5.41 },
+  { rank: 20, name: '동백중학교',       city: '용인시', gu: '기흥구', dong: '동백동',   rate:  5.39 },
+  { rank: 21, name: '서현중학교',       city: '성남시', gu: '분당구', dong: '서현동',   rate:  4.83 },
+  { rank: 22, name: '흥덕중학교',       city: '용인시', gu: '기흥구', dong: '영덕동',   rate:  4.66 },
+  { rank: 23, name: '구성중학교',       city: '용인시', gu: '기흥구', dong: '마북동',   rate:  4.35 },
+  { rank: 24, name: '분당중학교',       city: '성남시', gu: '분당구', dong: '수내동',   rate:  3.73 },
+  { rank: 25, name: '동탄중학교',       city: '화성시', gu: '동탄구', dong: '청계동',   rate:  3.42 },
+  { rank: 26, name: '판교중학교',       city: '성남시', gu: '분당구', dong: '판교동',   rate:  3.31 },
+  { rank: 27, name: '손곡중학교',       city: '용인시', gu: '수지구', dong: '동천동',   rate:  1.84 },
+  { rank: 28, name: '야탑중학교',       city: '성남시', gu: '분당구', dong: '야탑동',   rate:  1.10 },
+];
+
 // ─── 양도세율 정적 데이터 ───────────────────────────────────────────────────
 const TAX_RATE_SERIES = [
   {
@@ -2474,18 +2508,59 @@ const SchoolTable: React.FC<{ schools: SchoolEntry[]; collapsed: boolean }> = Re
 });
 
 
+const SpecialSchoolTable: React.FC<{ schools: SpecialSchoolEntry[]; collapsed: boolean }> = React.memo(({ schools, collapsed }) => {
+  const list = collapsed ? schools.slice(0, 10) : schools;
+  return (
+    <>
+      <View style={{ flexDirection: 'row', paddingHorizontal: 16, paddingVertical: 10, backgroundColor: '#f3f4f6', borderBottomWidth: 1, borderBottomColor: '#e5e7eb' }}>
+        <Text style={{ width: 30, fontSize: 11, fontWeight: '600', color: '#6b7280' }}>순위</Text>
+        <Text style={{ flex: 1.5, fontSize: 11, fontWeight: '600', color: '#6b7280' }}>학교명</Text>
+        <Text style={{ flex: 1.3, fontSize: 11, fontWeight: '600', color: '#6b7280' }}>위치</Text>
+        <Text style={{ flex: 0.8, fontSize: 11, fontWeight: '600', color: '#4f46e5', textAlign: 'right' }}>진학률</Text>
+      </View>
+      {list.map(school => {
+        const isTop3 = school.rank <= 3;
+        const rankColor = school.rank === 1 ? SCHOOL_ROW_COLORS.gold : school.rank === 2 ? SCHOOL_ROW_COLORS.silver : school.rank === 3 ? SCHOOL_ROW_COLORS.bronze : SCHOOL_ROW_COLORS.normal;
+        const rateColor = school.rate >= 15 ? '#dc2626' : school.rate >= 10 ? '#d97706' : school.rate >= 5 ? '#2563eb' : '#6b7280';
+        const location = [school.city, school.gu, school.dong].filter(Boolean).join(' ');
+        return (
+          <View key={school.rank} style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 12, backgroundColor: isTop3 ? '#fffbeb' : '#fff', borderBottomWidth: 1, borderBottomColor: '#f3f4f6' }}>
+            <Text style={{ width: 30, fontSize: 13, fontWeight: '700', color: rankColor }}>{school.rank}</Text>
+            <Text style={{ flex: 1.5, fontSize: 13, fontWeight: isTop3 ? '600' : '400', color: '#262626' }}>{school.name}</Text>
+            <Text style={{ flex: 1.3, fontSize: 11, color: '#6b7280' }}>{location}</Text>
+            <Text style={{ flex: 0.8, fontSize: 13, fontWeight: '700', color: rateColor, textAlign: 'right' }}>{school.rate.toFixed(1)}%</Text>
+          </View>
+        );
+      })}
+    </>
+  );
+});
+
 const SchoolAnalysisModal = React.memo<{ visible: boolean; onClose: () => void }>(
   function SchoolAnalysisModal({ visible, onClose }) {
     const [activeTab, setActiveTab] = useState<'elem' | 'middle' | 'high'>('middle');
+    const [criteria, setCriteria] = useState<'location' | 'special'>('location');
     const [collapsed, setCollapsed] = useState(false);
 
     const handleTabPress = useCallback((tab: 'elem' | 'middle' | 'high') => {
       setActiveTab(tab);
+      setCriteria('location');
       setCollapsed(false);
     }, []);
 
+    const handleCriteriaPress = useCallback((c: 'location' | 'special') => {
+      setCriteria(c);
+      setCollapsed(false);
+    }, []);
+
+    const isSpecial = activeTab === 'middle' && criteria === 'special';
     const tabData = activeTab === 'elem' ? GYEONGGI_ELEM_SCHOOLS : activeTab === 'middle' ? GYEONGGI_MIDDLE_SCHOOLS : GYEONGGI_HIGH_SCHOOLS;
-    const listLength = tabData.length;
+    const specialData = GYEONGGI_MIDDLE_SPECIAL_SCHOOLS;
+    const listLength = isSpecial ? specialData.length : tabData.length;
+
+    const footnote = isSpecial
+      ? '※ 출처: 학교알리미 졸업생 진로현황 (blog.allinfo.today) · 과학고+외국어고+자사고 합산 · 2024년 기준'
+      : '※ 위치 정보 출처: NEIS 나이스 교육정보시스템 공식 API · 번호는 지역별 나열';
 
     return (
       <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
@@ -2515,8 +2590,29 @@ const SchoolAnalysisModal = React.memo<{ visible: boolean; onClose: () => void }
               );
             })}
           </View>
+          {/* 기준 선택 (중학교 탭에서만) */}
+          {activeTab === 'middle' && (
+            <View style={{ flexDirection: 'row', gap: 8, paddingHorizontal: 16, paddingVertical: 10, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#f3f4f6' }}>
+              {(['location', 'special'] as const).map(c => {
+                const label = c === 'location' ? '지역별 목록' : '특목고 진학률 순위';
+                const isActive = criteria === c;
+                return (
+                  <TouchableOpacity
+                    key={c}
+                    onPress={() => handleCriteriaPress(c)}
+                    style={{ paddingHorizontal: 12, paddingVertical: 6, borderRadius: 20, backgroundColor: isActive ? '#262626' : '#f3f4f6' }}
+                  >
+                    <Text style={{ fontSize: 12, fontWeight: '600', color: isActive ? '#fff' : '#6b7280' }}>{label}</Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          )}
           <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingBottom: 40 }}>
-            <SchoolTable schools={tabData} collapsed={collapsed} />
+            {isSpecial
+              ? <SpecialSchoolTable schools={specialData} collapsed={collapsed} />
+              : <SchoolTable schools={tabData} collapsed={collapsed} />
+            }
             <TouchableOpacity
               onPress={() => setCollapsed(v => !v)}
               style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: 14, gap: 4, backgroundColor: '#fff', borderTopWidth: 1, borderTopColor: '#f3f4f6' }}
@@ -2524,7 +2620,7 @@ const SchoolAnalysisModal = React.memo<{ visible: boolean; onClose: () => void }
               <Text style={{ fontSize: 13, fontWeight: '600', color: '#374151' }}>{collapsed ? `펼치기 (${listLength - 10}개 더보기)` : '접기'}</Text>
               <MaterialIcons name={collapsed ? 'expand-more' : 'expand-less'} size={18} color="#374151" />
             </TouchableOpacity>
-            <Text style={{ fontSize: 10, color: '#9ca3af', marginHorizontal: 16, marginTop: 8, lineHeight: 15 }}>※ 위치 정보 출처: NEIS 나이스 교육정보시스템 공식 API · 번호는 지역별 나열 (공식 학업성취도 통계 미공개)</Text>
+            <Text style={{ fontSize: 10, color: '#9ca3af', marginHorizontal: 16, marginTop: 8, lineHeight: 15 }}>{footnote}</Text>
           </ScrollView>
         </SafeAreaView>
       </Modal>
