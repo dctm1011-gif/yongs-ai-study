@@ -250,7 +250,12 @@ def analyze_podcast_script(script: str) -> dict:
     try:
         import anthropic as ant
         client = ant.Anthropic(api_key=ANTHROPIC_API_KEY)
-        truncated = script[:5000] if len(script) > 5000 else script
+        # 긴 스크립트는 앞 1500자(광고/인트로 구간) 건너뛰고 본문 위주로 전달
+        if len(script) > 3000:
+            start = 1500
+            truncated = script[start:start + 5000]
+        else:
+            truncated = script
         prompt = (
             "You are a cheerful 20-year-old Korean woman helping your boyfriend study English podcasts. "
             "Use emojis naturally and write in a warm, casual tone (친구한테 말하듯이).\n\n"
