@@ -2,16 +2,19 @@
 """
 영어학습 팟캐스트 수집기
 - BBC Learning English: RSS description 내 transcript URL로 스크립트 스크래핑
-- NPR Up First: 최근 7개 (transcript 전문, 24-48h 딜레이 후 재시도)
-- VOA Learning English: RSS max 20개 (스크립트 없음, 단순 설명)
+- All Ears English: RSS description 사용
+- KBS World / Korea Herald: 기사 전문 스크래핑 + Claude Haiku 문장별 번역
 매일 05:00 KST GitHub Actions에서 실행 — MIN_SCRIPT_LEN 미만이면 재시도
 """
 import json
+import os
 import re
 import urllib.request
 from datetime import datetime, timezone, timedelta
 from email.utils import parsedate
 from xml.etree import ElementTree
+
+ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 
 DB_URL = "https://yongstudy-1f242-default-rtdb.asia-southeast1.firebasedatabase.app"
 ITUNES_NS = "http://www.itunes.com/dtds/podcast-1.0.dtd"
@@ -149,6 +152,71 @@ def scrape_bbc_script(bbc_transcript_url: str) -> str:
         print(f"    BBC 스크립트: {len(result)}자 ({len(texts)}단락)")
         return result
     return ""
+
+
+# ── 뉴스 기사 본문 스크래핑 ──────────────────────────────────────────────────
+def scrape_news_article(url: str) -> str:
+    """뉴스 기사 URL → 본문 텍스트 (범용)"""
+    raw = fetch(url)
+    if not raw:
+        return ""
+    html = raw.decode("utf-8", errors="ignore")
+
+    # 공통 기사 컨테이너 패턴 시도
+    for pat in [
+        r'<div[^>]+class="[^"]*(?:article[_-](?:view|body|content|text)|news[_-](?:body|content|text)|story[_-]body|detail[_-]body|content[_-]area|board[_-]content)[^"]*"[^>]*>(.*?)</div\s*>',
+        r'<div[^>]+id="[^"]*(?:articleText|article[_-]body|news[_-]content|story[_-]body)[^"]*"[^>]*>(.*?)</div\s*>',
+        r'<article[^>]*>(.*?)</article>',
+    ]:
+        m = re.search(pat, html, re.DOTALL | re.IGNORECASE)
+        if m:
+            paras = [strip_html(p) for p in re.findall(r'<p[^>]*>(.*?)</p>', m.group(1), re.DOTALL)]
+            paras = [p for p in paras if len(p) > 30]
+            if len(paras) >= 2:
+                return "\n".join(paras)
+
+    # fallback: 전체 <p> 태그에서 본문 추정
+    paras = [strip_html(p) for p in re.findall(r'<p[^>]*>(.*?)</p>', html, re.DOTALL)]
+    bad = ['copyright', 'rights reserved', 'subscribe', 'newsletter',
+           'advertisement', '©', 'sign up', 'click here']
+    paras = [p for p in paras if len(p) > 60 and not any(kw in p.lower() for kw in bad)]
+    return "\n".join(paras[:40])
+
+
+def split_into_sentences(text: str, max_count: int = 25) -> list[str]:
+    """영어 본문 → 문장 배열 (최대 max_count개)"""
+    text = text.replace("\n", " ")
+    sents = re.split(r'(?<=[.!?])\s+(?=[A-Z"\'])', text)
+    sents = [s.strip() for s in sents if len(s.strip()) > 20]
+    return sents[:max_count]
+
+
+def translate_sentences(sentences: list[str]) -> list[str]:
+    """Claude Haiku로 영어 문장 배열 → 한국어 번역 배열"""
+    if not ANTHROPIC_API_KEY or not sentences:
+        return [""] * len(sentences)
+    try:
+        import anthropic as ant
+        client = ant.Anthropic(api_key=ANTHROPIC_API_KEY)
+        prompt = (
+            "Translate each English sentence to natural Korean. "
+            "Return ONLY a JSON array of Korean strings (same count, same order, no extra text).\n\n"
+            + json.dumps(sentences, ensure_ascii=False)
+        )
+        msg = client.messages.create(
+            model="claude-haiku-4-5-20251001",
+            max_tokens=2048,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        txt = msg.content[0].text.strip()
+        m = re.search(r"\[.*\]", txt, re.DOTALL)
+        if m:
+            result = json.loads(m.group())
+            if isinstance(result, list) and len(result) == len(sentences):
+                return [str(r) for r in result]
+    except Exception as e:
+        print(f"  [!] 번역 실패: {e}")
+    return [""] * len(sentences)
 
 
 # ── NPR transcript 스크래핑 ──────────────────────────────────────────────────
@@ -310,7 +378,7 @@ def process_source(source_key: str, config: dict, scraper=None):
 
 
 def fetch_korea_herald():
-    """Korea Herald 전체 뉴스 → Firebase english/korea_herald/{date}"""
+    """Korea Herald 뉴스 → 문장별 번역 포함 Firebase english/korea_herald/{date}"""
     print("\n[Korea Herald]")
     rss_url = "https://www.koreaherald.com/rss/newsAll"
     raw = fetch(rss_url)
@@ -336,10 +404,22 @@ def fetch_korea_herald():
         if not title or len(desc) < 20:
             continue
 
+        # 전문 스크래핑 시도, 실패 시 RSS description 사용
+        print(f"  스크래핑: {title[:50]}")
+        full_text = scrape_news_article(link) if link else ""
+        body = full_text if len(full_text) > len(desc) + 100 else desc
+
+        sents_en = split_into_sentences(body)
+        if not sents_en:
+            sents_en = [desc]
+
+        sents_ko = translate_sentences(sents_en)
+        sentences = [{"en": e, "ko": k} for e, k in zip(sents_en, sents_ko)]
+
         articles.append({
             "title": title,
             "category": cat,
-            "summary": desc,
+            "sentences": sentences,
             "url": link,
         })
 
@@ -360,7 +440,7 @@ def fetch_korea_herald():
 
 
 def fetch_kbs_news():
-    """KBS World Radio 영어 뉴스 → Firebase english/korea_news/{date}"""
+    """KBS World Radio 영어 뉴스 → 문장별 번역 포함 Firebase english/korea_news/{date}"""
     print("\n[KBS World Korea News]")
     rss_url = "https://world.kbs.co.kr/rss/rss_news.htm?lang=e"
     raw = fetch(rss_url)
@@ -395,10 +475,22 @@ def fetch_kbs_news():
         if not title or len(desc) < 30:
             continue
 
+        # 기사 전문 스크래핑 시도, 실패 시 RSS description 사용
+        print(f"  스크래핑: {title[:50]}")
+        full_text = scrape_news_article(link) if link else ""
+        body = full_text if len(full_text) > len(desc) + 100 else desc
+
+        sents_en = split_into_sentences(body)
+        if not sents_en:
+            sents_en = [desc]
+
+        sents_ko = translate_sentences(sents_en)
+        sentences = [{"en": e, "ko": k} for e, k in zip(sents_en, sents_ko)]
+
         articles.append({
             "title": title,
             "category": cat,
-            "summary": desc,
+            "sentences": sentences,
             "url": link,
         })
 
