@@ -250,31 +250,29 @@ def analyze_podcast_script(script: str) -> dict:
     try:
         import anthropic as ant
         client = ant.Anthropic(api_key=ANTHROPIC_API_KEY)
-        # 긴 스크립트는 앞 1500자(광고/인트로 구간) 건너뛰고 본문 위주로 전달
-        if len(script) > 3000:
-            start = 1500
-            truncated = script[start:start + 5000]
-        else:
-            truncated = script
+        # 전체 스크립트를 보내서 Claude가 교육 콘텐츠를 직접 식별하도록 함
+        truncated = script[:8000] if len(script) > 8000 else script
         prompt = (
             "You are a cheerful 20-year-old Korean woman helping your boyfriend study English podcasts. "
             "Use emojis naturally and write in a warm, casual tone (친구한테 말하듯이).\n\n"
-            "IMPORTANT: Completely IGNORE any advertisement, sponsor mention, promotional segment, "
-            "or call-to-action at the start or end of the script (e.g. 'brought to you by', "
-            "'check out our sponsor', 'sign up at', 'use code', 'visit our website', "
-            "'subscribe', 'follow us', 'leave a review', 'join our community'). "
-            "Focus ONLY on the actual educational/conversational content of the episode.\n\n"
-            "Given the following English podcast script, return a JSON object with exactly these two keys:\n\n"
-            '- "summary_ko": a detailed Korean summary of the episode content, 7-10 sentences long. '
-            "Cover: main topic, key points discussed, any interesting facts or examples mentioned, "
-            "and what the listener can take away. Be thorough but natural — like explaining to a friend what you just listened to. "
-            "Do NOT mention sponsors, ads, or promotions.\n\n"
-            '- "key_expressions": array of exactly 5 useful English expressions/phrases picked from the actual episode content (not from ads). '
-            "For each, include:\n"
-            '  - "en": the expression as it appears in the script\n'
+            "The script below may contain advertisements, sponsor segments, subscription prompts, "
+            "review requests, website links, or other promotional content — these appear at the start AND/OR end. "
+            "Your job is to READ THE ENTIRE SCRIPT, identify which parts are actual educational/conversational content "
+            "(the lesson, the main discussion, the conversation between hosts, the examples and stories), "
+            "and ONLY summarize and analyze those parts. Skip ALL promotional/ad content entirely.\n\n"
+            "If the script is mostly promotional with very little educational content, "
+            "extract whatever genuine learning moments exist, even if brief.\n\n"
+            "Given the following podcast script, return a JSON object with exactly these two keys:\n\n"
+            '- "summary_ko": a detailed Korean summary of the actual episode content, 7-10 sentences long. '
+            "What is the main topic? What did the hosts discuss or teach? What examples or stories did they share? "
+            "What can the listener take away? Write naturally with emojis, like telling a friend what you learned. "
+            "Do NOT mention ads, sponsors, or any promotional content.\n\n"
+            '- "key_expressions": array of exactly 5 useful English expressions from the actual lesson/conversation (never from ads). '
+            "For each:\n"
+            '  - "en": the expression as used in the script\n'
             '  - "ko": natural Korean translation\n'
-            '  - "analysis": friendly Korean explanation — structure, synonyms/alternatives, '
-            "colloquial English version shown in single quotes like 'casual version here', and a memorable tip\n\n"
+            '  - "analysis": friendly Korean explanation — structure, alternatives, '
+            "colloquial English version in single quotes like 'say it this way', memorable tip\n\n"
             "Return ONLY valid JSON, no other text.\n\n"
             "SCRIPT:\n" + truncated
         )
