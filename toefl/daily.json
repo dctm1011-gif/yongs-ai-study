@@ -1,190 +1,118 @@
 {
   "date": "2026-08-24",
   "reading": {
-    "title": "Archaeological Methods in Dating Ancient Civilizations",
-    "passage": "Radiocarbon dating has revolutionized archaeological research by enabling scientists to determine the age of organic materials with remarkable precision. This technique, developed in the 1940s, measures the decay of carbon-14 isotopes in artifacts such as bones, wood, and textiles. As living organisms continuously exchange carbon with the atmosphere, the ratio of carbon-14 to carbon-12 remains constant during life. However, once an organism dies, this exchange ceases, and the carbon-14 begins to decay at a predictable rate. By measuring the remaining carbon-14 concentration in an artifact, archaeologists can calculate when the organism died, typically within a margin of error of 50 to 100 years for materials up to 50,000 years old.\n\nDespite its widespread application, radiocarbon dating has significant limitations. The technique requires relatively large samples and assumes that the atmospheric carbon-14 concentration has remained constant throughout history, an assumption that has proven partially incorrect. Fluctuations in solar activity and variations in Earth's magnetic field have altered carbon-14 levels over millennia. Consequently, archaeologists now use calibration curves to adjust radiocarbon dates, correlating them with tree-ring data and other chronometric methods. Furthermore, contamination from modern carbon sources can skew results, necessitating meticulous sample preparation and handling protocols in specialized laboratories.",
-    "vocabulary": [
-      {
-        "word": "radiocarbon dating",
-        "meaning_ko": "방사성탄소 연대측정법"
-      },
-      {
-        "word": "organic materials",
-        "meaning_ko": "유기물"
-      },
-      {
-        "word": "isotopes",
-        "meaning_ko": "동위원소"
-      },
-      {
-        "word": "decay",
-        "meaning_ko": "붕괴, 감소"
-      },
-      {
-        "word": "chronometric methods",
-        "meaning_ko": "시간 측정 방법"
-      },
-      {
-        "word": "calibration curves",
-        "meaning_ko": "보정 곡선"
-      },
-      {
-        "word": "contamination",
-        "meaning_ko": "오염"
-      },
-      {
-        "word": "meticulous",
-        "meaning_ko": "세심한, 꼼꼼한"
-      }
-    ],
+    "title": "The Impact of Remote Work on Urban Development",
+    "passage": "Remote work has fundamentally transformed how cities develop and function. As companies embrace flexible work arrangements, fewer employees commute daily, reducing traffic congestion and pollution in urban centers. However, this shift creates challenges for city planners. Commercial real estate values decline when office spaces sit empty, threatening local tax revenues. Additionally, suburban areas experience rapid growth as workers relocate, straining infrastructure and services. Urban renewal requires adapting vacant buildings into residential spaces and community centers. Cities that successfully transition will prioritize mixed-use developments, promoting both residential and commercial integration.",
     "questions": [
       {
-        "q": "According to the passage, what is the primary principle behind radiocarbon dating?",
+        "q": "According to the passage, what is one challenge that remote work creates for city planners?",
         "options": [
-          "Carbon-14 levels increase after an organism dies.",
-          "Living organisms continuously exchange carbon with the atmosphere, but this exchange stops after death.",
-          "The ratio of carbon-14 to carbon-12 increases over time.",
-          "Carbon-14 isotopes are found only in ancient civilizations."
+          "Increased traffic congestion in downtown areas",
+          "Decline in commercial real estate values",
+          "Reduced suburban development",
+          "Higher pollution levels"
         ],
         "answer": 1,
-        "explanation": "지문의 첫 번째 단락에서 '생물이 살아있을 때는 대기와 지속적으로 탄소를 교환하지만, 죽으면 이 교환이 멈추고 탄소-14가 예측 가능한 속도로 붕괴한다'고 명시되어 있습니다."
+        "explanation": "본문에서 'Commercial real estate values decline when office spaces sit empty'라고 명시되어 있습니다. 이는 도시 계획자들이 직면하는 구체적인 문제입니다."
       },
       {
-        "q": "What can be inferred from the passage about the reliability of radiocarbon dating?",
+        "q": "What does the passage suggest cities should do to successfully transition?",
         "options": [
-          "It is completely accurate with no margin of error.",
-          "It is reliable for dating materials up to 50,000 years old, but requires calibration adjustments.",
-          "It cannot be used for organic materials.",
-          "It has become obsolete due to modern contamination."
-        ],
-        "answer": 1,
-        "explanation": "지문에서 50,000년까지의 물질에 대해 50~100년의 오차 범위 내에서 신뢰할 수 있으며, 보정 곡선을 사용하여 조정된다고 설명합니다."
-      },
-      {
-        "q": "The word 'meticulous' in the second paragraph is closest in meaning to...",
-        "options": [
-          "quick and efficient",
-          "careless and negligent",
-          "careful and thorough",
-          "experimental and uncertain"
+          "Increase office building construction",
+          "Discourage residential development",
+          "Prioritize mixed-use developments",
+          "Maintain traditional business districts"
         ],
         "answer": 2,
-        "explanation": "'meticulous'는 '세심한, 꼼꼼한'이라는 의미로, 샘플 준비의 신중함과 정밀함을 나타냅니다."
+        "explanation": "'Cities that successfully transition will prioritize mixed-use developments'라는 문장에서 도시가 성공적으로 전환하기 위해 해야 할 일을 설명하고 있습니다."
       },
       {
-        "q": "Why does the author mention fluctuations in solar activity and Earth's magnetic field?",
+        "q": "Which of the following is mentioned as a positive effect of remote work?",
         "options": [
-          "To explain why radiocarbon dating was invented.",
-          "To demonstrate that atmospheric carbon-14 levels have changed over time, affecting dating accuracy.",
-          "To suggest that archaeologists should abandon radiocarbon dating.",
-          "To illustrate that organic materials decay more rapidly in certain conditions."
+          "Increased commercial real estate profits",
+          "Reduced traffic congestion and pollution",
+          "Faster suburban growth",
+          "Higher city tax revenues"
         ],
         "answer": 1,
-        "explanation": "저자는 이들 요인이 역사적으로 탄소-14 수준을 변화시켰으며, 따라서 보정이 필요하다는 점을 보여주기 위해 언급했습니다."
+        "explanation": "'fewer employees commute daily, reducing traffic congestion and pollution in urban centers'에서 원격 근무의 긍정적 효과를 찾을 수 있습니다."
       }
     ]
   },
   "writing": {
-    "topic": "Should governments implement strict regulations on artificial intelligence development?",
-    "sentences": [
-      {
-        "original": "This technique, developed in the 1940s, measures the decay of carbon-14 isotopes in artifacts such as bones, wood, and textiles.",
-        "paraphrase": "Artifacts including bones, wood, and textiles can have their carbon-14 isotope decay measured through this methodology, which was established during the 1940s.",
-        "tip": "능동→수동 변환 및 명사 위치 재배치를 통한 표현 다양화"
-      },
-      {
-        "original": "As living organisms continuously exchange carbon with the atmosphere, the ratio of carbon-14 to carbon-12 remains constant during life.",
-        "paraphrase": "The constancy of the carbon-14 to carbon-12 ratio throughout an organism's lifetime results from the perpetual carbon exchange between the organism and the atmosphere.",
-        "tip": "인과관계를 명확히 하고 동사를 명사화하여 학술적 표현 강화"
-      },
-      {
-        "original": "By measuring the remaining carbon-14 concentration in an artifact, archaeologists can calculate when the organism died, typically within a margin of error of 50 to 100 years for materials up to 50,000 years old.",
-        "paraphrase": "Archaeologists are able to determine the death time of an organism through measurement of residual carbon-14 levels, achieving accuracy margins of 50 to 100 years for organic materials not exceeding 50,000 years in age.",
-        "tip": "수치 표현을 보다 자연스럽게 재구성하고 전치사 사용 변경"
-      }
+    "prompt": "Do you agree or disagree with the statement: 'Remote work is better than working in a traditional office environment'?",
+    "structure": {
+      "intro": "의견을 명확히 제시하되, 찬성 또는 반대 입장을 분명히 하고 2-3개의 주요 이유를 소개합니다.",
+      "body1": "첫 번째 이유를 구체적인 예시와 함께 설명합니다. 예: 유연성, 효율성, 생활의 질 향상 등",
+      "body2": "두 번째 이유를 제시하고 상세히 전개합니다. 반대 주장에 대한 반박도 포함할 수 있습니다.",
+      "conclusion": "주요 논점을 요약하고 최종 의견을 재확인하며 전체 주장을 강화합니다."
+    },
+    "useful_phrases": [
+      "In my opinion,",
+      "I strongly believe that...",
+      "From my perspective,",
+      "Furthermore,",
+      "In addition,",
+      "However, some people argue that...",
+      "Although this may be true,",
+      "For example,",
+      "In conclusion,",
+      "To summarize,"
     ]
   },
   "speaking": {
-    "prompt": "Some people are morning people who wake up early and feel most productive in the morning. Others are evening people who feel more alert and focused at night. Which do you prefer and why? Include specific reasons and examples from your own experience.",
-    "model_sentences": [
-      "I personally prefer being a morning person because I find that waking up early gives me a sense of accomplishment and sets a positive tone for the entire day.",
-      "The main reason is that my mind feels clearest and sharpest in the early hours, which allows me to concentrate on important tasks more effectively.",
-      "For example, when I wake up at six in the morning, I can complete my homework or study for exams before most people are even awake, and I feel much less stressed.",
-      "Additionally, morning routines like exercise and a healthy breakfast give me sustained energy throughout the day, unlike the energy crashes I used to experience when staying up late.",
-      "Therefore, I believe that being a morning person not only improves my productivity and academic performance but also enhances my overall well-being and mental health."
+    "prompt": "Some people prefer working in a traditional office. Others prefer remote work. Which do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer... because...",
+      "One reason is that...",
+      "Another advantage is...",
+      "For example,",
+      "This means...",
+      "As a result,",
+      "In conclusion, I believe..."
+    ],
+    "sample_points": [
+      "원격 근무는 통근 시간을 절약하고 개인 시간을 더 확보할 수 있으며, 유연한 일정으로 생산성을 높일 수 있습니다.",
+      "반면 사무실 근무는 동료와의 직접적인 상호작용, 팀 협력 강화, 그리고 업무 관계 구축에 장점이 있습니다."
     ]
   },
   "listening": {
-    "title": "Biology Lecture on Photosynthesis",
+    "title": "Professor's Lecture on Urban Planning",
     "type": "lecture",
-    "script": "Professor: Today we're going to discuss photosynthesis, one of the most important biological processes on Earth. Photosynthesis is the process by which plants, algae, and some bacteria convert light energy from the sun into chemical energy stored in glucose. This process occurs primarily in the chloroplasts of plant cells.\n\nNow, photosynthesis has two main stages: the light-dependent reactions and the light-independent reactions, or the Calvin cycle. During the light-dependent reactions, which occur in the thylakoid membranes, chlorophyll absorbs photons from sunlight and energizes electrons. These energized electrons move through an electron transport chain, ultimately generating ATP and NADPH, which are crucial energy carriers.\n\nThe second stage, the Calvin cycle, uses the ATP and NADPH produced in the first stage to synthesize glucose from carbon dioxide. Interestingly, the Calvin cycle doesn't directly require light, which is why it's called light-independent.\n\nOne fascinating aspect is that photosynthesis is not entirely efficient. While the theoretical maximum efficiency is about 11 percent, most plants only achieve 3 to 6 percent efficiency. This variation depends on factors like temperature, light intensity, and the plant species itself. Any questions so far?",
-    "vocabulary": [
-      {
-        "word": "photosynthesis",
-        "meaning_ko": "광합성"
-      },
-      {
-        "word": "chloroplasts",
-        "meaning_ko": "엽록체"
-      },
-      {
-        "word": "light-dependent reactions",
-        "meaning_ko": "명반응(명의존 반응)"
-      },
-      {
-        "word": "Calvin cycle",
-        "meaning_ko": "캘빈 회로"
-      },
-      {
-        "word": "thylakoid membranes",
-        "meaning_ko": "타일라코이드 막"
-      },
-      {
-        "word": "energized electrons",
-        "meaning_ko": "에너지를 얻은 전자"
-      },
-      {
-        "word": "electron transport chain",
-        "meaning_ko": "전자 전달계"
-      },
-      {
-        "word": "synthesize",
-        "meaning_ko": "합성하다"
-      }
-    ],
+    "script": "Professor: Good morning, everyone. Today we'll discuss how cities are adapting to remote work trends. As you know, the pandemic accelerated remote work adoption significantly. Now, five years later, cities face both opportunities and challenges. On the positive side, reduced commuting means lower carbon emissions and less traffic congestion. Downtown areas have become more pedestrian-friendly with improved public spaces. However, traditional office districts are struggling. Landlords face vacant buildings, and local governments lose tax revenue from commercial properties. Some cities are being proactive. They're converting empty office buildings into apartments, co-working spaces, and cultural centers. For example, San Francisco and New York have launched programs to revitalize downtown areas through mixed-use development. The key to success is planning ahead. Cities that adapt quickly will attract both residents and businesses. Those that don't risk economic decline. Urban planners must balance growth with sustainability.",
     "questions": [
       {
         "q": "What is the main topic of the lecture?",
         "options": [
-          "The structure of chloroplasts and their components.",
-          "The process of photosynthesis and its two main stages.",
-          "The efficiency rates of different plant species.",
-          "How bacteria convert sunlight into energy."
+          "How to reduce carbon emissions in cities",
+          "How cities are adapting to remote work trends",
+          "The history of commercial real estate",
+          "Why remote work is harmful to cities"
         ],
         "answer": 1,
-        "explanation": "교수는 광합성의 전반적인 과정과 명반응 및 암반응의 두 주요 단계에 대해 설명하므로, 이것이 강의의 주요 주제입니다."
+        "explanation": "교수는 'Today we'll discuss how cities are adapting to remote work trends'라고 명시했습니다. 이것이 강의의 주요 주제입니다."
       },
       {
-        "q": "According to the professor, where do the light-dependent reactions occur?",
+        "q": "According to the professor, what are cities doing to revitalize downtown areas?",
         "options": [
-          "In the Calvin cycle",
-          "In the glucose molecules",
-          "In the thylakoid membranes",
-          "In the carbon dioxide"
+          "Building new office towers",
+          "Increasing commercial property taxes",
+          "Converting empty offices into apartments and co-working spaces",
+          "Reducing public transportation"
         ],
         "answer": 2,
-        "explanation": "교수가 명시적으로 '광의존 반응은 타일라코이드 막에서 일어난다'고 언급했습니다."
+        "explanation": "'They're converting empty office buildings into apartments, co-working spaces, and cultural centers'라는 문장에서 도시의 구체적인 행동을 설명하고 있습니다."
       },
       {
-        "q": "Why does the professor mention that photosynthesis is not entirely efficient?",
+        "q": "What does the professor imply about cities that don't adapt quickly?",
         "options": [
-          "To explain why plants need so much sunlight.",
-          "To show that the theoretical maximum efficiency differs from actual plant efficiency, which varies by species and environmental conditions.",
-          "To suggest that photosynthesis should be improved by scientists.",
-          "To introduce the concept of the Calvin cycle."
+          "They will become more attractive to workers",
+          "They risk economic decline",
+          "They will benefit from lower property taxes",
+          "They will attract more remote workers"
         ],
         "answer": 1,
-        "explanation": "교수는 이론적 최대 효율(약 11%)과 실제 식물의 효율(3~6%)의 차이를 언급하고, 이 차이가 온도, 광도, 식물 종에 따라 달라진다고 설명함으로써 효율성의 변동성을 보여주려 했습니다."
+        "explanation": "'Those that don't risk economic decline'에서 빠르게 적응하지 않는 도시의 위험성을 명확히 나타내고 있습니다."
       }
     ]
   }
