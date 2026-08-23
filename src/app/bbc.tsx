@@ -40,11 +40,9 @@ interface KoreaNewsArticle {
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
-  // KBS World
   Politics: '#dc2626', Economy: '#059669', Society: '#7c3aed',
   Culture: '#d97706', Science: '#0891b2', Sports: '#ea580c',
   World: '#1d4ed8', North: '#b45309',
-  // Korea Herald
   National: '#dc2626', Business: '#059669', 'Life&Culture': '#d97706',
   LifenCulture: '#d97706', Opinion: '#6b7280', 'K-pop': '#db2777', Kpop: '#db2777',
 };
@@ -107,8 +105,8 @@ function EpisodeCard({ ep, color, label }: { ep: PodcastEpisode; color: string; 
   return (
     <View style={[styles.episodeCard, { borderLeftColor: color }]}>
       <View style={styles.epHeader}>
-        <View style={[styles.sourceBadge, { backgroundColor: color }]}>
-          <Text style={styles.sourceBadgeText}>{label}</Text>
+        <View style={[styles.badge, { backgroundColor: color }]}>
+          <Text style={styles.badgeText}>{label}</Text>
         </View>
         <Text style={styles.epDate}>{ep.pub_date}</Text>
         {ep.episode_url ? (
@@ -168,15 +166,42 @@ function EpisodeCard({ ep, color, label }: { ep: PodcastEpisode; color: string; 
   );
 }
 
+// ─── News article card ─────────────────────────────────────────────────────
+function NewsCard({ article, sourceName, sourceColor }: {
+  article: KoreaNewsArticle; sourceName: string; sourceColor: string;
+}) {
+  const catColor = CATEGORY_COLORS[article.category] ?? '#6b7280';
+  return (
+    <TouchableOpacity style={styles.newsCard}
+      onPress={() => Linking.openURL(article.url)} activeOpacity={0.8}>
+      <View style={styles.newsCardMeta}>
+        <View style={[styles.badge, { backgroundColor: sourceColor }]}>
+          <Text style={styles.badgeText}>{sourceName}</Text>
+        </View>
+        {article.category ? (
+          <View style={[styles.badge, { backgroundColor: catColor }]}>
+            <Text style={styles.badgeText}>{article.category}</Text>
+          </View>
+        ) : null}
+      </View>
+      <Text style={styles.newsTitle}>{article.title}</Text>
+      <Text style={styles.newsSummary}>{article.summary}</Text>
+      <Text style={styles.newsLink}>원문 보기 →</Text>
+    </TouchableOpacity>
+  );
+}
+
 // ─── Main screen ──────────────────────────────────────────────────────────
+type View = 'home' | 'reading' | 'listening';
+
 export default function BBCScreen() {
+  const [view, setView] = useState<View>('home');
   const [koreaNews, setKoreaNews] = useState<KoreaNewsArticle[]>([]);
   const [loadingKorea, setLoadingKorea] = useState(true);
   const [herald, setHerald] = useState<KoreaNewsArticle[]>([]);
   const [loadingHerald, setLoadingHerald] = useState(true);
   const [podcasts, setPodcasts] = useState<Record<string, PodcastEpisode | null>>({});
   const [loadingPodcasts, setLoadingPodcasts] = useState(true);
-  const [readingOpen, setReadingOpen] = useState(true);
   const today = getKSTDateString();
 
   useEffect(() => {
@@ -224,154 +249,157 @@ export default function BBCScreen() {
     }).finally(() => setLoadingPodcasts(false));
   }, [today]);
 
-  const kbsArticle = koreaNews[0] ?? null;
-  const heraldArticle = herald[0] ?? null;
-  const readingLoading = loadingKorea || loadingHerald;
+  // ── Reading view ─────────────────────────────────────────────────────────
+  if (view === 'reading') {
+    const kbsArticle = koreaNews[0] ?? null;
+    const heraldArticle = herald[0] ?? null;
+    const loading = loadingKorea || loadingHerald;
+    return (
+      <View style={styles.flex}>
+        <TouchableOpacity style={styles.backBar} onPress={() => setView('home')}>
+          <Text style={styles.backText}>← Reading</Text>
+        </TouchableOpacity>
+        <ScrollView contentContainerStyle={styles.detailContent}>
+          <Text style={styles.dateLabel}>{today}</Text>
+          {loading ? (
+            <View style={styles.skeleton}>
+              <ActivityIndicator size="small" color="#9ca3af" />
+              <Text style={styles.skeletonText}>불러오는 중...</Text>
+            </View>
+          ) : (
+            <>
+              {kbsArticle
+                ? <NewsCard article={kbsArticle} sourceName="KBS World" sourceColor="#dc5f00" />
+                : <View style={styles.skeleton}><Text style={styles.skeletonText}>KBS World 기사 없음</Text></View>}
+              {heraldArticle
+                ? <NewsCard article={heraldArticle} sourceName="Korea Herald" sourceColor="#1a3a5c" />
+                : <View style={styles.skeleton}><Text style={styles.skeletonText}>Korea Herald 기사 없음</Text></View>}
+            </>
+          )}
+        </ScrollView>
+      </View>
+    );
+  }
 
+  // ── Listening view ────────────────────────────────────────────────────────
+  if (view === 'listening') {
+    return (
+      <View style={styles.flex}>
+        <TouchableOpacity style={styles.backBar} onPress={() => setView('home')}>
+          <Text style={styles.backText}>← Listening</Text>
+        </TouchableOpacity>
+        <ScrollView contentContainerStyle={styles.detailContent}>
+          <Text style={styles.dateLabel}>{today}</Text>
+          {loadingPodcasts ? (
+            <View style={styles.skeleton}>
+              <ActivityIndicator size="small" color="#9ca3af" />
+              <Text style={styles.skeletonText}>팟캐스트 불러오는 중...</Text>
+            </View>
+          ) : (
+            PODCAST_SOURCES.map(src => {
+              const ep = podcasts[src.key];
+              return ep ? (
+                <EpisodeCard key={src.key} ep={ep} color={src.color} label={src.label} />
+              ) : (
+                <View key={src.key} style={[styles.skeleton, { borderLeftWidth: 3, borderLeftColor: src.color }]}>
+                  <View style={[styles.badge, { backgroundColor: src.color }]}>
+                    <Text style={styles.badgeText}>{src.label}</Text>
+                  </View>
+                  <Text style={styles.skeletonText}>오늘의 에피소드 준비 중</Text>
+                </View>
+              );
+            })
+          )}
+        </ScrollView>
+      </View>
+    );
+  }
+
+  // ── Home view ─────────────────────────────────────────────────────────────
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <View style={styles.homeContainer}>
       <Text style={styles.dateLabel}>{today}</Text>
 
-      {/* ── Reading ────────────────────────────────── */}
-      <TouchableOpacity style={styles.sectionBtn} onPress={() => setReadingOpen(v => !v)} activeOpacity={0.7}>
-        <MaterialIcons name="menu-book" size={18} color="#111827" />
-        <Text style={styles.sectionTitle}>Reading</Text>
-        <MaterialIcons name={readingOpen ? 'expand-less' : 'expand-more'} size={22} color="#6b7280" />
+      <TouchableOpacity style={styles.hubCard} onPress={() => setView('reading')} activeOpacity={0.8}>
+        <MaterialIcons name="menu-book" size={36} color="#1d4ed8" />
+        <View style={styles.hubCardBody}>
+          <Text style={styles.hubCardName}>Reading</Text>
+          <Text style={styles.hubCardDesc}>KBS World · Korea Herald</Text>
+        </View>
+        <Text style={styles.hubArrow}>›</Text>
       </TouchableOpacity>
 
-      {readingOpen && (
-        readingLoading ? (
-          <View style={styles.skeleton}>
-            <ActivityIndicator size="small" color="#9ca3af" />
-            <Text style={styles.skeletonText}>불러오는 중...</Text>
-          </View>
-        ) : (
-          <>
-            {/* KBS World 1개 */}
-            {kbsArticle ? (
-              <TouchableOpacity style={styles.koreaCard}
-                onPress={() => Linking.openURL(kbsArticle.url)} activeOpacity={0.8}>
-                <View style={styles.readingCardMeta}>
-                  <View style={[styles.sourceBadge, { backgroundColor: '#dc5f00' }]}>
-                    <Text style={styles.sourceBadgeText}>KBS World</Text>
-                  </View>
-                  {kbsArticle.category ? (
-                    <View style={[styles.sourceBadge, { backgroundColor: CATEGORY_COLORS[kbsArticle.category] ?? '#6b7280' }]}>
-                      <Text style={styles.sourceBadgeText}>{kbsArticle.category}</Text>
-                    </View>
-                  ) : null}
-                </View>
-                <Text style={styles.koreaTitle}>{kbsArticle.title}</Text>
-                <Text style={styles.koreaSummary}>{kbsArticle.summary}</Text>
-                <Text style={styles.koreaLink}>원문 보기 →</Text>
-              </TouchableOpacity>
-            ) : (
-              <View style={[styles.skeleton, { borderLeftWidth: 3, borderLeftColor: '#dc5f00' }]}>
-                <Text style={styles.skeletonText}>KBS World 기사 없음 (05:00 KST)</Text>
-              </View>
-            )}
-
-            {/* Korea Herald 1개 */}
-            {heraldArticle ? (
-              <TouchableOpacity style={styles.koreaCard}
-                onPress={() => Linking.openURL(heraldArticle.url)} activeOpacity={0.8}>
-                <View style={styles.readingCardMeta}>
-                  <View style={[styles.sourceBadge, { backgroundColor: '#1a3a5c' }]}>
-                    <Text style={styles.sourceBadgeText}>Korea Herald</Text>
-                  </View>
-                  {heraldArticle.category ? (
-                    <View style={[styles.sourceBadge, { backgroundColor: CATEGORY_COLORS[heraldArticle.category] ?? '#6b7280' }]}>
-                      <Text style={styles.sourceBadgeText}>{heraldArticle.category}</Text>
-                    </View>
-                  ) : null}
-                </View>
-                <Text style={styles.koreaTitle}>{heraldArticle.title}</Text>
-                <Text style={styles.koreaSummary}>{heraldArticle.summary}</Text>
-                <Text style={styles.koreaLink}>원문 보기 →</Text>
-              </TouchableOpacity>
-            ) : (
-              <View style={[styles.skeleton, { borderLeftWidth: 3, borderLeftColor: '#1a3a5c' }]}>
-                <Text style={styles.skeletonText}>Korea Herald 기사 없음 (05:00 KST)</Text>
-              </View>
-            )}
-          </>
-        )
-      )}
-
-      {/* ── Listening ──────────────────────────────── */}
-      <View style={[styles.sectionHeader, { marginTop: 28 }]}>
-        <MaterialIcons name="headphones" size={18} color="#111827" />
-        <Text style={styles.sectionTitle}>Listening</Text>
-      </View>
-
-      {loadingPodcasts ? (
-        <View style={styles.skeleton}>
-          <ActivityIndicator size="small" color="#9ca3af" />
-          <Text style={styles.skeletonText}>팟캐스트 불러오는 중...</Text>
+      <TouchableOpacity style={styles.hubCard} onPress={() => setView('listening')} activeOpacity={0.8}>
+        <MaterialIcons name="headphones" size={36} color="#7c3aed" />
+        <View style={styles.hubCardBody}>
+          <Text style={styles.hubCardName}>Listening</Text>
+          <Text style={styles.hubCardDesc}>BBC · NPR Up First · NPR Consider This</Text>
         </View>
-      ) : (
-        PODCAST_SOURCES.map(src => {
-          const ep = podcasts[src.key];
-          return ep ? (
-            <EpisodeCard key={src.key} ep={ep} color={src.color} label={src.label} />
-          ) : (
-            <View key={src.key} style={[styles.skeleton, { borderLeftWidth: 3, borderLeftColor: src.color }]}>
-              <View style={[styles.sourceBadge, { backgroundColor: src.color }]}>
-                <Text style={styles.sourceBadgeText}>{src.label}</Text>
-              </View>
-              <Text style={styles.skeletonText}>오늘의 에피소드 준비 중</Text>
-            </View>
-          );
-        })
-      )}
-
-      <View style={{ height: 60 }} />
-    </ScrollView>
+        <Text style={styles.hubArrow}>›</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 
 // ─── Styles ───────────────────────────────────────────────────────────────
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
-  content: { padding: 20, paddingTop: 56 },
-  dateLabel: { fontSize: 11, color: '#9ca3af', fontWeight: '600', marginBottom: 20, letterSpacing: 1 },
+  flex: { flex: 1, backgroundColor: '#fff' },
 
-  sectionHeader: {
-    flexDirection: 'row', alignItems: 'center', gap: 8,
-    marginBottom: 12,
+  // Back bar (GameHub pattern)
+  backBar: {
+    paddingHorizontal: 16, paddingVertical: 13, minHeight: 44,
+    justifyContent: 'center', backgroundColor: '#fff',
+    borderBottomWidth: 1, borderBottomColor: '#e5e7eb',
   },
-  sectionBtn: {
-    flexDirection: 'row', alignItems: 'center', gap: 8,
-    marginBottom: 12, paddingVertical: 4,
+  backText: { fontSize: 14, fontWeight: '600', color: '#1d4ed8' },
+
+  // Home hub
+  homeContainer: {
+    flex: 1, backgroundColor: '#fff',
+    paddingHorizontal: 20, justifyContent: 'center',
   },
-  sectionTitle: { fontSize: 17, fontWeight: '800', color: '#111827', flex: 1 },
+  dateLabel: { fontSize: 11, color: '#9ca3af', fontWeight: '600', marginBottom: 28, letterSpacing: 1, textAlign: 'center' },
+  hubCard: {
+    flexDirection: 'row', alignItems: 'center',
+    backgroundColor: '#fff', borderRadius: 16, padding: 20,
+    marginVertical: 8, borderWidth: 1, borderColor: '#e5e7eb',
+    gap: 16,
+  },
+  hubCardBody: { flex: 1 },
+  hubCardName: { fontSize: 17, fontWeight: '700', color: '#111827', marginBottom: 4 },
+  hubCardDesc: { fontSize: 12, color: '#9ca3af' },
+  hubArrow: { fontSize: 26, color: '#9ca3af', fontWeight: '300' },
+
+  // Detail views
+  detailContent: { padding: 20, paddingBottom: 60 },
 
   skeleton: {
     flexDirection: 'row', alignItems: 'center', gap: 10,
     backgroundColor: '#f9fafb', borderRadius: 12, padding: 16,
-    marginBottom: 10, borderWidth: 1, borderColor: '#e5e7eb',
+    marginBottom: 12, borderWidth: 1, borderColor: '#e5e7eb',
   },
   skeletonText: { fontSize: 13, color: '#9ca3af' },
 
-  // Korea News (Reading) cards
-  readingCardMeta: { flexDirection: 'row', gap: 6, marginBottom: 8, flexWrap: 'wrap' },
+  // Shared badge
+  badge: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 5 },
+  badgeText: { fontSize: 10, fontWeight: '800', color: '#fff', letterSpacing: 0.3 },
 
-  koreaCard: {
+  // News cards (Reading)
+  newsCard: {
     backgroundColor: '#fafafa', borderRadius: 14, padding: 16,
-    marginBottom: 10, borderWidth: 1, borderColor: '#e5e7eb',
+    marginBottom: 12, borderWidth: 1, borderColor: '#e5e7eb',
   },
-  koreaTitle: { fontSize: 14, fontWeight: '700', color: '#111827', lineHeight: 20, marginBottom: 6 },
-  koreaSummary: { fontSize: 13, color: '#4b5563', lineHeight: 19, marginBottom: 4 },
-  koreaLink: { fontSize: 12, color: '#1d4ed8', marginTop: 4 },
+  newsCardMeta: { flexDirection: 'row', gap: 6, marginBottom: 8, flexWrap: 'wrap' },
+  newsTitle: { fontSize: 15, fontWeight: '700', color: '#111827', lineHeight: 22, marginBottom: 6 },
+  newsSummary: { fontSize: 13, color: '#4b5563', lineHeight: 19, marginBottom: 4 },
+  newsLink: { fontSize: 12, color: '#1d4ed8', marginTop: 4 },
 
-  // Episode card
+  // Episode cards (Listening)
   episodeCard: {
     backgroundColor: '#fafafa', borderRadius: 14, padding: 16,
     marginBottom: 12, borderWidth: 1, borderColor: '#e5e7eb', borderLeftWidth: 4,
   },
   epHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 8 },
-  sourceBadge: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 5 },
-  sourceBadgeText: { fontSize: 10, fontWeight: '800', color: '#fff', letterSpacing: 0.3 },
   epDate: { fontSize: 11, color: '#9ca3af', fontWeight: '600', flex: 1 },
   epTitle: { fontSize: 14, fontWeight: '700', color: '#111827', lineHeight: 20, marginBottom: 12 },
 
