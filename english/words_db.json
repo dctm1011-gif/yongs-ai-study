@@ -2474,5 +2474,65 @@
     "explanation": "아직 완전히 형성되거나 발전하지 않은 상태를 의미해요. 추상적인 아이디어, 계획, 움직임 등이 '아직 진행 중이고 명확하지 않은' 뉘앙스. TOEFL Reading의 과학·역사·정책 지문에서 '초기 단계' 표현에 자주 등장합니다.",
     "tip": "동의어: nascent(초기의), embryonic(태아 같은), rudimentary(기초적인), formative(형성 중인). 반의어: mature(성숙한), developed(발달한), complete(완성된). Reading·Listening 고빈출 — 학자적이고 정교한 표현이라 고난도 지문에서 반복 출제.",
     "emoji": "🌱"
+  },
+  {
+    "id": "truculent",
+    "word": "truculent",
+    "pos": "형용사",
+    "date": "2026-08-24",
+    "meaning": "공격적인, 시비를 거는",
+    "example_ko": "공격적인 협상가가 평화 회담을 어렵게 만들었어요.",
+    "example_en": "The truculent negotiator made the peace talks difficult.",
+    "explanation": "쉽게 적대적이 되거나 싸우려 드는 성향. TOEFL 사회·심리 지문에 나와요.",
+    "tip": "동의어: aggressive, combative, belligerent. 반의어: peaceable, docile.",
+    "emoji": "😡"
+  },
+  {
+    "id": "penurious",
+    "word": "penurious",
+    "pos": "형용사",
+    "date": "2026-08-24",
+    "meaning": "몹시 가난한, 인색한",
+    "example_ko": "노동자들의 극빈한 환경이 대규모 파업으로 이어졌어요.",
+    "example_en": "The penurious conditions of the workers led to a major strike.",
+    "explanation": "극도로 가난하거나 지나치게 돈을 아끼는 것. 경제·사회 지문에 등장해요.",
+    "tip": "동의어: destitute, impoverished, miserly. 반의어: wealthy, generous.",
+    "emoji": "💸"
+  },
+  {
+    "id": "loquacious",
+    "word": "loquacious",
+    "pos": "형용사",
+    "date": "2026-08-24",
+    "meaning": "말이 많은, 수다스러운",
+    "example_ko": "말 많은 성격 덕분에 그녀는 모든 모임의 중심이 되었어요.",
+    "example_en": "Her loquacious nature made her the life of every social gathering.",
+    "explanation": "매우 말이 많은 성향. garrulous보다 더 중립적 뉘앙스로 쓰여요.",
+    "tip": "동의어: talkative, garrulous, verbose. 반의어: taciturn, reserved.",
+    "emoji": "💬"
+  },
+  {
+    "id": "mendacious",
+    "word": "mendacious",
+    "pos": "형용사",
+    "date": "2026-08-24",
+    "meaning": "거짓말하는, 불성실한",
+    "example_ko": "거짓말하는 정치인은 결국 탐사 언론인들에게 폭로되었어요.",
+    "example_en": "The mendacious politician was eventually exposed by investigative journalists.",
+    "explanation": "습관적으로 거짓말하는 성향. TOEFL 윤리·법 지문에 등장해요.",
+    "tip": "동의어: dishonest, untruthful, deceitful. 반의어: honest, truthful, veracious.",
+    "emoji": "🤥"
+  },
+  {
+    "id": "intransigent",
+    "word": "intransigent",
+    "pos": "형용사",
+    "date": "2026-08-24",
+    "meaning": "타협하지 않는, 완고한",
+    "example_ko": "완고한 노동조합은 협상 중 어떤 타협도 받아들이지 않았어요.",
+    "example_en": "The intransigent union refused to accept any compromise during negotiations.",
+    "explanation": "자신의 입장을 절대 바꾸지 않는 것. 정치·협상 지문 핵심 어휘예요.",
+    "tip": "동의어: inflexible, uncompromising, stubborn. 반의어: flexible, conciliatory.",
+    "emoji": "🧱"
   }
 ]

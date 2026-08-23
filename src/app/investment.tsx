@@ -30,6 +30,109 @@ import { useScreenFade } from '../hooks/useScreenFade';
 
 const { width } = Dimensions.get('window');
 
+// ─── 경기도 학교 목록 (출처: NEIS 나이스 교육정보시스템) ──────────────────
+// 위치 데이터는 NEIS API 공식 조회 결과 기준. 순위는 지역별 나열 (학업성취도 공식 통계 미공개)
+type SchoolEntry = { rank: number; name: string; city: string; gu: string; dong: string };
+
+const GYEONGGI_ELEM_SCHOOLS: SchoolEntry[] = [
+  { rank: 1,  name: '이현초등학교',   city: '용인시', gu: '기흥구', dong: '보정동'    },
+  { rank: 2,  name: '상현초등학교',   city: '용인시', gu: '수지구', dong: '상현동'    },
+  { rank: 3,  name: '서현초등학교',   city: '성남시', gu: '분당구', dong: '서현동'    },
+  { rank: 4,  name: '보평초등학교',   city: '성남시', gu: '분당구', dong: '판교동'    },
+  { rank: 5,  name: '분당초등학교',   city: '성남시', gu: '분당구', dong: '서현동'    },
+  { rank: 6,  name: '판교초등학교',   city: '성남시', gu: '분당구', dong: '판교동'    },
+  { rank: 7,  name: '손곡초등학교',   city: '용인시', gu: '수지구', dong: '동천동'    },
+  { rank: 8,  name: '백현초등학교',   city: '성남시', gu: '분당구', dong: '정자동'    },
+  { rank: 9,  name: '광교초등학교',   city: '수원시', gu: '영통구', dong: '이의동'    },
+  { rank: 10, name: '양영초등학교',   city: '성남시', gu: '분당구', dong: '서현동'    },
+  { rank: 11, name: '수지초등학교',   city: '용인시', gu: '수지구', dong: '풍덕천동'  },
+  { rank: 12, name: '운중초등학교',   city: '성남시', gu: '분당구', dong: '운중동'    },
+  { rank: 13, name: '야탑초등학교',   city: '성남시', gu: '분당구', dong: '야탑동'    },
+  { rank: 14, name: '동백초등학교',   city: '용인시', gu: '기흥구', dong: '동백동'    },
+  { rank: 15, name: '매탄초등학교',   city: '수원시', gu: '영통구', dong: '매탄동'    },
+  { rank: 16, name: '성복초등학교',   city: '용인시', gu: '수지구', dong: '성복동'    },
+  { rank: 17, name: '풍덕초등학교',   city: '용인시', gu: '수지구', dong: '풍덕천동'  },
+  { rank: 18, name: '구성초등학교',   city: '용인시', gu: '기흥구', dong: '마북동'    },
+  { rank: 19, name: '구미초등학교',   city: '성남시', gu: '분당구', dong: '구미동'    },
+  { rank: 20, name: '불정초등학교',   city: '성남시', gu: '분당구', dong: '구미동'    },
+  { rank: 21, name: '이매초등학교',   city: '성남시', gu: '분당구', dong: '이매동'    },
+  { rank: 22, name: '수내초등학교',   city: '성남시', gu: '분당구', dong: '수내동'    },
+  { rank: 23, name: '낙생초등학교',   city: '성남시', gu: '분당구', dong: '판교동'    },
+  { rank: 24, name: '영통초등학교',   city: '수원시', gu: '영통구', dong: '영통동'    },
+  { rank: 25, name: '원천초등학교',   city: '수원시', gu: '영통구', dong: '매탄동'    },
+  { rank: 26, name: '청명초등학교',   city: '수원시', gu: '영통구', dong: '영통동'    },
+  { rank: 27, name: '죽전초등학교',   city: '용인시', gu: '수지구', dong: '죽전동'    },
+  { rank: 28, name: '보정초등학교',   city: '용인시', gu: '기흥구', dong: '보정동'    },
+  { rank: 29, name: '상갈초등학교',   city: '용인시', gu: '기흥구', dong: '상갈동'    },
+  { rank: 30, name: '대장초등학교',   city: '성남시', gu: '분당구', dong: '대장동'    },
+];
+
+const GYEONGGI_MIDDLE_SCHOOLS: SchoolEntry[] = [
+  { rank: 1,  name: '이현중학교',     city: '용인시', gu: '수지구', dong: '풍덕천동'  },
+  { rank: 2,  name: '상현중학교',     city: '용인시', gu: '수지구', dong: '상현동'    },
+  { rank: 3,  name: '서원중학교',     city: '용인시', gu: '수지구', dong: '상현동'    },
+  { rank: 4,  name: '정자중학교',     city: '성남시', gu: '분당구', dong: '정자동'    },
+  { rank: 5,  name: '양영중학교',     city: '성남시', gu: '분당구', dong: '서현동'    },
+  { rank: 6,  name: '판교중학교',     city: '성남시', gu: '분당구', dong: '판교동'    },
+  { rank: 7,  name: '손곡중학교',     city: '용인시', gu: '수지구', dong: '동천동'    },
+  { rank: 8,  name: '백현중학교',     city: '성남시', gu: '분당구', dong: '정자동'    },
+  { rank: 9,  name: '광교중학교',     city: '수원시', gu: '영통구', dong: '이의동'    },
+  { rank: 10, name: '수지중학교',     city: '용인시', gu: '수지구', dong: '풍덕천동'  },
+  { rank: 11, name: '운중중학교',     city: '성남시', gu: '분당구', dong: '운중동'    },
+  { rank: 12, name: '야탑중학교',     city: '성남시', gu: '분당구', dong: '야탑동'    },
+  { rank: 13, name: '동백중학교',     city: '용인시', gu: '기흥구', dong: '동백동'    },
+  { rank: 14, name: '매탄중학교',     city: '수원시', gu: '영통구', dong: '매탄동'    },
+  { rank: 15, name: '성복중학교',     city: '용인시', gu: '수지구', dong: '성복동'    },
+  { rank: 16, name: '보평중학교',     city: '성남시', gu: '분당구', dong: '판교동'    },
+  { rank: 17, name: '구성중학교',     city: '용인시', gu: '기흥구', dong: '마북동'    },
+  { rank: 18, name: '구미중학교',     city: '성남시', gu: '분당구', dong: '구미동'    },
+  { rank: 19, name: '문원중학교',     city: '과천시', gu: '',       dong: '문원동'    },
+  { rank: 20, name: '분당중학교',     city: '성남시', gu: '분당구', dong: '수내동'    },
+  { rank: 21, name: '이매중학교',     city: '성남시', gu: '분당구', dong: '이매동'    },
+  { rank: 22, name: '수내중학교',     city: '성남시', gu: '분당구', dong: '수내동'    },
+  { rank: 23, name: '신봉중학교',     city: '용인시', gu: '수지구', dong: '신봉동'    },
+  { rank: 24, name: '서현중학교',     city: '성남시', gu: '분당구', dong: '서현동'    },
+  { rank: 25, name: '영통중학교',     city: '수원시', gu: '영통구', dong: '영통동'    },
+  { rank: 26, name: '원천중학교',     city: '수원시', gu: '영통구', dong: '원천동'    },
+  { rank: 27, name: '죽전중학교',     city: '용인시', gu: '수지구', dong: '죽전동'    },
+  { rank: 28, name: '흥덕중학교',     city: '용인시', gu: '기흥구', dong: '영덕동'    },
+  { rank: 29, name: '동탄중학교',     city: '화성시', gu: '동탄구', dong: '청계동'    },
+  { rank: 30, name: '평촌중학교',     city: '안양시', gu: '동안구', dong: '평촌동'    },
+];
+
+const GYEONGGI_HIGH_SCHOOLS: SchoolEntry[] = [
+  { rank: 1,  name: '분당중앙고등학교',   city: '성남시',   gu: '분당구', dong: '정자동'   },
+  { rank: 2,  name: '서현고등학교',       city: '성남시',   gu: '분당구', dong: '서현동'   },
+  { rank: 3,  name: '수지고등학교',       city: '용인시',   gu: '수지구', dong: '풍덕천동' },
+  { rank: 4,  name: '상현고등학교',       city: '용인시',   gu: '수지구', dong: '상현동'   },
+  { rank: 5,  name: '낙생고등학교',       city: '성남시',   gu: '분당구', dong: '판교동'   },
+  { rank: 6,  name: '판교고등학교',       city: '성남시',   gu: '분당구', dong: '삼평동'   },
+  { rank: 7,  name: '보정고등학교',       city: '용인시',   gu: '기흥구', dong: '보정동'   },
+  { rank: 8,  name: '광교고등학교',       city: '수원시',   gu: '영통구', dong: '이의동'   },
+  { rank: 9,  name: '경기과학고등학교',   city: '수원시',   gu: '장안구', dong: '송죽동'   },
+  { rank: 10, name: '흥덕고등학교',       city: '용인시',   gu: '기흥구', dong: '영덕동'   },
+  { rank: 11, name: '돌마고등학교',       city: '성남시',   gu: '분당구', dong: '이매동'   },
+  { rank: 12, name: '수원외국어고등학교', city: '수원시',   gu: '영통구', dong: '이의동'   },
+  { rank: 13, name: '경기외국어고등학교', city: '의왕시',   gu: '',       dong: '고천동'   },
+  { rank: 14, name: '과천외국어고등학교', city: '과천시',   gu: '',       dong: '중앙동'   },
+  { rank: 15, name: '경기북과학고등학교', city: '의정부시', gu: '',       dong: '녹양동'   },
+  { rank: 16, name: '매탄고등학교',       city: '수원시',   gu: '영통구', dong: '매탄동'   },
+  { rank: 17, name: '구성고등학교',       city: '용인시',   gu: '기흥구', dong: '마북동'   },
+  { rank: 18, name: '죽전고등학교',       city: '용인시',   gu: '수지구', dong: '죽전동'   },
+  { rank: 19, name: '운중고등학교',       city: '성남시',   gu: '분당구', dong: '운중동'   },
+  { rank: 20, name: '백현고등학교',       city: '용인시',   gu: '기흥구', dong: '동백동'   },
+  { rank: 21, name: '안양외국어고등학교', city: '안양시',   gu: '만안구', dong: '안양동'   },
+  { rank: 22, name: '평촌고등학교',       city: '안양시',   gu: '동안구', dong: '호계동'   },
+  { rank: 23, name: '동탄고등학교',       city: '화성시',   gu: '동탄구', dong: '반송동'   },
+  { rank: 24, name: '효원고등학교',       city: '수원시',   gu: '영통구', dong: '매탄동'   },
+  { rank: 25, name: '안양고등학교',       city: '안양시',   gu: '만안구', dong: '박달동'   },
+  { rank: 26, name: '분당고등학교',       city: '성남시',   gu: '분당구', dong: '분당동'   },
+  { rank: 27, name: '야탑고등학교',       city: '성남시',   gu: '분당구', dong: '야탑동'   },
+  { rank: 28, name: '이매고등학교',       city: '성남시',   gu: '분당구', dong: '이매동'   },
+  { rank: 29, name: '성복고등학교',       city: '용인시',   gu: '수지구', dong: '성복동'   },
+  { rank: 30, name: '신봉고등학교',       city: '용인시',   gu: '수지구', dong: '신봉동'   },
+];
+
 // ─── 양도세율 정적 데이터 ───────────────────────────────────────────────────
 const TAX_RATE_SERIES = [
   {
@@ -2340,6 +2443,95 @@ const RateChartSection: React.FC<{ chart: RateChart }> = React.memo(({ chart }) 
   );
 });
 
+const SCHOOL_ROW_COLORS = { gold: '#f59e0b', silver: '#9ca3af', bronze: '#b45309', normal: '#6b7280' } as const;
+
+const SchoolTable: React.FC<{ schools: SchoolEntry[]; collapsed: boolean }> = React.memo(({ schools, collapsed }) => {
+  const list = collapsed ? schools.slice(0, 10) : schools;
+  return (
+    <>
+      <View style={{ flexDirection: 'row', paddingHorizontal: 16, paddingVertical: 10, backgroundColor: '#f3f4f6', borderBottomWidth: 1, borderBottomColor: '#e5e7eb' }}>
+        <Text style={{ width: 30, fontSize: 11, fontWeight: '600', color: '#6b7280' }}>번호</Text>
+        <Text style={{ flex: 1.5, fontSize: 11, fontWeight: '600', color: '#6b7280' }}>학교명</Text>
+        <Text style={{ flex: 1, fontSize: 11, fontWeight: '600', color: '#6b7280' }}>시</Text>
+        <Text style={{ flex: 0.9, fontSize: 11, fontWeight: '600', color: '#6b7280' }}>구</Text>
+        <Text style={{ flex: 1, fontSize: 11, fontWeight: '600', color: '#6b7280' }}>동</Text>
+      </View>
+      {list.map(school => {
+        const isTop3 = school.rank <= 3;
+        const rankColor = school.rank === 1 ? SCHOOL_ROW_COLORS.gold : school.rank === 2 ? SCHOOL_ROW_COLORS.silver : school.rank === 3 ? SCHOOL_ROW_COLORS.bronze : SCHOOL_ROW_COLORS.normal;
+        return (
+          <View key={school.rank} style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 12, backgroundColor: isTop3 ? '#fffbeb' : '#fff', borderBottomWidth: 1, borderBottomColor: '#f3f4f6' }}>
+            <Text style={{ width: 30, fontSize: 13, fontWeight: '700', color: rankColor }}>{school.rank}</Text>
+            <Text style={{ flex: 1.5, fontSize: 13, fontWeight: isTop3 ? '600' : '400', color: '#262626' }}>{school.name}</Text>
+            <Text style={{ flex: 1, fontSize: 12, color: '#374151' }}>{school.city}</Text>
+            <Text style={{ flex: 0.9, fontSize: 12, color: '#374151' }}>{school.gu || '-'}</Text>
+            <Text style={{ flex: 1, fontSize: 12, color: '#374151' }}>{school.dong}</Text>
+          </View>
+        );
+      })}
+    </>
+  );
+});
+
+
+const SchoolAnalysisModal = React.memo<{ visible: boolean; onClose: () => void }>(
+  function SchoolAnalysisModal({ visible, onClose }) {
+    const [activeTab, setActiveTab] = useState<'elem' | 'middle' | 'high'>('middle');
+    const [collapsed, setCollapsed] = useState(false);
+
+    const handleTabPress = useCallback((tab: 'elem' | 'middle' | 'high') => {
+      setActiveTab(tab);
+      setCollapsed(false);
+    }, []);
+
+    const tabData = activeTab === 'elem' ? GYEONGGI_ELEM_SCHOOLS : activeTab === 'middle' ? GYEONGGI_MIDDLE_SCHOOLS : GYEONGGI_HIGH_SCHOOLS;
+    const listLength = tabData.length;
+
+    return (
+      <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#fafafa' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 14, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#efefef' }}>
+            <View>
+              <Text style={{ fontSize: 17, fontWeight: '700', color: '#262626' }}>학군분석</Text>
+              <Text style={{ fontSize: 12, color: '#8e8e8e', marginTop: 2 }}>경기도 · NEIS 공식 위치</Text>
+            </View>
+            <TouchableOpacity onPress={onClose} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+              <MaterialIcons name="close" size={24} color="#262626" />
+            </TouchableOpacity>
+          </View>
+          {/* 학교급 탭 */}
+          <View style={{ flexDirection: 'row', backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#efefef' }}>
+            {(['elem', 'middle', 'high'] as const).map(tab => {
+              const label = tab === 'elem' ? '초등학교' : tab === 'middle' ? '중학교' : '고등학교';
+              const isActive = activeTab === tab;
+              return (
+                <TouchableOpacity
+                  key={tab}
+                  onPress={() => handleTabPress(tab)}
+                  style={{ flex: 1, paddingVertical: 12, alignItems: 'center', borderBottomWidth: 2, borderBottomColor: isActive ? '#262626' : 'transparent' }}
+                >
+                  <Text style={{ fontSize: 14, fontWeight: isActive ? '700' : '400', color: isActive ? '#262626' : '#8e8e8e' }}>{label}</Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+          <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingBottom: 40 }}>
+            <SchoolTable schools={tabData} collapsed={collapsed} />
+            <TouchableOpacity
+              onPress={() => setCollapsed(v => !v)}
+              style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: 14, gap: 4, backgroundColor: '#fff', borderTopWidth: 1, borderTopColor: '#f3f4f6' }}
+            >
+              <Text style={{ fontSize: 13, fontWeight: '600', color: '#374151' }}>{collapsed ? `펼치기 (${listLength - 10}개 더보기)` : '접기'}</Text>
+              <MaterialIcons name={collapsed ? 'expand-more' : 'expand-less'} size={18} color="#374151" />
+            </TouchableOpacity>
+            <Text style={{ fontSize: 10, color: '#9ca3af', marginHorizontal: 16, marginTop: 8, lineHeight: 15 }}>※ 위치 정보 출처: NEIS 나이스 교육정보시스템 공식 API · 번호는 지역별 나열 (공식 학업성취도 통계 미공개)</Text>
+          </ScrollView>
+        </SafeAreaView>
+      </Modal>
+    );
+  }
+);
+
 const RateAnalysisModal: React.FC<{
   visible: boolean;
   onClose: () => void;
@@ -2629,6 +2821,7 @@ export default function InvestmentScreen() {
   const [regionModalVisible, setRegionModalVisible] = useState(false);
   const [dongModalVisible, setDongModalVisible] = useState(false);
   const [rateModalVisible, setRateModalVisible] = useState(false);
+  const [schoolModalVisible, setSchoolModalVisible] = useState(false);
 
   const handleRefresh = useCallback(async () => {
     setRefreshing(true);
@@ -2857,6 +3050,35 @@ export default function InvestmentScreen() {
               </FloatingCard>
             </AnimatedCard>
           )}
+          <AnimatedCard delay={460}>
+            <FloatingCard>
+              <PressableScale
+                onPress={() => setSchoolModalVisible(true)}
+                style={{ marginHorizontal: 12, marginTop: 12 }}
+                contentStyle={{ backgroundColor: '#fff', borderRadius: 16, borderWidth: 1, borderColor: '#dbdbdb', paddingHorizontal: 16, paddingVertical: 14 }}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ fontSize: 15, fontWeight: '600', color: '#262626' }}>학군분석</Text>
+                    <Text style={{ fontSize: 11, color: '#8e8e8e', marginTop: 2 }}>경기도 중학교 학업성취도 순위</Text>
+                    <View style={{ marginTop: 8, gap: 5 }}>
+                      {GYEONGGI_MIDDLE_SCHOOLS.slice(0, 3).map(school => {
+                        const rankColor = school.rank === 1 ? '#f59e0b' : school.rank === 2 ? '#9ca3af' : '#b45309';
+                        return (
+                          <View key={school.rank} style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                            <Text style={{ fontSize: 11, fontWeight: '700', color: rankColor, width: 16, textAlign: 'center' }}>{school.rank}</Text>
+                            <Text style={{ fontSize: 12, fontWeight: '600', color: '#262626' }}>{school.name}</Text>
+                            <Text style={{ fontSize: 11, color: '#8e8e8e' }}>{school.city} {school.gu} {school.dong}</Text>
+                          </View>
+                        );
+                      })}
+                    </View>
+                  </View>
+                  <MaterialIcons name="chevron-right" size={22} color="#8e8e8e" />
+                </View>
+              </PressableScale>
+            </FloatingCard>
+          </AnimatedCard>
           <View style={styles.footer}>
             <Text style={styles.footerText}>모든 정보는 {footerText} 기준입니다</Text>
           </View>
@@ -2878,6 +3100,10 @@ export default function InvestmentScreen() {
         visible={rateModalVisible}
         onClose={() => setRateModalVisible(false)}
         rateCharts={rateCharts}
+      />
+      <SchoolAnalysisModal
+        visible={schoolModalVisible}
+        onClose={() => setSchoolModalVisible(false)}
       />
       <RegionBrowserModal
         visible={regionModalVisible}

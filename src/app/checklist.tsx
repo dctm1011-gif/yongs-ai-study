@@ -18,12 +18,14 @@ const GROUPS: { title: string; items: CheckItem[] }[] = [
   {
     title: '영어',
     items: [
-      { key: 'english',          label: '단어장',       emoji: '📖' },
-      { key: 'english_word_match', label: '카드 매칭',  emoji: '🃏' },
-      { key: 'english_crossword',  label: '낱말 퍼즐',  emoji: '📝' },
-      { key: 'english_scramble',   label: '스크램블',   emoji: '🔀' },
-      { key: 'english_sentence',   label: '예문 OX',    emoji: '🔍' },
-      { key: 'english_review',     label: '문장복습',   emoji: '📋' },
+      { key: 'english',              label: '단어장',       emoji: '📖' },
+      { key: 'english_word_match',   label: '카드 매칭',    emoji: '🃏' },
+      { key: 'english_crossword',    label: '낱말 퍼즐',    emoji: '📝' },
+      { key: 'english_scramble',     label: '스크램블',     emoji: '🔀' },
+      { key: 'english_sentence',     label: '예문 OX',      emoji: '🔍' },
+      { key: 'english_review',       label: '문장복습',     emoji: '📋' },
+      { key: 'english_news_reading',   label: '영어 리딩',  emoji: '📰' },
+      { key: 'english_news_listening', label: '영어 리스닝', emoji: '🎙️' },
     ],
   },
   {

@@ -1,283 +1,162 @@
 {
-  "date": "2026-08-23",
+  "date": "2026-08-24",
   "words": [
     {
-      "word": "deleterious",
+      "word": "truculent",
       "part_of_speech": "형용사",
-      "meaning_ko": "해로운, 유해한, 악영향을 끼치는",
-      "explanation": "어떤 것이 건강, 성능, 상황 등에 부정적인 영향을 미치는 것을 의미해요. TOEFL Reading의 과학·의학·환경 지문에서 매우 자주 등장합니다.",
-      "example_from_convo": "Excessive screen time can have deleterious effects on children's eyesight.",
-      "example_ko": "과도한 화면 노출은 아이들의 시력에 해로운 영향을 끼칠 수 있어요.",
-      "tip": "동의어: harmful(해로운), detrimental(악영향을 끼치는), adverse(역작용의). 반의어: beneficial(유익한), advantageous(유리한). Reading·Listening 고빈출 — 특히 건강·환경·정책 평가 맥락에서 등장.",
-      "emoji": "⚠️"
+      "meaning_ko": "공격적인, 시비를 거는",
+      "explanation": "쉽게 적대적이 되거나 싸우려 드는 성향. TOEFL 사회·심리 지문에 나와요.",
+      "example_from_convo": "The truculent negotiator made the peace talks difficult.",
+      "example_ko": "공격적인 협상가가 평화 회담을 어렵게 만들었어요.",
+      "tip": "동의어: aggressive, combative, belligerent. 반의어: peaceable, docile.",
+      "emoji": "😡"
     },
     {
-      "word": "obfuscation",
-      "part_of_speech": "명사",
-      "meaning_ko": "난독화, 의도적 혼동, 애매하게 만듦",
-      "explanation": "의도적으로 또는 부주의로 어떤 것을 복잡하고 이해하기 어렵게 만드는 행위. TOEFL Reading에서 비판적 텍스트 분석, 정치·미디어 지문에서 등장해요.",
-      "example_from_convo": "The company's use of technical jargon was pure obfuscation to hide their negligence.",
-      "example_ko": "그 회사가 기술 용어를 사용한 것은 자신들의 과실을 숨기기 위한 순수한 의도적 혼동이었어요.",
-      "tip": "동의어: obscuration(모호함), ambiguity(애매함). 관련 형용사: obfuscatory(난독화하는). Writing Task 1에서 '저자의 의도 비판' 시 유용. 'deliberate obfuscation(의도적 혼동)'이 자주 쓰여요.",
-      "emoji": "🌫️"
-    },
-    {
-      "word": "enervate",
-      "part_of_speech": "동사",
-      "meaning_ko": "기력을 빼앗다, 약하게 만들다, 무기력하게 하다",
-      "explanation": "육체적·정신적·도덕적 힘을 약화시키거나 제거하는 것. 단순한 '피곤'이 아니라 '정신적·신체적 에너지 고갈'을 의미해요. TOEFL Reading 역사·문학·사회학 지문에서 등장합니다.",
-      "example_from_convo": "Decades of economic hardship had enervated the nation's resolve.",
-      "example_ko": "수십 년의 경제적 어려움은 그 나라의 결단력을 약화시켰어요.",
-      "tip": "동의어: weaken(약하게 하다), sap(활력을 빼다), exhaust(소진). 반의어: invigorate(활력을 주다), strengthen(강화). 과거분사 'enervated(무기력한, 기진맥진한)' 형용사로도 자주 사용. Listening·Reading 모두 고빈출.",
-      "emoji": "💤"
-    },
-    {
-      "word": "venal",
+      "word": "penurious",
       "part_of_speech": "형용사",
-      "meaning_ko": "뇌물에 응하는, 부패한, 돈에 매수될 수 있는",
-      "explanation": "윤리적 원칙을 돈이나 자기 이익을 위해 포기할 수 있는 사람이나 행동을 말해요. TOEFL Reading의 정치·역사·윤리 지문에서 정부 부패나 도덕적 타락 비판 시 사용됩니다.",
-      "example_from_convo": "The judge's venal decisions were exposed when he accepted bribes from wealthy defendants.",
-      "example_ko": "그 판사의 부패한 판결은 부유한 피고인들로부터 뇌물을 받은 것이 드러났을 때 폭로되었어요.",
-      "tip": "동의어: corrupt(부패한), mercenary(돈을 좋아하는), bribable(뇌물을 받을 수 있는). 혼동하기 쉬운 단어: venial(용서할 수 있는 — 죄의 정도에 대해). Reading·Writing 모두 출제 가능 — 특히 비판적 텍스트 분석에서 '저자의 부패 비판' 표현.",
-      "emoji": "💰"
+      "meaning_ko": "몹시 가난한, 인색한",
+      "explanation": "극도로 가난하거나 지나치게 돈을 아끼는 것. 경제·사회 지문에 등장해요.",
+      "example_from_convo": "The penurious conditions of the workers led to a major strike.",
+      "example_ko": "노동자들의 극빈한 환경이 대규모 파업으로 이어졌어요.",
+      "tip": "동의어: destitute, impoverished, miserly. 반의어: wealthy, generous.",
+      "emoji": "💸"
     },
     {
-      "word": "inchoate",
+      "word": "loquacious",
       "part_of_speech": "형용사",
-      "meaning_ko": "미완성의, 막 시작된, 불완전한, 초기 단계의",
-      "explanation": "아직 완전히 형성되거나 발전하지 않은 상태를 의미해요. 추상적인 아이디어, 계획, 움직임 등이 '아직 진행 중이고 명확하지 않은' 뉘앙스. TOEFL Reading의 과학·역사·정책 지문에서 '초기 단계' 표현에 자주 등장합니다.",
-      "example_from_convo": "The movement's inchoate ideology made it difficult to predict its long-term goals.",
-      "example_ko": "그 운동의 미완성 이념은 그것의 장기적 목표를 예측하기 어렵게 만들었어요.",
-      "tip": "동의어: nascent(초기의), embryonic(태아 같은), rudimentary(기초적인), formative(형성 중인). 반의어: mature(성숙한), developed(발달한), complete(완성된). Reading·Listening 고빈출 — 학자적이고 정교한 표현이라 고난도 지문에서 반복 출제.",
-      "emoji": "🌱"
+      "meaning_ko": "말이 많은, 수다스러운",
+      "explanation": "매우 말이 많은 성향. garrulous보다 더 중립적 뉘앙스로 쓰여요.",
+      "example_from_convo": "Her loquacious nature made her the life of every social gathering.",
+      "example_ko": "말 많은 성격 덕분에 그녀는 모든 모임의 중심이 되었어요.",
+      "tip": "동의어: talkative, garrulous, verbose. 반의어: taciturn, reserved.",
+      "emoji": "💬"
+    },
+    {
+      "word": "mendacious",
+      "part_of_speech": "형용사",
+      "meaning_ko": "거짓말하는, 불성실한",
+      "explanation": "습관적으로 거짓말하는 성향. TOEFL 윤리·법 지문에 등장해요.",
+      "example_from_convo": "The mendacious politician was eventually exposed by investigative journalists.",
+      "example_ko": "거짓말하는 정치인은 결국 탐사 언론인들에게 폭로되었어요.",
+      "tip": "동의어: dishonest, untruthful, deceitful. 반의어: honest, truthful, veracious.",
+      "emoji": "🤥"
+    },
+    {
+      "word": "intransigent",
+      "part_of_speech": "형용사",
+      "meaning_ko": "타협하지 않는, 완고한",
+      "explanation": "자신의 입장을 절대 바꾸지 않는 것. 정치·협상 지문 핵심 어휘예요.",
+      "example_from_convo": "The intransigent union refused to accept any compromise during negotiations.",
+      "example_ko": "완고한 노동조합은 협상 중 어떤 타협도 받아들이지 않았어요.",
+      "tip": "동의어: inflexible, uncompromising, stubborn. 반의어: flexible, conciliatory.",
+      "emoji": "🧱"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "deleterious",
-      "question": "What is the primary meaning of 'deleterious'?",
+      "word": "truculent",
+      "question": "'truculent'의 의미로 가장 적절한 것은?",
       "options": [
-        "causing harm or damage to something",
-        "gradually improving a condition",
-        "lacking importance or significance",
-        "spreading rapidly through a population"
+        "공격적인, 시비를 거는",
+        "강하게 반발하다",
+        "무관심한",
+        "일시적인"
       ],
       "answer": 0,
-      "explanation": "'deleterious'는 '해로운, 부정적인 영향을 미치는'이라는 뜻이에요.",
-      "option_explanations": [
-        null,
-        "'improving'은 deleterious의 반의어인 beneficial(유익한) 개념이에요.",
-        "'lacking importance'는 trivial(하찮은)의 의미로, deleterious와 무관해요.",
-        "'spreading rapidly'는 rampant(만연한), epidemic(전염병) 개념이에요."
-      ]
+      "explanation": "truculent = 공격적인, 시비를 거는."
     },
     {
       "type": "fill_blank",
-      "word": "deleterious",
-      "sentence": "The study found that air pollution has _____ effects on respiratory health.",
-      "sentence_ko": "그 연구는 대기 오염이 호흡기 건강에 해로운 영향을 미친다는 것을 발견했어요.",
-      "answer": "deleterious",
-      "hint": "harmful, negative effects"
-    },
-    {
-      "type": "situation",
-      "word": "deleterious",
-      "question": "A pharmaceutical company discovers that a widely-used medication has been causing serious side effects in patients. What would accurately describe the medication's effect?",
-      "options": [
-        "beneficial",
-        "deleterious",
-        "negligible",
-        "inconsequential"
-      ],
-      "answer": 1,
-      "explanation": "의약품이 심각한 부작용을 초래하는 것은 deleterious(해로운) 효과에요."
+      "word": "truculent",
+      "sentence": "The _____ negotiator made the peace talks difficult.",
+      "sentence_ko": "공격적인 협상가가 평화 회담을 어렵게 만들었어요.",
+      "answer": "truculent",
+      "hint": "공격적인, 시비를 거는"
     },
     {
       "type": "meaning",
-      "word": "obfuscation",
-      "question": "Which situation best exemplifies 'obfuscation'?",
+      "word": "penurious",
+      "question": "'penurious'의 의미로 가장 적절한 것은?",
       "options": [
-        "A scientist clearly explains complex data with simple visuals",
-        "A politician uses vague language and jargon to hide the truth about a scandal",
-        "A teacher provides detailed step-by-step instructions for a project",
-        "A journalist investigates and publishes transparent financial records"
+        "몹시 가난한, 인색한",
+        "강하게 반발하다",
+        "무관심한",
+        "일시적인"
       ],
-      "answer": 1,
-      "explanation": "'obfuscation'은 의도적으로 모호한 언어를 사용해 진실을 숨기는 행위예요.",
-      "option_explanations": [
-        "명확한 설명은 obfuscation의 반대예요.",
-        null,
-        "상세한 지시는 obfuscation과 반대 방향이에요.",
-        "투명한 공개는 obfuscation의 반의어예요."
-      ]
+      "answer": 0,
+      "explanation": "penurious = 몹시 가난한, 인색한."
     },
     {
       "type": "fill_blank",
-      "word": "obfuscation",
-      "sentence": "Critics accused the government of _____ when they refused to answer straightforward questions about the budget.",
-      "sentence_ko": "비평가들은 정부가 예산에 대한 직접적인 질문에 답하지 않을 때 의도적 혼동을 하고 있다고 비난했어요.",
-      "answer": "obfuscation",
-      "hint": "intentional confusion, deliberately making unclear"
-    },
-    {
-      "type": "situation",
-      "word": "enervate",
-      "question": "After months of psychological pressure and constant criticism, an athlete lost all motivation and energy to compete. Which word best describes what happened to the athlete's spirit?",
-      "options": [
-        "It was invigorated",
-        "It was enervated",
-        "It was preserved",
-        "It was accelerated"
-      ],
-      "answer": 1,
-      "explanation": "심리적 압박과 비난으로 인해 선수의 정신력이 약화되고 기력이 빠졌으므로 enervated(무기력해졌다)가 맞아요."
+      "word": "penurious",
+      "sentence": "The _____ conditions of the workers led to a major strike.",
+      "sentence_ko": "노동자들의 극빈한 환경이 대규모 파업으로 이어졌어요.",
+      "answer": "penurious",
+      "hint": "몹시 가난한, 인색한"
     },
     {
       "type": "meaning",
-      "word": "venal",
-      "question": "How would you best describe a 'venal' public official?",
+      "word": "loquacious",
+      "question": "'loquacious'의 의미로 가장 적절한 것은?",
       "options": [
-        "One who is easily bribed and will compromise ethics for money",
-        "One who is dedicated to serving the public interest without reward",
-        "One who is too inexperienced to hold office",
-        "One who is physically weakened by illness"
+        "말이 많은, 수다스러운",
+        "강하게 반발하다",
+        "무관심한",
+        "일시적인"
       ],
       "answer": 0,
-      "explanation": "'venal'은 '뇌물에 응하고 돈을 위해 윤리를 타협하는' 부패한 성질을 묘사해요.",
-      "option_explanations": [
-        null,
-        "이는 venal의 반의어인 principled(원칙 있는) 개념이에요.",
-        "'inexperienced'는 venal과 무관한 별도의 자질이에요.",
-        "'physically weakened'는 enervated(무기력한)의 개념이에요."
-      ]
+      "explanation": "loquacious = 말이 많은, 수다스러운."
     },
     {
       "type": "fill_blank",
-      "word": "inchoate",
-      "sentence": "The artist's _____ vision gradually developed into a coherent artistic style over years of experimentation.",
-      "sentence_ko": "그 예술가의 미완성된 비전은 수년간의 실험을 통해 점진적으로 일관된 예술 스타일로 발전했어요.",
-      "answer": "inchoate",
-      "hint": "unformed, not fully developed, preliminary"
+      "word": "loquacious",
+      "sentence": "Her _____ nature made her the life of every social gathering.",
+      "sentence_ko": "말 많은 성격 덕분에 그녀는 모든 모임의 중심이 되었어요.",
+      "answer": "loquacious",
+      "hint": "말이 많은, 수다스러운"
+    },
+    {
+      "type": "meaning",
+      "word": "mendacious",
+      "question": "'mendacious'의 의미로 가장 적절한 것은?",
+      "options": [
+        "거짓말하는, 불성실한",
+        "강하게 반발하다",
+        "무관심한",
+        "일시적인"
+      ],
+      "answer": 0,
+      "explanation": "mendacious = 거짓말하는, 불성실한."
+    },
+    {
+      "type": "fill_blank",
+      "word": "mendacious",
+      "sentence": "The _____ politician was eventually exposed by investigative journalists.",
+      "sentence_ko": "거짓말하는 정치인은 결국 탐사 언론인들에게 폭로되었어요.",
+      "answer": "mendacious",
+      "hint": "거짓말하는, 불성실한"
+    },
+    {
+      "type": "meaning",
+      "word": "intransigent",
+      "question": "'intransigent'의 의미로 가장 적절한 것은?",
+      "options": [
+        "타협하지 않는, 완고한",
+        "강하게 반발하다",
+        "무관심한",
+        "일시적인"
+      ],
+      "answer": 0,
+      "explanation": "intransigent = 타협하지 않는, 완고한."
+    },
+    {
+      "type": "fill_blank",
+      "word": "intransigent",
+      "sentence": "The _____ union refused to accept any compromise during negotiations.",
+      "sentence_ko": "완고한 노동조합은 협상 중 어떤 타협도 받아들이지 않았어요.",
+      "answer": "intransigent",
+      "hint": "타협하지 않는, 완고한"
     }
-  ],
-  "sentences": [
-    {
-      "word": "deleterious",
-      "sentence": "Regular alcohol consumption has deleterious effects on liver function.",
-      "sentence_ko": "정기적인 음주는 간 기능에 해로운 영향을 미쳐요.",
-      "nuance": "'해롭다'는 의미지만, '부정적인 결과를 초래하는' 정도의 심각성을 내포해요. 단순한 나쁜 것이 아니라 건강·성능·상태 등에 '실질적 손상'을 주는 느낌.",
-      "context": "의학·과학·정책·환경 지문에서 부작용, 위험성, 악영향을 설명할 때. 공식적이고 학술적인 맥락에서만 사용.",
-      "everyday_usage": "목적어로 'effects(영향)', 'consequences(결과)', 'impact(영향)'를 자주 동반. 'have/have had deleterious effects on ~' 형태가 매우 정형화되어 있어요."
-    },
-    {
-      "word": "obfuscation",
-      "sentence": "The CEO's response to the scandal was filled with obfuscation and corporate jargon.",
-      "sentence_ko": "그 CEO의 스캔들 대응은 의도적 혼동과 기업 용어로 가득 차 있었어요.",
-      "nuance": "단순한 '모호함'이 아니라 '의도적으로, 또는 교활하게 사실을 숨기려는' 뉘앙스. 비판적 톤이 강해요.",
-      "context": "정치·미디어·윤리 논쟁, 기업 스캔들 분석, 정부 투명성 비판에서 사용. '저자가 누군가의 기만행위를 폭로하는' 맥락.",
-      "everyday_usage": "'obfuscation of the truth(진실의 은폐)', 'deliberate obfuscation(의도적 혼동)', 'linguistic obfuscation(언어적 혼동)' 같은 표현이 정형화. 비판 톤의 글에서 주로 나타나요."
-    },
-    {
-      "word": "enervate",
-      "sentence": "Years of defeat and poverty had enervated the community's hope for change.",
-      "sentence_ko": "수년간의 패배와 빈곤은 그 지역사회의 변화에 대한 희망을 무기력하게 만들었어요.",
-      "nuance": "단순한 '약화'가 아니라 '정신적·영혼적 에너지가 완전히 빠져나가는' 느낌. 암울하고 우울한 톤.",
-      "context": "역사·사회학·문학 지문에서 집단의 정신적 붕괴, 도덕적 위기, 무기력 상태를 묘사할 때. '저자가 어떤 집단이나 사회의 쇠락을 안타까워하거나 비판' 맥락.",
-      "everyday_usage": "과거분사 'enervated(무기력한)' 형태로 'enervated population(무기력한 인구)', 'enervated spirit(무기력한 정신)' 처럼 형용사로 자주 사용돼요."
-    },
-    {
-      "word": "venal",
-      "sentence": "The venal officials accepted bribes in exchange for favorable contract awards.",
-      "sentence_ko": "그 부패한 관료들은 유리한 계약 수주 대가로 뇌물을 받아들였어요.",
-      "nuance": "단순한 '나쁜' 행동이 아니라 '돈을 위해 원칙을 버린' 도덕적 타락. 강한 비난 톤.",
-      "context": "정치·역사·윤리 지문에서 정부 부패, 사법부 부정, 기관 부실 비판에서 사용. '저자가 권력자의 부정행위를 노골적으로 비난' 맥락.",
-      "everyday_usage": "'venal corruption(부패)', 'venal politician(부패한 정치인)', 'venal interests(이기적 이익)' 같은 표현이 자주 나와요. 법적·정치적 텍스트에 많이 등장."
-    },
-    {
-      "word": "inchoate",
-      "sentence": "The startup's inchoate business model lacked clear direction and measurable goals.",
-      "sentence_ko": "그 스타트업의 미완성 사업 모델은 명확한 방향과 측정 가능한 목표가 부족했어요.",
-      "nuance": "'초기 단계'라는 의미지만, '완성되지 않았기 때문에 문제가 있다'는 약간의 비판적 톤. 아직 '진행 중이고 불완전함'을 강조.",
-      "context": "과학·역사·정책·사업 지문에서 초기 발전 단계, 미성숙한 운동·이념·기술을 설명할 때. 학술적이고 정교한 표현.",
-      "everyday_usage": "'inchoate idea(미완성 아이디어)', 'inchoate movement(초기 운동)', 'inchoate form(미완성 형태)' 같은 표현이 정형화. nascent(초기의)의 동의어지만 '더 미완성'의 뉘앙스."
-    },
-    {
-      "word": "aberrant",
-      "sentence": "The scientist's aberrant results required further investigation and replication.",
-      "sentence_ko": "그 과학자의 이상한 결과는 추가 조사와 재현이 필요했어요.",
-      "nuance": "'비정상적인' 또는 '일반적인 패턴에서 벗어난' 의미로, 과학·통계 맥락에서는 중립적이지만 도덕·행동 맥락에서는 부정적. 예상과 다른 '이상 현상'을 강조해요.",
-      "context": "과학·의학·통계 지문에서 예외적 데이터, 특이한 사례를 설명할 때. 또는 도덕·행동 비판에서 '비정상적인 행동'을 지적할 때.",
-      "everyday_usage": "'aberrant behavior(비정상적 행동)', 'aberrant results(이상 결과)', 'aberrant pattern(이상 패턴)' 같은 형태로 정형화. 학술적이고 거리감 있는 톤."
-    },
-    {
-      "word": "acclimate",
-      "sentence": "New employees needed several weeks to acclimate to the company's demanding work environment.",
-      "sentence_ko": "신입사원들은 회사의 엄격한 업무 환경에 적응하기 위해 몇 주가 필요했어요.",
-      "nuance": "환경·조건에 '익숙해지고 적응하는 과정'을 의미해요. 물리적·사회적 환경 변화에 대한 적응을 강조.",
-      "context": "조직·교육·이민 지문에서 새로운 환경으로의 전환, 적응 기간을 설명할 때. '시간이 걸리는 과정'으로 표현.",
-      "everyday_usage": "'acclimate to + 환경(새로운 학교, 직장, 기후, 문화)' 형태가 정형화. 'take time to acclimate(적응에 시간이 걸리다)' 표현이 자주 나와요."
-    },
-    {
-      "word": "aggregate",
-      "sentence": "When you aggregate the survey responses from all regions, the overall trend becomes clear.",
-      "sentence_ko": "모든 지역의 설문 응답을 합산하면 전체적인 추세가 명확해져요.",
-      "nuance": "개별 항목들을 '모아서 하나의 전체로 합치는' 과정. 수학·통계 맥락에서는 기술적이고, 일반 맥락에서는 '모음'의 의미.",
-      "context": "통계·데이터 분석·연구 지문에서 데이터 수집·통합, 또는 보고서·논문에서 결론 도출할 때.",
-      "everyday_usage": "'aggregate data(통합 데이터)', 'in aggregate(합계로, 전체적으로)', 'aggregate results(종합 결과)' 형태가 정형화. 명사·동사·형용사로 쓰여요."
-    },
-    {
-      "word": "alacrity",
-      "sentence": "The rescue team responded to the emergency with alacrity and professionalism.",
-      "sentence_ko": "구조대는 긴급 상황에 신속함과 전문성으로 대응했어요.",
-      "nuance": "신속함과 함께 '기꺼이, 적극적으로' 행동하는 태도. 긍정적이고 칭찬하는 톤.",
-      "context": "비즈니스·군사·응급 상황 설명에서 신속하고 효율적인 대응을 찬양할 때.",
-      "everyday_usage": "'with alacrity(적극적으로)', 'respond with alacrity(신속하게 대응)' 형태가 정형화. 다소 형식적이고 긍정 평가 톤."
-    },
-    {
-      "word": "alleviate",
-      "sentence": "The new medication helps alleviate chronic pain for many patients.",
-      "sentence_ko": "그 새로운 의약품은 많은 환자들의 만성 통증을 완화시키는 데 도움이 돼요.",
-      "nuance": "'완전히 해결'이 아니라 '증상이나 문제를 '덜어내다, 줄여주다' 의미. 부분적 개선 강조.",
-      "context": "의학·복지·정책 지문에서 증상 완화, 고통 감소, 부분적 개선을 설명할 때.",
-      "everyday_usage": "'alleviate pain(통증 완화)', 'alleviate suffering(고통 경감)', 'alleviate poverty(빈곤 완화)' 형태가 정형화. 의료·사회 복지 담론에서 자주 등장."
-    },
-    {
-      "word": "aloof",
-      "sentence": "The director remained aloof from departmental conflicts, refusing to take sides.",
-      "sentence_ko": "그 이사는 부서 갈등으로부터 거리를 두고 어느 쪽도 들지 않았어요.",
-      "nuance": "물리적·감정적 거리를 유지하며 '초연하고 무관심한' 태도. 때로는 고고하거나 냉담하게 느껴져요.",
-      "context": "개인 성격·리더십·관계 설명에서 '거리를 두는 태도' 표현. 또는 정중한 거리감을 유지하는 상황.",
-      "everyday_usage": "'remain/stay aloof(거리를 유지하다)', 'aloof from + 상황(상황으로부터 물러서다)' 형태가 정형화. 중립성 또는 초연함을 강조할 때 사용."
-    },
-    {
-      "word": "amalgamate",
-      "sentence": "The two companies decided to amalgamate their operations to increase efficiency.",
-      "sentence_ko": "두 회사는 효율성을 높이기 위해 운영을 통합하기로 결정했어요.",
-      "nuance": "별개의 것들을 '결합하여 하나의 통일된 전체로 만드는' 과정. 조직·구조 변화를 강조.",
-      "context": "경영·조직·정책 지문에서 합병, 통합, 조직 개편을 설명할 때.",
-      "everyday_usage": "'amalgamate + 목적어(회사, 부서, 기능) into + 결과물' 형태. 비즈니스·행정 언어에서 정형화."
-    },
-    {
-      "word": "ambiguous",
-      "sentence": "The politician's ambiguous statement left voters confused about his actual position.",
-      "sentence_ko": "그 정치인의 모호한 성명은 유권자들을 그의 실제 입장에 대해 혼란스럽게 만들었어요.",
-      "nuance": "'여러 해석이 가능한, 명확하지 않은' 의미. 의도성 여부와 무관하게 모호함 자체를 지적.",
-      "context": "의사소통·텍스트 분석·철학 지문에서 해석의 여러 가능성, 불명확성을 설명할 때.",
-      "everyday_usage": "'ambiguous wording(모호한 표현)', 'ambiguous response(애매한 대답)' 형태. 소통 문제나 언어 분석 맥락에서 자주 등장."
-    },
-    {
-      "word": "ambitious",
-      "sentence": "The country's ambitious climate goals require significant investment in renewable energy.",
-      "sentence_ko": "그 국가의 야심찬 기후 목표는 재생 에너지에 상당한 투자를 요구해요.",
-      "nuance": "'높고 도전적인 목표를 추구하는' 의미. 긍정적 평가와 현실적 도전 가능성을 동시에 내포.",
-      "context": "정책·사업·연구 지문에서 큰 목표, 장기 계획, 변혁적 목표를 설명할 때.",
-      "everyday_usage": "'ambitious plan(야심찬 계획)', 'ambitious goal(높은 목표)' 형태가 정형화. 규모감이 있는 프로젝트나 비전을 표현할 때."
-    }
-  ],
-  "tips": {
-    "study_strategy": "TOEFL iBT 고득점(25점 이상)을 목표로 할 때는 단어의 '색감(tone)'과 '출제 맥락'을 동시에 학습하세요. 같은 '부정' 의미여도 deleterious(해로운 결과), enervate(정신적 무기력), venal(도덕적 부패)은 서로 다른 감정 온도를 가져요. Reading 지문에서 이런 뉘앙스 차이를 구분할 수 있으면 정확한 이해와 고득점이 가능해요.",
-    "collocations": "TOEFL은 단어보다 '자주 붙어 나오는 표현(collocation)'을 중시합니다. 예: 'have deleterious effects on', 'respond with alacrity', 'alleviate poverty', 'amalgamate operations into' 같은 정형화된 표현들을 패턴으로 암기하세요.",
-    "inference_skill": "특히 Reading에서 어려운 이유는 어려운 단어 때문이 아니라 '저자의 태도·의도'를 파악해야 하기 때문이에요. 'obfuscation'이나 'venal' 같은 단어는 그 자체로 '저자의 비판'을 담고 있어요. 단어 의미뿐 아니라 '왜 저자가 이 단어를 선택했나'를 생각하며 읽으세요."
-  }
+  ]
 }
