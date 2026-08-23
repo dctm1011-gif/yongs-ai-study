@@ -4,9 +4,10 @@ import {
   ActivityIndicator, Linking, Alert,
 } from 'react-native';
 import { Audio, AVPlaybackStatus } from 'expo-av';
-import { getDatabase, get, ref, query, orderByKey, limitToLast } from 'firebase/database';
+import { getDatabase, get, ref, set, query, orderByKey, limitToLast } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useAuth } from '../context/AuthContext';
 
 function stripHtml(s: string): string {
   return s
@@ -30,13 +31,19 @@ function formatDuration(sec: number): string {
 }
 
 // ─── Types ────────────────────────────────────────────────────────────────
+interface PodcastKeyExpr { en: string; ko: string; analysis: string; }
+interface PodcastAnalysis { summary_ko: string; key_expressions: PodcastKeyExpr[]; }
 interface PodcastEpisode {
   source: string; title: string; script: string;
   audio_url: string; duration_sec: number;
   pub_date: string; episode_url: string;
+  analysis?: PodcastAnalysis;
 }
+interface ArticleSentence { en: string; ko: string; analysis?: string; }
 interface KoreaNewsArticle {
-  title: string; category: string; summary: string; url: string;
+  title: string; category: string; url: string;
+  sentences?: ArticleSentence[];
+  summary?: string;  // fallback for old cached data
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -61,6 +68,14 @@ function EpisodeCard({ ep, color, label }: { ep: PodcastEpisode; color: string; 
   const [durationSec, setDurationSec] = useState(ep.duration_sec || 0);
   const [scriptOpen, setScriptOpen] = useState(false);
   const [scriptFull, setScriptFull] = useState(false);
+  const [analysisOpen, setAnalysisOpen] = useState(false);
+  const [expandedExpr, setExpandedExpr] = useState<Set<number>>(new Set());
+
+  const toggleExpr = (i: number) => setExpandedExpr(prev => {
+    const next = new Set(prev);
+    if (next.has(i)) next.delete(i); else next.add(i);
+    return next;
+  });
 
   useEffect(() => {
     Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
@@ -144,6 +159,45 @@ function EpisodeCard({ ep, color, label }: { ep: PodcastEpisode; color: string; 
         )}
       </View>
 
+      {ep.analysis?.summary_ko ? (
+        <>
+          <TouchableOpacity style={styles.scriptToggle} onPress={() => setAnalysisOpen(v => !v)}>
+            <Text style={[styles.scriptToggleText, { color }]}>요약 & 표현 분석</Text>
+            <MaterialIcons name={analysisOpen ? 'expand-less' : 'expand-more'} size={18} color={color} />
+          </TouchableOpacity>
+          {analysisOpen && (
+            <View style={styles.podAnalysisBox}>
+              <Text style={styles.podSummaryText}>{ep.analysis.summary_ko}</Text>
+              {ep.analysis.key_expressions?.length > 0 && (
+                <View style={styles.podExpressionsBlock}>
+                  <Text style={[styles.podExpressionsTitle, { color }]}>핵심 표현</Text>
+                  {ep.analysis.key_expressions.map((expr, i) => (
+                    <View key={i} style={styles.podExprRow}>
+                      <Text style={styles.podExprEn}>{expr.en}</Text>
+                      <Text style={styles.podExprKo}>{expr.ko}</Text>
+                      {expr.analysis ? (
+                        <>
+                          <TouchableOpacity onPress={() => toggleExpr(i)}>
+                            <Text style={[styles.analysisToggleText, { color }]}>
+                              {expandedExpr.has(i) ? '분석 접기 ▲' : '문장 분석 ▼'}
+                            </Text>
+                          </TouchableOpacity>
+                          {expandedExpr.has(i) && (
+                            <View style={[styles.analysisBox, { borderLeftColor: color }]}>
+                              <Text style={styles.analysisText}>{expr.analysis}</Text>
+                            </View>
+                          )}
+                        </>
+                      ) : null}
+                    </View>
+                  ))}
+                </View>
+              )}
+            </View>
+          )}
+        </>
+      ) : null}
+
       {cleanScript ? (
         <>
           <TouchableOpacity style={styles.scriptToggle} onPress={() => setScriptOpen(v => !v)}>
@@ -172,10 +226,20 @@ function EpisodeCard({ ep, color, label }: { ep: PodcastEpisode; color: string; 
 function NewsCard({ article, sourceName, sourceColor }: {
   article: KoreaNewsArticle; sourceName: string; sourceColor: string;
 }) {
+  const [expandedSet, setExpandedSet] = useState<Set<number>>(new Set());
   const catColor = CATEGORY_COLORS[article.category] ?? '#6b7280';
+  const hasSentences = article.sentences && article.sentences.length > 0;
+
+  const toggleAnalysis = (i: number) => {
+    setExpandedSet(prev => {
+      const next = new Set(prev);
+      if (next.has(i)) next.delete(i); else next.add(i);
+      return next;
+    });
+  };
+
   return (
-    <TouchableOpacity style={styles.newsCard}
-      onPress={() => Linking.openURL(article.url)} activeOpacity={0.8}>
+    <View style={styles.newsCard}>
       <View style={styles.newsCardMeta}>
         <View style={[styles.badge, { backgroundColor: sourceColor }]}>
           <Text style={styles.badgeText}>{sourceName}</Text>
@@ -187,9 +251,41 @@ function NewsCard({ article, sourceName, sourceColor }: {
         ) : null}
       </View>
       <Text style={styles.newsTitle}>{article.title}</Text>
-      <Text style={styles.newsSummary}>{article.summary}</Text>
-      <Text style={styles.newsLink}>원문 보기 →</Text>
-    </TouchableOpacity>
+
+      {hasSentences ? (
+        <View style={[styles.sentenceList, { borderTopColor: sourceColor + '33' }]}>
+          {article.sentences!.map((s, i) => {
+            const open = expandedSet.has(i);
+            return (
+              <View key={i} style={[styles.sentenceRow, i > 0 && styles.sentenceRowBorder]}>
+                <Text style={styles.sentenceEn}>{s.en}</Text>
+                {s.ko ? <Text style={styles.sentenceKo}>{s.ko}</Text> : null}
+                {s.analysis ? (
+                  <>
+                    <TouchableOpacity
+                      style={styles.analysisToggle}
+                      onPress={() => toggleAnalysis(i)}
+                      activeOpacity={0.7}
+                    >
+                      <Text style={[styles.analysisToggleText, { color: sourceColor }]}>
+                        {open ? '분석 닫기 ▲' : '문장 분석 ▼'}
+                      </Text>
+                    </TouchableOpacity>
+                    {open ? (
+                      <View style={[styles.analysisBox, { borderLeftColor: sourceColor }]}>
+                        <Text style={styles.analysisText}>{s.analysis}</Text>
+                      </View>
+                    ) : null}
+                  </>
+                ) : null}
+              </View>
+            );
+          })}
+        </View>
+      ) : (
+        <Text style={styles.newsSummary}>{article.summary ?? ''}</Text>
+      )}
+    </View>
   );
 }
 
@@ -197,6 +293,7 @@ function NewsCard({ article, sourceName, sourceColor }: {
 type View = 'home' | 'reading' | 'listening';
 
 export default function BBCScreen() {
+  const { user } = useAuth();
   const [view, setView] = useState<View>('home');
   const [koreaNews, setKoreaNews] = useState<KoreaNewsArticle[]>([]);
   const [loadingKorea, setLoadingKorea] = useState(true);
@@ -204,7 +301,17 @@ export default function BBCScreen() {
   const [loadingHerald, setLoadingHerald] = useState(true);
   const [podcasts, setPodcasts] = useState<Record<string, PodcastEpisode | null>>({});
   const [loadingPodcasts, setLoadingPodcasts] = useState(true);
+  const [readingDone, setReadingDone] = useState(false);
+  const [listeningDone, setListeningDone] = useState(false);
   const today = getKSTDateString();
+
+  const markDone = async (key: string, setDone: (v: boolean) => void) => {
+    setDone(true);
+    const uid = user?.uid;
+    if (!uid) return;
+    const db = getDatabase(getFirebaseApp());
+    await set(ref(db, `users/${uid}/completion/${key}/${today}`), true);
+  };
 
   useEffect(() => {
     const db = getDatabase(getFirebaseApp());
@@ -278,6 +385,16 @@ export default function BBCScreen() {
                 : <View style={styles.skeleton}><Text style={styles.skeletonText}>Korea Herald 기사 없음</Text></View>}
             </>
           )}
+          <TouchableOpacity
+            style={[styles.doneBtn, readingDone && styles.doneBtnDone]}
+            onPress={() => markDone('english_news_reading', setReadingDone)}
+            disabled={readingDone}
+            activeOpacity={0.8}
+          >
+            <Text style={[styles.doneBtnText, readingDone && styles.doneBtnTextDone]}>
+              {readingDone ? '✓ 완료됨' : '완료'}
+            </Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     );
@@ -312,6 +429,16 @@ export default function BBCScreen() {
               );
             })
           )}
+          <TouchableOpacity
+            style={[styles.doneBtn, listeningDone && styles.doneBtnDone]}
+            onPress={() => markDone('english_news_listening', setListeningDone)}
+            disabled={listeningDone}
+            activeOpacity={0.8}
+          >
+            <Text style={[styles.doneBtnText, listeningDone && styles.doneBtnTextDone]}>
+              {listeningDone ? '✓ 완료됨' : '완료'}
+            </Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     );
@@ -392,9 +519,20 @@ const styles = StyleSheet.create({
     marginBottom: 12, borderWidth: 1, borderColor: '#e5e7eb',
   },
   newsCardMeta: { flexDirection: 'row', gap: 6, marginBottom: 8, flexWrap: 'wrap' },
-  newsTitle: { fontSize: 15, fontWeight: '700', color: '#111827', lineHeight: 22, marginBottom: 6 },
-  newsSummary: { fontSize: 13, color: '#4b5563', lineHeight: 19, marginBottom: 4 },
-  newsLink: { fontSize: 12, color: '#1d4ed8', marginTop: 4 },
+  newsTitle: { fontSize: 15, fontWeight: '700', color: '#111827', lineHeight: 22, marginBottom: 4 },
+  newsSummary: { fontSize: 13, color: '#4b5563', lineHeight: 19 },
+  sentenceList: { marginTop: 10, borderTopWidth: 1 },
+  sentenceRow: { paddingVertical: 8 },
+  sentenceRowBorder: { borderTopWidth: 1, borderTopColor: '#f0f0f0' },
+  sentenceEn: { fontSize: 14, color: '#111827', lineHeight: 21 },
+  sentenceKo: { fontSize: 13, color: '#6b7280', lineHeight: 20, marginTop: 4 },
+  analysisToggle: { marginTop: 6 },
+  analysisToggleText: { fontSize: 11, fontWeight: '700', letterSpacing: 0.3 },
+  analysisBox: {
+    marginTop: 6, padding: 10, backgroundColor: '#f8fafc',
+    borderRadius: 8, borderLeftWidth: 3,
+  },
+  analysisText: { fontSize: 12, color: '#374151', lineHeight: 19 },
 
   // Episode cards (Listening)
   episodeCard: {
@@ -420,4 +558,23 @@ const styles = StyleSheet.create({
   scriptToggleText: { fontSize: 11, fontWeight: '700', letterSpacing: 0.5 },
   scriptText: { fontSize: 13, color: '#374151', lineHeight: 20, marginTop: 8 },
   scriptMoreText: { fontSize: 12, fontWeight: '600', marginTop: 8 },
+
+  podAnalysisBox: { marginTop: 10, padding: 12, backgroundColor: '#f8fafc', borderRadius: 10 },
+  podSummaryText: { fontSize: 13, color: '#374151', lineHeight: 21 },
+  podExpressionsBlock: { marginTop: 12 },
+  podExpressionsTitle: { fontSize: 11, fontWeight: '800', letterSpacing: 0.5, marginBottom: 8 },
+  podExprRow: {
+    paddingVertical: 8, borderTopWidth: 1, borderTopColor: '#e5e7eb',
+  },
+  podExprEn: { fontSize: 13, fontWeight: '600', color: '#111827', lineHeight: 20 },
+  podExprKo: { fontSize: 12, color: '#6b7280', lineHeight: 19, marginTop: 2, marginBottom: 4 },
+
+  // 완료 button
+  doneBtn: {
+    marginTop: 8, paddingVertical: 14, borderRadius: 14,
+    backgroundColor: '#1d4ed8', alignItems: 'center',
+  },
+  doneBtnDone: { backgroundColor: '#16a34a' },
+  doneBtnText: { fontSize: 16, fontWeight: '700', color: '#fff' },
+  doneBtnTextDone: { color: '#fff' },
 });

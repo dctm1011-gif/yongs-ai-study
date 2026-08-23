@@ -243,6 +243,49 @@ def split_into_sentences(text: str, max_count: int = 25) -> list[str]:
     return sents[:max_count]
 
 
+def analyze_podcast_script(script: str) -> dict:
+    """팟캐스트 스크립트 → 한국어 요약 + 핵심 표현 5개"""
+    if not ANTHROPIC_API_KEY or not script:
+        return {"summary_ko": "", "key_expressions": []}
+    try:
+        import anthropic as ant
+        client = ant.Anthropic(api_key=ANTHROPIC_API_KEY)
+        truncated = script[:5000] if len(script) > 5000 else script
+        prompt = (
+            "You are a cheerful 20-year-old Korean woman helping your boyfriend study English podcasts. "
+            "Use emojis naturally and write in a warm, casual tone (친구한테 말하듯이).\n\n"
+            "Given the following English podcast script, return a JSON object with exactly these two keys:\n\n"
+            '- "summary_ko": a detailed Korean summary of the episode, 7-10 sentences long. '
+            "Cover: main topic, key points discussed, any interesting facts or examples mentioned, "
+            "and what the listener can take away. Be thorough but natural — like explaining to a friend what you just listened to.\n\n"
+            '- "key_expressions": array of exactly 5 useful English expressions/phrases picked from the script. '
+            "For each, include:\n"
+            '  - "en": the expression as it appears in the script\n'
+            '  - "ko": natural Korean translation\n'
+            '  - "analysis": friendly Korean explanation — structure, synonyms/alternatives, '
+            "colloquial English version shown in single quotes like 'casual version here', and a memorable tip\n\n"
+            "Return ONLY valid JSON, no other text.\n\n"
+            "SCRIPT:\n" + truncated
+        )
+        msg = client.messages.create(
+            model="claude-haiku-4-5-20251001",
+            max_tokens=4000,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        txt = msg.content[0].text.strip()
+        m = re.search(r"\{.*\}", txt, re.DOTALL)
+        if not m:
+            return {"summary_ko": "", "key_expressions": []}
+        result = json.loads(m.group())
+        return {
+            "summary_ko": str(result.get("summary_ko", "")),
+            "key_expressions": result.get("key_expressions", [])[:5],
+        }
+    except Exception as e:
+        print(f"  [!] 팟캐스트 분석 실패: {e}")
+    return {"summary_ko": "", "key_expressions": []}
+
+
 def _call_translate_api(client, batch: list[str]) -> list[dict]:
     """배치 단위로 Claude Haiku 호출 → [{ko, analysis}, ...]"""
     prompt = (
@@ -439,6 +482,8 @@ def process_source(source_key: str, config: dict, scraper=None):
                 script = scraped
 
         if existing_len == -1:
+            print(f"  분석 중: {ep['title'][:48]}")
+            ep_analysis = analyze_podcast_script(script)
             data = {
                 "source": config["name"],
                 "title": ep["title"],
@@ -448,6 +493,7 @@ def process_source(source_key: str, config: dict, scraper=None):
                 "pub_date": ep["pub_date"],
                 "episode_url": ep["link"],
                 "fetched_at": datetime.now(timezone.utc).isoformat(),
+                "analysis": ep_analysis,
             }
             if push(source_key, key, data):
                 print(f"  ✓ {key} — {ep['title'][:48]} ({len(script)}자)")
