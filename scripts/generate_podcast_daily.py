@@ -243,41 +243,64 @@ def split_into_sentences(text: str, max_count: int = 25) -> list[str]:
     return sents[:max_count]
 
 
+def _call_translate_api(client, batch: list[str]) -> list[dict]:
+    """배치 단위로 Claude Haiku 호출 → [{ko, analysis}, ...]"""
+    prompt = (
+        "You are a cheerful 20-year-old Korean woman explaining English sentences to your boyfriend in Korean. "
+        "Use emojis naturally, be warm and casual (친구한테 말하듯이), and make it fun to read. "
+        "Write the analysis as one flowing paragraph — no rigid bullet points, just talk naturally.\n\n"
+        "For each English sentence below, return a JSON array where each element has:\n"
+        '- "ko": natural Korean translation\n'
+        '- "analysis": a friendly Korean explanation that naturally covers:\n'
+        "  · 문장 구조나 핵심 표현을 쉽게 설명\n"
+        "  · 핵심 단어의 동의어나 다른 표현\n"
+        "  · 동사+전치사 조합이나 숙어가 있으면 용법 설명\n"
+        "  · 일상 영어에서 어떻게 더 캐주얼하게 말하는지 — 실제 영어 표현을 직접 보여줄 것 "
+        "(예: 구어체로는 'It's not a big deal' 이렇게 말해~ 처럼 작은따옴표로 감싸서)\n"
+        "  · 기억에 남을 팁이나 재미있는 비유\n\n"
+        "Return ONLY valid JSON array, no other text.\n\n"
+        + json.dumps(batch, ensure_ascii=False)
+    )
+    msg = client.messages.create(
+        model="claude-haiku-4-5-20251001",
+        max_tokens=8000,
+        messages=[{"role": "user", "content": prompt}],
+    )
+    txt = msg.content[0].text.strip()
+    m = re.search(r"\[.*\]", txt, re.DOTALL)
+    if not m:
+        return []
+    raw_json = m.group()
+    try:
+        result = json.loads(raw_json)
+    except json.JSONDecodeError:
+        import ast
+        try:
+            result = ast.literal_eval(raw_json)
+        except Exception:
+            return []
+    if not isinstance(result, list) or len(result) != len(batch):
+        return []
+    return [{"ko": str(r.get("ko", "")), "analysis": str(r.get("analysis", ""))} for r in result]
+
+
 def translate_and_analyze(sentences: list[str]) -> list[dict]:
-    """Claude Haiku로 영어 문장 배열 → 번역 + 문장 분석"""
+    """Claude Haiku로 영어 문장 배열 → 번역 + 문장 분석 (8문장씩 배치 처리)"""
     if not ANTHROPIC_API_KEY or not sentences:
         return [{"ko": "", "analysis": ""} for _ in sentences]
     try:
         import anthropic as ant
         client = ant.Anthropic(api_key=ANTHROPIC_API_KEY)
-        prompt = (
-            "You are a cheerful 20-year-old Korean woman explaining English sentences to your boyfriend in Korean. "
-            "Use emojis naturally, be warm and casual (친구한테 말하듯이), and make it fun to read. "
-            "Write the analysis as one flowing paragraph — no rigid bullet points, just talk naturally.\n\n"
-            "For each English sentence below, return a JSON array where each element has:\n"
-            '- "ko": natural Korean translation\n'
-            '- "analysis": a friendly Korean explanation that naturally covers:\n'
-            "  · 문장 구조나 핵심 표현을 쉽게 설명\n"
-            "  · 핵심 단어의 동의어나 다른 표현\n"
-            "  · 동사+전치사 조합이나 숙어가 있으면 용법 설명\n"
-            "  · 일상 영어에서 어떻게 더 캐주얼하게 말하는지 — **실제 영어 표현을 직접 보여줄 것** "
-            "(예: '구어체로는 \"It's not a big deal\" 이렇게 말해~' 식으로)\n"
-            "  · 기억에 남을 팁이나 재미있는 비유\n\n"
-            "Return ONLY valid JSON array, no other text.\n\n"
-            + json.dumps(sentences, ensure_ascii=False)
-        )
-        msg = client.messages.create(
-            model="claude-haiku-4-5-20251001",
-            max_tokens=6000,
-            messages=[{"role": "user", "content": prompt}],
-        )
-        txt = msg.content[0].text.strip()
-        m = re.search(r"\[.*\]", txt, re.DOTALL)
-        if m:
-            result = json.loads(m.group())
-            if isinstance(result, list) and len(result) == len(sentences):
-                return [{"ko": str(r.get("ko", "")), "analysis": str(r.get("analysis", ""))}
-                        for r in result]
+        BATCH = 8
+        results: list[dict] = []
+        for i in range(0, len(sentences), BATCH):
+            batch = sentences[i:i + BATCH]
+            batch_result = _call_translate_api(client, batch)
+            if not batch_result:
+                print(f"  [!] 배치 {i//BATCH+1} 번역 실패 — 빈값으로 대체")
+                batch_result = [{"ko": "", "analysis": ""} for _ in batch]
+            results.extend(batch_result)
+        return results
     except Exception as e:
         print(f"  [!] 번역/분석 실패: {e}")
     return [{"ko": "", "analysis": ""} for _ in sentences]
