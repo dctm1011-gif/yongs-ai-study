@@ -394,7 +394,7 @@ def fetch_korea_herald():
     today = datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d")
     articles = []
 
-    for item in root.findall(".//item")[:25]:
+    for i, item in enumerate(root.findall(".//item")[:25]):
         title = item.findtext("title", "").strip()
         link = item.findtext("link", "").strip()
         desc_raw = item.findtext("description", "") or ""
@@ -404,24 +404,17 @@ def fetch_korea_herald():
         if not title or len(desc) < 20:
             continue
 
-        # 전문 스크래핑 시도, 실패 시 RSS description 사용
-        print(f"  스크래핑: {title[:50]}")
-        full_text = scrape_news_article(link) if link else ""
-        body = full_text if len(full_text) > len(desc) + 100 else desc
-
-        sents_en = split_into_sentences(body)
-        if not sents_en:
-            sents_en = [desc]
-
-        sents_ko = translate_sentences(sents_en)
-        sentences = [{"en": e, "ko": k} for e, k in zip(sents_en, sents_ko)]
-
-        articles.append({
-            "title": title,
-            "category": cat,
-            "sentences": sentences,
-            "url": link,
-        })
+        if i == 0:
+            # 첫 번째 기사만 전문 스크래핑 + 번역
+            print(f"  스크래핑: {title[:50]}")
+            full_text = scrape_news_article(link) if link else ""
+            body = full_text if len(full_text) > len(desc) + 100 else desc
+            sents_en = split_into_sentences(body) or [desc]
+            sents_ko = translate_sentences(sents_en)
+            sentences = [{"en": e, "ko": k} for e, k in zip(sents_en, sents_ko)]
+            articles.append({"title": title, "category": cat, "sentences": sentences, "url": link})
+        else:
+            articles.append({"title": title, "category": cat, "summary": desc, "url": link})
 
     if not articles:
         print("  기사 없음")
@@ -456,7 +449,7 @@ def fetch_kbs_news():
     today = datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d")
     articles = []
 
-    for item in root.findall(".//item")[:15]:
+    for i, item in enumerate(root.findall(".//item")[:15]):
         title = item.findtext("title", "").strip()
         link = item.findtext("link", "").strip()
         desc_raw = item.findtext("description", "") or ""
@@ -475,24 +468,17 @@ def fetch_kbs_news():
         if not title or len(desc) < 30:
             continue
 
-        # 기사 전문 스크래핑 시도, 실패 시 RSS description 사용
-        print(f"  스크래핑: {title[:50]}")
-        full_text = scrape_news_article(link) if link else ""
-        body = full_text if len(full_text) > len(desc) + 100 else desc
-
-        sents_en = split_into_sentences(body)
-        if not sents_en:
-            sents_en = [desc]
-
-        sents_ko = translate_sentences(sents_en)
-        sentences = [{"en": e, "ko": k} for e, k in zip(sents_en, sents_ko)]
-
-        articles.append({
-            "title": title,
-            "category": cat,
-            "sentences": sentences,
-            "url": link,
-        })
+        if i == 0:
+            # 첫 번째 기사만 전문 스크래핑 + 번역
+            print(f"  스크래핑: {title[:50]}")
+            full_text = scrape_news_article(link) if link else ""
+            body = full_text if len(full_text) > len(desc) + 100 else desc
+            sents_en = split_into_sentences(body) or [desc]
+            sents_ko = translate_sentences(sents_en)
+            sentences = [{"en": e, "ko": k} for e, k in zip(sents_en, sents_ko)]
+            articles.append({"title": title, "category": cat, "sentences": sentences, "url": link})
+        else:
+            articles.append({"title": title, "category": cat, "summary": desc, "url": link})
 
     if not articles:
         print("  기사 없음")
