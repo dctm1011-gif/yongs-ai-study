@@ -30,11 +30,11 @@ SOURCES = {
         "max": 7,
         "min_script_len": 2000,  # transcript 전문 기준
     },
-    "voa": {
-        "rss": "https://learningenglish.voanews.com/podcast?zoneId=1689",
-        "name": "VOA Learning English",
-        "max": 20,
-        "min_script_len": 0,  # JS 렌더링이라 스크래핑 불가 → 설명으로 만족
+    "npr_consider": {
+        "rss": "https://feeds.npr.org/510355/podcast.xml",
+        "name": "NPR Consider This",
+        "max": 7,
+        "min_script_len": 2000,  # NPR transcript 전문 기준
     },
 }
 
@@ -325,7 +325,10 @@ def main():
         "npr_upfirst", SOURCES["npr_upfirst"],
         scraper=lambda ep: scrape_npr_transcript(ep.get("link", ""))
     )
-    process_source("voa", SOURCES["voa"])  # VOA: JS 렌더링, 스크립트 없음
+    process_source(
+        "npr_consider", SOURCES["npr_consider"],
+        scraper=lambda ep: scrape_npr_transcript(ep.get("link", ""))
+    )
 
     print("\n[*] 완료")
 

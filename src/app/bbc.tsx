@@ -44,9 +44,9 @@ interface PodcastEpisode {
 }
 
 const PODCAST_SOURCES = [
-  { key: 'bbc_learning', label: 'BBC Learning English', color: '#dc2626' },
-  { key: 'npr_upfirst',  label: 'NPR Up First',         color: '#1a56db' },
-  { key: 'voa',          label: 'VOA Learning English',  color: '#059669' },
+  { key: 'bbc_learning',  label: 'BBC Learning English', color: '#dc2626' },
+  { key: 'npr_upfirst',   label: 'NPR Up First',         color: '#1a56db' },
+  { key: 'npr_consider',  label: 'NPR Consider This',    color: '#7c3aed' },
 ] as const;
 
 // ─── BBC Reading detail view ───────────────────────────────────────────────
