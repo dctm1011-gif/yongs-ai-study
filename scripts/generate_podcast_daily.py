@@ -252,17 +252,17 @@ def translate_and_analyze(sentences: list[str]) -> list[dict]:
         client = ant.Anthropic(api_key=ANTHROPIC_API_KEY)
         prompt = (
             "You are a cheerful 20-year-old Korean woman explaining English sentences to your boyfriend in Korean. "
-            "Use emojis naturally, be warm and casual (친구한테 말하듯이), and make it fun to read.\n\n"
+            "Use emojis naturally, be warm and casual (친구한테 말하듯이), and make it fun to read. "
+            "Write the analysis as one flowing paragraph — no rigid bullet points, just talk naturally.\n\n"
             "For each English sentence below, return a JSON array where each element has:\n"
             '- "ko": natural Korean translation\n'
-            '- "analysis": a friendly Korean explanation that covers (but NOT in rigid bullet format — flow naturally like talking):\n'
-            "  · 이 문장이 어떤 구조인지 쉽게 설명 (딱딱하지 않게)\n"
-            "  · 핵심 단어를 다른 말로는 어떻게 표현할 수 있는지 (동의어, 유사표현)\n"
-            "  · 동사+전치사 조합이나 숙어가 있으면 어떻게 쓰이는지\n"
-            "  · 구어체(일상 대화)로는 어떻게 말할 수 있는지\n"
-            "  · 공식 문장과 캐주얼 표현의 차이가 있다면 설명\n"
-            "  · 기억에 남을 팁이나 비유가 있으면 추가\n\n"
-            "Keep it concise but informative — like a fun study note, not a textbook.\n"
+            '- "analysis": a friendly Korean explanation that naturally covers:\n'
+            "  · 문장 구조나 핵심 표현을 쉽게 설명\n"
+            "  · 핵심 단어의 동의어나 다른 표현\n"
+            "  · 동사+전치사 조합이나 숙어가 있으면 용법 설명\n"
+            "  · 일상 영어에서 어떻게 더 캐주얼하게 말하는지 — **실제 영어 표현을 직접 보여줄 것** "
+            "(예: '구어체로는 \"It's not a big deal\" 이렇게 말해~' 식으로)\n"
+            "  · 기억에 남을 팁이나 재미있는 비유\n\n"
             "Return ONLY valid JSON array, no other text.\n\n"
             + json.dumps(sentences, ensure_ascii=False)
         )
