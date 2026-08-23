@@ -67,6 +67,7 @@ def fetch_rss_news(url: str) -> list[dict]:
     return items
 
 
+
 def fetch_podcast_episode(feed_key: str, feed_info: dict) -> dict | None:
     """RSS 피드에서 최신 에피소드의 오디오 URL과 메타데이터를 추출"""
     req = urllib.request.Request(feed_info["url"], headers={"User-Agent": "Mozilla/5.0"})

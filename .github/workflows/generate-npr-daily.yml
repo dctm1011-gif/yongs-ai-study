@@ -1,0 +1,24 @@
+name: Fetch NPR News Now
+
+on:
+  schedule:
+    - cron: '0 22 * * *'   # 07:00 KST
+    - cron: '30 23 * * *'  # 08:30 KST
+    - cron: '0 1 * * *'    # 10:00 KST
+  workflow_dispatch:
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Fetch NPR episode and push to Firebase
+        run: python scripts/generate_npr_daily.py
