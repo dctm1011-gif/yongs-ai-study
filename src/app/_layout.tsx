@@ -201,9 +201,9 @@ function MainTabs() {
           name="BBC"
           component={BBCScreen}
           options={{
-            title: 'BBC',
+            title: 'NPR',
             tabBarIcon: ({ color }) => (
-              <MaterialIcons name="rss-feed" size={26} color={color} />
+              <MaterialIcons name="podcasts" size={26} color={color} />
             ),
           }}
         />

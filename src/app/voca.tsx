@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, Alert, ToastAndroid, Linking, Modal, Animated, RefreshControl } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, Alert, ToastAndroid, Linking, Modal, Animated, RefreshControl, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useScreenFade } from '../hooks/useScreenFade';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -1781,26 +1781,77 @@ const SentenceReviewView = React.memo(({ sentences, loading, uid, onComplete }: 
 
 interface PoolWord { id: string; word: string; meaning: string; count: number; }
 
+const POOL_SNAPSHOT_KEY = 'reviewPool_snapshot';
+
 const ReviewPoolView = React.memo(({ uid }: { uid: string }) => {
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [poolWords, setPoolWords] = useState<PoolWord[]>([]);
+  const [search, setSearch] = useState('');
+  const [deltas, setDeltas] = useState<Record<string, number>>({});
+
+  const poolWordsRef = React.useRef<PoolWord[]>([]);
+  const lastSeenRef = React.useRef<Record<string, number>>({});
 
   useEffect(() => {
     if (!uid) return;
-    const db = getDatabase(getFirebaseApp());
-    get(ref(db, `users/${uid}/english/reviewPool`)).then(snap => {
-      if (!snap.exists()) { setLoading(false); return; }
-      const vals: PoolWord[] = Object.entries(snap.val()).map(([id, v]: [string, any]) => ({
-        id,
-        word: v.word ?? '',
-        meaning: v.meaning ?? '',
-        count: v.count ?? 0,
-      }));
-      vals.sort((a, b) => a.count - b.count);
-      setPoolWords(vals);
-      setLoading(false);
-    }).catch(() => setLoading(false));
+    let unsub: (() => void) | null = null;
+
+    AsyncStorage.getItem(`${POOL_SNAPSHOT_KEY}_${uid}`).then(raw => {
+      if (raw) lastSeenRef.current = JSON.parse(raw);
+
+      const db = getDatabase(getFirebaseApp());
+      unsub = onValue(ref(db, `users/${uid}/english/reviewPool`), snap => {
+        if (!snap.exists()) { setLoading(false); setRefreshing(false); return; }
+        const vals: PoolWord[] = Object.entries(snap.val()).map(([id, v]: [string, any]) => ({
+          id,
+          word: v.word ?? '',
+          meaning: v.meaning ?? '',
+          count: v.count ?? 0,
+        }));
+        vals.sort((a, b) => a.count - b.count);
+
+        const newDeltas: Record<string, number> = {};
+        vals.forEach(w => {
+          const prev = lastSeenRef.current[w.id] ?? 0;
+          if (w.count > prev) newDeltas[w.id] = w.count - prev;
+        });
+        setDeltas(newDeltas);
+
+        poolWordsRef.current = vals;
+        setPoolWords(vals);
+        setLoading(false);
+        setRefreshing(false);
+      });
+    });
+
+    return () => {
+      if (unsub) unsub();
+      const snapshot: Record<string, number> = {};
+      poolWordsRef.current.forEach(w => { snapshot[w.id] = w.count; });
+      if (Object.keys(snapshot).length > 0) {
+        AsyncStorage.setItem(`${POOL_SNAPSHOT_KEY}_${uid}`, JSON.stringify(snapshot));
+      }
+    };
   }, [uid]);
+
+  const handleRefresh = useCallback(() => {
+    setRefreshing(true);
+    const snapshot: Record<string, number> = {};
+    poolWordsRef.current.forEach(w => { snapshot[w.id] = w.count; });
+    lastSeenRef.current = snapshot;
+    AsyncStorage.setItem(`${POOL_SNAPSHOT_KEY}_${uid}`, JSON.stringify(snapshot));
+    setDeltas({});
+    setTimeout(() => setRefreshing(false), 400);
+  }, [uid]);
+
+  const filteredWords = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    if (!q) return poolWords;
+    return poolWords.filter(w =>
+      w.word.toLowerCase().includes(q) || w.meaning.includes(search.trim())
+    );
+  }, [poolWords, search]);
 
   if (loading) {
     return (
@@ -1820,20 +1871,25 @@ const ReviewPoolView = React.memo(({ uid }: { uid: string }) => {
 
   const active = poolWords.filter(w => w.count < 10);
   const graduated = poolWords.filter(w => w.count >= 10);
+  const totalDelta = Object.values(deltas).reduce((a, b) => a + b, 0);
 
   const renderWord = ({ item }: { item: PoolWord }) => {
     const pct = Math.min(item.count / 10, 1);
     const isGraduated = item.count >= 10;
+    const delta = deltas[item.id] ?? 0;
     return (
       <View style={styles.poolRow}>
         <View style={{ flex: 1 }}>
-          <Text style={styles.poolWord}>{item.word}</Text>
+          <Text style={styles.poolWord}>{item.word || '(단어 없음)'}</Text>
           <Text style={styles.poolMeaning}>{item.meaning}</Text>
         </View>
         <View style={styles.poolCountCol}>
-          <Text style={[styles.poolCount, isGraduated && styles.poolCountGraduated]}>
-            {item.count}/10
-          </Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, justifyContent: 'flex-end' }}>
+            <Text style={[styles.poolCount, isGraduated && styles.poolCountGraduated]}>
+              {item.count}/10
+            </Text>
+            {delta > 0 && <Text style={styles.poolDelta}>+{delta}</Text>}
+          </View>
           <View style={styles.poolBar}>
             <View style={[styles.poolBarFill, { width: `${pct * 100}%` as any }, isGraduated && styles.poolBarGraduated]} />
           </View>
@@ -1844,14 +1900,38 @@ const ReviewPoolView = React.memo(({ uid }: { uid: string }) => {
 
   return (
     <FlatList
-      data={poolWords}
+      data={filteredWords}
       keyExtractor={item => item.id}
       renderItem={renderWord}
       contentContainerStyle={{ paddingVertical: 8, paddingBottom: 80 }}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={handleRefresh}
+          colors={['#0095f6']}
+        />
+      }
       ListHeaderComponent={
-        <Text style={styles.poolHeader}>
-          복습 중 {active.length}개 · 졸업 {graduated.length}개
-        </Text>
+        <View>
+          <TextInput
+            style={styles.poolSearchInput}
+            placeholder="단어 검색..."
+            placeholderTextColor="#aaa"
+            value={search}
+            onChangeText={setSearch}
+            clearButtonMode="while-editing"
+          />
+          <Text style={styles.poolHeader}>
+            복습 중 {active.length}개 · 졸업 {graduated.length}개
+            {search.trim() ? ` · 검색결과 ${filteredWords.length}개` : ''}
+            {totalDelta > 0 ? `  🟢 오늘 +${totalDelta}` : ''}
+          </Text>
+        </View>
+      }
+      ListEmptyComponent={
+        <View style={{ alignItems: 'center', paddingTop: 40 }}>
+          <Text style={{ fontSize: 14, color: '#8e8e8e' }}>'{search}' 검색 결과 없음</Text>
+        </View>
       }
       ItemSeparatorComponent={() => <View style={{ height: 1, backgroundColor: '#f0f0f0', marginHorizontal: 16 }} />}
     />
@@ -2390,6 +2470,17 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#0095f6',
   },
+  poolSearchInput: {
+    marginHorizontal: 16,
+    marginTop: 10,
+    marginBottom: 4,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 10,
+    backgroundColor: '#f0f0f0',
+    fontSize: 14,
+    color: '#262626',
+  },
   poolHeader: {
     fontSize: 12,
     color: '#8e8e8e',
@@ -2425,6 +2516,11 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   poolCountGraduated: {
+    color: '#16a34a',
+  },
+  poolDelta: {
+    fontSize: 11,
+    fontWeight: '700',
     color: '#16a34a',
   },
   poolBar: {

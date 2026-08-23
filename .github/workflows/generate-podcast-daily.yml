@@ -1,0 +1,22 @@
+name: Fetch Learning English Podcasts
+
+on:
+  schedule:
+    - cron: '0 20 * * *'  # 05:00 KST
+  workflow_dispatch:
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Fetch podcasts and push to Firebase
+        run: python scripts/generate_podcast_daily.py
