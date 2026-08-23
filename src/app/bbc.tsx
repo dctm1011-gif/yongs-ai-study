@@ -40,9 +40,13 @@ interface KoreaNewsArticle {
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
+  // KBS World
   Politics: '#dc2626', Economy: '#059669', Society: '#7c3aed',
   Culture: '#d97706', Science: '#0891b2', Sports: '#ea580c',
   World: '#1d4ed8', North: '#b45309',
+  // Korea Herald
+  National: '#dc2626', Business: '#059669', 'Life&Culture': '#d97706',
+  LifenCulture: '#d97706', Opinion: '#6b7280', 'K-pop': '#db2777', Kpop: '#db2777',
 };
 
 const PODCAST_SOURCES = [
@@ -168,6 +172,8 @@ function EpisodeCard({ ep, color, label }: { ep: PodcastEpisode; color: string; 
 export default function BBCScreen() {
   const [koreaNews, setKoreaNews] = useState<KoreaNewsArticle[]>([]);
   const [loadingKorea, setLoadingKorea] = useState(true);
+  const [herald, setHerald] = useState<KoreaNewsArticle[]>([]);
+  const [loadingHerald, setLoadingHerald] = useState(true);
   const [podcasts, setPodcasts] = useState<Record<string, PodcastEpisode | null>>({});
   const [loadingPodcasts, setLoadingPodcasts] = useState(true);
   const today = getKSTDateString();
@@ -183,6 +189,19 @@ export default function BBCScreen() {
       })
       .catch(e => console.error('Korea news:', e?.message))
       .finally(() => setLoadingKorea(false));
+  }, [today]);
+
+  useEffect(() => {
+    const db = getDatabase(getFirebaseApp());
+    get(ref(db, `english/korea_herald/${today}`))
+      .then(snap => {
+        if (snap.exists()) {
+          const val = snap.val();
+          setHerald(Array.isArray(val) ? val : Object.values(val));
+        }
+      })
+      .catch(e => console.error('Korea Herald:', e?.message))
+      .finally(() => setLoadingHerald(false));
   }, [today]);
 
   useEffect(() => {
@@ -240,6 +259,40 @@ export default function BBCScreen() {
       ) : (
         <View style={[styles.skeleton, { borderLeftWidth: 3, borderLeftColor: '#ef4444' }]}>
           <Text style={styles.skeletonText}>오늘의 한국 뉴스가 아직 없습니다 (05:00 KST)</Text>
+        </View>
+      )}
+
+      {/* ── Korea Herald ───────────────────────────── */}
+      <View style={[styles.sectionHeader, { marginTop: 28 }]}>
+        <MaterialIcons name="newspaper" size={18} color="#111827" />
+        <Text style={styles.sectionTitle}>Korea Herald</Text>
+      </View>
+
+      {loadingHerald ? (
+        <View style={styles.skeleton}>
+          <ActivityIndicator size="small" color="#9ca3af" />
+          <Text style={styles.skeletonText}>불러오는 중...</Text>
+        </View>
+      ) : herald.length > 0 ? (
+        herald.map((article, i) => {
+          const catColor = CATEGORY_COLORS[article.category] ?? '#6b7280';
+          return (
+            <TouchableOpacity key={i} style={styles.koreaCard}
+              onPress={() => Linking.openURL(article.url)} activeOpacity={0.8}>
+              {article.category ? (
+                <View style={[styles.sourceBadge, { backgroundColor: catColor, marginBottom: 8, alignSelf: 'flex-start' }]}>
+                  <Text style={styles.sourceBadgeText}>{article.category}</Text>
+                </View>
+              ) : null}
+              <Text style={styles.koreaTitle}>{article.title}</Text>
+              <Text style={styles.koreaSummary}>{article.summary}</Text>
+              <Text style={styles.koreaLink}>원문 보기 →</Text>
+            </TouchableOpacity>
+          );
+        })
+      ) : (
+        <View style={[styles.skeleton, { borderLeftWidth: 3, borderLeftColor: '#b45309' }]}>
+          <Text style={styles.skeletonText}>오늘의 기사가 아직 없습니다 (05:00 KST)</Text>
         </View>
       )}
 

@@ -314,6 +314,56 @@ def process_source(source_key: str, config: dict, scraper=None):
     print(f"  → 신규 {new_count}개, 재시도 업데이트 {retry_count}개")
 
 
+def fetch_korea_herald():
+    """Korea Herald 전체 뉴스 → Firebase english/korea_herald/{date}"""
+    print("\n[Korea Herald]")
+    rss_url = "https://www.koreaherald.com/rss/newsAll"
+    raw = fetch(rss_url)
+    if not raw:
+        return
+
+    try:
+        root = ElementTree.fromstring(raw)
+    except Exception as e:
+        print(f"  RSS 파싱 실패: {e}")
+        return
+
+    today = datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d")
+    articles = []
+
+    for item in root.findall(".//item")[:25]:
+        title = item.findtext("title", "").strip()
+        link = item.findtext("link", "").strip()
+        desc_raw = item.findtext("description", "") or ""
+        desc = strip_html(desc_raw).strip()
+        cat = item.findtext("category", "").strip()
+
+        if not title or len(desc) < 20:
+            continue
+
+        articles.append({
+            "title": title,
+            "category": cat,
+            "summary": desc,
+            "url": link,
+        })
+
+    if not articles:
+        print("  기사 없음")
+        return
+
+    payload = json.dumps(articles, ensure_ascii=False).encode("utf-8")
+    url = f"{DB_URL}/english/korea_herald/{today}.json"
+    req = urllib.request.Request(url, data=payload, method="PUT",
+                                  headers={"Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=15) as r:
+            r.read()
+        print(f"  ✓ {today} — {len(articles)}개 기사 저장")
+    except Exception as e:
+        print(f"  [!] Firebase 저장 실패: {e}")
+
+
 def fetch_kbs_news():
     """KBS World Radio 영어 뉴스 → Firebase english/korea_news/{date}"""
     print("\n[KBS World Korea News]")
@@ -389,6 +439,7 @@ def main():
         scraper=lambda ep: scrape_npr_transcript(ep.get("link", ""))
     )
     fetch_kbs_news()
+    fetch_korea_herald()
 
     print("\n[*] 완료")
 
