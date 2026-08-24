@@ -2534,5 +2534,65 @@
     "explanation": "자신의 입장을 절대 바꾸지 않는 것. 정치·협상 지문 핵심 어휘예요.",
     "tip": "동의어: inflexible, uncompromising, stubborn. 반의어: flexible, conciliatory.",
     "emoji": "🧱"
+  },
+  {
+    "id": "constitute",
+    "word": "constitute",
+    "pos": "동사",
+    "date": "2026-08-25",
+    "meaning": "구성하다, 이루다, 해당하다",
+    "example_ko": "소셜 미디어 사용은 청소년 일일 활동의 상당한 부분을 차지해요.",
+    "example_en": "Social media usage constitutes a significant portion of adolescent daily activity.",
+    "explanation": "여러 부분이 모여서 전체를 이루거나, 특정 조건을 충족하는 것. TOEFL Reading에서 사회·정치·법률 지문에 빈번하게 출제돼요.",
+    "tip": "동의어: comprise(포함하다), make up(구성하다). Reading·Writing 고빈출. 'What constitutes...?' 형태로 자주 출제.",
+    "emoji": "🧩"
+  },
+  {
+    "id": "undermine",
+    "word": "undermine",
+    "pos": "동사",
+    "date": "2026-08-25",
+    "meaning": "약화시키다, 무너뜨리다, 훼손하다",
+    "example_ko": "거짓 정보는 과학 기관에 대한 대중의 신뢰를 훼손해요.",
+    "example_en": "Misinformation undermines public trust in scientific institutions.",
+    "explanation": "기초를 깎아내듯이 어떤 것의 기반이나 신뢰도를 약화시키는 것. 정책·신뢰·증거 등에 대해 사용. TOEFL에서 학술 논증 맥락에서 자주 나타나요.",
+    "tip": "동의어: weaken(약화), compromise(훼손), erode(침식). 반의어: strengthen(강화), reinforce(강화). Reading·Writing 필수 어휘.",
+    "emoji": "⚠️"
+  },
+  {
+    "id": "sustain",
+    "word": "sustain",
+    "pos": "동사",
+    "date": "2026-08-25",
+    "meaning": "지속하다, 유지하다, 견디다",
+    "example_ko": "환경 보호 없이는 경제 성장을 지속할 수 없어요.",
+    "example_en": "Economic growth cannot be sustained without environmental protection.",
+    "explanation": "오랜 기간 계속 유지하거나 견뎌내는 것. 환경·경제·건강 논제에서 sustainability와 함께 자주 출제. 학술 문맥에서 '지탱하다'라는 뜻으로도 사용돼요.",
+    "tip": "동의어: maintain(유지), preserve(보존), endure(견디다). 명사형: sustainability. Reading·Writing·Speaking 빈출.",
+    "emoji": "🔄"
+  },
+  {
+    "id": "subsequent",
+    "word": "subsequent",
+    "pos": "형용사/부사",
+    "date": "2026-08-25",
+    "meaning": "이후의, 뒤따르는, 그 다음의",
+    "example_ko": "초기 발견 이후, 뒤따르는 연구들이 예상 밖의 패턴을 드러냈어요.",
+    "example_en": "After the initial discovery, subsequent research revealed unexpected patterns.",
+    "explanation": "어떤 사건이나 시간 이후에 일어나는 것. 시간 순서를 나타낼 때 필수적으로 사용. TOEFL Reading의 역사·사건 설명 지문에서 매우 자주 출제돼요.",
+    "tip": "동의어: following(다음의), later(나중의). 반의어: prior(이전의), previous(이전의). TOEFL Reading 시간 관계 파악 핵심 어휘.",
+    "emoji": "⏳"
+  },
+  {
+    "id": "inherent",
+    "word": "inherent",
+    "pos": "형용사",
+    "date": "2026-08-25",
+    "meaning": "내재된, 본질적인, 고유한",
+    "example_ko": "모든 실험 절차에는 내재된 위험이 있어요.",
+    "example_en": "There are inherent risks in any experimental procedure.",
+    "explanation": "어떤 것에 타고나거나 자연스럽게 포함되어 있는 성질이나 특성. 제거하기 어렵거나 본래부터 가진 속성을 설명할 때 사용. TOEFL Reading 학술 논문·사회과학 지문에서 고빈출.",
+    "tip": "동의어: intrinsic(내재적), innate(타고난), built-in(본래 포함된). 반의어: extrinsic(외재적). TOEFL Writing 에세이에서도 자주 사용.",
+    "emoji": "🔗"
   }
 ]

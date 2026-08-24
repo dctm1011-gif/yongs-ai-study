@@ -29,15 +29,6 @@ const GROUPS: { title: string; items: CheckItem[] }[] = [
     ],
   },
   {
-    title: 'TOEFL',
-    items: [
-      { key: 'toefl_reading',   label: 'Reading',  emoji: '📚' },
-      { key: 'toefl_listening', label: 'Listening', emoji: '🎧' },
-      { key: 'toefl_writing',   label: 'Writing',  emoji: '✍️' },
-      { key: 'toefl_speaking',  label: 'Speaking', emoji: '🎤' },
-    ],
-  },
-  {
     title: '투자',
     items: [
       { key: 'investment', label: '투자 학습', emoji: '📈' },

@@ -3,9 +3,10 @@ import { resolve } from 'path';
 import { initializeApp, getApps } from 'firebase/app';
 import { getDatabase, ref, set } from 'firebase/database';
 
-export const config = {
-  schedule: '0 21 * * *',
-};
+// TOEFL 비활성화 (2026-08-24)
+// export const config = {
+//   schedule: '0 21 * * *',
+// };
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,

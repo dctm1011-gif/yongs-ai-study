@@ -160,10 +160,6 @@ export default function SettingsScreen() {
             <Text style={styles.value}>영어 단어 학습</Text>
           </View>
           <View style={styles.item}>
-            <Text style={styles.label}>🎓 TOEFL</Text>
-            <Text style={styles.value}>TOEFL 시험 준비</Text>
-          </View>
-          <View style={styles.item}>
             <Text style={styles.label}>💰 Investment</Text>
             <Text style={styles.value}>투자 분석</Text>
           </View>

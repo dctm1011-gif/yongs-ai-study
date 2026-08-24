@@ -1,118 +1,199 @@
 {
-  "date": "2026-08-24",
+  "date": "2026-08-25",
   "reading": {
-    "title": "The Impact of Remote Work on Urban Development",
-    "passage": "Remote work has fundamentally transformed how cities develop and function. As companies embrace flexible work arrangements, fewer employees commute daily, reducing traffic congestion and pollution in urban centers. However, this shift creates challenges for city planners. Commercial real estate values decline when office spaces sit empty, threatening local tax revenues. Additionally, suburban areas experience rapid growth as workers relocate, straining infrastructure and services. Urban renewal requires adapting vacant buildings into residential spaces and community centers. Cities that successfully transition will prioritize mixed-use developments, promoting both residential and commercial integration.",
+    "title": "Neuroplasticity and Brain Adaptation",
+    "passage": "Neuroplasticity refers to the brain's remarkable ability to reorganize itself by forming new neural connections throughout life. This fundamental mechanism allows the brain to adapt to environmental changes, recover from injuries, and acquire new skills even in adulthood. For decades, neuroscientists believed the adult brain was fixed and immutable; however, groundbreaking research has demonstrated that neural pathways can be strengthened, weakened, or entirely restructured through experience and learning. When individuals engage in repetitive practice, such as learning a musical instrument or mastering a new language, the corresponding neural networks expand and become more efficient. Studies using functional magnetic resonance imaging (fMRI) have revealed that stroke patients can regain lost motor functions by engaging in intensive rehabilitation, as undamaged brain regions assume responsibilities previously handled by damaged areas. This neurological flexibility has profound implications for education, cognitive training, and therapeutic interventions, suggesting that intellectual capabilities are not predetermined but rather shaped by deliberate effort and environmental enrichment.",
+    "vocabulary": [
+      {
+        "word": "neuroplasticity",
+        "meaning_ko": "신경가소성; 뇌가 스스로 재조직화하는 능력"
+      },
+      {
+        "word": "neural connections",
+        "meaning_ko": "신경 연결; 뉴런 간의 시냅스 연결"
+      },
+      {
+        "word": "immutable",
+        "meaning_ko": "불변의, 변할 수 없는"
+      },
+      {
+        "word": "neural pathways",
+        "meaning_ko": "신경 경로; 뉴런들 사이의 신호 전달 경로"
+      },
+      {
+        "word": "functional magnetic resonance imaging (fMRI)",
+        "meaning_ko": "기능적 자기공명영상; 뇌 활동을 측정하는 기술"
+      },
+      {
+        "word": "rehabilitation",
+        "meaning_ko": "재활, 회복 치료"
+      },
+      {
+        "word": "therapeutic interventions",
+        "meaning_ko": "치료 개입; 의료적 치료 방법"
+      }
+    ],
     "questions": [
       {
-        "q": "According to the passage, what is one challenge that remote work creates for city planners?",
+        "q": "According to the passage, what was the previous scientific belief about the adult brain?",
         "options": [
-          "Increased traffic congestion in downtown areas",
-          "Decline in commercial real estate values",
-          "Reduced suburban development",
-          "Higher pollution levels"
+          "The adult brain could easily form new neural connections.",
+          "The adult brain was fixed and could not change.",
+          "The adult brain was more adaptable than the young brain.",
+          "The adult brain could only recover from minor injuries."
         ],
         "answer": 1,
-        "explanation": "본문에서 'Commercial real estate values decline when office spaces sit empty'라고 명시되어 있습니다. 이는 도시 계획자들이 직면하는 구체적인 문제입니다."
+        "explanation": "지문에서 '신경과학자들은 성인 뇌가 고정되어 불변이라고 믿었다'고 명시하고 있습니다."
       },
       {
-        "q": "What does the passage suggest cities should do to successfully transition?",
+        "q": "What can be inferred from the passage about the effects of repetitive practice?",
         "options": [
-          "Increase office building construction",
-          "Discourage residential development",
-          "Prioritize mixed-use developments",
-          "Maintain traditional business districts"
+          "It damages neural networks over time.",
+          "It weakens existing neural connections.",
+          "It strengthens and expands corresponding neural networks.",
+          "It prevents the brain from forming new memories."
         ],
         "answer": 2,
-        "explanation": "'Cities that successfully transition will prioritize mixed-use developments'라는 문장에서 도시가 성공적으로 전환하기 위해 해야 할 일을 설명하고 있습니다."
+        "explanation": "지문에서 반복 연습을 하면 해당 신경망이 확장되고 더 효율적이 된다고 설명합니다."
       },
       {
-        "q": "Which of the following is mentioned as a positive effect of remote work?",
+        "q": "The word 'immutable' in the passage is closest in meaning to",
         "options": [
-          "Increased commercial real estate profits",
-          "Reduced traffic congestion and pollution",
-          "Faster suburban growth",
-          "Higher city tax revenues"
+          "changeable",
+          "unchangeable",
+          "flexible",
+          "adaptive"
         ],
         "answer": 1,
-        "explanation": "'fewer employees commute daily, reducing traffic congestion and pollution in urban centers'에서 원격 근무의 긍정적 효과를 찾을 수 있습니다."
+        "explanation": "'immutable'은 '변할 수 없는'이라는 뜻의 형용사로, 'unchangeable'과 가장 가까운 의미입니다."
+      },
+      {
+        "q": "Why does the author mention stroke patients in the passage?",
+        "options": [
+          "To explain that stroke patients cannot recover brain function.",
+          "To demonstrate that neuroplasticity allows brain regions to assume new responsibilities.",
+          "To argue that rehabilitation is unnecessary for adults.",
+          "To show that fMRI technology is unreliable."
+        ],
+        "answer": 1,
+        "explanation": "뇌졸중 환자의 예시는 신경가소성이 손상된 뇌 영역의 기능을 다른 영역이 담당하도록 함을 보여주기 위함입니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Remote work is better than working in a traditional office environment'?",
-    "structure": {
-      "intro": "의견을 명확히 제시하되, 찬성 또는 반대 입장을 분명히 하고 2-3개의 주요 이유를 소개합니다.",
-      "body1": "첫 번째 이유를 구체적인 예시와 함께 설명합니다. 예: 유연성, 효율성, 생활의 질 향상 등",
-      "body2": "두 번째 이유를 제시하고 상세히 전개합니다. 반대 주장에 대한 반박도 포함할 수 있습니다.",
-      "conclusion": "주요 논점을 요약하고 최종 의견을 재확인하며 전체 주장을 강화합니다."
-    },
-    "useful_phrases": [
-      "In my opinion,",
-      "I strongly believe that...",
-      "From my perspective,",
-      "Furthermore,",
-      "In addition,",
-      "However, some people argue that...",
-      "Although this may be true,",
-      "For example,",
-      "In conclusion,",
-      "To summarize,"
+    "sentences": [
+      {
+        "original": "Neuroplasticity refers to the brain's remarkable ability to reorganize itself by forming new neural connections throughout life.",
+        "paraphrase": "The capacity of the brain to establish fresh neural connections and restructure itself persistently across one's lifespan is known as neuroplasticity.",
+        "tip": "주어-동사 구조 재배열 및 능동→수동 표현으로 변환 (refers to → is known as)"
+      },
+      {
+        "original": "This fundamental mechanism allows the brain to adapt to environmental changes, recover from injuries, and acquire new skills even in adulthood.",
+        "paraphrase": "By means of this essential process, the brain can adjust to shifts in its surroundings, restore capabilities after damage, and develop novel competencies throughout adult life.",
+        "tip": "동의어 치환 (mechanism→process, adapt→adjust, injuries→damage, skills→competencies)"
+      },
+      {
+        "original": "When individuals engage in repetitive practice, such as learning a musical instrument or mastering a new language, the corresponding neural networks expand and become more efficient.",
+        "paraphrase": "Engaging repeatedly in activities like acquiring musical proficiency or linguistic mastery leads to the expansion and increased efficiency of related neural networks.",
+        "tip": "명사구 재구성 (engage in→engaging in, learning a musical instrument→acquiring musical proficiency)"
+      },
+      {
+        "original": "Studies using functional magnetic resonance imaging (fMRI) have revealed that stroke patients can regain lost motor functions by engaging in intensive rehabilitation.",
+        "paraphrase": "Research employing fMRI technology has demonstrated the capacity of stroke patients to recover previously lost motor capabilities through participation in rigorous rehabilitative treatment.",
+        "tip": "수동→능동 전환 및 동의어 치환 (revealed→demonstrated, regain→recover, intensive rehabilitation→rigorous rehabilitative treatment)"
+      },
+      {
+        "original": "This neurological flexibility has profound implications for education, cognitive training, and therapeutic interventions.",
+        "paraphrase": "The significance of such neural adaptability extends substantially to educational practices, cognitive development programs, and medical treatment methods.",
+        "tip": "동의어 선택 (implications→significance, neurological flexibility→neural adaptability, therapeutic interventions→medical treatment methods)"
+      }
     ]
   },
+  "writing_task": {
+    "prompt": "Some people believe that cities should expand public transportation systems extensively. Others argue that improving existing systems is more practical. Which approach do you support, and why? Use specific reasons and examples to support your answer.",
+    "essay_structure": "Introduction: State your position clearly. Body 1: First reason with specific example. Body 2: Second reason with counter-argument refutation. Conclusion: Summarize your stance and its broader implications."
+  },
   "speaking": {
-    "prompt": "Some people prefer working in a traditional office. Others prefer remote work. Which do you prefer and why?",
-    "useful_expressions": [
-      "In my opinion, I prefer... because...",
-      "One reason is that...",
-      "Another advantage is...",
-      "For example,",
-      "This means...",
-      "As a result,",
-      "In conclusion, I believe..."
-    ],
-    "sample_points": [
-      "원격 근무는 통근 시간을 절약하고 개인 시간을 더 확보할 수 있으며, 유연한 일정으로 생산성을 높일 수 있습니다.",
-      "반면 사무실 근무는 동료와의 직접적인 상호작용, 팀 협력 강화, 그리고 업무 관계 구축에 장점이 있습니다."
+    "prompt": "Some people prefer to travel and explore new places. Others prefer to save money and avoid travel expenses. Which do you prefer, and why? Include specific reasons and details in your response.",
+    "model_sentences": [
+      "I definitely prefer traveling over saving money because the experiences and personal growth I gain are invaluable.",
+      "First, traveling exposes me to different cultures and perspectives that I could never learn from books or the internet.",
+      "For example, when I visited Japan last year, I learned about their traditions firsthand and made friends from around the world, which broadened my worldview significantly.",
+      "Additionally, these memories and skills I acquire become a permanent part of who I am, whereas saved money can be spent on less meaningful things.",
+      "Therefore, I believe investing in travel experiences is a wiser choice for personal development and long-term happiness."
     ]
   },
   "listening": {
-    "title": "Professor's Lecture on Urban Planning",
+    "title": "The Industrial Revolution and Technological Innovation",
     "type": "lecture",
-    "script": "Professor: Good morning, everyone. Today we'll discuss how cities are adapting to remote work trends. As you know, the pandemic accelerated remote work adoption significantly. Now, five years later, cities face both opportunities and challenges. On the positive side, reduced commuting means lower carbon emissions and less traffic congestion. Downtown areas have become more pedestrian-friendly with improved public spaces. However, traditional office districts are struggling. Landlords face vacant buildings, and local governments lose tax revenue from commercial properties. Some cities are being proactive. They're converting empty office buildings into apartments, co-working spaces, and cultural centers. For example, San Francisco and New York have launched programs to revitalize downtown areas through mixed-use development. The key to success is planning ahead. Cities that adapt quickly will attract both residents and businesses. Those that don't risk economic decline. Urban planners must balance growth with sustainability.",
+    "script": "Professor: Good morning, everyone. Today we're examining the Industrial Revolution, particularly how technological innovations transformed manufacturing and society. The period, roughly from 1760 to 1840, marked humanity's transition from agrarian economies to industrial ones. Initially, innovations like the steam engine, invented by James Watt, revolutionized textile production. Factories could now operate continuously, unlike traditional craftsmen who relied on manual labor and daylight. This mechanization dramatically increased output but created significant social upheaval. Workers, particularly from rural areas, migrated to cities seeking employment, resulting in overcrowded urban centers with poor living conditions. However, the Industrial Revolution also catalyzed unprecedented economic growth and technological advancement. Interestingly, these technological breakthroughs didn't occur in isolation; they built upon previous scientific discoveries and collaborative efforts among inventors. By understanding this period, we can appreciate how technological change simultaneously drives progress and generates challenges that societies must address thoughtfully.",
+    "vocabulary": [
+      {
+        "word": "Industrial Revolution",
+        "meaning_ko": "산업혁명; 18-19세기 기계화로 인한 사회 변화"
+      },
+      {
+        "word": "technological innovations",
+        "meaning_ko": "기술 혁신; 새로운 기술 개발"
+      },
+      {
+        "word": "agrarian economies",
+        "meaning_ko": "농업 경제; 농업을 기반으로 한 경제 체제"
+      },
+      {
+        "word": "steam engine",
+        "meaning_ko": "증기 기관; 증기 동력을 이용한 기계"
+      },
+      {
+        "word": "mechanization",
+        "meaning_ko": "기계화; 기계를 이용한 생산 과정"
+      },
+      {
+        "word": "social upheaval",
+        "meaning_ko": "사회적 격변; 사회의 급격한 변화"
+      },
+      {
+        "word": "catalyzed",
+        "meaning_ko": "촉발했다; 어떤 일이 일어나도록 유발했다"
+      },
+      {
+        "word": "collaborative efforts",
+        "meaning_ko": "협력적 노력; 함께 하는 노력"
+      }
+    ],
     "questions": [
       {
         "q": "What is the main topic of the lecture?",
         "options": [
-          "How to reduce carbon emissions in cities",
-          "How cities are adapting to remote work trends",
-          "The history of commercial real estate",
-          "Why remote work is harmful to cities"
+          "The history of textile production and craftsmanship",
+          "The Industrial Revolution's technological innovations and social impacts",
+          "The causes of urban overcrowding in 19th-century England",
+          "The biography of James Watt and his inventions"
         ],
         "answer": 1,
-        "explanation": "교수는 'Today we'll discuss how cities are adapting to remote work trends'라고 명시했습니다. 이것이 강의의 주요 주제입니다."
+        "explanation": "교수는 산업혁명과 그것이 제조업과 사회에 미친 영향을 다루고 있으며, 기술 혁신을 중심으로 설명합니다."
       },
       {
-        "q": "According to the professor, what are cities doing to revitalize downtown areas?",
+        "q": "According to the professor, what was one major consequence of mechanization?",
         "options": [
-          "Building new office towers",
-          "Increasing commercial property taxes",
-          "Converting empty offices into apartments and co-working spaces",
-          "Reducing public transportation"
+          "Rural economies became stronger.",
+          "Workers had more leisure time.",
+          "Factory workers relocated to cities seeking employment.",
+          "Manual labor completely disappeared."
         ],
         "answer": 2,
-        "explanation": "'They're converting empty office buildings into apartments, co-working spaces, and cultural centers'라는 문장에서 도시의 구체적인 행동을 설명하고 있습니다."
+        "explanation": "강의에서 기계화로 인해 시골 지역의 노동자들이 일자리를 찾아 도시로 이주했다고 명시합니다."
       },
       {
-        "q": "What does the professor imply about cities that don't adapt quickly?",
+        "q": "Why does the professor mention that technological breakthroughs 'didn't occur in isolation'?",
         "options": [
-          "They will become more attractive to workers",
-          "They risk economic decline",
-          "They will benefit from lower property taxes",
-          "They will attract more remote workers"
+          "To suggest that inventors worked alone in laboratories.",
+          "To explain that innovations built upon previous discoveries and collaborative efforts.",
+          "To argue that the Industrial Revolution was inevitable.",
+          "To criticize inventors for not sharing their work."
         ],
         "answer": 1,
-        "explanation": "'Those that don't risk economic decline'에서 빠르게 적응하지 않는 도시의 위험성을 명확히 나타내고 있습니다."
+        "explanation": "교수는 기술적 돌파구들이 이전의 과학적 발견과 발명가들의 협력 노력에 기반했음을 설명하려고 합니다."
       }
     ]
   }
