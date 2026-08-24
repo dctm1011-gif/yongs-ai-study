@@ -6,8 +6,9 @@ import { View, ActivityIndicator, TouchableOpacity, Text, StyleSheet } from 'rea
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Updates from 'expo-updates';
 import { useUpdates } from 'expo-updates';
+import { getDatabase, ref, set } from 'firebase/database';
+import { getFirebaseApp } from '../config/firebase';
 import VocaScreen from './voca';
-import TOEFLScreen from './toefl';
 import InvestmentScreen from './investment';
 import CultureScreen from './culture';
 import ChecklistScreen from './checklist';
@@ -77,6 +78,24 @@ function MainTabs() {
   // 앱 시작 시 오늘치 학습 알림 갱신 (하루 1회만 실행, 로그인 후 uid 확보 시 실행)
   useEffect(() => {
     if (user?.uid) refreshStudyNotifications(user.uid);
+  }, [user?.uid]);
+
+  // Expo push token 취득 → Firebase pushTokens/{uid} 저장
+  useEffect(() => {
+    if (!user?.uid) return;
+    (async () => {
+      const { status } = await Notifications.getPermissionsAsync();
+      if (status !== 'granted') return;
+      try {
+        const token = await Notifications.getExpoPushTokenAsync({
+          projectId: '391a8441-ff72-45ea-846f-ceccae07bd15',
+        });
+        const db = getDatabase(getFirebaseApp());
+        await set(ref(db, `pushTokens/${user.uid}`), token.data);
+      } catch (e) {
+        console.warn('[push] 토큰 저장 실패:', e);
+      }
+    })();
   }, [user?.uid]);
 
   // 알림 수신 시 로그 기록 (디버그용)
@@ -162,16 +181,6 @@ function MainTabs() {
             title: 'Voca',
             tabBarIcon: ({ color }) => (
               <MaterialIcons name="language" size={26} color={color} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="TOEFL"
-          component={TOEFLScreen}
-          options={{
-            title: 'TOEFL',
-            tabBarIcon: ({ color }) => (
-              <MaterialIcons name="school" size={26} color={color} />
             ),
           }}
         />

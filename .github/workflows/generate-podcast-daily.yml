@@ -2,7 +2,7 @@ name: Fetch Learning English Podcasts
 
 on:
   schedule:
-    - cron: '0 20 * * *'  # 05:00 KST
+    - cron: '0 1 * * *'   # 10:00 KST
   workflow_dispatch:
 
 jobs:

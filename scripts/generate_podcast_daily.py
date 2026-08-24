@@ -631,6 +631,44 @@ def fetch_kbs_news():
         print(f"  [!] Firebase 저장 실패: {e}")
 
 
+def send_push_notifications(title: str, body: str) -> None:
+    """Firebase pushTokens에서 토큰 읽어 Expo Push API로 알림 발송"""
+    req = urllib.request.Request(
+        f"{DB_URL}/pushTokens.json",
+        headers={"User-Agent": "Mozilla/5.0"}
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=15) as r:
+            data = json.loads(r.read())
+    except Exception as e:
+        print(f"  [!] pushTokens 조회 실패: {e}")
+        return
+
+    if not data or not isinstance(data, dict):
+        print("  [!] pushToken 없음")
+        return
+
+    tokens = [v for v in data.values() if isinstance(v, str) and v.startswith("ExponentPushToken")]
+    if not tokens:
+        print("  [!] 유효한 Expo 토큰 없음")
+        return
+
+    messages = [{"to": t, "title": title, "body": body, "sound": "default"} for t in tokens]
+    payload = json.dumps(messages, ensure_ascii=False).encode("utf-8")
+    req2 = urllib.request.Request(
+        "https://exp.host/--/api/v2/push/send",
+        data=payload,
+        headers={"Content-Type": "application/json", "Accept": "application/json"}
+    )
+    try:
+        with urllib.request.urlopen(req2, timeout=15) as r:
+            result = json.loads(r.read())
+            ok = sum(1 for d in result.get("data", []) if d.get("status") == "ok")
+            print(f"  ✓ 알림 발송: {ok}/{len(tokens)}명 성공")
+    except Exception as e:
+        print(f"  [!] 알림 발송 실패: {e}")
+
+
 def main():
     print(f"[*] 팟캐스트 수집 — {datetime.now(timezone.utc).isoformat()[:19]} UTC")
 
@@ -641,6 +679,11 @@ def main():
     process_source("all_ears_english", SOURCES["all_ears_english"])
     fetch_kbs_news()
     fetch_korea_herald()
+
+    send_push_notifications(
+        "📰 오늘의 영어 뉴스 도착!",
+        "KBS뉴스 · Korea Herald 리딩이 업데이트됐어요 → English 탭에서 확인!"
+    )
 
     print("\n[*] 완료")
 
