@@ -4,9 +4,10 @@ import { createLogger } from './_utils.mjs';
 import { initializeApp, getApps } from 'firebase/app';
 import { getDatabase, ref, set, get } from 'firebase/database';
 
-export const config = {
-  schedule: '0 21 * * *',
-};
+// 자동 스케줄 비활성화 — 수동 실행 전용 (2026-08-24)
+// export const config = {
+//   schedule: '0 21 * * *',
+// };
 
 const log = createLogger('investment-daily');
 
