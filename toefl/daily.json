@@ -1,199 +1,118 @@
 {
   "date": "2026-08-25",
   "reading": {
-    "title": "Neuroplasticity and Brain Adaptation",
-    "passage": "Neuroplasticity refers to the brain's remarkable ability to reorganize itself by forming new neural connections throughout life. This fundamental mechanism allows the brain to adapt to environmental changes, recover from injuries, and acquire new skills even in adulthood. For decades, neuroscientists believed the adult brain was fixed and immutable; however, groundbreaking research has demonstrated that neural pathways can be strengthened, weakened, or entirely restructured through experience and learning. When individuals engage in repetitive practice, such as learning a musical instrument or mastering a new language, the corresponding neural networks expand and become more efficient. Studies using functional magnetic resonance imaging (fMRI) have revealed that stroke patients can regain lost motor functions by engaging in intensive rehabilitation, as undamaged brain regions assume responsibilities previously handled by damaged areas. This neurological flexibility has profound implications for education, cognitive training, and therapeutic interventions, suggesting that intellectual capabilities are not predetermined but rather shaped by deliberate effort and environmental enrichment.",
-    "vocabulary": [
-      {
-        "word": "neuroplasticity",
-        "meaning_ko": "신경가소성; 뇌가 스스로 재조직화하는 능력"
-      },
-      {
-        "word": "neural connections",
-        "meaning_ko": "신경 연결; 뉴런 간의 시냅스 연결"
-      },
-      {
-        "word": "immutable",
-        "meaning_ko": "불변의, 변할 수 없는"
-      },
-      {
-        "word": "neural pathways",
-        "meaning_ko": "신경 경로; 뉴런들 사이의 신호 전달 경로"
-      },
-      {
-        "word": "functional magnetic resonance imaging (fMRI)",
-        "meaning_ko": "기능적 자기공명영상; 뇌 활동을 측정하는 기술"
-      },
-      {
-        "word": "rehabilitation",
-        "meaning_ko": "재활, 회복 치료"
-      },
-      {
-        "word": "therapeutic interventions",
-        "meaning_ko": "치료 개입; 의료적 치료 방법"
-      }
-    ],
+    "title": "Climate Change and Ocean Acidification",
+    "passage": "Ocean acidification occurs when excess carbon dioxide in the atmosphere dissolves into seawater, lowering its pH level. This phenomenon threatens marine ecosystems by weakening the shells of mollusks and corals. Scientists warn that if current emission rates continue, many shellfish populations may collapse within decades. The economic consequences are severe, as fishing industries and coastal communities depend heavily on marine resources. International cooperation is essential to reduce carbon emissions and protect ocean health for future generations.",
     "questions": [
       {
-        "q": "According to the passage, what was the previous scientific belief about the adult brain?",
+        "q": "According to the passage, what happens when carbon dioxide dissolves in seawater?",
         "options": [
-          "The adult brain could easily form new neural connections.",
-          "The adult brain was fixed and could not change.",
-          "The adult brain was more adaptable than the young brain.",
-          "The adult brain could only recover from minor injuries."
+          "It increases oxygen levels",
+          "It lowers the pH level",
+          "It strengthens coral shells",
+          "It reduces fish populations"
         ],
         "answer": 1,
-        "explanation": "지문에서 '신경과학자들은 성인 뇌가 고정되어 불변이라고 믿었다'고 명시하고 있습니다."
+        "explanation": "지문에서 'dissolves into seawater, lowering its pH level'이라고 명시되어 있습니다. 따라서 정답은 B입니다."
       },
       {
-        "q": "What can be inferred from the passage about the effects of repetitive practice?",
+        "q": "Which organisms are threatened by ocean acidification?",
         "options": [
-          "It damages neural networks over time.",
-          "It weakens existing neural connections.",
-          "It strengthens and expands corresponding neural networks.",
-          "It prevents the brain from forming new memories."
-        ],
-        "answer": 2,
-        "explanation": "지문에서 반복 연습을 하면 해당 신경망이 확장되고 더 효율적이 된다고 설명합니다."
-      },
-      {
-        "q": "The word 'immutable' in the passage is closest in meaning to",
-        "options": [
-          "changeable",
-          "unchangeable",
-          "flexible",
-          "adaptive"
+          "Only fish species",
+          "Mollusks and corals",
+          "Plants and trees",
+          "Mammals only"
         ],
         "answer": 1,
-        "explanation": "'immutable'은 '변할 수 없는'이라는 뜻의 형용사로, 'unchangeable'과 가장 가까운 의미입니다."
+        "explanation": "지문의 'weakening the shells of mollusks and corals'에서 연체동물과 산호가 위협받는다고 언급되어 있습니다."
       },
       {
-        "q": "Why does the author mention stroke patients in the passage?",
+        "q": "What is suggested as a necessary action to address this problem?",
         "options": [
-          "To explain that stroke patients cannot recover brain function.",
-          "To demonstrate that neuroplasticity allows brain regions to assume new responsibilities.",
-          "To argue that rehabilitation is unnecessary for adults.",
-          "To show that fMRI technology is unreliable."
+          "Increase fishing activities",
+          "International cooperation to reduce carbon emissions",
+          "Build more factories",
+          "Ignore the issue"
         ],
         "answer": 1,
-        "explanation": "뇌졸중 환자의 예시는 신경가소성이 손상된 뇌 영역의 기능을 다른 영역이 담당하도록 함을 보여주기 위함입니다."
+        "explanation": "지문의 마지막 문장 'International cooperation is essential to reduce carbon emissions'에서 국제 협력이 필요하다고 명시되어 있습니다."
       }
     ]
   },
   "writing": {
-    "sentences": [
-      {
-        "original": "Neuroplasticity refers to the brain's remarkable ability to reorganize itself by forming new neural connections throughout life.",
-        "paraphrase": "The capacity of the brain to establish fresh neural connections and restructure itself persistently across one's lifespan is known as neuroplasticity.",
-        "tip": "주어-동사 구조 재배열 및 능동→수동 표현으로 변환 (refers to → is known as)"
-      },
-      {
-        "original": "This fundamental mechanism allows the brain to adapt to environmental changes, recover from injuries, and acquire new skills even in adulthood.",
-        "paraphrase": "By means of this essential process, the brain can adjust to shifts in its surroundings, restore capabilities after damage, and develop novel competencies throughout adult life.",
-        "tip": "동의어 치환 (mechanism→process, adapt→adjust, injuries→damage, skills→competencies)"
-      },
-      {
-        "original": "When individuals engage in repetitive practice, such as learning a musical instrument or mastering a new language, the corresponding neural networks expand and become more efficient.",
-        "paraphrase": "Engaging repeatedly in activities like acquiring musical proficiency or linguistic mastery leads to the expansion and increased efficiency of related neural networks.",
-        "tip": "명사구 재구성 (engage in→engaging in, learning a musical instrument→acquiring musical proficiency)"
-      },
-      {
-        "original": "Studies using functional magnetic resonance imaging (fMRI) have revealed that stroke patients can regain lost motor functions by engaging in intensive rehabilitation.",
-        "paraphrase": "Research employing fMRI technology has demonstrated the capacity of stroke patients to recover previously lost motor capabilities through participation in rigorous rehabilitative treatment.",
-        "tip": "수동→능동 전환 및 동의어 치환 (revealed→demonstrated, regain→recover, intensive rehabilitation→rigorous rehabilitative treatment)"
-      },
-      {
-        "original": "This neurological flexibility has profound implications for education, cognitive training, and therapeutic interventions.",
-        "paraphrase": "The significance of such neural adaptability extends substantially to educational practices, cognitive development programs, and medical treatment methods.",
-        "tip": "동의어 선택 (implications→significance, neurological flexibility→neural adaptability, therapeutic interventions→medical treatment methods)"
-      }
+    "prompt": "Do you agree or disagree with the statement: 'Governments should prioritize environmental protection over economic development.' Support your opinion with specific examples.",
+    "structure": {
+      "intro": "명확한 입장 제시. 예: 'I strongly agree that governments should prioritize environmental protection over economic development because...' (20-30단어)",
+      "body1": "첫 번째 이유와 구체적 예시. 예: '첫째, 환경 보호는 장기적 경제 이익을 만든다. 예를 들어, 재생 에너지 산업은...' (60-80단어)",
+      "body2": "두 번째 이유와 반론 대처. 예: '둘째, 환경 파괴의 비용이 경제 발전의 이익보다 크다. 예: 오염으로 인한 의료비...' (60-80단어)",
+      "conclusion": "입장 재확인 및 미래 전망. 예: 'In conclusion, prioritizing environmental protection is not just ethical but economically wise for future generations.' (25-35단어)"
+    },
+    "useful_phrases": [
+      "In my opinion,",
+      "I strongly agree/disagree that",
+      "First and foremost,",
+      "Furthermore,",
+      "Moreover,",
+      "On the other hand,",
+      "For example,",
+      "In conclusion,",
+      "It is clear that",
+      "As a result,"
     ]
   },
-  "writing_task": {
-    "prompt": "Some people believe that cities should expand public transportation systems extensively. Others argue that improving existing systems is more practical. Which approach do you support, and why? Use specific reasons and examples to support your answer.",
-    "essay_structure": "Introduction: State your position clearly. Body 1: First reason with specific example. Body 2: Second reason with counter-argument refutation. Conclusion: Summarize your stance and its broader implications."
-  },
   "speaking": {
-    "prompt": "Some people prefer to travel and explore new places. Others prefer to save money and avoid travel expenses. Which do you prefer, and why? Include specific reasons and details in your response.",
-    "model_sentences": [
-      "I definitely prefer traveling over saving money because the experiences and personal growth I gain are invaluable.",
-      "First, traveling exposes me to different cultures and perspectives that I could never learn from books or the internet.",
-      "For example, when I visited Japan last year, I learned about their traditions firsthand and made friends from around the world, which broadened my worldview significantly.",
-      "Additionally, these memories and skills I acquire become a permanent part of who I am, whereas saved money can be spent on less meaningful things.",
-      "Therefore, I believe investing in travel experiences is a wiser choice for personal development and long-term happiness."
+    "prompt": "Some people prefer to work in large corporations with many employees. Others prefer to work in small businesses or startups. Which do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer...",
+      "One reason is that...",
+      "Another advantage/disadvantage is...",
+      "For example,",
+      "This is important because...",
+      "On the other hand,",
+      "To be honest,"
+    ],
+    "sample_points": [
+      "소규모 회사에서는 더 많은 책임과 다양한 경험을 할 수 있습니다. 예: 여러 프로젝트에 직접 관여하고 경영진과의 상호작용이 많습니다.",
+      "대규모 회사는 안정성, 복리후생, 경력 발전의 명확한 경로를 제공합니다. 예: 교육 기회, 퇴직금, 승진 시스템이 체계적입니다."
     ]
   },
   "listening": {
-    "title": "The Industrial Revolution and Technological Innovation",
-    "type": "lecture",
-    "script": "Professor: Good morning, everyone. Today we're examining the Industrial Revolution, particularly how technological innovations transformed manufacturing and society. The period, roughly from 1760 to 1840, marked humanity's transition from agrarian economies to industrial ones. Initially, innovations like the steam engine, invented by James Watt, revolutionized textile production. Factories could now operate continuously, unlike traditional craftsmen who relied on manual labor and daylight. This mechanization dramatically increased output but created significant social upheaval. Workers, particularly from rural areas, migrated to cities seeking employment, resulting in overcrowded urban centers with poor living conditions. However, the Industrial Revolution also catalyzed unprecedented economic growth and technological advancement. Interestingly, these technological breakthroughs didn't occur in isolation; they built upon previous scientific discoveries and collaborative efforts among inventors. By understanding this period, we can appreciate how technological change simultaneously drives progress and generates challenges that societies must address thoughtfully.",
-    "vocabulary": [
-      {
-        "word": "Industrial Revolution",
-        "meaning_ko": "산업혁명; 18-19세기 기계화로 인한 사회 변화"
-      },
-      {
-        "word": "technological innovations",
-        "meaning_ko": "기술 혁신; 새로운 기술 개발"
-      },
-      {
-        "word": "agrarian economies",
-        "meaning_ko": "농업 경제; 농업을 기반으로 한 경제 체제"
-      },
-      {
-        "word": "steam engine",
-        "meaning_ko": "증기 기관; 증기 동력을 이용한 기계"
-      },
-      {
-        "word": "mechanization",
-        "meaning_ko": "기계화; 기계를 이용한 생산 과정"
-      },
-      {
-        "word": "social upheaval",
-        "meaning_ko": "사회적 격변; 사회의 급격한 변화"
-      },
-      {
-        "word": "catalyzed",
-        "meaning_ko": "촉발했다; 어떤 일이 일어나도록 유발했다"
-      },
-      {
-        "word": "collaborative efforts",
-        "meaning_ko": "협력적 노력; 함께 하는 노력"
-      }
-    ],
+    "title": "Student and Professor Discussion About Research Methods",
+    "type": "conversation",
+    "script": "Student: Professor, I'm confused about which research method to use for my project. Should I conduct interviews or surveys? Professor: That's a great question. It depends on your research goals. Interviews allow you to gather deep, detailed information from fewer people. You can explore complex topics thoroughly. Surveys, on the other hand, let you collect data from a larger population, which gives you more generalizable results. Student: So if I want to understand why people make certain decisions, interviews would be better? Professor: Exactly. Interviews are ideal for exploratory research. If you want to measure trends across a large group, surveys work better. You could also combine both methods for a more comprehensive study. Student: That makes sense. I think I'll start with interviews since I want to understand people's motivations.",
     "questions": [
       {
-        "q": "What is the main topic of the lecture?",
+        "q": "What is the main topic of this conversation?",
         "options": [
-          "The history of textile production and craftsmanship",
-          "The Industrial Revolution's technological innovations and social impacts",
-          "The causes of urban overcrowding in 19th-century England",
-          "The biography of James Watt and his inventions"
+          "How to conduct surveys",
+          "Choosing between research methods",
+          "Interview techniques",
+          "Statistical analysis"
         ],
         "answer": 1,
-        "explanation": "교수는 산업혁명과 그것이 제조업과 사회에 미친 영향을 다루고 있으며, 기술 혁신을 중심으로 설명합니다."
+        "explanation": "학생이 인터뷰와 설문조사 중 어떤 방법을 사용할지 물어보고, 교수가 각 방법의 장점을 설명합니다. 따라서 주제는 '연구 방법 선택'입니다."
       },
       {
-        "q": "According to the professor, what was one major consequence of mechanization?",
+        "q": "According to the professor, what is an advantage of using interviews?",
         "options": [
-          "Rural economies became stronger.",
-          "Workers had more leisure time.",
-          "Factory workers relocated to cities seeking employment.",
-          "Manual labor completely disappeared."
-        ],
-        "answer": 2,
-        "explanation": "강의에서 기계화로 인해 시골 지역의 노동자들이 일자리를 찾아 도시로 이주했다고 명시합니다."
-      },
-      {
-        "q": "Why does the professor mention that technological breakthroughs 'didn't occur in isolation'?",
-        "options": [
-          "To suggest that inventors worked alone in laboratories.",
-          "To explain that innovations built upon previous discoveries and collaborative efforts.",
-          "To argue that the Industrial Revolution was inevitable.",
-          "To criticize inventors for not sharing their work."
+          "They are faster than surveys",
+          "They provide deep, detailed information",
+          "They work with large populations",
+          "They are cheaper to conduct"
         ],
         "answer": 1,
-        "explanation": "교수는 기술적 돌파구들이 이전의 과학적 발견과 발명가들의 협력 노력에 기반했음을 설명하려고 합니다."
+        "explanation": "교수는 'Interviews allow you to gather deep, detailed information from fewer people'라고 명시했습니다. 인터뷰의 장점은 깊이 있는 정보 수집입니다."
+      },
+      {
+        "q": "Why does the student decide to use interviews?",
+        "options": [
+          "They are easier to conduct",
+          "They want to understand people's motivations",
+          "The professor recommended it",
+          "They need data from a large group"
+        ],
+        "answer": 1,
+        "explanation": "학생이 'I want to understand people's motivations'라고 명확히 말했고, 이는 인터뷰가 탐색적 연구에 적합하기 때문입니다."
       }
     ]
   }
