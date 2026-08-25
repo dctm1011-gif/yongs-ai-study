@@ -2594,5 +2594,65 @@
     "explanation": "어떤 것에 타고나거나 자연스럽게 포함되어 있는 성질이나 특성. 제거하기 어렵거나 본래부터 가진 속성을 설명할 때 사용. TOEFL Reading 학술 논문·사회과학 지문에서 고빈출.",
     "tip": "동의어: intrinsic(내재적), innate(타고난), built-in(본래 포함된). 반의어: extrinsic(외재적). TOEFL Writing 에세이에서도 자주 사용.",
     "emoji": "🔗"
+  },
+  {
+    "id": "proliferate",
+    "word": "proliferate",
+    "pos": "동사",
+    "date": "2026-08-26",
+    "meaning": "빠르게 증가하다, 번식하다, 확산되다",
+    "example_ko": "지난 10년간 소셜미디어 플랫폼이 급증했고, 사람들의 소통 방식을 바꿨어요.",
+    "example_en": "Social media platforms have proliferated over the past decade, changing how people communicate.",
+    "explanation": "어떤 것이 급속도로 늘어나거나 확산되는 과정을 나타냅니다. TOEFL Reading의 과학·환경·기술 지문에서 매우 자주 출제돼요.",
+    "tip": "동의어: multiply(증가), spread(확산), expand(확장). 반의어: diminish(감소), decline(저하). Reading·Listening 고빈출. 명사형: proliferation(증가, 확산).",
+    "emoji": "📊"
+  },
+  {
+    "id": "inevitable",
+    "word": "inevitable",
+    "pos": "형용사",
+    "date": "2026-08-26",
+    "meaning": "피할 수 없는, 필연적인",
+    "example_ko": "현재의 추세를 감안하면, 경제 침체는 피할 수 없어 보여요.",
+    "example_en": "Given the current trends, economic recession seems inevitable.",
+    "explanation": "어떤 일이 반드시 일어날 수밖에 없다는 의미입니다. TOEFL Writing과 Speaking에서 주장·결론을 강화할 때 자주 쓰여요.",
+    "tip": "동의어: unavoidable(회피 불가능), inescapable(벗어날 수 없는), necessary(필연적). 반의어: avoidable(피할 수 있는), optional(선택적). Writing 에세이에서 주로 사용.",
+    "emoji": "⚡"
+  },
+  {
+    "id": "advocate",
+    "word": "advocate",
+    "pos": "동사/명사",
+    "date": "2026-08-26",
+    "meaning": "옹호하다, 지지하다 / 옹호자, 지지자",
+    "example_ko": "환경단체들은 탄소 배출 규제를 강화할 것을 주장해요.",
+    "example_en": "Environmental groups advocate for stricter regulations on carbon emissions.",
+    "explanation": "특정 입장이나 정책을 강력하게 지지하고 주장하는 것입니다. TOEFL Speaking Task 1·2와 Writing에서 의견 표현 시 핵심 어휘예요.",
+    "tip": "동의어: support(지지), promote(촉진), champion(옹호). 반의어: oppose(반대), criticize(비판). Speaking·Writing 필수 어휘. 명사로도 자주 사용.",
+    "emoji": "🗣️"
+  },
+  {
+    "id": "deteriorate",
+    "word": "deteriorate",
+    "pos": "동사",
+    "date": "2026-08-26",
+    "meaning": "악화되다, 나빠지다",
+    "example_ko": "도시 지역의 공기질이 산업 오염으로 계속 악화되고 있어요.",
+    "example_en": "Air quality in urban areas continues to deteriorate due to industrial pollution.",
+    "explanation": "상태나 상황이 점진적으로 나빠지는 과정입니다. exacerbate와 달리 외부 요인 없이 자연스럽게 악화되는 뉘앙스예요.",
+    "tip": "동의어: worsen(악화), decline(저하), degrade(품질 저하). 반의어: improve(개선), enhance(향상). Reading·Listening 고빈출. 명사형: deterioration(악화).",
+    "emoji": "📉"
+  },
+  {
+    "id": "predominant",
+    "word": "predominant",
+    "pos": "형용사",
+    "date": "2026-08-26",
+    "meaning": "지배적인, 주된, 우세한",
+    "example_ko": "현대 문학의 주된 주제는 정체성 탐색이에요.",
+    "example_en": "The predominant theme in contemporary literature is the search for identity.",
+    "explanation": "어떤 것이 가장 크거나 가장 영향력 있는 상태입니다. TOEFL Reading에서 주요 개념이나 경향을 설명할 때 자주 나타나요.",
+    "tip": "동의어: dominant(지배적), prevailing(우세한), principal(주요한). 반의어: minor(소수의), subordinate(종속적). Reading 지문에서 주요 아이디어 파악 시 중요.",
+    "emoji": "👑"
   }
 ]
