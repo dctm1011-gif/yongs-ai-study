@@ -7,7 +7,7 @@ import * as Speech from 'expo-speech';
 import { Audio } from 'expo-av';
 import { cacheManager } from '../utils/CacheManager';
 import { performanceMonitor } from '../utils/PerformanceMonitor';
-import { getDatabase, ref, onValue, get, set as dbSet } from 'firebase/database';
+import { getDatabase, ref, onValue, get, set as dbSet, remove } from 'firebase/database';
 import * as Notifications from 'expo-notifications';
 import { SchedulableTriggerInputTypes } from 'expo-notifications';
 import { NOTIF_LOG_KEY } from './_layout';
@@ -648,6 +648,8 @@ export default function VocaScreen() {
     dbSet(userRef(uid, `english/skipList/${wordId}`), { word: word.word, skippedAt }).catch(() => {});
     // 단어 생성 스크립트가 읽는 글로벌 skipList
     dbSet(ref(db, `english/globalSkipList/${wordId}`), { word: word.word, skippedAt }).catch(() => {});
+    // reviewPool에서 즉시 삭제 (통계에서도 사라짐, 복습 안 함)
+    remove(userRef(uid, `english/reviewPool/${wordId}`)).catch(() => {});
 
     setSkipSet(prev => new Set([...prev, wordId]));
   };
