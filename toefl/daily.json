@@ -1,177 +1,115 @@
 {
   "date": "2026-08-26",
   "reading": {
-    "title": "Plant Photosynthesis and Carbon Dioxide Regulation",
-    "passage": "Photosynthesis is the fundamental biological process by which plants convert light energy into chemical energy, enabling them to synthesize organic compounds essential for growth and survival. During this process, plants absorb carbon dioxide from the atmosphere through microscopic pores called stomata, while simultaneously releasing oxygen as a byproduct. The efficiency of photosynthesis is largely determined by environmental factors, particularly light intensity, temperature, and the concentration of carbon dioxide available. Recent studies have demonstrated that elevated atmospheric CO₂ levels can initially enhance photosynthetic rates in many plant species, a phenomenon known as CO₂ fertilization. However, this advantage diminishes when temperatures exceed optimal ranges, as heat stress impairs the enzymes responsible for catalyzing photochemical reactions. Furthermore, researchers have discovered that prolonged exposure to high CO₂ concentrations may lead to acclimation, whereby plants gradually reduce their photosynthetic capacity despite continued CO₂ availability. Understanding these complex interactions is crucial for predicting how vegetation will respond to ongoing climate change and for developing agricultural strategies to maintain crop productivity in an increasingly variable environment.",
-    "vocabulary": [
-      {
-        "word": "photosynthesis",
-        "meaning_ko": "광합성; 빛 에너지를 화학 에너지로 전환하는 생물학적 과정"
-      },
-      {
-        "word": "stomata",
-        "meaning_ko": "기공; 식물의 잎에 있는 미세한 구멍으로 가스 교환을 담당"
-      },
-      {
-        "word": "byproduct",
-        "meaning_ko": "부산물; 주요 생산물 외에 생성되는 물질"
-      },
-      {
-        "word": "catalyzing",
-        "meaning_ko": "촉매작용을 하다; 화학 반응을 가속화시키다"
-      },
-      {
-        "word": "acclimation",
-        "meaning_ko": "순응; 새로운 환경 조건에 적응하는 과정"
-      },
-      {
-        "word": "vegetation",
-        "meaning_ko": "식생; 한 지역에 자라는 식물들 전체"
-      },
-      {
-        "word": "impairs",
-        "meaning_ko": "손상시키다; 기능을 약화시키다"
-      }
-    ],
+    "title": "Bioluminescence in Deep Sea Creatures",
+    "passage": "Bioluminescence is the production of light by living organisms through chemical reactions. In the deep ocean, where sunlight cannot reach, many creatures use bioluminescence for communication, hunting, and defense. The anglerfish, for example, uses a glowing lure to attract prey in complete darkness. Scientists estimate that approximately 90% of deep-sea creatures produce their own light. This adaptation allows organisms to survive in one of Earth's most extreme environments, demonstrating the remarkable diversity of life.",
     "questions": [
       {
-        "q": "According to the passage, what is released as a byproduct during photosynthesis?",
+        "q": "According to the passage, what is the primary purpose of bioluminescence in deep-sea creatures?",
         "options": [
-          "Carbon dioxide",
-          "Oxygen",
-          "Nitrogen",
-          "Water vapor"
+          "To absorb sunlight",
+          "For communication, hunting, and defense",
+          "To generate heat",
+          "To increase water temperature"
         ],
         "answer": 1,
-        "explanation": "지문의 첫 번째 단락에서 'plants absorb carbon dioxide from the atmosphere through microscopic pores called stomata, while simultaneously releasing oxygen as a byproduct'라고 명시되어 있습니다. 따라서 광합성의 부산물은 산소입니다."
+        "explanation": "본문에서 'bioluminescence for communication, hunting, and defense'라고 명시되어 있습니다. 이것이 심해 생물들의 생물발광의 주요 목적입니다."
       },
       {
-        "q": "What can be inferred from the passage about the effect of high temperatures on photosynthesis?",
+        "q": "Which of the following is mentioned as an example of a bioluminescent creature?",
         "options": [
-          "High temperatures always increase photosynthetic efficiency",
-          "High temperatures improve enzyme function in photochemical reactions",
-          "High temperatures can reduce the photosynthetic capacity by impairing enzymes",
-          "High temperatures have no significant impact on plants"
-        ],
-        "answer": 2,
-        "explanation": "지문에서 'this advantage diminishes when temperatures exceed optimal ranges, as heat stress impairs the enzymes responsible for catalyzing photochemical reactions'라고 설명되어 있으므로, 최적 온도를 초과할 때 고온이 효소를 손상시켜 광합성 능력을 감소시킨다고 추론할 수 있습니다."
-      },
-      {
-        "q": "The word 'acclimation' in the third sentence of the second paragraph is closest in meaning to:",
-        "options": [
-          "Rapid mutation of plant genes",
-          "Gradual adaptation to environmental changes",
-          "Permanent loss of plant function",
-          "Immediate response to stress"
+          "Dolphin",
+          "Anglerfish",
+          "Blue whale",
+          "Sea turtle"
         ],
         "answer": 1,
-        "explanation": "지문에서 acclimation은 'plants gradually reduce their photosynthetic capacity despite continued CO₂ availability'라는 맥락으로 사용되어 있으므로, 환경 변화에 대한 점진적 적응을 의미합니다."
+        "explanation": "본문에서 'The anglerfish, for example, uses a glowing lure to attract prey'라고 구체적으로 제시되었습니다."
       },
       {
-        "q": "Why does the author mention CO₂ fertilization in the passage?",
+        "q": "What does the passage suggest about the prevalence of bioluminescence in deep-sea creatures?",
         "options": [
-          "To explain why plants no longer need stomata",
-          "To show that elevated CO₂ can initially improve photosynthetic rates but has limitations",
-          "To argue that CO₂ is harmful to all plant species",
-          "To introduce a new method of artificial photosynthesis"
+          "It is rare and unusual",
+          "It is found in most deep-sea creatures",
+          "It only occurs in fish",
+          "It is decreasing over time"
         ],
         "answer": 1,
-        "explanation": "저자는 CO₂ 시비를 언급함으로써 높은 CO₂ 농도가 처음에는 광합성 속도를 증가시킬 수 있지만, 온도 상승이나 순응으로 인해 이점이 감소할 수 있음을 보여주려고 합니다."
+        "explanation": "'Scientists estimate that approximately 90% of deep-sea creatures produce their own light'는 생물발광이 심해 생물들 중 매우 흔하다는 것을 의미합니다."
       }
     ]
   },
   "writing": {
-    "sentences": [
-      {
-        "original": "During this process, plants absorb carbon dioxide from the atmosphere through microscopic pores called stomata, while simultaneously releasing oxygen as a byproduct.",
-        "paraphrase": "Plants take in atmospheric carbon dioxide via microscopic pores known as stomata, and at the same time, they emit oxygen as a secondary product of this process.",
-        "tip": "능동형 → 능동형으로 유지하면서 동의어 치환(absorb→take in, pores→microscopic openings, byproduct→secondary product) 사용"
-      },
-      {
-        "original": "Recent studies have demonstrated that elevated atmospheric CO₂ levels can initially enhance photosynthetic rates in many plant species, a phenomenon known as CO₂ fertilization.",
-        "paraphrase": "The phenomenon called CO₂ fertilization shows that when atmospheric CO₂ concentrations rise, photosynthetic rates in numerous plant species can be boosted at first, according to recent research findings.",
-        "tip": "문장 구조 재배열 및 수동형 표현 추가(have demonstrated → according to research findings), 절 순서 변경"
-      },
-      {
-        "original": "However, this advantage diminishes when temperatures exceed optimal ranges, as heat stress impairs the enzymes responsible for catalyzing photochemical reactions.",
-        "paraphrase": "When temperatures surpass their ideal levels, the benefit decreases because excessive heat damages the enzymes that are needed to facilitate photochemical reactions.",
-        "tip": "exceed → surpass, diminishes → decreases(동의어), impairs → damages, catalyzing → facilitate로 치환, 관계절 재구성"
-      }
+    "prompt": "Do you agree or disagree with the statement: 'Technology has made education more accessible to people around the world'?",
+    "structure": {
+      "intro": "주장을 명확히 제시하세요. 예: 'I strongly agree that technology has significantly improved access to education globally.'",
+      "body1": "첫 번째 근거: 온라인 학습 플랫폼(Coursera, Khan Academy)이 저비용으로 양질의 교육을 제공하는 방식",
+      "body2": "두 번째 근거: 개발도상국 학생들이 인터넷을 통해 세계 최고의 교육에 접근할 수 있게 됨",
+      "conclusion": "재정리와 함께 기술의 긍정적 영향을 요약하고, 향후 발전 가능성 제시"
+    },
+    "useful_phrases": [
+      "In my opinion,",
+      "I agree that...",
+      "Furthermore,",
+      "This is because...",
+      "For example,",
+      "In conclusion,",
+      "As a result,",
+      "Moreover,"
     ]
   },
   "speaking": {
-    "prompt": "Some people believe students should be free to choose any major they prefer. Others think students should choose majors that are likely to lead to good job opportunities. Which perspective do you agree with more, and why? Include specific reasons and examples to support your answer.",
-    "model_sentences": [
-      "I believe students should have the freedom to choose their own major based on their personal interests and passions, rather than solely focusing on job prospects.",
-      "First, when students pursue subjects they are genuinely interested in, they tend to perform better academically and maintain higher motivation throughout their studies.",
-      "For example, a student who loves environmental science might become a more dedicated researcher and innovator in that field compared to someone who chose it only for job security.",
-      "Additionally, following one's passion often leads to greater career satisfaction and success in the long run, even if the initial job market seems less promising.",
-      "While job opportunities are certainly important, I believe that personal fulfillment and genuine interest should be the primary factors in choosing a major."
+    "prompt": "Some people prefer to study alone in a quiet environment. Others prefer to study in groups with classmates. Which do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer...",
+      "One reason is that...",
+      "Another advantage is...",
+      "For example,",
+      "I believe that...",
+      "This allows me to..."
+    ],
+    "sample_points": [
+      "조용한 환경에서의 집중력: 방해 없이 깊은 이해 가능, 자신의 속도로 학습 가능",
+      "그룹 스터디의 장점: 다양한 관점 학습, 어려운 부분을 함께 해결, 동기부여 증진"
     ]
   },
   "listening": {
-    "title": "Memory Formation in the Brain: A Psychology Lecture",
-    "type": "lecture",
-    "script": "Professor: Good morning, everyone. Today we're going to discuss how memories are actually formed in our brains. So, you've probably wondered why you can remember some events vividly but forget others almost immediately. Well, memory formation is a complex process that involves multiple stages. First, there's encoding, where sensory information is converted into a form the brain can store. Then comes consolidation, which is probably the most critical phase. During consolidation, memories are transferred from short-term storage to long-term storage through a process involving the hippocampus. This is where repetition becomes really important. When you repeat information, you strengthen the neural connections associated with that memory. Student: So, does that mean studying the same material multiple times actually helps? Professor: Absolutely! And here's something interesting—the timing matters too. Research shows that spacing out your study sessions is more effective than cramming. When you space your learning, you reinforce these neural pathways more effectively. Additionally, sleep is crucial for memory consolidation. During sleep, your brain literally replays the day's memories and solidifies them. Student: Wow, I didn't know sleep was that important! Professor: Many students don't, which is why they often forget material right before exams. Get adequate sleep, and your brain will thank you.",
-    "vocabulary": [
-      {
-        "word": "encoding",
-        "meaning_ko": "부호화; 감각 정보를 뇌가 저장할 수 있는 형태로 전환하는 과정"
-      },
-      {
-        "word": "consolidation",
-        "meaning_ko": "공고화; 단기 기억을 장기 기억으로 전환하는 과정"
-      },
-      {
-        "word": "hippocampus",
-        "meaning_ko": "해마; 기억 형성과 학습에 중요한 역할을 하는 뇌 구조"
-      },
-      {
-        "word": "neural pathways",
-        "meaning_ko": "신경 경로; 뉴런 간의 연결 경로"
-      },
-      {
-        "word": "cramming",
-        "meaning_ko": "벼락치기; 시험 직전에 집중적으로 공부하는 것"
-      },
-      {
-        "word": "reinforce",
-        "meaning_ko": "강화하다; 더 강하게 만들다"
-      }
-    ],
+    "title": "Campus Library Services Discussion",
+    "type": "conversation",
+    "script": "Librarian: Good afternoon! How can I help you today? Student: Hi, I'm new to campus and I'm not sure how to use the library resources. Librarian: Welcome! Let me show you our online database system. We have access to thousands of academic journals and e-books. You can search from anywhere, even your dorm room. Student: That's great! What about borrowing physical books? Librarian: You can borrow up to 20 books at a time, and they're due back in three weeks. We also offer research consultation services where librarians can help you find sources for your papers. Student: Do you offer workshops on research skills? Librarian: Absolutely! We hold workshops every Thursday at 3 PM. This month we're covering how to evaluate source credibility and cite properly. I highly recommend attending. Student: Perfect! I'll definitely come. Thank you so much!",
     "questions": [
       {
-        "q": "What is the main topic of this lecture?",
+        "q": "What is the main topic of this conversation?",
         "options": [
-          "Different types of sleep and their benefits",
-          "How memories are formed and consolidated in the brain",
-          "Why students should avoid cramming before exams",
-          "The role of the hippocampus in controlling emotions"
+          "How to check out books from the library",
+          "An overview of campus library services and resources",
+          "The history of the university library",
+          "Computer technical support"
         ],
         "answer": 1,
-        "explanation": "교수는 강의의 시작에서 'Today we're going to discuss how memories are actually formed in our brains'라고 명시했으므로, 주요 주제는 뇌에서 기억이 어떻게 형성되는지입니다."
+        "explanation": "대화에서 사서가 온라인 데이터베이스, 책 대출, 연구 상담, 워크숍 등 도서관의 다양한 서비스를 설명하고 있습니다."
       },
       {
-        "q": "What does the professor suggest about studying methods?",
+        "q": "According to the librarian, how many books can a student borrow at one time?",
         "options": [
-          "Cramming the night before an exam is the most effective method",
-          "Spacing out study sessions is more effective than intensive cramming",
-          "The timing of study sessions doesn't matter as long as you study enough",
-          "Students should only study right before sleep"
+          "10 books",
+          "15 books",
+          "20 books",
+          "Unlimited"
         ],
-        "answer": 1,
-        "explanation": "교수는 'spacing out your study sessions is more effective than cramming'이라고 명확히 말했으므로, 공간을 두고 공부하는 것이 벼락치기보다 더 효과적이라고 제안합니다."
+        "answer": 2,
+        "explanation": "사서는 'You can borrow up to 20 books at a time'이라고 명확히 말했습니다."
       },
       {
-        "q": "Why does the professor mention sleep in the context of memory?",
+        "q": "When are the research skills workshops held?",
         "options": [
-          "To explain why students feel tired during exams",
-          "To show that sleep helps consolidate memories and solidify them for long-term retention",
-          "To suggest that students should sleep more often",
-          "To demonstrate that sleep has no connection to memory formation"
+          "Monday at 2 PM",
+          "Thursday at 3 PM",
+          "Friday at 4 PM",
+          "Wednesday at 1 PM"
         ],
         "answer": 1,
-        "explanation": "교수는 'During sleep, your brain literally replays the day's memories and solidifies them'이라고 설명했으므로, 수면이 기억 공고화에 중요한 역할을 함을 보여주기 위해 언급했습니다."
+        "explanation": "사서가 'We hold workshops every Thursday at 3 PM'이라고 구체적으로 언급했습니다."
       }
     ]
   }
