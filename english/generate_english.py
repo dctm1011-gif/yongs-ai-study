@@ -34,6 +34,26 @@ def load_used_words() -> list:
         return []
 
 
+def load_skip_list() -> list:
+    """Firebase english/globalSkipList에서 skip된 단어 목록 로드."""
+    db_url = os.environ.get(
+        "EXPO_PUBLIC_FIREBASE_DATABASE_URL",
+        "https://yongstudy-1f242-default-rtdb.asia-southeast1.firebasedatabase.app"
+    )
+    try:
+        import urllib.request as ur
+        req = ur.Request(f"{db_url}/english/globalSkipList.json",
+                         headers={"User-Agent": "Mozilla/5.0"})
+        with ur.urlopen(req, timeout=10) as r:
+            data = json.loads(r.read())
+            if not data or not isinstance(data, dict):
+                return []
+            return [v.get("word", k) for k, v in data.items() if isinstance(v, dict)]
+    except Exception as e:
+        print(f"[skip] globalSkipList 로드 실패 (무시): {e}")
+        return []
+
+
 def get_default_words(target_date: date) -> dict:
     """API 최대 실패 시 비상 fallback — words_db에 없는 단어를 동적으로 선택"""
     used_lower = {w.lower() for w in load_used_words()}
@@ -242,16 +262,23 @@ def generate_default_words(client: anthropic.Anthropic, target_date: date, toefl
     print("[*] TOEFL 빈출 어휘 생성 중...")
 
     used_words = load_used_words()
+    skip_words = load_skip_list()
     used_words_block = ""
     if used_words:
         used_words_block = (
             "\n⚠️ 아래 단어는 이미 다뤘으니 제외해주세요:\n"
             + ", ".join(used_words) + "\n"
         )
+    skip_block = ""
+    if skip_words:
+        skip_block = (
+            "\n🚫 아래 단어들은 사용자가 너무 어렵다고 SKIP했습니다. 이 단어들보다 쉽거나 비슷한 난이도로 조정해주세요:\n"
+            + ", ".join(skip_words) + "\n"
+        )
 
     prompt = f"""TOEFL iBT에 실제로 자주 출제되는 학술 어휘 5개를 선정하고, 각각의 학습 자료를 JSON으로만 생성해주세요. ({target_date})
 JSON 외 다른 텍스트는 절대 포함하지 마세요.
-{used_words_block}
+{used_words_block}{skip_block}
 단어 선정 기준 (반드시 준수):
 - 난이도: TOEFL iBT B2~C1 수준 — 실제 TOEFL 시험에 출제되는 학술 어휘
 - GRE 전용 고난도 어휘 절대 금지: perspicacious, mendacious, obsequious, truculent, veracious, penurious, recalcitrant, perfidious, intransigent, garrulous, loquacious, querulous, sanguine, laconic, esoteric, spurious, tendentious 등 GRE 수준은 제외

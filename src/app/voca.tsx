@@ -41,6 +41,7 @@ interface NetlifyWord {
 
 interface Word extends NetlifyWord {
   isRead: boolean;
+  isSkipped?: boolean;
 }
 
 interface Quiz {
@@ -161,8 +162,11 @@ function mapFirebaseQuizzes(data: any): Quiz[] {
 async function syncReadWordsToPool(uid: string, readWords: Word[]): Promise<void> {
   if (!uid || readWords.length === 0) return;
   const db = getDatabase(getFirebaseApp());
+  // skipList 먼저 확인해서 skip된 단어는 reviewPool 등록 제외
+  const skipSnap = await get(ref(db, `users/${uid}/english/skipList`)).catch(() => null);
+  const skipKeys = new Set(skipSnap?.exists() ? Object.keys(skipSnap.val()) : []);
   for (const w of readWords) {
-    if (!w.id) continue;
+    if (!w.id || skipKeys.has(w.id)) continue;
     const poolRef = userRef(uid, `english/reviewPool/${w.id}`);
     get(poolRef).then(snap => {
       if (!snap.exists()) {
@@ -201,6 +205,7 @@ export default function VocaScreen() {
   const [debugPoolStats, setDebugPoolStats] = useState<{ total: number; graduated: number; playDays: number } | null>(null);
   const [lastUpdateTime, setLastUpdateTime] = useState<string | null>(null);
   const [cacheTimeLeft, setCacheTimeLeft] = useState<string>('캐시 정보 로딩 중...');
+  const [skipSet, setSkipSet] = useState<Set<string>>(new Set());
   const [playAllWordId, setPlayAllWordId] = useState<string | null>(null);
   // ref mirror of playAllWordId — the toggle check must read the *current*
   // value, not the value captured when the useCallback was created, otherwise a
@@ -222,6 +227,15 @@ export default function VocaScreen() {
       console.log(`📚 Voca tab loaded in ${loadTime}ms (cached: ${isCached})`);
     }
   }, [loading, isCached, loadStartTime]);
+
+  // skipList 로드 (마운트 1회)
+  useEffect(() => {
+    if (!uid) return;
+    const db = getDatabase(getFirebaseApp());
+    get(ref(db, `users/${uid}/english/skipList`)).then(snap => {
+      if (snap.exists()) setSkipSet(new Set(Object.keys(snap.val())));
+    }).catch(() => {});
+  }, [uid]);
 
   // Listen to today's game completion for tab unlocking
   useEffect(() => {
@@ -597,9 +611,8 @@ export default function VocaScreen() {
         console.warn('읽음 상태 Firebase 저장 실패:', error)
       );
 
-      // 처음 읽음 처리되는 단어만 복습 게임 대상 목록(reviewPool)에 등록.
-      // 이미 등록돼 있으면 손대지 않음 - 카운트는 오직 게임 등장으로만 증가한다.
-      if (toggled.isRead) {
+      // skip된 단어는 reviewPool 등록 안 함
+      if (toggled.isRead && !skipSet.has(wordId)) {
         const poolRef = userRef(uid, `english/reviewPool/${wordId}`);
         get(poolRef).then(snapshot => {
           if (!snapshot.exists()) {
@@ -617,6 +630,27 @@ export default function VocaScreen() {
     }
   };
 
+  const skipWord = (wordId: string) => {
+    const word = words.find(w => w.id === wordId);
+    if (!word || skipSet.has(wordId)) return;
+
+    // 읽음 처리
+    const updated = words.map(w => w.id === wordId ? { ...w, isRead: true } : w);
+    saveWords(updated);
+
+    const db = getDatabase(getFirebaseApp());
+    const today = getKSTDateString();
+    const skippedAt = new Date().toISOString();
+
+    // readStatus 기록
+    dbSet(userRef(uid, `english/readStatus/${today}/${wordId}`), true).catch(() => {});
+    // 유저별 skipList
+    dbSet(userRef(uid, `english/skipList/${wordId}`), { word: word.word, skippedAt }).catch(() => {});
+    // 단어 생성 스크립트가 읽는 글로벌 skipList
+    dbSet(ref(db, `english/globalSkipList/${wordId}`), { word: word.word, skippedAt }).catch(() => {});
+
+    setSkipSet(prev => new Set([...prev, wordId]));
+  };
 
   const playAllWords = useCallback(async () => {
     if (playAllWordIdRef.current !== null) {
@@ -985,6 +1019,8 @@ export default function VocaScreen() {
           <WordsView
             words={hideReadWords ? words.filter(w => !w.isRead) : words}
             onToggleRead={toggleWordRead}
+            onSkip={skipWord}
+            skipSet={skipSet}
             onRefresh={refreshFromNetlify}
             refreshing={refreshing}
             playAllWordId={playAllWordId}
@@ -1081,9 +1117,11 @@ let _wcPlayId = 0;
 let _wcSound: Audio.Sound | null = null;
 
 // Memoized component to prevent unnecessary re-renders
-const WordsView = React.memo(({ words, onToggleRead, onRefresh, refreshing, playAllWordId, allWordsRead, onComplete }: {
+const WordsView = React.memo(({ words, onToggleRead, onSkip, skipSet, onRefresh, refreshing, playAllWordId, allWordsRead, onComplete }: {
   words: Word[],
   onToggleRead: (id: string) => void,
+  onSkip: (id: string) => void,
+  skipSet: Set<string>,
   onRefresh: () => void,
   refreshing: boolean,
   playAllWordId: string | null,
@@ -1116,6 +1154,8 @@ const WordsView = React.memo(({ words, onToggleRead, onRefresh, refreshing, play
         <WordCard
           word={item}
           onToggleRead={onToggleRead}
+          onSkip={onSkip}
+          isSkipped={skipSet.has(item.id)}
           isPlayingAll={playAllWordId === item.id}
         />
       )}
@@ -1125,9 +1165,11 @@ const WordsView = React.memo(({ words, onToggleRead, onRefresh, refreshing, play
 });
 
 // Memoized word card component with expand + OpenAI TTS
-const WordCard = React.memo(({ word, onToggleRead, isPlayingAll }: {
+const WordCard = React.memo(({ word, onToggleRead, onSkip, isSkipped, isPlayingAll }: {
   word: Word,
   onToggleRead: (id: string) => void,
+  onSkip: (id: string) => void,
+  isSkipped: boolean,
   isPlayingAll?: boolean,
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -1303,7 +1345,10 @@ const WordCard = React.memo(({ word, onToggleRead, isPlayingAll }: {
         </View>
         <View style={styles.cardHeaderRight}>
           <Text style={styles.updateDate}>{formatDate(word.date)}</Text>
-          <Text style={styles.readBadge}>{word.isRead ? '✓' : '○'}</Text>
+          {isSkipped
+            ? <Text style={[styles.readBadge, { color: '#aaa' }]}>skip</Text>
+            : <Text style={styles.readBadge}>{word.isRead ? '✓' : '○'}</Text>
+          }
         </View>
       </View>
       <Text style={styles.meaning}>{word.meaning}</Text>
@@ -1344,12 +1389,23 @@ const WordCard = React.memo(({ word, onToggleRead, isPlayingAll }: {
           </>
         )}
       </View>
-      <TouchableOpacity
-        style={styles.googleSearchBtn}
-        onPress={() => Linking.openURL(`https://www.google.com/search?q=${encodeURIComponent(word.word + ' 뜻')}&hl=ko&gl=KR&lr=lang_ko`)}
-      >
-        <Text style={styles.googleSearchBtnText}>🔍 구글 검색</Text>
-      </TouchableOpacity>
+      <View style={{ flexDirection: 'row', gap: 8, marginTop: 4 }}>
+        <TouchableOpacity
+          style={[styles.googleSearchBtn, { flex: 1 }]}
+          onPress={() => Linking.openURL(`https://www.google.com/search?q=${encodeURIComponent(word.word + ' 뜻')}&hl=ko&gl=KR&lr=lang_ko`)}
+        >
+          <Text style={styles.googleSearchBtnText}>🔍 구글 검색</Text>
+        </TouchableOpacity>
+        {!isSkipped && !word.isRead && (
+          <TouchableOpacity
+            style={styles.skipBtn}
+            onPress={(e) => { e.stopPropagation(); onSkip(word.id); }}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.skipBtnText}>Skip</Text>
+          </TouchableOpacity>
+        )}
+      </View>
     </TouchableOpacity>
   );
 });
@@ -1782,6 +1838,11 @@ const SentenceReviewView = React.memo(({ sentences, loading, uid, onComplete }: 
 interface PoolWord { id: string; word: string; meaning: string; count: number; }
 
 const POOL_SNAPSHOT_KEY = 'reviewPool_snapshot';
+const POOL_SNAPSHOT_DATE_KEY = 'reviewPool_snapshot_date';
+
+function getKSTDateStr(): string {
+  return new Date(Date.now() + 9 * 3600_000).toISOString().slice(0, 10);
+}
 
 const ReviewPoolView = React.memo(({ uid }: { uid: string }) => {
   const [loading, setLoading] = useState(true);
@@ -1797,10 +1858,18 @@ const ReviewPoolView = React.memo(({ uid }: { uid: string }) => {
     if (!uid) return;
     let unsub: (() => void) | null = null;
 
-    AsyncStorage.getItem(`${POOL_SNAPSHOT_KEY}_${uid}`).then(raw => {
-      if (raw) lastSeenRef.current = JSON.parse(raw);
+    AsyncStorage.multiGet([`${POOL_SNAPSHOT_KEY}_${uid}`, `${POOL_SNAPSHOT_DATE_KEY}_${uid}`]).then(results => {
+      const raw = results[0][1];
+      const savedDate = results[1][1];
+      const today = getKSTDateStr();
+      // 날짜가 오늘과 같을 때만 스냅샷 사용 — 다르면 첫 Firebase 로드 시 현재 count를 기준으로 설정
+      const isNewDay = !raw || savedDate !== today;
+      if (!isNewDay) {
+        lastSeenRef.current = JSON.parse(raw!);
+      }
 
       const db = getDatabase(getFirebaseApp());
+      let firstLoad = isNewDay;
       unsub = onValue(ref(db, `users/${uid}/english/reviewPool`), snap => {
         if (!snap.exists()) { setLoading(false); setRefreshing(false); return; }
         const vals: PoolWord[] = Object.entries(snap.val()).map(([id, v]: [string, any]) => ({
@@ -1811,12 +1880,25 @@ const ReviewPoolView = React.memo(({ uid }: { uid: string }) => {
         }));
         vals.sort((a, b) => a.count - b.count);
 
-        const newDeltas: Record<string, number> = {};
-        vals.forEach(w => {
-          const prev = lastSeenRef.current[w.id] ?? 0;
-          if (w.count > prev) newDeltas[w.id] = w.count - prev;
-        });
-        setDeltas(newDeltas);
+        if (firstLoad) {
+          // 새 날 첫 로드: 현재 count를 기준점으로 저장 → delta = 0 (아직 복습 안 함)
+          firstLoad = false;
+          const snapshot: Record<string, number> = {};
+          vals.forEach(w => { snapshot[w.id] = w.count; });
+          lastSeenRef.current = snapshot;
+          AsyncStorage.multiSet([
+            [`${POOL_SNAPSHOT_KEY}_${uid}`, JSON.stringify(snapshot)],
+            [`${POOL_SNAPSHOT_DATE_KEY}_${uid}`, today],
+          ]);
+          setDeltas({});
+        } else {
+          const newDeltas: Record<string, number> = {};
+          vals.forEach(w => {
+            const prev = lastSeenRef.current[w.id] ?? 0;
+            if (w.count > prev) newDeltas[w.id] = w.count - prev;
+          });
+          setDeltas(newDeltas);
+        }
 
         poolWordsRef.current = vals;
         setPoolWords(vals);
@@ -1830,7 +1912,11 @@ const ReviewPoolView = React.memo(({ uid }: { uid: string }) => {
       const snapshot: Record<string, number> = {};
       poolWordsRef.current.forEach(w => { snapshot[w.id] = w.count; });
       if (Object.keys(snapshot).length > 0) {
-        AsyncStorage.setItem(`${POOL_SNAPSHOT_KEY}_${uid}`, JSON.stringify(snapshot));
+        const today = getKSTDateStr();
+        AsyncStorage.multiSet([
+          [`${POOL_SNAPSHOT_KEY}_${uid}`, JSON.stringify(snapshot)],
+          [`${POOL_SNAPSHOT_DATE_KEY}_${uid}`, today],
+        ]);
       }
     };
   }, [uid]);
@@ -1840,7 +1926,11 @@ const ReviewPoolView = React.memo(({ uid }: { uid: string }) => {
     const snapshot: Record<string, number> = {};
     poolWordsRef.current.forEach(w => { snapshot[w.id] = w.count; });
     lastSeenRef.current = snapshot;
-    AsyncStorage.setItem(`${POOL_SNAPSHOT_KEY}_${uid}`, JSON.stringify(snapshot));
+    const today = getKSTDateStr();
+    AsyncStorage.multiSet([
+      [`${POOL_SNAPSHOT_KEY}_${uid}`, JSON.stringify(snapshot)],
+      [`${POOL_SNAPSHOT_DATE_KEY}_${uid}`, today],
+    ]);
     setDeltas({});
     setTimeout(() => setRefreshing(false), 400);
   }, [uid]);
@@ -2158,6 +2248,21 @@ const styles = StyleSheet.create({
   googleSearchBtnText: {
     fontSize: 12,
     color: '#0095f6',
+    fontWeight: '600',
+  },
+  skipBtn: {
+    marginTop: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 14,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    backgroundColor: '#f5f5f5',
+    alignSelf: 'flex-start',
+  },
+  skipBtnText: {
+    fontSize: 12,
+    color: '#999',
     fontWeight: '600',
   },
   debugOverlay: {
