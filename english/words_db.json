@@ -2654,5 +2654,65 @@
     "explanation": "어떤 것이 가장 크거나 가장 영향력 있는 상태입니다. TOEFL Reading에서 주요 개념이나 경향을 설명할 때 자주 나타나요.",
     "tip": "동의어: dominant(지배적), prevailing(우세한), principal(주요한). 반의어: minor(소수의), subordinate(종속적). Reading 지문에서 주요 아이디어 파악 시 중요.",
     "emoji": "👑"
+  },
+  {
+    "id": "disproportionate",
+    "word": "disproportionate",
+    "pos": "형용사",
+    "date": "2026-08-27",
+    "meaning": "불균형적인, 과도한, 부당하게 큰",
+    "example_ko": "청년층은 이전 세대와 비교하여 학생 대출금의 부당하게 큰 부담을 안고 있어요.",
+    "example_en": "Young adults face a disproportionate burden of student loan debt compared to previous generations.",
+    "explanation": "어떤 것과 비교할 때 크기, 정도, 영향력이 적절하지 않게 크거나 작은 것. TOEFL Reading 사회·경제·통계 지문에서 자주 등장해요.",
+    "tip": "동의어: excessive(과도한), unequal(불평등한). 반의어: proportionate(균형잡힌), commensurate(적절한). Reading·Writing·Speaking 고빈출. 통계나 비교 맥락에서 주로 사용.",
+    "emoji": "⚖️"
+  },
+  {
+    "id": "nuance",
+    "word": "nuance",
+    "pos": "명사",
+    "date": "2026-08-27",
+    "meaning": "미묘한 차이, 뉘앙스, 세세한 구분",
+    "example_ko": "'자유'와 '해방'의 미묘한 차이는 종종 번역에서 사라져요.",
+    "example_en": "The nuance between 'freedom' and 'liberty' is often lost in translation.",
+    "explanation": "분명하지 않지만 중요한 작은 차이나 의미상의 미세한 구별. TOEFL Speaking·Writing에서 복잡한 아이디어를 표현할 때 필수 어휘예요.",
+    "tip": "동의어: subtlety(미묘함), distinction(구분). 함께 자주 나오는 표현: 'lack of nuance'(뉘앙스 부족), 'appreciate the nuance'(뉘앙스를 이해하다). 학술 토론·에세이 고빈출.",
+    "emoji": "🎭"
+  },
+  {
+    "id": "revise",
+    "word": "revise",
+    "pos": "동사",
+    "date": "2026-08-27",
+    "meaning": "수정하다, 개정하다, 재검토하다",
+    "example_ko": "과학자들은 새로운 실험 데이터를 바탕으로 가설을 수정했어요.",
+    "example_en": "Scientists revised their hypothesis based on new experimental data.",
+    "explanation": "기존의 것을 다시 보고 필요한 부분을 고쳐서 더 좋게 만드는 것. TOEFL Writing·학술 맥락에서 아이디어나 이론을 재평가할 때 사용해요.",
+    "tip": "동의어: modify(수정), amend(개정), update(업데이트). 반의어: maintain(유지), preserve(보존). Reading·Writing 고빈출. 학문적 진화나 정책 개선 맥락에서 주로 사용.",
+    "emoji": "✏️"
+  },
+  {
+    "id": "concur",
+    "word": "concur",
+    "pos": "동사",
+    "date": "2026-08-27",
+    "meaning": "동의하다, 동시에 일어나다, 함께 진행되다",
+    "example_ko": "대부분의 연구자들은 기후변화가 주로 인간 활동으로 인한 것이라는 의견에 동의해요.",
+    "example_en": "Most researchers concur that climate change is primarily caused by human activity.",
+    "explanation": "의견이나 판단에 같은 입장을 취하거나(의견 측면), 두 사건이나 상황이 같은 시간에 발생하는 것(시간 측면). TOEFL Reading·Listening에서 학자들의 합의나 동시 발생을 표현할 때 자주 나와요.",
+    "tip": "동의어: agree(동의), coincide(동시에 일어나다). 반의어: dissent(반대), conflict(충돌). 패턴: 'concur with' + 누군가, 'concur that' + 절. Reading·Listening 고빈출.",
+    "emoji": "🤝"
+  },
+  {
+    "id": "attribution",
+    "word": "attribution",
+    "pos": "명사",
+    "date": "2026-08-27",
+    "meaning": "귀인, 원인 분석, 근거 제시, 저작권 표시",
+    "example_ko": "고대 유적이 사라진 문명에 속한다는 귀인은 고고학적 증거가 필요해요.",
+    "example_en": "The attribution of ancient ruins to lost civilizations requires archaeological evidence.",
+    "explanation": "어떤 현상, 결과, 또는 창작물의 원인을 파악하거나 그것이 누구 것인지 명시하는 것. TOEFL Reading 과학·사회 지문과 Writing에서 인과관계를 분석할 때 핵심 어휘예요.",
+    "tip": "동의어: assignment(할당), ascription(귀속), credit(인정). 함께 자주 나오는 표현: 'attribution error'(귀인 오류), 'attribution bias'(귀인 편향). Reading·Writing 고빈출. 학술 맥락에서 원인 분석이나 인정 표시 시 사용.",
+    "emoji": "🏷️"
   }
 ]

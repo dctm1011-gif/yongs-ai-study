@@ -142,7 +142,15 @@ function mapFirebaseQuizzes(data: any): Quiz[] {
       rawOptions = [correctWord, ...wrongs];
     }
     const correct = typeof q.answer === 'number' ? (rawOptions[q.answer] ?? '') : (q.answer ?? '');
-    const options = shuffleArrayStatic(rawOptions);
+    const rawExplanations: (string | null)[] = Array.isArray(q.option_explanations)
+      ? q.option_explanations
+      : rawOptions.map(() => null);
+    // Shuffle options and explanations together so their indices stay in sync
+    const combined = rawOptions.map((opt, i) => ({ opt, expl: rawExplanations[i] ?? null }));
+    const shuffled = shuffleArrayStatic(combined);
+    const options = shuffled.map(c => c.opt);
+    const shuffledExplanations = shuffled.map(c => c.expl);
+    const hasExplanations = shuffledExplanations.some(e => e !== null);
     return {
       id: `fb_${idx}_${wordId}`,
       wordId,
@@ -151,7 +159,7 @@ function mapFirebaseQuizzes(data: any): Quiz[] {
       options,
       correct,
       explanation: q.explanation || undefined,
-      option_explanations: Array.isArray(q.option_explanations) ? q.option_explanations : undefined,
+      option_explanations: hasExplanations ? shuffledExplanations : undefined,
       correctMeaning: type === 'blanks' ? (q.meaning || q.meaning_ko || undefined) : (q.word || undefined),
     };
   });
@@ -373,9 +381,7 @@ export default function VocaScreen() {
         setQuizzes(newQuizzes);
         await AsyncStorage.setItem('english_quizzes', JSON.stringify(newQuizzes));
 
-        const fbSentences = mapFirebaseSentences(snapshot.val());
-        setReviewSentences(fbSentences);
-        await AsyncStorage.setItem('english_sentences', JSON.stringify(fbSentences));
+        // Daily sentences are not saved to reviewSentences — review tab loads from reviewPool directly
       },
       error => {
         console.error('Firebase subscription error:', error);
@@ -770,11 +776,12 @@ export default function VocaScreen() {
       return q;
     });
     saveQuizzes(updated);
-    if (updated.every(q => q.answered)) {
-      const correct = updated.filter(q => q.correct_answer).length;
+    const activeQuizzes = updated.filter(q => !skipSet.has(q.wordId));
+    if (activeQuizzes.length > 0 && activeQuizzes.every(q => q.answered)) {
+      const correct = activeQuizzes.filter(q => q.correct_answer).length;
       const today = getKSTDateString();
       dbSet(userRef(uid, `completion/english/${today}`), {
-        done: true, correct, total: updated.length, ts: Date.now(),
+        done: true, correct, total: activeQuizzes.length, ts: Date.now(),
       }).catch(() => {});
     }
   };
@@ -898,9 +905,7 @@ export default function VocaScreen() {
       setQuizzes(refreshedQuizzes);
       await AsyncStorage.setItem('english_quizzes', JSON.stringify(refreshedQuizzes));
 
-      const refreshedSentences = mapFirebaseSentences(snapshot.val());
-      setReviewSentences(refreshedSentences);
-      await AsyncStorage.setItem('english_sentences', JSON.stringify(refreshedSentences));
+      // Daily sentences are not saved to reviewSentences — review tab loads from reviewPool directly
 
       ToastAndroid.show(
         isUpdated ? '✅ 새로운 단어가 추가되었습니다!' : '✓ 이미 최신 상태입니다',
@@ -966,13 +971,14 @@ export default function VocaScreen() {
         const GAME_KEYS = ['english_word_match', 'english_crossword', 'english_scramble', 'english_sentence'];
         const gamesAllDone = GAME_KEYS.every(k => completionToday[k]);
         const allWordsRead = !loading && words.length > 0 && words.every(w => w.isRead);
-        const quizAllDone = quizzes.length > 0 && quizzes.every(q => q.answered);
+        const activeQuizzes = quizzes.filter(q => !skipSet.has(q.wordId));
+        const quizAllDone = activeQuizzes.length > 0 && activeQuizzes.every(q => q.answered);
 
         const tabDefs: { key: ViewType; label: string; unlocked: boolean; hint: string; onPress: () => void }[] = [
           { key: 'game',   label: '게임',    unlocked: true,          hint: '',                          onPress: () => setView('game') },
           { key: 'words',  label: '단어장',  unlocked: gamesAllDone,  hint: '게임을 모두 완료하세요',      onPress: () => setView('words') },
           { key: 'quiz',   label: '퀴즈',    unlocked: allWordsRead,  hint: '단어장을 모두 읽으세요',      onPress: () => setView('quiz') },
-          { key: 'review', label: '문장복습', unlocked: quizAllDone,   hint: '퀴즈를 먼저 완료하세요',     onPress: () => { setView('review'); if (reviewSentences.length === 0) loadReviewPoolSentences(); } },
+          { key: 'review', label: '문장복습', unlocked: quizAllDone,   hint: '퀴즈를 먼저 완료하세요',     onPress: () => { setView('review'); loadReviewPoolSentences(); } },
           { key: 'stats',  label: '통계',    unlocked: true,          hint: '',                          onPress: () => setView('stats') },
         ];
 
@@ -1033,9 +1039,10 @@ export default function VocaScreen() {
       )}
       {view === 'review' && <SentenceReviewView sentences={reviewSentences} loading={reviewLoading} uid={uid} onComplete={() => ToastAndroid.show('문장복습 완료!', ToastAndroid.SHORT)} />}
       {view === 'stats' && <ReviewPoolView uid={uid} />}
-      {view === 'quiz' && <QuizView quizzes={quizzes} words={words} onAnswer={answerQuiz} onComplete={() => {
-        const correct = quizzes.filter(q => q.correct_answer).length;
-        ToastAndroid.show(`완료! ${correct}/${quizzes.length} 정답 저장됨`, ToastAndroid.SHORT);
+      {view === 'quiz' && <QuizView quizzes={quizzes.filter(q => !skipSet.has(q.wordId))} words={words} onAnswer={answerQuiz} onComplete={() => {
+        const active = quizzes.filter(q => !skipSet.has(q.wordId));
+        const correct = active.filter(q => q.correct_answer).length;
+        ToastAndroid.show(`완료! ${correct}/${active.length} 정답 저장됨`, ToastAndroid.SHORT);
       }} />}
       {view === 'game' && <GameHub />}
 

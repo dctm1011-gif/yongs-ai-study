@@ -1,15 +1,5 @@
 [
   {
-    "date": "2026-08-16",
-    "name": "삼성전자",
-    "ticker": "005930.KS"
-  },
-  {
-    "date": "2026-08-17",
-    "name": "Yum! Brands",
-    "ticker": "YUM"
-  },
-  {
     "date": "2026-08-18",
     "name": "Walmart",
     "ticker": "WMT"
@@ -46,6 +36,16 @@
   },
   {
     "date": "2026-08-25",
+    "name": "NVIDIA",
+    "ticker": "NVDA"
+  },
+  {
+    "date": "2026-08-26",
+    "name": "삼성전자",
+    "ticker": "005930.KS"
+  },
+  {
+    "date": "2026-08-26",
     "name": "NVIDIA",
     "ticker": "NVDA"
   }

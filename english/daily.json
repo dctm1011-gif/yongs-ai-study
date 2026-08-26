@@ -1,290 +1,298 @@
 {
-  "date": "2026-08-26",
+  "date": "2026-08-27",
   "words": [
     {
-      "word": "proliferate",
-      "part_of_speech": "동사",
-      "meaning_ko": "빠르게 증가하다, 번식하다, 확산되다",
-      "explanation": "어떤 것이 급속도로 늘어나거나 확산되는 과정을 나타냅니다. TOEFL Reading의 과학·환경·기술 지문에서 매우 자주 출제돼요.",
-      "example_from_convo": "Social media platforms have proliferated over the past decade, changing how people communicate.",
-      "example_ko": "지난 10년간 소셜미디어 플랫폼이 급증했고, 사람들의 소통 방식을 바꿨어요.",
-      "tip": "동의어: multiply(증가), spread(확산), expand(확장). 반의어: diminish(감소), decline(저하). Reading·Listening 고빈출. 명사형: proliferation(증가, 확산).",
-      "emoji": "📊"
-    },
-    {
-      "word": "inevitable",
+      "word": "disproportionate",
       "part_of_speech": "형용사",
-      "meaning_ko": "피할 수 없는, 필연적인",
-      "explanation": "어떤 일이 반드시 일어날 수밖에 없다는 의미입니다. TOEFL Writing과 Speaking에서 주장·결론을 강화할 때 자주 쓰여요.",
-      "example_from_convo": "Given the current trends, economic recession seems inevitable.",
-      "example_ko": "현재의 추세를 감안하면, 경제 침체는 피할 수 없어 보여요.",
-      "tip": "동의어: unavoidable(회피 불가능), inescapable(벗어날 수 없는), necessary(필연적). 반의어: avoidable(피할 수 있는), optional(선택적). Writing 에세이에서 주로 사용.",
-      "emoji": "⚡"
+      "meaning_ko": "불균형적인, 과도한, 부당하게 큰",
+      "explanation": "어떤 것과 비교할 때 크기, 정도, 영향력이 적절하지 않게 크거나 작은 것. TOEFL Reading 사회·경제·통계 지문에서 자주 등장해요.",
+      "example_from_convo": "Young adults face a disproportionate burden of student loan debt compared to previous generations.",
+      "example_ko": "청년층은 이전 세대와 비교하여 학생 대출금의 부당하게 큰 부담을 안고 있어요.",
+      "tip": "동의어: excessive(과도한), unequal(불평등한). 반의어: proportionate(균형잡힌), commensurate(적절한). Reading·Writing·Speaking 고빈출. 통계나 비교 맥락에서 주로 사용.",
+      "emoji": "⚖️"
     },
     {
-      "word": "advocate",
-      "part_of_speech": "동사/명사",
-      "meaning_ko": "옹호하다, 지지하다 / 옹호자, 지지자",
-      "explanation": "특정 입장이나 정책을 강력하게 지지하고 주장하는 것입니다. TOEFL Speaking Task 1·2와 Writing에서 의견 표현 시 핵심 어휘예요.",
-      "example_from_convo": "Environmental groups advocate for stricter regulations on carbon emissions.",
-      "example_ko": "환경단체들은 탄소 배출 규제를 강화할 것을 주장해요.",
-      "tip": "동의어: support(지지), promote(촉진), champion(옹호). 반의어: oppose(반대), criticize(비판). Speaking·Writing 필수 어휘. 명사로도 자주 사용.",
-      "emoji": "🗣️"
+      "word": "nuance",
+      "part_of_speech": "명사",
+      "meaning_ko": "미묘한 차이, 뉘앙스, 세세한 구분",
+      "explanation": "분명하지 않지만 중요한 작은 차이나 의미상의 미세한 구별. TOEFL Speaking·Writing에서 복잡한 아이디어를 표현할 때 필수 어휘예요.",
+      "example_from_convo": "The nuance between 'freedom' and 'liberty' is often lost in translation.",
+      "example_ko": "'자유'와 '해방'의 미묘한 차이는 종종 번역에서 사라져요.",
+      "tip": "동의어: subtlety(미묘함), distinction(구분). 함께 자주 나오는 표현: 'lack of nuance'(뉘앙스 부족), 'appreciate the nuance'(뉘앙스를 이해하다). 학술 토론·에세이 고빈출.",
+      "emoji": "🎭"
     },
     {
-      "word": "deteriorate",
+      "word": "revise",
       "part_of_speech": "동사",
-      "meaning_ko": "악화되다, 나빠지다",
-      "explanation": "상태나 상황이 점진적으로 나빠지는 과정입니다. exacerbate와 달리 외부 요인 없이 자연스럽게 악화되는 뉘앙스예요.",
-      "example_from_convo": "Air quality in urban areas continues to deteriorate due to industrial pollution.",
-      "example_ko": "도시 지역의 공기질이 산업 오염으로 계속 악화되고 있어요.",
-      "tip": "동의어: worsen(악화), decline(저하), degrade(품질 저하). 반의어: improve(개선), enhance(향상). Reading·Listening 고빈출. 명사형: deterioration(악화).",
-      "emoji": "📉"
+      "meaning_ko": "수정하다, 개정하다, 재검토하다",
+      "explanation": "기존의 것을 다시 보고 필요한 부분을 고쳐서 더 좋게 만드는 것. TOEFL Writing·학술 맥락에서 아이디어나 이론을 재평가할 때 사용해요.",
+      "example_from_convo": "Scientists revised their hypothesis based on new experimental data.",
+      "example_ko": "과학자들은 새로운 실험 데이터를 바탕으로 가설을 수정했어요.",
+      "tip": "동의어: modify(수정), amend(개정), update(업데이트). 반의어: maintain(유지), preserve(보존). Reading·Writing 고빈출. 학문적 진화나 정책 개선 맥락에서 주로 사용.",
+      "emoji": "✏️"
     },
     {
-      "word": "predominant",
-      "part_of_speech": "형용사",
-      "meaning_ko": "지배적인, 주된, 우세한",
-      "explanation": "어떤 것이 가장 크거나 가장 영향력 있는 상태입니다. TOEFL Reading에서 주요 개념이나 경향을 설명할 때 자주 나타나요.",
-      "example_from_convo": "The predominant theme in contemporary literature is the search for identity.",
-      "example_ko": "현대 문학의 주된 주제는 정체성 탐색이에요.",
-      "tip": "동의어: dominant(지배적), prevailing(우세한), principal(주요한). 반의어: minor(소수의), subordinate(종속적). Reading 지문에서 주요 아이디어 파악 시 중요.",
-      "emoji": "👑"
+      "word": "concur",
+      "part_of_speech": "동사",
+      "meaning_ko": "동의하다, 동시에 일어나다, 함께 진행되다",
+      "explanation": "의견이나 판단에 같은 입장을 취하거나(의견 측면), 두 사건이나 상황이 같은 시간에 발생하는 것(시간 측면). TOEFL Reading·Listening에서 학자들의 합의나 동시 발생을 표현할 때 자주 나와요.",
+      "example_from_convo": "Most researchers concur that climate change is primarily caused by human activity.",
+      "example_ko": "대부분의 연구자들은 기후변화가 주로 인간 활동으로 인한 것이라는 의견에 동의해요.",
+      "tip": "동의어: agree(동의), coincide(동시에 일어나다). 반의어: dissent(반대), conflict(충돌). 패턴: 'concur with' + 누군가, 'concur that' + 절. Reading·Listening 고빈출.",
+      "emoji": "🤝"
+    },
+    {
+      "word": "attribution",
+      "part_of_speech": "명사",
+      "meaning_ko": "귀인, 원인 분석, 근거 제시, 저작권 표시",
+      "explanation": "어떤 현상, 결과, 또는 창작물의 원인을 파악하거나 그것이 누구 것인지 명시하는 것. TOEFL Reading 과학·사회 지문과 Writing에서 인과관계를 분석할 때 핵심 어휘예요.",
+      "example_from_convo": "The attribution of ancient ruins to lost civilizations requires archaeological evidence.",
+      "example_ko": "고대 유적이 사라진 문명에 속한다는 귀인은 고고학적 증거가 필요해요.",
+      "tip": "동의어: assignment(할당), ascription(귀속), credit(인정). 함께 자주 나오는 표현: 'attribution error'(귀인 오류), 'attribution bias'(귀인 편향). Reading·Writing 고빈출. 학술 맥락에서 원인 분석이나 인정 표시 시 사용.",
+      "emoji": "🏷️"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "proliferate",
-      "question": "What does 'proliferate' primarily mean?",
+      "word": "disproportionate",
+      "question": "Which of the following best describes 'disproportionate'?",
       "options": [
-        "to increase rapidly in number or amount",
-        "to carefully control the growth of something",
-        "to prevent the spread of a disease",
-        "to separate into smaller groups"
+        "significantly unequal or excessive compared to something else",
+        "balanced and fair in all aspects",
+        "gradually becoming smaller over time",
+        "related to measuring something precisely"
       ],
       "answer": 0,
-      "explanation": "proliferate는 '빠르게 증가하다' 또는 '번식하다'는 의미예요.",
+      "explanation": "disproportionate는 비교 대상에 비해 부당하게 크거나 작은 것을 의미해요.",
       "option_explanations": [
         null,
-        "이는 proliferate의 반대 의미 — proliferation을 제어하는 것이죠.",
-        "prevent와 control은 proliferate의 반의어예요.",
-        "이는 proliferate와 관계없는 의미예요."
+        "balanced(균형잡힌)는 disproportionate의 반의어예요.",
+        "gradually becoming smaller는 disproportionate와 무관한 개념이에요.",
+        "proportionate나 proportion(비율)과 혼동되기 쉽지만, 'measuring'은 핵심이 아니에요."
       ]
     },
     {
       "type": "meaning",
-      "word": "inevitable",
-      "question": "Which situation best describes something 'inevitable'?",
+      "word": "nuance",
+      "question": "What does 'nuance' refer to in academic writing?",
       "options": [
-        "an event that cannot be avoided and must happen",
-        "an event that might happen if conditions change",
-        "an event that was planned in advance",
-        "an event that happened unexpectedly in the past"
+        "a subtle distinction or delicate variation in meaning",
+        "a major difference between two concepts",
+        "the main argument of an essay",
+        "a grammatical error in sentence structure"
       ],
       "answer": 0,
-      "explanation": "inevitable는 '피할 수 없는, 반드시 일어날 수밖에 없는' 상황을 나타내요.",
+      "explanation": "nuance는 미묘한 차이나 세세한 구분을 뜻해요. 학술 글쓰기에서 복잡한 개념을 정교하게 표현할 때 중요해요.",
       "option_explanations": [
         null,
-        "might happen은 unavoidable이나 uncertain한 상황이라 inevitable과 다르네요.",
-        "planned은 inevitable과는 무관한 개념이에요.",
-        "happened in the past는 미래 필연성을 표현하지 못해요."
+        "major difference는 nuance보다 훨씬 큰 차이를 의미해요.",
+        "nuance는 논증 자체가 아니라 의미의 세밀함이에요.",
+        "nuance는 문법과 무관한 개념이에요."
       ]
     },
     {
       "type": "meaning",
-      "word": "deteriorate",
-      "question": "What is the key difference between 'deteriorate' and 'exacerbate'?",
+      "word": "concur",
+      "question": "In the context of scientific discussion, what does 'concur' most likely mean?",
       "options": [
-        "deteriorate happens naturally; exacerbate is made worse by external forces",
-        "deteriorate is faster than exacerbate",
-        "deteriorate only applies to physical objects",
-        "exacerbate is the opposite of deteriorate"
+        "to agree with or have the same opinion as",
+        "to challenge another researcher's findings",
+        "to delay making a decision",
+        "to conduct an experiment again"
       ],
       "answer": 0,
-      "explanation": "deteriorate는 자연스러운 악화, exacerbate는 외부 요인으로 인한 악화를 나타내요.",
+      "explanation": "과학 맥락에서 concur는 다른 연구자의 의견에 동의한다는 의미예요.",
       "option_explanations": [
         null,
-        "deteriorate와 exacerbate의 속도 차이는 없어요. 뉘앙스가 다를 뿐입니다.",
-        "deteriorate는 물리적 객체뿐만 아니라 상황·관계·건강 등에도 쓰여요.",
-        "반대 의미가 아니라 니앙스만 다른 거예요."
+        "challenge는 concur의 반의어에 가까워요.",
+        "delay는 concur와 무관해요.",
+        "conduct an experiment again은 concur의 의미가 아니에요."
       ]
     },
     {
       "type": "fill_blank",
-      "word": "proliferate",
-      "sentence": "As internet access expands, online businesses continue to _____ in developing nations.",
-      "sentence_ko": "인터넷 접근이 확대되면서, 온라인 사업이 개발도상국에서 계속 증가하고 있어요.",
-      "answer": "proliferate",
-      "hint": "rapid increase/spread"
+      "word": "disproportionate",
+      "sentence": "Women bear a _____ share of unpaid domestic labor compared to men in most households.",
+      "sentence_ko": "대부분의 가정에서 여성들은 남성에 비해 부당하게 큰 무급 가사노동을 담당해요.",
+      "answer": "disproportionate",
+      "hint": "unequal or excessive"
     },
     {
       "type": "fill_blank",
-      "word": "advocate",
-      "sentence": "Many scientists _____ for stronger environmental protection policies to combat climate change.",
-      "sentence_ko": "많은 과학자들이 기후변화에 대응하기 위해 더 강한 환경 보호 정책을 주장해요.",
-      "answer": "advocate",
-      "hint": "support/promote strongly"
+      "word": "nuance",
+      "sentence": "The debate lacks _____ — both sides oversimplify the complex policy issue.",
+      "sentence_ko": "그 논쟁에는 뉘앙스가 부족해요 — 양측이 복잡한 정책 문제를 과도하게 단순화해요.",
+      "answer": "nuance",
+      "hint": "subtle distinction"
     },
     {
       "type": "fill_blank",
-      "word": "predominant",
-      "sentence": "While mobile phones have become _____ in urban areas, rural regions still lack sufficient infrastructure.",
-      "sentence_ko": "휴대폰이 도시 지역에서 보편화되었지만, 시골 지역은 여전히 인프라가 부족해요.",
-      "answer": "predominant",
-      "hint": "dominant/prevailing"
+      "word": "concur",
+      "sentence": "Leading economists _____ that interest rate increases are necessary to combat inflation.",
+      "sentence_ko": "주요 경제학자들은 인플레이션 퇴치를 위해 금리 인상이 필요하다는 의견에 동의해요.",
+      "answer": "concur",
+      "hint": "agree"
     },
     {
       "type": "situation",
-      "word": "inevitable",
-      "question": "A company's resources are shrinking, demand is decreasing, and competitors are gaining market share. What outcome seems _____ at this point?",
+      "word": "revise",
+      "question": "A university professor receives feedback on her research paper and decides to rewrite several sections with new interpretations based on peer comments. What is she doing?",
       "options": [
-        "improvement",
-        "bankruptcy",
-        "temporary fluctuation",
-        "gradual recovery"
+        "abandoning her research",
+        "revising her manuscript",
+        "publishing her findings",
+        "rejecting all feedback"
       ],
       "answer": 1,
-      "explanation": "모든 지표가 부정적이므로 파산은 피할 수 없는 결과예요. 이것이 'inevitable'이에요.",
+      "explanation": "교수가 피드백에 따라 논문의 여러 섹션을 다시 쓰고 해석을 수정하는 것은 revise하는 것이에요.",
       "option_explanations": [
-        "모든 조건이 악화되고 있어서 개선은 피할 수 없는 결과가 아니에요.",
+        "abandoning은 completely 포기하는 것이므로 수정과는 다르죠.",
         null,
-        "일시적 변동은 inevitable하지 않아요. 지금 상황은 명확한 악화 추세를 보이고 있어요.",
-        "회복도 피할 수 없는 결과가 아니에요. 현재 데이터상 파산이 더 피할 수 없어 보여요."
+        "publishing은 revision 후의 다음 단계예요.",
+        "rejecting feedback는 revise의 반대 행동이에요."
       ]
     },
     {
       "type": "situation",
-      "word": "deteriorate",
-      "question": "A patient stops taking prescribed medication for a chronic illness. What is most likely to happen to their health condition?",
+      "word": "attribution",
+      "question": "A historian examines pottery fragments from an archaeological site and determines they belong to a specific ancient civilization based on clay analysis and decorative patterns. What process is she engaging in?",
       "options": [
-        "remain stable indefinitely",
-        "immediately become critical",
-        "gradually deteriorate over time",
-        "fluctuate randomly without pattern"
+        "collecting random artifacts",
+        "attribution of the artifacts to a particular culture",
+        "destroying historical evidence",
+        "inventing a new archaeological method"
       ],
-      "answer": 2,
-      "explanation": "약을 중단하면 만성질환 환자의 상태는 점진적으로 악화될 것이에요. 이것이 deteriorate의 의미예요.",
+      "answer": 1,
+      "explanation": "역사가가 도자기 조각들이 특정 문명에 속한다고 결정하는 것은 归因(attribution)의 과정이에요.",
       "option_explanations": [
-        "약을 중단했으니 안정적이지 않아요.",
-        "immediate는 아니지만, 확실히 악화될 거예요.",
+        "collecting random은 체계적인 분석이 아니에요.",
         null,
-        "deteriorate는 방향성 있는 악화이지, 무작위 변동이 아니에요."
+        "destroying은 고고학의 반대예요.",
+        "inventing a method는 일어나고 있지 않아요."
       ]
     }
   ],
   "sentences": [
     {
+      "word": "disproportionate",
+      "sentence": "Low-income families spend a disproportionate amount of their earnings on housing costs.",
+      "sentence_ko": "저소득 가정은 소득의 부당하게 큰 부분을 주거비로 써요.",
+      "nuance": "단순히 '많다'가 아니라 합리적이거나 공정한 수준을 초과하는, '너무 과한' 느낌. 불공정성이나 불균형이 내포돼 있어요.",
+      "context": "사회 불평등, 통계 분석, 정책 비판, 자원 배분 등에서 사용. 뉴스나 학술 논문에서 부정적 현상을 강조할 때 자주 나와요.",
+      "everyday_usage": "주로 'disproportionate share/burden/amount/impact + of' 패턴으로 사용. 'This group bears a disproportionate burden.' 형태로 쓰여요."
+    },
+    {
+      "word": "nuance",
+      "sentence": "Understanding the nuance between correlation and causation is crucial for data analysis.",
+      "sentence_ko": "상관관계와 인과관계 사이의 미묘한 차이를 이해하는 것은 데이터 분석에 필수적이에요.",
+      "nuance": "크고 명백한 차이가 아니라 전문가의 눈으로만 구분할 수 있는 섬세한 차이. 이 차이를 놓치면 큰 오류가 발생할 수 있어요.",
+      "context": "학술 토론, 철학, 언어학, 데이터 해석 등 정교한 사고가 필요한 분야. 특히 STEM과 humanities에서 개념 구분이 중요할 때 사용.",
+      "everyday_usage": "'appreciate/understand/miss the nuance' 패턴으로 자주 쓰여요. 또는 'There's a nuance here that...' 형태로 세밀한 지점을 강조할 때 씁니다."
+    },
+    {
+      "word": "revise",
+      "sentence": "The committee decided to revise the proposal after considering stakeholder feedback.",
+      "sentence_ko": "위원회는 이해관계자 의견을 고려한 후 제안을 수정하기로 결정했어요.",
+      "nuance": "단순한 수정이 아니라 검토 후 의도적으로 개선하는 과정. '더 나은 버전'을 만들려는 목표가 내포돼 있어요.",
+      "context": "학술 쓰기, 정책 개발, 프로젝트 관리, 창작 활동 등에서 사용. 초안에서 최종본으로 가는 과정을 표현할 때 자주 나와요.",
+      "everyday_usage": "'revise a draft/plan/strategy' 패턴이 매우 흔해요. 'I need to revise my essay.'는 일상 학생 표현이에요."
+    },
+    {
+      "word": "concur",
+      "sentence": "Multiple studies concur that regular exercise improves mental health outcomes.",
+      "sentence_ko": "여러 연구가 규칙적인 운동이 정신 건강 결과를 개선한다는 의견을 공유해요.",
+      "nuance": "단순한 '같다'가 아니라 독립적인 여러 주체가 같은 결론에 도달했다는 신뢰감 있는 합의. 과학적 신뢰성을 암시해요.",
+      "context": "과학 연구, 학술 논문, 전문가 의견, 법적 판단 등에서 합의나 일치를 표현할 때 사용. 권위 있는 결론을 뒷받침할 때 매우 유용해요.",
+      "everyday_usage": "'concur with someone/something that' 구조가 표준이에요. 'concur in' + 명사도 가능. 'The experts concur that...' 형태로 전문가 의견을 제시할 때 씁니다."
+    },
+    {
+      "word": "attribution",
+      "sentence": "The attribution of a painting to Leonardo da Vinci requires rigorous authentication.",
+      "sentence_ko": "그림을 레오나르도 다 빈치의 작품으로 귀인하는 것은 엄격한 인증이 필요해요.",
+      "nuance": "어떤 것의 출처나 원인을 '규정하고 명시하는' 행위. 단순한 추측이 아니라 근거 있는 판단을 전제해요.",
+      "context": "예술사, 고고학, 저작권, 인과관계 분석, 심리학(귀인 이론) 등에서 사용. 학술적 신뢰성과 정확성이 중요한 맥락이에요.",
+      "everyday_usage": "'attribution to + 대상/원인' 패턴으로 사용. 'We can attribute this to...' 또는 '...can be attributed to' 수동형도 자주 나와요."
+    },
+    {
+      "word": "exacerbate",
+      "sentence": "Prolonged stress exacerbates existing chronic conditions like asthma and hypertension.",
+      "sentence_ko": "장기간의 스트레스는 천식과 고혈압 같은 기존 만성질환을 악화시켜요.",
+      "nuance": "이미 나쁜 상황을 능동적으로 더 심각하게 만드는 외부 요인의 개입. 상황의 악순환을 강조해요.",
+      "context": "의료, 환경, 사회 문제, 정치적 갈등, 경제 위기 등 부정적 시나리오에서 자주 사용. 원인-결과 분석이 필요한 학술문에서 고빈출.",
+      "everyday_usage": "'exacerbate + 문제/상태/조건' 패턴이 표준. 'Only makes it worse'보다 학술적이고 정교해요. 'This policy exacerbates inequality.'처럼 쓰입니다."
+    },
+    {
+      "word": "facilitate",
+      "sentence": "Online platforms facilitate communication between researchers across different continents.",
+      "sentence_ko": "온라인 플랫폼은 다른 대륙의 연구자들 간 소통을 용이하게 해요.",
+      "nuance": "어떤 행동이나 과정이 더 쉽고 부드럽게 일어나도록 돕는 것. 직접 행동하지 않지만 환경을 개선해요.",
+      "context": "교육, 비즈니스, 기술, 관계 형성 등 긍정적인 진전이나 연결이 필요한 맥락. TOEFL Reading 고빈출 어휘예요.",
+      "everyday_usage": "'facilitate + 명사' 또는 'facilitate + 행동' 구조로 사용. 'facilitate learning/communication/exchange' 패턴이 매우 흔해요."
+    },
+    {
       "word": "proliferate",
-      "sentence": "Misinformation on social media platforms has proliferated faster than fact-checking can address.",
-      "sentence_ko": "소셜미디어에서 거짓 정보가 팩트체크보다 빠르게 확산되고 있어요.",
-      "nuance": "'빠르게 증가하다'는 의미로, 통제 불가능할 정도로 급속도로 퍼지는 뉘앙스. exacerbate처럼 외부 요인이 작용하지만, proliferate는 자체적인 번식·확산 능력에 초점을 맞춰요.",
-      "context": "기술·과학·사회 현상 지문에서 자주 등장. 박테리아 번식, 종 확산, 재정 위기 확대, 정보 확산 등 급격한 증가를 설명할 때 씁니다.",
-      "everyday_usage": "주로 abstractions(개념)이나 organisms(생물)을 목적어로 씁니다. 'viruses proliferate', 'rumors proliferate', 'species proliferate'."
+      "sentence": "Invasive species proliferate rapidly when introduced to environments without natural predators.",
+      "sentence_ko": "침입종은 천적이 없는 환경에 도입되면 빠르게 증식해요.",
+      "nuance": "단순히 증가하는 것이 아니라 통제 불가능할 정도로 기하급수적으로 번지는 모습. 종종 부정적 뉘앙스를 담아요.",
+      "context": "생태학, 전염병, 정보 확산, 문제 심화 등에서 사용. 특히 빠른 속도와 광범위한 영향을 강조할 때.",
+      "everyday_usage": "'proliferate' 또는 '...proliferate throughout/across' 패턴으로 사용. 'Rumors proliferated on social media.'처럼 부정적 상황에서 자주 나와요."
     },
     {
-      "word": "inevitable",
-      "sentence": "Given the aging population, increased healthcare costs seem inevitable in most developed nations.",
-      "sentence_ko": "고령화 인구를 감안하면, 대부분의 선진국에서 의료비 증가는 피할 수 없어 보여요.",
-      "nuance": "'반드시 일어날 수밖에 없다'는 의미로, 어떤 일이 확실성 높게 미래에 발생할 것 같은 뉘앙스. 논리적 귀결이나 당연한 결과를 나타내요.",
-      "context": "TOEFL Writing 에세이의 주장·결론 섹션에서 자주 등장. 경제 분석, 환경 예측, 역사적 추론 등에서 필연성을 강조할 때 씁니다.",
-      "everyday_usage": "'seem inevitable', 'prove inevitable', 'appear inevitable'처럼 be동사나 seem 뒤에 와요. 'It is inevitable that...' 구문도 흔해요."
-    },
-    {
-      "word": "advocate",
-      "sentence": "Child development experts advocate for more outdoor play to combat rising childhood obesity rates.",
-      "sentence_ko": "아동발달 전문가들은 증가하는 소아 비만에 대항하기 위해 야외활동을 강화할 것을 주장해요.",
-      "nuance": "'강력하게 지지하고 주장하다'는 의미로, 수동적 지지가 아니라 능동적·적극적 입장 표현. 어떤 정책이나 입장의 필요성을 설득하려는 뉘앙스.",
-      "context": "TOEFL Speaking Task 1·2와 Writing Task 1·2에서 본인 의견 전개 시 필수. 정책 논쟁, 환경 이슈, 교육 개혁 등 다양한 주제에서 지지 입장을 나타낼 때 씁니다.",
-      "everyday_usage": "'for/against + something/someone'과 함께 쓰여요. 'advocate for better working conditions', 'advocate against discrimination'. 명사로는 'an advocate for...'."
-    },
-    {
-      "word": "deteriorate",
-      "sentence": "Without regular maintenance, the structural integrity of aging buildings will gradually deteriorate.",
-      "sentence_ko": "정기적 유지보수 없이, 낡은 건물의 구조적 완성도는 점차 악화될 거예요.",
-      "nuance": "'점진적으로 나빠지다'는 의미로, 시간에 따른 자연스러운 악화 과정. 누군가가 의도적으로 악화시키지 않아도 상태 자체가 떨어지는 느낌.",
-      "context": "Reading 지문의 인프라·건강·환경·관계 등 다양한 분야에서 악화 추세를 설명할 때 쓰여요. 과학·역사·사회학 텍스트에서 고빈출.",
-      "everyday_usage": "'gradually deteriorate', 'steadily deteriorate', 'rapidly deteriorate'처럼 부사와 자주 쓰여요. 'conditions deteriorate', 'health deteriorates', 'relations deteriorate'."
-    },
-    {
-      "word": "predominant",
-      "sentence": "Despite increasing diversity, English remains the predominant language in international business communications.",
-      "sentence_ko": "다양성 증가에도 불구하고, 영어는 국제 비즈니스 소통에서 여전히 지배적인 언어예요.",
-      "nuance": "'가장 중요하거나 많은' 의미로, 어떤 것이 우위·우세 상태에 있는 느낌. 다른 것들도 있지만 하나가 명확하게 앞선다는 뉘앙스.",
-      "context": "Reading 학술 지문에서 주요 개념이나 주류 입장을 설명할 때 자주 등장. 문화·언어·사상·경제 현상에서 지배 추세를 나타내요.",
-      "everyday_usage": "'the predominant view/trend/theme/reason'처럼 명사 앞에 주로 와요. 부사형 'predominantly'도 자주 쓰여: 'predominantly male/female', 'predominantly urban'."
-    },
-    {
-      "word": "comprise",
-      "sentence": "This dataset comprises information from over 50 countries across five continents.",
-      "sentence_ko": "이 데이터셋은 다섯 대륙의 50개 이상 국가로부터의 정보를 포함해요.",
-      "nuance": "'구성되다', '이루어지다'는 의미로, 전체가 여러 부분으로 이루어진 관계를 나타내요. '포함하다(contain)'보다 더 체계적인 구성.",
-      "context": "TOEFL Reading의 학술 지문, 특히 과학·통계·지리 텍스트에서 구조나 구성을 설명할 때 자주 등장.",
-      "everyday_usage": "'comprise'는 수동형 'be comprised of'로도 많이 쓰여요. 'The team is comprised of experts.' Active는 'The team comprises experts.'"
-    },
-    {
-      "word": "correlate",
-      "sentence": "Research shows that education levels strongly correlate with health outcomes in developed societies.",
-      "sentence_ko": "연구에 따르면 교육 수준은 선진국 사회에서 건강 결과와 강한 상관관계를 보여요.",
-      "nuance": "'서로 연관되다', '상호 관계가 있다'는 의미로, 두 변수 간의 연결성을 나타내요. 인과관계보다는 함께 움직이는 패턴.",
-      "context": "TOEFL Reading의 학술 논문, 사회학·심리학·경제학 지문에서 변수 간 관계를 분석할 때 자주 쓰여요.",
-      "everyday_usage": "'correlate with something', 'correlate strongly/weakly', 'positively/negatively correlate'. 명사형 'correlation'도 Reading에서 매우 자주 등장."
-    },
-    {
-      "word": "contemplate",
-      "sentence": "As scientists contemplate the long-term effects of climate change, new data continues to emerge.",
-      "sentence_ko": "과학자들이 기후변화의 장기 영향을 고려하면서, 새로운 데이터가 계속 나타나고 있어요.",
-      "nuance": "'깊이 생각하다', '진지하게 고려하다'는 의미로, 단순 생각이 아니라 신중하고 숙고하는 느낌.",
-      "context": "TOEFL Reading·Listening에서 학자들의 연구 과정이나 사고 활동을 설명할 때 등장. 철학·과학 지문에서 고빈출.",
-      "everyday_usage": "'contemplate doing something', 'contemplate + noun object'. 'Consider', 'think about'보다 더 formal하고 깊은 사유의 뉘앙스."
-    },
-    {
-      "word": "undermine",
-      "sentence": "Frequent policy reversals undermine public confidence in government institutions.",
-      "sentence_ko": "빈번한 정책 변경은 정부 기관에 대한 공중 신뢰를 훼손해요.",
-      "nuance": "'약화시키다', '훼손하다'는 의미로, 기초를 파괴하거나 신뢰·정당성을 침식하는 느낌. exacerbate보다 더 직접적인 손상.",
-      "context": "TOEFL Reading·Writing에서 정책 비판, 논증 약화, 신뢰 상실 등을 설명할 때 자주 등장. 정치·사회 지문에서 고빈출.",
-      "everyday_usage": "'undermine confidence/trust/credibility/authority'. 주로 무형의 것(신뢰, 권위, 정당성)을 대상으로 사용해요."
-    },
-    {
-      "word": "attribute",
-      "sentence": "Researchers attribute the rise in allergies to increased pollution and changed dietary patterns.",
-      "sentence_ko": "연구자들은 알레르기 증가를 증가된 오염과 변화된 식단 패턴에 돌려요.",
-      "nuance": "'원인을 돌리다', '귀인하다'는 의미로, 어떤 현상의 원인을 특정 요소에 연결하는 것. 인과관계 설명.",
-      "context": "TOEFL Reading의 학술 논문, 특히 원인 분석이나 결과 해석 부분에서 매우 자주 등장.",
-      "everyday_usage": "'attribute X to Y' 구문이 기본. 'Success is attributed to hard work.' Noun form 'attribute'(특성)와 혼동 주의."
-    },
-    {
-      "word": "coincide",
-      "sentence": "The rise in smartphone adoption coincided with a dramatic decrease in newspaper readership.",
-      "sentence_ko": "스마트폰 채택 증가는 신문 독자 감소와 시간적으로 일치했어요.",
-      "nuance": "'동시에 발생하다', '시간적으로 일치하다'는 의미로, 인과관계 없이 동시성을 나타내요.",
-      "context": "TOEFL Reading의 역사·사회학 텍스트에서 시간적 연관성을 설명할 때 자주 등장. 상관관계 분석.",
-      "everyday_usage": "'coincide with something'. 주로 시간적 동시성을 나타내요. 'The event coincides with the holiday.'"
-    },
-    {
-      "word": "diverse",
-      "sentence": "The university's diverse student body brings varied perspectives to classroom discussions.",
-      "sentence_ko": "대학의 다양한 학생 구성은 강의실 토론에 여러 관점을 가져와요.",
-      "nuance": "'다양한', '서로 다른' 의미로, 여러 종류·배경·입장이 섞여 있는 상태. 단순히 '많은'과는 다른 '차이'의 강조.",
-      "context": "TOEFL Reading·Speaking의 교육·사회·문화 토픽에서 자주 등장. 포용성·다원성 설명.",
-      "everyday_usage": "'diverse perspectives/backgrounds/opinions/experiences'. Noun form 'diversity'도 TOEFL에서 매우 자주 출제."
+      "word": "pervasive",
+      "sentence": "Pervasive gender stereotypes in media continue to influence children's career aspirations.",
+      "sentence_ko": "미디어의 광범위한 성별 고정관념은 아이들의 진로 포부에 계속 영향을 미쳐요.",
+      "nuance": "널리 퍼져 있고 거의 모든 곳에 존재하는 것. 눈에 띄거나 명백한 문제가 아니지만 깊게 스며들어 있어요.",
+      "context": "사회 문제, 문화, 경제 구조, 건강 문제 분석에서 광범위한 영향을 표현할 때 사용. 학술 에세이 고빈출.",
+      "everyday_usage": "'pervasive in/throughout + 범위' 또는 'pervasive + 명사' 패턴으로 사용. 'pervasive influence/problem/culture' 같이 추상명사와 함께 나타나요."
     },
     {
       "word": "inherent",
-      "sentence": "The inherent risks of deep-sea exploration require extensive safety protocols and advanced technology.",
-      "sentence_ko": "심해 탐사에 고유한 위험들은 광범위한 안전 절차와 첨단 기술을 필요로 해요.",
-      "nuance": "'본질적인', '고유한' 의미로, 어떤 것의 기본 특성이나 필수 요소를 나타내요. 분리 불가능한 특성.",
-      "context": "TOEFL Reading의 과학·기술·철학 텍스트에서 본질적 특성이나 근본적 문제를 설명할 때 등장.",
-      "everyday_usage": "'inherent in/to something', 'inherent risks/dangers/qualities'. Adverb 'inherently'도 자주 쓰여요."
+      "sentence": "The inherent conflict between individual freedom and collective responsibility shapes political debate.",
+      "sentence_ko": "개인의 자유와 집단의 책임 사이의 근본적인 갈등은 정치 논쟁을 형성해요.",
+      "nuance": "본질적으로 그 안에 들어있는, 제거할 수 없는 특성. 외부에서 더해진 것이 아니라 태생적인 것이에요.",
+      "context": "철학, 법학, 윤리학, 과학 등 근본적인 모순이나 특성을 분석할 때 사용. TOEFL Reading 고빈출.",
+      "everyday_usage": "'inherent in/to + 대상' 또는 'inherent + 명사' 패턴으로 사용. 'Inherent risks/qualities/problems/contradiction' 형태가 자주 나와요."
+    },
+    {
+      "word": "undermine",
+      "sentence": "Misinformation undermines public trust in scientific institutions and health recommendations.",
+      "sentence_ko": "거짓 정보는 과학 기관과 보건 권고에 대한 대중의 신뢰를 훼손해요.",
+      "nuance": "겉으로는 보이지 않지만 기초를 약하게 만들어 결국 붕괴하게 하는 것. 점진적이고 간접적인 파괴예요.",
+      "context": "신뢰, 신용, 체계, 기관 등 추상적 기초가 있는 대상에 대한 손상을 표현할 때 사용. 정책 비판이나 사회 분석에서 자주 나와요.",
+      "everyday_usage": "'undermine + 신뢰/신용/기관/지위' 패턴이 매우 표준. 'This policy undermines environmental protections.'처럼 쓰입니다."
     },
     {
       "word": "subsequent",
-      "sentence": "The company restructured its operations, and the subsequent financial reports showed significant improvement.",
-      "sentence_ko": "회사가 운영을 개편했고, 그 이후의 재무 보고서는 상당한 개선을 보였어요.",
-      "nuance": "'나중의', '그 다음의' 의미로, 시간 순서상 어떤 일 다음에 오는 것. 결과적 변화를 나타낼 때 씁니다.",
-      "context": "TOEFL Reading의 역사·비즈니스·사과학 텍스트에서 시간적 순서와 인과관계를 설명할 때 자주 등장.",
-      "everyday_usage": "'subsequent to something', 'in subsequent years/studies'. 'Following' 또는 'after'보다 더 formal하고 학술적."
+      "sentence": "The initial observation led to questions that subsequent research could only partially answer.",
+      "sentence_ko": "초기 관찰은 이후 연구가 부분적으로만 답할 수 있는 질문들을 이끌어냈어요.",
+      "nuance": "시간 순서에서 뒤따르는 것. 원인-결과나 시간 흐름을 명확히 해요.",
+      "context": "역사, 과학, 서사 구조 등에서 시간의 순서를 표현할 때 사용. 학술 글쓰기에서 논리적 흐름을 만들 때 필수.",
+      "everyday_usage": "'subsequent to + 시점' 또는 'subsequent + 명사' 패턴으로 사용. 'subsequent events/chapters/studies/findings' 형태가 흔해요."
+    },
+    {
+      "word": "comprehensive",
+      "sentence": "A comprehensive review of all available evidence was necessary before drawing conclusions.",
+      "sentence_ko": "결론을 내리기 전에 모든 가용 증거를 포괄하는 종합적인 검토가 필요했어요.",
+      "nuance": "모든 중요한 부분을 빠짐없이 포함하는 철저함. 편향적이지 않고 전체적으로 다루어요.",
+      "context": "학술 연구, 교육 프로그램, 정책 분석, 보험 등 '전체를 다룬다'는 신뢰성을 강조할 때 사용. TOEFL Reading 고빈출.",
+      "everyday_usage": "'comprehensive + 명사' 패턴이 표준. 'comprehensive study/review/plan/guide/coverage' 형태로 매우 자주 나와요."
+    },
+    {
+      "word": "mitigate",
+      "sentence": "Urban green spaces mitigate the heat island effect in densely populated cities.",
+      "sentence_ko": "도시 녹지는 인구 밀집 도시의 열섬 효과를 완화해요.",
+      "nuance": "나쁜 상황의 심각성을 줄이거나 부정적 영향을 감소시키기. 완전히 제거하지는 않지만 상당히 개선해요.",
+      "context": "환경, 재해 대응, 건강 리스크, 정책 효과 등 부정적 결과를 줄이는 방안을 논할 때 사용.",
+      "everyday_usage": "'mitigate + 문제/영향/리스크' 패턴이 표준. 'mitigate climate change/damage/risk' 형태로 자주 나와요."
+    },
+    {
+      "word": "attribute",
+      "sentence": "Scientists attribute the recent biodiversity loss to habitat destruction and climate change.",
+      "sentence_ko": "과학자들은 최근의 생물 다양성 손실을 서식지 파괴와 기후변화에 귀인해요.",
+      "nuance": "어떤 결과나 현상의 원인을 규정하는 행위. 인과관계를 명확히 하고 책임을 귀속시키는 뉘앙스도 포함해요.",
+      "context": "과학 분석, 역사 해석, 책임 추적, 통계 분석 등에서 원인을 규명할 때 사용. 학술문에서 고빈출.",
+      "everyday_usage": "'attribute + 현상 + to + 원인' 구조가 표준. 수동형 'can be attributed to'도 자주 사용되요. 'The success can be attributed to hard work.'"
     }
   ]
 }
