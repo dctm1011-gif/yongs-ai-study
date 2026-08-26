@@ -1,178 +1,115 @@
 {
   "date": "2026-08-27",
   "reading": {
-    "title": "Climate Change and Ocean Acidification",
-    "passage": "Ocean acidification, a consequence of rising atmospheric carbon dioxide levels, represents one of the most pressing environmental challenges of the twenty-first century. When CO2 is absorbed by seawater, it forms carbonic acid, which lowers the ocean's pH and reduces the availability of carbonate ions essential for marine organisms to build their shells and skeletons. This process has accelerated dramatically over the past century, with the ocean's acidity increasing by approximately 30 percent since the Industrial Revolution. Marine ecosystems, particularly coral reefs and pteropod populations, face unprecedented stress as their calcium carbonate structures dissolve in increasingly acidic waters. Scientists warn that if current emission rates persist, many species will experience severe physiological disruptions, threatening biodiversity and global food security. The economic implications are equally alarming, as shellfish industries, which generate billions of dollars annually, face potential collapse in regions where acidification is most severe. Addressing this crisis requires immediate and sustained reduction in greenhouse gas emissions through international cooperation and transition to renewable energy sources.",
-    "vocabulary": [
-      {
-        "word": "acidification",
-        "meaning_ko": "산성화; 산도가 높아지는 과정"
-      },
-      {
-        "word": "carbonic acid",
-        "meaning_ko": "탄산; 이산화탄소가 물에 녹아 생성되는 산"
-      },
-      {
-        "word": "carbonate ions",
-        "meaning_ko": "탄산이온; 껍질과 골격 형성에 필수적인 화학 물질"
-      },
-      {
-        "word": "pteropod",
-        "meaning_ko": "익족류; 해양 미생물로 많은 물고기의 먹이"
-      },
-      {
-        "word": "physiological",
-        "meaning_ko": "생리적인; 신체 기능과 관련된"
-      },
-      {
-        "word": "biodiversity",
-        "meaning_ko": "생물 다양성; 다양한 생물 종의 존재"
-      },
-      {
-        "word": "persist",
-        "meaning_ko": "계속되다; 지속되다"
-      }
-    ],
+    "title": "인공지능과 교육의 미래",
+    "passage": "Artificial intelligence is transforming education by personalizing learning experiences for students. AI-powered systems can analyze individual learning patterns and adapt content accordingly, allowing students to progress at their own pace. Teachers can use AI tools to identify struggling students early and provide targeted interventions. However, concerns about privacy, data security, and the potential loss of human interaction in classrooms remain significant challenges. Despite these concerns, many educators believe AI will enhance rather than replace traditional teaching methods.",
     "questions": [
       {
-        "q": "According to the passage, what happens when CO2 is absorbed by seawater?",
+        "q": "According to the passage, what is one advantage of AI in education?",
         "options": [
-          "A) It increases carbonate ion availability for marine organisms",
-          "B) It forms carbonic acid and lowers the ocean's pH",
-          "C) It strengthens the shells of pteropods",
-          "D) It reduces atmospheric carbon dioxide levels"
+          "A) It eliminates the need for teachers",
+          "B) It personalizes learning experiences for students",
+          "C) It reduces educational costs significantly",
+          "D) It prevents all learning problems"
         ],
         "answer": 1,
-        "explanation": "지문에서 'When CO2 is absorbed by seawater, it forms carbonic acid, which lowers the ocean's pH'라고 명시되어 있습니다."
+        "explanation": "본문에서 'AI-powered systems can analyze individual learning patterns and adapt content accordingly'라고 명시되어 있어, AI가 학생들의 학습을 개인화할 수 있다고 설명합니다."
       },
       {
-        "q": "What can be inferred from the passage about the relationship between ocean acidification and economic consequences?",
+        "q": "What does the passage identify as a concern about AI in education?",
         "options": [
-          "A) Shellfish industries have already collapsed completely",
-          "B) Ocean acidification has minimal impact on economic sectors",
-          "C) Industries dependent on marine resources are vulnerable to acidification",
-          "D) Renewable energy sources eliminate acidification entirely"
+          "A) It is too expensive to implement",
+          "B) It only benefits advanced students",
+          "C) Privacy and data security issues",
+          "D) It cannot identify struggling students"
         ],
         "answer": 2,
-        "explanation": "지문에서 shellfish 산업이 수십억 달러를 생성하며 산성화가 심한 지역에서 붕괴될 수 있다고 언급하여, 해양 자원에 의존하는 산업이 취약하다는 것을 추론할 수 있습니다."
+        "explanation": "'concerns about privacy, data security, and the potential loss of human interaction'이라는 구절에서 프라이버시와 데이터 보안이 우려사항임을 알 수 있습니다."
       },
       {
-        "q": "The word 'accelerated' in the passage is closest in meaning to",
+        "q": "What is the author's overall perspective on AI in education?",
         "options": [
-          "A) slowed down gradually",
-          "B) increased in speed or intensity",
-          "C) remained constant over time",
-          "D) reversed its direction"
+          "A) AI should completely replace teachers",
+          "B) AI will harm the education system",
+          "C) AI will enhance rather than replace traditional teaching",
+          "D) AI has no impact on education"
         ],
-        "answer": 1,
-        "explanation": "'accelerated'는 속도나 강도가 증가했음을 의미하며, 문맥상 산성화가 빠르게 진행되고 있음을 나타냅니다."
-      },
-      {
-        "q": "Why does the author mention coral reefs and pteropod populations specifically?",
-        "options": [
-          "A) To explain how marine organisms produce carbonic acid",
-          "B) To provide examples of species most vulnerable to ocean acidification",
-          "C) To argue that renewable energy is unnecessary",
-          "D) To demonstrate that acidification benefits some species"
-        ],
-        "answer": 1,
-        "explanation": "저자는 산호초와 익족류가 '전례 없는 스트레스'를 받고 있다고 언급하여, 산성화에 가장 취약한 종들의 구체적 사례를 제시하고 있습니다."
+        "answer": 2,
+        "explanation": "마지막 문장 'many educators believe AI will enhance rather than replace traditional teaching methods'에서 저자의 긍정적인 관점을 볼 수 있습니다."
       }
     ]
   },
   "writing": {
-    "sentences": [
-      {
-        "original": "Ocean acidification, a consequence of rising atmospheric carbon dioxide levels, represents one of the most pressing environmental challenges of the twenty-first century.",
-        "paraphrase": "The escalation of atmospheric CO2 has resulted in ocean acidification, which constitutes a critical environmental threat in contemporary times.",
-        "tip": "능동→수동 구조 변환 및 명사구를 동사구로 변환하여 문장 구조를 단순화"
-      },
-      {
-        "original": "When CO2 is absorbed by seawater, it forms carbonic acid, which lowers the ocean's pH and reduces the availability of carbonate ions essential for marine organisms to build their shells and skeletons.",
-        "paraphrase": "The absorption of CO2 by seawater generates carbonic acid that decreases oceanic pH levels and diminishes the presence of carbonate ions necessary for marine life to construct protective shells and skeletal structures.",
-        "tip": "관계절을 동명사로 변환하고 동의어 치환(lowers→decreases, reduces→diminishes) 사용"
-      },
-      {
-        "original": "This process has accelerated dramatically over the past century, with the ocean's acidity increasing by approximately 30 percent since the Industrial Revolution.",
-        "paraphrase": "Over the past hundred years, this phenomenon has intensified substantially, causing oceanic acidity to rise by roughly 30 percent from the period following industrialization.",
-        "tip": "시간 표현 변환(past century→hundred years) 및 원인-결과 구조 재구성"
-      }
+    "prompt": "Do you agree or disagree with the statement: 'Remote work has a negative impact on employee productivity and company culture'?",
+    "structure": {
+      "intro": "자신의 입장을 명확히 밝히기 (agree 또는 disagree). 예: 'While remote work presents certain challenges, I disagree with the notion that it negatively impacts productivity and company culture.'",
+      "body1": "첫 번째 주장: 생산성 측면 - 재택근무는 집중력 향상, 통근시간 절감 등의 이점 제시",
+      "body2": "두 번째 주장: 회사 문화 측면 - 화상 회의, 온라인 협업 도구로 유지 가능하며, 유연성이 직원 만족도 증진",
+      "conclusion": "결론에서 전체 입장 재확인하고, 원격근무는 적절히 관리될 경우 긍정적 결과 도출 가능함을 강조"
+    },
+    "useful_phrases": [
+      "In my opinion,",
+      "Furthermore,",
+      "On the other hand,",
+      "It is true that,",
+      "However, I believe that,",
+      "In conclusion,",
+      "To sum up,",
+      "This demonstrates that"
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to spend their free time with close friends. Others prefer to spend their free time with family members. Which do you prefer and why? Include specific reasons and details in your response.",
-    "model_sentences": [
-      "I personally prefer spending my free time with family members rather than friends because family provides a unique sense of belonging and unconditional support.",
-      "First, family relationships are built on deeper history and mutual responsibility that create stronger emotional bonds compared to friendships.",
-      "For instance, when I was struggling with my college applications, my parents and siblings provided consistent encouragement and practical advice that helped me succeed.",
-      "Additionally, spending time with family allows me to maintain important cultural traditions and values that define my identity.",
-      "In contrast, while friendships are valuable, they often require more effort to maintain and can sometimes feel temporary.",
-      "Overall, I believe that prioritizing family time strengthens the foundational relationships that support us throughout life's challenges."
+    "prompt": "Some people prefer to study in libraries with a quiet environment. Others prefer to study in cafes with background noise. Which environment do you prefer for studying, and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer studying in...",
+      "One reason is that...",
+      "Another advantage is...",
+      "I believe that...",
+      "For example,",
+      "This is because..."
+    ],
+    "sample_points": [
+      "첫 번째 아이디어: 조용한 도서관 환경에서 집중력 향상, 방해 요소 제거로 효율적 학습 가능",
+      "두 번째 아이디어: 카페의 배경음은 완전 침묵보다 뇌 활동 자극, 다양한 환경 적응력 개발에 도움"
     ]
   },
   "listening": {
-    "title": "Economics Lecture: Supply and Demand",
-    "type": "lecture",
-    "script": "Professor: Today we're examining the fundamental concept of supply and demand in economics. Let me start with a simple example. Imagine a local coffee shop during winter. When temperatures drop, more customers want hot coffee, right? The demand increases. However, the coffee shop has limited coffee beans and equipment, so the supply remains relatively constant. What happens? The price goes up. This is the law of demand in action—when demand exceeds supply, prices rise. Conversely, suppose it's summer and fewer people want hot beverages. Demand decreases, but the supply stays the same. The shop must lower prices to attract customers. Now, supply can also shift. If a disease damages the coffee crop globally, bean availability decreases, pushing prices higher even if demand remains unchanged. These market forces—supply, demand, and price—constantly interact to reach equilibrium. When we reach equilibrium, the quantity supplied equals the quantity demanded at a particular price point. This is the market's natural balance. Understanding these dynamics is essential for predicting economic behavior and making informed business decisions.",
-    "vocabulary": [
-      {
-        "word": "equilibrium",
-        "meaning_ko": "균형; 공급과 수요가 일치하는 상태"
-      },
-      {
-        "word": "exceed",
-        "meaning_ko": "초과하다; ~보다 더 많다"
-      },
-      {
-        "word": "converge",
-        "meaning_ko": "수렴하다; 한 점으로 모이다"
-      },
-      {
-        "word": "commodity",
-        "meaning_ko": "상품; 거래되는 물품"
-      },
-      {
-        "word": "fluctuate",
-        "meaning_ko": "변동하다; 오르내리다"
-      },
-      {
-        "word": "scarcity",
-        "meaning_ko": "부족; 충분하지 않은 상태"
-      }
-    ],
+    "title": "대학 상담실 상담 장면",
+    "type": "conversation",
+    "script": "Student: Hi, Professor. I'm struggling with my time management this semester. I have too many classes and I'm working part-time as well. Advisor: I understand. Many students face similar challenges. Let's look at your schedule. How many hours are you working each week? Student: About 20 hours. Advisor: That's significant. And how many credits are you taking? Student: 15 credits, which is a full load. Advisor: I see the problem. You're actually taking on too much. I recommend reducing your work hours to 10 hours per week or dropping one class this semester. Student: But I need the money for tuition. Advisor: I understand your concern. However, overloading yourself might affect your grades, which could impact your future opportunities. Have you considered applying for financial aid or scholarships? Student: Actually, I haven't looked into that seriously. Advisor: That could be a game-changer. Let's set up an appointment with our financial aid office. They can help you find resources to reduce your work hours without sacrificing your education.",
     "questions": [
       {
-        "q": "What is the main topic of the lecture?",
+        "q": "What is the main purpose of the conversation?",
         "options": [
-          "A) The history of coffee production worldwide",
-          "B) The fundamental principles of supply and demand economics",
-          "C) How to start a successful coffee shop business",
-          "D) The effects of climate change on agricultural commodities"
+          "A) To discuss the student's financial situation",
+          "B) To address the student's time management problems",
+          "C) To help the student find a part-time job",
+          "D) To encourage the student to drop out"
         ],
         "answer": 1,
-        "explanation": "교수가 강의 초반에 'Today we're examining the fundamental concept of supply and demand in economics'라고 명시하며, 전체 강의가 공급과 수요의 기본 원리를 설명하고 있습니다."
+        "explanation": "학생이 처음부터 시간 관리 문제로 상담을 요청했고, 학생 상담사가 스케줄을 검토하면서 일과 학업의 균형 문제를 다루고 있습니다."
       },
       {
-        "q": "What does the professor suggest happens when demand exceeds supply?",
+        "q": "How many hours per week is the student currently working?",
         "options": [
-          "A) The market reaches equilibrium automatically",
-          "B) Consumers stop buying the product",
-          "C) Prices increase",
-          "D) The supply instantly doubles"
+          "A) 10 hours",
+          "B) 15 hours",
+          "C) 20 hours",
+          "D) 25 hours"
         ],
         "answer": 2,
-        "explanation": "교수는 '겨울에 따뜻한 커피 수요가 증가하지만 공급은 일정하면, 가격이 올라간다'고 설명하며 수요 > 공급일 때 가격 상승을 명시합니다."
+        "explanation": "학생이 'About 20 hours'라고 명시적으로 답했습니다."
       },
       {
-        "q": "Why does the professor mention a disease damaging the coffee crop?",
+        "q": "What does the advisor suggest as a solution?",
         "options": [
-          "A) To show how demand shifts in response to health concerns",
-          "B) To explain how supply changes can independently affect prices",
-          "C) To argue that coffee is an unreliable commodity",
-          "D) To demonstrate why farmers should grow different crops"
+          "A) Work more hours to earn more money",
+          "B) Drop out of university",
+          "C) Reduce work hours or drop a class, and explore financial aid",
+          "D) Continue with the current schedule"
         ],
-        "answer": 1,
-        "explanation": "교수는 이 예시를 통해 '수요가 변하지 않아도 공급이 감소하면 가격이 올라간다'는 것을 보여주어, 공급 변화가 독립적으로 가격에 영향을 미칠 수 있음을 설명합니다."
+        "answer": 2,
+        "explanation": "상담사는 근무 시간을 10시간으로 줄이거나 한 과목을 드롭할 것을 권유하고, 재정 지원과 장학금을 찾아볼 것을 제안합니다."
       }
     ]
   }
