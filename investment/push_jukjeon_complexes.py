@@ -90,15 +90,17 @@ set(ref(db, 'investment/sujiComplexes'), data)
 
 
 def main():
+    from datetime import datetime
     molit_key = get_molit_api_key()
     months = int(sys.argv[1]) if len(sys.argv) > 1 else 5
+    reference_date = datetime.strptime(sys.argv[2], "%Y-%m-%d").date() if len(sys.argv) > 2 else None
     all_data = {}
 
     for gu in GU_LIST:
         key = gu["key"]
         lawd_cd = gu["lawd_cd"]
         print(f"[*] {key} 수집 중 (최근 {months}개월, lawd_cd={lawd_cd})...")
-        gu_by_dong = fetch_gu_complexes_by_dong(lawd_cd, molit_key, months=months)
+        gu_by_dong = fetch_gu_complexes_by_dong(lawd_cd, molit_key, months=months, reference_date=reference_date)
         all_data[key] = gu_by_dong
         total = sum(len(v) for v in gu_by_dong.values())
         print(f"  → {len(gu_by_dong)}개 동, {total}개 단지")

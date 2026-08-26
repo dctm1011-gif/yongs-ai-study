@@ -15,7 +15,7 @@ from urllib.parse import urlparse
 
 import anthropic
 
-from realestate_api import get_all_areas_chart_data, get_dong_comparison_data, get_molit_api_key, get_all_regions_chart_data
+from realestate_api import get_all_areas_chart_data, get_dong_comparison_data, get_molit_api_key
 from stock_api import pick_and_fetch_stock, load_recent_picks
 
 ROOT = Path(__file__).parent.parent
@@ -508,7 +508,7 @@ def _push_to_firebase_direct(target_date: date) -> None:
     env = _load_env_vars()
     script = f"""
 const {{ initializeApp, getApps }} = require('firebase/app');
-const {{ getDatabase, ref, set }} = require('firebase/database');
+const {{ getDatabase, ref, update }} = require('firebase/database');
 const fs = require('fs');
 const config = {{
   apiKey: '{env.get("EXPO_PUBLIC_FIREBASE_API_KEY", os.environ.get("EXPO_PUBLIC_FIREBASE_API_KEY", ""))}',
@@ -524,12 +524,11 @@ const data = {{
   termOfDay: daily.termOfDay || null,
   newsArticles: daily.newsArticles || [],
   dongCharts: daily.dongCharts || [],
-  regionCharts: daily.regionCharts || [],
   timestamp: new Date().toISOString(),
   date: '{target_date}',
   count: daily.columns.length,
 }};
-set(ref(db, 'investment/columns/{target_date}'), data)
+update(ref(db, 'investment/columns/{target_date}'), data)
   .then(() => {{ console.log('[+] Firebase 직접 업로드 완료 - term:', daily.termOfDay?.term); process.exit(0); }})
   .catch(e => {{ console.error('[!] Firebase 업로드 실패:', e.message); process.exit(1); }});
 """
@@ -563,12 +562,15 @@ def deploy(target_date: date) -> None:
         print("[!] GitHub 배포 실패 (returncode:", result.returncode, ")")
 
 
-def main(target_date: date = None):
+def main(target_date: date = None, api_date_override: date = None):
     if target_date is None:
         target_date = date.today()
-    # 실거래가 신고기한(계약 후 30일)을 고려해 두달 전 기준으로 조회
-    _prev = target_date.replace(day=1) - timedelta(days=1)
-    api_date = _prev.replace(day=1) - timedelta(days=1)
+    if api_date_override is not None:
+        api_date = api_date_override
+    else:
+        # 실거래가 신고기한(계약 후 30일)을 고려해 두달 전 기준으로 조회
+        _prev = target_date.replace(day=1) - timedelta(days=1)
+        api_date = _prev.replace(day=1) - timedelta(days=1)
 
     molit_key = get_molit_api_key()
     print(f"[*] {api_date} 기준 경기도 20개 지역 실거래가 조회 중 (국토교통부 API)...")
@@ -581,9 +583,7 @@ def main(target_date: date = None):
     dong_charts = get_dong_comparison_data(api_date, molit_key)
     print(f"[+] 동별 데이터 확보: {len(dong_charts)}개 지역")
 
-    print(f"[*] {api_date} 기준 경기도 전체 지역별(시/구) 실거래가 조회 중...")
-    region_charts = get_all_regions_chart_data(api_date, molit_key)
-    print(f"[+] 지역 탐색 데이터 확보: {len(region_charts)}개 구/시")
+    # regionCharts는 push_region_charts.py로 수동 업데이트 (API 호출량 절감)
 
     client = anthropic.Anthropic(api_key=get_api_key())
 
@@ -630,7 +630,6 @@ def main(target_date: date = None):
     print(f"[+] 뉴스 기사: {len(news_articles)}개")
     data["newsArticles"] = news_articles
     data["dongCharts"] = dong_charts
-    data["regionCharts"] = region_charts
 
     print(f"[*] {target_date} 양도세 정책 방향 요약 생성 중 (웹 검색)...")
     tax_policy_summary = generate_tax_policy_summary(client, target_date)
@@ -653,9 +652,12 @@ def main(target_date: date = None):
 
 
 if __name__ == "__main__":
+    _target = None
+    _api = None
     if len(sys.argv) > 1:
         from datetime import datetime
-        d = datetime.strptime(sys.argv[1], "%Y-%m-%d").date()
-        main(d)
-    else:
-        main()
+        _target = datetime.strptime(sys.argv[1], "%Y-%m-%d").date()
+    if len(sys.argv) > 2:
+        from datetime import datetime
+        _api = datetime.strptime(sys.argv[2], "%Y-%m-%d").date()
+    main(_target, _api)

@@ -34,6 +34,8 @@ LARGE_COMPLEX_THRESHOLD = 1000  # 이 세대수 이상이면 "대단지"로 분�
 
 MONTHLY_WINDOW = 12   # 월별 보기: 최근 12개월
 YEARLY_WINDOW_MONTHS = 120  # 연도별 보기: 과거 10년(=120개월)치를 모아서 연 단위로 집계
+REGION_YEARLY_WINDOW_MONTHS = 60   # 지역 탐색 전체 수집: 5년
+REGION_INCREMENTAL_MONTHS = 18     # 지역 탐색 증분 업데이트: 18개월(월별 12 + 동별 6 커버)
 DONG_MIN_TRADES = 3  # 동별 비교에서 이보다 거래가 적은 동은 노이즈로 보고 제외
 
 # area(기존 라벨) -> { lawd_cd: 5자리 법정동 시군구코드(str 또는 list[str]), umd: 법정동명 필터(list[str] 또는 None) }
@@ -609,15 +611,23 @@ REGION_CODES: dict[str, dict] = {
 }
 
 
-def get_all_regions_chart_data(target_date: date, service_key: str) -> list[dict]:
+def get_all_regions_chart_data(
+    target_date: date,
+    service_key: str,
+    existing_data: list[dict] | None = None,
+) -> list[dict]:
     """REGION_CODES 전체의 경기도 지역별 chartData. 앱 지역 탐색 UI용.
 
     구 있는 시: 시→구→동 3단계 / 구 없는 시: 시→동 2단계.
-    trades는 한 번만 fetch하고, 동별 분리는 umdNm 필드로 추가 API 호출 없이 처리.
+    existing_data 제공 시 증분 모드: 18개월만 fetch하고 yearlyData는 기존 데이터와 병합.
+    existing_data=None 시 전체 모드: 5년(60개월) 전부 fetch.
     """
-    all_months = recent_year_months(target_date, YEARLY_WINDOW_MONTHS)
+    is_incremental = existing_data is not None
+    window = REGION_INCREMENTAL_MONTHS if is_incremental else REGION_YEARLY_WINDOW_MONTHS
+    all_months = recent_year_months(target_date, window)
     recent_6_set = {(y, m) for (y, m) in recent_year_months(target_date, 6)}
-    years = sorted({y for (y, m) in all_months})
+    fetch_years = sorted({y for (y, m) in all_months})
+    existing_by_area: dict[str, dict] = {e["area"]: e for e in (existing_data or [])}
 
     chart_data = []
     for area, config in REGION_CODES.items():
@@ -644,13 +654,19 @@ def get_all_regions_chart_data(target_date: date, service_key: str) -> list[dict
             if s:
                 monthly_points.append({"label": f"{m}월", **s})
 
-        # 구/시 전체 연도별
-        yearly_points = []
-        for y in years:
+        # 구/시 전체 연도별 (증분 모드: fetch 범위 연도만 재계산 후 기존과 병합)
+        new_yearly: dict[str, dict] = {}
+        for y in fetch_years:
             year_trades = [t for (yy, mm), ts in trades_by_month.items() if yy == y for t in ts]
             s = summarize_trades(year_trades)
             if s:
-                yearly_points.append({"label": f"{y}년", **s})
+                new_yearly[f"{y}년"] = {"label": f"{y}년", **s}
+        if is_incremental and area in existing_by_area:
+            existing_yearly = {p["label"]: p for p in existing_by_area[area].get("yearlyData", [])}
+            merged_yearly = {**existing_yearly, **new_yearly}
+            yearly_points = sorted(merged_yearly.values(), key=lambda p: p["label"])
+        else:
+            yearly_points = sorted(new_yearly.values(), key=lambda p: p["label"])
 
         if not monthly_points and not yearly_points:
             print(f"[!] {area}: 거래 데이터 없음 - 항목 생략")
@@ -675,12 +691,22 @@ def get_all_regions_chart_data(target_date: date, service_key: str) -> list[dict
                 if s:
                     dong_monthly.append({"label": f"{m}월", **s})
 
-            dong_yearly = []
-            for y in years:
+            new_dong_yearly: dict[str, dict] = {}
+            for y in fetch_years:
                 dong_trades = [t for (yy, mm), ts in trades_by_month.items() if yy == y for t in ts if t.get("umdNm", "").strip() == dong]
                 s = summarize_trades(dong_trades)
                 if s:
-                    dong_yearly.append({"label": f"{y}년", **s})
+                    new_dong_yearly[f"{y}년"] = {"label": f"{y}년", **s}
+            if is_incremental and area in existing_by_area:
+                existing_dongs = {d["name"]: d for d in existing_by_area[area].get("dongs", [])}
+                if dong in existing_dongs:
+                    ex_dy = {p["label"]: p for p in existing_dongs[dong].get("yearlyData", [])}
+                    merged_dy = {**ex_dy, **new_dong_yearly}
+                    dong_yearly = sorted(merged_dy.values(), key=lambda p: p["label"])
+                else:
+                    dong_yearly = sorted(new_dong_yearly.values(), key=lambda p: p["label"])
+            else:
+                dong_yearly = sorted(new_dong_yearly.values(), key=lambda p: p["label"])
 
             if dong_monthly or dong_yearly:
                 dongs_data.append({"name": dong, "data": dong_monthly, "yearlyData": dong_yearly})
@@ -891,13 +917,18 @@ def fetch_gu_complexes_by_dong(
     service_key: str,
     months: int = 5,
     min_complexes: int = 3,
+    reference_date: date | None = None,
 ) -> dict[str, list[dict]]:
     """구 전체 아파트 단지 실거래가를 수집해 동(umdNm)별로 그룹핑하여 반환.
     min_complexes: 단지 수가 이보다 적은 동은 노이즈로 간주해 제외.
+    reference_date: 수집 기준 마지막 달(None이면 두달 전 자동 계산).
     Returns: { 동이름: [complex_dict, ...], ... }
     """
-    _prev = date.today().replace(day=1) - timedelta(days=1)
-    today = _prev.replace(day=1) - timedelta(days=1)  # 두달 전 기준 (신고기한 30일 경과로 데이터 완성)
+    if reference_date is not None:
+        today = reference_date
+    else:
+        _prev = date.today().replace(day=1) - timedelta(days=1)
+        today = _prev.replace(day=1) - timedelta(days=1)  # 두달 전 기준 (신고기한 30일 경과로 데이터 완성)
     month_slots: list[tuple[str, str]] = []
     for m in range(months - 1, -1, -1):
         year = today.year
