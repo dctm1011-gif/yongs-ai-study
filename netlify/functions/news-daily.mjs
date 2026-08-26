@@ -54,11 +54,12 @@ async function fetchUrl(url, headers = {}) {
 
 function parseRssFirstItem(xml) {
   const titleM = xml.match(/<item[^>]*>[\s\S]*?<title[^>]*><!\[CDATA\[(.*?)\]\]><\/title>|<item[^>]*>[\s\S]*?<title[^>]*>(.*?)<\/title>/);
-  const linkM = xml.match(/<item[^>]*>[\s\S]*?<link[^>]*>(.*?)<\/link>/);
+  const linkM = xml.match(/<item[^>]*>[\s\S]*?<link[^>]*>(.*?)<\/link>/s);
   const catM = xml.match(/<item[^>]*>[\s\S]*?<category[^>]*>(.*?)<\/category>/);
   if (!linkM) return null;
   const title = stripHtml(titleM?.[1] || titleM?.[2] || '');
-  const link = (linkM[1] || '').trim();
+  let link = (linkM[1] || '').trim();
+  link = link.replace(/^<!\[CDATA\[/, '').replace(/\]\]>$/, '').trim();
   const category = stripHtml(catM?.[1] || '');
   return { title, url: link, category };
 }
