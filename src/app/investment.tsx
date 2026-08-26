@@ -2219,7 +2219,7 @@ const RegionBrowserModal: React.FC<{
   </Modal>
 ));
 
-const GU_ORDER = ['수지구', '기흥구', '동탄구', '마포구', '용산구', '성동구', '영통구'] as const;
+const GU_ORDER = ['수지구', '기흥구', '동탄구', '마포구', '용산구', '성동구', '영통구', '연수구(송도)'] as const;
 // 통계청 가계동향조사 전체가구 분기별 월평균 경상소득 (만원/월)
 const QUARTERLY_INCOME_MAN: Record<string, number> = {
   '23Q1': 486, '23Q2': 499, '23Q3': 514, '23Q4': 558,
@@ -2666,7 +2666,7 @@ const SujiDongCard: React.FC<{ sujiComplexes: Record<string, Record<string, Jukj
     <View style={{ marginHorizontal: 12, marginTop: 12, backgroundColor: '#fff', borderRadius: 16, borderWidth: 1, borderColor: '#dbdbdb', overflow: 'hidden' }}>
       <View style={{ paddingHorizontal: 16, paddingTop: 14, paddingBottom: 10 }}>
         <Text style={{ fontSize: 15, fontWeight: '600', color: '#262626' }}>동별 매매가</Text>
-        <Text style={{ fontSize: 11, color: '#8e8e8e', marginTop: 2 }}>수지·기흥·동탄·마포·용산·성동구</Text>
+        <Text style={{ fontSize: 11, color: '#8e8e8e', marginTop: 2 }}>수지·기흥·동탄·마포·용산·성동·연수구</Text>
       </View>
       {GU_ORDER.map((gu, i) => (
         <GuSection key={gu} guName={gu} guData={sujiComplexes[gu] ?? {}} isFirst={i === 0} />
@@ -2686,7 +2686,7 @@ const SujiDongModal: React.FC<{
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 14, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#efefef' }}>
         <View>
           <Text style={{ fontSize: 17, fontWeight: '700', color: '#262626' }}>동별 매매가</Text>
-          <Text style={{ fontSize: 12, color: '#8e8e8e', marginTop: 2 }}>수지·기흥·동탄·마포·용산·성동구</Text>
+          <Text style={{ fontSize: 12, color: '#8e8e8e', marginTop: 2 }}>수지·기흥·동탄·마포·용산·성동·연수구</Text>
         </View>
         <PressableScale onPress={onClose} contentStyle={{ padding: 4 }} scaleTo={0.85}>
           <MaterialIcons name="close" size={24} color="#262626" />
@@ -3072,7 +3072,7 @@ export default function InvestmentScreen() {
                 >
                   <View>
                     <Text style={{ fontSize: 15, fontWeight: '600', color: '#262626' }}>동별 매매가</Text>
-                    <Text style={{ fontSize: 12, color: '#8e8e8e', marginTop: 3 }}>수지·기흥·동탄·마포·용산·성동구</Text>
+                    <Text style={{ fontSize: 12, color: '#8e8e8e', marginTop: 3 }}>수지·기흥·동탄·마포·용산·성동·연수구</Text>
                   </View>
                   <MaterialIcons name="chevron-right" size={22} color="#8e8e8e" />
                 </PressableScale>
