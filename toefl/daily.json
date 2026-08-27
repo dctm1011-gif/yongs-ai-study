@@ -1,180 +1,114 @@
 {
   "date": "2026-08-28",
   "reading": {
-    "title": "Bacterial Communication and Quorum Sensing",
-    "passage": "Bacteria were long considered simple, solitary organisms incapable of complex behavior. However, recent microbiological research has revealed that bacteria engage in sophisticated chemical communication known as quorum sensing. This process allows bacterial cells to detect and respond to population density by monitoring the concentration of signaling molecules called autoinducers. When a certain threshold of autoinducers is reached, bacteria collectively alter their behavior, activating genes responsible for bioluminescence, antibiotic production, or virulence. For example, the bacterium Vibrio fischeri produces light only when its population density becomes sufficiently high, a phenomenon that would be impossible for isolated cells. This collective behavior, termed phenotypic plasticity, demonstrates that bacteria possess a rudimentary form of intelligence and social organization. Furthermore, quorum sensing plays a critical role in pathogenic biofilm formation, wherein bacteria coordinate to create protective matrices that resist antibiotics. Understanding these mechanisms has profound implications for developing novel therapeutic strategies to combat bacterial infections without triggering antibiotic resistance.",
-    "vocabulary": [
-      {
-        "word": "quorum sensing",
-        "meaning_ko": "박테리아가 신호 분자의 농도를 감지하여 개체군 밀도를 인식하는 통신 과정"
-      },
-      {
-        "word": "autoinducers",
-        "meaning_ko": "박테리아 세포 간 신호 전달에 사용되는 화학 물질"
-      },
-      {
-        "word": "bioluminescence",
-        "meaning_ko": "생물이 빛을 내는 현상"
-      },
-      {
-        "word": "phenotypic plasticity",
-        "meaning_ko": "환경 조건에 따라 형질이 변하는 생물의 능력"
-      },
-      {
-        "word": "biofilm",
-        "meaning_ko": "미생물이 만드는 보호막 구조"
-      },
-      {
-        "word": "virulence",
-        "meaning_ko": "병원성; 질병을 유발하는 능력"
-      }
-    ],
+    "title": "The Impact of Artificial Intelligence on Modern Education",
+    "passage": "Artificial intelligence is transforming education by personalizing learning experiences for students. AI-powered systems can analyze individual learning patterns and adapt content accordingly, helping students progress at their own pace. Teachers can use AI tools to automate grading and administrative tasks, allowing them to focus more on student engagement and mentorship. However, concerns exist about data privacy and the potential reduction of human interaction in classrooms. Despite challenges, AI integration in education promises significant improvements in accessibility and educational outcomes for diverse learners worldwide.",
     "questions": [
       {
-        "q": "According to the passage, what is quorum sensing?",
+        "q": "According to the passage, what is one benefit of AI in education?",
         "options": [
-          "A simple process of bacterial reproduction",
-          "A chemical communication system that allows bacteria to detect population density",
-          "The ability of bacteria to produce antibiotics independently",
-          "A mechanism that prevents bacterial cells from interacting with one another"
+          "A) It completely replaces teachers in classrooms",
+          "B) It personalizes learning experiences for students",
+          "C) It eliminates the need for educational assessment",
+          "D) It reduces the cost of textbooks"
         ],
         "answer": 1,
-        "explanation": "지문에서 quorum sensing은 '박테리아가 신호 분자의 농도를 모니터링하여 개체군 밀도를 감지하고 반응할 수 있게 하는 화학 통신 과정'으로 정의됩니다."
+        "explanation": "지문의 두 번째 문장에서 'AI-powered systems can analyze individual learning patterns and adapt content accordingly'라고 명시되어 있습니다. 개인화된 학습 경험이 AI의 이점입니다."
       },
       {
-        "q": "What can be inferred from the passage about Vibrio fischeri?",
+        "q": "What concern is mentioned about AI in education?",
         "options": [
-          "It produces light regardless of population density",
-          "It is incapable of phenotypic plasticity",
-          "Its light production is dependent on reaching a critical population threshold",
-          "It does not participate in quorum sensing"
+          "A) It is too expensive to implement",
+          "B) It teaches outdated information",
+          "C) Data privacy and reduction of human interaction",
+          "D) It only works for advanced students"
         ],
         "answer": 2,
-        "explanation": "지문에서 Vibrio fischeri는 '개체군 밀도가 충분히 높을 때만 빛을 생성한다'고 명시되어 있으며, 이는 쿼럼 센싱이 작동하는 구체적 예시입니다."
+        "explanation": "지문의 다섯 번째 문장에서 'However, concerns exist about data privacy and the potential reduction of human interaction in classrooms'라고 직접 언급되어 있습니다."
       },
       {
-        "q": "The word 'sophisticated' in the first paragraph is closest in meaning to",
+        "q": "What can teachers do with AI tools according to the passage?",
         "options": [
-          "Simple and primitive",
-          "Complex and well-developed",
-          "Limited and restricted",
-          "Random and unpredictable"
+          "A) Stop teaching and work from home",
+          "B) Automate grading and administrative tasks",
+          "C) Design their own curriculum",
+          "D) Monitor student behavior outside school"
         ],
         "answer": 1,
-        "explanation": "'Sophisticated'은 '정교하고 복잡한'을 의미하며, 박테리아의 고급 통신 시스템을 설명하는 문맥에서 'complex and well-developed'이 가장 적절합니다."
-      },
-      {
-        "q": "Why does the author mention biofilm formation in the final sentence?",
-        "options": [
-          "To criticize bacterial behavior as harmful",
-          "To demonstrate a practical application of quorum sensing and its importance in understanding infections",
-          "To suggest that bacteria are incapable of organization",
-          "To prove that antibiotics are ineffective against all bacteria"
-        ],
-        "answer": 1,
-        "explanation": "저자는 biofilm 형성을 언급함으로써 quorum sensing의 실제 임상적 중요성을 보여주고, 항생제 내성을 극복하기 위한 새로운 치료 전략 개발의 필요성을 강조합니다."
+        "explanation": "지문의 네 번째 문장에서 'Teachers can use AI tools to automate grading and administrative tasks, allowing them to focus more on student engagement'라고 명시되어 있습니다."
       }
     ]
   },
   "writing": {
-    "topic": "동물실험 규제",
-    "task": "다음 문장들을 패러프레이즈하고 TOEFL Writing Independent Task로 활용하기",
-    "sentences": [
-      {
-        "original": "Bacteria were long considered simple, solitary organisms incapable of complex behavior.",
-        "paraphrase": "For many years, bacteria have been regarded as elementary life forms that lacked the ability to exhibit intricate behavioral patterns.",
-        "tip": "장형용사(complex) → 동치 명사(intricate behavioral patterns), 부사 구조 재배열"
-      },
-      {
-        "original": "This process allows bacterial cells to detect and respond to population density by monitoring the concentration of signaling molecules called autoinducers.",
-        "paraphrase": "By tracking the levels of signaling molecules known as autoinducers, bacteria are enabled to perceive and act upon changes in their population density.",
-        "tip": "능동 → 수동(are enabled), 전치사 구 재구성(by monitoring → By tracking)"
-      },
-      {
-        "original": "When a certain threshold of autoinducers is reached, bacteria collectively alter their behavior, activating genes responsible for bioluminescence, antibiotic production, or virulence.",
-        "paraphrase": "Upon attaining a critical concentration of autoinducers, bacterial populations undergo coordinated behavioral modifications that trigger genes accountable for light emission, antimicrobial synthesis, or pathogenicity.",
-        "tip": "동의어 치환(threshold → critical concentration, activate → trigger, virulence → pathogenicity) 및 명사구 확장"
-      },
-      {
-        "original": "This collective behavior, termed phenotypic plasticity, demonstrates that bacteria possess a rudimentary form of intelligence and social organization.",
-        "paraphrase": "Such coordinated conduct, referred to as phenotypic plasticity, provides evidence that bacteria exhibit elementary cognitive capacities and organizational structures.",
-        "tip": "동의어 치환(collective → coordinated, possess → exhibit, rudimentary → elementary) 및 동사 재배열"
-      }
+    "prompt": "Do you agree or disagree with the statement: 'Technology should play a major role in education'? Use specific reasons and examples to support your answer.",
+    "structure": {
+      "intro": "명확한 입장 선택 (동의 또는 반대) + 간단한 이유 2-3개 예시",
+      "body1": "첫 번째 이유를 자세히 설명하고 구체적인 예시 제공 (150-200단어)",
+      "body2": "두 번째 이유를 설명하고 예시로 뒷받침 (150-200단어)",
+      "conclusion": "입장 재확인 + 교육과 기술의 미래에 대한 강조적 마무리"
+    },
+    "useful_phrases": [
+      "In my opinion, technology plays a crucial role in modern education.",
+      "First and foremost, technology enhances accessibility to educational resources.",
+      "Furthermore, digital tools enable personalized learning experiences.",
+      "For instance, students can access online courses from anywhere in the world.",
+      "In addition, interactive simulations help students understand complex concepts.",
+      "However, it is important to maintain balance between technology and traditional methods.",
+      "In conclusion, I firmly believe that technology should be integrated thoughtfully into education."
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to study alone, while others prefer to study in groups. Which study method do you prefer and why? Include specific reasons and details.",
-    "model_sentences": [
-      "I personally prefer studying in groups because I believe collaborative learning creates more dynamic and engaging educational experiences.",
-      "First, when I study with peers, we can discuss difficult concepts and help each other understand complex ideas that might be confusing when studying alone.",
-      "For instance, in my biology class last semester, my study group helped me understand cellular respiration by explaining it in different ways until it finally made sense to me.",
-      "Additionally, group study sessions keep me more motivated and accountable, since I don't want to let my teammates down.",
-      "Overall, while solo studying has its benefits for focused concentration, I find that group study sessions provide better learning outcomes and help me retain information more effectively."
+    "prompt": "Some people believe that online learning is more effective than traditional classroom learning. Others prefer traditional classroom education. Which do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer [online learning/traditional classroom learning] because...",
+      "One significant advantage is that...",
+      "Another reason I believe this is...",
+      "For example, when I...",
+      "In addition to this point...",
+      "However, I acknowledge that..."
+    ],
+    "sample_points": [
+      "온라인 학습: 시간과 장소의 자유도, 개인 맞춤형 학습 속도, 다양한 온라인 자료 접근 가능",
+      "전통 교실 학습: 교사와의 직접 상호작용, 즉각적인 피드백, 동료 학생들과의 사회적 상호작용, 체계적인 구조"
     ]
   },
   "listening": {
-    "title": "Student Registration Problem",
-    "type": "conversation",
-    "script": "Student: Professor Kim, I'm really concerned. I tried to register for your Advanced Microbiology course this morning, but the system shows it's already full. The course registration period closed yesterday, and I'm worried I won't be able to take it this semester. This class is required for my major. Professor: I understand your frustration. Unfortunately, the registration system was at capacity quickly this year. However, I can add you to the waitlist if you'd like. Typically, one or two students drop the course before it begins. Student: Oh, that's helpful! How many people are ahead of me on the waitlist? Professor: Currently, there are three students. But honestly, based on previous semesters, there's a good chance you'll get in. Alternatively, I'm teaching the same course next spring, and it's less popular. You could take it then instead. Student: I appreciate the suggestion, but I was hoping to take it this semester to stay on schedule with my graduation plan. I'll definitely get on the waitlist. Professor: Good decision. Just make sure to check your email regularly after the semester starts. We'll notify you immediately if a spot opens up.",
-    "vocabulary": [
-      {
-        "word": "registration",
-        "meaning_ko": "수강신청; 등록"
-      },
-      {
-        "word": "at capacity",
-        "meaning_ko": "수강인원이 가득 찬"
-      },
-      {
-        "word": "waitlist",
-        "meaning_ko": "대기 명단"
-      },
-      {
-        "word": "drop",
-        "meaning_ko": "(수강을) 취소하다"
-      },
-      {
-        "word": "graduation plan",
-        "meaning_ko": "졸업 계획"
-      },
-      {
-        "word": "frustration",
-        "meaning_ko": "답답함; 좌절감"
-      }
-    ],
+    "title": "Professor's Lecture on Climate Change and Renewable Energy",
+    "type": "lecture",
+    "script": "Good morning, students. Today, I want to discuss the relationship between climate change and renewable energy sources. As you know, climate change is primarily caused by greenhouse gas emissions from burning fossil fuels like coal and oil. The burning of these fuels releases carbon dioxide and methane into the atmosphere, trapping heat and warming our planet. Now, renewable energy sources such as solar, wind, and hydroelectric power offer promising alternatives. These sources produce electricity without generating harmful emissions. For instance, solar panels convert sunlight directly into electricity, while wind turbines harness wind power. Hydroelectric power uses flowing water to generate electricity. The adoption of renewable energy is essential for reducing our carbon footprint and mitigating climate change effects. However, transitioning to renewable energy requires significant investment in infrastructure and technology. Additionally, storage solutions for renewable energy need further development. Despite these challenges, many countries are increasing their renewable energy capacity. For example, Denmark now generates over 80 percent of its electricity from wind power. This demonstrates that renewable energy transition is feasible and beneficial for our environment.",
     "questions": [
       {
-        "q": "What is the main problem the student is facing?",
+        "q": "What is the main topic of the lecture?",
         "options": [
-          "The course is offered only in the spring semester",
-          "The Advanced Microbiology course is full and registration has closed",
-          "The student doesn't understand the course requirements",
-          "The professor is not available to teach the course"
+          "A) The history of fossil fuel consumption",
+          "B) The relationship between climate change and renewable energy",
+          "C) The economic benefits of coal mining",
+          "D) Traditional methods of electricity generation"
         ],
         "answer": 1,
-        "explanation": "학생은 수강신청이 마감되었는데 Advanced Microbiology 수업이 이미 정원이 차서 등록할 수 없는 문제를 겪고 있습니다."
+        "explanation": "강의의 첫 문장에서 'Today, I want to discuss the relationship between climate change and renewable energy sources'라고 명시되어 있습니다."
       },
       {
-        "q": "What does the professor suggest as an alternative solution?",
+        "q": "According to the professor, why are renewable energy sources important?",
         "options": [
-          "Drop another course to make room",
-          "Wait until next semester and take the course in spring",
-          "Take an online version of the course",
-          "Join a different professor's section of the course"
+          "A) They are cheaper than fossil fuels",
+          "B) They produce electricity without generating harmful emissions",
+          "C) They are available in all countries",
+          "D) They require no technological development"
         ],
         "answer": 1,
-        "explanation": "교수는 학생이 봄 학기에 같은 수업을 들을 수 있다고 제안합니다. 교수는 내년 봄에 같은 과목을 덜 인기 있게 가르친다고 언급합니다."
+        "explanation": "강의에서 'These sources produce electricity without generating harmful emissions'라고 명확히 설명되어 있으며, 이것이 재생에너지가 중요한 이유입니다."
       },
       {
-        "q": "According to the professor, why is there a good chance the student will get into the course?",
+        "q": "What example does the professor give of successful renewable energy adoption?",
         "options": [
-          "The professor will create more seats in the course",
-          "Based on previous semesters, usually one or two students drop the course before it starts",
-          "The student is at the top of the waitlist",
-          "The registration system will reopen at the end of the semester"
+          "A) Japan generates 50% from solar power",
+          "B) Germany stopped using fossil fuels",
+          "C) Denmark generates over 80% of its electricity from wind power",
+          "D) United States relies entirely on hydroelectric power"
         ],
-        "answer": 1,
-        "explanation": "교수는 이전 학기들을 토대로 학기 시작 전에 일반적으로 1-2명의 학생이 수강을 취소한다고 설명합니다."
+        "answer": 2,
+        "explanation": "강의 마지막 부분에서 'For example, Denmark now generates over 80 percent of its electricity from wind power'라고 구체적 사례를 제시하고 있습니다."
       }
     ]
   }
