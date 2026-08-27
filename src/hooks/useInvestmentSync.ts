@@ -115,6 +115,16 @@ export interface DongChartEntry {
   multiOwnerRatioByYear?: { label: string; ratio: number }[]; // 통계청 주택소유통계: 2주택자 이상 비율(%)
 }
 
+export interface SupplyDemandPoint {
+  month: string;  // "202603"
+  value: number;  // 수급지수 (100 기준, 초과 시 수요>공급)
+}
+
+export interface SupplyDemandIndex {
+  lastUpdated: string;
+  data: Record<string, SupplyDemandPoint[]>;  // 지역명 → 월별 시계열
+}
+
 export interface RegionChartEntry {
   area: string;          // 내부 키 (예: "수원_장안")
   si: string;            // 시 (예: "수원시")
@@ -273,6 +283,7 @@ export function useInvestmentSync() {
   const [complexUpdateReminder, setComplexUpdateReminder] = useState<{ active: boolean; targetMonth: string; message: string } | null>(null);
   const [rateUpdateReminder, setRateUpdateReminder] = useState<{ active: boolean; targetMonth: string } | null>(null);
   const [rateCharts, setRateCharts] = useState<RateChart[]>([]);
+  const [supplyDemandIndex, setSupplyDemandIndex] = useState<SupplyDemandIndex | null>(null);
   const [taxPolicySummary, setTaxPolicySummary] = useState<{ text: string; updatedAt: string } | null>(null);
   const [jongbuseSummary, setJongbuseSummary] = useState<{ text: string; updatedAt: string } | null>(null);
   const [bookmarks, setBookmarks] = useState<string[]>([]);
@@ -419,7 +430,15 @@ export function useInvestmentSync() {
         }
       }
     );
-    return () => { unsubSuji(); unsubReminder(); unsubRateReminder(); unsubRates(); };
+    const unsubSDI = onValue(
+      ref(db, 'investment/supplyDemandIndex'),
+      snapshot => {
+        if (snapshot.exists()) {
+          setSupplyDemandIndex(snapshot.val() as SupplyDemandIndex);
+        }
+      }
+    );
+    return () => { unsubSuji(); unsubReminder(); unsubRateReminder(); unsubRates(); unsubSDI(); };
   }, []);
 
   const syncData = useCallback(async () => {
@@ -480,6 +499,7 @@ export function useInvestmentSync() {
     complexUpdateReminder,
     rateUpdateReminder,
     rateCharts,
+    supplyDemandIndex,
     taxPolicySummary,
     jongbuseSummary,
     bookmarks,

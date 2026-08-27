@@ -2714,5 +2714,65 @@
     "explanation": "어떤 현상, 결과, 또는 창작물의 원인을 파악하거나 그것이 누구 것인지 명시하는 것. TOEFL Reading 과학·사회 지문과 Writing에서 인과관계를 분석할 때 핵심 어휘예요.",
     "tip": "동의어: assignment(할당), ascription(귀속), credit(인정). 함께 자주 나오는 표현: 'attribution error'(귀인 오류), 'attribution bias'(귀인 편향). Reading·Writing 고빈출. 학술 맥락에서 원인 분석이나 인정 표시 시 사용.",
     "emoji": "🏷️"
+  },
+  {
+    "id": "compelling",
+    "word": "compelling",
+    "pos": "형용사",
+    "date": "2026-08-28",
+    "meaning": "강렬한, 설득력 있는, 매력적인",
+    "example_ko": "연구원은 해양 산성화가 해양 생태계를 위협한다는 강력한 논거를 제시했어요.",
+    "example_en": "The researcher presented a compelling argument that ocean acidification threatens marine ecosystems.",
+    "explanation": "논증이나 증거가 매우 설득력 있어서 사람들의 주의를 끌거나 동의를 유도하는 상태. TOEFL Reading의 학술 지문과 Writing 고빈출 어휘입니다.",
+    "tip": "동의어: persuasive(설득력 있는), convincing(납득시키는), compelling. 반의어: unconvincing(설득력 없는), weak(약한). Reading·Writing·Speaking 고빈출.",
+    "emoji": "💪"
+  },
+  {
+    "id": "attribute",
+    "word": "attribute",
+    "pos": "동사/명사",
+    "date": "2026-08-28",
+    "meaning": "~의 원인이라고 보다, 돌리다 (동사) / 특성, 속성 (명사)",
+    "example_ko": "과학자들은 공룡의 멸종을 거대한 운석 충돌 탓이라고 봐요.",
+    "example_en": "Scientists attribute the extinction of dinosaurs to a massive meteor impact.",
+    "explanation": "어떤 결과나 특성이 특정한 원인이나 출처에서 비롯되었다고 생각하거나 말하는 것. TOEFL Reading에서 '~을 ~에 돌리다', '~때문이라고 생각하다'의 의미로 자주 출제됩니다.",
+    "tip": "동사: attribute A to B (A를 B에 돌리다). 명사: key attributes(핵심 특성). 동의어: ascribe(귀속시키다), trace(추적하다). Reading·Listening에서 인과관계 파악할 때 필수.",
+    "emoji": "🔍"
+  },
+  {
+    "id": "preliminary",
+    "word": "preliminary",
+    "pos": "형용사",
+    "date": "2026-08-28",
+    "meaning": "예비적인, 사전 단계의, 초기의",
+    "example_ko": "예비 결과에 따르면 새로운 백신이 바이러스에 대해 85% 효과가 있어요.",
+    "example_en": "Preliminary results suggest that the new vaccine is 85% effective against the virus.",
+    "explanation": "본격적인 진행 전 준비 단계나 초기 단계를 나타내는 말. '~한 조사', '~한 회의' 등으로 쓰여 최종 결과가 아님을 암시합니다.",
+    "tip": "동의어: initial(초기의), preparatory(준비적인). 반의어: final(최종적인), conclusive(결론적인). 'preliminary report'·'preliminary study' 자주 등장. Reading·Listening 고빈출.",
+    "emoji": "🔮"
+  },
+  {
+    "id": "coincide",
+    "word": "coincide",
+    "pos": "동사",
+    "date": "2026-08-28",
+    "meaning": "일치하다, 동시에 발생하다, 겹치다",
+    "example_ko": "이산화탄소 수준의 상승은 증가된 산업 활동과 일치해요.",
+    "example_en": "The rise in carbon dioxide levels coincides with increased industrial activity.",
+    "explanation": "두 개 이상의 사건이나 시간이 같은 시점에 일어나거나, 견해나 의견이 정확하게 같을 때 사용합니다.",
+    "tip": "동사 coincide with (함께 일어나다). 동의어: occur simultaneously(동시에 발생), align(일렬로 서다). Reading·Listening에서 인과관계·상관관계 파악에 중요. 'coincidence'(우연)와 구분.",
+    "emoji": "⏰"
+  },
+  {
+    "id": "substantial",
+    "word": "substantial",
+    "pos": "형용사",
+    "date": "2026-08-28",
+    "meaning": "상당한, 상실할 만한, 실질적인",
+    "example_ko": "연구에 따르면 상호작용식 학습 방식을 도입한 후 학생 참여도가 상당히 증가했어요.",
+    "example_en": "The study revealed a substantial increase in student engagement after implementing interactive learning methods.",
+    "explanation": "양, 규모, 정도가 충분히 크거나 많다는 뜻. '무시할 수 없는 정도의', '의미 있는' 정도를 나타냅니다.",
+    "tip": "동의어: significant(의미 있는), considerable(상당한), substantial. 반의어: negligible(무시할 만한), trivial(하찮은). 'substantial evidence'·'substantial change' 자주 사용. Reading·Writing 고빈출.",
+    "emoji": "📊"
   }
 ]

@@ -1,115 +1,180 @@
 {
-  "date": "2026-08-27",
+  "date": "2026-08-28",
   "reading": {
-    "title": "인공지능과 교육의 미래",
-    "passage": "Artificial intelligence is transforming education by personalizing learning experiences for students. AI-powered systems can analyze individual learning patterns and adapt content accordingly, allowing students to progress at their own pace. Teachers can use AI tools to identify struggling students early and provide targeted interventions. However, concerns about privacy, data security, and the potential loss of human interaction in classrooms remain significant challenges. Despite these concerns, many educators believe AI will enhance rather than replace traditional teaching methods.",
+    "title": "Bacterial Communication and Quorum Sensing",
+    "passage": "Bacteria were long considered simple, solitary organisms incapable of complex behavior. However, recent microbiological research has revealed that bacteria engage in sophisticated chemical communication known as quorum sensing. This process allows bacterial cells to detect and respond to population density by monitoring the concentration of signaling molecules called autoinducers. When a certain threshold of autoinducers is reached, bacteria collectively alter their behavior, activating genes responsible for bioluminescence, antibiotic production, or virulence. For example, the bacterium Vibrio fischeri produces light only when its population density becomes sufficiently high, a phenomenon that would be impossible for isolated cells. This collective behavior, termed phenotypic plasticity, demonstrates that bacteria possess a rudimentary form of intelligence and social organization. Furthermore, quorum sensing plays a critical role in pathogenic biofilm formation, wherein bacteria coordinate to create protective matrices that resist antibiotics. Understanding these mechanisms has profound implications for developing novel therapeutic strategies to combat bacterial infections without triggering antibiotic resistance.",
+    "vocabulary": [
+      {
+        "word": "quorum sensing",
+        "meaning_ko": "박테리아가 신호 분자의 농도를 감지하여 개체군 밀도를 인식하는 통신 과정"
+      },
+      {
+        "word": "autoinducers",
+        "meaning_ko": "박테리아 세포 간 신호 전달에 사용되는 화학 물질"
+      },
+      {
+        "word": "bioluminescence",
+        "meaning_ko": "생물이 빛을 내는 현상"
+      },
+      {
+        "word": "phenotypic plasticity",
+        "meaning_ko": "환경 조건에 따라 형질이 변하는 생물의 능력"
+      },
+      {
+        "word": "biofilm",
+        "meaning_ko": "미생물이 만드는 보호막 구조"
+      },
+      {
+        "word": "virulence",
+        "meaning_ko": "병원성; 질병을 유발하는 능력"
+      }
+    ],
     "questions": [
       {
-        "q": "According to the passage, what is one advantage of AI in education?",
+        "q": "According to the passage, what is quorum sensing?",
         "options": [
-          "A) It eliminates the need for teachers",
-          "B) It personalizes learning experiences for students",
-          "C) It reduces educational costs significantly",
-          "D) It prevents all learning problems"
+          "A simple process of bacterial reproduction",
+          "A chemical communication system that allows bacteria to detect population density",
+          "The ability of bacteria to produce antibiotics independently",
+          "A mechanism that prevents bacterial cells from interacting with one another"
         ],
         "answer": 1,
-        "explanation": "본문에서 'AI-powered systems can analyze individual learning patterns and adapt content accordingly'라고 명시되어 있어, AI가 학생들의 학습을 개인화할 수 있다고 설명합니다."
+        "explanation": "지문에서 quorum sensing은 '박테리아가 신호 분자의 농도를 모니터링하여 개체군 밀도를 감지하고 반응할 수 있게 하는 화학 통신 과정'으로 정의됩니다."
       },
       {
-        "q": "What does the passage identify as a concern about AI in education?",
+        "q": "What can be inferred from the passage about Vibrio fischeri?",
         "options": [
-          "A) It is too expensive to implement",
-          "B) It only benefits advanced students",
-          "C) Privacy and data security issues",
-          "D) It cannot identify struggling students"
+          "It produces light regardless of population density",
+          "It is incapable of phenotypic plasticity",
+          "Its light production is dependent on reaching a critical population threshold",
+          "It does not participate in quorum sensing"
         ],
         "answer": 2,
-        "explanation": "'concerns about privacy, data security, and the potential loss of human interaction'이라는 구절에서 프라이버시와 데이터 보안이 우려사항임을 알 수 있습니다."
+        "explanation": "지문에서 Vibrio fischeri는 '개체군 밀도가 충분히 높을 때만 빛을 생성한다'고 명시되어 있으며, 이는 쿼럼 센싱이 작동하는 구체적 예시입니다."
       },
       {
-        "q": "What is the author's overall perspective on AI in education?",
+        "q": "The word 'sophisticated' in the first paragraph is closest in meaning to",
         "options": [
-          "A) AI should completely replace teachers",
-          "B) AI will harm the education system",
-          "C) AI will enhance rather than replace traditional teaching",
-          "D) AI has no impact on education"
+          "Simple and primitive",
+          "Complex and well-developed",
+          "Limited and restricted",
+          "Random and unpredictable"
         ],
-        "answer": 2,
-        "explanation": "마지막 문장 'many educators believe AI will enhance rather than replace traditional teaching methods'에서 저자의 긍정적인 관점을 볼 수 있습니다."
+        "answer": 1,
+        "explanation": "'Sophisticated'은 '정교하고 복잡한'을 의미하며, 박테리아의 고급 통신 시스템을 설명하는 문맥에서 'complex and well-developed'이 가장 적절합니다."
+      },
+      {
+        "q": "Why does the author mention biofilm formation in the final sentence?",
+        "options": [
+          "To criticize bacterial behavior as harmful",
+          "To demonstrate a practical application of quorum sensing and its importance in understanding infections",
+          "To suggest that bacteria are incapable of organization",
+          "To prove that antibiotics are ineffective against all bacteria"
+        ],
+        "answer": 1,
+        "explanation": "저자는 biofilm 형성을 언급함으로써 quorum sensing의 실제 임상적 중요성을 보여주고, 항생제 내성을 극복하기 위한 새로운 치료 전략 개발의 필요성을 강조합니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Remote work has a negative impact on employee productivity and company culture'?",
-    "structure": {
-      "intro": "자신의 입장을 명확히 밝히기 (agree 또는 disagree). 예: 'While remote work presents certain challenges, I disagree with the notion that it negatively impacts productivity and company culture.'",
-      "body1": "첫 번째 주장: 생산성 측면 - 재택근무는 집중력 향상, 통근시간 절감 등의 이점 제시",
-      "body2": "두 번째 주장: 회사 문화 측면 - 화상 회의, 온라인 협업 도구로 유지 가능하며, 유연성이 직원 만족도 증진",
-      "conclusion": "결론에서 전체 입장 재확인하고, 원격근무는 적절히 관리될 경우 긍정적 결과 도출 가능함을 강조"
-    },
-    "useful_phrases": [
-      "In my opinion,",
-      "Furthermore,",
-      "On the other hand,",
-      "It is true that,",
-      "However, I believe that,",
-      "In conclusion,",
-      "To sum up,",
-      "This demonstrates that"
+    "topic": "동물실험 규제",
+    "task": "다음 문장들을 패러프레이즈하고 TOEFL Writing Independent Task로 활용하기",
+    "sentences": [
+      {
+        "original": "Bacteria were long considered simple, solitary organisms incapable of complex behavior.",
+        "paraphrase": "For many years, bacteria have been regarded as elementary life forms that lacked the ability to exhibit intricate behavioral patterns.",
+        "tip": "장형용사(complex) → 동치 명사(intricate behavioral patterns), 부사 구조 재배열"
+      },
+      {
+        "original": "This process allows bacterial cells to detect and respond to population density by monitoring the concentration of signaling molecules called autoinducers.",
+        "paraphrase": "By tracking the levels of signaling molecules known as autoinducers, bacteria are enabled to perceive and act upon changes in their population density.",
+        "tip": "능동 → 수동(are enabled), 전치사 구 재구성(by monitoring → By tracking)"
+      },
+      {
+        "original": "When a certain threshold of autoinducers is reached, bacteria collectively alter their behavior, activating genes responsible for bioluminescence, antibiotic production, or virulence.",
+        "paraphrase": "Upon attaining a critical concentration of autoinducers, bacterial populations undergo coordinated behavioral modifications that trigger genes accountable for light emission, antimicrobial synthesis, or pathogenicity.",
+        "tip": "동의어 치환(threshold → critical concentration, activate → trigger, virulence → pathogenicity) 및 명사구 확장"
+      },
+      {
+        "original": "This collective behavior, termed phenotypic plasticity, demonstrates that bacteria possess a rudimentary form of intelligence and social organization.",
+        "paraphrase": "Such coordinated conduct, referred to as phenotypic plasticity, provides evidence that bacteria exhibit elementary cognitive capacities and organizational structures.",
+        "tip": "동의어 치환(collective → coordinated, possess → exhibit, rudimentary → elementary) 및 동사 재배열"
+      }
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to study in libraries with a quiet environment. Others prefer to study in cafes with background noise. Which environment do you prefer for studying, and why?",
-    "useful_expressions": [
-      "In my opinion, I prefer studying in...",
-      "One reason is that...",
-      "Another advantage is...",
-      "I believe that...",
-      "For example,",
-      "This is because..."
-    ],
-    "sample_points": [
-      "첫 번째 아이디어: 조용한 도서관 환경에서 집중력 향상, 방해 요소 제거로 효율적 학습 가능",
-      "두 번째 아이디어: 카페의 배경음은 완전 침묵보다 뇌 활동 자극, 다양한 환경 적응력 개발에 도움"
+    "prompt": "Some people prefer to study alone, while others prefer to study in groups. Which study method do you prefer and why? Include specific reasons and details.",
+    "model_sentences": [
+      "I personally prefer studying in groups because I believe collaborative learning creates more dynamic and engaging educational experiences.",
+      "First, when I study with peers, we can discuss difficult concepts and help each other understand complex ideas that might be confusing when studying alone.",
+      "For instance, in my biology class last semester, my study group helped me understand cellular respiration by explaining it in different ways until it finally made sense to me.",
+      "Additionally, group study sessions keep me more motivated and accountable, since I don't want to let my teammates down.",
+      "Overall, while solo studying has its benefits for focused concentration, I find that group study sessions provide better learning outcomes and help me retain information more effectively."
     ]
   },
   "listening": {
-    "title": "대학 상담실 상담 장면",
+    "title": "Student Registration Problem",
     "type": "conversation",
-    "script": "Student: Hi, Professor. I'm struggling with my time management this semester. I have too many classes and I'm working part-time as well. Advisor: I understand. Many students face similar challenges. Let's look at your schedule. How many hours are you working each week? Student: About 20 hours. Advisor: That's significant. And how many credits are you taking? Student: 15 credits, which is a full load. Advisor: I see the problem. You're actually taking on too much. I recommend reducing your work hours to 10 hours per week or dropping one class this semester. Student: But I need the money for tuition. Advisor: I understand your concern. However, overloading yourself might affect your grades, which could impact your future opportunities. Have you considered applying for financial aid or scholarships? Student: Actually, I haven't looked into that seriously. Advisor: That could be a game-changer. Let's set up an appointment with our financial aid office. They can help you find resources to reduce your work hours without sacrificing your education.",
+    "script": "Student: Professor Kim, I'm really concerned. I tried to register for your Advanced Microbiology course this morning, but the system shows it's already full. The course registration period closed yesterday, and I'm worried I won't be able to take it this semester. This class is required for my major. Professor: I understand your frustration. Unfortunately, the registration system was at capacity quickly this year. However, I can add you to the waitlist if you'd like. Typically, one or two students drop the course before it begins. Student: Oh, that's helpful! How many people are ahead of me on the waitlist? Professor: Currently, there are three students. But honestly, based on previous semesters, there's a good chance you'll get in. Alternatively, I'm teaching the same course next spring, and it's less popular. You could take it then instead. Student: I appreciate the suggestion, but I was hoping to take it this semester to stay on schedule with my graduation plan. I'll definitely get on the waitlist. Professor: Good decision. Just make sure to check your email regularly after the semester starts. We'll notify you immediately if a spot opens up.",
+    "vocabulary": [
+      {
+        "word": "registration",
+        "meaning_ko": "수강신청; 등록"
+      },
+      {
+        "word": "at capacity",
+        "meaning_ko": "수강인원이 가득 찬"
+      },
+      {
+        "word": "waitlist",
+        "meaning_ko": "대기 명단"
+      },
+      {
+        "word": "drop",
+        "meaning_ko": "(수강을) 취소하다"
+      },
+      {
+        "word": "graduation plan",
+        "meaning_ko": "졸업 계획"
+      },
+      {
+        "word": "frustration",
+        "meaning_ko": "답답함; 좌절감"
+      }
+    ],
     "questions": [
       {
-        "q": "What is the main purpose of the conversation?",
+        "q": "What is the main problem the student is facing?",
         "options": [
-          "A) To discuss the student's financial situation",
-          "B) To address the student's time management problems",
-          "C) To help the student find a part-time job",
-          "D) To encourage the student to drop out"
+          "The course is offered only in the spring semester",
+          "The Advanced Microbiology course is full and registration has closed",
+          "The student doesn't understand the course requirements",
+          "The professor is not available to teach the course"
         ],
         "answer": 1,
-        "explanation": "학생이 처음부터 시간 관리 문제로 상담을 요청했고, 학생 상담사가 스케줄을 검토하면서 일과 학업의 균형 문제를 다루고 있습니다."
+        "explanation": "학생은 수강신청이 마감되었는데 Advanced Microbiology 수업이 이미 정원이 차서 등록할 수 없는 문제를 겪고 있습니다."
       },
       {
-        "q": "How many hours per week is the student currently working?",
+        "q": "What does the professor suggest as an alternative solution?",
         "options": [
-          "A) 10 hours",
-          "B) 15 hours",
-          "C) 20 hours",
-          "D) 25 hours"
+          "Drop another course to make room",
+          "Wait until next semester and take the course in spring",
+          "Take an online version of the course",
+          "Join a different professor's section of the course"
         ],
-        "answer": 2,
-        "explanation": "학생이 'About 20 hours'라고 명시적으로 답했습니다."
+        "answer": 1,
+        "explanation": "교수는 학생이 봄 학기에 같은 수업을 들을 수 있다고 제안합니다. 교수는 내년 봄에 같은 과목을 덜 인기 있게 가르친다고 언급합니다."
       },
       {
-        "q": "What does the advisor suggest as a solution?",
+        "q": "According to the professor, why is there a good chance the student will get into the course?",
         "options": [
-          "A) Work more hours to earn more money",
-          "B) Drop out of university",
-          "C) Reduce work hours or drop a class, and explore financial aid",
-          "D) Continue with the current schedule"
+          "The professor will create more seats in the course",
+          "Based on previous semesters, usually one or two students drop the course before it starts",
+          "The student is at the top of the waitlist",
+          "The registration system will reopen at the end of the semester"
         ],
-        "answer": 2,
-        "explanation": "상담사는 근무 시간을 10시간으로 줄이거나 한 과목을 드롭할 것을 권유하고, 재정 지원과 장학금을 찾아볼 것을 제안합니다."
+        "answer": 1,
+        "explanation": "교수는 이전 학기들을 토대로 학기 시작 전에 일반적으로 1-2명의 학생이 수강을 취소한다고 설명합니다."
       }
     ]
   }

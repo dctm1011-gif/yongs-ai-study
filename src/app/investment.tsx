@@ -21,7 +21,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as ScreenOrientation from 'expo-screen-orientation';
-import { useInvestmentSync, InvestmentColumn, BoxPlotPoint, DongChartEntry, DongEntry, DailyTerm, NewsArticle, RegionChartEntry, JukjeonComplex, RateChart, RateDataPoint } from '../hooks/useInvestmentSync';
+import { useInvestmentSync, InvestmentColumn, BoxPlotPoint, DongChartEntry, DongEntry, DailyTerm, NewsArticle, RegionChartEntry, JukjeonComplex, RateChart, RateDataPoint, SupplyDemandIndex } from '../hooks/useInvestmentSync';
 import { getDatabase, ref, set as dbSet, get } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
 import { useAuth } from '../context/AuthContext';
@@ -2435,6 +2435,109 @@ const RateHBarChart: React.FC<{
 });
 
 // ── 지표분석 모달 ─────────────────────────────────────────────────────
+function sdiBarColor(value: number, minV: number, maxV: number): string {
+  if (value <= 90) {
+    // 낮을수록 진파랑, 90에 가까울수록 연파랑
+    const t = Math.min(1, (value - minV) / Math.max(0.1, 90 - minV));
+    const r = Math.round(30 + (191 - 30) * t);
+    const g = Math.round(64 + (219 - 64) * t);
+    const b = Math.round(175 + (254 - 175) * t);
+    return `rgb(${r},${g},${b})`;
+  } else {
+    // 90에 가까울수록 연빨강, 높을수록 진빨강
+    const t = Math.min(1, (value - 90) / Math.max(0.1, maxV - 90));
+    const r = Math.round(254 + (153 - 254) * t);
+    const g = Math.round(202 + (27 - 202) * t);
+    const b = Math.round(202 + (27 - 202) * t);
+    return `rgb(${r},${g},${b})`;
+  }
+}
+
+const SupplyDemandSection: React.FC<{ sdi: SupplyDemandIndex }> = React.memo(({ sdi }) => {
+  const [expanded, setExpanded] = useState(true);
+  const REGIONS = ['서울', '경기', '인천'] as const;
+  const { width: screenW } = useWindowDimensions();
+  const LABEL_W = 38;
+  const VALUE_W = 42;
+  const H_GAP = 8;
+  const BAR_H = 13;
+  const maxBarW = screenW - 64 - LABEL_W - VALUE_W - H_GAP * 2;
+  return (
+    <View style={{ backgroundColor: '#fff', borderRadius: 16, marginHorizontal: 16, marginTop: 16, borderWidth: 1, borderColor: '#e5e7eb', overflow: 'hidden' }}>
+      <TouchableOpacity onPress={() => setExpanded(v => !v)} activeOpacity={0.7} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 16 }}>
+        <View>
+          <Text style={{ fontSize: 16, fontWeight: '700', color: '#262626' }}>아파트 매매수급지수</Text>
+          <Text style={{ fontSize: 11, color: '#8e8e8e', marginTop: 2 }}>100 초과=매수 우위 · 한국부동산원</Text>
+        </View>
+        <View style={{ alignItems: 'flex-end' }}>
+          {(() => {
+            const sSeoul = sdi.data['서울'];
+            if (!sSeoul || sSeoul.length === 0) return null;
+            const cur = sSeoul[sSeoul.length - 1].value;
+            const minSeoul = Math.min(...sSeoul.map(p => p.value));
+            const maxSeoul = Math.max(...sSeoul.map(p => p.value));
+            return <Text style={{ fontSize: 20, fontWeight: '800', color: sdiBarColor(cur, minSeoul, maxSeoul) }}>서울 {cur.toFixed(1)}</Text>;
+          })()}
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2, marginTop: 4 }}>
+            <Text style={{ fontSize: 11, color: '#8e8e8e' }}>{expanded ? '접기' : '펼치기'}</Text>
+            <MaterialIcons name={expanded ? 'keyboard-arrow-up' : 'keyboard-arrow-down'} size={16} color="#8e8e8e" />
+          </View>
+        </View>
+      </TouchableOpacity>
+      {expanded && (
+        <View style={{ paddingHorizontal: 16, paddingBottom: 16, borderTopWidth: 1, borderTopColor: '#f5f5f5' }}>
+          {REGIONS.map(region => {
+            const pts = sdi.data[region];
+            if (!pts || pts.length === 0) return null;
+            const minV = Math.min(...pts.map(p => p.value));
+            const maxV = Math.max(...pts.map(p => p.value));
+            const range = maxV - minV || 0.01;
+            const cur = pts[pts.length - 1].value;
+            const prev = pts.length >= 2 ? pts[pts.length - 2].value : cur;
+            const diff = cur - prev;
+            const curColor = sdiBarColor(cur, minV, maxV);
+            const diffColor = diff > 0 ? '#ef4444' : diff < 0 ? '#1d4ed8' : '#8e8e8e';
+            return (
+              <View key={region} style={{ marginTop: 12 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+                  <Text style={{ fontSize: 13, fontWeight: '700', color: '#262626', width: 44 }}>{region}</Text>
+                  <Text style={{ fontSize: 12, fontWeight: '700', color: curColor, marginLeft: 4 }}>{cur.toFixed(1)}</Text>
+                  <Text style={{ fontSize: 11, color: diffColor, marginLeft: 6 }}>
+                    {diff > 0 ? `▲${diff.toFixed(1)}` : diff < 0 ? `▼${Math.abs(diff).toFixed(1)}` : '─'}
+                  </Text>
+                  <Text style={{ fontSize: 10, color: '#9ca3af', marginLeft: 4 }}>전월비</Text>
+                </View>
+                <View style={{ gap: 3 }}>
+                  {pts.map((p, i) => {
+                    const isLast = i === pts.length - 1;
+                    const barW = Math.max(4, Math.round(((p.value - minV) / range) * maxBarW));
+                    const monthLabel = `${p.month.slice(2, 4)}.${p.month.slice(4)}`;
+                    const barCol = sdiBarColor(p.value, minV, maxV);
+                    return (
+                      <View key={p.month} style={{ flexDirection: 'row', alignItems: 'center', gap: H_GAP }}>
+                        <Text style={{ width: LABEL_W, fontSize: 10, color: isLast ? curColor : '#6b7280', textAlign: 'right', fontWeight: isLast ? '700' : '400' }}>
+                          {monthLabel}
+                        </Text>
+                        <View style={{ flex: 1, height: BAR_H, justifyContent: 'center' }}>
+                          <View style={{ height: BAR_H, width: barW, backgroundColor: barCol, borderRadius: 3 }} />
+                        </View>
+                        <Text style={{ width: VALUE_W, fontSize: 10, color: isLast ? curColor : '#374151', fontWeight: isLast ? '700' : '400', textAlign: 'right' }}>
+                          {p.value.toFixed(1)}
+                        </Text>
+                      </View>
+                    );
+                  })}
+                </View>
+              </View>
+            );
+          })}
+          <Text style={{ fontSize: 10, color: '#9ca3af', marginTop: 12, textAlign: 'right' }}>{sdi.lastUpdated} 기준</Text>
+        </View>
+      )}
+    </View>
+  );
+});
+
 const RateChartSection: React.FC<{ chart: RateChart }> = React.memo(({ chart }) => {
   const [expanded, setExpanded] = useState(true);
   const changeColor = chart.change < 0 ? '#1d4ed8' : chart.change > 0 ? '#ef4444' : '#8e8e8e';
@@ -2632,13 +2735,14 @@ const RateAnalysisModal: React.FC<{
   visible: boolean;
   onClose: () => void;
   rateCharts: RateChart[];
-}> = React.memo(({ visible, onClose, rateCharts }) => (
+  supplyDemandIndex: SupplyDemandIndex | null;
+}> = React.memo(({ visible, onClose, rateCharts, supplyDemandIndex }) => (
   <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fafafa' }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 14, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#efefef' }}>
         <View>
           <Text style={{ fontSize: 17, fontWeight: '700', color: '#262626' }}>지표분석</Text>
-          <Text style={{ fontSize: 12, color: '#8e8e8e', marginTop: 2 }}>기준금리 · 주택담보대출금리</Text>
+          <Text style={{ fontSize: 12, color: '#8e8e8e', marginTop: 2 }}>기준금리 · 주담대금리 · 매매수급지수</Text>
         </View>
         <TouchableOpacity onPress={onClose} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
           <MaterialIcons name="close" size={24} color="#262626" />
@@ -2653,6 +2757,7 @@ const RateAnalysisModal: React.FC<{
         ) : rateCharts.map(chart => (
           <RateChartSection key={chart.id} chart={chart} />
         ))}
+        {supplyDemandIndex && <SupplyDemandSection sdi={supplyDemandIndex} />}
         <View style={{ height: 20 }} />
       </ScrollView>
     </SafeAreaView>
@@ -2885,6 +2990,7 @@ export default function InvestmentScreen() {
     complexUpdateReminder,
     rateUpdateReminder,
     rateCharts,
+    supplyDemandIndex,
     taxPolicySummary,
     jongbuseSummary,
     bookmarks,
@@ -3111,7 +3217,7 @@ export default function InvestmentScreen() {
               </View>
             </TouchableOpacity>
           )}
-          {rateCharts.length > 0 && (
+          {(rateCharts.length > 0 || supplyDemandIndex) && (
             <AnimatedCard delay={420}>
               <FloatingCard>
                 <PressableScale
@@ -3139,6 +3245,23 @@ export default function InvestmentScreen() {
                           </View>
                         );
                       })}
+                      {supplyDemandIndex && (() => {
+                        const regions = ['서울', '경기', '인천'] as const;
+                        return (
+                          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5, gap: 6 }}>
+                            <Text style={{ fontSize: 11, color: '#8e8e8e', width: 80 }}>매매수급지수</Text>
+                            {regions.map(r => {
+                              const pts = supplyDemandIndex.data[r];
+                              if (!pts || pts.length === 0) return null;
+                              const cur = pts[pts.length - 1].value;
+                              const color = cur > 105 ? '#ef4444' : cur > 100 ? '#f97316' : '#1d4ed8';
+                              return (
+                                <Text key={r} style={{ fontSize: 10, color, fontWeight: '700' }}>{r} {cur.toFixed(0)}</Text>
+                              );
+                            })}
+                          </View>
+                        );
+                      })()}
                     </View>
                     <MaterialIcons name="chevron-right" size={22} color="#8e8e8e" />
                   </View>
@@ -3196,6 +3319,7 @@ export default function InvestmentScreen() {
         visible={rateModalVisible}
         onClose={() => setRateModalVisible(false)}
         rateCharts={rateCharts}
+        supplyDemandIndex={supplyDemandIndex}
       />
       <SchoolAnalysisModal
         visible={schoolModalVisible}
