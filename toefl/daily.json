@@ -1,173 +1,120 @@
 {
   "date": "2026-08-29",
   "reading": {
-    "title": "The Evolution of Architectural Design in Urban Development",
-    "passage": "Architectural design has undergone significant transformation over the past century, fundamentally reshaping how cities are conceived and constructed. Modern architects increasingly prioritize sustainable practices and innovative materials to create structures that minimize environmental impact. The shift toward green building began in earnest during the 1990s when researchers documented that buildings account for approximately 40% of global carbon emissions. Consequently, architects now incorporate features such as solar panels, rainwater harvesting systems, and energy-efficient insulation into their designs. This paradigm shift has spawned new architectural movements that challenge conventional construction methods.\n\nThe integration of technology in architectural practice has revolutionized both design processes and building functionality. Computer-aided design (CAD) software enables architects to model complex structures with unprecedented precision, allowing for better cost estimation and risk mitigation. Furthermore, buildings equipped with smart systems can automatically adjust heating, lighting, and ventilation based on occupancy patterns and weather conditions. These technological advancements have not only improved operational efficiency but also enhanced user experience and comfort. As urbanization continues to accelerate globally, the demand for intelligent, sustainable architecture will undoubtedly intensify.",
-    "vocabulary": [
-      {
-        "word": "paradigm shift",
-        "meaning_ko": "패러다임의 변화; 기존 관념에서 새로운 관념으로의 근본적인 변화"
-      },
-      {
-        "word": "sustainability",
-        "meaning_ko": "지속 가능성; 환경과 자원을 보존하면서 유지할 수 있는 특성"
-      },
-      {
-        "word": "mitigation",
-        "meaning_ko": "완화, 감소; 문제나 위험을 줄이거나 완화하는 행위"
-      },
-      {
-        "word": "integrate",
-        "meaning_ko": "통합하다; 여러 요소를 하나로 합치다"
-      },
-      {
-        "word": "conventiona",
-        "meaning_ko": "관례적인, 전통적인; 일반적으로 따르는 방식"
-      },
-      {
-        "word": "accelerate",
-        "meaning_ko": "가속화하다; 속도나 진행 속도를 높이다"
-      },
-      {
-        "word": "unprecedented",
-        "meaning_ko": "전례 없는, 전무후무한; 이전에 없었던"
-      }
-    ],
+    "title": "Bioluminescence in Deep-Sea Organisms",
+    "passage": "Bioluminescence is the production of light by living organisms through chemical reactions. In the deep ocean, where sunlight cannot penetrate, many creatures have evolved this remarkable ability. Fish, jellyfish, and squid use bioluminescent light for various purposes, including hunting prey, attracting mates, and communicating with other members of their species. The light-producing organs, called photophores, contain specialized cells that generate light through the oxidation of luciferin. Scientists estimate that approximately 90% of deep-sea creatures produce or display bioluminescence, making it one of the most common adaptations in the ocean.",
     "questions": [
       {
-        "q": "According to the passage, what percentage of global carbon emissions come from buildings?",
+        "q": "According to the passage, what is the primary function of bioluminescence in deep-sea organisms?",
         "options": [
-          "Approximately 30%",
-          "Approximately 40%",
-          "Approximately 50%",
-          "Approximately 60%"
+          "To regulate body temperature",
+          "To hunt prey, attract mates, and communicate",
+          "To synthesize vitamin D",
+          "To navigate through water currents"
         ],
         "answer": 1,
-        "explanation": "지문의 두 번째 문장에서 '건물이 전 지구 탄소 배출의 약 40%를 차지한다'고 명시되어 있습니다."
+        "explanation": "지문에서 생물이 빛을 사냥, 짝짓기 유인, 의사소통 등의 목적으로 사용한다고 명시되어 있습니다."
       },
       {
-        "q": "What can be inferred from the passage about the relationship between architecture and environmental concerns?",
+        "q": "What does the term 'photophores' refer to?",
         "options": [
-          "Environmental concerns have had no impact on architectural design",
-          "Architects only recently began considering environmental sustainability",
-          "Environmental responsibility has become a central consideration in modern architectural practice",
-          "Green building practices were abandoned after the 1990s"
+          "A type of deep-sea fish",
+          "The chemical substance that produces light",
+          "Light-producing organs in organisms",
+          "The deepest part of the ocean"
         ],
         "answer": 2,
-        "explanation": "지문에서 지속 가능한 건축 실천이 1990년대에 본격화되었고, 현대 건축가들이 환경 영향을 최소화하는 기능(태양광 패널, 빗물 수확 등)을 설계에 포함한다고 설명하고 있습니다."
+        "explanation": "지문에서 photophores는 '빛을 생성하는 기관'으로 정의되어 있습니다."
       },
       {
-        "q": "The word 'spawned' in the first paragraph is closest in meaning to",
+        "q": "What percentage of deep-sea creatures are estimated to use bioluminescence?",
         "options": [
-          "eliminated",
-          "produced or generated",
-          "criticized",
-          "replaced"
+          "Approximately 50%",
+          "Approximately 70%",
+          "Approximately 90%",
+          "Approximately 100%"
         ],
-        "answer": 1,
-        "explanation": "'Spawned'는 '생성하다, 낳다'라는 의미로, 문맥상 '새로운 건축 운동을 만들어냈다'는 의미입니다. 정답은 'produced or generated'입니다."
-      },
-      {
-        "q": "Why does the author mention Computer-aided Design (CAD) software?",
-        "options": [
-          "To criticize the overuse of technology in architecture",
-          "To illustrate how technology has improved architectural precision and cost estimation",
-          "To suggest that traditional design methods are superior",
-          "To explain why buildings are more expensive today"
-        ],
-        "answer": 1,
-        "explanation": "저자는 CAD 소프트웨어가 건축가들이 더 높은 정밀도로 복잡한 구조를 모델링할 수 있게 하고, 비용 추정과 위험 관리를 개선한다고 언급하여 기술의 긍정적 역할을 보여주고 있습니다."
+        "answer": 2,
+        "explanation": "지문의 마지막 문장에서 심해 생물의 약 90%가 생물발광을 생성하거나 표시한다고 명시되어 있습니다."
       }
     ]
   },
   "writing": {
-    "sentences": [
-      {
-        "original": "Architectural design has undergone significant transformation over the past century, fundamentally reshaping how cities are conceived and constructed.",
-        "paraphrase": "Over the last hundred years, the field of architecture has experienced substantial changes that have altered the way urban planners and developers think about and build cities.",
-        "tip": "능동태→수동태 변환, 추상적 명사(transformation)를 동사구(changes)로 변환, 동의어 치환(undergone→experienced, fundamentally reshaping→altered)"
-      },
-      {
-        "original": "Modern architects increasingly prioritize sustainable practices and innovative materials to create structures that minimize environmental impact.",
-        "paraphrase": "Contemporary architectural professionals are placing greater emphasis on environmentally responsible construction methods and novel building materials with the goal of reducing the ecological footprint of buildings.",
-        "tip": "명사구→동사구 변환(prioritize to create→placing emphasis...with the goal of), 동의어 치환(Modern→Contemporary, sustainable→environmentally responsible, minimize→reducing)"
-      },
-      {
-        "original": "Computer-aided design (CAD) software enables architects to model complex structures with unprecedented precision, allowing for better cost estimation and risk mitigation.",
-        "paraphrase": "The utilization of CAD technology has made it possible for architects to create highly accurate models of intricate buildings, which in turn facilitates improved financial planning and the reduction of potential problems.",
-        "tip": "능동태→수동태 변환(enables→made it possible), 복잡한 문장→단순한 문장으로 분해, 동의어 치환(unprecedented precision→highly accurate, mitigation→reduction)"
-      }
+    "prompt": "Do you agree or disagree with the statement: 'Remote work is more productive than working in an office environment'? Support your answer with specific examples.",
+    "structure": {
+      "intro": "명확한 입장 제시: 동의하는지 반대하는지 명확히 표현하고, 간단한 이유 2-3가지를 미리 언급합니다.",
+      "body1": "첫 번째 주장: 원격근무의 장점 (집중력, 통근시간 절약 등) 또는 사무실 근무의 장점 (협업, 직접 커뮤니케이션 등)을 구체적인 예시와 함께 설명합니다.",
+      "body2": "두 번째 주장: 다른 관점의 장점을 또 다른 구체적 예시와 함께 제시합니다. 첫 번째 주장의 반대편 의견도 인정하되, 왜 본인의 의견이 더 타당한지 설명합니다.",
+      "conclusion": "서론에서 제시한 입장을 다시 강조하고, 두 가지 주요 근거를 요약한 후 마무리합니다."
+    },
+    "useful_phrases": [
+      "In my opinion,",
+      "I strongly agree/disagree with",
+      "To begin with,",
+      "Furthermore,",
+      "In addition,",
+      "On the other hand,",
+      "However,",
+      "For example,",
+      "This demonstrates that",
+      "In conclusion,",
+      "Therefore,",
+      "It is clear that"
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to live in cities where there are many opportunities and activities. Others prefer to live in rural areas where life is quieter and more peaceful. Which do you prefer and why? Include specific reasons and details.",
-    "model_sentences": [
-      "Personally, I prefer to live in a city rather than a rural area because urban life offers more career opportunities and cultural activities.",
-      "First, cities provide better job markets across diverse industries, which means I have more choices for my future career development.",
-      "For example, in a city like Seoul, I can access numerous companies in technology, finance, and entertainment sectors, whereas rural areas typically have limited employment options.",
-      "Additionally, cities offer better access to education, entertainment, and public transportation, which improves my overall quality of life.",
-      "Although rural areas can be peaceful and stress-free, the practical advantages and diverse opportunities in cities outweigh those benefits for me."
+    "prompt": "Some people believe that artificial intelligence will improve education. Others think it will replace human teachers. Which perspective do you agree with more? Explain your opinion.",
+    "useful_expressions": [
+      "In my opinion, I believe that",
+      "One reason is that",
+      "Another important point is",
+      "For example,",
+      "This shows that",
+      "I think the most significant advantage is",
+      "However, some people might argue that"
+    ],
+    "sample_points": [
+      "AI는 개인맞춤형 학습을 제공하고 학생 진도에 맞춰 속도를 조절할 수 있다는 점",
+      "그러나 인간 교사는 감정적 지원, 도덕적 교육, 창의적 사고 발달 등을 제공하며 AI는 이를 완전히 대체할 수 없다는 점"
     ]
   },
   "listening": {
-    "title": "Club Budget Allocation Discussion",
+    "title": "Campus Library Study Room Reservation",
     "type": "conversation",
-    "script": "Student A: Hey, did you attend the club budget meeting yesterday? We need to decide how to allocate our funds for next semester.\n\nStudent B: Yeah, I was there. I think we should increase funding for the annual conference. Last year's event was really successful, and we had to turn away participants because we ran out of space.\n\nStudent A: I understand your point, but we also need to consider our publication budget. The literary magazine is our most visible project, and we're currently cutting corners on quality printing.\n\nStudent B: That's true, but the conference generates more interest from external sponsors. If we can make it bigger and better, we might secure additional sponsorships for future events.\n\nStudent A: Actually, that's a good argument. What if we propose a compromise? We could request additional funding from the administration specifically for the conference, rather than taking money from other programs.\n\nStudent B: That's a smart idea. We could submit a proposal highlighting the conference's success rate and potential for growth. The administration might be more willing to approve additional funds if they see concrete evidence of its impact.",
-    "vocabulary": [
-      {
-        "word": "allocate",
-        "meaning_ko": "배분하다, 배치하다; 자금이나 자원을 특정 목적에 할당하다"
-      },
-      {
-        "word": "sponsor",
-        "meaning_ko": "후원자, 스폰서; 재정적 지원을 제공하는 개인이나 조직"
-      },
-      {
-        "word": "compromise",
-        "meaning_ko": "타협, 절충; 양쪽이 각각 양보하여 중간점을 찾는 것"
-      },
-      {
-        "word": "proposal",
-        "meaning_ko": "제안, 안; 승인이나 검토를 위해 제시하는 계획"
-      },
-      {
-        "word": "concrete evidence",
-        "meaning_ko": "구체적인 증거; 명확하고 구체적인 증명 자료"
-      }
-    ],
+    "script": "Student: Hi, I'd like to book a study room in the library for tomorrow afternoon. Librarian: Of course! We have several options available. How many hours do you need? Student: I'm thinking about three hours, probably from 2 PM to 5 PM. Librarian: Let me check our system. Yes, that time slot is available. How many people will be using the room? Student: Just me and my study partner, so two people. Librarian: Perfect. The rooms accommodate up to six people. I should mention that all study rooms are equipped with a whiteboard, projector, and computer access. However, food and drinks other than water are not permitted inside. Student: That's helpful to know. What's the cancellation policy? Librarian: You can cancel up to 24 hours before your reservation without any penalty. After that, you'll be charged a $5 cancellation fee. Student: Understood. Let's proceed with the reservation.",
     "questions": [
       {
-        "q": "What is the main topic of the conversation?",
+        "q": "What time does the student want to reserve the study room?",
         "options": [
-          "How to improve the quality of the literary magazine",
-          "How to allocate the club's budget between different programs",
-          "Why external sponsors are important to the club",
-          "How to recruit more members for the annual conference"
+          "1 PM to 4 PM",
+          "2 PM to 5 PM",
+          "3 PM to 6 PM",
+          "12 PM to 3 PM"
         ],
         "answer": 1,
-        "explanation": "대화의 전체 내용은 동아리의 예산을 연례 회의와 문학 잡지 출판 사이에 어떻게 배분할 것인지에 관한 것입니다."
+        "explanation": "대화에서 학생이 '2시부터 5시까지, 3시간' 동안 예약하길 원한다고 명시되어 있습니다."
       },
       {
-        "q": "What does Student B suggest as a reason for increasing the conference budget?",
+        "q": "How many people will use the study room?",
         "options": [
-          "The conference costs less to organize than expected",
-          "The conference was successful last year and generated external sponsorships",
-          "The literary magazine is no longer important to the club",
-          "More students have expressed interest in attending this year"
+          "One person",
+          "Two people",
+          "Three people",
+          "Six people"
         ],
         "answer": 1,
-        "explanation": "Student B는 지난해 행사가 성공적이었고, 외부 후원자를 확보할 수 있는 가능성이 있다고 제안합니다."
+        "explanation": "학생이 '나와 공부 파트너, 2명'이 사용할 것이라고 말했습니다."
       },
       {
-        "q": "Why does Student A propose requesting additional funding from the administration?",
+        "q": "What items are NOT allowed in the study room?",
         "options": [
-          "To avoid reducing funds for the literary magazine while still supporting the conference",
-          "To prove that the club needs more money than other clubs",
-          "To convince Student B that the conference is not important",
-          "To eliminate the need for external sponsorships"
+          "Whiteboards and projectors",
+          "Computers",
+          "Food and drinks except water",
+          "Books and notebooks"
         ],
-        "answer": 0,
-        "explanation": "Student A는 행정부에 추가 자금을 요청하면 다른 프로그램의 예산을 줄이지 않으면서도 회의 예산을 증가시킬 수 있다고 제안합니다. 이는 타협 방안입니다."
+        "answer": 2,
+        "explanation": "사서가 '물을 제외한 음식과 음료는 실내에서 허용되지 않는다'고 명확히 말했습니다."
       }
     ]
   }
