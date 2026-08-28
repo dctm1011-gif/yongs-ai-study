@@ -280,11 +280,10 @@ def generate_default_words(client: anthropic.Anthropic, target_date: date, toefl
 JSON 외 다른 텍스트는 절대 포함하지 마세요.
 {used_words_block}{skip_block}
 단어 선정 기준 (반드시 준수):
-- 난이도: TOEFL iBT B2~C1 수준 — 실제 TOEFL 시험에 출제되는 학술 어휘
-- GRE 전용 고난도 어휘 절대 금지: perspicacious, mendacious, obsequious, truculent, veracious, penurious, recalcitrant, perfidious, intransigent, garrulous, loquacious, querulous, sanguine, laconic, esoteric, spurious, tendentious 등 GRE 수준은 제외
-- 너무 쉬운 기초 어휘도 금지: analyze, indicate, require, suggest, significant, provide, increase, develop, create, include 등
+- 난이도: TOEFL iBT C1~C2 수준 — TOEFL 고득점(29점) 및 GRE와 겹치는 고급 학술 어휘 우선
+- 너무 일상적이거나 쉬운 어휘 금지: analyze, indicate, require, suggest, significant, provide, increase, develop, create, include, mitigate, exacerbate, proliferate, advocate, constitute, sustain, compelling, facilitate, deteriorate, predominant 등 이미 일반적으로 알려진 TOEFL 기본 어휘
 - 슬랭·구어체·일상 표현 절대 금지
-- 목표 난이도 예시: mitigate, exacerbate, proliferate, pervasive, advocate, undermine, constitute, sustain, subsequent, inevitable, ambiguous, compelling, facilitate, deteriorate, predominant, diverse, inherent, coincide, attribute, preliminary
+- 목표 난이도 예시: recalcitrant, intransigent, perfidious, equivocal, inveterate, precipitate, tenuous, nuanced, ostensible, insidious, circumvent, bolster, contentious, spurious, ephemeral, predisposed, irrevocable, inadvertent, corroborate, presuppose, counterintuitive, tacit, delineate, conflate, extrapolate
 
 JSON 형식:
 {{"date": "{target_date}", "words": [{{"word": "exacerbate", "part_of_speech": "동사", "meaning_ko": "악화시키다, 심화시키다", "explanation": "이미 나쁜 상황을 더욱 심각하게 만드는 것. TOEFL Reading 환경·사회 지문에서 자주 등장해요.", "example_from_convo": "Deforestation exacerbates climate change by reducing carbon absorption.", "example_ko": "삼림 벌채는 탄소 흡수를 줄여 기후변화를 악화시켜요.", "tip": "동의어: aggravate(악화), worsen(나빠지다). 반의어: alleviate(완화), mitigate(누그러뜨리다). Reading·Writing 고빈출.", "emoji": "📈"}}], "quiz": [{{"type": "meaning", "word": "exacerbate", "question": "Which of the following best describes 'exacerbate'?", "options": ["to make a bad situation worse", "to gradually reduce a problem", "to resolve a situation fundamentally", "to temporarily suppress change"], "answer": 0, "explanation": "exacerbate는 이미 나쁜 상황을 '더 나쁘게' 만드는 것이에요.", "option_explanations": [null, "alleviate(완화)의 의미로 exacerbate의 반의어예요.", "resolve(해결)와 혼동 — exacerbate는 해결이 아니라 악화예요.", "suppress(억제)는 다른 뉘앙스예요."]}}, {{"type": "fill_blank", "word": "exacerbate", "sentence": "Poor nutrition can _____ existing health conditions.", "sentence_ko": "불량한 영양 섭취는 기존 건강 상태를 악화시킬 수 있어요.", "answer": "exacerbate", "hint": "make worse"}}, {{"type": "situation", "word": "exacerbate", "question": "A new policy causes a conflict that was already tense to become far more serious. Which word best describes what happened?", "options": ["alleviate", "exacerbate", "resolve", "suppress"], "answer": 1, "explanation": "갈등이 더 심각해졌으므로 exacerbate(악화)가 적절해요."}}], "sentences": [{{"word": "exacerbate", "sentence": "Skipping sleep only exacerbates the anxiety you already feel before an exam.", "sentence_ko": "수면 부족은 시험 전에 느끼는 불안을 더욱 악화시킬 뿐이에요.", "nuance": "단순히 '나빠진다'가 아니라 이미 존재하는 부정적 상황을 능동적으로 더 심화시키는 뉘앙스. 외부 요인이 문제를 증폭시킬 때 씁니다.", "context": "환경, 건강, 사회 문제, 갈등 등 부정적 상황이 더 나빠지는 맥락. 뉴스·학술문에서 정책 비판할 때 자주 등장.", "everyday_usage": "stress/situation/problem을 목적어로 자주 씁니다. 'This only exacerbates the problem.' / 'Don't exacerbate the situation.'"}}]}}
@@ -344,7 +343,7 @@ def fetch_replacement_words(client: anthropic.Anthropic, target_date: date, excl
     prompt = f"""TOEFL iBT 빈출 학술 어휘 {count}개와 퀴즈를 JSON으로만 생성해주세요.
 
 ⚠️ 아래 단어는 제외해주세요: {', '.join(sorted(exclude_lower))}
-슬랭·구어체·일상 표현 금지. AWL/ETS 수준 학술 어휘만 선정해주세요.
+슬랭·구어체·일상 표현 금지. TOEFL C1~C2 이상 고급 학술 어휘 우선 선정해주세요.
 
 JSON 형식:
 {{"words": [{{"word": "단어", "part_of_speech": "품사", "meaning_ko": "뜻", "explanation": "설명", "example_from_convo": "학술 예문", "example_ko": "한국어 예문", "tip": "동의어/반의어/TOEFL 출제 영역", "emoji": "😊"}}], "quiz": [{{"type": "meaning", "word": "단어", "question": "문제?", "options": ["정답", "오답1", "오답2", "오답3"], "answer": 0, "explanation": "설명"}}]}}

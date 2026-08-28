@@ -2774,5 +2774,65 @@
     "explanation": "양, 규모, 정도가 충분히 크거나 많다는 뜻. '무시할 수 없는 정도의', '의미 있는' 정도를 나타냅니다.",
     "tip": "동의어: significant(의미 있는), considerable(상당한), substantial. 반의어: negligible(무시할 만한), trivial(하찮은). 'substantial evidence'·'substantial change' 자주 사용. Reading·Writing 고빈출.",
     "emoji": "📊"
+  },
+  {
+    "id": "inadvertent",
+    "word": "inadvertent",
+    "pos": "형용사",
+    "date": "2026-08-29",
+    "meaning": "부주의한, 의도하지 않은",
+    "example_ko": "그 과학자는 관련 없는 가설을 테스트하다가 의도하지 않은 발견을 했어요.",
+    "example_en": "The scientist made an inadvertent discovery while testing an unrelated hypothesis.",
+    "explanation": "실수로 또는 부주의로 인해 의도하지 않게 벌어진 것. TOEFL Reading 과학·역사 지문에서 인과관계 설명할 때 자주 출현해요.",
+    "tip": "동의어: unintentional(의도하지 않은), accidental(우연의). 반의어: deliberate(의도적인), intentional(의도적인). Reading·Listening 고빈출.",
+    "emoji": "⚡"
+  },
+  {
+    "id": "irrevocable",
+    "word": "irrevocable",
+    "pos": "형용사",
+    "date": "2026-08-29",
+    "meaning": "돌이킬 수 없는, 취소 불가능한",
+    "example_ko": "그 조약은 환경 보호에 돌이킬 수 없는 약속을 했어요.",
+    "example_en": "The treaty made an irrevocable commitment to environmental protection.",
+    "explanation": "한 번 결정되거나 벌어지면 절대 되돌릴 수 없는 상태. 법률·윤리·역사 지문에서 중요한 결정이나 결과를 묘사할 때 씁니다.",
+    "tip": "동의어: irreversible(되돌릴 수 없는), permanent(영구적인). 반의어: revocable(취소 가능한), temporary(임시의). Writing·Reading 고난도.",
+    "emoji": "🔒"
+  },
+  {
+    "id": "presuppose",
+    "word": "presuppose",
+    "pos": "동사",
+    "date": "2026-08-29",
+    "meaning": "전제로 삼다, 미리 가정하다",
+    "example_ko": "그의 주장은 모든 참가자가 정보에 동등하게 접근할 수 있다는 것을 전제로 해요.",
+    "example_en": "His argument presupposes that all participants have equal access to information.",
+    "explanation": "어떤 주장이나 행동이 사전에 어떤 것이 이미 참이거나 존재함을 암묵적으로 요구하는 것. 논리·철학·언어학 지문에서 전제 관계를 분석할 때 핵심 어휘예요.",
+    "tip": "동의어: assume(가정하다), imply(암시하다). 반의어: question(의문 제기하다), doubt(의심하다). Reading·Listening 논리 문제 필수.",
+    "emoji": "🧠"
+  },
+  {
+    "id": "equivocal",
+    "word": "equivocal",
+    "pos": "형용사",
+    "date": "2026-08-29",
+    "meaning": "애매한, 모호한, 의심스러운",
+    "example_ko": "실험 결과는 애매해서 확실한 결론을 내리기 어려웠어요.",
+    "example_en": "The experimental results were equivocal, making it difficult to draw firm conclusions.",
+    "explanation": "명확하지 않고 여러 해석이 가능하거나 일관되지 않은 상태. 과학·사회 연구 지문에서 증거의 신뢰성이나 결론의 확실성을 평가할 때 자주 나와요.",
+    "tip": "동의어: ambiguous(모호한), inconclusive(결론 미정의). 반의어: unequivocal(명확한), definitive(확정적인). Reading 증거 평가 문제.",
+    "emoji": "❓"
+  },
+  {
+    "id": "inveterate",
+    "word": "inveterate",
+    "pos": "형용사",
+    "date": "2026-08-29",
+    "meaning": "고질적인, 오래된, 만성적인",
+    "example_ko": "그는 여러 번 시도했지만 담배를 끊지 못하는 고질적인 흡연자였어요.",
+    "example_en": "He was an inveterate smoker, unable to quit despite multiple attempts.",
+    "explanation": "오랫동안 습관이나 특성으로 굳어져 쉽게 바뀌지 않는 것. 보통 부정적이거나 고착된 상태를 묘사합니다. 문학·역사·사회 지문에서 인물 묘사나 사회 문제에 자주 등장해요.",
+    "tip": "동의어: chronic(만성적인), habitual(습관적인), ingrained(근본적인). 반의어: temporary(임시의), occasional(가끔의). Reading·Listening 성격 묘사.",
+    "emoji": "🔄"
   }
 ]
