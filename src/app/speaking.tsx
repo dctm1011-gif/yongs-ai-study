@@ -78,6 +78,16 @@ export default function SpeakingScreen() {
       .catch(() => {});
   }, [user?.uid]);
 
+  function stripMarkdown(text: string): string {
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '$1')
+      .replace(/\*(.*?)\*/g, '$1')
+      .replace(/^---+$/gm, '')
+      .replace(/^#{1,3}\s/gm, '')
+      .replace(/^-\s/gm, '• ')
+      .trim();
+  }
+
   async function callChat(msgs: { role: string; content: string }[], isFeedbackRequest = false) {
     const res = await fetch(CHAT_URL, {
       method: 'POST',
@@ -85,7 +95,8 @@ export default function SpeakingScreen() {
       body: JSON.stringify({ messages: msgs, topic, isFeedbackRequest }),
     });
     const data = await res.json();
-    return (data.reply as string) ?? '';
+    const raw = (data.reply as string) ?? '';
+    return isFeedbackRequest ? stripMarkdown(raw) : raw;
   }
 
   async function startConversation() {
