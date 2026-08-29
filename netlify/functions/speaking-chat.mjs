@@ -1,5 +1,17 @@
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 
+async function resolveImageUrl(query) {
+  try {
+    const res = await fetch(
+      `https://source.unsplash.com/400x300/?${encodeURIComponent(query)}`,
+      { redirect: 'follow' },
+    );
+    return res.url || null;
+  } catch {
+    return null;
+  }
+}
+
 export default async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, {
@@ -40,7 +52,8 @@ Rules:
 - Keep responses to 2-4 sentences maximum. Be concise.
 - Use natural everyday English.
 - If the user makes a grammar error, gently note it at the end: "(Tip: '...' sounds more natural)"
-- Always end with one follow-up question to keep the conversation going.`;
+- Always end with one follow-up question to keep the conversation going.
+- PHOTO RULE (very important): When the user asks to see a photo or picture of anything — phrases like "show me a picture of X", "사진 보여줘", "X 사진", "can I see X", etc. — you MUST write [IMAGE: 2-3 English keywords] at the very end of your reply. The app will automatically fetch and display the photo using that tag. Do NOT say you can't show pictures. Just include the tag and the app handles the rest. Example: user says "show me Australia" → you reply normally AND append [IMAGE: australia landscape]`;
 
   const res = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
@@ -58,9 +71,18 @@ Rules:
   });
 
   const data = await res.json();
-  const reply = data.content?.[0]?.text ?? 'Sorry, something went wrong.';
+  let reply = data.content?.[0]?.text ?? '';
 
-  return new Response(JSON.stringify({ reply }), {
+  // Parse [IMAGE: query] tag and resolve to actual URL server-side
+  let imageUrl = null;
+  const imageMatch = reply.match(/\[IMAGE:\s*([^\]]+)\]/i);
+  if (imageMatch) {
+    const query = imageMatch[1].trim();
+    reply = reply.replace(/\[IMAGE:\s*[^\]]+\]/gi, '').trim();
+    imageUrl = await resolveImageUrl(query);
+  }
+
+  return new Response(JSON.stringify({ reply, imageUrl }), {
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',

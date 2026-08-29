@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
   View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet,
-  KeyboardAvoidingView, Platform, ActivityIndicator,
+  KeyboardAvoidingView, Platform, ActivityIndicator, Image,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getDatabase, ref, set as dbSet, get } from 'firebase/database';
@@ -54,7 +54,10 @@ interface Message {
   id: string;
   role: 'user' | 'assistant';
   content: string;
+  imageUrl?: string | null;
 }
+
+type ChatResponse = { text: string; imageUrl?: string | null };
 
 type ViewState = 'idle' | 'loading' | 'chatting' | 'ending' | 'done';
 
@@ -88,7 +91,10 @@ export default function SpeakingScreen() {
       .trim();
   }
 
-  async function callChat(msgs: { role: string; content: string }[], isFeedbackRequest = false) {
+  async function callChat(
+    msgs: { role: string; content: string }[],
+    isFeedbackRequest = false,
+  ): Promise<ChatResponse> {
     const res = await fetch(CHAT_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -96,17 +102,18 @@ export default function SpeakingScreen() {
     });
     const data = await res.json();
     const raw = (data.reply as string) ?? '';
-    return isFeedbackRequest ? stripMarkdown(raw) : raw;
+    const text = isFeedbackRequest ? stripMarkdown(raw) : raw;
+    return { text, imageUrl: data.imageUrl ?? null };
   }
 
   async function startConversation() {
     setViewState('loading');
     try {
-      const reply = await callChat([{
+      const { text, imageUrl } = await callChat([{
         role: 'user',
         content: 'Please greet me and ask your first question about the topic.',
       }]);
-      setMessages([{ id: '0', role: 'assistant', content: reply }]);
+      setMessages([{ id: '0', role: 'assistant', content: text, imageUrl }]);
       setViewState('chatting');
     } catch {
       setViewState('idle');
@@ -124,8 +131,12 @@ export default function SpeakingScreen() {
     setUserMsgCount(newCount);
     setViewState('loading');
     try {
-      const reply = await callChat(newMessages.map(m => ({ role: m.role, content: m.content })));
-      setMessages(prev => [...prev, { id: String(Date.now() + 1), role: 'assistant', content: reply }]);
+      const { text: reply, imageUrl } = await callChat(
+        newMessages.map(m => ({ role: m.role, content: m.content })),
+      );
+      setMessages(prev => [...prev, {
+        id: String(Date.now() + 1), role: 'assistant', content: reply, imageUrl,
+      }]);
     } catch {}
     setViewState('chatting');
   }
@@ -133,7 +144,7 @@ export default function SpeakingScreen() {
   async function endConversation() {
     setViewState('ending');
     try {
-      const feedback = await callChat(
+      const { text: feedback } = await callChat(
         messages.map(m => ({ role: m.role, content: m.content })),
         true,
       );
@@ -151,6 +162,26 @@ export default function SpeakingScreen() {
       }).catch(() => {});
     }
     setViewState('done');
+  }
+
+  function renderBubble({ item }: { item: Message }) {
+    const isUser = item.role === 'user';
+    return (
+      <View style={[styles.bubble, isUser ? styles.userBubble : styles.aiBubble]}>
+        {item.content ? (
+          <Text style={[styles.bubbleText, isUser ? styles.userText : styles.aiText]}>
+            {item.content}
+          </Text>
+        ) : null}
+        {item.imageUrl ? (
+          <Image
+            source={{ uri: item.imageUrl }}
+            style={styles.chatImage}
+            resizeMode="cover"
+          />
+        ) : null}
+      </View>
+    );
   }
 
   // Already completed from a previous session
@@ -182,7 +213,8 @@ export default function SpeakingScreen() {
           <Text style={styles.topicBig}>{topic}</Text>
           <Text style={styles.startHint}>
             {'AI와 영어로 대화해보세요.\n'}
-            {`${MIN_EXCHANGES}번 이상 답변하면 종료할 수 있어요.`}
+            {`${MIN_EXCHANGES}번 이상 답변하면 종료할 수 있어요.\n`}
+            {'사진이 보고 싶으면 "show me a picture of ..." 라고 해보세요!'}
           </Text>
           <TouchableOpacity style={styles.startBtn} onPress={startConversation}>
             <Text style={styles.startBtnText}>대화 시작</Text>
@@ -199,13 +231,7 @@ export default function SpeakingScreen() {
             ref={listRef}
             data={messages}
             keyExtractor={item => item.id}
-            renderItem={({ item }) => (
-              <View style={[styles.bubble, item.role === 'user' ? styles.userBubble : styles.aiBubble]}>
-                <Text style={[styles.bubbleText, item.role === 'user' ? styles.userText : styles.aiText]}>
-                  {item.content}
-                </Text>
-              </View>
-            )}
+            renderItem={renderBubble}
             contentContainerStyle={styles.messageList}
             onContentSizeChange={() => listRef.current?.scrollToEnd({ animated: true })}
           />
@@ -229,7 +255,7 @@ export default function SpeakingScreen() {
                   style={styles.input}
                   value={input}
                   onChangeText={setInput}
-                  placeholder="Type in English..."
+                  placeholder='Type in English... (or "show me a picture of ...")'
                   placeholderTextColor="#94a3b8"
                   multiline
                   maxLength={300}
@@ -287,6 +313,7 @@ const styles = StyleSheet.create({
   bubbleText: { fontSize: 14, lineHeight: 21 },
   userText: { color: '#fff' },
   aiText: { color: '#1e293b' },
+  chatImage: { width: 220, height: 150, borderRadius: 10, marginTop: 8 },
   typingRow: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 16, paddingVertical: 8 },
   typingText: { color: '#94a3b8', fontSize: 13 },
   endBtn: {
