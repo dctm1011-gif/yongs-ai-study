@@ -19,6 +19,7 @@ import LoginScreen from './login';
 import { useAnnouncements } from '../hooks/useAnnouncements';
 import { AnnouncementModal } from '../components/AnnouncementModal';
 import { refreshStudyNotifications } from '../utils/studyNotifications';
+import { writeDailySummary } from '../utils/dailySummary';
 import * as Notifications from 'expo-notifications';
 import { AuthProvider, useAuth } from '../context/AuthContext';
 
@@ -78,6 +79,14 @@ function MainTabs() {
   // 앱 시작 시 오늘치 학습 알림 갱신 (하루 1회만 실행, 로그인 후 uid 확보 시 실행)
   useEffect(() => {
     if (user?.uid) refreshStudyNotifications(user.uid);
+  }, [user?.uid]);
+
+  // 앱 시작 및 1시간마다 전체 학습 요약을 공개 경로에 기록 (이메일 리포트용)
+  useEffect(() => {
+    if (!user?.uid) return;
+    writeDailySummary(user.uid).catch(() => {});
+    const interval = setInterval(() => writeDailySummary(user.uid!).catch(() => {}), 60 * 60 * 1000);
+    return () => clearInterval(interval);
   }, [user?.uid]);
 
   // Expo push token 취득 → Firebase pushTokens/{uid} 저장
