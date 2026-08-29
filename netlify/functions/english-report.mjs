@@ -8,186 +8,218 @@ const DB_URL = process.env.FIREBASE_DATABASE_URL;
 const GMAIL_USER = process.env.GMAIL_USER;
 const GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD;
 const REPORT_TO = process.env.REPORT_TO_EMAIL || 'dctm1011@naver.com';
+const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 
-function getKSTDateString() {
-  const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
+function getKSTDateString(offsetDays = 0) {
+  const kst = new Date(Date.now() + 9 * 60 * 60 * 1000 - offsetDays * 86400000);
   return kst.toISOString().split('T')[0];
 }
 
 async function fbGet(path) {
   const res = await fetch(`${DB_URL}/${path}.json`);
   if (!res.ok) return null;
-  return res.json();
+  const data = await res.json();
+  return data;
 }
 
-const check = v => v ? '✅' : '❌';
+async function callHaiku(prompt) {
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'x-api-key': ANTHROPIC_API_KEY,
+      'anthropic-version': '2023-06-01',
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 1500,
+      messages: [{ role: 'user', content: prompt }],
+    }),
+  });
+  const data = await res.json();
+  return data.content?.[0]?.text ?? '';
+}
 
-function statusRow(label, done) {
-  const color = done ? '#22c55e' : '#94a3b8';
-  const bg = done ? '#f0fdf4' : '#f8fafc';
-  return `<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 14px;background:${bg};border-radius:8px;margin-bottom:6px;">
-    <span style="font-size:14px;color:#334155;">${label}</span>
-    <span style="font-size:16px;color:${color};font-weight:700;">${check(done)}</span>
+function section(title, content) {
+  return `
+  <div style="padding:0 28px 22px;">
+    <h2 style="margin:0 0 12px;font-size:13px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">${title}</h2>
+    <div style="background:#f8fafc;border-radius:14px;padding:18px 20px;font-size:14px;line-height:1.8;color:#334155;">
+      ${content}
+    </div>
   </div>`;
 }
 
-function sectionBlock(title, rows) {
-  return `<div style="padding:0 28px 20px;">
-    <h2 style="margin:0 0 10px;font-size:13px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">${title}</h2>
-    ${rows}
+function statBox(label, value, color) {
+  return `<div style="flex:1;background:#f8fafc;border-radius:14px;padding:16px 10px;text-align:center;border-top:3px solid ${color};">
+    <div style="font-size:26px;font-weight:800;color:${color};">${value}</div>
+    <div style="font-size:11px;color:#94a3b8;margin-top:4px;">${label}</div>
   </div>`;
 }
 
-function buildHtml({ today, words, summary }) {
-  const c = summary?.completion ?? {};
-  const eng = summary?.english ?? null;
+export default async () => {
+  try {
+    const today = getKSTDateString();
 
-  // 영어 퀴즈 점수
-  const correct = eng?.correct ?? 0;
-  const total = eng?.total ?? 0;
-  const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
-  const scoreColor = pct >= 80 ? '#22c55e' : pct >= 60 ? '#f59e0b' : '#ef4444';
-  const gradeLabel = pct === 100 ? '완벽 🏆' : pct >= 80 ? '우수 👍' : pct >= 60 ? '보통 📈' : '분발 💪';
+    // 지난 30일 데이터 수집
+    const dates = Array.from({ length: 30 }, (_, i) => getKSTDateString(i));
+    const [summaries, wordSets] = await Promise.all([
+      Promise.all(dates.map(d => fbGet(`dailySummary/${d}`))),
+      Promise.all(dates.map(d => fbGet(`english/words/${d}`))),
+    ]);
 
-  // 오늘 전체 완료 항목 수
-  const allKeys = [
-    'english','english_crossword','english_review','english_scramble',
-    'english_sentence','english_word_match','english_news_reading','english_news_listening',
-    'reading','sajaseongeo','sangshik','korean_ox',
-    'investment',
-    'toefl_reading','toefl_listening','toefl_writing','toefl_speaking',
-  ];
-  const doneCount = allKeys.filter(k => c[k]).length;
-  const totalTasks = allKeys.length;
+    // 날짜별 데이터 정리
+    const history = dates.map((date, i) => ({
+      date,
+      summary: summaries[i],
+      words: wordSets[i]?.words ?? [],
+    })).filter(d => d.summary || d.words.length > 0);
 
-  // 틀린 단어
-  const wrongItems = (eng?.quizDetails ?? [])
-    .filter(q => !q.correct_answer)
-    .map(q => {
-      const w = words?.find(w => w.word === q.word);
-      return { word: q.word || '?', meaning: w?.meaning_ko || '', selected: q.selectedOption || '' };
+    const todayData = history[0];
+    const pool = todayData?.summary?.english?.pool ?? { active: 0, graduated: 0 };
+
+    // 통계 집계
+    const activeDays = history.filter(d => d.summary).length;
+    const quizDays = history.filter(d => d.summary?.english?.total > 0);
+    const avgScore = quizDays.length > 0
+      ? Math.round(quizDays.reduce((s, d) => s + (d.summary.english.correct / d.summary.english.total) * 100, 0) / quizDays.length)
+      : 0;
+    const totalWords = new Set(
+      history.flatMap(d => d.words.map(w => w.word))
+    ).size;
+
+    // 자주 틀린 단어 수집
+    const wrongCounts = {};
+    history.forEach(d => {
+      (d.summary?.english?.quizDetails ?? [])
+        .filter(q => !q.correct_answer)
+        .forEach(q => { wrongCounts[q.word] = (wrongCounts[q.word] ?? 0) + 1; });
     });
+    const topWrong = Object.entries(wrongCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5)
+      .map(([w, n]) => `${w}(${n}회)`);
 
-  const wrongRows = wrongItems.length > 0
-    ? wrongItems.map(w => `
-    <tr>
-      <td style="padding:8px 12px;border-bottom:1px solid #fff1f2;font-weight:600;color:#dc2626;">❌ ${w.word}</td>
-      <td style="padding:8px 12px;border-bottom:1px solid #fff1f2;color:#475569;">${w.meaning}</td>
-      <td style="padding:8px 12px;border-bottom:1px solid #fff1f2;color:#94a3b8;font-size:12px;">선택: ${w.selected}</td>
-    </tr>`).join('')
-    : `<tr><td colspan="3" style="padding:12px;text-align:center;color:#22c55e;font-weight:600;">모두 정답! 🎉</td></tr>`;
+    // 활동별 완료율
+    const activityKeys = {
+      'english': '영어 퀴즈', 'english_review': '복습 리뷰',
+      'english_crossword': '크로스워드', 'english_scramble': '스크램블',
+      'reading': '한국어 독해', 'sajaseongeo': '사자성어',
+      'sangshik': '상식', 'investment': '투자 칼럼',
+      'toefl_reading': 'TOEFL', 'english_news_reading': 'BBC 뉴스',
+    };
+    const activityRates = Object.entries(activityKeys).map(([key, label]) => {
+      const done = history.filter(d => d.summary?.completion?.[key]).length;
+      const rate = activeDays > 0 ? Math.round((done / Math.max(activeDays, 1)) * 100) : 0;
+      return { key, label, done, rate };
+    }).sort((a, b) => b.rate - a.rate);
 
-  const wordRows = (words || []).map(w => `
-    <tr>
-      <td style="padding:8px 12px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#1e293b;">${w.emoji || '📖'} ${w.word}</td>
-      <td style="padding:8px 12px;border-bottom:1px solid #f1f5f9;color:#64748b;font-size:13px;">${w.part_of_speech || ''}</td>
-      <td style="padding:8px 12px;border-bottom:1px solid #f1f5f9;color:#334155;">${w.meaning_ko || ''}</td>
-    </tr>`).join('');
+    // 오늘 배운 단어
+    const todayWords = todayData?.words ?? [];
 
-  // 복습풀
-  const pool = eng?.pool ?? { active: 0, graduated: 0 };
+    // Haiku에게 분석 요청
+    const dataForAI = {
+      period: `최근 30일 (${dates[dates.length - 1]} ~ ${today})`,
+      activeDays,
+      avgQuizScore: `${avgScore}%`,
+      totalUniqueWords: totalWords,
+      reviewPool: `복습중 ${pool.active}개 / 졸업 ${pool.graduated}개`,
+      topWrongWords: topWrong.join(', ') || '없음',
+      activityRates: activityRates.map(a => `${a.label}: ${a.rate}%`).join(', '),
+      todayScore: todayData?.summary?.english
+        ? `${todayData.summary.english.correct}/${todayData.summary.english.total}`
+        : '미완료',
+      todayCompleted: Object.keys(todayData?.summary?.completion ?? {}).filter(k => todayData.summary.completion[k]).length,
+    };
 
-  const koreanOxScore = typeof c['korean_ox'] === 'number' ? `${c['korean_ox']}점` : null;
+    const aiPrompt = `당신은 학습 코치입니다. 아래는 YongStudy 앱 사용자의 최근 학습 데이터입니다.
 
-  return `<!DOCTYPE html>
+${JSON.stringify(dataForAI, null, 2)}
+
+다음 4가지를 각각 2-4문장으로 한국어로 작성해주세요. HTML 태그 없이 순수 텍스트로만, 각 섹션은 "---"로 구분:
+
+1. 📊 이번 달 총평: 전반적인 학습 성과와 특징
+2. 💪 잘하고 있는 점: 구체적인 강점 (데이터 기반)
+3. ⚠️ 개선이 필요한 점: 약점과 구체적 이유
+4. 🎯 이번 주 실천 과제: 3가지 구체적 행동 제안
+
+단, 칭찬과 비판을 솔직하게 섞어서, 데이터에 없는 내용은 추측하지 말고 있는 데이터만으로 분석해주세요.`;
+
+    const aiText = await callHaiku(aiPrompt);
+    const [totalReview, strength, weakness, action] = aiText.split('---').map(s => s.trim());
+
+    // 활동 완료율 바 차트
+    const activityBars = activityRates.map(a => {
+      const color = a.rate >= 70 ? '#22c55e' : a.rate >= 40 ? '#f59e0b' : '#ef4444';
+      return `<div style="margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+          <span style="font-size:13px;color:#475569;">${a.label}</span>
+          <span style="font-size:13px;font-weight:600;color:${color};">${a.rate}%</span>
+        </div>
+        <div style="background:#e2e8f0;border-radius:99px;height:7px;overflow:hidden;">
+          <div style="width:${a.rate}%;height:100%;background:${color};border-radius:99px;"></div>
+        </div>
+      </div>`;
+    }).join('');
+
+    // 틀린 단어 태그
+    const wrongTags = topWrong.length > 0
+      ? topWrong.map(w => `<span style="display:inline-block;background:#fee2e2;color:#dc2626;border-radius:99px;padding:4px 12px;font-size:13px;font-weight:600;margin:3px;">${w}</span>`).join('')
+      : '<span style="color:#94a3b8;font-size:13px;">데이터 누적 중...</span>';
+
+    // 오늘 단어 목록
+    const wordRows = todayWords.map(w =>
+      `<tr><td style="padding:8px 12px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#1e293b;">${w.emoji || '📖'} ${w.word}</td><td style="padding:8px 12px;border-bottom:1px solid #f1f5f9;color:#64748b;font-size:12px;">${w.part_of_speech || ''}</td><td style="padding:8px 12px;border-bottom:1px solid #f1f5f9;color:#334155;font-size:13px;">${w.meaning_ko || ''}</td></tr>`
+    ).join('');
+
+    const html = `<!DOCTYPE html>
 <html lang="ko">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
 <body style="margin:0;padding:20px 0;background:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
-<div style="max-width:580px;margin:0 auto;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 4px 32px rgba(0,0,0,.10);">
+<div style="max-width:600px;margin:0 auto;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 4px 32px rgba(0,0,0,.10);">
 
   <!-- 헤더 -->
   <div style="background:linear-gradient(135deg,#6366f1,#8b5cf6);padding:32px 28px 28px;">
     <p style="margin:0 0 6px;color:rgba(255,255,255,.7);font-size:13px;">📅 ${today} · 매일 22:00 KST</p>
-    <h1 style="margin:0 0 8px;color:#fff;font-size:26px;font-weight:800;">YongStudy 일간 리포트</h1>
-    <div style="background:rgba(255,255,255,.15);border-radius:12px;padding:12px 16px;display:inline-block;">
-      <span style="color:#fff;font-size:20px;font-weight:800;">${doneCount} / ${totalTasks}</span>
-      <span style="color:rgba(255,255,255,.8);font-size:13px;margin-left:6px;">항목 완료</span>
+    <h1 style="margin:0 0 4px;color:#fff;font-size:26px;font-weight:800;">YongStudy 학습 리포트</h1>
+    <p style="margin:0;color:rgba(255,255,255,.75);font-size:13px;">최근 30일 분석 · Claude Haiku 제공</p>
+  </div>
+
+  <!-- 핵심 지표 -->
+  <div style="padding:24px 28px 0;">
+    <h2 style="margin:0 0 12px;font-size:13px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">📊 30일 핵심 지표</h2>
+    <div style="display:flex;gap:10px;">
+      ${statBox('활동일', `${activeDays}일`, '#6366f1')}
+      ${statBox('평균 퀴즈', `${avgScore}%`, avgScore >= 80 ? '#22c55e' : avgScore >= 60 ? '#f59e0b' : '#ef4444')}
+      ${statBox('누적 단어', `${totalWords}개`, '#3b82f6')}
+      ${statBox('복습 졸업', `${pool.graduated}개`, '#22c55e')}
     </div>
   </div>
 
-  <!-- 영어 퀴즈 점수 -->
-  ${eng ? `
-  <div style="padding:24px 28px 0;">
-    <h2 style="margin:0 0 14px;font-size:13px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">🎯 영어 퀴즈</h2>
-    <div style="display:flex;align-items:center;gap:20px;background:#f8fafc;border-radius:14px;padding:16px 20px;">
-      <div style="text-align:center;min-width:72px;">
-        <div style="font-size:44px;font-weight:900;color:${scoreColor};line-height:1;">${pct}%</div>
-        <div style="font-size:12px;color:#94a3b8;margin-top:3px;">${gradeLabel}</div>
-      </div>
-      <div style="flex:1;">
-        <div style="background:#e2e8f0;border-radius:99px;height:10px;overflow:hidden;">
-          <div style="width:${pct}%;height:100%;background:${scoreColor};border-radius:99px;"></div>
-        </div>
-        <p style="margin:7px 0 0;font-size:13px;color:#64748b;">${correct}개 정답 / 전체 ${total}개</p>
-      </div>
-    </div>
-  </div>` : ''}
+  <!-- AI 총평 -->
+  ${section('📊 이번 달 총평', (totalReview || '데이터 누적 중...').replace(/\n/g, '<br>'))}
+  ${section('💪 잘하고 있는 점', (strength || '-').replace(/\n/g, '<br>'))}
+  ${section('⚠️ 개선이 필요한 점', (weakness || '-').replace(/\n/g, '<br>'))}
+  ${section('🎯 이번 주 실천 과제', (action || '-').replace(/\n/g, '<br>'))}
 
-  <!-- 틀린 단어 -->
-  ${eng && wrongItems.length > 0 ? `
-  <div style="padding:16px 28px 0;">
-    <h2 style="margin:0 0 10px;font-size:13px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">❌ 틀린 단어</h2>
-    <div style="background:#fff5f5;border-radius:12px;overflow:hidden;">
-      <table style="width:100%;border-collapse:collapse;">${wrongRows}</table>
-    </div>
-  </div>` : ''}
+  <!-- 활동별 완료율 -->
+  <div style="padding:0 28px 22px;">
+    <h2 style="margin:0 0 14px;font-size:13px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">📈 활동별 완료율 (30일)</h2>
+    ${activityBars}
+  </div>
 
-  <!-- 영어 활동 -->
-  ${sectionBlock('📚 영어 학습', [
-    statusRow('오늘 단어 퀴즈', !!c['english']),
-    statusRow('복습 리뷰', !!c['english_review']),
-    statusRow('크로스워드 게임', !!c['english_crossword']),
-    statusRow('스크램블 게임', !!c['english_scramble']),
-    statusRow('문장 퀴즈', !!c['english_sentence']),
-    statusRow('단어 매칭 게임', !!c['english_word_match']),
-    statusRow('BBC 뉴스 읽기', !!c['english_news_reading']),
-    statusRow('BBC 뉴스 듣기', !!c['english_news_listening']),
-  ].join(''))}
-
-  <!-- 한국어 -->
-  ${sectionBlock('🇰🇷 한국어', [
-    statusRow('독해', !!c['reading']),
-    statusRow('사자성어', !!c['sajaseongeo']),
-    statusRow('상식', !!c['sangshik']),
-    koreanOxScore
-      ? statusRow(`OX 퀴즈 (${koreanOxScore})`, true)
-      : statusRow('OX 퀴즈', false),
-  ].join(''))}
-
-  <!-- 투자/부동산 -->
-  ${sectionBlock('📈 투자 · 부동산', statusRow('투자 칼럼', !!c['investment']))}
-
-  <!-- TOEFL -->
-  ${sectionBlock('🎓 TOEFL', [
-    statusRow('Reading', !!c['toefl_reading']),
-    statusRow('Listening', !!c['toefl_listening']),
-    statusRow('Writing', !!c['toefl_writing']),
-    statusRow('Speaking', !!c['toefl_speaking']),
-  ].join(''))}
-
-  <!-- 복습풀 -->
-  <div style="padding:0 28px 24px;">
-    <h2 style="margin:0 0 10px;font-size:13px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">📦 복습풀</h2>
-    <div style="display:flex;gap:10px;">
-      <div style="flex:1;background:#eff6ff;border-radius:14px;padding:16px 10px;text-align:center;">
-        <div style="font-size:28px;font-weight:800;color:#3b82f6;">${pool.active}</div>
-        <div style="font-size:12px;color:#64748b;margin-top:3px;">복습 중</div>
-      </div>
-      <div style="flex:1;background:#f0fdf4;border-radius:14px;padding:16px 10px;text-align:center;">
-        <div style="font-size:28px;font-weight:800;color:#22c55e;">${pool.graduated}</div>
-        <div style="font-size:12px;color:#64748b;margin-top:3px;">졸업</div>
-      </div>
-      <div style="flex:1;background:#f8fafc;border-radius:14px;padding:16px 10px;text-align:center;">
-        <div style="font-size:28px;font-weight:800;color:#94a3b8;">${pool.active + pool.graduated}</div>
-        <div style="font-size:12px;color:#64748b;margin-top:3px;">누적 합계</div>
-      </div>
+  <!-- 자주 틀린 단어 -->
+  <div style="padding:0 28px 22px;">
+    <h2 style="margin:0 0 12px;font-size:13px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">❌ 자주 틀리는 단어</h2>
+    <div style="background:#fff5f5;border-radius:14px;padding:14px 16px;">
+      ${wrongTags}
     </div>
   </div>
 
   <!-- 오늘 단어 -->
-  ${words?.length ? `
+  ${todayWords.length ? `
   <div style="padding:0 28px 28px;">
-    <h2 style="margin:0 0 10px;font-size:13px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">📖 오늘 배운 단어</h2>
+    <h2 style="margin:0 0 12px;font-size:13px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">📖 오늘 배운 단어</h2>
     <div style="border-radius:12px;overflow:hidden;border:1px solid #f1f5f9;">
       <table style="width:100%;border-collapse:collapse;">${wordRows}</table>
     </div>
@@ -195,32 +227,12 @@ function buildHtml({ today, words, summary }) {
 
   <!-- 푸터 -->
   <div style="background:#f8fafc;padding:16px 28px;text-align:center;border-top:1px solid #e2e8f0;">
-    <p style="margin:0;font-size:12px;color:#94a3b8;">YongStudy · 자동 발송 · 매일 22:00 KST</p>
+    <p style="margin:0;font-size:12px;color:#94a3b8;">YongStudy · AI 리포트 · 매일 22:00 KST</p>
   </div>
 
 </div>
 </body>
 </html>`;
-}
-
-export default async () => {
-  try {
-    const today = getKSTDateString();
-
-    const [todayData, summary] = await Promise.all([
-      fbGet(`english/words/${today}`),
-      fbGet(`dailySummary/${today}`),
-    ]);
-
-    const words = todayData?.words || [];
-    const eng = summary?.english;
-    const correct = eng?.correct ?? 0;
-    const total = eng?.total ?? 0;
-    const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
-    const c = summary?.completion ?? {};
-    const doneCount = Object.keys(c).filter(k => c[k]).length;
-
-    const html = buildHtml({ today, words, summary });
 
     const transport = nodemailer.createTransport({
       service: 'gmail',
@@ -230,13 +242,13 @@ export default async () => {
     await transport.sendMail({
       from: `"YongStudy 리포트" <${GMAIL_USER}>`,
       to: REPORT_TO,
-      subject: `📚 [${today}] YongStudy 리포트 — ${doneCount}개 완료 · 퀴즈 ${correct}/${total} (${pct}%)`,
+      subject: `📚 [${today}] YongStudy AI 리포트 — ${activeDays}일 활동 · 평균 ${avgScore}%`,
       html,
     });
 
-    console.log(`✅ 리포트 발송 완료: ${today} done=${doneCount} quiz=${correct}/${total}`);
+    console.log(`✅ AI 리포트 발송: ${today} activeDays=${activeDays} avgScore=${avgScore}%`);
     return new Response(
-      JSON.stringify({ success: true, date: today, done: doneCount, score: `${correct}/${total}` }),
+      JSON.stringify({ success: true, date: today, activeDays, avgScore }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
   } catch (err) {
