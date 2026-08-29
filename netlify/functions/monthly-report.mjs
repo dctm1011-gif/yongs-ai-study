@@ -175,25 +175,37 @@ export async function generateMonthlyReport(year, month) {
     topWrongWords: topWrong.slice(0, 5).map(([w, n]) => `${w}(${n}회)`).join(', ') || '없음',
     bestActivities: activityStats.slice(0, 3).map(a => `${a.label} ${a.rate}%`).join(', '),
     worstActivities: activityStats.slice(-3).map(a => `${a.label} ${a.rate}%`).join(', '),
+    appCoverage: {
+      영어_수용적: 'BBC뉴스, TOEFL 리딩/리스닝, 어휘퀴즈, 크로스워드, 스크램블',
+      영어_생산적: '스피킹 미지원 (앱에 없음), 라이팅은 TOEFL만',
+      한국어: '독해, 사자성어, 상식, OX퀴즈',
+      투자부동산: '칼럼 읽기',
+    },
   };
 
   const aiPrompt = `당신은 학습 데이터 분석 전문가입니다. 아래는 YongStudy 앱 사용자의 ${monthLabel} 학습 데이터입니다.
 
 ${JSON.stringify(dataForAI, null, 2)}
 
-다음 5가지를 한국어로 작성해주세요. HTML 없이 순수 텍스트, 각 섹션은 "---"로 구분:
+다음 6가지를 한국어로 작성해주세요. HTML 없이 순수 텍스트, 각 섹션은 "---"로 구분:
 
 1. 🗓️ 월간 총평 (3-4문장): 이달 학습의 전반적 특징과 성과 수준 평가
 2. 🏆 이달의 성취 (2-3문장): 데이터에서 보이는 구체적 성과
 3. 📉 이달의 약점 (2-3문장): 개선이 필요한 부분과 원인 분석
-4. 🔁 반복 실수 패턴 (2-3문장): 자주 틀리는 단어나 학습 패턴의 특징
-5. 📅 다음 달 목표 (번호 매긴 3가지): 구체적이고 측정 가능한 목표
+4. 🔧 영역별 보강 포인트 (각 영역 1-2문장씩):
+   - 영어 어휘/독해:
+   - 영어 스피킹/라이팅: (앱 미지원 영역이므로 AI 대화 연습 등 외부 방법 반드시 제안)
+   - 한국어:
+   - 투자/부동산:
+   - TOEFL:
+5. 🔁 반복 실수 패턴 (2문장): 자주 틀리는 단어 패턴 특징
+6. 📅 다음 달 목표 (번호 매긴 3가지): 측정 가능한 목표
 
-솔직하고 구체적으로, 데이터에 근거해서만 작성해주세요.`;
+솔직하고 구체적으로, 데이터 근거 기반으로 작성해주세요.`;
 
   const aiText = await callHaiku(aiPrompt);
   const parts = aiText.split('---').map(s => s.trim());
-  const [overview, achievement, weakness, pattern, nextGoal] = parts;
+  const [overview, achievement, weakness, reinforce, pattern, nextGoal] = parts;
 
   // HTML 생성
   const activityBars = activityStats.map(a => {
@@ -224,7 +236,7 @@ ${JSON.stringify(dataForAI, null, 2)}
 
   return {
     monthLabel, totalDays, activeDays, avgScore, totalWords, pool, maxStreak,
-    overview, achievement, weakness, pattern, nextGoal,
+    overview, achievement, weakness, reinforce, pattern, nextGoal,
     activityBars, wrongTags, heatmapCells, weeklyAvg,
   };
 }
@@ -311,6 +323,7 @@ function buildHtml(r, yearMonth) {
   ${section('🗓️ 월간 총평', (r.overview || '데이터 누적 중...').replace(/\n/g, '<br>'))}
   ${section('🏆 이달의 성취', (r.achievement || '-').replace(/\n/g, '<br>'))}
   ${section('📉 이달의 약점', (r.weakness || '-').replace(/\n/g, '<br>'))}
+  ${section('🔧 영역별 보강 포인트', (r.reinforce || '-').replace(/\n/g, '<br>'))}
   ${section('🔁 반복 실수 패턴', (r.pattern || '-').replace(/\n/g, '<br>'))}
   ${section('📅 다음 달 목표', (r.nextGoal || '-').replace(/\n/g, '<br>'))}
 
