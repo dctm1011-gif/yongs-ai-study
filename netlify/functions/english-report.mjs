@@ -130,23 +130,35 @@ export default async () => {
         ? `${todayData.summary.english.correct}/${todayData.summary.english.total}`
         : '미완료',
       todayCompleted: Object.keys(todayData?.summary?.completion ?? {}).filter(k => todayData.summary.completion[k]).length,
+      appCoverage: {
+        영어_수용적: 'BBC뉴스읽기/듣기, TOEFL 리딩/리스닝, 어휘퀴즈, 크로스워드, 스크램블',
+        영어_생산적: '스피킹 없음 (앱 미지원), 라이팅 TOEFL만',
+        한국어: '독해, 사자성어, 상식, OX퀴즈',
+        투자부동산: '칼럼 읽기',
+      },
     };
 
     const aiPrompt = `당신은 학습 코치입니다. 아래는 YongStudy 앱 사용자의 최근 학습 데이터입니다.
 
 ${JSON.stringify(dataForAI, null, 2)}
 
-다음 4가지를 각각 2-4문장으로 한국어로 작성해주세요. HTML 태그 없이 순수 텍스트로만, 각 섹션은 "---"로 구분:
+다음 5가지를 한국어로 작성해주세요. HTML 없이 순수 텍스트, 각 섹션은 "---"로 구분:
 
-1. 📊 이번 달 총평: 전반적인 학습 성과와 특징
-2. 💪 잘하고 있는 점: 구체적인 강점 (데이터 기반)
-3. ⚠️ 개선이 필요한 점: 약점과 구체적 이유
-4. 🎯 이번 주 실천 과제: 3가지 구체적 행동 제안
+1. 📊 총평 (2-3문장): 전반적인 학습 성과
+2. 💪 잘하고 있는 점 (2문장): 데이터 기반 강점
+3. ⚠️ 개선이 필요한 점 (2문장): 약점과 이유
+4. 🔧 영역별 보강 포인트 (각 영역 1문장씩):
+   - 영어 어휘/독해:
+   - 영어 스피킹/라이팅: (앱에 스피킹 기능이 없는 점 반드시 언급, AI 대화 연습 권고)
+   - 한국어:
+   - 투자/부동산:
+   - TOEFL:
+5. 🎯 이번 주 실천 과제 (번호 매긴 3가지): 구체적 행동
 
-단, 칭찬과 비판을 솔직하게 섞어서, 데이터에 없는 내용은 추측하지 말고 있는 데이터만으로 분석해주세요.`;
+솔직하고 데이터에 근거해서, 스피킹처럼 앱에 없는 영역은 외부 방법을 제안해주세요.`;
 
     const aiText = await callHaiku(aiPrompt);
-    const [totalReview, strength, weakness, action] = aiText.split('---').map(s => s.trim());
+    const [totalReview, strength, weakness, reinforce, action] = aiText.split('---').map(s => s.trim());
 
     // 활동 완료율 바 차트
     const activityBars = activityRates.map(a => {
@@ -197,9 +209,10 @@ ${JSON.stringify(dataForAI, null, 2)}
   </div>
 
   <!-- AI 총평 -->
-  ${section('📊 이번 달 총평', (totalReview || '데이터 누적 중...').replace(/\n/g, '<br>'))}
+  ${section('📊 총평', (totalReview || '데이터 누적 중...').replace(/\n/g, '<br>'))}
   ${section('💪 잘하고 있는 점', (strength || '-').replace(/\n/g, '<br>'))}
   ${section('⚠️ 개선이 필요한 점', (weakness || '-').replace(/\n/g, '<br>'))}
+  ${section('🔧 영역별 보강 포인트', (reinforce || '-').replace(/\n/g, '<br>'))}
   ${section('🎯 이번 주 실천 과제', (action || '-').replace(/\n/g, '<br>'))}
 
   <!-- 활동별 완료율 -->
