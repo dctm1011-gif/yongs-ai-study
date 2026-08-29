@@ -1,120 +1,181 @@
 {
-  "date": "2026-08-29",
+  "date": "2026-08-30",
   "reading": {
-    "title": "Bioluminescence in Deep-Sea Organisms",
-    "passage": "Bioluminescence is the production of light by living organisms through chemical reactions. In the deep ocean, where sunlight cannot penetrate, many creatures have evolved this remarkable ability. Fish, jellyfish, and squid use bioluminescent light for various purposes, including hunting prey, attracting mates, and communicating with other members of their species. The light-producing organs, called photophores, contain specialized cells that generate light through the oxidation of luciferin. Scientists estimate that approximately 90% of deep-sea creatures produce or display bioluminescence, making it one of the most common adaptations in the ocean.",
+    "title": "Linguistic Relativity and Cognitive Processing",
+    "passage": "The Sapir-Whorf hypothesis, a foundational theory in linguistics, posits that language fundamentally shapes the way speakers perceive and categorize the world. This hypothesis emerged in the early 20th century through the work of linguists Edward Sapir and Benjamin Lee Whorf, who examined indigenous languages and observed striking differences in how various cultures conceptualize reality. For instance, some languages possess multiple terms for different types of snow, enabling speakers to make finer distinctions in their environment, whereas English speakers rely on a single word. Recent neuroscientific studies have provided empirical validation for aspects of this theory, demonstrating that bilingual individuals activate different cognitive pathways when processing information in distinct languages. However, contemporary linguists debate the extent to which language constrains versus influences thought. While strong determinism—the notion that language completely dictates cognition—has been largely refuted, the weaker interpretation suggests that linguistic structures subtly guide attention and facilitate certain conceptual patterns. This nuanced understanding acknowledges both the power of language and the remarkable cognitive flexibility of human beings.",
+    "vocabulary": [
+      {
+        "word": "posits",
+        "meaning_ko": "주장하다, 제안하다"
+      },
+      {
+        "word": "indigenous",
+        "meaning_ko": "토착의, 원주민의"
+      },
+      {
+        "word": "empirical",
+        "meaning_ko": "경험적인, 실험에 근거한"
+      },
+      {
+        "word": "determinism",
+        "meaning_ko": "결정론"
+      },
+      {
+        "word": "refuted",
+        "meaning_ko": "반박하다, 부정하다"
+      },
+      {
+        "word": "cognitive flexibility",
+        "meaning_ko": "인지적 유연성"
+      },
+      {
+        "word": "facilitate",
+        "meaning_ko": "촉진하다, 쉽게 하다"
+      }
+    ],
     "questions": [
       {
-        "q": "According to the passage, what is the primary function of bioluminescence in deep-sea organisms?",
+        "q": "According to the passage, what did Sapir and Whorf observe when examining indigenous languages?",
         "options": [
-          "To regulate body temperature",
-          "To hunt prey, attract mates, and communicate",
-          "To synthesize vitamin D",
-          "To navigate through water currents"
+          "Indigenous languages are simpler than modern languages",
+          "Different cultures conceptualize reality in strikingly different ways",
+          "All languages share identical vocabulary for natural phenomena",
+          "Indigenous speakers have superior cognitive abilities"
         ],
         "answer": 1,
-        "explanation": "지문에서 생물이 빛을 사냥, 짝짓기 유인, 의사소통 등의 목적으로 사용한다고 명시되어 있습니다."
+        "explanation": "Sapir와 Whorf는 토착 언어를 조사하면서 다양한 문화가 현실을 개념화하는 방식에서 상당한 차이를 관찰했습니다. 문장 '...who examined indigenous languages and observed striking differences in how various cultures conceptualize reality'에서 직접 언급되어 있습니다."
       },
       {
-        "q": "What does the term 'photophores' refer to?",
+        "q": "What can be inferred from the passage about bilingual individuals?",
         "options": [
-          "A type of deep-sea fish",
-          "The chemical substance that produces light",
-          "Light-producing organs in organisms",
-          "The deepest part of the ocean"
+          "They have lower cognitive abilities than monolingual speakers",
+          "They process information differently depending on which language they use",
+          "They cannot distinguish between languages",
+          "They speak all languages with equal proficiency"
         ],
-        "answer": 2,
-        "explanation": "지문에서 photophores는 '빛을 생성하는 기관'으로 정의되어 있습니다."
+        "answer": 1,
+        "explanation": "문장 'bilingual individuals activate different cognitive pathways when processing information in distinct languages'에서 이중언어 사용자들이 각 언어마다 다른 인지 경로를 활성화한다고 명시되어 있으므로, 사용하는 언어에 따라 정보를 다르게 처리한다고 추론할 수 있습니다."
       },
       {
-        "q": "What percentage of deep-sea creatures are estimated to use bioluminescence?",
+        "q": "The word 'constrain' in paragraph 2 is closest in meaning to:",
         "options": [
-          "Approximately 50%",
-          "Approximately 70%",
-          "Approximately 90%",
-          "Approximately 100%"
+          "enhance and improve",
+          "limit or restrict",
+          "completely determine",
+          "ignore or overlook"
         ],
-        "answer": 2,
-        "explanation": "지문의 마지막 문장에서 심해 생물의 약 90%가 생물발광을 생성하거나 표시한다고 명시되어 있습니다."
+        "answer": 1,
+        "explanation": "'constrain'은 '제한하다' 또는 '제약을 주다'는 의미입니다. 문맥상 'language constrains versus influences thought'에서 언어가 사고를 '제한한다'는 뜻이므로 'limit or restrict'이 가장 가깝습니다."
+      },
+      {
+        "q": "Why does the author mention that some languages have multiple terms for snow?",
+        "options": [
+          "To demonstrate that English is less developed than other languages",
+          "To provide a concrete example of how language shapes perception and categorization",
+          "To explain why indigenous people are better adapted to cold climates",
+          "To support the theory that language completely dictates cognition"
+        ],
+        "answer": 1,
+        "explanation": "저자는 눈에 대한 여러 용어를 가진 언어의 예시를 통해 Sapir-Whorf 가설을 설명하고 있습니다. 이 예시는 언어가 어떻게 화자들이 세상을 지각하고 분류하는 방식을 형성하는지 보여주는 구체적인 증거입니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Remote work is more productive than working in an office environment'? Support your answer with specific examples.",
-    "structure": {
-      "intro": "명확한 입장 제시: 동의하는지 반대하는지 명확히 표현하고, 간단한 이유 2-3가지를 미리 언급합니다.",
-      "body1": "첫 번째 주장: 원격근무의 장점 (집중력, 통근시간 절약 등) 또는 사무실 근무의 장점 (협업, 직접 커뮤니케이션 등)을 구체적인 예시와 함께 설명합니다.",
-      "body2": "두 번째 주장: 다른 관점의 장점을 또 다른 구체적 예시와 함께 제시합니다. 첫 번째 주장의 반대편 의견도 인정하되, 왜 본인의 의견이 더 타당한지 설명합니다.",
-      "conclusion": "서론에서 제시한 입장을 다시 강조하고, 두 가지 주요 근거를 요약한 후 마무리합니다."
-    },
-    "useful_phrases": [
-      "In my opinion,",
-      "I strongly agree/disagree with",
-      "To begin with,",
-      "Furthermore,",
-      "In addition,",
-      "On the other hand,",
-      "However,",
-      "For example,",
-      "This demonstrates that",
-      "In conclusion,",
-      "Therefore,",
-      "It is clear that"
+    "sentences": [
+      {
+        "original": "The Sapir-Whorf hypothesis posits that language fundamentally shapes the way speakers perceive and categorize the world.",
+        "paraphrase": "Language may play a crucial role in determining how individuals in different speech communities organize and interpret their surrounding environment, according to the Sapir-Whorf hypothesis.",
+        "tip": "주동사 변경 및 명사구→동사구 전환. 'posits'를 'may play a crucial role in determining'으로 변경하여 수동적 표현에서 능동적이고 더 학술적인 표현으로 전환"
+      },
+      {
+        "original": "Some languages possess multiple terms for different types of snow, enabling speakers to make finer distinctions in their environment.",
+        "paraphrase": "The capacity to differentiate various snow conditions is enhanced in certain languages due to the existence of numerous specialized vocabulary items, which allows speakers greater precision in environmental observation.",
+        "tip": "동명사→명사구 치환 및 인과관계 구조 재구성. 'enabling'을 'enhanced/allows'로 변경하여 더 공식적인 학술 표현으로 수정"
+      },
+      {
+        "original": "Recent neuroscientific studies have provided empirical validation for aspects of this theory, demonstrating that bilingual individuals activate different cognitive pathways when processing information in distinct languages.",
+        "paraphrase": "Evidence from contemporary neuroscience supports certain dimensions of the hypothesis, as research reveals that people fluent in multiple languages engage distinct mental processes based on which language they are using to process information.",
+        "tip": "복잡한 분사구→관계절 변환. 'demonstrating that'을 'as research reveals that'으로 변경하여 명확한 인과 관계 표시. 학술성 강화"
+      }
     ]
   },
   "speaking": {
-    "prompt": "Some people believe that artificial intelligence will improve education. Others think it will replace human teachers. Which perspective do you agree with more? Explain your opinion.",
-    "useful_expressions": [
-      "In my opinion, I believe that",
-      "One reason is that",
-      "Another important point is",
-      "For example,",
-      "This shows that",
-      "I think the most significant advantage is",
-      "However, some people might argue that"
-    ],
-    "sample_points": [
-      "AI는 개인맞춤형 학습을 제공하고 학생 진도에 맞춰 속도를 조절할 수 있다는 점",
-      "그러나 인간 교사는 감정적 지원, 도덕적 교육, 창의적 사고 발달 등을 제공하며 AI는 이를 완전히 대체할 수 없다는 점"
+    "prompt": "Some people prefer reading books to gain knowledge and entertainment. Others prefer watching movies for the same purpose. Which do you prefer and why? Include specific reasons and details.",
+    "model_sentences": [
+      "I personally prefer reading books over watching movies because books offer a much deeper level of engagement and allow me to use my imagination.",
+      "When I read, I can control the pace and spend as much time as I want on complex ideas or beautiful descriptions, whereas movies are restricted to a fixed duration.",
+      "For example, when I read a novel like 'The Great Gatsby,' I can form my own mental images of the characters and settings, which makes the experience more personal and memorable.",
+      "Additionally, books often contain more detailed information and nuanced perspectives compared to movies, which sometimes oversimplify the original story.",
+      "Overall, while movies are entertaining, books provide a richer intellectual experience that better develops my critical thinking skills."
     ]
   },
   "listening": {
-    "title": "Campus Library Study Room Reservation",
+    "title": "Research Paper Topic Discussion with Advisor",
     "type": "conversation",
-    "script": "Student: Hi, I'd like to book a study room in the library for tomorrow afternoon. Librarian: Of course! We have several options available. How many hours do you need? Student: I'm thinking about three hours, probably from 2 PM to 5 PM. Librarian: Let me check our system. Yes, that time slot is available. How many people will be using the room? Student: Just me and my study partner, so two people. Librarian: Perfect. The rooms accommodate up to six people. I should mention that all study rooms are equipped with a whiteboard, projector, and computer access. However, food and drinks other than water are not permitted inside. Student: That's helpful to know. What's the cancellation policy? Librarian: You can cancel up to 24 hours before your reservation without any penalty. After that, you'll be charged a $5 cancellation fee. Student: Understood. Let's proceed with the reservation.",
+    "script": "Professor Chen: Good morning, Sarah. I reviewed your research proposal on syntactic variation across dialects. I have some thoughts about your preliminary outline. Student Sarah: Thank you, Professor Chen. I'm actually quite nervous about this project. It's my first major research endeavor. Professor Chen: Well, your topic is compelling, but I think you need to narrow the scope significantly. Examining all dialects of English is too ambitious. Student Sarah: I see. What would you suggest? Professor Chen: Consider focusing on just three major dialects—perhaps British, American, and Australian English. This would make your analysis more manageable and rigorous. Also, I noticed you mentioned collecting data through interviews. That's good, but you should also incorporate existing corpora to strengthen your findings. Student Sarah: That's really helpful advice. Should I start with the literature review immediately? Professor Chen: Yes, absolutely. Spend at least three weeks reviewing pertinent studies. This will help you contextualize your research within the existing scholarly framework. Then we'll meet again to refine your methodology before you begin data collection.",
+    "vocabulary": [
+      {
+        "word": "syntactic",
+        "meaning_ko": "문법 체계의, 통사론적인"
+      },
+      {
+        "word": "preliminary",
+        "meaning_ko": "예비적인, 초기의"
+      },
+      {
+        "word": "scope",
+        "meaning_ko": "범위, 규모"
+      },
+      {
+        "word": "ambitious",
+        "meaning_ko": "야심 있는, 광범위한"
+      },
+      {
+        "word": "corpora",
+        "meaning_ko": "말뭉치, 언어 자료 모음"
+      },
+      {
+        "word": "pertinent",
+        "meaning_ko": "관련 있는, 적절한"
+      },
+      {
+        "word": "contextualize",
+        "meaning_ko": "맥락 속에 놓다, 상황화하다"
+      }
+    ],
     "questions": [
       {
-        "q": "What time does the student want to reserve the study room?",
+        "q": "What is the main topic of the conversation?",
         "options": [
-          "1 PM to 4 PM",
-          "2 PM to 5 PM",
-          "3 PM to 6 PM",
-          "12 PM to 3 PM"
+          "How to write a literature review for a research paper",
+          "Discussing and refining Sarah's research proposal on dialect variations",
+          "Comparing British, American, and Australian English grammar",
+          "The challenges of conducting interviews for linguistic research"
         ],
         "answer": 1,
-        "explanation": "대화에서 학생이 '2시부터 5시까지, 3시간' 동안 예약하길 원한다고 명시되어 있습니다."
+        "explanation": "Professor Chen과 Sarah의 대화 전체는 Sarah의 방언 연구 제안서를 검토하고 개선하는 내용을 다루고 있습니다. 주제 좁히기, 데이터 수집 방법, 문헌 검토에 대한 조언이 중심입니다."
       },
       {
-        "q": "How many people will use the study room?",
+        "q": "What does Professor Chen suggest Sarah should do to improve her research project?",
         "options": [
-          "One person",
-          "Two people",
-          "Three people",
-          "Six people"
-        ],
-        "answer": 1,
-        "explanation": "학생이 '나와 공부 파트너, 2명'이 사용할 것이라고 말했습니다."
-      },
-      {
-        "q": "What items are NOT allowed in the study room?",
-        "options": [
-          "Whiteboards and projectors",
-          "Computers",
-          "Food and drinks except water",
-          "Books and notebooks"
+          "Expand her research to include more dialects from around the world",
+          "Stop conducting interviews and rely only on existing data",
+          "Narrow her focus to three specific dialects and incorporate existing language corpora",
+          "Begin data collection immediately without reviewing the literature"
         ],
         "answer": 2,
-        "explanation": "사서가 '물을 제외한 음식과 음료는 실내에서 허용되지 않는다'고 명확히 말했습니다."
+        "explanation": "Professor Chen은 Sarah에게 세 가지 주요 방언에만 집중하고, 면접 자료뿐만 아니라 기존 말뭉치(corpora)도 활용할 것을 제안합니다. 이는 분석을 더 엄밀하고 관리 가능하게 만들 것입니다."
+      },
+      {
+        "q": "Why does Professor Chen suggest using existing corpora in addition to interviews?",
+        "options": [
+          "Because interviews are unreliable and should be avoided",
+          "To strengthen the research findings and make the analysis more robust",
+          "Because most research papers only use corpora",
+          "To reduce the time Sarah needs to spend on the project"
+        ],
+        "answer": 1,
+        "explanation": "Professor Chen이 'you should also incorporate existing corpora to strengthen your findings'라고 명시적으로 말했습니다. 기존 말뭉치를 추가로 활용하면 연구 결과를 더 강화할 수 있다는 의미입니다."
       }
     ]
   }
