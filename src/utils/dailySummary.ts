@@ -17,6 +17,8 @@ const COMPLETION_KEYS = [
   'investment',
   // TOEFL
   'toefl_reading', 'toefl_listening', 'toefl_writing', 'toefl_speaking',
+  // AI 스피킹
+  'english_speaking',
 ];
 
 export async function writeDailySummary(uid: string): Promise<void> {

@@ -1,0 +1,300 @@
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet,
+  KeyboardAvoidingView, Platform, ActivityIndicator,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { getDatabase, ref, set as dbSet, get } from 'firebase/database';
+import { getFirebaseApp } from '../config/firebase';
+import { useAuth } from '../context/AuthContext';
+
+const CHAT_URL = 'https://illustrious-cuchufli-7c4e58.netlify.app/.netlify/functions/speaking-chat';
+const MIN_EXCHANGES = 5;
+
+const DAILY_TOPICS = [
+  'Your weekend plans',
+  'A memorable trip you\'ve taken',
+  'Your favorite food and cooking',
+  'A hobby you enjoy',
+  'A movie or TV show you recommend',
+  'Your daily routine',
+  'Technology you use most',
+  'A book that influenced you',
+  'Your dream job or career goals',
+  'Sports or exercise habits',
+  'A skill you want to learn',
+  'Your hometown or neighborhood',
+  'Social media habits',
+  'A challenge you\'ve overcome',
+  'Your favorite season and why',
+  'Plans for the future',
+  'A person who inspired you',
+  'Your shopping habits',
+  'Music you enjoy',
+  'Environmental issues you care about',
+  'Your study or work habits',
+  'A recent news story that interested you',
+  'Your favorite restaurant or café',
+  'A cultural difference you\'ve noticed',
+  'Your morning or evening routine',
+  'A gift that meant a lot to you',
+  'Your favorite way to relax',
+  'An achievement you\'re proud of',
+  'A place you want to visit',
+  'Your opinions on learning English',
+  'A lesson learned from a mistake',
+];
+
+function getKSTDateString(): string {
+  const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
+  return kst.toISOString().split('T')[0];
+}
+
+interface Message {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+}
+
+type ViewState = 'idle' | 'loading' | 'chatting' | 'ending' | 'done';
+
+export default function SpeakingScreen() {
+  const { user } = useAuth();
+  const [viewState, setViewState] = useState<ViewState>('idle');
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState('');
+  const [userMsgCount, setUserMsgCount] = useState(0);
+  const listRef = useRef<FlatList>(null);
+
+  const today = getKSTDateString();
+  const dayOfMonth = new Date(today).getDate();
+  const topic = DAILY_TOPICS[(dayOfMonth - 1) % DAILY_TOPICS.length];
+
+  useEffect(() => {
+    if (!user?.uid) return;
+    const db = getDatabase(getFirebaseApp());
+    get(ref(db, `users/${user.uid}/completion/english_speaking/${today}`))
+      .then(snap => { if (snap.exists() && snap.val()?.done) setViewState('done'); })
+      .catch(() => {});
+  }, [user?.uid]);
+
+  async function callChat(msgs: { role: string; content: string }[], isFeedbackRequest = false) {
+    const res = await fetch(CHAT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: msgs, topic, isFeedbackRequest }),
+    });
+    const data = await res.json();
+    return (data.reply as string) ?? '';
+  }
+
+  async function startConversation() {
+    setViewState('loading');
+    try {
+      const reply = await callChat([{
+        role: 'user',
+        content: 'Please greet me and ask your first question about the topic.',
+      }]);
+      setMessages([{ id: '0', role: 'assistant', content: reply }]);
+      setViewState('chatting');
+    } catch {
+      setViewState('idle');
+    }
+  }
+
+  async function sendMessage() {
+    if (!input.trim() || viewState !== 'chatting') return;
+    const text = input.trim();
+    setInput('');
+    const userMsg: Message = { id: String(Date.now()), role: 'user', content: text };
+    const newMessages = [...messages, userMsg];
+    setMessages(newMessages);
+    const newCount = userMsgCount + 1;
+    setUserMsgCount(newCount);
+    setViewState('loading');
+    try {
+      const reply = await callChat(newMessages.map(m => ({ role: m.role, content: m.content })));
+      setMessages(prev => [...prev, { id: String(Date.now() + 1), role: 'assistant', content: reply }]);
+    } catch {}
+    setViewState('chatting');
+  }
+
+  async function endConversation() {
+    setViewState('ending');
+    try {
+      const feedback = await callChat(
+        messages.map(m => ({ role: m.role, content: m.content })),
+        true,
+      );
+      setMessages(prev => [...prev, {
+        id: 'feedback',
+        role: 'assistant',
+        content: `✅ 오늘 대화 완료!\n\n${feedback}`,
+      }]);
+    } catch {}
+
+    if (user?.uid) {
+      const db = getDatabase(getFirebaseApp());
+      dbSet(ref(db, `users/${user.uid}/completion/english_speaking/${today}`), {
+        done: true, exchanges: userMsgCount, ts: Date.now(),
+      }).catch(() => {});
+    }
+    setViewState('done');
+  }
+
+  // Already completed from a previous session
+  if (viewState === 'done' && messages.length === 0) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>🗣️ AI English Talk</Text>
+          <Text style={styles.topicLabel}>Topic: {topic}</Text>
+        </View>
+        <View style={styles.centeredContent}>
+          <Text style={styles.doneEmoji}>✅</Text>
+          <Text style={styles.doneTitle}>오늘 대화 완료!</Text>
+          <Text style={styles.doneSub}>내일 새로운 주제로 만나요</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>🗣️ AI English Talk</Text>
+        <Text style={styles.topicLabel}>Topic: {topic}</Text>
+      </View>
+
+      {viewState === 'idle' && (
+        <View style={styles.centeredContent}>
+          <Text style={styles.topicBig}>{topic}</Text>
+          <Text style={styles.startHint}>
+            {'AI와 영어로 대화해보세요.\n'}
+            {`${MIN_EXCHANGES}번 이상 답변하면 종료할 수 있어요.`}
+          </Text>
+          <TouchableOpacity style={styles.startBtn} onPress={startConversation}>
+            <Text style={styles.startBtnText}>대화 시작</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
+      {viewState !== 'idle' && (
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
+          <FlatList
+            ref={listRef}
+            data={messages}
+            keyExtractor={item => item.id}
+            renderItem={({ item }) => (
+              <View style={[styles.bubble, item.role === 'user' ? styles.userBubble : styles.aiBubble]}>
+                <Text style={[styles.bubbleText, item.role === 'user' ? styles.userText : styles.aiText]}>
+                  {item.content}
+                </Text>
+              </View>
+            )}
+            contentContainerStyle={styles.messageList}
+            onContentSizeChange={() => listRef.current?.scrollToEnd({ animated: true })}
+          />
+
+          {(viewState === 'loading' || viewState === 'ending') && (
+            <View style={styles.typingRow}>
+              <ActivityIndicator size="small" color="#6366f1" />
+              <Text style={styles.typingText}>AI가 답변 중...</Text>
+            </View>
+          )}
+
+          {viewState === 'chatting' && (
+            <>
+              {userMsgCount >= MIN_EXCHANGES && (
+                <TouchableOpacity style={styles.endBtn} onPress={endConversation}>
+                  <Text style={styles.endBtnText}>대화 종료 & 피드백 받기</Text>
+                </TouchableOpacity>
+              )}
+              <View style={styles.inputRow}>
+                <TextInput
+                  style={styles.input}
+                  value={input}
+                  onChangeText={setInput}
+                  placeholder="Type in English..."
+                  placeholderTextColor="#94a3b8"
+                  multiline
+                  maxLength={300}
+                  blurOnSubmit={false}
+                />
+                <TouchableOpacity
+                  style={[styles.sendBtn, !input.trim() && styles.sendBtnDisabled]}
+                  onPress={sendMessage}
+                  disabled={!input.trim()}
+                >
+                  <Text style={styles.sendBtnText}>전송</Text>
+                </TouchableOpacity>
+              </View>
+              {userMsgCount < MIN_EXCHANGES && (
+                <Text style={styles.progressHint}>
+                  {`${userMsgCount}/${MIN_EXCHANGES}번 답변 — ${MIN_EXCHANGES - userMsgCount}번 더 하면 종료 가능`}
+                </Text>
+              )}
+            </>
+          )}
+
+          {viewState === 'done' && (
+            <View style={styles.doneBanner}>
+              <Text style={styles.doneBannerText}>🎉 오늘 스피킹 완료! 내일 또 만나요.</Text>
+            </View>
+          )}
+        </KeyboardAvoidingView>
+      )}
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#f8fafc' },
+  header: { backgroundColor: '#6366f1', padding: 16, paddingBottom: 12 },
+  headerTitle: { color: '#fff', fontSize: 18, fontWeight: '800' },
+  topicLabel: { color: 'rgba(255,255,255,0.8)', fontSize: 12, marginTop: 2 },
+  centeredContent: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 },
+  topicBig: { fontSize: 22, fontWeight: '700', color: '#1e293b', textAlign: 'center', marginBottom: 12 },
+  startHint: { fontSize: 13, color: '#64748b', textAlign: 'center', lineHeight: 20, marginBottom: 28 },
+  startBtn: { backgroundColor: '#6366f1', borderRadius: 14, paddingVertical: 14, paddingHorizontal: 40 },
+  startBtnText: { color: '#fff', fontSize: 16, fontWeight: '700' },
+  doneEmoji: { fontSize: 56, marginBottom: 12 },
+  doneTitle: { fontSize: 22, fontWeight: '800', color: '#1e293b', marginBottom: 8 },
+  doneSub: { fontSize: 14, color: '#64748b' },
+  messageList: { padding: 16, paddingBottom: 8 },
+  bubble: { maxWidth: '82%', borderRadius: 16, padding: 12, marginVertical: 3 },
+  userBubble: {
+    alignSelf: 'flex-end', backgroundColor: '#6366f1', borderBottomRightRadius: 4,
+  },
+  aiBubble: {
+    alignSelf: 'flex-start', backgroundColor: '#fff', borderBottomLeftRadius: 4,
+    shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 4, elevation: 1,
+  },
+  bubbleText: { fontSize: 14, lineHeight: 21 },
+  userText: { color: '#fff' },
+  aiText: { color: '#1e293b' },
+  typingRow: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 16, paddingVertical: 8 },
+  typingText: { color: '#94a3b8', fontSize: 13 },
+  endBtn: {
+    backgroundColor: '#10b981', margin: 12, borderRadius: 12,
+    paddingVertical: 12, alignItems: 'center',
+  },
+  endBtnText: { color: '#fff', fontSize: 14, fontWeight: '700' },
+  inputRow: {
+    flexDirection: 'row', padding: 10, gap: 8,
+    backgroundColor: '#fff', borderTopWidth: 1, borderTopColor: '#e2e8f0',
+  },
+  input: {
+    flex: 1, backgroundColor: '#f1f5f9', borderRadius: 12,
+    padding: 10, fontSize: 14, color: '#1e293b', maxHeight: 80,
+  },
+  sendBtn: { backgroundColor: '#6366f1', borderRadius: 12, paddingHorizontal: 16, justifyContent: 'center' },
+  sendBtnDisabled: { backgroundColor: '#c7d2fe' },
+  sendBtnText: { color: '#fff', fontSize: 13, fontWeight: '700' },
+  progressHint: { textAlign: 'center', fontSize: 11, color: '#94a3b8', paddingBottom: 6 },
+  doneBanner: { backgroundColor: '#dcfce7', padding: 14, alignItems: 'center', margin: 12, borderRadius: 12 },
+  doneBannerText: { color: '#16a34a', fontSize: 14, fontWeight: '600' },
+});

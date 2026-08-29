@@ -13,6 +13,7 @@ import InvestmentScreen from './investment';
 import CultureScreen from './culture';
 import ChecklistScreen from './checklist';
 import BBCScreen from './bbc';
+import SpeakingScreen from './speaking';
 
 const APP_VARIANT = process.env.EXPO_PUBLIC_APP_VARIANT ?? 'full';
 import LoginScreen from './login';
@@ -222,6 +223,16 @@ function MainTabs() {
             title: 'English',
             tabBarIcon: ({ color }) => (
               <MaterialIcons name="podcasts" size={26} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Speaking"
+          component={SpeakingScreen}
+          options={{
+            title: 'Talk',
+            tabBarIcon: ({ color }) => (
+              <MaterialIcons name="record-voice-over" size={26} color={color} />
             ),
           }}
         />
