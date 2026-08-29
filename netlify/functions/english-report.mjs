@@ -5,8 +5,6 @@ export const config = {
 };
 
 const DB_URL = process.env.FIREBASE_DATABASE_URL;
-const DB_SECRET = process.env.FIREBASE_DB_SECRET;
-const USER_UID = process.env.FIREBASE_USER_UID;
 const GMAIL_USER = process.env.GMAIL_USER;
 const GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD;
 const REPORT_TO = process.env.REPORT_TO_EMAIL || 'dctm1011@naver.com';
@@ -17,56 +15,49 @@ function getKSTDateString() {
 }
 
 async function fbGet(path) {
-  const auth = DB_SECRET ? `?auth=${DB_SECRET}` : '';
-  const res = await fetch(`${DB_URL}/${path}.json${auth}`);
+  const res = await fetch(`${DB_URL}/${path}.json`);
   if (!res.ok) return null;
   return res.json();
 }
 
-function buildHtml({ today, words, quizStatus, reviewPool, completion }) {
-  // 퀴즈 결과 집계
-  const quizList = quizStatus ? Object.values(quizStatus) : [];
-  const total = quizList.length;
-  const correct = quizList.filter(q => q.correct_answer === true).length;
+function buildHtml({ today, words, summary }) {
+  const correct = summary?.correct ?? 0;
+  const total = summary?.total ?? 0;
   const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
-  const wrongQuizzes = quizList.filter(q => q.correct_answer === false);
+  const quizDetails = summary?.quizDetails ?? [];
+  const pool = summary?.pool ?? { active: 0, graduated: 0 };
 
-  // 오늘 틀린 단어 (선택한 답 + 단어 이름)
-  const wrongItems = wrongQuizzes.map(q => {
-    const word = words?.find(w => w.word === q.word || w.word === q.wordId);
-    return {
-      word: q.word || q.wordId || '?',
-      meaning: word?.meaning_ko || '',
-      selected: q.selectedOption || '',
-    };
-  });
+  const wrongItems = quizDetails
+    .filter(q => !q.correct_answer)
+    .map(q => {
+      const wordData = words?.find(w => w.word === q.word);
+      return {
+        word: q.word || '?',
+        meaning: wordData?.meaning_ko || '',
+        selected: q.selectedOption || '',
+      };
+    });
 
-  // 복습풀 통계
-  const poolEntries = reviewPool ? Object.values(reviewPool) : [];
-  const active = poolEntries.filter(e => (e.count ?? 0) < 10).length;
-  const graduated = poolEntries.filter(e => (e.count ?? 0) >= 10).length;
-
-  const isDone = completion?.done === true;
   const scoreColor = pct >= 80 ? '#22c55e' : pct >= 60 ? '#f59e0b' : '#ef4444';
-  const gradeLabel = pct === 100 ? '완벽' : pct >= 80 ? '우수' : pct >= 60 ? '보통' : '분발';
+  const gradeLabel = pct === 100 ? '완벽 🏆' : pct >= 80 ? '우수 👍' : pct >= 60 ? '보통 📈' : '분발 💪';
 
-  // 오늘 배운 단어 목록
   const wordRows = (words || []).map(w => `
     <tr>
       <td style="padding:8px 12px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#1e293b;">${w.emoji || '📖'} ${w.word}</td>
-      <td style="padding:8px 12px;border-bottom:1px solid #f1f5f9;color:#475569;">${w.part_of_speech || ''}</td>
+      <td style="padding:8px 12px;border-bottom:1px solid #f1f5f9;color:#64748b;font-size:13px;">${w.part_of_speech || ''}</td>
       <td style="padding:8px 12px;border-bottom:1px solid #f1f5f9;color:#334155;">${w.meaning_ko || ''}</td>
     </tr>`).join('');
 
-  // 틀린 단어 목록
   const wrongRows = wrongItems.length > 0
     ? wrongItems.map(w => `
     <tr>
-      <td style="padding:8px 12px;border-bottom:1px solid #fef2f2;font-weight:600;color:#dc2626;">❌ ${w.word}</td>
-      <td style="padding:8px 12px;border-bottom:1px solid #fef2f2;color:#475569;">${w.meaning}</td>
-      <td style="padding:8px 12px;border-bottom:1px solid #fef2f2;color:#94a3b8;font-size:12px;">선택: ${w.selected}</td>
+      <td style="padding:8px 12px;border-bottom:1px solid #fff1f2;font-weight:600;color:#dc2626;">❌ ${w.word}</td>
+      <td style="padding:8px 12px;border-bottom:1px solid #fff1f2;color:#475569;">${w.meaning}</td>
+      <td style="padding:8px 12px;border-bottom:1px solid #fff1f2;color:#94a3b8;font-size:12px;">선택: ${w.selected}</td>
     </tr>`).join('')
-    : `<tr><td colspan="3" style="padding:12px;text-align:center;color:#22c55e;">모두 정답! 🎉</td></tr>`;
+    : `<tr><td colspan="3" style="padding:14px;text-align:center;color:#22c55e;font-weight:600;">모두 정답! 🎉</td></tr>`;
+
+  const hasSummary = summary !== null;
 
   return `<!DOCTYPE html>
 <html lang="ko">
@@ -75,67 +66,80 @@ function buildHtml({ today, words, quizStatus, reviewPool, completion }) {
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>YongStudy 학습 리포트 ${today}</title>
 </head>
-<body style="margin:0;padding:0;background:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
-<div style="max-width:600px;margin:24px auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08);">
+<body style="margin:0;padding:20px 0;background:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+<div style="max-width:580px;margin:0 auto;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 4px 32px rgba(0,0,0,.10);">
 
   <!-- 헤더 -->
-  <div style="background:linear-gradient(135deg,#6366f1,#8b5cf6);padding:32px 28px 24px;">
-    <p style="margin:0 0 4px;color:rgba(255,255,255,.75);font-size:13px;">📅 ${today}</p>
-    <h1 style="margin:0;color:#fff;font-size:24px;font-weight:700;">YongStudy 일간 리포트</h1>
-    <p style="margin:6px 0 0;color:rgba(255,255,255,.8);font-size:14px;">
-      ${isDone ? '✅ 오늘 학습 완료' : '⏳ 학습 미완료'}
+  <div style="background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 100%);padding:32px 28px 28px;">
+    <p style="margin:0 0 6px;color:rgba(255,255,255,.7);font-size:13px;letter-spacing:.04em;">📅 ${today} · 매일 22:00 KST</p>
+    <h1 style="margin:0 0 4px;color:#fff;font-size:26px;font-weight:800;">YongStudy 일간 리포트</h1>
+    <p style="margin:0;color:rgba(255,255,255,.8);font-size:14px;">
+      ${hasSummary ? '✅ 오늘 학습을 완료했습니다' : '⏳ 오늘 학습을 아직 완료하지 않았습니다'}
     </p>
   </div>
 
+  ${hasSummary ? `
   <!-- 퀴즈 점수 -->
-  <div style="padding:24px 28px 20px;">
-    <h2 style="margin:0 0 16px;font-size:15px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;">🎯 오늘 퀴즈 결과</h2>
-    <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
-      <div style="text-align:center;">
-        <div style="font-size:48px;font-weight:800;color:${scoreColor};line-height:1;">${pct}%</div>
-        <div style="font-size:13px;color:#94a3b8;margin-top:2px;">${gradeLabel}</div>
+  <div style="padding:28px 28px 0;">
+    <h2 style="margin:0 0 16px;font-size:13px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">🎯 오늘 퀴즈 결과</h2>
+    <div style="display:flex;align-items:center;gap:24px;">
+      <div style="text-align:center;min-width:80px;">
+        <div style="font-size:52px;font-weight:900;color:${scoreColor};line-height:1;">${pct}%</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">${gradeLabel}</div>
       </div>
       <div style="flex:1;">
-        <div style="background:#f1f5f9;border-radius:99px;height:10px;overflow:hidden;">
-          <div style="width:${pct}%;height:100%;background:${scoreColor};border-radius:99px;"></div>
+        <div style="background:#f1f5f9;border-radius:99px;height:12px;overflow:hidden;">
+          <div style="width:${pct}%;height:100%;background:${scoreColor};border-radius:99px;transition:width .3s;"></div>
         </div>
-        <p style="margin:8px 0 0;font-size:14px;color:#475569;">${correct} / ${total} 정답</p>
+        <p style="margin:8px 0 0;font-size:14px;color:#64748b;">${correct}개 정답 / 전체 ${total}개</p>
       </div>
     </div>
   </div>
 
   <!-- 틀린 단어 -->
-  <div style="padding:0 28px 20px;">
-    <h2 style="margin:0 0 12px;font-size:15px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;">❌ 틀린 단어</h2>
-    <table style="width:100%;border-collapse:collapse;background:#fff5f5;border-radius:8px;overflow:hidden;">
-      ${wrongRows}
-    </table>
-  </div>
-
-  <!-- 오늘 배운 단어 -->
-  <div style="padding:0 28px 20px;">
-    <h2 style="margin:0 0 12px;font-size:15px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;">📚 오늘 배운 단어</h2>
-    <table style="width:100%;border-collapse:collapse;">
-      ${wordRows}
-    </table>
+  <div style="padding:24px 28px 0;">
+    <h2 style="margin:0 0 12px;font-size:13px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">❌ 틀린 단어</h2>
+    <div style="background:#fff5f5;border-radius:12px;overflow:hidden;">
+      <table style="width:100%;border-collapse:collapse;">
+        ${wrongRows}
+      </table>
+    </div>
   </div>
 
   <!-- 복습풀 현황 -->
-  <div style="padding:0 28px 28px;">
-    <h2 style="margin:0 0 12px;font-size:15px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;">📦 복습풀 현황</h2>
+  <div style="padding:24px 28px 0;">
+    <h2 style="margin:0 0 12px;font-size:13px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">📦 복습풀 현황</h2>
     <div style="display:flex;gap:12px;">
-      <div style="flex:1;background:#eff6ff;border-radius:12px;padding:16px;text-align:center;">
-        <div style="font-size:28px;font-weight:700;color:#3b82f6;">${active}</div>
-        <div style="font-size:12px;color:#64748b;margin-top:2px;">복습 중</div>
+      <div style="flex:1;background:#eff6ff;border-radius:14px;padding:18px 12px;text-align:center;">
+        <div style="font-size:32px;font-weight:800;color:#3b82f6;">${pool.active}</div>
+        <div style="font-size:12px;color:#64748b;margin-top:4px;">복습 중</div>
       </div>
-      <div style="flex:1;background:#f0fdf4;border-radius:12px;padding:16px;text-align:center;">
-        <div style="font-size:28px;font-weight:700;color:#22c55e;">${graduated}</div>
-        <div style="font-size:12px;color:#64748b;margin-top:2px;">졸업</div>
+      <div style="flex:1;background:#f0fdf4;border-radius:14px;padding:18px 12px;text-align:center;">
+        <div style="font-size:32px;font-weight:800;color:#22c55e;">${pool.graduated}</div>
+        <div style="font-size:12px;color:#64748b;margin-top:4px;">졸업</div>
       </div>
-      <div style="flex:1;background:#fafafa;border-radius:12px;padding:16px;text-align:center;">
-        <div style="font-size:28px;font-weight:700;color:#94a3b8;">${active + graduated}</div>
-        <div style="font-size:12px;color:#64748b;margin-top:2px;">누적 총계</div>
+      <div style="flex:1;background:#f8fafc;border-radius:14px;padding:18px 12px;text-align:center;">
+        <div style="font-size:32px;font-weight:800;color:#94a3b8;">${pool.active + pool.graduated}</div>
+        <div style="font-size:12px;color:#64748b;margin-top:4px;">누적 합계</div>
       </div>
+    </div>
+  </div>
+  ` : `
+  <!-- 미완료 안내 -->
+  <div style="padding:28px 28px 0;">
+    <div style="background:#fffbeb;border-radius:14px;padding:20px;text-align:center;">
+      <p style="margin:0;font-size:15px;color:#92400e;">앱을 열어 오늘 단어를 학습해보세요! 📱</p>
+    </div>
+  </div>
+  `}
+
+  <!-- 오늘 배운 단어 -->
+  <div style="padding:24px 28px 28px;">
+    <h2 style="margin:0 0 12px;font-size:13px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">📚 오늘 배운 단어</h2>
+    <div style="border-radius:12px;overflow:hidden;border:1px solid #f1f5f9;">
+      <table style="width:100%;border-collapse:collapse;">
+        ${wordRows || `<tr><td style="padding:14px;color:#94a3b8;text-align:center;">단어 데이터 없음</td></tr>`}
+      </table>
     </div>
   </div>
 
@@ -153,31 +157,31 @@ export default async () => {
   try {
     const today = getKSTDateString();
 
-    const [todayData, quizStatus, reviewPool, completion] = await Promise.all([
+    const [todayData, summary] = await Promise.all([
       fbGet(`english/words/${today}`),
-      fbGet(`users/${USER_UID}/english/quizStatus/${today}`),
-      fbGet(`users/${USER_UID}/english/reviewPool`),
-      fbGet(`users/${USER_UID}/completion/english/${today}`),
+      fbGet(`english/dailySummary/${today}`),
     ]);
 
     const words = todayData?.words || [];
-
-    const html = buildHtml({ today, words, quizStatus, reviewPool, completion });
-
-    const quizList = quizStatus ? Object.values(quizStatus) : [];
-    const total = quizList.length;
-    const correct = quizList.filter(q => q.correct_answer === true).length;
+    const correct = summary?.correct ?? 0;
+    const total = summary?.total ?? 0;
     const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
+
+    const html = buildHtml({ today, words, summary });
 
     const transport = nodemailer.createTransport({
       service: 'gmail',
       auth: { user: GMAIL_USER, pass: GMAIL_APP_PASSWORD },
     });
 
+    const subject = summary
+      ? `📚 [${today}] YongStudy 리포트 — ${correct}/${total} (${pct}%)`
+      : `📚 [${today}] YongStudy 리포트 — 오늘 학습 미완료`;
+
     await transport.sendMail({
       from: `"YongStudy 리포트" <${GMAIL_USER}>`,
       to: REPORT_TO,
-      subject: `📚 [${today}] YongStudy 학습 리포트 — ${correct}/${total} (${pct}%)`,
+      subject,
       html,
     });
 

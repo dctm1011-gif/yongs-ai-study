@@ -783,6 +783,26 @@ export default function VocaScreen() {
       dbSet(userRef(uid, `completion/english/${today}`), {
         done: true, correct, total: activeQuizzes.length, ts: Date.now(),
       }).catch(() => {});
+
+      // 일간 리포트용 공개 요약 (인증 없이 Netlify 함수가 읽을 수 있는 경로)
+      const db = getDatabase(getFirebaseApp());
+      get(ref(db, `users/${uid}/english/reviewPool`)).then(snap => {
+        const pool = snap.exists() ? Object.values(snap.val() as Record<string, any>) : [];
+        const active = pool.filter((e: any) => (e.count ?? 0) < 10).length;
+        const graduated = pool.filter((e: any) => (e.count ?? 0) >= 10).length;
+        return dbSet(ref(db, `english/dailySummary/${today}`), {
+          correct,
+          total: activeQuizzes.length,
+          quizDetails: activeQuizzes.map(q => ({
+            word: q.word,
+            wordId: q.wordId,
+            correct_answer: q.correct_answer ?? false,
+            selectedOption: q.selectedOption ?? '',
+          })),
+          pool: { active, graduated },
+          ts: Date.now(),
+        });
+      }).catch(() => {});
     }
   };
 
