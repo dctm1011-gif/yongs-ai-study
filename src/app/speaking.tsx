@@ -121,14 +121,14 @@ export default function SpeakingScreen() {
   }
 
   async function sendMessage() {
-    if (!input.trim() || viewState !== 'chatting') return;
+    if (!input.trim() || (viewState !== 'chatting' && viewState !== 'done')) return;
+    const resumeState = viewState; // remember whether we were chatting or done
     const text = input.trim();
     setInput('');
     const userMsg: Message = { id: String(Date.now()), role: 'user', content: text };
     const newMessages = [...messages, userMsg];
     setMessages(newMessages);
-    const newCount = userMsgCount + 1;
-    setUserMsgCount(newCount);
+    setUserMsgCount(c => c + 1);
     setViewState('loading');
     try {
       const { text: reply, imageUrl } = await callChat(
@@ -138,7 +138,7 @@ export default function SpeakingScreen() {
         id: String(Date.now() + 1), role: 'assistant', content: reply, imageUrl,
       }]);
     } catch {}
-    setViewState('chatting');
+    setViewState(resumeState);
   }
 
   async function endConversation() {
@@ -184,7 +184,7 @@ export default function SpeakingScreen() {
     );
   }
 
-  // Already completed from a previous session
+  // Already completed from a previous session — show done badge + continue button
   if (viewState === 'done' && messages.length === 0) {
     return (
       <SafeAreaView style={styles.container}>
@@ -195,7 +195,10 @@ export default function SpeakingScreen() {
         <View style={styles.centeredContent}>
           <Text style={styles.doneEmoji}>✅</Text>
           <Text style={styles.doneTitle}>오늘 대화 완료!</Text>
-          <Text style={styles.doneSub}>내일 새로운 주제로 만나요</Text>
+          <Text style={styles.doneSub}>더 이야기하고 싶으면 계속할 수 있어요</Text>
+          <TouchableOpacity style={[styles.startBtn, { marginTop: 24 }]} onPress={startConversation}>
+            <Text style={styles.startBtnText}>계속 대화하기</Text>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     );
@@ -278,9 +281,30 @@ export default function SpeakingScreen() {
           )}
 
           {viewState === 'done' && (
-            <View style={styles.doneBanner}>
-              <Text style={styles.doneBannerText}>🎉 오늘 스피킹 완료! 내일 또 만나요.</Text>
-            </View>
+            <>
+              <View style={styles.doneBanner}>
+                <Text style={styles.doneBannerText}>🎉 완료! 계속 대화해도 괜찮아요.</Text>
+              </View>
+              <View style={styles.inputRow}>
+                <TextInput
+                  style={styles.input}
+                  value={input}
+                  onChangeText={setInput}
+                  placeholder='Type in English...'
+                  placeholderTextColor="#94a3b8"
+                  multiline
+                  maxLength={300}
+                  blurOnSubmit={false}
+                />
+                <TouchableOpacity
+                  style={[styles.sendBtn, !input.trim() && styles.sendBtnDisabled]}
+                  onPress={sendMessage}
+                  disabled={!input.trim()}
+                >
+                  <Text style={styles.sendBtnText}>전송</Text>
+                </TouchableOpacity>
+              </View>
+            </>
           )}
         </KeyboardAvoidingView>
       )}
