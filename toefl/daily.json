@@ -1,192 +1,116 @@
 {
   "date": "2026-08-31",
   "reading": {
-    "title": "Animal Communication and Social Behavior",
-    "passage": "Animal communication systems have evolved to facilitate the transmission of information within and between species, playing a critical role in survival and reproduction. Primates, in particular, exhibit sophisticated vocal and gestural communication networks that extend far beyond simple alarm calls. Research by primatologists has demonstrated that chimpanzees employ context-dependent vocalizations, adjusting their calls based on the presence of dominant individuals and environmental threats. Furthermore, recent studies employing neuroimaging techniques have revealed that the brains of social species show enhanced development in regions associated with processing social information. This neural plasticity suggests that complex social environments exert selective pressure, favoring individuals with superior communication abilities. The implications of these findings extend beyond academic interest; understanding animal communication systems provides invaluable insights into the evolutionary origins of human language and cognition.",
-    "vocabulary": [
-      {
-        "word": "facilitate",
-        "meaning_ko": "촉진하다, 용이하게 하다"
-      },
-      {
-        "word": "context-dependent",
-        "meaning_ko": "상황에 따라 달라지는, 맥락에 의존하는"
-      },
-      {
-        "word": "neuroimaging",
-        "meaning_ko": "뇌 영상 촬영, 신경 영상화"
-      },
-      {
-        "word": "plasticity",
-        "meaning_ko": "가소성, 유연성"
-      },
-      {
-        "word": "selective pressure",
-        "meaning_ko": "선택압, 진화적 압력"
-      },
-      {
-        "word": "cognition",
-        "meaning_ko": "인지, 인식"
-      },
-      {
-        "word": "vocalization",
-        "meaning_ko": "발성, 음성 표현"
-      }
-    ],
+    "title": "The Impact of Social Media on Mental Health",
+    "passage": "Recent studies indicate that excessive social media usage significantly affects adolescent mental health. Platforms like Instagram and TikTok create unrealistic standards through curated content, leading to increased anxiety and depression. However, social media also provides communities for isolated individuals. Researchers suggest that moderation and digital literacy education are essential. The key lies not in eliminating social media entirely, but in developing healthy consumption habits and critical thinking skills to navigate the digital landscape responsibly.",
     "questions": [
       {
-        "q": "According to the passage, what is one key function of animal communication systems?",
+        "q": "According to the passage, what is one negative effect of social media on adolescents?",
         "options": [
-          "A) To establish territorial boundaries exclusively",
-          "B) To facilitate the transmission of information for survival and reproduction",
-          "C) To prevent inter-species interaction",
-          "D) To replace gestural communication entirely"
+          "It provides community support",
+          "It creates unrealistic standards through curated content",
+          "It improves digital literacy",
+          "It eliminates anxiety"
         ],
         "answer": 1,
-        "explanation": "첫 문장에서 동물 커뮤니케이션 시스템이 '생존과 번식을 위한 정보 전달'을 촉진한다고 명시되어 있습니다."
+        "explanation": "본문에서 'Platforms like Instagram and TikTok create unrealistic standards through curated content, leading to increased anxiety and depression'라고 명시되어 있습니다."
       },
       {
-        "q": "What can be inferred from the passage about chimpanzee communication?",
+        "q": "What solution does the passage suggest for healthy social media use?",
         "options": [
-          "A) Chimpanzees only use alarm calls to communicate",
-          "B) Chimpanzees adjust their vocalizations based on social context",
-          "C) Chimpanzees cannot process social information",
-          "D) Chimpanzees lack the ability to use gestural communication"
+          "Complete elimination of social media",
+          "Moderation and digital literacy education",
+          "Using only one platform",
+          "Avoiding all digital content"
         ],
         "answer": 1,
-        "explanation": "두 번째 문장에서 침팬지가 '맥락에 따라 달라지는 발성을 사용하고, 지배적 개체와 환경 위협의 존재에 따라 울음소리를 조정한다'고 설명합니다."
+        "explanation": "'Researchers suggest that moderation and digital literacy education are essential'라는 문장에서 해결책을 제시하고 있습니다."
       },
       {
-        "q": "The word 'plasticity' in the passage is closest in meaning to",
+        "q": "Which of the following is mentioned as a positive aspect of social media?",
         "options": [
-          "A) Rigidity and inflexibility",
-          "B) The ability to adapt and change",
-          "C) Permanent structural damage",
-          "D) Resistance to environmental influence"
+          "It eliminates mental health issues",
+          "It provides communities for isolated individuals",
+          "It always creates realistic standards",
+          "It removes the need for face-to-face interaction"
         ],
         "answer": 1,
-        "explanation": "'Plasticity'는 복잡한 사회 환경에서 뇌가 변화한다는 맥락에서 '적응 능력과 변화 가능성'을 의미합니다."
-      },
-      {
-        "q": "Why does the author mention neuroimaging techniques?",
-        "options": [
-          "A) To criticize primate research methods",
-          "B) To provide evidence that social species have enhanced brain development in communication-related regions",
-          "C) To suggest that animals cannot communicate effectively",
-          "D) To explain why human language is superior to animal communication"
-        ],
-        "answer": 1,
-        "explanation": "신경 영상화 기술은 사회적 종의 뇌 발달을 입증하는 과학적 증거를 제시하기 위해 언급되었습니다."
+        "explanation": "본문의 'However, social media also provides communities for isolated individuals'에서 긍정적인 측면을 언급하고 있습니다."
       }
     ]
   },
   "writing": {
-    "sentences": [
-      {
-        "original": "Animal communication systems have evolved to facilitate the transmission of information within and between species, playing a critical role in survival and reproduction.",
-        "paraphrase": "The evolution of animal communication has enabled species to exchange vital information necessary for their survival and reproductive success.",
-        "tip": "능동→수동 표현을 동사 구조로 변환하고, 복합 구조를 단순화하여 의미 유지"
-      },
-      {
-        "original": "Primates, in particular, exhibit sophisticated vocal and gestural communication networks that extend far beyond simple alarm calls.",
-        "paraphrase": "Among animals, primates stand out for their highly developed systems of vocal and gestural communication, which go well beyond basic warning signals.",
-        "tip": "복잡한 관계절 구조를 전치사구로 단순화하고 'extend far beyond'를 'go well beyond'로 동의어 치환"
-      },
-      {
-        "original": "Research by primatologists has demonstrated that chimpanzees employ context-dependent vocalizations, adjusting their calls based on the presence of dominant individuals and environmental threats.",
-        "paraphrase": "Primatologists have shown through their research that chimpanzees modify their vocal expressions in response to social hierarchy and environmental dangers.",
-        "tip": "구체적 표현('context-dependent vocalizations')을 더 간단한 동사구('modify their vocal expressions')로 대체"
-      },
-      {
-        "original": "This neural plasticity suggests that complex social environments exert selective pressure, favoring individuals with superior communication abilities.",
-        "paraphrase": "The capacity of the brain to adapt indicates that animals living in complex social groups experience evolutionary advantages if they possess strong communication skills.",
-        "tip": "학술 용어('neural plasticity', 'selective pressure')를 설명적 표현으로 풀어서 표현"
-      },
-      {
-        "original": "Understanding animal communication systems provides invaluable insights into the evolutionary origins of human language and cognition.",
-        "paraphrase": "By studying how animals communicate, researchers can better understand how human language and thought processes first emerged through evolution.",
-        "tip": "추상적 명사구('invaluable insights into')를 구체적 동사구('better understand how')로 변환"
-      }
+    "prompt": "Do you agree or disagree with the statement: 'Technology has made our lives better than they were 100 years ago'? Use specific examples to support your position.",
+    "structure": {
+      "intro": "명확한 주장 제시: 동의하는지 불동의하는지 직접 표현. 예: 'I strongly agree that technology has significantly improved our quality of life'",
+      "body1": "첫 번째 이유와 구체적 사례 제시. 의료, 통신, 교육 등의 분야에서 기술의 혁신성 설명",
+      "body2": "두 번째 이유와 구체적 사례 제시. 환경 문제나 사회적 영향 등 다각적 관점 포함 가능",
+      "conclusion": "주장을 재강조하되 새로운 내용 추가 없이 요약. 미래에 대한 간단한 언급으로 마무리"
+    },
+    "useful_phrases": [
+      "In my opinion,",
+      "I firmly believe that",
+      "For instance,",
+      "Furthermore,",
+      "Moreover,",
+      "To illustrate this point,",
+      "In conclusion,",
+      "As a result,",
+      "On the other hand,"
     ]
   },
-  "writing_prompt": {
-    "topic": "저출산 대응 정책",
-    "prompt": "Many countries are experiencing declining birth rates and aging populations. Governments are implementing various policies such as childcare subsidies, parental leave, tax incentives, and housing support to encourage people to have more children. Discuss what you think are the most effective policies to address low birth rates. Use specific examples and reasons to support your answer.",
-    "instruction": "최소 300단어 이상의 학술적 에세이 작성. 서론에서 입장 제시, 본론에서 2-3개의 근거 제시 및 구체적 사례 포함, 결론에서 재강조"
-  },
   "speaking": {
-    "prompt": "Some people prefer shopping online for convenience and variety. Others prefer shopping in physical stores to see products in person and get immediate assistance. Which do you prefer and why? Include specific reasons and details.",
-    "model_sentences": [
-      "Personally, I prefer shopping online because it offers greater convenience and a wider selection of products.",
-      "First, online shopping saves me time since I can browse and purchase from home without traveling to multiple stores.",
-      "For example, when I need to buy electronics or clothing, I can easily compare prices and read customer reviews across different websites within minutes.",
-      "Additionally, online retailers often provide better deals and discounts than physical stores, which helps me save money.",
-      "Although some people enjoy the experience of trying products before buying, I find the ease and efficiency of online shopping far more practical for my lifestyle."
+    "prompt": "Some people prefer to study in a quiet library environment. Others prefer to study in a bustling café with background noise. Which environment do you prefer for studying, and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer studying in a library because",
+      "One reason is that a quiet environment helps me concentrate better",
+      "Another important point is that I can avoid distractions when studying alone",
+      "From my perspective,",
+      "The main advantage is that",
+      "I believe this is better because"
+    ],
+    "sample_points": [
+      "조용한 도서관 환경에서는 집중력이 향상되어 학습 효율이 높아진다는 점",
+      "카페 환경의 배경 소음은 때로 주의 산만을 유발하지만, 적절한 음악은 창의성을 높일 수 있다는 상충된 관점"
     ]
   },
   "listening": {
-    "title": "기숙사 배정 및 룸메이트 배치 문의",
-    "type": "conversation",
-    "script": "Student A: Hi, I have a question about dormitory assignment for next semester. I submitted my housing application three weeks ago, but I haven't received any confirmation yet. Student B: Oh, I understand your concern. The housing office processes applications in batches, so it usually takes four to six weeks for a decision. Student A: Four to six weeks? That's longer than I expected. Is there any way to expedite the process? Student B: Well, you could visit the housing office in person during their office hours, which are Monday through Friday from 10 AM to 2 PM. Bring your application receipt and student ID. They might be able to give you an update. Student A: That sounds helpful. Also, I wanted to request a specific roommate. Is it too late to submit a roommate preference form? Student B: Not at all. You can submit a roommate request form even after initial assignment, but it has to be done within two weeks of receiving your housing assignment letter. Student A: Great! One more thing—I'm an international student, and I prefer to be housed with someone who can help me adjust to campus life. Do you think the office can accommodate that? Student B: Definitely. The housing office takes special circumstances into consideration. Just mention this in the additional comments section of your form. They'll do their best to match you with a compatible roommate.",
-    "vocabulary": [
-      {
-        "word": "expedite",
-        "meaning_ko": "신속하게 처리하다, 가속화하다"
-      },
-      {
-        "word": "batches",
-        "meaning_ko": "일괄, 묶음"
-      },
-      {
-        "word": "housing assignment",
-        "meaning_ko": "기숙사 배정"
-      },
-      {
-        "word": "roommate preference",
-        "meaning_ko": "룸메이트 선호도"
-      },
-      {
-        "word": "accommodate",
-        "meaning_ko": "수용하다, 배려하다"
-      },
-      {
-        "word": "compatible",
-        "meaning_ko": "양립 가능한, 잘 어울리는"
-      }
-    ],
+    "title": "Professor's Lecture on Climate Change Solutions",
+    "type": "lecture",
+    "script": "Good morning everyone. Today we'll discuss renewable energy as a solution to climate change. Traditional fossil fuels have dominated our energy systems for centuries, but they're major contributors to greenhouse gas emissions. Renewable sources like solar, wind, and hydroelectric power offer sustainable alternatives. Solar panels convert sunlight directly into electricity, while wind turbines harness kinetic energy. Hydroelectric plants use flowing water to generate power. These technologies have become increasingly cost-effective. Germany, for example, now generates over 50 percent of its electricity from renewables. However, challenges remain. Intermittency is a major issue—the sun doesn't always shine, and wind doesn't always blow. Battery storage technology is advancing rapidly to address this. Additionally, transitioning existing infrastructure requires significant investment and political will. Despite these obstacles, renewable energy represents our most viable path toward reducing carbon emissions and combating climate change effectively.",
     "questions": [
       {
-        "q": "What is the main reason Student A visits the housing office?",
+        "q": "What is the main topic of the lecture?",
         "options": [
-          "A) To submit a housing application",
-          "B) To inquire about the status of their dormitory assignment",
-          "C) To change their dormitory location",
-          "D) To request a single room instead of sharing"
+          "The history of fossil fuels",
+          "Renewable energy as a solution to climate change",
+          "The cost of solar panels",
+          "Political obstacles to energy production"
         ],
         "answer": 1,
-        "explanation": "Student A는 3주 전에 기숙사 신청을 했는데 아직 확인 메시지를 받지 못해 상태를 문의하고 있습니다."
+        "explanation": "교수가 'Today we'll discuss renewable energy as a solution to climate change'라고 명시적으로 주제를 제시했습니다."
       },
       {
-        "q": "What does Student B suggest to expedite the housing decision?",
+        "q": "According to the professor, what is one major challenge with renewable energy?",
         "options": [
-          "A) Submit another application immediately",
-          "B) Contact the housing office by phone",
-          "C) Visit the housing office in person with application receipt and student ID",
-          "D) Wait for two more weeks"
+          "It's too expensive",
+          "Intermittency—solar and wind power are not always available",
+          "It produces more emissions than fossil fuels",
+          "It requires no infrastructure investment"
         ],
-        "answer": 2,
-        "explanation": "Student B는 월요일부터 금요일 오전 10시부터 오후 2시 사이에 기숙사 사무소를 직접 방문하고 신청 영수증과 학생증을 가져가라고 제안합니다."
+        "answer": 1,
+        "explanation": "강의에서 'Intermittency is a major issue—the sun doesn't always shine, and wind doesn't always blow'라고 명확히 설명했습니다."
       },
       {
-        "q": "Why does Student A want to be housed with someone who can help them adjust to campus life?",
+        "q": "Which country is mentioned as an example of successful renewable energy adoption?",
         "options": [
-          "A) Because they are an international student",
-          "B) Because they are a first-year student",
-          "C) Because they have difficulty making friends",
-          "D) Because they struggle with English"
+          "Japan",
+          "Germany",
+          "United States",
+          "China"
         ],
-        "answer": 0,
-        "explanation": "Student A는 국제 학생이기 때문에 캠퍼스 생활에 적응하는 데 도움을 줄 수 있는 사람과 함께 있고 싶다고 명시합니다."
+        "answer": 1,
+        "explanation": "'Germany, for example, now generates over 50 percent of its electricity from renewables'라는 구절에서 독일이 사례로 제시되었습니다."
       }
     ]
   }
