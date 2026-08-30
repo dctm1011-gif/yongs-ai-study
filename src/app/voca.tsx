@@ -818,7 +818,7 @@ export default function VocaScreen() {
       const sorted = Object.values(pool)
         .filter((v: any) => (v.count ?? 0) < 10)
         .sort((a: any, b: any) => (a.count ?? 0) - (b.count ?? 0))
-        .slice(0, 15);
+        .slice(0, 8);
 
       const sentences: ReviewSentence[] = [];
       for (const entry of sorted) {

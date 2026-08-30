@@ -194,6 +194,26 @@ function MainTabs() {
             ),
           }}
         />
+        <Tab.Screen
+          name="BBC"
+          component={BBCScreen}
+          options={{
+            title: 'English',
+            tabBarIcon: ({ color }) => (
+              <MaterialIcons name="podcasts" size={26} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Speaking"
+          component={SpeakingScreen}
+          options={{
+            title: 'Talk',
+            tabBarIcon: ({ color }) => (
+              <MaterialIcons name="record-voice-over" size={26} color={color} />
+            ),
+          }}
+        />
         {APP_VARIANT === 'full' && (
           <Tab.Screen
             name="Investment"
@@ -213,26 +233,6 @@ function MainTabs() {
             title: 'Korean',
             tabBarIcon: ({ color }) => (
               <MaterialIcons name="menu-book" size={26} color={color} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="BBC"
-          component={BBCScreen}
-          options={{
-            title: 'English',
-            tabBarIcon: ({ color }) => (
-              <MaterialIcons name="podcasts" size={26} color={color} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Speaking"
-          component={SpeakingScreen}
-          options={{
-            title: 'Talk',
-            tabBarIcon: ({ color }) => (
-              <MaterialIcons name="record-voice-over" size={26} color={color} />
             ),
           }}
         />
