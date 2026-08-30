@@ -4,6 +4,7 @@ import {
   KeyboardAvoidingView, Platform, ActivityIndicator, Image,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getDatabase, ref, set as dbSet, get } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
 import { useAuth } from '../context/AuthContext';
@@ -57,9 +58,16 @@ interface Message {
   imageUrl?: string | null;
 }
 
-type ChatResponse = { text: string; imageUrl?: string | null };
+type ChatResponse = { text: string; imageUrl?: string | null; summary?: string | null };
 
 type ViewState = 'idle' | 'loading' | 'chatting' | 'ending' | 'done';
+
+interface HistoryEntry {
+  date: string;
+  topic: string;
+  summary: string;
+  exchanges: number;
+}
 
 export default function SpeakingScreen() {
   const { user } = useAuth();
@@ -67,11 +75,47 @@ export default function SpeakingScreen() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [userMsgCount, setUserMsgCount] = useState(0);
+  const [history, setHistory] = useState<HistoryEntry[]>([]);
   const listRef = useRef<FlatList>(null);
 
   const today = getKSTDateString();
   const dayOfMonth = new Date(today).getDate();
   const topic = DAILY_TOPICS[(dayOfMonth - 1) % DAILY_TOPICS.length];
+  const STORAGE_KEY = `speaking_session_${today}`;
+
+  // Restore today's session from AsyncStorage
+  useEffect(() => {
+    AsyncStorage.getItem(STORAGE_KEY).then(raw => {
+      if (!raw) return;
+      const saved = JSON.parse(raw);
+      if (Array.isArray(saved.messages) && saved.messages.length > 0) {
+        setMessages(saved.messages);
+        setUserMsgCount(saved.userMsgCount ?? 0);
+        setViewState(saved.viewState === 'done' ? 'done' : 'chatting');
+      }
+    }).catch(() => {});
+  }, []);
+
+  // Persist session whenever messages or state changes
+  useEffect(() => {
+    if (messages.length === 0) return;
+    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify({ messages, userMsgCount, viewState })).catch(() => {});
+  }, [messages, userMsgCount, viewState]);
+
+  // Load past conversation summaries from Firebase (last 7 days, excluding today)
+  useEffect(() => {
+    if (!user?.uid) return;
+    const db = getDatabase(getFirebaseApp());
+    get(ref(db, `users/${user.uid}/speaking_history`)).then(snap => {
+      if (!snap.exists()) return;
+      const all: HistoryEntry[] = Object.values(snap.val() as Record<string, HistoryEntry>);
+      const recent = all
+        .filter(h => h.date < today)
+        .sort((a, b) => b.date.localeCompare(a.date))
+        .slice(0, 7);
+      setHistory(recent);
+    }).catch(() => {});
+  }, [user?.uid]);
 
   useEffect(() => {
     if (!user?.uid) return;
@@ -98,12 +142,12 @@ export default function SpeakingScreen() {
     const res = await fetch(CHAT_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: msgs, topic, isFeedbackRequest }),
+      body: JSON.stringify({ messages: msgs, topic, isFeedbackRequest, history }),
     });
     const data = await res.json();
     const raw = (data.reply as string) ?? '';
     const text = isFeedbackRequest ? stripMarkdown(raw) : raw;
-    return { text, imageUrl: data.imageUrl ?? null };
+    return { text, imageUrl: data.imageUrl ?? null, summary: data.summary ?? null };
   }
 
   async function startConversation() {
@@ -144,7 +188,7 @@ export default function SpeakingScreen() {
   async function endConversation() {
     setViewState('ending');
     try {
-      const { text: feedback } = await callChat(
+      const { text: feedback, summary } = await callChat(
         messages.map(m => ({ role: m.role, content: m.content })),
         true,
       );
@@ -153,14 +197,22 @@ export default function SpeakingScreen() {
         role: 'assistant',
         content: `✅ 오늘 대화 완료!\n\n${feedback}`,
       }]);
-    } catch {}
 
-    if (user?.uid) {
-      const db = getDatabase(getFirebaseApp());
-      dbSet(ref(db, `users/${user.uid}/completion/english_speaking/${today}`), {
-        done: true, exchanges: userMsgCount, ts: Date.now(),
-      }).catch(() => {});
-    }
+      if (user?.uid) {
+        const db = getDatabase(getFirebaseApp());
+        const tasks: Promise<any>[] = [
+          dbSet(ref(db, `users/${user.uid}/completion/english_speaking/${today}`), {
+            done: true, exchanges: userMsgCount, ts: Date.now(),
+          }),
+        ];
+        if (summary) {
+          tasks.push(dbSet(ref(db, `users/${user.uid}/speaking_history/${today}`), {
+            date: today, topic, summary, exchanges: userMsgCount, ts: Date.now(),
+          }));
+        }
+        await Promise.all(tasks).catch(() => {});
+      }
+    } catch {}
     setViewState('done');
   }
 
@@ -263,6 +315,9 @@ export default function SpeakingScreen() {
                   multiline
                   maxLength={300}
                   blurOnSubmit={false}
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                  disableFullscreenUI={true}
                 />
                 <TouchableOpacity
                   style={[styles.sendBtn, !input.trim() && styles.sendBtnDisabled]}
@@ -295,6 +350,9 @@ export default function SpeakingScreen() {
                   multiline
                   maxLength={300}
                   blurOnSubmit={false}
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                  disableFullscreenUI={true}
                 />
                 <TouchableOpacity
                   style={[styles.sendBtn, !input.trim() && styles.sendBtnDisabled]}

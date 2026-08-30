@@ -1,114 +1,192 @@
 {
-  "date": "2026-08-30",
+  "date": "2026-08-31",
   "reading": {
-    "title": "Bioluminescence in Deep Ocean",
-    "passage": "Bioluminescence, the production of light by living organisms, is a fascinating phenomenon commonly observed in deep ocean environments. Many deep-sea creatures, such as anglerfish and jellyfish, produce light through chemical reactions within their bodies. This adaptation serves multiple purposes: attracting prey, communicating with other organisms, and providing defense mechanisms against predators. Scientists estimate that approximately 90% of deep-sea organisms possess bioluminescent capabilities, making it one of nature's most remarkable survival strategies in extreme environments.",
+    "title": "Animal Communication and Social Behavior",
+    "passage": "Animal communication systems have evolved to facilitate the transmission of information within and between species, playing a critical role in survival and reproduction. Primates, in particular, exhibit sophisticated vocal and gestural communication networks that extend far beyond simple alarm calls. Research by primatologists has demonstrated that chimpanzees employ context-dependent vocalizations, adjusting their calls based on the presence of dominant individuals and environmental threats. Furthermore, recent studies employing neuroimaging techniques have revealed that the brains of social species show enhanced development in regions associated with processing social information. This neural plasticity suggests that complex social environments exert selective pressure, favoring individuals with superior communication abilities. The implications of these findings extend beyond academic interest; understanding animal communication systems provides invaluable insights into the evolutionary origins of human language and cognition.",
+    "vocabulary": [
+      {
+        "word": "facilitate",
+        "meaning_ko": "촉진하다, 용이하게 하다"
+      },
+      {
+        "word": "context-dependent",
+        "meaning_ko": "상황에 따라 달라지는, 맥락에 의존하는"
+      },
+      {
+        "word": "neuroimaging",
+        "meaning_ko": "뇌 영상 촬영, 신경 영상화"
+      },
+      {
+        "word": "plasticity",
+        "meaning_ko": "가소성, 유연성"
+      },
+      {
+        "word": "selective pressure",
+        "meaning_ko": "선택압, 진화적 압력"
+      },
+      {
+        "word": "cognition",
+        "meaning_ko": "인지, 인식"
+      },
+      {
+        "word": "vocalization",
+        "meaning_ko": "발성, 음성 표현"
+      }
+    ],
     "questions": [
       {
-        "q": "According to the passage, what is the primary purpose of bioluminescence in deep-sea creatures?",
+        "q": "According to the passage, what is one key function of animal communication systems?",
         "options": [
-          "To regulate body temperature",
-          "To attract prey, communicate, and defend against predators",
-          "To help them navigate through water",
-          "To produce energy for movement"
+          "A) To establish territorial boundaries exclusively",
+          "B) To facilitate the transmission of information for survival and reproduction",
+          "C) To prevent inter-species interaction",
+          "D) To replace gestural communication entirely"
         ],
         "answer": 1,
-        "explanation": "본문에서 'attracting prey, communicating with other organisms, and providing defense mechanisms against predators'라고 명시되어 있습니다."
+        "explanation": "첫 문장에서 동물 커뮤니케이션 시스템이 '생존과 번식을 위한 정보 전달'을 촉진한다고 명시되어 있습니다."
       },
       {
-        "q": "Which of the following organisms is mentioned as having bioluminescence?",
+        "q": "What can be inferred from the passage about chimpanzee communication?",
         "options": [
-          "Dolphins and whales",
-          "Anglerfish and jellyfish",
-          "Sharks and rays",
-          "Octopuses and crabs"
+          "A) Chimpanzees only use alarm calls to communicate",
+          "B) Chimpanzees adjust their vocalizations based on social context",
+          "C) Chimpanzees cannot process social information",
+          "D) Chimpanzees lack the ability to use gestural communication"
         ],
         "answer": 1,
-        "explanation": "본문에서 'anglerfish and jellyfish'가 bioluminescence를 가진 생물의 예시로 제시되었습니다."
+        "explanation": "두 번째 문장에서 침팬지가 '맥락에 따라 달라지는 발성을 사용하고, 지배적 개체와 환경 위협의 존재에 따라 울음소리를 조정한다'고 설명합니다."
       },
       {
-        "q": "What does the passage suggest about the prevalence of bioluminescence in deep-sea environments?",
+        "q": "The word 'plasticity' in the passage is closest in meaning to",
         "options": [
-          "It is extremely rare among deep-sea creatures",
-          "It affects only predatory species",
-          "Approximately 90% of deep-sea organisms possess this ability",
-          "It is decreasing over time"
+          "A) Rigidity and inflexibility",
+          "B) The ability to adapt and change",
+          "C) Permanent structural damage",
+          "D) Resistance to environmental influence"
         ],
-        "answer": 2,
-        "explanation": "본문의 마지막 부분에서 '약 90%의 심해 생물들이 생물발광 능력을 가지고 있다'고 명시되어 있습니다."
+        "answer": 1,
+        "explanation": "'Plasticity'는 복잡한 사회 환경에서 뇌가 변화한다는 맥락에서 '적응 능력과 변화 가능성'을 의미합니다."
+      },
+      {
+        "q": "Why does the author mention neuroimaging techniques?",
+        "options": [
+          "A) To criticize primate research methods",
+          "B) To provide evidence that social species have enhanced brain development in communication-related regions",
+          "C) To suggest that animals cannot communicate effectively",
+          "D) To explain why human language is superior to animal communication"
+        ],
+        "answer": 1,
+        "explanation": "신경 영상화 기술은 사회적 종의 뇌 발달을 입증하는 과학적 증거를 제시하기 위해 언급되었습니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Technology has made human life easier but less meaningful'? Use specific reasons and examples to support your opinion.",
-    "structure": {
-      "intro": "명확한 입장 제시 (동의/비동의). 2-3개의 주요 이유를 간단히 언급. 예: 'I disagree with this statement because technology has enhanced both convenience and meaning in our lives.'",
-      "body1": "첫 번째 이유 전개. 기술이 업무 효율성을 증대시켜 더 의미 있는 활동에 시간을 할애할 수 있다는 점 설명. 구체적 예시 제시 (원격근무, 자동화 등).",
-      "body2": "두 번째 이유 전개. 기술이 사람들 간의 연결을 가능하게 하여 관계와 공동체 의식을 강화한다는 점. 예시: 소셜 미디어, 온라인 커뮤니티, 원거리 교육 등.",
-      "conclusion": "주요 주장 재강조. 기술은 올바르게 사용될 경우 삶을 더 의미 있게 만들 수 있다는 최종 의견 제시."
-    },
-    "useful_phrases": [
-      "In my opinion,",
-      "I strongly believe that...",
-      "Furthermore,",
-      "For example,",
-      "This demonstrates that...",
-      "In conclusion,",
-      "On the other hand,",
-      "It is undeniable that..."
+    "sentences": [
+      {
+        "original": "Animal communication systems have evolved to facilitate the transmission of information within and between species, playing a critical role in survival and reproduction.",
+        "paraphrase": "The evolution of animal communication has enabled species to exchange vital information necessary for their survival and reproductive success.",
+        "tip": "능동→수동 표현을 동사 구조로 변환하고, 복합 구조를 단순화하여 의미 유지"
+      },
+      {
+        "original": "Primates, in particular, exhibit sophisticated vocal and gestural communication networks that extend far beyond simple alarm calls.",
+        "paraphrase": "Among animals, primates stand out for their highly developed systems of vocal and gestural communication, which go well beyond basic warning signals.",
+        "tip": "복잡한 관계절 구조를 전치사구로 단순화하고 'extend far beyond'를 'go well beyond'로 동의어 치환"
+      },
+      {
+        "original": "Research by primatologists has demonstrated that chimpanzees employ context-dependent vocalizations, adjusting their calls based on the presence of dominant individuals and environmental threats.",
+        "paraphrase": "Primatologists have shown through their research that chimpanzees modify their vocal expressions in response to social hierarchy and environmental dangers.",
+        "tip": "구체적 표현('context-dependent vocalizations')을 더 간단한 동사구('modify their vocal expressions')로 대체"
+      },
+      {
+        "original": "This neural plasticity suggests that complex social environments exert selective pressure, favoring individuals with superior communication abilities.",
+        "paraphrase": "The capacity of the brain to adapt indicates that animals living in complex social groups experience evolutionary advantages if they possess strong communication skills.",
+        "tip": "학술 용어('neural plasticity', 'selective pressure')를 설명적 표현으로 풀어서 표현"
+      },
+      {
+        "original": "Understanding animal communication systems provides invaluable insights into the evolutionary origins of human language and cognition.",
+        "paraphrase": "By studying how animals communicate, researchers can better understand how human language and thought processes first emerged through evolution.",
+        "tip": "추상적 명사구('invaluable insights into')를 구체적 동사구('better understand how')로 변환"
+      }
     ]
   },
+  "writing_prompt": {
+    "topic": "저출산 대응 정책",
+    "prompt": "Many countries are experiencing declining birth rates and aging populations. Governments are implementing various policies such as childcare subsidies, parental leave, tax incentives, and housing support to encourage people to have more children. Discuss what you think are the most effective policies to address low birth rates. Use specific examples and reasons to support your answer.",
+    "instruction": "최소 300단어 이상의 학술적 에세이 작성. 서론에서 입장 제시, 본론에서 2-3개의 근거 제시 및 구체적 사례 포함, 결론에서 재강조"
+  },
   "speaking": {
-    "prompt": "Some people prefer to study alone, while others prefer to study in groups. Which do you prefer and why?",
-    "useful_expressions": [
-      "In my opinion, I prefer studying in groups because...",
-      "One reason is that studying with others helps me...",
-      "Another advantage is that group study allows me to...",
-      "For example, when I study with friends...",
-      "In conclusion, I believe that group study is more beneficial for me."
-    ],
-    "sample_points": [
-      "그룹 스터디는 다양한 관점과 설명을 통해 더 깊은 이해를 가능하게 합니다. 친구들이 다른 방식으로 개념을 설명할 때 더 명확하게 이해할 수 있습니다.",
-      "협력적 학습은 동기부여와 책임감을 증대시킵니다. 함께 공부하는 것이 혼자 공부할 때보다 더 재미있고 효과적입니다. 또한 어려운 부분을 함께 해결할 수 있습니다."
+    "prompt": "Some people prefer shopping online for convenience and variety. Others prefer shopping in physical stores to see products in person and get immediate assistance. Which do you prefer and why? Include specific reasons and details.",
+    "model_sentences": [
+      "Personally, I prefer shopping online because it offers greater convenience and a wider selection of products.",
+      "First, online shopping saves me time since I can browse and purchase from home without traveling to multiple stores.",
+      "For example, when I need to buy electronics or clothing, I can easily compare prices and read customer reviews across different websites within minutes.",
+      "Additionally, online retailers often provide better deals and discounts than physical stores, which helps me save money.",
+      "Although some people enjoy the experience of trying products before buying, I find the ease and efficiency of online shopping far more practical for my lifestyle."
     ]
   },
   "listening": {
-    "title": "University Library Study Program",
+    "title": "기숙사 배정 및 룸메이트 배치 문의",
     "type": "conversation",
-    "script": "Student: Excuse me, I'm looking for information about the study programs offered at the library. Librarian: Of course! We offer several programs throughout the semester. We have quiet study zones for those who need concentration, collaborative study rooms for group projects, and specialized tutoring sessions for different subjects. Student: That sounds great! How do I register for the tutoring sessions? Librarian: It's quite simple. You can sign up online through our website or come to the front desk with your student ID. We offer tutoring in mathematics, sciences, languages, and humanities. Sessions are typically held three times a week. Student: Perfect! Do you charge any fees? Librarian: No, all our services are completely free for enrolled students. We also provide access to digital databases and online resources. Is there anything else you'd like to know? Student: No, that's very helpful. Thank you!",
+    "script": "Student A: Hi, I have a question about dormitory assignment for next semester. I submitted my housing application three weeks ago, but I haven't received any confirmation yet. Student B: Oh, I understand your concern. The housing office processes applications in batches, so it usually takes four to six weeks for a decision. Student A: Four to six weeks? That's longer than I expected. Is there any way to expedite the process? Student B: Well, you could visit the housing office in person during their office hours, which are Monday through Friday from 10 AM to 2 PM. Bring your application receipt and student ID. They might be able to give you an update. Student A: That sounds helpful. Also, I wanted to request a specific roommate. Is it too late to submit a roommate preference form? Student B: Not at all. You can submit a roommate request form even after initial assignment, but it has to be done within two weeks of receiving your housing assignment letter. Student A: Great! One more thing—I'm an international student, and I prefer to be housed with someone who can help me adjust to campus life. Do you think the office can accommodate that? Student B: Definitely. The housing office takes special circumstances into consideration. Just mention this in the additional comments section of your form. They'll do their best to match you with a compatible roommate.",
+    "vocabulary": [
+      {
+        "word": "expedite",
+        "meaning_ko": "신속하게 처리하다, 가속화하다"
+      },
+      {
+        "word": "batches",
+        "meaning_ko": "일괄, 묶음"
+      },
+      {
+        "word": "housing assignment",
+        "meaning_ko": "기숙사 배정"
+      },
+      {
+        "word": "roommate preference",
+        "meaning_ko": "룸메이트 선호도"
+      },
+      {
+        "word": "accommodate",
+        "meaning_ko": "수용하다, 배려하다"
+      },
+      {
+        "word": "compatible",
+        "meaning_ko": "양립 가능한, 잘 어울리는"
+      }
+    ],
     "questions": [
       {
-        "q": "What is the main purpose of this conversation?",
+        "q": "What is the main reason Student A visits the housing office?",
         "options": [
-          "To discuss library opening hours",
-          "To provide information about library study programs and services",
-          "To arrange a personal tutoring appointment",
-          "To complain about library facilities"
+          "A) To submit a housing application",
+          "B) To inquire about the status of their dormitory assignment",
+          "C) To change their dormitory location",
+          "D) To request a single room instead of sharing"
         ],
         "answer": 1,
-        "explanation": "대화의 전반적인 내용은 학생이 도서관의 스터디 프로그램에 대한 정보를 요청하고, 사서가 다양한 서비스(조용한 스터디 존, 협력학습실, 튜터링 등)를 설명하는 것입니다."
+        "explanation": "Student A는 3주 전에 기숙사 신청을 했는데 아직 확인 메시지를 받지 못해 상태를 문의하고 있습니다."
       },
       {
-        "q": "According to the librarian, which subjects does the library provide tutoring for?",
+        "q": "What does Student B suggest to expedite the housing decision?",
         "options": [
-          "Only mathematics and sciences",
-          "Mathematics, sciences, languages, and humanities",
-          "All academic subjects without limitation",
-          "Only languages and humanities"
-        ],
-        "answer": 1,
-        "explanation": "사서는 'We offer tutoring in mathematics, sciences, languages, and humanities'라고 명시적으로 언급했습니다."
-      },
-      {
-        "q": "What does the student learn about the cost of library services?",
-        "options": [
-          "Services are expensive and require membership fees",
-          "Tutoring costs money but other services are free",
-          "All services are completely free for enrolled students",
-          "There is a small registration fee"
+          "A) Submit another application immediately",
+          "B) Contact the housing office by phone",
+          "C) Visit the housing office in person with application receipt and student ID",
+          "D) Wait for two more weeks"
         ],
         "answer": 2,
-        "explanation": "사서는 'No, all our services are completely free for enrolled students'라고 명확히 설명했습니다."
+        "explanation": "Student B는 월요일부터 금요일 오전 10시부터 오후 2시 사이에 기숙사 사무소를 직접 방문하고 신청 영수증과 학생증을 가져가라고 제안합니다."
+      },
+      {
+        "q": "Why does Student A want to be housed with someone who can help them adjust to campus life?",
+        "options": [
+          "A) Because they are an international student",
+          "B) Because they are a first-year student",
+          "C) Because they have difficulty making friends",
+          "D) Because they struggle with English"
+        ],
+        "answer": 0,
+        "explanation": "Student A는 국제 학생이기 때문에 캠퍼스 생활에 적응하는 데 도움을 줄 수 있는 사람과 함께 있고 싶다고 명시합니다."
       }
     ]
   }

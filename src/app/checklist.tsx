@@ -64,7 +64,7 @@ export default function ChecklistScreen() {
       const result: Record<string, boolean> = {};
       for (const key of Object.keys(data)) {
         const val = data[key]?.[today];
-        result[key] = val === true || (typeof val === 'number' && val > 0);
+        result[key] = val === true || (typeof val === 'number' && val > 0) || (typeof val === 'object' && val !== null && val?.done === true);
       }
       setDone(result);
     });
