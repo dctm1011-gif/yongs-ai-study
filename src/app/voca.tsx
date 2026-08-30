@@ -815,20 +815,22 @@ export default function VocaScreen() {
       if (!poolSnap.exists()) { setReviewSentences([]); return; }
 
       const pool: Record<string, any> = poolSnap.val();
-      const sorted = Object.values(pool)
+      // 최대 80개를 병렬 조회해서 sentence가 있는 단어 8개만 추림
+      const candidates = Object.values(pool)
         .filter((v: any) => (v.count ?? 0) < 10)
         .sort((a: any, b: any) => (a.count ?? 0) - (b.count ?? 0))
-        .slice(0, 8);
+        .slice(0, 80);
 
-      const sentences: ReviewSentence[] = [];
-      for (const entry of sorted) {
-        const key = (entry.word || '').toLowerCase().replace(/\s+/g, '_').replace(/-/g, '_');
-        if (!key) continue;
-        const snap = await get(ref(db, `english/sentences/${key}`));
-        if (snap.exists()) {
-          sentences.push({ word: entry.word, meaning: entry.meaning, ...snap.val() });
-        }
-      }
+      const results = await Promise.all(
+        candidates.map(async (entry: any) => {
+          const key = (entry.word || '').toLowerCase().replace(/\s+/g, '_').replace(/-/g, '_');
+          if (!key) return null;
+          const snap = await get(ref(db, `english/sentences/${key}`));
+          if (!snap.exists()) return null;
+          return { word: entry.word, meaning: entry.meaning, ...snap.val() } as ReviewSentence;
+        })
+      );
+      const sentences = results.filter(Boolean).slice(0, 8) as ReviewSentence[];
       setReviewSentences(sentences);
       await AsyncStorage.setItem('english_sentences', JSON.stringify(sentences));
     } catch (e) {
