@@ -261,29 +261,33 @@ def generate_default_words(client: anthropic.Anthropic, target_date: date, toefl
     """Claude가 TOEFL iBT 빈출 학술 어휘를 선정하고 학습 자료 생성"""
     print("[*] TOEFL 빈출 어휘 생성 중...")
 
-    used_words = load_used_words()
+    all_used_words = load_used_words()
     skip_words = load_skip_list()
+
+    # 최근 90일분(최대 450개)만 exclusion으로 전달 — 너무 긴 리스트는 Haiku가 무시함
+    used_words = all_used_words[-450:]
     used_words_block = ""
     if used_words:
         used_words_block = (
-            "\n⚠️ 아래 단어는 이미 다뤘으니 제외해주세요:\n"
+            "\n⚠️ 이미 출제한 단어 — 아래 단어들은 절대 사용하지 마세요:\n"
             + ", ".join(used_words) + "\n"
         )
     skip_block = ""
     if skip_words:
         skip_block = (
-            "\n🚫 아래 단어들은 사용자가 너무 어렵다고 SKIP했습니다. 이 단어들보다 쉽거나 비슷한 난이도로 조정해주세요:\n"
+            "\n🚫 사용자가 SKIP한 단어 — 이 단어들보다 쉽거나 비슷한 난이도로 조정해주세요:\n"
             + ", ".join(skip_words) + "\n"
         )
 
-    prompt = f"""TOEFL iBT에 실제로 자주 출제되는 학술 어휘 5개를 선정하고, 각각의 학습 자료를 JSON으로만 생성해주세요. ({target_date})
+    prompt = f"""TOEFL iBT 고급 학술 어휘 5개를 선정하고, 각각의 학습 자료를 JSON으로만 생성해주세요. ({target_date})
 JSON 외 다른 텍스트는 절대 포함하지 마세요.
 {used_words_block}{skip_block}
-단어 선정 기준 (반드시 준수):
-- 난이도: TOEFL iBT C1~C2 수준 — TOEFL 고득점(29점) 및 GRE와 겹치는 고급 학술 어휘 우선
-- 너무 일상적이거나 쉬운 어휘 금지: analyze, indicate, require, suggest, significant, provide, increase, develop, create, include, mitigate, exacerbate, proliferate, advocate, constitute, sustain, compelling, facilitate, deteriorate, predominant 등 이미 일반적으로 알려진 TOEFL 기본 어휘
+[단어 선정 기준 — 반드시 준수]
+- 난이도: GRE 수준 또는 TOEFL iBT 고득점(28~30점) 필수 어휘. CEFR C2 수준의 희귀하고 학술적인 단어.
+- 한국 중·고교 교과서나 일반 TOEFL 기초 학습서에는 나오지 않는 단어
+- 영어 원어민 대학원생이나 학술 논문에서 쓰는 전문 어휘
+- 5개 단어는 서로 의미·어원·품사가 겹치지 않도록 다양하게 선정
 - 슬랭·구어체·일상 표현 절대 금지
-- 목표 난이도 예시: recalcitrant, intransigent, perfidious, equivocal, inveterate, precipitate, tenuous, nuanced, ostensible, insidious, circumvent, bolster, contentious, spurious, ephemeral, predisposed, irrevocable, inadvertent, corroborate, presuppose, counterintuitive, tacit, delineate, conflate, extrapolate
 
 JSON 형식:
 {{"date": "{target_date}", "words": [{{"word": "exacerbate", "part_of_speech": "동사", "meaning_ko": "악화시키다, 심화시키다", "explanation": "이미 나쁜 상황을 더욱 심각하게 만드는 것. TOEFL Reading 환경·사회 지문에서 자주 등장해요.", "example_from_convo": "Deforestation exacerbates climate change by reducing carbon absorption.", "example_ko": "삼림 벌채는 탄소 흡수를 줄여 기후변화를 악화시켜요.", "tip": "동의어: aggravate(악화), worsen(나빠지다). 반의어: alleviate(완화), mitigate(누그러뜨리다). Reading·Writing 고빈출.", "emoji": "📈"}}], "quiz": [{{"type": "meaning", "word": "exacerbate", "question": "Which of the following best describes 'exacerbate'?", "options": ["to make a bad situation worse", "to gradually reduce a problem", "to resolve a situation fundamentally", "to temporarily suppress change"], "answer": 0, "explanation": "exacerbate는 이미 나쁜 상황을 '더 나쁘게' 만드는 것이에요.", "option_explanations": [null, "alleviate(완화)의 의미로 exacerbate의 반의어예요.", "resolve(해결)와 혼동 — exacerbate는 해결이 아니라 악화예요.", "suppress(억제)는 다른 뉘앙스예요."]}}, {{"type": "fill_blank", "word": "exacerbate", "sentence": "Poor nutrition can _____ existing health conditions.", "sentence_ko": "불량한 영양 섭취는 기존 건강 상태를 악화시킬 수 있어요.", "answer": "exacerbate", "hint": "make worse"}}, {{"type": "situation", "word": "exacerbate", "question": "A new policy causes a conflict that was already tense to become far more serious. Which word best describes what happened?", "options": ["alleviate", "exacerbate", "resolve", "suppress"], "answer": 1, "explanation": "갈등이 더 심각해졌으므로 exacerbate(악화)가 적절해요."}}], "sentences": [{{"word": "exacerbate", "sentence": "Skipping sleep only exacerbates the anxiety you already feel before an exam.", "sentence_ko": "수면 부족은 시험 전에 느끼는 불안을 더욱 악화시킬 뿐이에요.", "nuance": "단순히 '나빠진다'가 아니라 이미 존재하는 부정적 상황을 능동적으로 더 심화시키는 뉘앙스. 외부 요인이 문제를 증폭시킬 때 씁니다.", "context": "환경, 건강, 사회 문제, 갈등 등 부정적 상황이 더 나빠지는 맥락. 뉴스·학술문에서 정책 비판할 때 자주 등장.", "everyday_usage": "stress/situation/problem을 목적어로 자주 씁니다. 'This only exacerbates the problem.' / 'Don't exacerbate the situation.'"}}]}}
@@ -299,8 +303,8 @@ JSON 형식:
 - sentences: 오늘 단어 5개 + words_db 최근 10개 단어 = 총 15개 단어, 단어 하나당 문장 하나 (절대 한 단어에 두 문장 금지). 각 문장은 짧고 자연스러운 일상 영어 문장(하이쿠처럼 핵심만). nuance(어떤 느낌인지), context(어떤 상황에서), everyday_usage(실제 일상 표현 패턴)를 한국어로 상세 작성
 - JSON만 반환"""
 
-    used_lower = {w.lower() for w in used_words}
-    max_attempts = 8
+    used_lower = {w.lower() for w in all_used_words}  # 전체 이력 기준으로 중복 체크
+    max_attempts = 5
     for attempt in range(max_attempts):
         response = client.messages.create(
             model="claude-haiku-4-5-20251001",

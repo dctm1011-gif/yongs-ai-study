@@ -78,6 +78,10 @@ export default function SpeakingScreen() {
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const listRef = useRef<FlatList>(null);
 
+  const scrollToBottom = (animated = true) => {
+    setTimeout(() => listRef.current?.scrollToEnd({ animated }), 80);
+  };
+
   const today = getKSTDateString();
   const dayOfMonth = new Date(today).getDate();
   const topic = DAILY_TOPICS[(dayOfMonth - 1) % DAILY_TOPICS.length];
@@ -101,6 +105,15 @@ export default function SpeakingScreen() {
     if (messages.length === 0) return;
     AsyncStorage.setItem(STORAGE_KEY, JSON.stringify({ messages, userMsgCount, viewState })).catch(() => {});
   }, [messages, userMsgCount, viewState]);
+
+  // 메시지 추가 또는 viewState 변경 시 스크롤 (레이아웃 완료 후 80ms 딜레이)
+  useEffect(() => {
+    if (messages.length > 0) scrollToBottom();
+  }, [messages]);
+
+  useEffect(() => {
+    if (viewState === 'done' || viewState === 'chatting') scrollToBottom();
+  }, [viewState]);
 
   // Load past conversation summaries from Firebase (last 7 days, excluding today)
   useEffect(() => {
@@ -288,7 +301,6 @@ export default function SpeakingScreen() {
             keyExtractor={item => item.id}
             renderItem={renderBubble}
             contentContainerStyle={styles.messageList}
-            onContentSizeChange={() => listRef.current?.scrollToEnd({ animated: true })}
           />
 
           {(viewState === 'loading' || viewState === 'ending') && (

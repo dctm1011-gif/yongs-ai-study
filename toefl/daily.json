@@ -1,116 +1,178 @@
 {
-  "date": "2026-08-31",
+  "date": "2026-09-01",
   "reading": {
-    "title": "The Impact of Social Media on Mental Health",
-    "passage": "Recent studies indicate that excessive social media usage significantly affects adolescent mental health. Platforms like Instagram and TikTok create unrealistic standards through curated content, leading to increased anxiety and depression. However, social media also provides communities for isolated individuals. Researchers suggest that moderation and digital literacy education are essential. The key lies not in eliminating social media entirely, but in developing healthy consumption habits and critical thinking skills to navigate the digital landscape responsibly.",
+    "title": "Bioluminescence in Deep-Sea Organisms",
+    "passage": "Bioluminescence, the production of light by living organisms, represents one of the most fascinating adaptations in marine biology. Approximately 90% of deep-sea creatures possess the ability to generate light through chemical reactions involving luciferin and luciferase enzymes. This phenomenon serves multiple critical functions in the abyssal environment where sunlight cannot penetrate. Many species utilize bioluminescence for predation, emitting lures that attract unsuspecting prey in the perpetual darkness. Others employ it as a defense mechanism, producing sudden flashes that confuse potential predators or serve as warning signals to indicate toxicity.\n\nThe ecological significance of bioluminescence extends beyond individual survival. Recent research indicates that bioluminescent organisms play a crucial role in deep-sea food webs, with their light production influencing predator-prey dynamics at depths exceeding 1,000 meters. Scientists have documented over 1,500 species capable of producing light, ranging from dinoflagellates to anglerfish. Furthermore, the study of bioluminescent proteins has revolutionized biomedical research, enabling scientists to develop innovative diagnostic tools and track cellular processes in unprecedented detail. This convergence of marine ecology and biotechnology demonstrates how understanding natural phenomena can yield substantial practical applications.",
+    "vocabulary": [
+      {
+        "word": "bioluminescence",
+        "meaning_ko": "생물이 화학반응을 통해 빛을 생성하는 현상"
+      },
+      {
+        "word": "luciferin",
+        "meaning_ko": "생명체가 빛을 내기 위해 필요한 화학물질"
+      },
+      {
+        "word": "abyssal",
+        "meaning_ko": "대양의 가장 깊은 부분의, 심해의"
+      },
+      {
+        "word": "perpetual",
+        "meaning_ko": "끊임없는, 계속되는"
+      },
+      {
+        "word": "predation",
+        "meaning_ko": "포식, 사냥"
+      },
+      {
+        "word": "dinoflagellates",
+        "meaning_ko": "편모조류, 해양 단세포 생물"
+      },
+      {
+        "word": "convergence",
+        "meaning_ko": "수렴, 만남"
+      }
+    ],
     "questions": [
       {
-        "q": "According to the passage, what is one negative effect of social media on adolescents?",
+        "q": "According to the passage, what percentage of deep-sea creatures can produce bioluminescence?",
         "options": [
-          "It provides community support",
-          "It creates unrealistic standards through curated content",
-          "It improves digital literacy",
-          "It eliminates anxiety"
+          "Approximately 50%",
+          "Approximately 75%",
+          "Approximately 90%",
+          "Approximately 100%"
         ],
-        "answer": 1,
-        "explanation": "본문에서 'Platforms like Instagram and TikTok create unrealistic standards through curated content, leading to increased anxiety and depression'라고 명시되어 있습니다."
+        "answer": 2,
+        "explanation": "첫 번째 문단에서 'Approximately 90% of deep-sea creatures possess the ability to generate light'라고 명시되어 있습니다."
       },
       {
-        "q": "What solution does the passage suggest for healthy social media use?",
+        "q": "What can be inferred from the passage about the deep-sea environment?",
         "options": [
-          "Complete elimination of social media",
-          "Moderation and digital literacy education",
-          "Using only one platform",
-          "Avoiding all digital content"
+          "It contains high levels of sunlight",
+          "It is characterized by complete darkness",
+          "It supports only bioluminescent organisms",
+          "It experiences regular seasonal changes"
         ],
         "answer": 1,
-        "explanation": "'Researchers suggest that moderation and digital literacy education are essential'라는 문장에서 해결책을 제시하고 있습니다."
+        "explanation": "지문에서 'in the abyssal environment where sunlight cannot penetrate'라고 언급되므로, 심해는 태양광이 닿지 않는 완전한 어둠의 환경임을 추론할 수 있습니다."
       },
       {
-        "q": "Which of the following is mentioned as a positive aspect of social media?",
+        "q": "The word 'emitting' in the first paragraph is closest in meaning to",
         "options": [
-          "It eliminates mental health issues",
-          "It provides communities for isolated individuals",
-          "It always creates realistic standards",
-          "It removes the need for face-to-face interaction"
+          "absorbing",
+          "producing and sending out",
+          "controlling",
+          "storing"
         ],
         "answer": 1,
-        "explanation": "본문의 'However, social media also provides communities for isolated individuals'에서 긍정적인 측면을 언급하고 있습니다."
+        "explanation": "'emitting'은 '방출하다', '내보내다'라는 의미로, 여기서는 생물이 불빛을 '생성하여 방출한다'는 뜻입니다. 'producing and sending out'이 가장 정확한 의미 입니다."
+      },
+      {
+        "q": "Why does the author mention bioluminescent proteins in the final sentence?",
+        "options": [
+          "To explain how bioluminescence evolved",
+          "To demonstrate the practical applications of studying natural phenomena",
+          "To criticize current biomedical research methods",
+          "To compare different types of marine organisms"
+        ],
+        "answer": 1,
+        "explanation": "저자는 생물 발광 단백질 연구가 의료 진단 도구 개발로 이어졌음을 언급하여, 자연 현상 연구가 실제적 응용으로 이어질 수 있음을 보여주기 위함입니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Technology has made our lives better than they were 100 years ago'? Use specific examples to support your position.",
-    "structure": {
-      "intro": "명확한 주장 제시: 동의하는지 불동의하는지 직접 표현. 예: 'I strongly agree that technology has significantly improved our quality of life'",
-      "body1": "첫 번째 이유와 구체적 사례 제시. 의료, 통신, 교육 등의 분야에서 기술의 혁신성 설명",
-      "body2": "두 번째 이유와 구체적 사례 제시. 환경 문제나 사회적 영향 등 다각적 관점 포함 가능",
-      "conclusion": "주장을 재강조하되 새로운 내용 추가 없이 요약. 미래에 대한 간단한 언급으로 마무리"
-    },
-    "useful_phrases": [
-      "In my opinion,",
-      "I firmly believe that",
-      "For instance,",
-      "Furthermore,",
-      "Moreover,",
-      "To illustrate this point,",
-      "In conclusion,",
-      "As a result,",
-      "On the other hand,"
+    "prompt": "Do you agree or disagree with the following statement? Remote work should become the standard employment model for most industries. Use specific reasons and examples to support your position.",
+    "paraphrasing": [
+      {
+        "original": "Bioluminescence, the production of light by living organisms, represents one of the most fascinating adaptations in marine biology.",
+        "paraphrase": "The ability of living creatures to generate illumination through chemical processes, known as bioluminescence, exemplifies remarkable evolutionary development in oceanic life.",
+        "tip": "명사구를 재구성하고 동의어(production→generate, fascinating adaptation→remarkable evolutionary development)로 치환하여 의미를 유지하면서 표현을 다양화"
+      },
+      {
+        "original": "Many species utilize bioluminescence for predation, emitting lures that attract unsuspecting prey in the perpetual darkness.",
+        "paraphrase": "To capture food in the endless darkness of the deep sea, numerous organisms emit light-based traps designed to lure unaware victims.",
+        "tip": "능동형 구조를 '~하기 위해'의 목적절 형태로 변환하고, 'emitting lures'를 'emit light-based traps'로 구체화하여 표현"
+      },
+      {
+        "original": "Scientists have documented over 1,500 species capable of producing light, ranging from dinoflagellates to anglerfish.",
+        "paraphrase": "Research has identified more than 1,500 light-producing organisms, spanning a diverse range from microscopic dinoflagellates to large anglerfish.",
+        "tip": "주어를 'Scientists'에서 'Research'로 변경(능동→준수동)하고, 'ranging from'을 'spanning a diverse range from'으로 확장하여 표현 강화"
+      }
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to study in a quiet library environment. Others prefer to study in a bustling café with background noise. Which environment do you prefer for studying, and why?",
-    "useful_expressions": [
-      "In my opinion, I prefer studying in a library because",
-      "One reason is that a quiet environment helps me concentrate better",
-      "Another important point is that I can avoid distractions when studying alone",
-      "From my perspective,",
-      "The main advantage is that",
-      "I believe this is better because"
-    ],
-    "sample_points": [
-      "조용한 도서관 환경에서는 집중력이 향상되어 학습 효율이 높아진다는 점",
-      "카페 환경의 배경 소음은 때로 주의 산만을 유발하지만, 적절한 음악은 창의성을 높일 수 있다는 상충된 관점"
+    "prompt": "Some people are morning types who are most productive early in the day. Others are evening types who prefer working late into the night. Which do you prefer and why? Include specific reasons and details.",
+    "model_sentences": [
+      "I definitely prefer being a morning person because I find that I can accomplish more before noon.",
+      "First of all, when I wake up early, my mind is fresh and I can focus on difficult tasks without distractions.",
+      "For example, last semester I started studying for exams at 6 AM instead of late at night, and I actually retained the information much better.",
+      "Additionally, morning productivity allows me to enjoy my evenings for relaxation and social activities instead of feeling exhausted.",
+      "In conclusion, I believe the morning schedule is more beneficial for both my academic performance and my overall well-being."
     ]
   },
   "listening": {
-    "title": "Professor's Lecture on Climate Change Solutions",
+    "title": "Photosynthesis in Marine Algae",
     "type": "lecture",
-    "script": "Good morning everyone. Today we'll discuss renewable energy as a solution to climate change. Traditional fossil fuels have dominated our energy systems for centuries, but they're major contributors to greenhouse gas emissions. Renewable sources like solar, wind, and hydroelectric power offer sustainable alternatives. Solar panels convert sunlight directly into electricity, while wind turbines harness kinetic energy. Hydroelectric plants use flowing water to generate power. These technologies have become increasingly cost-effective. Germany, for example, now generates over 50 percent of its electricity from renewables. However, challenges remain. Intermittency is a major issue—the sun doesn't always shine, and wind doesn't always blow. Battery storage technology is advancing rapidly to address this. Additionally, transitioning existing infrastructure requires significant investment and political will. Despite these obstacles, renewable energy represents our most viable path toward reducing carbon emissions and combating climate change effectively.",
+    "script": "Professor: Today we're examining photosynthesis in marine algae, which differs significantly from terrestrial plants. Student: What makes it different, Professor? Professor: Well, deep-sea algae receive limited sunlight, so they've evolved specialized pigments like chlorophyll-b and xanthophyll. These additional pigments capture wavelengths that standard chlorophyll cannot access. Student: So they're more efficient? Professor: Precisely. They maximize light absorption despite limited availability. Additionally, the osmotic pressure in saltwater environments requires algae to develop thicker cell walls and unique photosynthetic pathways. Some species even practice cyclic photophosphorylation at night, storing energy in ATP molecules. This remarkable adaptation allows them to photosynthesize continuously, even during darkness. The implications for understanding plant biochemistry and developing sustainable biofuel sources are enormous. Any questions? Student: Could we replicate this in laboratories? Professor: That's an excellent question we'll explore in next week's lab session.",
+    "vocabulary": [
+      {
+        "word": "pigments",
+        "meaning_ko": "색소, 광합성에서 빛을 흡수하는 물질"
+      },
+      {
+        "word": "xanthophyll",
+        "meaning_ko": "크산토필, 황색 광합성 색소"
+      },
+      {
+        "word": "osmotic pressure",
+        "meaning_ko": "삼투압, 용액에서 발생하는 압력"
+      },
+      {
+        "word": "cyclic photophosphorylation",
+        "meaning_ko": "순환 광인산화, 빛 에너지로 ATP를 생성하는 과정"
+      },
+      {
+        "word": "wavelengths",
+        "meaning_ko": "파장, 빛의 주기적 특성"
+      },
+      {
+        "word": "biofuel",
+        "meaning_ko": "바이오연료, 생명체로부터 생성된 연료"
+      }
+    ],
     "questions": [
       {
         "q": "What is the main topic of the lecture?",
         "options": [
-          "The history of fossil fuels",
-          "Renewable energy as a solution to climate change",
-          "The cost of solar panels",
-          "Political obstacles to energy production"
+          "The differences between terrestrial and marine photosynthesis",
+          "How to develop sustainable biofuels",
+          "The classification of deep-sea organisms",
+          "The relationship between osmotic pressure and plant growth"
         ],
-        "answer": 1,
-        "explanation": "교수가 'Today we'll discuss renewable energy as a solution to climate change'라고 명시적으로 주제를 제시했습니다."
+        "answer": 0,
+        "explanation": "교수가 처음부터 '해양 조류의 광합성이 육상 식물과 어떻게 다른지' 설명하고 있으므로, 주제는 해양과 육상 광합성의 차이입니다."
       },
       {
-        "q": "According to the professor, what is one major challenge with renewable energy?",
+        "q": "According to the professor, what do specialized pigments in deep-sea algae do?",
         "options": [
-          "It's too expensive",
-          "Intermittency—solar and wind power are not always available",
-          "It produces more emissions than fossil fuels",
-          "It requires no infrastructure investment"
+          "They change color based on water temperature",
+          "They capture light wavelengths that standard chlorophyll cannot access",
+          "They reduce the algae's need for saltwater",
+          "They increase photosynthesis only during the day"
         ],
         "answer": 1,
-        "explanation": "강의에서 'Intermittency is a major issue—the sun doesn't always shine, and wind doesn't always blow'라고 명확히 설명했습니다."
+        "explanation": "교수는 'These additional pigments capture wavelengths that standard chlorophyll cannot access'라고 명시적으로 설명했습니다."
       },
       {
-        "q": "Which country is mentioned as an example of successful renewable energy adoption?",
+        "q": "Why does the professor mention cyclic photophosphorylation?",
         "options": [
-          "Japan",
-          "Germany",
-          "United States",
-          "China"
+          "To explain why deep-sea algae have thicker cell walls",
+          "To demonstrate how deep-sea algae can continue photosynthesizing even in darkness",
+          "To describe the osmotic pressure in saltwater",
+          "To show why terrestrial plants are more efficient"
         ],
         "answer": 1,
-        "explanation": "'Germany, for example, now generates over 50 percent of its electricity from renewables'라는 구절에서 독일이 사례로 제시되었습니다."
+        "explanation": "교수는 '밤 동안에도 ATP에 에너지를 저장하는 방식으로, 이를 통해 연속적인 광합성이 가능하다'고 설명하여 암흑에서도 광합성이 가능한 메커니즘을 보여줍니다."
       }
     ]
   }
