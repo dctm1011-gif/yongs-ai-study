@@ -4,6 +4,7 @@
 
 [build.environment]
   SECRETS_SCAN_OMIT_PATHS = ".claude,english/push_daily_to_firebase.py"
+  NPM_FLAGS = "--ignore-scripts"
 
 [functions]
   directory = "netlify/functions"
