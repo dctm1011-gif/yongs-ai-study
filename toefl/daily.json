@@ -1,178 +1,111 @@
 {
   "date": "2026-09-01",
   "reading": {
-    "title": "Bioluminescence in Deep-Sea Organisms",
-    "passage": "Bioluminescence, the production of light by living organisms, represents one of the most fascinating adaptations in marine biology. Approximately 90% of deep-sea creatures possess the ability to generate light through chemical reactions involving luciferin and luciferase enzymes. This phenomenon serves multiple critical functions in the abyssal environment where sunlight cannot penetrate. Many species utilize bioluminescence for predation, emitting lures that attract unsuspecting prey in the perpetual darkness. Others employ it as a defense mechanism, producing sudden flashes that confuse potential predators or serve as warning signals to indicate toxicity.\n\nThe ecological significance of bioluminescence extends beyond individual survival. Recent research indicates that bioluminescent organisms play a crucial role in deep-sea food webs, with their light production influencing predator-prey dynamics at depths exceeding 1,000 meters. Scientists have documented over 1,500 species capable of producing light, ranging from dinoflagellates to anglerfish. Furthermore, the study of bioluminescent proteins has revolutionized biomedical research, enabling scientists to develop innovative diagnostic tools and track cellular processes in unprecedented detail. This convergence of marine ecology and biotechnology demonstrates how understanding natural phenomena can yield substantial practical applications.",
-    "vocabulary": [
-      {
-        "word": "bioluminescence",
-        "meaning_ko": "생물이 화학반응을 통해 빛을 생성하는 현상"
-      },
-      {
-        "word": "luciferin",
-        "meaning_ko": "생명체가 빛을 내기 위해 필요한 화학물질"
-      },
-      {
-        "word": "abyssal",
-        "meaning_ko": "대양의 가장 깊은 부분의, 심해의"
-      },
-      {
-        "word": "perpetual",
-        "meaning_ko": "끊임없는, 계속되는"
-      },
-      {
-        "word": "predation",
-        "meaning_ko": "포식, 사냥"
-      },
-      {
-        "word": "dinoflagellates",
-        "meaning_ko": "편모조류, 해양 단세포 생물"
-      },
-      {
-        "word": "convergence",
-        "meaning_ko": "수렴, 만남"
-      }
-    ],
+    "title": "Remote Work and Productivity",
+    "passage": "Remote work has transformed modern employment landscapes significantly. Studies indicate that employees working from home demonstrate 13% higher productivity compared to office-based counterparts. However, isolation and reduced face-to-face collaboration present challenges. Companies implementing hybrid models report improved employee satisfaction and retention rates. Technology enables seamless communication through video conferencing and project management tools. Despite initial skepticism, remote work arrangements have proven sustainable for many organizations, reshaping workplace culture and employee expectations permanently.",
     "questions": [
       {
-        "q": "According to the passage, what percentage of deep-sea creatures can produce bioluminescence?",
+        "q": "According to the passage, what is one advantage of remote work?",
         "options": [
-          "Approximately 50%",
-          "Approximately 75%",
-          "Approximately 90%",
-          "Approximately 100%"
+          "A) Reduced company expenses",
+          "B) Higher employee productivity",
+          "C) Easier management oversight",
+          "D) Faster project completion"
+        ],
+        "answer": 1,
+        "explanation": "본문에서 '재택근무 직원들은 사무실 기반 직원들에 비해 13% 더 높은 생산성을 보인다'고 명시되어 있습니다."
+      },
+      {
+        "q": "What challenge of remote work is mentioned in the passage?",
+        "options": [
+          "A) High technology costs",
+          "B) Difficulty hiring employees",
+          "C) Isolation and reduced collaboration",
+          "D) Legal compliance issues"
         ],
         "answer": 2,
-        "explanation": "첫 번째 문단에서 'Approximately 90% of deep-sea creatures possess the ability to generate light'라고 명시되어 있습니다."
+        "explanation": "본문에서 '고립과 면대면 협업 감소가 도전 과제'라고 명시되어 있습니다."
       },
       {
-        "q": "What can be inferred from the passage about the deep-sea environment?",
+        "q": "Which work model does the passage suggest improves employee satisfaction?",
         "options": [
-          "It contains high levels of sunlight",
-          "It is characterized by complete darkness",
-          "It supports only bioluminescent organisms",
-          "It experiences regular seasonal changes"
+          "A) Fully remote",
+          "B) Fully office-based",
+          "C) Hybrid models",
+          "D) Rotating schedules"
         ],
-        "answer": 1,
-        "explanation": "지문에서 'in the abyssal environment where sunlight cannot penetrate'라고 언급되므로, 심해는 태양광이 닿지 않는 완전한 어둠의 환경임을 추론할 수 있습니다."
-      },
-      {
-        "q": "The word 'emitting' in the first paragraph is closest in meaning to",
-        "options": [
-          "absorbing",
-          "producing and sending out",
-          "controlling",
-          "storing"
-        ],
-        "answer": 1,
-        "explanation": "'emitting'은 '방출하다', '내보내다'라는 의미로, 여기서는 생물이 불빛을 '생성하여 방출한다'는 뜻입니다. 'producing and sending out'이 가장 정확한 의미 입니다."
-      },
-      {
-        "q": "Why does the author mention bioluminescent proteins in the final sentence?",
-        "options": [
-          "To explain how bioluminescence evolved",
-          "To demonstrate the practical applications of studying natural phenomena",
-          "To criticize current biomedical research methods",
-          "To compare different types of marine organisms"
-        ],
-        "answer": 1,
-        "explanation": "저자는 생물 발광 단백질 연구가 의료 진단 도구 개발로 이어졌음을 언급하여, 자연 현상 연구가 실제적 응용으로 이어질 수 있음을 보여주기 위함입니다."
+        "answer": 2,
+        "explanation": "본문에서 '하이브리드 모델을 시행하는 회사들이 직원 만족도와 유지율 향상을 보고한다'고 나와있습니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the following statement? Remote work should become the standard employment model for most industries. Use specific reasons and examples to support your position.",
-    "paraphrasing": [
-      {
-        "original": "Bioluminescence, the production of light by living organisms, represents one of the most fascinating adaptations in marine biology.",
-        "paraphrase": "The ability of living creatures to generate illumination through chemical processes, known as bioluminescence, exemplifies remarkable evolutionary development in oceanic life.",
-        "tip": "명사구를 재구성하고 동의어(production→generate, fascinating adaptation→remarkable evolutionary development)로 치환하여 의미를 유지하면서 표현을 다양화"
-      },
-      {
-        "original": "Many species utilize bioluminescence for predation, emitting lures that attract unsuspecting prey in the perpetual darkness.",
-        "paraphrase": "To capture food in the endless darkness of the deep sea, numerous organisms emit light-based traps designed to lure unaware victims.",
-        "tip": "능동형 구조를 '~하기 위해'의 목적절 형태로 변환하고, 'emitting lures'를 'emit light-based traps'로 구체화하여 표현"
-      },
-      {
-        "original": "Scientists have documented over 1,500 species capable of producing light, ranging from dinoflagellates to anglerfish.",
-        "paraphrase": "Research has identified more than 1,500 light-producing organisms, spanning a diverse range from microscopic dinoflagellates to large anglerfish.",
-        "tip": "주어를 'Scientists'에서 'Research'로 변경(능동→준수동)하고, 'ranging from'을 'spanning a diverse range from'으로 확장하여 표현 강화"
-      }
+    "prompt": "Do you agree or disagree with the statement: 'Remote work should be the standard employment model for all companies'? Use specific reasons and examples to support your position.",
+    "structure": {
+      "intro": "명확한 입장 제시 (동의/반대). 배경 정보 1-2문장으로 제공. 논문의 방향성 암시.",
+      "body1": "첫 번째 근거 제시. 구체적 사례나 데이터 인용. 주제문 + 설명 + 예시 구조.",
+      "body2": "두 번째 근거 제시. 첫 번째와 다른 관점. 실생활 예시 또는 연구 기반 주장.",
+      "conclusion": "입장 재강조. 본론의 주요 포인트 요약. 더 넓은 의미의 함축 또는 미래 전망 제시."
+    },
+    "useful_phrases": [
+      "In my opinion, remote work should/should not be the standard because...",
+      "First and foremost, this arrangement allows employees to...",
+      "Furthermore, companies benefit from reduced overhead costs and...",
+      "However, one significant drawback is that...",
+      "For instance, collaborative teams in creative industries require...",
+      "In conclusion, while remote work offers advantages, it is not universally suitable for..."
     ]
   },
   "speaking": {
-    "prompt": "Some people are morning types who are most productive early in the day. Others are evening types who prefer working late into the night. Which do you prefer and why? Include specific reasons and details.",
-    "model_sentences": [
-      "I definitely prefer being a morning person because I find that I can accomplish more before noon.",
-      "First of all, when I wake up early, my mind is fresh and I can focus on difficult tasks without distractions.",
-      "For example, last semester I started studying for exams at 6 AM instead of late at night, and I actually retained the information much better.",
-      "Additionally, morning productivity allows me to enjoy my evenings for relaxation and social activities instead of feeling exhausted.",
-      "In conclusion, I believe the morning schedule is more beneficial for both my academic performance and my overall well-being."
+    "prompt": "Some people prefer working in a traditional office environment. Others prefer remote work. Which do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer remote work because it allows me to...",
+      "One reason is that remote work provides flexibility and...",
+      "Another important factor is that I can concentrate better when...",
+      "This preference is based on my personal experience with..."
+    ],
+    "sample_points": [
+      "유연성 - 출퇴근 시간 절약, 개인 일정 조절 가능, 일과 삶의 균형 개선",
+      "생산성 - 방해 요소 감소, 집중력 향상, 자신의 페이스대로 작업 가능"
     ]
   },
   "listening": {
-    "title": "Photosynthesis in Marine Algae",
-    "type": "lecture",
-    "script": "Professor: Today we're examining photosynthesis in marine algae, which differs significantly from terrestrial plants. Student: What makes it different, Professor? Professor: Well, deep-sea algae receive limited sunlight, so they've evolved specialized pigments like chlorophyll-b and xanthophyll. These additional pigments capture wavelengths that standard chlorophyll cannot access. Student: So they're more efficient? Professor: Precisely. They maximize light absorption despite limited availability. Additionally, the osmotic pressure in saltwater environments requires algae to develop thicker cell walls and unique photosynthetic pathways. Some species even practice cyclic photophosphorylation at night, storing energy in ATP molecules. This remarkable adaptation allows them to photosynthesize continuously, even during darkness. The implications for understanding plant biochemistry and developing sustainable biofuel sources are enormous. Any questions? Student: Could we replicate this in laboratories? Professor: That's an excellent question we'll explore in next week's lab session.",
-    "vocabulary": [
-      {
-        "word": "pigments",
-        "meaning_ko": "색소, 광합성에서 빛을 흡수하는 물질"
-      },
-      {
-        "word": "xanthophyll",
-        "meaning_ko": "크산토필, 황색 광합성 색소"
-      },
-      {
-        "word": "osmotic pressure",
-        "meaning_ko": "삼투압, 용액에서 발생하는 압력"
-      },
-      {
-        "word": "cyclic photophosphorylation",
-        "meaning_ko": "순환 광인산화, 빛 에너지로 ATP를 생성하는 과정"
-      },
-      {
-        "word": "wavelengths",
-        "meaning_ko": "파장, 빛의 주기적 특성"
-      },
-      {
-        "word": "biofuel",
-        "meaning_ko": "바이오연료, 생명체로부터 생성된 연료"
-      }
-    ],
+    "title": "Discussion on Workplace Communication",
+    "type": "conversation",
+    "script": "Professor: Good morning, everyone. Today we're discussing effective workplace communication in the digital age. Sarah, in your survey about remote teams, what was the most surprising finding? Student: Well, Professor, we discovered that email isn't always the most effective tool. Many workers felt overwhelmed by excessive emails and preferred real-time communication through instant messaging or video calls. Professor: That's fascinating. Did you find generational differences in preferences? Student: Absolutely. Younger employees strongly favored video conferencing for complex discussions, while some senior staff still preferred traditional email for documentation purposes. They wanted a permanent record. Professor: This raises an important point. Organizations must balance immediacy with accountability. What recommendations did your study suggest? Student: We recommended a tiered communication strategy. Use instant messaging for quick questions, video calls for nuanced discussions, and email for formal records. This approach seemed to satisfy both preferences and improved overall team collaboration. Professor: Excellent research, Sarah. This reflects real workplace challenges organizations face today.",
     "questions": [
       {
-        "q": "What is the main topic of the lecture?",
+        "q": "What was the main finding of Sarah's survey?",
         "options": [
-          "The differences between terrestrial and marine photosynthesis",
-          "How to develop sustainable biofuels",
-          "The classification of deep-sea organisms",
-          "The relationship between osmotic pressure and plant growth"
-        ],
-        "answer": 0,
-        "explanation": "교수가 처음부터 '해양 조류의 광합성이 육상 식물과 어떻게 다른지' 설명하고 있으므로, 주제는 해양과 육상 광합성의 차이입니다."
-      },
-      {
-        "q": "According to the professor, what do specialized pigments in deep-sea algae do?",
-        "options": [
-          "They change color based on water temperature",
-          "They capture light wavelengths that standard chlorophyll cannot access",
-          "They reduce the algae's need for saltwater",
-          "They increase photosynthesis only during the day"
+          "A) Email is the best workplace communication tool",
+          "B) Remote workers prefer video calls over emails",
+          "C) Younger employees reject all traditional communication methods",
+          "D) Senior staff only use email for daily work"
         ],
         "answer": 1,
-        "explanation": "교수는 'These additional pigments capture wavelengths that standard chlorophyll cannot access'라고 명시적으로 설명했습니다."
+        "explanation": "사라의 연구에서 이메일이 항상 효과적이지 않으며, 많은 근로자들이 즉시 메시지나 화상 통화를 선호한다고 밝혔습니다."
       },
       {
-        "q": "Why does the professor mention cyclic photophosphorylation?",
+        "q": "What generational difference did Sarah's study identify?",
         "options": [
-          "To explain why deep-sea algae have thicker cell walls",
-          "To demonstrate how deep-sea algae can continue photosynthesizing even in darkness",
-          "To describe the osmotic pressure in saltwater",
-          "To show why terrestrial plants are more efficient"
+          "A) Only young workers use technology",
+          "B) Older workers prefer video calls exclusively",
+          "C) Younger employees favored video conferencing; senior staff preferred email for records",
+          "D) No generational differences were found"
+        ],
+        "answer": 2,
+        "explanation": "본문에서 젊은 직원들은 화상 회의를 선호하고, 연장자 직원들은 기록을 위해 이메일을 선호한다고 명확히 나타나 있습니다."
+      },
+      {
+        "q": "What tiered communication strategy did Sarah recommend?",
+        "options": [
+          "A) Use only instant messaging for all communication",
+          "B) Instant messaging for quick questions, video calls for complex discussions, email for formal records",
+          "C) Eliminate email entirely from workplace communication",
+          "D) Use only video calls for all workplace matters"
         ],
         "answer": 1,
-        "explanation": "교수는 '밤 동안에도 ATP에 에너지를 저장하는 방식으로, 이를 통해 연속적인 광합성이 가능하다'고 설명하여 암흑에서도 광합성이 가능한 메커니즘을 보여줍니다."
+        "explanation": "사라는 빠른 질문에는 즉시 메시지, 복잡한 논의에는 화상 통화, 공식 기록에는 이메일을 사용할 것을 권장했습니다."
       }
     ]
   }
