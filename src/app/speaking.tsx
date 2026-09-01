@@ -125,7 +125,7 @@ export default function SpeakingScreen() {
       const recent = all
         .filter(h => h.date < today)
         .sort((a, b) => b.date.localeCompare(a.date))
-        .slice(0, 7);
+        .slice(0, 10);
       setHistory(recent);
     }).catch(() => {});
   }, [user?.uid]);
