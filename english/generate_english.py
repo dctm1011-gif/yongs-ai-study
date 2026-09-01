@@ -258,87 +258,90 @@ def load_toefl_words(toefl_path: Path = None) -> list:
 
 
 def generate_default_words(client: anthropic.Anthropic, target_date: date, toefl_words: list = None) -> dict:
-    """Claude가 TOEFL iBT 빈출 학술 어휘를 선정하고 학습 자료 생성"""
-    print("[*] TOEFL 빈출 어휘 생성 중...")
+    """도메인별 2단계로 학술 어휘 생성 (exclusion 리스트 대신 도메인 지정으로 중복 방지)"""
+    import re as _re
+    print("[*] 학술 어휘 생성 중 (도메인 방식)...")
 
     all_used_words = load_used_words()
-    skip_words = load_skip_list()
+    used_lower = {w.lower() for w in all_used_words}
+    recent_50 = ", ".join(all_used_words[-50:])
 
-    # 최근 90일분(최대 450개)만 exclusion으로 전달 — 너무 긴 리스트는 Haiku가 무시함
-    used_words = all_used_words[-450:]
-    used_words_block = ""
-    if used_words:
-        used_words_block = (
-            "\n⚠️ 이미 출제한 단어 — 아래 단어들은 절대 사용하지 마세요:\n"
-            + ", ".join(used_words) + "\n"
+    # 1단계: 도메인별 후보 단어 선정 (최근 50개만 금지 — 짧아야 Haiku가 지킴)
+    step1_prompt = (
+        f"10개의 고급 영어 학술 단어를 선정하세요. 5개 도메인에서 각 2개씩:\n"
+        "1. 의학/생물학  2. 법학/법률  3. 철학/논리학  4. 경제학/금융  5. 언어학/수사학\n\n"
+        f"절대 금지: {recent_50}\n"
+        "조건: GRE/TOEFL 고득점 수준 전문 학술어, 슬랭 금지\n\n"
+        'JSON 배열만 반환:\n'
+        '[{"word":"단어","domain":"도메인","pos":"품사","meaning_ko":"뜻"}]'
+    )
+
+    candidates = []
+    for attempt in range(3):
+        resp = client.messages.create(
+            model="claude-haiku-4-5-20251001", max_tokens=700,
+            messages=[{"role": "user", "content": step1_prompt if attempt == 0
+                       else step1_prompt + f"\n이미 선택됨(금지): {[c['word'] for c in candidates]}"}]
         )
-    skip_block = ""
-    if skip_words:
-        skip_block = (
-            "\n🚫 사용자가 SKIP한 단어 — 이 단어들보다 쉽거나 비슷한 난이도로 조정해주세요:\n"
-            + ", ".join(skip_words) + "\n"
-        )
-
-    prompt = f"""TOEFL iBT 고급 학술 어휘 5개를 선정하고, 각각의 학습 자료를 JSON으로만 생성해주세요. ({target_date})
-JSON 외 다른 텍스트는 절대 포함하지 마세요.
-{used_words_block}{skip_block}
-[단어 선정 기준 — 반드시 준수]
-- 난이도: GRE 수준 또는 TOEFL iBT 고득점(28~30점) 필수 어휘. CEFR C2 수준의 희귀하고 학술적인 단어.
-- 한국 중·고교 교과서나 일반 TOEFL 기초 학습서에는 나오지 않는 단어
-- 영어 원어민 대학원생이나 학술 논문에서 쓰는 전문 어휘
-- 5개 단어는 서로 의미·어원·품사가 겹치지 않도록 다양하게 선정
-- 슬랭·구어체·일상 표현 절대 금지
-
-JSON 형식:
-{{"date": "{target_date}", "words": [{{"word": "exacerbate", "part_of_speech": "동사", "meaning_ko": "악화시키다, 심화시키다", "explanation": "이미 나쁜 상황을 더욱 심각하게 만드는 것. TOEFL Reading 환경·사회 지문에서 자주 등장해요.", "example_from_convo": "Deforestation exacerbates climate change by reducing carbon absorption.", "example_ko": "삼림 벌채는 탄소 흡수를 줄여 기후변화를 악화시켜요.", "tip": "동의어: aggravate(악화), worsen(나빠지다). 반의어: alleviate(완화), mitigate(누그러뜨리다). Reading·Writing 고빈출.", "emoji": "📈"}}], "quiz": [{{"type": "meaning", "word": "exacerbate", "question": "Which of the following best describes 'exacerbate'?", "options": ["to make a bad situation worse", "to gradually reduce a problem", "to resolve a situation fundamentally", "to temporarily suppress change"], "answer": 0, "explanation": "exacerbate는 이미 나쁜 상황을 '더 나쁘게' 만드는 것이에요.", "option_explanations": [null, "alleviate(완화)의 의미로 exacerbate의 반의어예요.", "resolve(해결)와 혼동 — exacerbate는 해결이 아니라 악화예요.", "suppress(억제)는 다른 뉘앙스예요."]}}, {{"type": "fill_blank", "word": "exacerbate", "sentence": "Poor nutrition can _____ existing health conditions.", "sentence_ko": "불량한 영양 섭취는 기존 건강 상태를 악화시킬 수 있어요.", "answer": "exacerbate", "hint": "make worse"}}, {{"type": "situation", "word": "exacerbate", "question": "A new policy causes a conflict that was already tense to become far more serious. Which word best describes what happened?", "options": ["alleviate", "exacerbate", "resolve", "suppress"], "answer": 1, "explanation": "갈등이 더 심각해졌으므로 exacerbate(악화)가 적절해요."}}], "sentences": [{{"word": "exacerbate", "sentence": "Skipping sleep only exacerbates the anxiety you already feel before an exam.", "sentence_ko": "수면 부족은 시험 전에 느끼는 불안을 더욱 악화시킬 뿐이에요.", "nuance": "단순히 '나빠진다'가 아니라 이미 존재하는 부정적 상황을 능동적으로 더 심화시키는 뉘앙스. 외부 요인이 문제를 증폭시킬 때 씁니다.", "context": "환경, 건강, 사회 문제, 갈등 등 부정적 상황이 더 나빠지는 맥락. 뉴스·학술문에서 정책 비판할 때 자주 등장.", "everyday_usage": "stress/situation/problem을 목적어로 자주 씁니다. 'This only exacerbates the problem.' / 'Don't exacerbate the situation.'"}}]}}
-
-규칙:
-- 단어 5개, 퀴즈 8개 (meaning 3개, fill_blank 3개, situation 2개)
-- ⚠️ question 필드는 반드시 영어로 작성 (한국어 질문 절대 금지)
-- fill_blank의 sentence는 영어 문장, sentence_ko는 한국어 번역
-- situation의 question도 영어로 작성 — 상황 묘사도 영어로
-- tip: TOEFL 출제 영역 + 핵심 동의어/반의어 포함
-- 오답 선택지: 동의어(뉘앙스 차이)·관련 단어·반의어 활용 (무작위 distractor 금지)
-- option_explanations: 오답마다 한국어로 WHY 설명 필수 (정답은 null)
-- sentences: 오늘 단어 5개 + words_db 최근 10개 단어 = 총 15개 단어, 단어 하나당 문장 하나 (절대 한 단어에 두 문장 금지). 각 문장은 짧고 자연스러운 일상 영어 문장(하이쿠처럼 핵심만). nuance(어떤 느낌인지), context(어떤 상황에서), everyday_usage(실제 일상 표현 패턴)를 한국어로 상세 작성
-- JSON만 반환"""
-
-    used_lower = {w.lower() for w in all_used_words}  # 전체 이력 기준으로 중복 체크
-    max_attempts = 5
-    for attempt in range(max_attempts):
-        response = client.messages.create(
-            model="claude-haiku-4-5-20251001",
-            max_tokens=8000,
-            messages=[{"role": "user", "content": prompt}]
-        )
-
-        text = response.content[0].text.strip()
-        start = text.find("{")
-        end = text.rfind("}") + 1
-        if start == -1 or end == 0:
-            print(f"[!] No JSON found (시도 {attempt + 1})")
+        raw = resp.content[0].text.strip()
+        raw = _re.sub(r'^```[a-z]*\n?', '', raw, flags=_re.M).strip().rstrip('`').strip()
+        m = _re.search(r'\[[\s\S]*\]', raw)
+        if not m:
             continue
-
         try:
-            data = json.loads(text[start:end])
+            batch = json.loads(m.group(0))
+        except json.JSONDecodeError:
+            continue
+        for c in batch:
+            if c.get("word","").lower() not in used_lower and c["word"] not in [x["word"] for x in candidates]:
+                candidates.append(c)
+        if len(candidates) >= 5:
+            break
+
+    if len(candidates) < 5:
+        print(f"[!] 후보 {len(candidates)}개만 확보 — 기본값 사용")
+        return get_default_words(target_date)
+
+    final_words = candidates[:5]
+    words_str = ", ".join(c["word"] for c in final_words)
+    print(f"[+] 선정: {words_str}")
+
+    # 2단계: 선정된 단어로 전체 콘텐츠 생성 (예시 단어 없음)
+    step2_prompt = (
+        f"단어 5개: {words_str}\n날짜: {target_date}\n\n"
+        "아래 JSON 구조로 학습 자료를 생성하세요. JSON만 반환 (마크다운 블록 없이):\n\n"
+        '{"date":"' + str(target_date) + '",'
+        '"words":[{"word":"","part_of_speech":"","meaning_ko":"","explanation":"","example_from_convo":"","example_ko":"","tip":"동의어/반의어+출제영역","emoji":""}],'
+        '"quiz":['
+        '{"type":"meaning","word":"","question":"영어질문","options":["","","",""],"answer":0,"explanation":"","option_explanations":[null,"","",""]},'
+        '{"type":"fill_blank","word":"","sentence":"영어 ___ 문장","sentence_ko":"","answer":"","hint":""},'
+        '{"type":"situation","word":"","question":"영어상황질문","options":["","","",""],"answer":0,"explanation":""}],'
+        '"sentences":[{"word":"","sentence":"","sentence_ko":"","nuance":"","context":"","everyday_usage":""}]}\n\n'
+        "규칙: words 5개, quiz는 meaning 3+fill_blank 3+situation 2=8개, sentences 5개\n"
+        "모든 question은 영어로. JSON만 반환."
+    )
+
+    for attempt in range(3):
+        resp2 = client.messages.create(
+            model="claude-haiku-4-5-20251001", max_tokens=8000,
+            messages=[{"role": "user", "content": step2_prompt}]
+        )
+        raw2 = resp2.content[0].text.strip()
+        raw2 = _re.sub(r'^```[a-z]*\n?', '', raw2, flags=_re.M).strip().rstrip('`').strip()
+        m2 = _re.search(r'\{[\s\S]*\}', raw2)
+        if not m2:
+            print(f"[!] 콘텐츠 JSON 없음 (시도 {attempt+1})")
+            continue
+        try:
+            data = json.loads(m2.group(0))
         except json.JSONDecodeError as e:
-            print(f"[!] JSON 파싱 실패 (시도 {attempt + 1}): {e}")
+            print(f"[!] JSON 파싱 실패 (시도 {attempt+1}): {e}")
             continue
-
-        if len(data.get("words", [])) < 5 or len(data.get("quiz", [])) < 8:
-            continue
-
-        repeats = [w["word"] for w in data["words"] if w.get("word", "").lower() in used_lower]
-        if not repeats:
-            words_generated = [w["word"] for w in data["words"]]
-            print(f"[+] TOEFL 어휘 {len(data['words'])}개 생성 완료: {', '.join(words_generated)}")
+        if len(data.get("words",[])) >= 5 and len(data.get("quiz",[])) >= 8:
+            print(f"[+] 콘텐츠 생성 완료: {[w['word'] for w in data['words']]}")
             return data
 
-        if attempt < max_attempts - 1:
-            print(f"[!] 중복 단어 생성됨 (시도 {attempt + 1}): {repeats} - 재시도")
-            continue
-
-    print(f"[!] {max_attempts}회 실패, 기본값 사용")
+    print("[!] 콘텐츠 생성 실패, 기본값 사용")
     return get_default_words(target_date)
 
 
