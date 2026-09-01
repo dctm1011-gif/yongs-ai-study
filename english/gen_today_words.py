@@ -26,15 +26,20 @@ print(f"DB 단어 수: {len(all_words)}")
 
 client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 
-# 1단계: 후보 단어 선정 (도메인별)
+# 1단계: 범학문 AWL B2-C1 후보 단어 선정
 resp = client.messages.create(
     model="claude-haiku-4-5-20251001",
     max_tokens=700,
-    messages=[{"role": "user", "content": f"""10개의 고급 영어 학술 단어를 선정하세요. 5개 도메인에서 각 2개씩:
-1. 의학/생물학  2. 법학/법률  3. 철학/논리학  4. 경제학/금융  5. 언어학/수사학
+    messages=[{"role": "user", "content": f"""10개의 영어 학술 단어를 선정하세요. 5개 영역에서 각 2개씩:
+1. 자연과학/환경  2. 사회/정치  3. 경제/경영  4. 심리/교육  5. 문화/예술
 
 절대 금지: {recent_50}
-조건: GRE/TOEFL 고득점 수준 전문 학술어, 슬랭 금지
+조건 (반드시 지킬 것):
+- CEFR B2~C1 수준 학술 어휘 (Academic Word List 범위)
+- 여러 학문 분야에서 두루 쓰이는 단어 (예: scrutinize, prevalent, empirical, tangible, coherent)
+- 의학 전공술어·법률 라틴어·철학 전문용어 절대 금지 (예: etiopathogenesis, mens rea, apodictic 금지)
+- TOEFL iBT Reading/Writing에 실제 등장하는 수준
+- 슬랭·구어 금지
 
 JSON 배열만 반환:
 [{{"word":"단어","domain":"도메인","pos":"품사","meaning_ko":"뜻"}}]"""}]

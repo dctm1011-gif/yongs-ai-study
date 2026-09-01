@@ -103,6 +103,40 @@ def load_skip_list() -> list:
         return []
 
 
+def fetch_user_ratings() -> dict:
+    """Firebase english/userRatings에서 사용자 난이도 평가 로드.
+    반환: {"avg": float, "easy": int, "medium": int, "hard": int, "total": int}
+    """
+    db_url = os.environ.get(
+        "EXPO_PUBLIC_FIREBASE_DATABASE_URL",
+        "https://yongstudy-1f242-default-rtdb.asia-southeast1.firebasedatabase.app"
+    )
+    empty = {"avg": 3.0, "easy": 0, "medium": 0, "hard": 0, "total": 0}
+    try:
+        import urllib.request as ur
+        req = ur.Request(f"{db_url}/english/userRatings.json",
+                         headers={"User-Agent": "Mozilla/5.0"})
+        with ur.urlopen(req, timeout=8) as r:
+            data = json.loads(r.read())
+        if not data or not isinstance(data, dict):
+            return empty
+        ratings = [v["rating"] for v in data.values()
+                   if isinstance(v, dict) and isinstance(v.get("rating"), (int, float))]
+        if not ratings:
+            return empty
+        avg = sum(ratings) / len(ratings)
+        return {
+            "avg": round(avg, 2),
+            "easy": sum(1 for r in ratings if r <= 2),
+            "medium": sum(1 for r in ratings if r == 3),
+            "hard": sum(1 for r in ratings if r >= 4),
+            "total": len(ratings),
+        }
+    except Exception as e:
+        print(f"[ratings] 로드 실패 (무시): {e}")
+        return empty
+
+
 def get_default_words(target_date: date) -> dict:
     """API 최대 실패 시 비상 fallback — words_db에 없는 단어를 동적으로 선택"""
     used_lower = {w.lower() for w in load_used_words()}
@@ -315,12 +349,36 @@ def generate_default_words(client: anthropic.Anthropic, target_date: date, toefl
     used_lower = {w.lower() for w in all_used_words}
     recent_50 = ", ".join(all_used_words[-50:])
 
-    # 1단계: 도메인별 후보 단어 선정 (최근 50개만 금지 — 짧아야 Haiku가 지킴)
+    # 사용자 난이도 평가 기반 CEFR 조정
+    ratings = fetch_user_ratings()
+    avg = ratings["avg"]
+    total = ratings["total"]
+    if total >= 5:
+        if avg < 2.3:
+            cefr_hint = "C1~C2 수준 (사용자가 대부분 쉽다고 평가함 — 더 어렵게)"
+        elif avg < 2.8:
+            cefr_hint = "C1 수준 (사용자가 약간 쉽다고 평가함 — 한 단계 높게)"
+        elif avg <= 3.5:
+            cefr_hint = "B2~C1 수준 (사용자 난이도 만족 — 현행 유지)"
+        elif avg <= 4.2:
+            cefr_hint = "B2 수준 (사용자가 약간 어렵다고 평가함 — 한 단계 낮게)"
+        else:
+            cefr_hint = "B1~B2 수준 (사용자가 많이 어렵다고 평가함 — 더 쉽게)"
+        print(f"[ratings] 평균 {avg} (n={total}) → {cefr_hint}")
+    else:
+        cefr_hint = "B2~C1 수준 (평가 데이터 부족 — 기본값)"
+
+    # 1단계: 범학문 AWL 후보 단어 선정 (최근 50개만 금지 — 짧아야 Haiku가 지킴)
     step1_prompt = (
-        f"10개의 고급 영어 학술 단어를 선정하세요. 5개 도메인에서 각 2개씩:\n"
-        "1. 의학/생물학  2. 법학/법률  3. 철학/논리학  4. 경제학/금융  5. 언어학/수사학\n\n"
+        f"10개의 영어 학술 단어를 선정하세요. 5개 영역에서 각 2개씩:\n"
+        "1. 자연과학/환경  2. 사회/정치  3. 경제/경영  4. 심리/교육  5. 문화/예술\n\n"
         f"절대 금지: {recent_50}\n"
-        "조건: GRE/TOEFL 고득점 수준 전문 학술어, 슬랭 금지\n\n"
+        "조건 (반드시 지킬 것):\n"
+        f"- 난이도: {cefr_hint}\n"
+        "- 여러 학문 분야에서 두루 쓰이는 단어 (예: scrutinize, prevalent, empirical, tangible, coherent)\n"
+        "- 의학 전공술어·법률 라틴어·철학 전문용어 절대 금지 (예: etiopathogenesis, mens rea, apodictic 금지)\n"
+        "- TOEFL iBT Reading/Writing에 실제 등장하는 수준\n"
+        "- 슬랭·구어 금지\n\n"
         'JSON 배열만 반환:\n'
         '[{"word":"단어","domain":"도메인","pos":"품사","meaning_ko":"뜻"}]'
     )

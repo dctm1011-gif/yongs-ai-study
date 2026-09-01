@@ -1,111 +1,181 @@
 {
-  "date": "2026-09-01",
+  "date": "2026-09-02",
   "reading": {
-    "title": "Remote Work and Productivity",
-    "passage": "Remote work has transformed modern employment landscapes significantly. Studies indicate that employees working from home demonstrate 13% higher productivity compared to office-based counterparts. However, isolation and reduced face-to-face collaboration present challenges. Companies implementing hybrid models report improved employee satisfaction and retention rates. Technology enables seamless communication through video conferencing and project management tools. Despite initial skepticism, remote work arrangements have proven sustainable for many organizations, reshaping workplace culture and employee expectations permanently.",
+    "title": "The Decline of the Roman Empire and Economic Transformation",
+    "passage": "The collapse of the Roman Empire in the fifth century CE resulted not from a single catastrophic event, but rather from a confluence of interconnected economic, military, and social factors that gradually undermined imperial stability. Archaeological evidence suggests that the empire's extensive trade networks, which had previously facilitated the accumulation of wealth and resources, began to deteriorate significantly during the third and fourth centuries. The debasement of currency, combined with rampant inflation and the escalating costs of maintaining military garrisons along the empire's vast frontiers, depleted the imperial treasury at an alarming rate. Furthermore, the fragmentation of agricultural production and the subsequent disruption of food distribution systems intensified economic hardship throughout the empire's provinces. Scholars now recognize that the empire's demise was neither instantaneous nor uniform across all regions; rather, it manifested as a protracted transformation characterized by institutional reorganization, the emergence of successor kingdoms, and the gradual shift from centralized Roman administration to decentralized feudal systems. This nuanced understanding has fundamentally altered our conceptualization of late antiquity, revealing it not as a period of unmitigated decline but as an era of dynamic cultural and institutional metamorphosis.",
+    "vocabulary": [
+      {
+        "word": "confluence",
+        "meaning_ko": "(여러 요소의) 결합, 합류"
+      },
+      {
+        "word": "undermine",
+        "meaning_ko": "약화시키다, 훼손하다"
+      },
+      {
+        "word": "debasement",
+        "meaning_ko": "가치 저하, 품질 저하"
+      },
+      {
+        "word": "escalating",
+        "meaning_ko": "점점 증가하는, 심화되는"
+      },
+      {
+        "word": "fragmentation",
+        "meaning_ko": "단편화, 분열"
+      },
+      {
+        "word": "protracted",
+        "meaning_ko": "오래 지속되는, 장기간의"
+      },
+      {
+        "word": "metamorphosis",
+        "meaning_ko": "변신, 변화"
+      },
+      {
+        "word": "unmitigated",
+        "meaning_ko": "완화되지 않은, 순전한"
+      }
+    ],
     "questions": [
       {
-        "q": "According to the passage, what is one advantage of remote work?",
+        "q": "According to the passage, which of the following was a major factor in the Roman Empire's economic deterioration?",
         "options": [
-          "A) Reduced company expenses",
-          "B) Higher employee productivity",
-          "C) Easier management oversight",
-          "D) Faster project completion"
+          "A) Excessive military expansion into northern territories",
+          "B) The debasement of currency and consequent inflation",
+          "C) The complete cessation of all trade networks",
+          "D) The rapid migration of the entire population to Africa"
         ],
         "answer": 1,
-        "explanation": "본문에서 '재택근무 직원들은 사무실 기반 직원들에 비해 13% 더 높은 생산성을 보인다'고 명시되어 있습니다."
+        "explanation": "본문에서 '화폐의 가치 저하(debasement of currency)와 급격한 인플레이션 그리고 국경 군대 유지비 증가'가 제국 재정 고갈의 원인으로 명시되어 있습니다."
       },
       {
-        "q": "What challenge of remote work is mentioned in the passage?",
+        "q": "What can be inferred from the passage about the characterization of late antiquity?",
         "options": [
-          "A) High technology costs",
-          "B) Difficulty hiring employees",
-          "C) Isolation and reduced collaboration",
-          "D) Legal compliance issues"
+          "A) It was purely a period of cultural destruction",
+          "B) It should be understood as a complex transformation rather than simple decline",
+          "C) It resulted in the complete disappearance of Roman traditions",
+          "D) It occurred suddenly and uniformly across all regions"
         ],
-        "answer": 2,
-        "explanation": "본문에서 '고립과 면대면 협업 감소가 도전 과제'라고 명시되어 있습니다."
+        "answer": 1,
+        "explanation": "마지막 문장에서 '완화되지 않은 쇠퇴의 시대가 아니라 역동적인 문화와 제도적 변화의 시대'라고 명시되어 있으며, 이는 단순한 쇠퇴가 아닌 복잡한 변환으로의 이해를 제시합니다."
       },
       {
-        "q": "Which work model does the passage suggest improves employee satisfaction?",
+        "q": "The word 'protracted' in the last paragraph is closest in meaning to which of the following?",
         "options": [
-          "A) Fully remote",
-          "B) Fully office-based",
-          "C) Hybrid models",
-          "D) Rotating schedules"
+          "A) Sudden and unexpected",
+          "B) Lasting for an extended period",
+          "C) Completely catastrophic",
+          "D) Deliberately concealed"
         ],
-        "answer": 2,
-        "explanation": "본문에서 '하이브리드 모델을 시행하는 회사들이 직원 만족도와 유지율 향상을 보고한다'고 나와있습니다."
+        "answer": 1,
+        "explanation": "'Protracted'는 '오래 지속되는, 장기간의'라는 의미로, extended period(오래 지속되는 기간)와 가장 가깝습니다."
+      },
+      {
+        "q": "Why does the author mention the fragmentation of agricultural production?",
+        "options": [
+          "A) To explain why Rome never developed advanced farming techniques",
+          "B) To illustrate how food distribution disruptions contributed to economic hardship",
+          "C) To argue that agriculture was the empire's primary source of wealth",
+          "D) To demonstrate that farmers deliberately refused to work for the empire"
+        ],
+        "answer": 1,
+        "explanation": "저자는 농업 생산의 단편화와 식량 배분 시스템의 중단이 제국 전역의 경제적 어려움을 심화시켰다고 언급하므로, 경제적 어려움의 원인을 설명하기 위함입니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Remote work should be the standard employment model for all companies'? Use specific reasons and examples to support your position.",
-    "structure": {
-      "intro": "명확한 입장 제시 (동의/반대). 배경 정보 1-2문장으로 제공. 논문의 방향성 암시.",
-      "body1": "첫 번째 근거 제시. 구체적 사례나 데이터 인용. 주제문 + 설명 + 예시 구조.",
-      "body2": "두 번째 근거 제시. 첫 번째와 다른 관점. 실생활 예시 또는 연구 기반 주장.",
-      "conclusion": "입장 재강조. 본론의 주요 포인트 요약. 더 넓은 의미의 함축 또는 미래 전망 제시."
-    },
-    "useful_phrases": [
-      "In my opinion, remote work should/should not be the standard because...",
-      "First and foremost, this arrangement allows employees to...",
-      "Furthermore, companies benefit from reduced overhead costs and...",
-      "However, one significant drawback is that...",
-      "For instance, collaborative teams in creative industries require...",
-      "In conclusion, while remote work offers advantages, it is not universally suitable for..."
+    "sentences": [
+      {
+        "original": "The debasement of currency, combined with rampant inflation and the escalating costs of maintaining military garrisons along the empire's vast frontiers, depleted the imperial treasury at an alarming rate.",
+        "paraphrase": "The imperial treasury was depleted at an alarming rate as a result of currency devaluation, widespread inflation, and increasingly expensive military garrison maintenance across the empire's extensive borders.",
+        "tip": "능동태→수동태 변환 및 원인을 결과 뒤로 이동시켜 문장 구조 재구성"
+      },
+      {
+        "original": "Archaeological evidence suggests that the empire's extensive trade networks, which had previously facilitated the accumulation of wealth and resources, began to deteriorate significantly during the third and fourth centuries.",
+        "paraphrase": "According to archaeological findings, the empire's far-reaching commercial networks, which once enabled the gathering of wealth and materials, experienced substantial decline in the third and fourth centuries.",
+        "tip": "유의어 치환: evidence→findings, extensive→far-reaching, facilitate→enable, accumulation→gathering"
+      },
+      {
+        "original": "Scholars now recognize that the empire's demise was neither instantaneous nor uniform across all regions; rather, it manifested as a protracted transformation characterized by institutional reorganization, the emergence of successor kingdoms, and the gradual shift from centralized Roman administration to decentralized feudal systems.",
+        "paraphrase": "Modern researchers understand the fall of the empire not as a sudden, region-wide event, but instead as a lengthy process marked by organizational restructuring, the rise of new kingdoms, and a slow transition from unified Roman governance to dispersed feudal arrangements.",
+        "tip": "명사 대체: demise→fall, institutional reorganization→organizational restructuring, emergence→rise, shift→transition, centralized→unified, decentralized→dispersed"
+      }
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer working in a traditional office environment. Others prefer remote work. Which do you prefer and why?",
-    "useful_expressions": [
-      "In my opinion, I prefer remote work because it allows me to...",
-      "One reason is that remote work provides flexibility and...",
-      "Another important factor is that I can concentrate better when...",
-      "This preference is based on my personal experience with..."
-    ],
-    "sample_points": [
-      "유연성 - 출퇴근 시간 절약, 개인 일정 조절 가능, 일과 삶의 균형 개선",
-      "생산성 - 방해 요소 감소, 집중력 향상, 자신의 페이스대로 작업 가능"
+    "prompt": "Some people believe that traveling to new places is the best way to spend money and time. Others think that saving money for the future is more important. Which perspective do you agree with, and why? Include specific reasons and examples.",
+    "model_sentences": [
+      "Personally, I believe traveling is more valuable than saving money, because it provides irreplaceable experiences and personal growth opportunities.",
+      "First, traveling exposes you to different cultures, languages, and perspectives that you simply cannot gain from books or videos alone.",
+      "For example, when I visited Japan last year, I not only learned about their traditions directly but also made international friends and developed greater confidence in myself.",
+      "Additionally, these experiences create lasting memories that money cannot buy, whereas saved money can lose value due to inflation.",
+      "Therefore, I think investing in travel experiences during your youth is wiser than merely accumulating savings for an uncertain future."
     ]
   },
   "listening": {
-    "title": "Discussion on Workplace Communication",
+    "title": "Lecture: The Industrial Revolution and Technological Innovation",
     "type": "conversation",
-    "script": "Professor: Good morning, everyone. Today we're discussing effective workplace communication in the digital age. Sarah, in your survey about remote teams, what was the most surprising finding? Student: Well, Professor, we discovered that email isn't always the most effective tool. Many workers felt overwhelmed by excessive emails and preferred real-time communication through instant messaging or video calls. Professor: That's fascinating. Did you find generational differences in preferences? Student: Absolutely. Younger employees strongly favored video conferencing for complex discussions, while some senior staff still preferred traditional email for documentation purposes. They wanted a permanent record. Professor: This raises an important point. Organizations must balance immediacy with accountability. What recommendations did your study suggest? Student: We recommended a tiered communication strategy. Use instant messaging for quick questions, video calls for nuanced discussions, and email for formal records. This approach seemed to satisfy both preferences and improved overall team collaboration. Professor: Excellent research, Sarah. This reflects real workplace challenges organizations face today.",
+    "script": "Professor: Good morning, everyone. Today we're examining the Industrial Revolution, particularly how mechanization transformed production. The steam engine, invented by James Watt in the 1760s, revolutionized manufacturing and transportation. Student A: Professor, I'm curious—did this technological advancement immediately improve workers' lives? Professor: That's a perceptive question. Actually, no. Although productivity surged dramatically, working conditions in factories were deplorable. Laborers, including children, worked sixteen-hour days in dangerous conditions. Student B: So there was a significant lag between technological progress and social reform? Professor: Exactly. It took decades for labor movements to push for legislation protecting workers. The Factory Acts in Britain gradually restricted working hours and child labor, but this didn't occur until the nineteenth century. The Industrial Revolution fundamentally altered economic structures and urbanization patterns, yet the human costs were substantial.",
+    "vocabulary": [
+      {
+        "word": "mechanization",
+        "meaning_ko": "기계화, 자동화"
+      },
+      {
+        "word": "revolutionized",
+        "meaning_ko": "혁명을 일으키다, 급격히 변화시키다"
+      },
+      {
+        "word": "productivity",
+        "meaning_ko": "생산성, 생산량"
+      },
+      {
+        "word": "deplorable",
+        "meaning_ko": "비참한, 형편없는"
+      },
+      {
+        "word": "perceptive",
+        "meaning_ko": "지각력 있는, 통찰력 있는"
+      },
+      {
+        "word": "surged",
+        "meaning_ko": "급증하다, 솟구치다"
+      }
+    ],
     "questions": [
       {
-        "q": "What was the main finding of Sarah's survey?",
+        "q": "What is the main topic of the lecture?",
         "options": [
-          "A) Email is the best workplace communication tool",
-          "B) Remote workers prefer video calls over emails",
-          "C) Younger employees reject all traditional communication methods",
-          "D) Senior staff only use email for daily work"
+          "A) The biography of James Watt and his inventions",
+          "B) How the Industrial Revolution transformed manufacturing and its social impacts",
+          "C) The history of labor movements in Britain",
+          "D) The environmental consequences of mechanization"
         ],
         "answer": 1,
-        "explanation": "사라의 연구에서 이메일이 항상 효과적이지 않으며, 많은 근로자들이 즉시 메시지나 화상 통화를 선호한다고 밝혔습니다."
+        "explanation": "교수는 산업혁명, 특히 기계화가 생산을 어떻게 변화시켰는지, 그리고 이것이 노동자 생활에 미친 영향을 다루고 있습니다."
       },
       {
-        "q": "What generational difference did Sarah's study identify?",
+        "q": "What does the professor suggest about the relationship between technological advancement and workers' conditions?",
         "options": [
-          "A) Only young workers use technology",
-          "B) Older workers prefer video calls exclusively",
-          "C) Younger employees favored video conferencing; senior staff preferred email for records",
-          "D) No generational differences were found"
-        ],
-        "answer": 2,
-        "explanation": "본문에서 젊은 직원들은 화상 회의를 선호하고, 연장자 직원들은 기록을 위해 이메일을 선호한다고 명확히 나타나 있습니다."
-      },
-      {
-        "q": "What tiered communication strategy did Sarah recommend?",
-        "options": [
-          "A) Use only instant messaging for all communication",
-          "B) Instant messaging for quick questions, video calls for complex discussions, email for formal records",
-          "C) Eliminate email entirely from workplace communication",
-          "D) Use only video calls for all workplace matters"
+          "A) They improved immediately and consistently",
+          "B) There was a significant time lag before social reform followed technological progress",
+          "C) Workers never benefited from technological innovation",
+          "D) Technology made working conditions worse before improving them"
         ],
         "answer": 1,
-        "explanation": "사라는 빠른 질문에는 즉시 메시지, 복잡한 논의에는 화상 통화, 공식 기록에는 이메일을 사용할 것을 권장했습니다."
+        "explanation": "교수는 생산성이 급증했음에도 불구하고 노동자 보호법이 수십 년 후에야 제정되었다고 설명하며, 기술 진보와 사회 개혁 사이의 상당한 지연을 시사합니다."
+      },
+      {
+        "q": "Why does the professor mention the Factory Acts?",
+        "options": [
+          "A) To show that Britain had the worst labor practices",
+          "B) To illustrate that labor reform legislation eventually emerged, though it came much later than technological innovation",
+          "C) To prove that the Industrial Revolution was entirely harmful",
+          "D) To explain why the steam engine was invented"
+        ],
+        "answer": 1,
+        "explanation": "교수는 Factory Acts를 언급하여 노동자 보호를 위한 입법이 결국 나타났지만, 기술 발전에 비해 훨씬 늦었다는 점을 보여줍니다."
       }
     ]
   }

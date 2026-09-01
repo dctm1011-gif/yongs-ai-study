@@ -214,6 +214,7 @@ export default function VocaScreen() {
   const [lastUpdateTime, setLastUpdateTime] = useState<string | null>(null);
   const [cacheTimeLeft, setCacheTimeLeft] = useState<string>('캐시 정보 로딩 중...');
   const [skipSet, setSkipSet] = useState<Set<string>>(new Set());
+  const [wordRatings, setWordRatings] = useState<Record<string, number>>({});
   const [playAllWordId, setPlayAllWordId] = useState<string | null>(null);
   // ref mirror of playAllWordId — the toggle check must read the *current*
   // value, not the value captured when the useCallback was created, otherwise a
@@ -244,6 +245,20 @@ export default function VocaScreen() {
       if (snap.exists()) setSkipSet(new Set(Object.keys(snap.val())));
     }).catch(() => {});
   }, [uid]);
+
+  // 난이도 평가 로드 (마운트 1회)
+  useEffect(() => {
+    const db = getDatabase(getFirebaseApp());
+    get(ref(db, 'english/userRatings')).then(snap => {
+      if (!snap.exists()) return;
+      const data = snap.val();
+      const ratings: Record<string, number> = {};
+      Object.entries(data).forEach(([key, val]: [string, any]) => {
+        if (typeof val?.rating === 'number') ratings[key] = val.rating;
+      });
+      setWordRatings(ratings);
+    }).catch(() => {});
+  }, []);
 
   // Listen to today's game completion for tab unlocking
   useEffect(() => {
@@ -635,6 +650,15 @@ export default function VocaScreen() {
       }
     }
   };
+
+  const rateWord = useCallback((wordId: string, rating: number) => {
+    setWordRatings(prev => ({ ...prev, [wordId]: rating }));
+    const db = getDatabase(getFirebaseApp());
+    dbSet(ref(db, `english/userRatings/${wordId}`), {
+      rating,
+      ratedAt: new Date().toISOString(),
+    }).catch(() => {});
+  }, []);
 
   const skipWord = (wordId: string) => {
     const word = words.find(w => w.id === wordId);
@@ -1056,6 +1080,8 @@ export default function VocaScreen() {
             playAllWordId={playAllWordId}
             allWordsRead={!loading && words.length > 0 && words.every(w => w.isRead)}
             onComplete={() => setView('quiz')}
+            wordRatings={wordRatings}
+            onRate={rateWord}
           />
         </View>
       )}
@@ -1148,7 +1174,7 @@ let _wcPlayId = 0;
 let _wcSound: Audio.Sound | null = null;
 
 // Memoized component to prevent unnecessary re-renders
-const WordsView = React.memo(({ words, onToggleRead, onSkip, skipSet, onRefresh, refreshing, playAllWordId, allWordsRead, onComplete }: {
+const WordsView = React.memo(({ words, onToggleRead, onSkip, skipSet, onRefresh, refreshing, playAllWordId, allWordsRead, onComplete, wordRatings, onRate }: {
   words: Word[],
   onToggleRead: (id: string) => void,
   onSkip: (id: string) => void,
@@ -1158,6 +1184,8 @@ const WordsView = React.memo(({ words, onToggleRead, onSkip, skipSet, onRefresh,
   playAllWordId: string | null,
   allWordsRead: boolean,
   onComplete: () => void,
+  wordRatings: Record<string, number>,
+  onRate: (id: string, rating: number) => void,
 }) => {
   const footer = (
     <TouchableOpacity
@@ -1188,6 +1216,8 @@ const WordsView = React.memo(({ words, onToggleRead, onSkip, skipSet, onRefresh,
           onSkip={onSkip}
           isSkipped={skipSet.has(item.id)}
           isPlayingAll={playAllWordId === item.id}
+          currentRating={wordRatings[item.id]}
+          onRate={onRate}
         />
       )}
       ListFooterComponent={footer}
@@ -1196,12 +1226,14 @@ const WordsView = React.memo(({ words, onToggleRead, onSkip, skipSet, onRefresh,
 });
 
 // Memoized word card component with expand + OpenAI TTS
-const WordCard = React.memo(({ word, onToggleRead, onSkip, isSkipped, isPlayingAll }: {
+const WordCard = React.memo(({ word, onToggleRead, onSkip, isSkipped, isPlayingAll, currentRating, onRate }: {
   word: Word,
   onToggleRead: (id: string) => void,
   onSkip: (id: string) => void,
   isSkipped: boolean,
   isPlayingAll?: boolean,
+  currentRating?: number,
+  onRate: (id: string, rating: number) => void,
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [sentenceData, setSentenceData] = useState<ReviewSentence | null>(null);
@@ -1381,6 +1413,20 @@ const WordCard = React.memo(({ word, onToggleRead, onSkip, isSkipped, isPlayingA
             : <Text style={styles.readBadge}>{word.isRead ? '✓' : '○'}</Text>
           }
         </View>
+      </View>
+      <View style={styles.ratingRow}>
+        <Text style={styles.ratingLabel}>난이도</Text>
+        {[1, 2, 3, 4, 5].map(n => (
+          <TouchableOpacity
+            key={n}
+            style={[styles.ratingBtn, currentRating === n && styles.ratingBtnActive]}
+            onPress={(e) => { e.stopPropagation(); onRate(word.id, n); }}
+            hitSlop={{ top: 6, bottom: 6, left: 4, right: 4 }}
+          >
+            <Text style={[styles.ratingBtnText, currentRating === n && styles.ratingBtnTextActive]}>{n}</Text>
+          </TouchableOpacity>
+        ))}
+        {!currentRating && <Text style={styles.ratingHint}>← 이 단어 난이도를 선택해주세요</Text>}
       </View>
       <Text style={styles.meaning}>{word.meaning}</Text>
       <Text style={styles.explanation}>{word.explanation}</Text>
@@ -2295,6 +2341,44 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#999',
     fontWeight: '600',
+  },
+  ratingRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    marginBottom: 8,
+  },
+  ratingLabel: {
+    fontSize: 11,
+    color: '#8e8e8e',
+    marginRight: 2,
+  },
+  ratingBtn: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#dbdbdb',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fafafa',
+  },
+  ratingBtnActive: {
+    borderColor: '#0095f6',
+    backgroundColor: '#0095f6',
+  },
+  ratingBtnText: {
+    fontSize: 11,
+    color: '#8e8e8e',
+  },
+  ratingBtnTextActive: {
+    color: '#fff',
+    fontWeight: '700',
+  },
+  ratingHint: {
+    fontSize: 10,
+    color: '#c0c0c0',
+    marginLeft: 2,
   },
   debugOverlay: {
     flex: 1,
