@@ -1,181 +1,115 @@
 {
   "date": "2026-09-02",
   "reading": {
-    "title": "The Decline of the Roman Empire and Economic Transformation",
-    "passage": "The collapse of the Roman Empire in the fifth century CE resulted not from a single catastrophic event, but rather from a confluence of interconnected economic, military, and social factors that gradually undermined imperial stability. Archaeological evidence suggests that the empire's extensive trade networks, which had previously facilitated the accumulation of wealth and resources, began to deteriorate significantly during the third and fourth centuries. The debasement of currency, combined with rampant inflation and the escalating costs of maintaining military garrisons along the empire's vast frontiers, depleted the imperial treasury at an alarming rate. Furthermore, the fragmentation of agricultural production and the subsequent disruption of food distribution systems intensified economic hardship throughout the empire's provinces. Scholars now recognize that the empire's demise was neither instantaneous nor uniform across all regions; rather, it manifested as a protracted transformation characterized by institutional reorganization, the emergence of successor kingdoms, and the gradual shift from centralized Roman administration to decentralized feudal systems. This nuanced understanding has fundamentally altered our conceptualization of late antiquity, revealing it not as a period of unmitigated decline but as an era of dynamic cultural and institutional metamorphosis.",
-    "vocabulary": [
-      {
-        "word": "confluence",
-        "meaning_ko": "(여러 요소의) 결합, 합류"
-      },
-      {
-        "word": "undermine",
-        "meaning_ko": "약화시키다, 훼손하다"
-      },
-      {
-        "word": "debasement",
-        "meaning_ko": "가치 저하, 품질 저하"
-      },
-      {
-        "word": "escalating",
-        "meaning_ko": "점점 증가하는, 심화되는"
-      },
-      {
-        "word": "fragmentation",
-        "meaning_ko": "단편화, 분열"
-      },
-      {
-        "word": "protracted",
-        "meaning_ko": "오래 지속되는, 장기간의"
-      },
-      {
-        "word": "metamorphosis",
-        "meaning_ko": "변신, 변화"
-      },
-      {
-        "word": "unmitigated",
-        "meaning_ko": "완화되지 않은, 순전한"
-      }
-    ],
+    "title": "Artificial Intelligence in Healthcare",
+    "passage": "Artificial intelligence is revolutionizing the healthcare industry by enabling faster and more accurate diagnoses. Machine learning algorithms can analyze medical images and detect diseases like cancer earlier than traditional methods. AI-powered systems also assist in drug discovery, reducing the time and cost of developing new medications. However, concerns about data privacy and the need for human oversight remain critical challenges. Healthcare professionals must balance technological advancement with patient safety and ethical considerations.",
     "questions": [
       {
-        "q": "According to the passage, which of the following was a major factor in the Roman Empire's economic deterioration?",
+        "q": "According to the passage, what is one benefit of using AI in healthcare?",
         "options": [
-          "A) Excessive military expansion into northern territories",
-          "B) The debasement of currency and consequent inflation",
-          "C) The complete cessation of all trade networks",
-          "D) The rapid migration of the entire population to Africa"
+          "It completely eliminates the need for doctors",
+          "It can detect diseases like cancer earlier than traditional methods",
+          "It guarantees all medications will be safe",
+          "It removes all privacy concerns"
         ],
         "answer": 1,
-        "explanation": "본문에서 '화폐의 가치 저하(debasement of currency)와 급격한 인플레이션 그리고 국경 군대 유지비 증가'가 제국 재정 고갈의 원인으로 명시되어 있습니다."
+        "explanation": "본문에서 'Machine learning algorithms can analyze medical images and detect diseases like cancer earlier than traditional methods'라고 명시되어 있습니다. AI가 전통적인 방법보다 더 빨리 암 같은 질병을 감지할 수 있다는 것이 주요 이점입니다."
       },
       {
-        "q": "What can be inferred from the passage about the characterization of late antiquity?",
+        "q": "What does the passage indicate about challenges in AI healthcare implementation?",
         "options": [
-          "A) It was purely a period of cultural destruction",
-          "B) It should be understood as a complex transformation rather than simple decline",
-          "C) It resulted in the complete disappearance of Roman traditions",
-          "D) It occurred suddenly and uniformly across all regions"
+          "There are no challenges at all",
+          "Only patients are concerned about the technology",
+          "Data privacy and need for human oversight are critical challenges",
+          "AI cannot help with drug discovery"
         ],
-        "answer": 1,
-        "explanation": "마지막 문장에서 '완화되지 않은 쇠퇴의 시대가 아니라 역동적인 문화와 제도적 변화의 시대'라고 명시되어 있으며, 이는 단순한 쇠퇴가 아닌 복잡한 변환으로의 이해를 제시합니다."
+        "answer": 2,
+        "explanation": "'However, concerns about data privacy and the need for human oversight remain critical challenges'라는 문장에서 데이터 프라이버시와 인간의 감시가 중요한 도전과제임을 알 수 있습니다."
       },
       {
-        "q": "The word 'protracted' in the last paragraph is closest in meaning to which of the following?",
+        "q": "What is the main idea of the passage?",
         "options": [
-          "A) Sudden and unexpected",
-          "B) Lasting for an extended period",
-          "C) Completely catastrophic",
-          "D) Deliberately concealed"
+          "Healthcare is becoming outdated",
+          "AI has both significant benefits and important ethical considerations in healthcare",
+          "Doctors should be replaced entirely by AI systems",
+          "Privacy is not important in medicine"
         ],
         "answer": 1,
-        "explanation": "'Protracted'는 '오래 지속되는, 장기간의'라는 의미로, extended period(오래 지속되는 기간)와 가장 가깝습니다."
-      },
-      {
-        "q": "Why does the author mention the fragmentation of agricultural production?",
-        "options": [
-          "A) To explain why Rome never developed advanced farming techniques",
-          "B) To illustrate how food distribution disruptions contributed to economic hardship",
-          "C) To argue that agriculture was the empire's primary source of wealth",
-          "D) To demonstrate that farmers deliberately refused to work for the empire"
-        ],
-        "answer": 1,
-        "explanation": "저자는 농업 생산의 단편화와 식량 배분 시스템의 중단이 제국 전역의 경제적 어려움을 심화시켰다고 언급하므로, 경제적 어려움의 원인을 설명하기 위함입니다."
+        "explanation": "본문은 AI의 장점(빠른 진단, 약물 개발)과 동시에 도전과제(프라이버시, 윤리적 고려)를 모두 제시하고 있으므로, AI가 의료에서 이점과 고려사항을 모두 가지고 있다는 것이 주요 내용입니다."
       }
     ]
   },
   "writing": {
-    "sentences": [
-      {
-        "original": "The debasement of currency, combined with rampant inflation and the escalating costs of maintaining military garrisons along the empire's vast frontiers, depleted the imperial treasury at an alarming rate.",
-        "paraphrase": "The imperial treasury was depleted at an alarming rate as a result of currency devaluation, widespread inflation, and increasingly expensive military garrison maintenance across the empire's extensive borders.",
-        "tip": "능동태→수동태 변환 및 원인을 결과 뒤로 이동시켜 문장 구조 재구성"
-      },
-      {
-        "original": "Archaeological evidence suggests that the empire's extensive trade networks, which had previously facilitated the accumulation of wealth and resources, began to deteriorate significantly during the third and fourth centuries.",
-        "paraphrase": "According to archaeological findings, the empire's far-reaching commercial networks, which once enabled the gathering of wealth and materials, experienced substantial decline in the third and fourth centuries.",
-        "tip": "유의어 치환: evidence→findings, extensive→far-reaching, facilitate→enable, accumulation→gathering"
-      },
-      {
-        "original": "Scholars now recognize that the empire's demise was neither instantaneous nor uniform across all regions; rather, it manifested as a protracted transformation characterized by institutional reorganization, the emergence of successor kingdoms, and the gradual shift from centralized Roman administration to decentralized feudal systems.",
-        "paraphrase": "Modern researchers understand the fall of the empire not as a sudden, region-wide event, but instead as a lengthy process marked by organizational restructuring, the rise of new kingdoms, and a slow transition from unified Roman governance to dispersed feudal arrangements.",
-        "tip": "명사 대체: demise→fall, institutional reorganization→organizational restructuring, emergence→rise, shift→transition, centralized→unified, decentralized→dispersed"
-      }
+    "prompt": "Do you agree or disagree with the statement that social media has more negative effects than positive effects on society?",
+    "structure": {
+      "intro": "명확한 입장 제시: 'I agree/disagree that social media has more negative effects on society because...' 형태로 서론을 시작하며, 2-3개의 주요 이유를 preview합니다.",
+      "body1": "첫 번째 주요 포인트: 소셜 미디어의 정신 건강에 미치는 부정적 영향 (스트레스, 우울증, 자존감 저하) 또는 긍정적 영향 (연결, 커뮤니티) 중 입장에 맞게 선택하여 구체적 예시 제시",
+      "body2": "두 번째 주요 포인트: 소셜 미디어의 정보 확산 (잘못된 정보/가짜뉴스) 또는 긍정적 정보 공유와 사회 운동에 미치는 영향에 대해 설명",
+      "conclusion": "입장 재확인 및 전체 논의 요약: 'In conclusion, I believe that social media...' 형태로 마무리하며 사회에 미치는 총체적 영향 재언급"
+    },
+    "useful_phrases": [
+      "In my opinion,",
+      "Furthermore,",
+      "For instance,",
+      "On the other hand,",
+      "It is clear that",
+      "In conclusion,",
+      "One significant reason is that...",
+      "To illustrate this point,",
+      "However, it is important to note that..."
     ]
   },
   "speaking": {
-    "prompt": "Some people believe that traveling to new places is the best way to spend money and time. Others think that saving money for the future is more important. Which perspective do you agree with, and why? Include specific reasons and examples.",
-    "model_sentences": [
-      "Personally, I believe traveling is more valuable than saving money, because it provides irreplaceable experiences and personal growth opportunities.",
-      "First, traveling exposes you to different cultures, languages, and perspectives that you simply cannot gain from books or videos alone.",
-      "For example, when I visited Japan last year, I not only learned about their traditions directly but also made international friends and developed greater confidence in myself.",
-      "Additionally, these experiences create lasting memories that money cannot buy, whereas saved money can lose value due to inflation.",
-      "Therefore, I think investing in travel experiences during your youth is wiser than merely accumulating savings for an uncertain future."
+    "prompt": "Some people prefer to work in a large corporation with many employees. Others prefer to work in a small company with few employees. Which do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer working in a small company because...",
+      "One reason is that small companies offer more opportunities for personal growth and direct impact.",
+      "Another advantage is that the work environment is more collaborative and interpersonal relationships are stronger.",
+      "For example, in my previous experience...",
+      "To summarize my point, I believe that..."
+    ],
+    "sample_points": [
+      "소규모 회사에서는 더 다양한 업무 경험을 할 수 있고 직원의 기여도가 더 명확하게 인정받을 수 있다는 점",
+      "대규모 기업에서는 더 많은 자원, 체계적인 교육 프로그램, 경력 발전 기회와 안정적인 급여가 있다는 점"
     ]
   },
   "listening": {
-    "title": "Lecture: The Industrial Revolution and Technological Innovation",
+    "title": "University Library Research Session",
     "type": "conversation",
-    "script": "Professor: Good morning, everyone. Today we're examining the Industrial Revolution, particularly how mechanization transformed production. The steam engine, invented by James Watt in the 1760s, revolutionized manufacturing and transportation. Student A: Professor, I'm curious—did this technological advancement immediately improve workers' lives? Professor: That's a perceptive question. Actually, no. Although productivity surged dramatically, working conditions in factories were deplorable. Laborers, including children, worked sixteen-hour days in dangerous conditions. Student B: So there was a significant lag between technological progress and social reform? Professor: Exactly. It took decades for labor movements to push for legislation protecting workers. The Factory Acts in Britain gradually restricted working hours and child labor, but this didn't occur until the nineteenth century. The Industrial Revolution fundamentally altered economic structures and urbanization patterns, yet the human costs were substantial.",
-    "vocabulary": [
-      {
-        "word": "mechanization",
-        "meaning_ko": "기계화, 자동화"
-      },
-      {
-        "word": "revolutionized",
-        "meaning_ko": "혁명을 일으키다, 급격히 변화시키다"
-      },
-      {
-        "word": "productivity",
-        "meaning_ko": "생산성, 생산량"
-      },
-      {
-        "word": "deplorable",
-        "meaning_ko": "비참한, 형편없는"
-      },
-      {
-        "word": "perceptive",
-        "meaning_ko": "지각력 있는, 통찰력 있는"
-      },
-      {
-        "word": "surged",
-        "meaning_ko": "급증하다, 솟구치다"
-      }
-    ],
+    "script": "Student: Professor Chen, I'm starting my research paper on climate change, but I'm overwhelmed by the amount of information available. Where should I start? Professor Chen: That's a common challenge. First, I recommend using our university library's database. It has peer-reviewed articles that are more reliable than general internet searches. Student: That sounds helpful. How do I access it? Professor Chen: You can log in with your student ID from any campus computer or remotely from home. I also suggest starting with recent review articles to get an overview of the topic. They usually cite other important papers. Student: Oh, that's a smart approach! Should I take notes on everything I read? Professor Chen: No, be selective. Read the abstract first to see if the article is relevant. Only read the full paper if it's directly related to your topic. This will save you time and help you focus on quality sources.",
     "questions": [
       {
-        "q": "What is the main topic of the lecture?",
+        "q": "What is the main purpose of this conversation?",
         "options": [
-          "A) The biography of James Watt and his inventions",
-          "B) How the Industrial Revolution transformed manufacturing and its social impacts",
-          "C) The history of labor movements in Britain",
-          "D) The environmental consequences of mechanization"
+          "The professor is teaching a climate change class",
+          "The student is asking the professor for guidance on starting a research paper",
+          "They are discussing the university's computer system",
+          "The professor is recommending published books about climate"
         ],
         "answer": 1,
-        "explanation": "교수는 산업혁명, 특히 기계화가 생산을 어떻게 변화시켰는지, 그리고 이것이 노동자 생활에 미친 영향을 다루고 있습니다."
+        "explanation": "대화에서 학생이 교수에게 연구 논문을 어떻게 시작할지에 대해 조언을 구하고 있습니다. 교수는 도서관 데이터베이스 사용법과 효율적인 자료 검색 방법을 제시하고 있습니다."
       },
       {
-        "q": "What does the professor suggest about the relationship between technological advancement and workers' conditions?",
+        "q": "According to Professor Chen, what should students do before reading a full research paper?",
         "options": [
-          "A) They improved immediately and consistently",
-          "B) There was a significant time lag before social reform followed technological progress",
-          "C) Workers never benefited from technological innovation",
-          "D) Technology made working conditions worse before improving them"
+          "Contact the author of the paper",
+          "Read the introduction section first",
+          "Read the abstract to check if it's relevant to their topic",
+          "Discuss it with classmates"
         ],
-        "answer": 1,
-        "explanation": "교수는 생산성이 급증했음에도 불구하고 노동자 보호법이 수십 년 후에야 제정되었다고 설명하며, 기술 진보와 사회 개혁 사이의 상당한 지연을 시사합니다."
+        "answer": 2,
+        "explanation": "교수는 '먼저 abstract를 읽어서 논문이 자신의 주제와 관련이 있는지 확인한 후, 직접 관련이 있을 경우에만 전체 논문을 읽으라'고 조언했습니다."
       },
       {
-        "q": "Why does the professor mention the Factory Acts?",
+        "q": "What advantage of using review articles does the professor mention?",
         "options": [
-          "A) To show that Britain had the worst labor practices",
-          "B) To illustrate that labor reform legislation eventually emerged, though it came much later than technological innovation",
-          "C) To prove that the Industrial Revolution was entirely harmful",
-          "D) To explain why the steam engine was invented"
+          "They are shorter and easier to read",
+          "They usually cite other important papers and provide an overview of the topic",
+          "They are written by famous authors",
+          "They are available in print format only"
         ],
         "answer": 1,
-        "explanation": "교수는 Factory Acts를 언급하여 노동자 보호를 위한 입법이 결국 나타났지만, 기술 발전에 비해 훨씬 늦었다는 점을 보여줍니다."
+        "explanation": "교수는 review 논문을 먼저 읽으면 주제에 대한 개요를 얻을 수 있고, 다른 중요한 논문들을 인용하고 있어서 추가 자료를 찾는 데 도움이 된다고 설명했습니다."
       }
     ]
   }
