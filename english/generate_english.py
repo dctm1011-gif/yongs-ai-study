@@ -23,6 +23,55 @@ try:
 except Exception:
     def notify(text): pass
 
+def sync_firebase_to_db() -> int:
+    """Firebase english/words 최근 30일과 words_db.json을 동기화 — DB에 없는 단어 추가."""
+    if not WORDS_DB_JSON.exists():
+        return 0
+    import urllib.request as ur
+    from datetime import timedelta
+    db_url = os.environ.get(
+        "EXPO_PUBLIC_FIREBASE_DATABASE_URL",
+        "https://yongstudy-1f242-default-rtdb.asia-southeast1.firebasedatabase.app"
+    )
+    try:
+        db = json.loads(WORDS_DB_JSON.read_text(encoding="utf-8"))
+        db_lower = {e.get("word","").lower() for e in db if e.get("word")}
+        added = 0
+        today = date.today()
+        for i in range(1, 31):
+            d = str(today - timedelta(days=i))
+            try:
+                with ur.urlopen(f"{db_url}/english/words/{d}.json", timeout=4) as r:
+                    data = json.loads(r.read())
+                if not data or "words" not in data:
+                    continue
+                for w in data["words"]:
+                    word = w.get("word", "")
+                    if word and word.lower() not in db_lower:
+                        db.append({
+                            "id": word, "word": word,
+                            "pos": w.get("part_of_speech", ""),
+                            "date": d,
+                            "meaning": w.get("meaning_ko", ""),
+                            "example_ko": w.get("example_ko", ""),
+                            "example_en": w.get("example_from_convo", ""),
+                            "explanation": w.get("explanation", ""),
+                            "tip": w.get("tip", ""),
+                            "emoji": w.get("emoji", ""),
+                        })
+                        db_lower.add(word.lower())
+                        added += 1
+            except Exception:
+                pass
+        if added:
+            WORDS_DB_JSON.write_text(json.dumps(db, ensure_ascii=False, indent=2), encoding="utf-8")
+            print(f"[sync] words_db ← Firebase {added}개 추가 (총 {len(db)}개)")
+        return added
+    except Exception as e:
+        print(f"[sync] Firebase 동기화 실패 (무시): {e}")
+        return 0
+
+
 def load_used_words() -> list:
     """words_db.json에 이미 등록된 단어 목록 (중복 생성 방지용)."""
     if not WORDS_DB_JSON.exists():
@@ -1989,6 +2038,9 @@ def get_api_key() -> str:
 def main(target_date: date = None):
     if target_date is None:
         target_date = date.today()
+
+    # Firebase → words_db 동기화 (직접 올린 단어도 중복 체크에 반영)
+    sync_firebase_to_db()
 
     api_key = get_api_key()
     if not api_key:
