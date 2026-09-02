@@ -16,18 +16,21 @@ export default async (req) => {
 
   const wordList = words.map(w => `${w.word} (${w.meaning})`).join(', ');
 
-  const prompt = `You are an English writing tutor. Write a single cohesive paragraph (4-6 sentences) that naturally uses ALL of these vocabulary words: ${wordList}
+  const prompt = `You are an English writing tutor. Write a cohesive story (5-6 sentences) that naturally uses ALL of these vocabulary words: ${wordList}
 
 Rules:
 - Use every word listed above in context
-- The paragraph must flow as one coherent narrative — not a list of unrelated sentences
+- Sentences must flow as one coherent narrative
 - Make it vivid and engaging
 - Bold each vocabulary word using **word** syntax
+- Provide a natural Korean translation for EACH sentence
 
 Return ONLY this JSON (no markdown code block, no extra text):
 {
-  "paragraph": "The English paragraph with **each vocab word** bolded when it appears",
-  "paragraph_ko": "Complete natural Korean translation of the full paragraph",
+  "sentences": [
+    {"en": "First English sentence with **vocab** bolded.", "ko": "첫 번째 문장의 자연스러운 한국어 번역."},
+    {"en": "Second sentence with **vocab** bolded.", "ko": "두 번째 문장 번역."}
+  ],
   "wordNuances": [
     {"word": "word1", "meaning": "한국어 뜻", "nuance": "이 문장에서의 뉘앙스와 사용법을 한국어로 2~3문장으로 설명"}
   ]
@@ -43,7 +46,7 @@ Return ONLY this JSON (no markdown code block, no extra text):
       },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
-        max_tokens: 1500,
+        max_tokens: 2000,
         messages: [{ role: 'user', content: prompt }],
       }),
     });
