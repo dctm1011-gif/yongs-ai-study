@@ -1,204 +1,120 @@
 {
   "date": "2026-09-03",
   "reading": {
-    "title": "Cognitive Psychology and Memory Formation",
-    "passage": "Cognitive psychology has revolutionized our understanding of how the human brain processes and retains information. Memory formation, a central concept in this field, involves three distinct stages: encoding, storage, and retrieval. During encoding, sensory information is transformed into a form that can be processed by the brain. This transformation is not passive; rather, it requires active attention and cognitive engagement. Research has demonstrated that individuals who employ elaborative encoding—connecting new information to existing knowledge—retain significantly more material than those using maintenance rehearsal, a superficial repetition technique.\n\nThe consolidation of memories involves the hippocampus, a brain structure critical for transferring short-term memories into long-term storage. Studies utilizing neuroimaging techniques have revealed that sleep plays an indispensable role in this consolidation process. During sleep, the brain reactivates neural patterns associated with learned information, strengthening synaptic connections and facilitating permanent retention. Furthermore, emotional salience substantially affects memory durability; emotionally charged experiences are encoded more robustly due to amygdala activation, which modulates the strength of memory traces.\n\nUnderstanding these mechanisms has profound implications for educational strategies and cognitive rehabilitation. Educators who recognize the importance of elaborative encoding can design curricula that promote deeper learning, while clinicians can develop interventions for individuals with memory impairments.",
-    "vocabulary": [
-      {
-        "word": "cognitive",
-        "meaning_ko": "인지적인, 인식의"
-      },
-      {
-        "word": "elaborative encoding",
-        "meaning_ko": "정교한 부호화, 정보를 기존 지식과 연결시키는 인코딩 방식"
-      },
-      {
-        "word": "consolidation",
-        "meaning_ko": "통합, 강화"
-      },
-      {
-        "word": "hippocampus",
-        "meaning_ko": "해마 (뇌의 장기 기억 저장 구조)"
-      },
-      {
-        "word": "synaptic",
-        "meaning_ko": "시냅스의, 신경 연결의"
-      },
-      {
-        "word": "amygdala activation",
-        "meaning_ko": "편도체 활성화 (감정 처리 관련)"
-      },
-      {
-        "word": "salience",
-        "meaning_ko": "두드러짐, 중요도"
-      }
-    ],
+    "title": "The Impact of Artificial Intelligence on Education",
+    "passage": "Artificial intelligence is revolutionizing the education sector by personalizing learning experiences for students. AI-powered systems can analyze individual learning patterns and adapt curriculum content to match each student's pace and style. Teachers can utilize AI tools to automate administrative tasks, allowing them to focus more on student engagement and mentorship. However, concerns about data privacy and over-reliance on technology persist. Educational institutions must balance technological innovation with maintaining human connection in the learning process.",
     "questions": [
       {
-        "q": "According to the passage, what is the primary difference between elaborative encoding and maintenance rehearsal?",
+        "q": "According to the passage, what is one advantage of AI in education?",
         "options": [
-          "Elaborative encoding involves connecting new information to existing knowledge, while maintenance rehearsal is superficial repetition",
-          "Maintenance rehearsal is more effective for long-term retention than elaborative encoding",
-          "Both techniques are equally effective for memory formation",
-          "Elaborative encoding requires less cognitive engagement than maintenance rehearsal"
-        ],
-        "answer": 0,
-        "explanation": "지문의 첫 번째 단락에서 '정교한 부호화는 새 정보를 기존 지식과 연결하는 반면, 유지 리허설은 표면적 반복 기법'이라고 명시되어 있습니다."
-      },
-      {
-        "q": "What can be inferred from the passage about the role of sleep in memory?",
-        "options": [
-          "Sleep is optional for memory consolidation",
-          "Sleep is essential for transferring short-term memories to long-term storage through neural reactivation",
-          "Sleep only affects emotional memories",
-          "The hippocampus does not function during sleep"
+          "It eliminates the need for teachers",
+          "It personalizes learning experiences for students",
+          "It reduces the cost of textbooks",
+          "It guarantees higher test scores"
         ],
         "answer": 1,
-        "explanation": "지문의 두 번째 단락에서 '수면은 학습된 정보와 관련된 신경 패턴을 재활성화하여 시냅스 연결을 강화한다'고 설명합니다."
+        "explanation": "지문에서 AI가 '개별 학습 패턴을 분석하고 각 학생의 속도와 스타일에 맞게 커리큘럼을 조정할 수 있다'고 명시되어 있습니다. 따라서 정답은 B번 '학생들을 위해 학습 경험을 개인화한다'입니다."
       },
       {
-        "q": "The word 'salience' in the third paragraph is closest in meaning to:",
+        "q": "What concern is mentioned regarding AI in education?",
         "options": [
-          "Emotional intensity",
-          "The state of being particularly noticeable or important",
-          "Memory capacity",
-          "Neural activity level"
+          "Students will become too dependent on AI",
+          "Data privacy and over-reliance on technology",
+          "AI is too expensive for schools",
+          "Teachers will be completely replaced"
         ],
         "answer": 1,
-        "explanation": "'Salience'는 특정 자극이나 정보가 얼마나 두드러지거나 중요한지를 나타내며, 맥락상 '감정적으로 두드러진 경험'을 의미합니다."
+        "explanation": "지문의 마지막 부분에서 '데이터 개인정보 보호와 기술에 대한 과도한 의존에 대한 우려가 지속된다'고 명시되어 있습니다."
       },
       {
-        "q": "Why does the author discuss the role of the amygdala in the passage?",
+        "q": "What does the passage suggest institutions should do?",
         "options": [
-          "To explain how emotional experiences are more strongly encoded in memory",
-          "To suggest that emotional memories are less reliable",
-          "To indicate that the amygdala controls all memory processes",
-          "To demonstrate that emotions interfere with cognitive processes"
+          "Completely replace human teachers with AI",
+          "Balance technological innovation with human connection",
+          "Avoid using AI in education",
+          "Only use AI for administrative purposes"
         ],
-        "answer": 0,
-        "explanation": "지문에서 편도체(amygdala) 활성화가 감정적 경험의 메모리 추적을 강화한다고 언급하여, 감정이 메모리 인코딩을 강화하는 메커니즘을 설명합니다."
+        "answer": 1,
+        "explanation": "지문의 마지막 문장에서 '교육 기관은 기술 혁신과 학습 과정에서의 인간관계 유지 사이의 균형을 맞춰야 한다'고 명시되어 있습니다."
       }
     ]
   },
   "writing": {
-    "sentences": [
-      {
-        "original": "Cognitive psychology has revolutionized our understanding of how the human brain processes and retains information.",
-        "paraphrase": "The field of cognitive psychology has fundamentally transformed our comprehension of the mechanisms by which the human brain encodes and maintains information.",
-        "tip": "능동태의 주어를 바꾸고, 서술어를 동의어로 치환 (revolutionized → transformed, understanding → comprehension)"
-      },
-      {
-        "original": "Memory formation involves three distinct stages: encoding, storage, and retrieval.",
-        "paraphrase": "The process of memory formation can be divided into three distinct phases—encoding, storage, and retrieval.",
-        "tip": "명사구 구조 변환 (involves → can be divided into) 및 콜론 사용을 대시로 변경"
-      },
-      {
-        "original": "Individuals who employ elaborative encoding retain significantly more material than those using maintenance rehearsal, a superficial repetition technique.",
-        "paraphrase": "Those who utilize elaborative encoding—connecting new information to existing knowledge—substantially retain more information in comparison to individuals who rely on maintenance rehearsal, which is merely superficial repetition.",
-        "tip": "비교 구조 강화 (than those using → in comparison to individuals who rely on) 및 부호화 기법의 특성을 명시적으로 추가"
-      },
-      {
-        "original": "During sleep, the brain reactivates neural patterns associated with learned information, strengthening synaptic connections and facilitating permanent retention.",
-        "paraphrase": "Sleep enables the brain to reactivate neural patterns linked to newly acquired information, thereby fortifying synaptic connections and promoting long-term memory retention.",
-        "tip": "시간 표현 구조 변경 (During sleep → Sleep enables) 및 동의어 사용 (strengthening → fortifying, permanent retention → long-term memory retention)"
-      },
-      {
-        "original": "Emotionally charged experiences are encoded more robustly due to amygdala activation, which modulates the strength of memory traces.",
-        "paraphrase": "The amygdala's activation modulates the intensity of memory traces, resulting in more robust encoding of emotionally salient experiences.",
-        "tip": "인과 관계를 재구성 (due to가 resulting in으로 변경) 및 전치사구 역할 변화"
-      }
+    "prompt": "Do you agree or disagree with the statement: 'Technology has more negative effects than positive effects on modern society'?",
+    "structure": {
+      "intro": "명확한 입장 제시: 동의하거나 반대하는 입장을 직접적으로 표현하고 주요 이유 2-3가지를 간단히 제시하세요.",
+      "body1": "첫 번째 이유 상세 설명: 구체적인 예시나 사례를 들어 설명하고, 왜 이것이 당신의 입장을 뒷받침하는지 논리적으로 전개하세요.",
+      "body2": "두 번째 이유 상세 설명: 다른 관점이나 반대 의견을 인정하면서도, 여전히 당신의 입장이 더 설득력 있음을 보여주세요.",
+      "conclusion": "주요 논점 요약: 본론에서 제시한 주요 이유들을 간단히 정리하고, 더 넓은 함의나 미래 전망으로 마무리하세요."
+    },
+    "useful_phrases": [
+      "In my opinion,",
+      "I strongly agree/disagree that",
+      "To begin with,",
+      "Furthermore,",
+      "On the other hand,",
+      "However,",
+      "For example,",
+      "In conclusion,",
+      "Therefore,",
+      "It is clear that"
     ]
   },
-  "writing_essay": {
-    "topic": "University Tuition Policy Reform",
-    "prompt": "Some people believe universities should significantly reduce tuition fees to make higher education more accessible. Others argue that high tuition reflects the quality of education and that students should bear the cost. What is your position on university tuition policy, and what specific measures would you recommend?",
-    "sample_response": "University tuition policy represents one of the most critical issues facing modern higher education systems. While both affordable education and quality assurance are important, I believe universities should implement a progressive tuition structure that balances accessibility with institutional sustainability. This approach would reduce financial barriers for low-income students while ensuring adequate funding for educational excellence.\n\nFirst, progressive tuition models would dramatically improve educational accessibility. Countries like Germany and Norway have demonstrated that reduced or tuition-free university education does not compromise academic quality; instead, it increases social mobility by enabling talented students from disadvantaged backgrounds to pursue degrees. Moreover, students unburdened by excessive debt can focus more effectively on their studies rather than working multiple jobs to finance their education.\n\nSecond, universities could employ a needs-based financial aid system combined with income-contingent loan repayment programs. This mechanism would ensure that graduates repay their loans proportionally to their actual earnings, preventing the debt crisis that currently affects millions. Additionally, universities could diversify funding through research grants, corporate partnerships, and alumni contributions, reducing their dependence on student tuition alone.\n\nFinally, while some argue that high tuition reflects quality, empirical evidence contradicts this assumption. The world's top universities, including many in countries with lower tuition costs, maintain their excellence through strategic investment in research and faculty development rather than excessive student fees. Therefore, implementing a progressive tuition policy combined with diversified institutional funding represents the most equitable and sustainable solution for higher education."
-  },
   "speaking": {
-    "prompt": "Some students prefer to choose their major based on their personal interests and passions, regardless of job market prospects. Others believe students should select majors in fields with strong employment opportunities and competitive salaries. Which approach do you prefer, and why? Include specific reasons and examples.",
-    "model_sentences": [
-      "I believe students should primarily choose majors based on their genuine interests while also considering career prospects.",
-      "The first reason is that studying a subject you're passionate about leads to better academic performance and deeper learning outcomes.",
-      "For example, a student who loves psychology will engage more actively in research projects and internships compared to someone pursuing it solely for money.",
-      "On the other hand, completely ignoring job market realities is unrealistic, so students should research whether their field offers adequate employment opportunities.",
-      "A balanced approach—where students pursue meaningful work in areas they find intellectually stimulating—ultimately leads to both personal fulfillment and career success.",
-      "Therefore, the best strategy combines personal passion with practical career awareness rather than prioritizing either factor exclusively."
+    "prompt": "Some people believe universities should focus on theoretical knowledge. Others believe universities should focus on practical skills. Which approach do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion,",
+      "I prefer the approach of...",
+      "One reason is that...",
+      "Another important point is...",
+      "This is because...",
+      "For example,",
+      "As a result,",
+      "On balance, I think...",
+      "To summarize my thoughts..."
+    ],
+    "sample_points": [
+      "실무 기술 중심 교육이 졸업 후 취업에 더 도움이 되며, 학생들이 실제 직업 현장에서 바로 적용할 수 있는 능력을 기르게 해줍니다.",
+      "그러나 이론적 지식은 비판적 사고력과 문제 해결 능력을 발달시켜 장기적 경력 성장을 가능하게 하므로, 두 가지 균형이 중요합니다."
     ]
   },
   "listening": {
-    "title": "Psychology Lecture: The Formation and Consolidation of Memory",
-    "type": "lecture",
-    "script": "Professor: Good morning, everyone. Today we're discussing a fascinating topic in cognitive psychology: how memories are actually formed and stored in our brains. Now, most people think memory works like a video recorder—we experience something and the brain records it perfectly. But that's not accurate at all. Memory formation is far more complex and selective.\n\nLet me start with the encoding phase. When you encounter new information, your brain doesn't automatically store everything. Instead, your attention determines what gets encoded. This is why you might not remember someone's name at a party even though you heard it clearly—you weren't paying full attention. The brain was focusing on other aspects of the environment. Now, here's the crucial part: the way you encode information dramatically affects how well you'll remember it later.\n\nResearch shows that elaborative encoding—when you connect new information to existing knowledge—produces much stronger memories than simple repetition. For instance, if you're learning vocabulary, just repeating the word isn't as effective as thinking about how it relates to other words you know or creating a mental image associated with it. This is why active learning techniques are so powerful in education.\n\nFinally, after encoding comes consolidation, which typically occurs during sleep. During sleep, your brain reactivates the neural patterns associated with what you learned, essentially replaying the memories and strengthening the connections. Without adequate sleep, this consolidation process is severely impaired. So yes, sleeping after studying isn't laziness—it's essential for memory formation!",
-    "vocabulary": [
-      {
-        "word": "consolidation",
-        "meaning_ko": "통합, 강화 (기억 형성 과정)"
-      },
-      {
-        "word": "encoding",
-        "meaning_ko": "부호화, 정보를 기억 가능한 형태로 변환하는 과정"
-      },
-      {
-        "word": "elaborative encoding",
-        "meaning_ko": "정교한 부호화 (새 정보를 기존 지식과 연결)"
-      },
-      {
-        "word": "neural patterns",
-        "meaning_ko": "신경 패턴 (뇌의 신경 활동 패턴)"
-      },
-      {
-        "word": "impaired",
-        "meaning_ko": "손상된, 저하된"
-      },
-      {
-        "word": "selective",
-        "meaning_ko": "선택적인, 골라서 선택하는"
-      }
-    ],
+    "title": "Campus Library Renovation Project",
+    "type": "conversation",
+    "script": "Student: Excuse me, I heard the library is closing for renovations. When will it reopen? Librarian: Yes, we're closing next month for about three months. We're adding more study spaces, updating computer systems, and creating a new collaboration zone. We'll have a temporary library in the student center during the renovation. Student: That's great! What about our books and resources? Librarian: All materials are being cataloged and stored securely. You can request items online, and we'll deliver them to the temporary location. We're also expanding our digital collection significantly, so you'll have access to more e-books and academic journals. Student: When will the new features be ready? Librarian: The core renovation should be complete in ten weeks, but we might need a few extra weeks for final touches and staff training.",
     "questions": [
       {
-        "q": "What is the main topic of the lecture?",
+        "q": "How long will the library be closed for renovations?",
         "options": [
-          "Different types of learning strategies in universities",
-          "How memory is formed and consolidated in the brain",
-          "Why people forget information after learning",
-          "The differences between short-term and long-term memory"
+          "Two months",
+          "Three months",
+          "One month",
+          "Five months"
         ],
         "answer": 1,
-        "explanation": "교수는 강의 처음에 '인지심리학의 흥미로운 주제: 뇌에서 기억이 어떻게 형성되고 저장되는가'라고 명시합니다."
+        "explanation": "사서가 '다음 달에 닫을 것이고 약 3개월 정도 걸릴 것 같다'고 명시했습니다. 따라서 정답은 B번 'Three months'입니다."
       },
       {
-        "q": "According to the professor, why might someone fail to remember a person's name at a party?",
+        "q": "What improvements will be made during the renovation?",
         "options": [
-          "The name was spoken too quietly",
-          "Short-term memory capacity was exceeded",
-          "Attention was not focused on the name being encoded",
-          "The consolidation process was interrupted"
-        ],
-        "answer": 2,
-        "explanation": "교수는 '파티에서 이름을 듣고도 기억하지 못하는 이유는 주의를 기울이지 않았기 때문'이라고 설명합니다."
-      },
-      {
-        "q": "Why does the professor mention vocabulary learning as an example of elaborative encoding?",
-        "options": [
-          "To show that vocabulary is the easiest subject to learn",
-          "To demonstrate that connecting new words to existing knowledge produces stronger memories than simple repetition",
-          "To suggest that sleeping is more important than studying",
-          "To explain why some languages are harder to learn than others"
+          "Only new furniture",
+          "More study spaces, computer updates, and a collaboration zone",
+          "Just digital resources",
+          "Smaller facility"
         ],
         "answer": 1,
-        "explanation": "교수는 어휘 학습 예를 들어 '새 단어를 알고 있는 다른 단어와 연결하거나 정신적 이미지를 만드는 것이 단순 반복보다 훨씬 효과적'이라고 설명합니다."
+        "explanation": "사서가 '더 많은 스터디 공간 추가, 컴퓨터 시스템 업데이트, 새로운 협업 구역 생성'을 언급했습니다. 따라서 정답은 B번입니다."
       },
       {
-        "q": "What does the professor imply about sleeping after studying?",
+        "q": "Where can students access library resources during the renovation?",
         "options": [
-          "It prevents memory consolidation from occurring",
-          "It is essential for the neural patterns to be reactivated and memories to be strengthened",
-          "It should be avoided because it wastes time",
-          "It only helps with emotional memories"
+          "They cannot access any resources",
+          "In the student center's temporary library and online",
+          "Only through the university website",
+          "At a nearby public library"
         ],
         "answer": 1,
-        "explanation": "교수는 '수면 중에 뇌가 학습 내용의 신경 패턴을 재활성화하여 기억 형성에 필수적'이라고 강조합니다."
+        "explanation": "사서가 '학생 센터에 임시 도서관이 설치될 것이고, 온라인으로 자료를 신청할 수 있다'고 설명했습니다. 따라서 정답은 B번입니다."
       }
     ]
   }
