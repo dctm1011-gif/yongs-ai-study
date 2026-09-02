@@ -3170,5 +3170,65 @@
     "explanation": "자산, 통화, 또는 무언가의 가치가 시간이 지나면서 감소하는 것. 경제학, 회계학에서 중요한 개념.",
     "tip": "동의어: decline, devaluation / 반의어: appreciation / 경제학, 회계학 필수 어휘 / 관련 동사: depreciate",
     "emoji": "📉"
+  },
+  {
+    "id": "trajectory",
+    "word": "trajectory",
+    "pos": "noun",
+    "date": "2026-09-03",
+    "meaning": "궤적, 발전 경로",
+    "example_ko": "그 스타트업의 발전 경로는 지난해 지수적 성장을 보여준다.",
+    "example_en": "The startup's trajectory shows exponential growth in the past year.",
+    "explanation": "The path or course that something follows, especially referring to the direction of development or progress of a person, company, or project over time.",
+    "tip": "동의어: path, course, direction | 반의어: stagnation | 경제/사업 영역 출제빈도 높음",
+    "emoji": "📈"
+  },
+  {
+    "id": "profitability",
+    "word": "profitability",
+    "pos": "noun",
+    "date": "2026-09-03",
+    "meaning": "수익성, 수익을 낼 수 있는 능력",
+    "example_ko": "투자자들은 강한 판매에도 불구하고 회사의 장기적 수익성에 우려하고 있다.",
+    "example_en": "Investors are concerned about the company's long-term profitability despite strong sales.",
+    "explanation": "The quality or state of being profitable; the ability of a business or investment to generate income that exceeds its costs.",
+    "tip": "동의어: profitableness, gain | 반의어: loss, deficit | 금융/경영학 핵심어",
+    "emoji": "💰"
+  },
+  {
+    "id": "monopoly",
+    "word": "monopoly",
+    "pos": "noun",
+    "date": "2026-09-03",
+    "meaning": "독점, 독점권",
+    "example_ko": "그 기술 대기업의 검색 엔진 독점은 규제 감시를 받고 있다.",
+    "example_en": "The tech giant's monopoly on search engines has attracted regulatory scrutiny.",
+    "explanation": "The exclusive control of a commodity or service in a particular market, or the person or company that has such control; also refers to a board game.",
+    "tip": "동의어: exclusive control | 반의어: competition, oligopoly | 경제학/법학 중요 개념",
+    "emoji": "🎯"
+  },
+  {
+    "id": "cognition",
+    "word": "cognition",
+    "pos": "noun",
+    "date": "2026-09-03",
+    "meaning": "인지, 인지 능력",
+    "example_ko": "정기적인 운동이 노인의 인지 기능과 인지 능력을 향상시킨다는 연구 결과가 있다.",
+    "example_en": "Research shows that regular exercise improves cognitive function and cognition in elderly adults.",
+    "explanation": "The mental process of acquiring knowledge and understanding through thought, experience, and the senses; the ability to think, learn, and remember.",
+    "tip": "동의어: perception, awareness, thinking | 반의어: ignorance | 심리학/신경과학 출제 영역",
+    "emoji": "🧠"
+  },
+  {
+    "id": "pedagogy",
+    "word": "pedagogy",
+    "pos": "noun",
+    "date": "2026-09-03",
+    "meaning": "교육학, 교수법",
+    "example_ko": "현대 교육학은 전통적인 강의식보다 학생 중심 학습을 강조한다.",
+    "example_en": "Modern pedagogy emphasizes student-centered learning rather than traditional lecture-based approaches.",
+    "explanation": "The method and practice of teaching; the science and art of education that focuses on how people learn and the best strategies for instructing students.",
+    "tip": "동의어: teaching method, instruction | 관련어: pedagogical | 교육학 전공 필수어",
+    "emoji": "📚"
   }
 ]

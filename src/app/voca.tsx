@@ -73,8 +73,7 @@ interface ReviewSentence {
 }
 
 interface ReviewStory {
-  paragraph: string;
-  paragraph_ko: string;
+  sentences: { en: string; ko: string }[];
   wordNuances: { word: string; meaning: string; nuance: string }[];
 }
 
@@ -447,10 +446,7 @@ export default function VocaScreen() {
         const hasNewFormat = Array.isArray(parsedQuizzes) && parsedQuizzes[0]?.id?.startsWith('fb_');
         setQuizzes(hasNewFormat ? parsedQuizzes : generateQuizzes(parsedWords));
 
-        const savedSentences = await AsyncStorage.getItem('english_sentences');
-        let parsedSentences: any = null;
-        try { parsedSentences = savedSentences ? JSON.parse(savedSentences) : null; } catch { parsedSentences = null; }
-        if (Array.isArray(parsedSentences)) setReviewSentences(parsedSentences);
+        // review story is generated on demand, not cached
       } else {
         // 캐시가 없거나 예전 형식(배열이 아님)으로 남아있으면 기본값으로 폴백
         loadedWords = getDefaultWords();
@@ -839,18 +835,32 @@ export default function VocaScreen() {
   const loadReviewStory = async () => {
     if (reviewLoading) return;
     setReviewLoading(true);
+    const db = getDatabase(getFirebaseApp());
+    const today = getKSTDateString();
+
+    const tryPublicCache = async (): Promise<ReviewStory | null> => {
+      try {
+        const snap = await get(ref(db, `english/reviewStory/${today}`));
+        return snap.exists() ? (snap.val() as ReviewStory) : null;
+      } catch { return null; }
+    };
+
     try {
-      const db = getDatabase(getFirebaseApp());
       const poolSnap = await get(userRef(uid, 'english/reviewPool'));
-      if (!poolSnap.exists()) { setReviewStory(null); return; }
+      let candidates: any[] = [];
 
-      const pool: Record<string, any> = poolSnap.val();
-      const candidates = Object.values(pool)
-        .filter((v: any) => (v.count ?? 0) < 10)
-        .sort((a: any, b: any) => (a.count ?? 0) - (b.count ?? 0))
-        .slice(0, 10);
+      if (poolSnap.exists()) {
+        const pool: Record<string, any> = poolSnap.val();
+        candidates = Object.values(pool)
+          .filter((v: any) => (v.count ?? 0) < 10)
+          .sort((a: any, b: any) => (a.count ?? 0) - (b.count ?? 0))
+          .slice(0, 10);
+      }
 
-      if (candidates.length === 0) { setReviewStory(null); return; }
+      if (candidates.length === 0) {
+        setReviewStory(await tryPublicCache());
+        return;
+      }
 
       const words = candidates.map((entry: any) => ({
         word: entry.word,
@@ -864,11 +874,10 @@ export default function VocaScreen() {
         body: JSON.stringify({ words }),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const story: ReviewStory = await res.json();
-      setReviewStory(story);
+      setReviewStory(await res.json());
     } catch (e) {
       console.warn('review story 생성 실패:', e);
-      setReviewStory(null);
+      setReviewStory(await tryPublicCache());
     } finally {
       setReviewLoading(false);
     }
@@ -1626,7 +1635,7 @@ const StoryReviewView = React.memo(({ story, loading, uid, onReload, onComplete 
   }, []);
 
   const playParagraph = useCallback(async () => {
-    if (!story?.paragraph) return;
+    if (!story?.sentences?.length) return;
     if (isPlayingRef.current) {
       ++_wcPlayId; Speech.stop();
       if (_wcSound) { await _wcSound.stopAsync().catch(() => {}); await _wcSound.unloadAsync().catch(() => {}); _wcSound = null; }
@@ -1636,7 +1645,7 @@ const StoryReviewView = React.memo(({ story, loading, uid, onReload, onComplete 
     isPlayingRef.current = true; setIsPlaying(true);
     try {
       await Audio.setAudioModeAsync({ staysActiveInBackground: true, playsInSilentModeIOS: true });
-      const plain = story.paragraph.replace(/\*\*(.+?)\*\*/g, '$1');
+      const plain = story.sentences.map(s => s.en.replace(/\*\*(.+?)\*\*/g, '$1')).join(' ');
       const url = `${NETLIFY_BASE_URL}/api/toefl-tts?speaker=Professor&text=${encodeURIComponent(plain)}`;
       const result = await Promise.race([
         Audio.Sound.createAsync({ uri: url }, { shouldPlay: false }).catch(() => null),
@@ -1657,7 +1666,7 @@ const StoryReviewView = React.memo(({ story, loading, uid, onReload, onComplete 
     } finally {
       if (_wcPlayId === myId) { isPlayingRef.current = false; setIsPlaying(false); }
     }
-  }, [story?.paragraph]);
+  }, [story?.sentences]);
 
   if (loading) {
     return (
@@ -1704,17 +1713,14 @@ const StoryReviewView = React.memo(({ story, loading, uid, onReload, onComplete 
         </TouchableOpacity>
       </View>
       <ScrollView contentContainerStyle={[styles.listContent, { paddingBottom: 100 }]}>
-        {/* 영어 단락 */}
-        <View style={styles.storyCard}>
-          <Text style={styles.storyLabel}>📖 Story</Text>
-          <Text style={styles.storyParagraph}>{renderParagraph(story.paragraph)}</Text>
-        </View>
-
-        {/* 한국어 해석 */}
-        <View style={[styles.storyCard, { backgroundColor: '#f0f9ff' }]}>
-          <Text style={styles.storyLabel}>🇰🇷 해석</Text>
-          <Text style={styles.storyKo}>{story.paragraph_ko}</Text>
-        </View>
+        {/* 문장별 영어 + 해석 */}
+        {story.sentences.map((s, i) => (
+          <View key={i} style={styles.storyCard}>
+            <Text style={styles.storyParagraph}>{renderParagraph(s.en)}</Text>
+            <View style={styles.storySentenceDivider} />
+            <Text style={styles.storyKo}>{s.ko}</Text>
+          </View>
+        ))}
 
         {/* 단어 뉘앙스 */}
         <Text style={styles.storyNuanceHeader}>💡 단어 뉘앙스</Text>
@@ -2196,9 +2202,14 @@ const styles = StyleSheet.create({
     color: '#1e293b',
     lineHeight: 24,
   },
+  storySentenceDivider: {
+    height: 1,
+    backgroundColor: '#e2e8f0',
+    marginVertical: 8,
+  },
   storyKo: {
     fontSize: 14,
-    color: '#334155',
+    color: '#64748b',
     lineHeight: 22,
   },
   storyNuanceHeader: {

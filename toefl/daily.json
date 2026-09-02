@@ -1,115 +1,204 @@
 {
-  "date": "2026-09-02",
+  "date": "2026-09-03",
   "reading": {
-    "title": "Artificial Intelligence in Healthcare",
-    "passage": "Artificial intelligence is revolutionizing the healthcare industry by enabling faster and more accurate diagnoses. Machine learning algorithms can analyze medical images and detect diseases like cancer earlier than traditional methods. AI-powered systems also assist in drug discovery, reducing the time and cost of developing new medications. However, concerns about data privacy and the need for human oversight remain critical challenges. Healthcare professionals must balance technological advancement with patient safety and ethical considerations.",
+    "title": "Cognitive Psychology and Memory Formation",
+    "passage": "Cognitive psychology has revolutionized our understanding of how the human brain processes and retains information. Memory formation, a central concept in this field, involves three distinct stages: encoding, storage, and retrieval. During encoding, sensory information is transformed into a form that can be processed by the brain. This transformation is not passive; rather, it requires active attention and cognitive engagement. Research has demonstrated that individuals who employ elaborative encoding—connecting new information to existing knowledge—retain significantly more material than those using maintenance rehearsal, a superficial repetition technique.\n\nThe consolidation of memories involves the hippocampus, a brain structure critical for transferring short-term memories into long-term storage. Studies utilizing neuroimaging techniques have revealed that sleep plays an indispensable role in this consolidation process. During sleep, the brain reactivates neural patterns associated with learned information, strengthening synaptic connections and facilitating permanent retention. Furthermore, emotional salience substantially affects memory durability; emotionally charged experiences are encoded more robustly due to amygdala activation, which modulates the strength of memory traces.\n\nUnderstanding these mechanisms has profound implications for educational strategies and cognitive rehabilitation. Educators who recognize the importance of elaborative encoding can design curricula that promote deeper learning, while clinicians can develop interventions for individuals with memory impairments.",
+    "vocabulary": [
+      {
+        "word": "cognitive",
+        "meaning_ko": "인지적인, 인식의"
+      },
+      {
+        "word": "elaborative encoding",
+        "meaning_ko": "정교한 부호화, 정보를 기존 지식과 연결시키는 인코딩 방식"
+      },
+      {
+        "word": "consolidation",
+        "meaning_ko": "통합, 강화"
+      },
+      {
+        "word": "hippocampus",
+        "meaning_ko": "해마 (뇌의 장기 기억 저장 구조)"
+      },
+      {
+        "word": "synaptic",
+        "meaning_ko": "시냅스의, 신경 연결의"
+      },
+      {
+        "word": "amygdala activation",
+        "meaning_ko": "편도체 활성화 (감정 처리 관련)"
+      },
+      {
+        "word": "salience",
+        "meaning_ko": "두드러짐, 중요도"
+      }
+    ],
     "questions": [
       {
-        "q": "According to the passage, what is one benefit of using AI in healthcare?",
+        "q": "According to the passage, what is the primary difference between elaborative encoding and maintenance rehearsal?",
         "options": [
-          "It completely eliminates the need for doctors",
-          "It can detect diseases like cancer earlier than traditional methods",
-          "It guarantees all medications will be safe",
-          "It removes all privacy concerns"
+          "Elaborative encoding involves connecting new information to existing knowledge, while maintenance rehearsal is superficial repetition",
+          "Maintenance rehearsal is more effective for long-term retention than elaborative encoding",
+          "Both techniques are equally effective for memory formation",
+          "Elaborative encoding requires less cognitive engagement than maintenance rehearsal"
         ],
-        "answer": 1,
-        "explanation": "본문에서 'Machine learning algorithms can analyze medical images and detect diseases like cancer earlier than traditional methods'라고 명시되어 있습니다. AI가 전통적인 방법보다 더 빨리 암 같은 질병을 감지할 수 있다는 것이 주요 이점입니다."
+        "answer": 0,
+        "explanation": "지문의 첫 번째 단락에서 '정교한 부호화는 새 정보를 기존 지식과 연결하는 반면, 유지 리허설은 표면적 반복 기법'이라고 명시되어 있습니다."
       },
       {
-        "q": "What does the passage indicate about challenges in AI healthcare implementation?",
+        "q": "What can be inferred from the passage about the role of sleep in memory?",
         "options": [
-          "There are no challenges at all",
-          "Only patients are concerned about the technology",
-          "Data privacy and need for human oversight are critical challenges",
-          "AI cannot help with drug discovery"
-        ],
-        "answer": 2,
-        "explanation": "'However, concerns about data privacy and the need for human oversight remain critical challenges'라는 문장에서 데이터 프라이버시와 인간의 감시가 중요한 도전과제임을 알 수 있습니다."
-      },
-      {
-        "q": "What is the main idea of the passage?",
-        "options": [
-          "Healthcare is becoming outdated",
-          "AI has both significant benefits and important ethical considerations in healthcare",
-          "Doctors should be replaced entirely by AI systems",
-          "Privacy is not important in medicine"
+          "Sleep is optional for memory consolidation",
+          "Sleep is essential for transferring short-term memories to long-term storage through neural reactivation",
+          "Sleep only affects emotional memories",
+          "The hippocampus does not function during sleep"
         ],
         "answer": 1,
-        "explanation": "본문은 AI의 장점(빠른 진단, 약물 개발)과 동시에 도전과제(프라이버시, 윤리적 고려)를 모두 제시하고 있으므로, AI가 의료에서 이점과 고려사항을 모두 가지고 있다는 것이 주요 내용입니다."
+        "explanation": "지문의 두 번째 단락에서 '수면은 학습된 정보와 관련된 신경 패턴을 재활성화하여 시냅스 연결을 강화한다'고 설명합니다."
+      },
+      {
+        "q": "The word 'salience' in the third paragraph is closest in meaning to:",
+        "options": [
+          "Emotional intensity",
+          "The state of being particularly noticeable or important",
+          "Memory capacity",
+          "Neural activity level"
+        ],
+        "answer": 1,
+        "explanation": "'Salience'는 특정 자극이나 정보가 얼마나 두드러지거나 중요한지를 나타내며, 맥락상 '감정적으로 두드러진 경험'을 의미합니다."
+      },
+      {
+        "q": "Why does the author discuss the role of the amygdala in the passage?",
+        "options": [
+          "To explain how emotional experiences are more strongly encoded in memory",
+          "To suggest that emotional memories are less reliable",
+          "To indicate that the amygdala controls all memory processes",
+          "To demonstrate that emotions interfere with cognitive processes"
+        ],
+        "answer": 0,
+        "explanation": "지문에서 편도체(amygdala) 활성화가 감정적 경험의 메모리 추적을 강화한다고 언급하여, 감정이 메모리 인코딩을 강화하는 메커니즘을 설명합니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement that social media has more negative effects than positive effects on society?",
-    "structure": {
-      "intro": "명확한 입장 제시: 'I agree/disagree that social media has more negative effects on society because...' 형태로 서론을 시작하며, 2-3개의 주요 이유를 preview합니다.",
-      "body1": "첫 번째 주요 포인트: 소셜 미디어의 정신 건강에 미치는 부정적 영향 (스트레스, 우울증, 자존감 저하) 또는 긍정적 영향 (연결, 커뮤니티) 중 입장에 맞게 선택하여 구체적 예시 제시",
-      "body2": "두 번째 주요 포인트: 소셜 미디어의 정보 확산 (잘못된 정보/가짜뉴스) 또는 긍정적 정보 공유와 사회 운동에 미치는 영향에 대해 설명",
-      "conclusion": "입장 재확인 및 전체 논의 요약: 'In conclusion, I believe that social media...' 형태로 마무리하며 사회에 미치는 총체적 영향 재언급"
-    },
-    "useful_phrases": [
-      "In my opinion,",
-      "Furthermore,",
-      "For instance,",
-      "On the other hand,",
-      "It is clear that",
-      "In conclusion,",
-      "One significant reason is that...",
-      "To illustrate this point,",
-      "However, it is important to note that..."
+    "sentences": [
+      {
+        "original": "Cognitive psychology has revolutionized our understanding of how the human brain processes and retains information.",
+        "paraphrase": "The field of cognitive psychology has fundamentally transformed our comprehension of the mechanisms by which the human brain encodes and maintains information.",
+        "tip": "능동태의 주어를 바꾸고, 서술어를 동의어로 치환 (revolutionized → transformed, understanding → comprehension)"
+      },
+      {
+        "original": "Memory formation involves three distinct stages: encoding, storage, and retrieval.",
+        "paraphrase": "The process of memory formation can be divided into three distinct phases—encoding, storage, and retrieval.",
+        "tip": "명사구 구조 변환 (involves → can be divided into) 및 콜론 사용을 대시로 변경"
+      },
+      {
+        "original": "Individuals who employ elaborative encoding retain significantly more material than those using maintenance rehearsal, a superficial repetition technique.",
+        "paraphrase": "Those who utilize elaborative encoding—connecting new information to existing knowledge—substantially retain more information in comparison to individuals who rely on maintenance rehearsal, which is merely superficial repetition.",
+        "tip": "비교 구조 강화 (than those using → in comparison to individuals who rely on) 및 부호화 기법의 특성을 명시적으로 추가"
+      },
+      {
+        "original": "During sleep, the brain reactivates neural patterns associated with learned information, strengthening synaptic connections and facilitating permanent retention.",
+        "paraphrase": "Sleep enables the brain to reactivate neural patterns linked to newly acquired information, thereby fortifying synaptic connections and promoting long-term memory retention.",
+        "tip": "시간 표현 구조 변경 (During sleep → Sleep enables) 및 동의어 사용 (strengthening → fortifying, permanent retention → long-term memory retention)"
+      },
+      {
+        "original": "Emotionally charged experiences are encoded more robustly due to amygdala activation, which modulates the strength of memory traces.",
+        "paraphrase": "The amygdala's activation modulates the intensity of memory traces, resulting in more robust encoding of emotionally salient experiences.",
+        "tip": "인과 관계를 재구성 (due to가 resulting in으로 변경) 및 전치사구 역할 변화"
+      }
     ]
   },
+  "writing_essay": {
+    "topic": "University Tuition Policy Reform",
+    "prompt": "Some people believe universities should significantly reduce tuition fees to make higher education more accessible. Others argue that high tuition reflects the quality of education and that students should bear the cost. What is your position on university tuition policy, and what specific measures would you recommend?",
+    "sample_response": "University tuition policy represents one of the most critical issues facing modern higher education systems. While both affordable education and quality assurance are important, I believe universities should implement a progressive tuition structure that balances accessibility with institutional sustainability. This approach would reduce financial barriers for low-income students while ensuring adequate funding for educational excellence.\n\nFirst, progressive tuition models would dramatically improve educational accessibility. Countries like Germany and Norway have demonstrated that reduced or tuition-free university education does not compromise academic quality; instead, it increases social mobility by enabling talented students from disadvantaged backgrounds to pursue degrees. Moreover, students unburdened by excessive debt can focus more effectively on their studies rather than working multiple jobs to finance their education.\n\nSecond, universities could employ a needs-based financial aid system combined with income-contingent loan repayment programs. This mechanism would ensure that graduates repay their loans proportionally to their actual earnings, preventing the debt crisis that currently affects millions. Additionally, universities could diversify funding through research grants, corporate partnerships, and alumni contributions, reducing their dependence on student tuition alone.\n\nFinally, while some argue that high tuition reflects quality, empirical evidence contradicts this assumption. The world's top universities, including many in countries with lower tuition costs, maintain their excellence through strategic investment in research and faculty development rather than excessive student fees. Therefore, implementing a progressive tuition policy combined with diversified institutional funding represents the most equitable and sustainable solution for higher education."
+  },
   "speaking": {
-    "prompt": "Some people prefer to work in a large corporation with many employees. Others prefer to work in a small company with few employees. Which do you prefer and why?",
-    "useful_expressions": [
-      "In my opinion, I prefer working in a small company because...",
-      "One reason is that small companies offer more opportunities for personal growth and direct impact.",
-      "Another advantage is that the work environment is more collaborative and interpersonal relationships are stronger.",
-      "For example, in my previous experience...",
-      "To summarize my point, I believe that..."
-    ],
-    "sample_points": [
-      "소규모 회사에서는 더 다양한 업무 경험을 할 수 있고 직원의 기여도가 더 명확하게 인정받을 수 있다는 점",
-      "대규모 기업에서는 더 많은 자원, 체계적인 교육 프로그램, 경력 발전 기회와 안정적인 급여가 있다는 점"
+    "prompt": "Some students prefer to choose their major based on their personal interests and passions, regardless of job market prospects. Others believe students should select majors in fields with strong employment opportunities and competitive salaries. Which approach do you prefer, and why? Include specific reasons and examples.",
+    "model_sentences": [
+      "I believe students should primarily choose majors based on their genuine interests while also considering career prospects.",
+      "The first reason is that studying a subject you're passionate about leads to better academic performance and deeper learning outcomes.",
+      "For example, a student who loves psychology will engage more actively in research projects and internships compared to someone pursuing it solely for money.",
+      "On the other hand, completely ignoring job market realities is unrealistic, so students should research whether their field offers adequate employment opportunities.",
+      "A balanced approach—where students pursue meaningful work in areas they find intellectually stimulating—ultimately leads to both personal fulfillment and career success.",
+      "Therefore, the best strategy combines personal passion with practical career awareness rather than prioritizing either factor exclusively."
     ]
   },
   "listening": {
-    "title": "University Library Research Session",
-    "type": "conversation",
-    "script": "Student: Professor Chen, I'm starting my research paper on climate change, but I'm overwhelmed by the amount of information available. Where should I start? Professor Chen: That's a common challenge. First, I recommend using our university library's database. It has peer-reviewed articles that are more reliable than general internet searches. Student: That sounds helpful. How do I access it? Professor Chen: You can log in with your student ID from any campus computer or remotely from home. I also suggest starting with recent review articles to get an overview of the topic. They usually cite other important papers. Student: Oh, that's a smart approach! Should I take notes on everything I read? Professor Chen: No, be selective. Read the abstract first to see if the article is relevant. Only read the full paper if it's directly related to your topic. This will save you time and help you focus on quality sources.",
+    "title": "Psychology Lecture: The Formation and Consolidation of Memory",
+    "type": "lecture",
+    "script": "Professor: Good morning, everyone. Today we're discussing a fascinating topic in cognitive psychology: how memories are actually formed and stored in our brains. Now, most people think memory works like a video recorder—we experience something and the brain records it perfectly. But that's not accurate at all. Memory formation is far more complex and selective.\n\nLet me start with the encoding phase. When you encounter new information, your brain doesn't automatically store everything. Instead, your attention determines what gets encoded. This is why you might not remember someone's name at a party even though you heard it clearly—you weren't paying full attention. The brain was focusing on other aspects of the environment. Now, here's the crucial part: the way you encode information dramatically affects how well you'll remember it later.\n\nResearch shows that elaborative encoding—when you connect new information to existing knowledge—produces much stronger memories than simple repetition. For instance, if you're learning vocabulary, just repeating the word isn't as effective as thinking about how it relates to other words you know or creating a mental image associated with it. This is why active learning techniques are so powerful in education.\n\nFinally, after encoding comes consolidation, which typically occurs during sleep. During sleep, your brain reactivates the neural patterns associated with what you learned, essentially replaying the memories and strengthening the connections. Without adequate sleep, this consolidation process is severely impaired. So yes, sleeping after studying isn't laziness—it's essential for memory formation!",
+    "vocabulary": [
+      {
+        "word": "consolidation",
+        "meaning_ko": "통합, 강화 (기억 형성 과정)"
+      },
+      {
+        "word": "encoding",
+        "meaning_ko": "부호화, 정보를 기억 가능한 형태로 변환하는 과정"
+      },
+      {
+        "word": "elaborative encoding",
+        "meaning_ko": "정교한 부호화 (새 정보를 기존 지식과 연결)"
+      },
+      {
+        "word": "neural patterns",
+        "meaning_ko": "신경 패턴 (뇌의 신경 활동 패턴)"
+      },
+      {
+        "word": "impaired",
+        "meaning_ko": "손상된, 저하된"
+      },
+      {
+        "word": "selective",
+        "meaning_ko": "선택적인, 골라서 선택하는"
+      }
+    ],
     "questions": [
       {
-        "q": "What is the main purpose of this conversation?",
+        "q": "What is the main topic of the lecture?",
         "options": [
-          "The professor is teaching a climate change class",
-          "The student is asking the professor for guidance on starting a research paper",
-          "They are discussing the university's computer system",
-          "The professor is recommending published books about climate"
+          "Different types of learning strategies in universities",
+          "How memory is formed and consolidated in the brain",
+          "Why people forget information after learning",
+          "The differences between short-term and long-term memory"
         ],
         "answer": 1,
-        "explanation": "대화에서 학생이 교수에게 연구 논문을 어떻게 시작할지에 대해 조언을 구하고 있습니다. 교수는 도서관 데이터베이스 사용법과 효율적인 자료 검색 방법을 제시하고 있습니다."
+        "explanation": "교수는 강의 처음에 '인지심리학의 흥미로운 주제: 뇌에서 기억이 어떻게 형성되고 저장되는가'라고 명시합니다."
       },
       {
-        "q": "According to Professor Chen, what should students do before reading a full research paper?",
+        "q": "According to the professor, why might someone fail to remember a person's name at a party?",
         "options": [
-          "Contact the author of the paper",
-          "Read the introduction section first",
-          "Read the abstract to check if it's relevant to their topic",
-          "Discuss it with classmates"
+          "The name was spoken too quietly",
+          "Short-term memory capacity was exceeded",
+          "Attention was not focused on the name being encoded",
+          "The consolidation process was interrupted"
         ],
         "answer": 2,
-        "explanation": "교수는 '먼저 abstract를 읽어서 논문이 자신의 주제와 관련이 있는지 확인한 후, 직접 관련이 있을 경우에만 전체 논문을 읽으라'고 조언했습니다."
+        "explanation": "교수는 '파티에서 이름을 듣고도 기억하지 못하는 이유는 주의를 기울이지 않았기 때문'이라고 설명합니다."
       },
       {
-        "q": "What advantage of using review articles does the professor mention?",
+        "q": "Why does the professor mention vocabulary learning as an example of elaborative encoding?",
         "options": [
-          "They are shorter and easier to read",
-          "They usually cite other important papers and provide an overview of the topic",
-          "They are written by famous authors",
-          "They are available in print format only"
+          "To show that vocabulary is the easiest subject to learn",
+          "To demonstrate that connecting new words to existing knowledge produces stronger memories than simple repetition",
+          "To suggest that sleeping is more important than studying",
+          "To explain why some languages are harder to learn than others"
         ],
         "answer": 1,
-        "explanation": "교수는 review 논문을 먼저 읽으면 주제에 대한 개요를 얻을 수 있고, 다른 중요한 논문들을 인용하고 있어서 추가 자료를 찾는 데 도움이 된다고 설명했습니다."
+        "explanation": "교수는 어휘 학습 예를 들어 '새 단어를 알고 있는 다른 단어와 연결하거나 정신적 이미지를 만드는 것이 단순 반복보다 훨씬 효과적'이라고 설명합니다."
+      },
+      {
+        "q": "What does the professor imply about sleeping after studying?",
+        "options": [
+          "It prevents memory consolidation from occurring",
+          "It is essential for the neural patterns to be reactivated and memories to be strengthened",
+          "It should be avoided because it wastes time",
+          "It only helps with emotional memories"
+        ],
+        "answer": 1,
+        "explanation": "교수는 '수면 중에 뇌가 학습 내용의 신경 패턴을 재활성화하여 기억 형성에 필수적'이라고 강조합니다."
       }
     ]
   }

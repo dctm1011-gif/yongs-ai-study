@@ -1,203 +1,191 @@
 {
-  "date": "2026-09-02",
+  "date": "2026-09-03",
   "words": [
     {
-      "word": "anthropogenic",
-      "part_of_speech": "adjective",
-      "meaning_ko": "인간이 야기한, 인위적인",
-      "explanation": "인간의 활동으로 인해 발생하거나 야기된 현상을 설명할 때 사용. 주로 환경, 기후 관련 논의에서 빈번하게 등장.",
-      "example_from_convo": "The anthropogenic climate change has become undeniable.",
-      "example_ko": "인위적 기후 변화는 더 이상 부인할 수 없게 되었다.",
-      "tip": "동의어: man-made, human-induced / 과학, 환경 시험 빈출 / 접두사 anthropo-(인간)",
-      "emoji": "🌍"
+      "word": "trajectory",
+      "part_of_speech": "noun",
+      "meaning_ko": "궤적, 발전 경로",
+      "explanation": "The path or course that something follows, especially referring to the direction of development or progress of a person, company, or project over time.",
+      "example_from_convo": "The startup's trajectory shows exponential growth in the past year.",
+      "example_ko": "그 스타트업의 발전 경로는 지난해 지수적 성장을 보여준다.",
+      "tip": "동의어: path, course, direction | 반의어: stagnation | 경제/사업 영역 출제빈도 높음",
+      "emoji": "📈"
     },
     {
-      "word": "hegemony",
+      "word": "profitability",
       "part_of_speech": "noun",
-      "meaning_ko": "패권, 지배력, 우위",
-      "explanation": "한 국가, 집단, 또는 사상이 다른 것들을 지배하거나 우위를 차지하는 상태. 정치, 국제관계 담론에서 자주 사용.",
-      "example_from_convo": "The economic hegemony of developed nations affects global trade.",
-      "example_ko": "선진국들의 경제적 패권은 세계 무역에 영향을 미친다.",
-      "tip": "동의어: dominance, supremacy / 반의어: equality, balance / 정치외교 시험 필수 어휘",
-      "emoji": "👑"
+      "meaning_ko": "수익성, 수익을 낼 수 있는 능력",
+      "explanation": "The quality or state of being profitable; the ability of a business or investment to generate income that exceeds its costs.",
+      "example_from_convo": "Investors are concerned about the company's long-term profitability despite strong sales.",
+      "example_ko": "투자자들은 강한 판매에도 불구하고 회사의 장기적 수익성에 우려하고 있다.",
+      "tip": "동의어: profitableness, gain | 반의어: loss, deficit | 금융/경영학 핵심어",
+      "emoji": "💰"
     },
     {
-      "word": "paradigm",
+      "word": "monopoly",
       "part_of_speech": "noun",
-      "meaning_ko": "패러다임, 모범, 전형적 예",
-      "explanation": "특정 분야에서 광범위하게 인정되고 따르는 이론, 관점, 또는 방식. 과학, 철학, 교육 등 다양한 분야에서 사용.",
-      "example_from_convo": "The scientific paradigm shifted after Einstein's theory was published.",
-      "example_ko": "아인슈타인의 이론 발표 후 과학적 패러다임이 변했다.",
-      "tip": "동의어: model, framework / 반의어: anomaly / 철학, 과학, 교육학 시험 빈출",
-      "emoji": "🔄"
+      "meaning_ko": "독점, 독점권",
+      "explanation": "The exclusive control of a commodity or service in a particular market, or the person or company that has such control; also refers to a board game.",
+      "example_from_convo": "The tech giant's monopoly on search engines has attracted regulatory scrutiny.",
+      "example_ko": "그 기술 대기업의 검색 엔진 독점은 규제 감시를 받고 있다.",
+      "tip": "동의어: exclusive control | 반의어: competition, oligopoly | 경제학/법학 중요 개념",
+      "emoji": "🎯"
     },
     {
-      "word": "proliferation",
+      "word": "cognition",
       "part_of_speech": "noun",
-      "meaning_ko": "확산, 급속한 증가, 번식",
-      "explanation": "특정 대상이 빠르게 증가하거나 퍼져나가는 현상. 주로 부정적 맥락(무기 확산, 질병 확산)에서 사용되지만 중립적으로도 사용 가능.",
-      "example_from_convo": "Nuclear weapon proliferation remains a global security concern.",
-      "example_ko": "핵무기 확산은 여전히 세계 안보 관심사로 남아있다.",
-      "tip": "동의어: expansion, increase, spread / 관련 동사: proliferate / 국제정치, 보안 시험 필수",
-      "emoji": "⚛️"
+      "meaning_ko": "인지, 인지 능력",
+      "explanation": "The mental process of acquiring knowledge and understanding through thought, experience, and the senses; the ability to think, learn, and remember.",
+      "example_from_convo": "Research shows that regular exercise improves cognitive function and cognition in elderly adults.",
+      "example_ko": "정기적인 운동이 노인의 인지 기능과 인지 능력을 향상시킨다는 연구 결과가 있다.",
+      "tip": "동의어: perception, awareness, thinking | 반의어: ignorance | 심리학/신경과학 출제 영역",
+      "emoji": "🧠"
     },
     {
-      "word": "depreciation",
+      "word": "pedagogy",
       "part_of_speech": "noun",
-      "meaning_ko": "감가, 가치 하락, 평가절하",
-      "explanation": "자산, 통화, 또는 무언가의 가치가 시간이 지나면서 감소하는 것. 경제학, 회계학에서 중요한 개념.",
-      "example_from_convo": "Currency depreciation affects import and export prices.",
-      "example_ko": "통화 가치 하락은 수입 및 수출 가격에 영향을 미친다.",
-      "tip": "동의어: decline, devaluation / 반의어: appreciation / 경제학, 회계학 필수 어휘 / 관련 동사: depreciate",
-      "emoji": "📉"
+      "meaning_ko": "교육학, 교수법",
+      "explanation": "The method and practice of teaching; the science and art of education that focuses on how people learn and the best strategies for instructing students.",
+      "example_from_convo": "Modern pedagogy emphasizes student-centered learning rather than traditional lecture-based approaches.",
+      "example_ko": "현대 교육학은 전통적인 강의식보다 학생 중심 학습을 강조한다.",
+      "tip": "동의어: teaching method, instruction | 관련어: pedagogical | 교육학 전공 필수어",
+      "emoji": "📚"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "anthropogenic",
-      "question": "Which of the following best defines 'anthropogenic'?",
+      "word": "trajectory",
+      "question": "Which of the following best defines 'trajectory' in a business context?",
       "options": [
-        "Caused by human activities or influence",
-        "Related to ancient civilizations",
-        "Caused by natural disasters",
-        "Belonging to a specific geographic region"
+        "A sudden loss of market value",
+        "The path of development or progress over time",
+        "A legal agreement between companies",
+        "The total revenue earned in a fiscal year"
+      ],
+      "answer": 1,
+      "explanation": "Trajectory refers to the course or path of development, especially used to describe how a company or project is progressing over time.",
+      "option_explanations": null
+    },
+    {
+      "type": "meaning",
+      "word": "profitability",
+      "question": "What does 'profitability' primarily measure?",
+      "options": [
+        "The total number of employees",
+        "The ability to generate income exceeding costs",
+        "The market share percentage",
+        "The company's brand reputation"
+      ],
+      "answer": 1,
+      "explanation": "Profitability is the quality of being profitable, measuring whether a business generates more income than it spends.",
+      "option_explanations": null
+    },
+    {
+      "type": "meaning",
+      "word": "monopoly",
+      "question": "In economics, a 'monopoly' refers to which situation?",
+      "options": [
+        "Multiple companies competing fairly",
+        "Exclusive control of a market or commodity",
+        "A partnership between several firms",
+        "Government price regulations"
       ],
       "answer": 0,
-      "explanation": "Anthropogenic refers to phenomena directly caused by human activities, particularly used in discussions of climate change and environmental impact.",
-      "option_explanations": null
-    },
-    {
-      "type": "meaning",
-      "word": "hegemony",
-      "question": "What does 'hegemony' most closely mean in international relations?",
-      "options": [
-        "Military alliance between nations",
-        "The dominance or leadership of one state over others",
-        "A treaty agreement between countries",
-        "Economic depression"
-      ],
-      "answer": 1,
-      "explanation": "Hegemony in international relations refers to the dominance, leadership, or supremacy of one nation or group over others.",
-      "option_explanations": null
-    },
-    {
-      "type": "meaning",
-      "word": "paradigm",
-      "question": "Which statement best explains the concept of 'paradigm'?",
-      "options": [
-        "A mathematical equation used in physics",
-        "A widely accepted model or framework of understanding in a field",
-        "A historical event that changed civilization",
-        "A type of scientific equipment"
-      ],
-      "answer": 1,
-      "explanation": "A paradigm is a typical model or pattern that represents how things are understood and practiced within a particular discipline or field.",
+      "explanation": "A monopoly exists when one company has exclusive control over a product or service in a market, limiting competition.",
       "option_explanations": null
     },
     {
       "type": "fill_blank",
-      "word": "proliferation",
-      "sentence": "The ___ of social media platforms has transformed global communication.",
-      "sentence_ko": "소셜 미디어 플랫폼의 ___ 은/는 전 지구적 통신을 변혁했다.",
-      "answer": "proliferation",
-      "hint": "급속한 증가를 의미하는 명사"
+      "word": "trajectory",
+      "sentence": "The company's _____ has been impressive, with revenues doubling each quarter.",
+      "sentence_ko": "회사의 _____ 는 인상적이었으며, 수익이 매 분기마다 두 배씩 증가했다.",
+      "answer": "trajectory",
+      "hint": "경로, 발전 방향을 나타내는 단어"
     },
     {
       "type": "fill_blank",
-      "word": "depreciation",
-      "sentence": "The ___ of the dollar against other currencies impacts international trade.",
-      "sentence_ko": "다른 통화에 대한 달러의 ___ 는 국제 무역에 영향을 미친다.",
-      "answer": "depreciation",
-      "hint": "가치 하락을 나타내는 경제학 용어"
+      "word": "cognition",
+      "sentence": "The study examined how age affects _____ and memory retention in humans.",
+      "sentence_ko": "이 연구는 나이가 인간의 _____ 와 기억 유지에 어떤 영향을 미치는지 조사했다.",
+      "answer": "cognition",
+      "hint": "생각하고 이해하는 정신적 과정"
     },
     {
       "type": "fill_blank",
-      "word": "hegemony",
-      "sentence": "Some scholars argue that Western cultural ___ has influenced global entertainment industries.",
-      "sentence_ko": "일부 학자들은 서구 문화의 ___ 이/가 세계 엔터테인먼트 산업에 영향을 미쳤다고 주장한다.",
-      "answer": "hegemony",
-      "hint": "지배력, 패권을 의미하는 명사"
+      "word": "pedagogy",
+      "sentence": "Effective _____ requires teachers to adapt their methods to different learning styles.",
+      "sentence_ko": "효과적인 _____ 는 교사들이 다양한 학습 방식에 맞게 방법을 조정해야 한다.",
+      "answer": "pedagogy",
+      "hint": "교수법, 교육의 방법과 실제"
     },
     {
       "type": "situation",
-      "word": "anthropogenic",
-      "question": "In a climate science discussion, what would be the best context to use 'anthropogenic'?",
+      "word": "monopoly",
+      "question": "A government regulator is concerned that one company controls 95% of the market for a essential service. What problem are they likely addressing?",
       "options": [
-        "Explaining why dinosaurs went extinct",
-        "Discussing human-caused greenhouse gas emissions",
-        "Describing natural weather patterns",
-        "Analyzing ancient civilizations"
+        "Market oversaturation",
+        "Monopolistic practices and lack of competition",
+        "Currency exchange rates",
+        "Supply chain inefficiency"
       ],
       "answer": 1,
-      "explanation": "Anthropogenic is specifically used when discussing phenomena caused by human activities, making it perfect for climate science discussions about human-caused emissions.",
-      "option_explanations": [
-        "Dinosaur extinction is not human-caused",
-        "This is the correct context for anthropogenic",
-        "Natural patterns are not anthropogenic",
-        "Ancient civilizations are not related to this term"
-      ]
+      "explanation": "When one company controls the vast majority of a market, it creates a monopoly situation that regulators worry about because it can harm consumers through reduced choice and higher prices."
     },
     {
       "type": "situation",
-      "word": "paradigm",
-      "question": "When would it be appropriate to use the word 'paradigm shift' in academic writing?",
+      "word": "profitability",
+      "question": "A company's CEO is meeting with investors who are worried despite strong sales numbers. What might be the concern?",
       "options": [
-        "When describing a minor change in a research methodology",
-        "When explaining a small adjustment to data collection",
-        "When discussing a fundamental change in how a field understands its subject",
-        "When listing basic facts about a topic"
+        "Sales are increasing too quickly",
+        "The company is not profitable enough or may not be sustainable",
+        "Employees are too satisfied",
+        "Market expansion is proceeding"
       ],
-      "answer": 2,
-      "explanation": "A paradigm shift refers to a major, fundamental change in how a discipline or field understands concepts, not minor adjustments.",
-      "option_explanations": [
-        "This would be too minor for paradigm shift",
-        "This is still too small a change",
-        "This is the correct usage",
-        "This does not warrant the term paradigm shift"
-      ]
+      "answer": 1,
+      "explanation": "While high sales are positive, investors focus on profitability—whether the company actually makes money after expenses. High sales with low profitability indicates operational problems."
     }
   ],
   "sentences": [
     {
-      "word": "anthropogenic",
-      "sentence": "Many scientists agree that anthropogenic factors are the primary drivers of current climate change.",
-      "sentence_ko": "많은 과학자들은 인위적 요인이 현재 기후 변화의 주요 원인이라고 동의한다.",
-      "nuance": "학술적이고 객관적인 톤",
-      "context": "기후 과학 논의",
-      "everyday_usage": "뉴스, 학술 논문, 환경 관련 공식 성명에서 사용"
+      "word": "trajectory",
+      "sentence": "The startup's trajectory from failure to billion-dollar valuation inspired many entrepreneurs.",
+      "sentence_ko": "그 스타트업의 실패에서 10억 달러 기업가치로의 궤적은 많은 기업가들을 영감케 했다.",
+      "nuance": "긍정적이고 극적인 성장 경로",
+      "context": "성공 사례, 비즈니스 이야기",
+      "everyday_usage": "회사나 개인의 발전 방향을 설명할 때 자주 사용"
     },
     {
-      "word": "hegemony",
-      "sentence": "The hegemony of the United States in global politics has been challenged by rising powers.",
-      "sentence_ko": "전 지구적 정치에서 미국의 패권은 신흥 강국들의 도전을 받아왔다.",
-      "nuance": "분석적이고 중립적",
-      "context": "국제관계 분석",
-      "everyday_usage": "정치 논평, 국제관계 학술지, 뉴스 분석 기사"
+      "word": "profitability",
+      "sentence": "Despite cutting costs aggressively, the company's profitability remained below industry standards.",
+      "sentence_ko": "적극적으로 비용을 삭감했음에도 불구하고, 회사의 수익성은 업계 기준 이하로 남아있었다.",
+      "nuance": "어려운 상황, 개선이 필요함을 시사",
+      "context": "재정 문제, 경영 분석",
+      "everyday_usage": "회사의 재정 건강도를 평가할 때 사용"
     },
     {
-      "word": "paradigm",
-      "sentence": "The discovery of quantum mechanics represented a major paradigm shift in physics.",
-      "sentence_ko": "양자역학의 발견은 물리학의 주요 패러다임 전환을 나타냈다.",
-      "nuance": "학술적이고 존중하는 톤",
-      "context": "과학 역사 논의",
-      "everyday_usage": "교육 자료, 과학 논문, 학술 강의"
+      "word": "monopoly",
+      "sentence": "The software company was accused of maintaining an illegal monopoly by bundling its products unfairly.",
+      "sentence_ko": "그 소프트웨어 회사는 제품을 부당하게 묶어서 판매하여 불법 독점을 유지했다는 혐의를 받았다.",
+      "nuance": "법적/도덕적 문제를 내포",
+      "context": "규제, 법적 분쟁",
+      "everyday_usage": "불공정 경쟁 행위를 설명할 때 사용"
     },
     {
-      "word": "proliferation",
-      "sentence": "The proliferation of fake news on social media has created new challenges for information literacy.",
-      "sentence_ko": "소셜 미디어상의 가짜뉴스 확산은 정보 문해력에 새로운 도전을 만들었다.",
-      "nuance": "우려를 표현하는 톤",
-      "context": "디지털 문화 및 언론 비평",
-      "everyday_usage": "사설, 미디어 비평, 사회 논평"
+      "word": "cognition",
+      "sentence": "The research on aging and cognition revealed that mental exercises can slow cognitive decline.",
+      "sentence_ko": "노화와 인지에 대한 연구는 정신 운동이 인지 능력 감소를 늦출 수 있음을 보여줬다.",
+      "nuance": "과학적, 긍정적인 발견",
+      "context": "의학 연구, 건강 과학",
+      "everyday_usage": "뇌 기능과 학습 능력을 설명할 때 사용"
     },
     {
-      "word": "depreciation",
-      "sentence": "The depreciation of assets over time must be accounted for in financial reporting.",
-      "sentence_ko": "시간 경과에 따른 자산의 감가상각은 재무 보고에서 고려되어야 한다.",
-      "nuance": "기술적이고 객관적",
-      "context": "회계 및 재무 관리",
-      "everyday_usage": "회계 교재, 재무 보고서, 세무 상담"
+      "word": "pedagogy",
+      "sentence": "The shift toward student-centered pedagogy has transformed classroom dynamics and engagement.",
+      "sentence_ko": "학생 중심 교육학으로의 전환은 교실 역학 관계와 참여도를 변화시켰다.",
+      "nuance": "현대적, 혁신적인 변화",
+      "context": "교육 개혁, 학습 방법론",
+      "everyday_usage": "교수 방법의 철학적 변화를 설명할 때 사용"
     }
   ]
 }
