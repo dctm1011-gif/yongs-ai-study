@@ -64,7 +64,7 @@ export default async () => {
     // 지난 30일 데이터 수집
     const dates = Array.from({ length: 30 }, (_, i) => getKSTDateString(i));
     const [summaries, wordSets] = await Promise.all([
-      Promise.all(dates.map(d => fbGet(`dailySummary/${d}`))),
+      Promise.all(dates.map(d => fbGet(`english/summary/${d}`))),
       Promise.all(dates.map(d => fbGet(`english/words/${d}`))),
     ]);
 
@@ -102,11 +102,23 @@ export default async () => {
 
     // 활동별 완료율
     const activityKeys = {
-      'english': '영어 퀴즈', 'english_review': '복습 리뷰',
-      'english_crossword': '크로스워드', 'english_scramble': '스크램블',
-      'reading': '한국어 독해', 'sajaseongeo': '사자성어',
-      'sangshik': '상식', 'investment': '투자 칼럼',
-      'toefl_reading': 'TOEFL', 'english_news_reading': 'BBC 뉴스',
+      'english': '영어 퀴즈',
+      'english_review': '복습 리뷰',
+      'english_crossword': '크로스워드',
+      'english_scramble': '스크램블',
+      'english_sentence': '문장 퀴즈',
+      'english_word_match': '단어 매칭',
+      'english_speaking': 'AI 스피킹',
+      'english_news_reading': '뉴스 읽기',
+      'english_news_listening': '뉴스 듣기',
+      'reading': '한국어 독해',
+      'sajaseongeo': '사자성어',
+      'sangshik': '상식',
+      'korean_ox': '한국어 OX',
+      'investment': '투자 칼럼',
+      'toefl_reading': 'TOEFL 읽기',
+      'toefl_listening': 'TOEFL 듣기',
+      'toefl_writing': 'TOEFL 쓰기',
     };
     const activityRates = Object.entries(activityKeys).map(([key, label]) => {
       const done = history.filter(d => d.summary?.completion?.[key]).length;
@@ -131,8 +143,8 @@ export default async () => {
         : '미완료',
       todayCompleted: Object.keys(todayData?.summary?.completion ?? {}).filter(k => todayData.summary.completion[k]).length,
       appCoverage: {
-        영어_수용적: 'BBC뉴스읽기/듣기, TOEFL 리딩/리스닝, 어휘퀴즈, 크로스워드, 스크램블',
-        영어_생산적: '스피킹 없음 (앱 미지원), 라이팅 TOEFL만',
+        영어_수용적: '뉴스읽기/듣기, TOEFL 읽기/듣기, 어휘퀴즈, 크로스워드, 스크램블, 문장퀴즈, 단어매칭',
+        영어_생산적: 'AI 스피킹 대화 (앱 지원), TOEFL 쓰기',
         한국어: '독해, 사자성어, 상식, OX퀴즈',
         투자부동산: '칼럼 읽기',
       },
@@ -149,7 +161,7 @@ ${JSON.stringify(dataForAI, null, 2)}
 3. ⚠️ 개선이 필요한 점 (2문장): 약점과 이유
 4. 🔧 영역별 보강 포인트 (각 영역 1문장씩):
    - 영어 어휘/독해:
-   - 영어 스피킹/라이팅: (앱에 스피킹 기능이 없는 점 반드시 언급, AI 대화 연습 권고)
+   - 영어 스피킹/라이팅: (AI 스피킹 활용 현황 언급, 개선 제안)
    - 한국어:
    - 투자/부동산:
    - TOEFL:

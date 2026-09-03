@@ -42,9 +42,14 @@ export async function writeDailySummary(uid: string): Promise<void> {
     }
   });
 
-  await set(ref(db, `dailySummary/${today}`), {
+  const summary = {
     completion,
     english: englishSnap?.val() ?? null,
     updatedAt: Date.now(),
-  });
+  };
+  // dailySummary는 Firebase 규칙상 인증 필요 → 리포트용 공개 경로에도 병행 기록
+  await Promise.all([
+    set(ref(db, `dailySummary/${today}`), summary),
+    set(ref(db, `english/summary/${today}`), summary),
+  ]);
 }
