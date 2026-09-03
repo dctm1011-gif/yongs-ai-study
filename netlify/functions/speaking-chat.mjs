@@ -62,7 +62,7 @@ Today's topic: "${topic}"
 ${history?.length
   ? `\nYour memory of past conversations with this user (last ${history.length} sessions):\n${history.map(h => `- ${h.date} [Topic: ${h.topic}]: ${h.summary}`).join('\n')}\n\nIMPORTANT: You genuinely remember these past conversations. When the user asks "do you remember...?" or mentions something from before, check your memory above and respond naturally — confirm what you remember, reference specific details, and connect it to the current conversation. Never say you don't have memory of previous conversations.\n`
   : ''}Rules:
-- Keep responses to 2-4 sentences maximum. Be concise.
+- STRICT LENGTH LIMIT: 2-3 sentences maximum. Never write more than 3 sentences. Do not use multiple paragraphs.
 - Use natural everyday English.
 - If the user makes a grammar error, gently note it at the end: "(Tip: '...' sounds more natural)"
 - Always end with one follow-up question to keep the conversation going.
@@ -94,7 +94,7 @@ ${history?.length
     reply = feedbackData.content?.[0]?.text ?? '';
     summary = summaryData.content?.[0]?.text?.trim() ?? null;
   } else {
-    const data = await callHaiku(systemPrompt, messages, 300);
+    const data = await callHaiku(systemPrompt, messages, 500);
     reply = data.content?.[0]?.text ?? '';
   }
 
