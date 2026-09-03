@@ -1,5 +1,6 @@
 import { getDatabase, ref, get, set } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function getKSTDateString(): string {
   const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
@@ -20,6 +21,31 @@ const COMPLETION_KEYS = [
   // AI 스피킹
   'english_speaking',
 ];
+
+// 과거 dailySummary → english/summary 백필 (앱 시작 시 1회만 실행)
+export async function backfillPublicSummaries(): Promise<void> {
+  const DONE_KEY = 'summary_backfill_done_v1';
+  const done = await AsyncStorage.getItem(DONE_KEY);
+  if (done) return;
+
+  const db = getDatabase(getFirebaseApp());
+  const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
+  const promises: Promise<any>[] = [];
+
+  for (let i = 0; i < 30; i++) {
+    const d = new Date(kst.getTime() - i * 86400000);
+    const date = d.toISOString().split('T')[0];
+    promises.push(
+      get(ref(db, `dailySummary/${date}`)).then(snap => {
+        if (!snap.exists()) return;
+        return set(ref(db, `english/summary/${date}`), snap.val()).catch(() => {});
+      }).catch(() => {})
+    );
+  }
+
+  await Promise.allSettled(promises);
+  await AsyncStorage.setItem(DONE_KEY, '1');
+}
 
 export async function writeDailySummary(uid: string): Promise<void> {
   const db = getDatabase(getFirebaseApp());

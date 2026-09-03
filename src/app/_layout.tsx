@@ -20,7 +20,7 @@ import LoginScreen from './login';
 import { useAnnouncements } from '../hooks/useAnnouncements';
 import { AnnouncementModal } from '../components/AnnouncementModal';
 import { refreshStudyNotifications } from '../utils/studyNotifications';
-import { writeDailySummary } from '../utils/dailySummary';
+import { writeDailySummary, backfillPublicSummaries } from '../utils/dailySummary';
 import * as Notifications from 'expo-notifications';
 import { AuthProvider, useAuth } from '../context/AuthContext';
 
@@ -86,6 +86,7 @@ function MainTabs() {
   useEffect(() => {
     if (!user?.uid) return;
     writeDailySummary(user.uid).catch(() => {});
+    backfillPublicSummaries().catch(() => {}); // 과거 30일 1회 백필
     const interval = setInterval(() => writeDailySummary(user.uid!).catch(() => {}), 60 * 60 * 1000);
     return () => clearInterval(interval);
   }, [user?.uid]);
