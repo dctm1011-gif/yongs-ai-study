@@ -7,7 +7,7 @@ import * as Speech from 'expo-speech';
 import { Audio } from 'expo-av';
 import { cacheManager } from '../utils/CacheManager';
 import { performanceMonitor } from '../utils/PerformanceMonitor';
-import { getDatabase, ref, onValue, get, set as dbSet, remove } from 'firebase/database';
+import { getDatabase, ref, onValue, get, set as dbSet, update, remove, increment } from 'firebase/database';
 import * as Notifications from 'expo-notifications';
 import { SchedulableTriggerInputTypes } from 'expo-notifications';
 import { NOTIF_LOG_KEY } from './_layout';
@@ -204,6 +204,7 @@ export default function VocaScreen() {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [reviewStory, setReviewStory] = useState<ReviewStory | null>(null);
   const [reviewLoading, setReviewLoading] = useState(false);
+  const [reviewWordIds, setReviewWordIds] = useState<string[]>([]);
   const [stats, setStats] = useState({ totalWords: 0, readWords: 0, quizzesCorrect: 0, quizzesTotal: 0 });
   const [completionToday, setCompletionToday] = useState<Record<string, boolean>>({});
   const [loading, setLoading] = useState(true);
@@ -851,18 +852,20 @@ export default function VocaScreen() {
 
       if (poolSnap.exists()) {
         const pool: Record<string, any> = poolSnap.val();
-        candidates = Object.values(pool)
-          .filter((v: any) => (v.count ?? 0) < 10)
-          .sort((a: any, b: any) => (a.count ?? 0) - (b.count ?? 0))
+        candidates = Object.entries(pool)
+          .filter(([_, v]: [string, any]) => (v.count ?? 0) < 10)
+          .sort(([_, a]: [string, any], [__, b]: [string, any]) => (a.count ?? 0) - (b.count ?? 0))
           .slice(0, 10);
       }
 
       if (candidates.length === 0) {
+        setReviewWordIds([]);
         setReviewStory(await tryPublicCache());
         return;
       }
 
-      const words = candidates.map((entry: any) => ({
+      setReviewWordIds((candidates as [string, any][]).map(([id]) => id));
+      const words = (candidates as [string, any][]).map(([_, entry]) => ({
         word: entry.word,
         meaning: entry.meaning ?? '',
         pos: entry.pos ?? '',
@@ -1104,7 +1107,19 @@ export default function VocaScreen() {
           />
         </View>
       )}
-      {view === 'review' && <StoryReviewView story={reviewStory} loading={reviewLoading} uid={uid} onReload={loadReviewStory} onComplete={() => ToastAndroid.show('문장복습 완료!', ToastAndroid.SHORT)} />}
+      {view === 'review' && <StoryReviewView story={reviewStory} loading={reviewLoading} uid={uid} onReload={loadReviewStory} onComplete={() => {
+        if (reviewWordIds.length > 0) {
+          const db = getDatabase(getFirebaseApp());
+          const today = getKSTDateString();
+          reviewWordIds.forEach(wordId => {
+            update(userRef(uid, `english/reviewPool/${wordId}`), {
+              count: increment(1),
+              lastReviewedDate: today,
+            }).catch(() => {});
+          });
+        }
+        ToastAndroid.show('문장복습 완료! 📖 +1', ToastAndroid.SHORT);
+      }} />}
       {view === 'stats' && <ReviewPoolView uid={uid} />}
       {view === 'quiz' && <QuizView quizzes={quizzes.filter(q => !skipSet.has(q.wordId))} words={words} onAnswer={answerQuiz} onComplete={() => {
         const active = quizzes.filter(q => !skipSet.has(q.wordId));

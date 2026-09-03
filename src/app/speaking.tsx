@@ -46,6 +46,12 @@ const DAILY_TOPICS = [
   'A lesson learned from a mistake',
 ];
 
+function ChatImage({ uri, style }: { uri: string; style: any }) {
+  const [failed, setFailed] = React.useState(false);
+  if (failed) return null;
+  return <Image source={{ uri }} style={style} resizeMode="cover" onError={() => setFailed(true)} />;
+}
+
 function getKSTDateString(): string {
   const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
   return kst.toISOString().split('T')[0];
@@ -200,32 +206,39 @@ export default function SpeakingScreen() {
 
   async function endConversation() {
     setViewState('ending');
+    let feedback = '';
+    let summary: string | null = null;
     try {
-      const { text: feedback, summary } = await callChat(
+      const res = await callChat(
         messages.map(m => ({ role: m.role, content: m.content })),
         true,
       );
-      setMessages(prev => [...prev, {
-        id: 'feedback',
-        role: 'assistant',
-        content: `✅ 오늘 대화 완료!\n\n${feedback}`,
-      }]);
-
-      if (user?.uid) {
-        const db = getDatabase(getFirebaseApp());
-        const tasks: Promise<any>[] = [
-          dbSet(ref(db, `users/${user.uid}/completion/english_speaking/${today}`), {
-            done: true, exchanges: userMsgCount, ts: Date.now(),
-          }),
-        ];
-        if (summary) {
-          tasks.push(dbSet(ref(db, `users/${user.uid}/speaking_history/${today}`), {
-            date: today, topic, summary, exchanges: userMsgCount, ts: Date.now(),
-          }));
-        }
-        await Promise.all(tasks).catch(() => {});
-      }
+      feedback = res.text ?? '';
+      summary = res.summary ?? null;
     } catch {}
+
+    setMessages(prev => [...prev, {
+      id: 'feedback',
+      role: 'assistant',
+      content: feedback.trim()
+        ? `✅ 오늘 대화 완료!\n\n${feedback}`
+        : '✅ 오늘 대화 완료! 수고하셨어요 👍\n(피드백을 불러오지 못했어요. 다음번에 다시 시도해보세요.)',
+    }]);
+
+    if (user?.uid) {
+      const db = getDatabase(getFirebaseApp());
+      const tasks: Promise<any>[] = [
+        dbSet(ref(db, `users/${user.uid}/completion/english_speaking/${today}`), {
+          done: true, exchanges: userMsgCount, ts: Date.now(),
+        }),
+      ];
+      if (summary) {
+        tasks.push(dbSet(ref(db, `users/${user.uid}/speaking_history/${today}`), {
+          date: today, topic, summary, exchanges: userMsgCount, ts: Date.now(),
+        }));
+      }
+      await Promise.all(tasks).catch(() => {});
+    }
     setViewState('done');
   }
 
@@ -238,13 +251,7 @@ export default function SpeakingScreen() {
             {item.content}
           </Text>
         ) : null}
-        {item.imageUrl ? (
-          <Image
-            source={{ uri: item.imageUrl }}
-            style={styles.chatImage}
-            resizeMode="cover"
-          />
-        ) : null}
+        {item.imageUrl ? <ChatImage uri={item.imageUrl} style={styles.chatImage} /> : null}
       </View>
     );
   }

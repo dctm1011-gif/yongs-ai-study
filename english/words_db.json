@@ -3230,5 +3230,65 @@
     "explanation": "The method and practice of teaching; the science and art of education that focuses on how people learn and the best strategies for instructing students.",
     "tip": "동의어: teaching method, instruction | 관련어: pedagogical | 교육학 전공 필수어",
     "emoji": "📚"
+  },
+  {
+    "id": "bioaccumulation",
+    "word": "bioaccumulation",
+    "pos": "noun",
+    "date": "2026-09-04",
+    "meaning": "생물 축적",
+    "example_ko": "생선의 수은 생물축적으로 인해 섭취가 위험해진다.",
+    "example_en": "Mercury bioaccumulation in fish makes them unsafe to eat.",
+    "explanation": "유해 물질이 생물체 내에 축적되어 농도가 증가하는 현상으로, 시간이 지날수록 먹이사슬을 통해 더 높은 농도로 축적됨",
+    "tip": "동의어: biomagnification / 반의어: biodegradation / 환경과학, 생물학 출제영역",
+    "emoji": "🐟"
+  },
+  {
+    "id": "geopolitical",
+    "word": "geopolitical",
+    "pos": "adjective",
+    "date": "2026-09-04",
+    "meaning": "지정학적인",
+    "example_ko": "그 지역의 지정학적 긴장은 글로벌 유가에 영향을 미친다.",
+    "example_en": "The geopolitical tensions in the region affect global oil prices.",
+    "explanation": "국가 간의 지리적 위치, 자원, 전략적 이익이 정치와 외교에 미치는 영향을 다루는 것",
+    "tip": "동의어: strategic, diplomatic / 반의어: apolitical / 국제관계, 정치학 출제영역",
+    "emoji": "🌍"
+  },
+  {
+    "id": "pecuniary",
+    "word": "pecuniary",
+    "pos": "adjective",
+    "date": "2026-09-04",
+    "meaning": "금전상의, 돈과 관련된",
+    "example_ko": "그 회사는 스캔들로 인해 심각한 금전적 손실을 입었다.",
+    "example_en": "The company suffered severe pecuniary losses due to the scandal.",
+    "explanation": "금전이나 돈과 관련된 사항을 나타내는 형용사로, 주로 금전적 손실이나 이익을 설명할 때 사용",
+    "tip": "동의어: financial, monetary / 반의어: non-financial / 금융, 경제학 출제영역",
+    "emoji": "💰"
+  },
+  {
+    "id": "amortization",
+    "word": "amortization",
+    "pos": "noun",
+    "date": "2026-09-04",
+    "meaning": "상환, 분할상환",
+    "example_ko": "상환 스케줄은 30년에 걸친 월별 모기지 상환액을 보여준다.",
+    "example_en": "The amortization schedule shows monthly mortgage payments over 30 years.",
+    "explanation": "대출금이나 채권을 일정 기간에 걸쳐 정기적으로 상환하는 과정, 또는 무형자산의 가치를 일정 기간에 걸쳐 비용으로 처리하는 회계 처리",
+    "tip": "동의어: repayment, depreciation / 반의어: lump-sum payment / 회계학, 금융 출제영역",
+    "emoji": "📊"
+  },
+  {
+    "id": "metacognition",
+    "word": "metacognition",
+    "pos": "noun",
+    "date": "2026-09-04",
+    "meaning": "메타인지, 인지에 대한 인지",
+    "example_ko": "좋은 메타인지는 학생들이 학습의 약점을 파악하는 데 도움이 된다.",
+    "example_en": "Good metacognition helps students identify their learning weaknesses.",
+    "explanation": "자신의 사고 과정과 학습 과정을 인식하고 모니터링하는 능력으로, '생각에 대해 생각하기'를 의미함",
+    "tip": "동의어: self-awareness, self-monitoring / 반의어: unreflective thinking / 인지심리학, 교육학 출제영역",
+    "emoji": "🧠"
   }
 ]

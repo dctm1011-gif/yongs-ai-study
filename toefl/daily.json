@@ -1,120 +1,177 @@
 {
-  "date": "2026-09-03",
+  "date": "2026-09-04",
   "reading": {
-    "title": "The Impact of Artificial Intelligence on Education",
-    "passage": "Artificial intelligence is revolutionizing the education sector by personalizing learning experiences for students. AI-powered systems can analyze individual learning patterns and adapt curriculum content to match each student's pace and style. Teachers can utilize AI tools to automate administrative tasks, allowing them to focus more on student engagement and mentorship. However, concerns about data privacy and over-reliance on technology persist. Educational institutions must balance technological innovation with maintaining human connection in the learning process.",
+    "title": "Plate Tectonics and Mountain Formation",
+    "passage": "The theory of plate tectonics has fundamentally transformed our understanding of Earth's dynamic geology. The Earth's lithosphere is divided into several rigid plates that constantly move at rates of a few centimeters per year, driven by convection currents in the underlying mantle. When two continental plates collide, the immense compressional forces create dramatic geological features, most notably mountain ranges. The Himalayas, which continue to rise at approximately 5 millimeters annually, exemplify this process. As the Indian and Eurasian plates converge, crustal material is compressed and uplifted, forming the world's highest mountain chain. This collision began roughly 40 million years ago and continues today, demonstrating that mountain-building is an ongoing geological process. Additionally, plate boundaries generate significant seismic activity, as the accumulated stress is periodically released through earthquakes. Understanding these mechanisms has enabled scientists to predict volcanic eruptions and assess earthquake hazards in tectonically active regions, providing crucial information for urban planning and disaster mitigation in vulnerable areas.",
+    "vocabulary": [
+      {
+        "word": "lithosphere",
+        "meaning_ko": "지각과 맨틀의 상부로 이루어진 지구의 가장 바깥층"
+      },
+      {
+        "word": "convection",
+        "meaning_ko": "유체가 가열되어 상승하고 냉각되어 하강하는 순환 운동"
+      },
+      {
+        "word": "compressional forces",
+        "meaning_ko": "지층을 압축시키는 지각 응력"
+      },
+      {
+        "word": "crustal material",
+        "meaning_ko": "지각을 이루는 물질"
+      },
+      {
+        "word": "convergence",
+        "meaning_ko": "두 개체가 같은 점으로 모여드는 움직임"
+      },
+      {
+        "word": "seismic activity",
+        "meaning_ko": "지진 활동"
+      },
+      {
+        "word": "mitigation",
+        "meaning_ko": "피해나 위험을 완화하거나 줄이는 행위"
+      }
+    ],
     "questions": [
       {
-        "q": "According to the passage, what is one advantage of AI in education?",
+        "q": "According to the passage, what is the primary force that drives the movement of tectonic plates?",
         "options": [
-          "It eliminates the need for teachers",
-          "It personalizes learning experiences for students",
-          "It reduces the cost of textbooks",
-          "It guarantees higher test scores"
+          "Gravitational pull from the moon",
+          "Convection currents in the mantle",
+          "Rotational velocity of the Earth",
+          "Magnetic fields beneath the surface"
         ],
         "answer": 1,
-        "explanation": "지문에서 AI가 '개별 학습 패턴을 분석하고 각 학생의 속도와 스타일에 맞게 커리큘럼을 조정할 수 있다'고 명시되어 있습니다. 따라서 정답은 B번 '학생들을 위해 학습 경험을 개인화한다'입니다."
+        "explanation": "passage의 두 번째 문장에서 'driven by convection currents in the underlying mantle'라고 명시되어 있습니다."
       },
       {
-        "q": "What concern is mentioned regarding AI in education?",
+        "q": "What can be inferred from the passage about the Himalayas?",
         "options": [
-          "Students will become too dependent on AI",
-          "Data privacy and over-reliance on technology",
-          "AI is too expensive for schools",
-          "Teachers will be completely replaced"
+          "They were formed by volcanic activity",
+          "They stopped growing millions of years ago",
+          "They are still in the process of being formed",
+          "They are located where oceanic plates collide"
         ],
-        "answer": 1,
-        "explanation": "지문의 마지막 부분에서 '데이터 개인정보 보호와 기술에 대한 과도한 의존에 대한 우려가 지속된다'고 명시되어 있습니다."
+        "answer": 2,
+        "explanation": "passage에서 '5 millimeters annually' 상승하고 있으며 'continues today'라고 했으므로, 히말라야는 현재도 계속 형성되고 있음을 알 수 있습니다."
       },
       {
-        "q": "What does the passage suggest institutions should do?",
+        "q": "The word 'exemplify' in the passage is closest in meaning to:",
         "options": [
-          "Completely replace human teachers with AI",
-          "Balance technological innovation with human connection",
-          "Avoid using AI in education",
-          "Only use AI for administrative purposes"
+          "Contradict",
+          "Serve as an example of",
+          "Reduce the importance of",
+          "Explain in detail"
         ],
         "answer": 1,
-        "explanation": "지문의 마지막 문장에서 '교육 기관은 기술 혁신과 학습 과정에서의 인간관계 유지 사이의 균형을 맞춰야 한다'고 명시되어 있습니다."
+        "explanation": "'exemplify'는 '전형적인 예를 보여주다' 또는 '...의 좋은 예가 되다'라는 뜻으로, 히말라야가 산맥 형성 과정의 전형적인 사례임을 나타냅니다."
+      },
+      {
+        "q": "Why does the author mention the rate at which the Himalayas continue to rise?",
+        "options": [
+          "To explain why mountain building is no longer occurring",
+          "To demonstrate that plate tectonics is an active and ongoing process",
+          "To argue that the Indian plate is moving faster than other plates",
+          "To show that seismic activity is decreasing over time"
+        ],
+        "answer": 1,
+        "explanation": "저자는 구체적인 상승률(5mm/year)과 '계속된다(continues today)'는 표현을 통해 산맥 형성이 과거가 아닌 현재진행형의 지질학적 과정임을 강조하고 있습니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Technology has more negative effects than positive effects on modern society'?",
-    "structure": {
-      "intro": "명확한 입장 제시: 동의하거나 반대하는 입장을 직접적으로 표현하고 주요 이유 2-3가지를 간단히 제시하세요.",
-      "body1": "첫 번째 이유 상세 설명: 구체적인 예시나 사례를 들어 설명하고, 왜 이것이 당신의 입장을 뒷받침하는지 논리적으로 전개하세요.",
-      "body2": "두 번째 이유 상세 설명: 다른 관점이나 반대 의견을 인정하면서도, 여전히 당신의 입장이 더 설득력 있음을 보여주세요.",
-      "conclusion": "주요 논점 요약: 본론에서 제시한 주요 이유들을 간단히 정리하고, 더 넓은 함의나 미래 전망으로 마무리하세요."
-    },
-    "useful_phrases": [
-      "In my opinion,",
-      "I strongly agree/disagree that",
-      "To begin with,",
-      "Furthermore,",
-      "On the other hand,",
-      "However,",
-      "For example,",
-      "In conclusion,",
-      "Therefore,",
-      "It is clear that"
+    "sentences": [
+      {
+        "original": "The Earth's lithosphere is divided into several rigid plates that constantly move at rates of a few centimeters per year, driven by convection currents in the underlying mantle.",
+        "paraphrase": "Convection currents occurring in the mantle propel the rigid plates composing Earth's lithosphere to move continuously, with displacement occurring at a rate of several centimeters annually.",
+        "tip": "능동태→수동태 전환, 'driven by'를 주절의 동사로 변환, 시간 표현 구조 변경"
+      },
+      {
+        "original": "When two continental plates collide, the immense compressional forces create dramatic geological features, most notably mountain ranges.",
+        "paraphrase": "The collision of continental plates results in the generation of powerful compressional forces, which in turn produce dramatic geological formations such as mountain ranges.",
+        "tip": "원인-결과 구조를 명사화, 'collide'→'collision', 'create'→'result in the generation of'로 동의어 치환"
+      },
+      {
+        "original": "This collision began roughly 40 million years ago and continues today, demonstrating that mountain-building is an ongoing geological process.",
+        "paraphrase": "The persistence of this collision from approximately 40 million years in the past to the present day serves as evidence that mountain formation constitutes a continuous geological phenomenon.",
+        "tip": "시간 표현 복잡화, 'continues'→'persistence', 'demonstrates'→'serves as evidence', 'ongoing process'→'continuous phenomenon'"
+      }
     ]
   },
   "speaking": {
-    "prompt": "Some people believe universities should focus on theoretical knowledge. Others believe universities should focus on practical skills. Which approach do you prefer and why?",
-    "useful_expressions": [
-      "In my opinion,",
-      "I prefer the approach of...",
-      "One reason is that...",
-      "Another important point is...",
-      "This is because...",
-      "For example,",
-      "As a result,",
-      "On balance, I think...",
-      "To summarize my thoughts..."
-    ],
-    "sample_points": [
-      "실무 기술 중심 교육이 졸업 후 취업에 더 도움이 되며, 학생들이 실제 직업 현장에서 바로 적용할 수 있는 능력을 기르게 해줍니다.",
-      "그러나 이론적 지식은 비판적 사고력과 문제 해결 능력을 발달시켜 장기적 경력 성장을 가능하게 하므로, 두 가지 균형이 중요합니다."
+    "prompt": "Some people prefer spending more time with friends. Others prefer spending more time with family. Which do you prefer and why? Include specific reasons and details.",
+    "model_sentences": [
+      "I personally prefer spending time with my family over friends because family relationships provide a deeper sense of belonging and support.",
+      "Family members know me throughout different stages of my life, so they understand my values and can offer more meaningful advice when I face challenges.",
+      "For example, when I was stressed about my college application, my parents not only listened to my concerns but also helped me prepare by reviewing my essays multiple times.",
+      "Friends are important too, but they tend to change more frequently, whereas family bonds are typically lifelong and unconditional.",
+      "That's why I believe investing time in family relationships is ultimately more valuable for long-term happiness and stability."
     ]
   },
   "listening": {
-    "title": "Campus Library Renovation Project",
-    "type": "conversation",
-    "script": "Student: Excuse me, I heard the library is closing for renovations. When will it reopen? Librarian: Yes, we're closing next month for about three months. We're adding more study spaces, updating computer systems, and creating a new collaboration zone. We'll have a temporary library in the student center during the renovation. Student: That's great! What about our books and resources? Librarian: All materials are being cataloged and stored securely. You can request items online, and we'll deliver them to the temporary location. We're also expanding our digital collection significantly, so you'll have access to more e-books and academic journals. Student: When will the new features be ready? Librarian: The core renovation should be complete in ten weeks, but we might need a few extra weeks for final touches and staff training.",
+    "title": "Economics Lecture: Supply and Demand",
+    "type": "lecture",
+    "script": "Professor: Today we're going to explore one of the most fundamental concepts in economics—supply and demand. So, let's start with the basic principle. Demand refers to the quantity of a good or service that consumers are willing to purchase at a given price. Supply, on the other hand, is the quantity that producers are willing to offer at that price. Now, here's the interesting part: these two forces interact to determine market equilibrium. When demand exceeds supply, prices tend to increase, right? Producers see an opportunity to profit, so they increase production. Conversely, when supply exceeds demand, prices fall, and producers are incentivized to reduce output. Let me give you a practical example. During the COVID-19 pandemic, there was a sudden surge in demand for personal protective equipment, especially masks and hand sanitizer. However, production capacity couldn't keep up immediately, so we experienced severe shortages. Prices skyrocketed. Eventually, as manufacturers ramped up production, the supply increased, and prices stabilized. This is supply and demand in action. So remember, this equilibrium isn't static—it's constantly shifting based on consumer preferences and production capabilities.",
+    "vocabulary": [
+      {
+        "word": "equilibrium",
+        "meaning_ko": "수요와 공급이 균형을 이루는 상태"
+      },
+      {
+        "word": "incentivized",
+        "meaning_ko": "동기를 부여받은, 유인이 주어진"
+      },
+      {
+        "word": "surge",
+        "meaning_ko": "급격한 증가"
+      },
+      {
+        "word": "capacity",
+        "meaning_ko": "생산능력, 수용력"
+      },
+      {
+        "word": "ramped up",
+        "meaning_ko": "증가시키다, 상향 조정하다"
+      },
+      {
+        "word": "static",
+        "meaning_ko": "변하지 않는, 정적인"
+      }
+    ],
     "questions": [
       {
-        "q": "How long will the library be closed for renovations?",
+        "q": "What is the main topic of the lecture?",
         "options": [
-          "Two months",
-          "Three months",
-          "One month",
-          "Five months"
+          "The history of economic crises",
+          "How supply and demand determine market prices",
+          "The causes of the COVID-19 pandemic",
+          "Different types of consumer preferences"
         ],
         "answer": 1,
-        "explanation": "사서가 '다음 달에 닫을 것이고 약 3개월 정도 걸릴 것 같다'고 명시했습니다. 따라서 정답은 B번 'Three months'입니다."
+        "explanation": "교수가 처음부터 'supply and demand'라는 기본 개념을 설명하겠다고 명시했으며, 전체 강의가 이를 중심으로 진행됩니다."
       },
       {
-        "q": "What improvements will be made during the renovation?",
+        "q": "According to the professor, what happens when demand exceeds supply?",
         "options": [
-          "Only new furniture",
-          "More study spaces, computer updates, and a collaboration zone",
-          "Just digital resources",
-          "Smaller facility"
+          "Producers decrease production",
+          "Prices tend to increase",
+          "Market equilibrium is reached",
+          "Consumer preferences change"
         ],
         "answer": 1,
-        "explanation": "사서가 '더 많은 스터디 공간 추가, 컴퓨터 시스템 업데이트, 새로운 협업 구역 생성'을 언급했습니다. 따라서 정답은 B번입니다."
+        "explanation": "교수가 명확하게 'When demand exceeds supply, prices tend to increase'라고 설명했습니다."
       },
       {
-        "q": "Where can students access library resources during the renovation?",
+        "q": "Why does the professor mention the pandemic and PPE shortages?",
         "options": [
-          "They cannot access any resources",
-          "In the student center's temporary library and online",
-          "Only through the university website",
-          "At a nearby public library"
+          "To criticize government policies",
+          "To explain the history of mask production",
+          "To provide a real-world example of supply and demand dynamics",
+          "To discuss health and safety protocols"
         ],
-        "answer": 1,
-        "explanation": "사서가 '학생 센터에 임시 도서관이 설치될 것이고, 온라인으로 자료를 신청할 수 있다'고 설명했습니다. 따라서 정답은 B번입니다."
+        "answer": 2,
+        "explanation": "교수가 '실제 사례를 드리겠습니다(Let me give you a practical example)'라고 명시하고 팬데믹 상황을 수요초과→공급부족→가격상승→공급증가→가격안정화의 완벽한 공급-수요 사이클을 설명하는 예시로 사용했습니다."
       }
     ]
   }
