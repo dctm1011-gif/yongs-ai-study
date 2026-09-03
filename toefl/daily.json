@@ -1,177 +1,109 @@
 {
   "date": "2026-09-04",
   "reading": {
-    "title": "Plate Tectonics and Mountain Formation",
-    "passage": "The theory of plate tectonics has fundamentally transformed our understanding of Earth's dynamic geology. The Earth's lithosphere is divided into several rigid plates that constantly move at rates of a few centimeters per year, driven by convection currents in the underlying mantle. When two continental plates collide, the immense compressional forces create dramatic geological features, most notably mountain ranges. The Himalayas, which continue to rise at approximately 5 millimeters annually, exemplify this process. As the Indian and Eurasian plates converge, crustal material is compressed and uplifted, forming the world's highest mountain chain. This collision began roughly 40 million years ago and continues today, demonstrating that mountain-building is an ongoing geological process. Additionally, plate boundaries generate significant seismic activity, as the accumulated stress is periodically released through earthquakes. Understanding these mechanisms has enabled scientists to predict volcanic eruptions and assess earthquake hazards in tectonically active regions, providing crucial information for urban planning and disaster mitigation in vulnerable areas.",
-    "vocabulary": [
-      {
-        "word": "lithosphere",
-        "meaning_ko": "지각과 맨틀의 상부로 이루어진 지구의 가장 바깥층"
-      },
-      {
-        "word": "convection",
-        "meaning_ko": "유체가 가열되어 상승하고 냉각되어 하강하는 순환 운동"
-      },
-      {
-        "word": "compressional forces",
-        "meaning_ko": "지층을 압축시키는 지각 응력"
-      },
-      {
-        "word": "crustal material",
-        "meaning_ko": "지각을 이루는 물질"
-      },
-      {
-        "word": "convergence",
-        "meaning_ko": "두 개체가 같은 점으로 모여드는 움직임"
-      },
-      {
-        "word": "seismic activity",
-        "meaning_ko": "지진 활동"
-      },
-      {
-        "word": "mitigation",
-        "meaning_ko": "피해나 위험을 완화하거나 줄이는 행위"
-      }
-    ],
+    "title": "Arctic Ice Melting and Climate Change",
+    "passage": "The Arctic ice sheet is melting at an unprecedented rate due to global warming. Scientists have observed that the average temperature in the Arctic has increased twice as fast as the global average over the past few decades. This rapid melting is causing sea levels to rise and affecting marine ecosystems. Polar bears and other Arctic animals face habitat loss and food scarcity. Additionally, the loss of white ice reduces the Earth's ability to reflect sunlight, creating a feedback loop that accelerates further warming.",
     "questions": [
       {
-        "q": "According to the passage, what is the primary force that drives the movement of tectonic plates?",
+        "q": "According to the passage, how does Arctic warming compare to global warming?",
         "options": [
-          "Gravitational pull from the moon",
-          "Convection currents in the mantle",
-          "Rotational velocity of the Earth",
-          "Magnetic fields beneath the surface"
+          "It is twice as fast",
+          "It is half as fast",
+          "It is the same rate",
+          "It is slower"
         ],
-        "answer": 1,
-        "explanation": "passage의 두 번째 문장에서 'driven by convection currents in the underlying mantle'라고 명시되어 있습니다."
+        "answer": 0,
+        "explanation": "본문에서 '평균 기온이 지난 수십 년간 지구 평균보다 두 배 빠르게 증가했다'고 명시되어 있습니다."
       },
       {
-        "q": "What can be inferred from the passage about the Himalayas?",
+        "q": "What is one consequence of Arctic ice melting mentioned in the passage?",
         "options": [
-          "They were formed by volcanic activity",
-          "They stopped growing millions of years ago",
-          "They are still in the process of being formed",
-          "They are located where oceanic plates collide"
-        ],
-        "answer": 2,
-        "explanation": "passage에서 '5 millimeters annually' 상승하고 있으며 'continues today'라고 했으므로, 히말라야는 현재도 계속 형성되고 있음을 알 수 있습니다."
-      },
-      {
-        "q": "The word 'exemplify' in the passage is closest in meaning to:",
-        "options": [
-          "Contradict",
-          "Serve as an example of",
-          "Reduce the importance of",
-          "Explain in detail"
+          "Increased snowfall",
+          "Rising sea levels",
+          "Cooler global temperatures",
+          "More ice formation"
         ],
         "answer": 1,
-        "explanation": "'exemplify'는 '전형적인 예를 보여주다' 또는 '...의 좋은 예가 되다'라는 뜻으로, 히말라야가 산맥 형성 과정의 전형적인 사례임을 나타냅니다."
+        "explanation": "본문에서 얼음 녹음으로 인해 해수면이 상승한다고 직접 언급되어 있습니다."
       },
       {
-        "q": "Why does the author mention the rate at which the Himalayas continue to rise?",
+        "q": "What does the passage explain about the feedback loop?",
         "options": [
-          "To explain why mountain building is no longer occurring",
-          "To demonstrate that plate tectonics is an active and ongoing process",
-          "To argue that the Indian plate is moving faster than other plates",
-          "To show that seismic activity is decreasing over time"
+          "White ice helps warm the planet",
+          "Loss of ice reduces sunlight reflection",
+          "Animals prevent further warming",
+          "Oceans absorb all heat"
         ],
         "answer": 1,
-        "explanation": "저자는 구체적인 상승률(5mm/year)과 '계속된다(continues today)'는 표현을 통해 산맥 형성이 과거가 아닌 현재진행형의 지질학적 과정임을 강조하고 있습니다."
+        "explanation": "백색 얼음이 햇빛을 반사하는 능력을 잃으면 더 빠른 온난화가 가속화된다는 피드백 루프가 설명되어 있습니다."
       }
     ]
   },
   "writing": {
-    "sentences": [
-      {
-        "original": "The Earth's lithosphere is divided into several rigid plates that constantly move at rates of a few centimeters per year, driven by convection currents in the underlying mantle.",
-        "paraphrase": "Convection currents occurring in the mantle propel the rigid plates composing Earth's lithosphere to move continuously, with displacement occurring at a rate of several centimeters annually.",
-        "tip": "능동태→수동태 전환, 'driven by'를 주절의 동사로 변환, 시간 표현 구조 변경"
-      },
-      {
-        "original": "When two continental plates collide, the immense compressional forces create dramatic geological features, most notably mountain ranges.",
-        "paraphrase": "The collision of continental plates results in the generation of powerful compressional forces, which in turn produce dramatic geological formations such as mountain ranges.",
-        "tip": "원인-결과 구조를 명사화, 'collide'→'collision', 'create'→'result in the generation of'로 동의어 치환"
-      },
-      {
-        "original": "This collision began roughly 40 million years ago and continues today, demonstrating that mountain-building is an ongoing geological process.",
-        "paraphrase": "The persistence of this collision from approximately 40 million years in the past to the present day serves as evidence that mountain formation constitutes a continuous geological phenomenon.",
-        "tip": "시간 표현 복잡화, 'continues'→'persistence', 'demonstrates'→'serves as evidence', 'ongoing process'→'continuous phenomenon'"
-      }
+    "prompt": "Do you agree or disagree with the statement: 'Technology has more positive effects than negative effects on human society'?",
+    "structure": {
+      "intro": "자신의 입장을 명확히 제시하고 간단한 이유 2-3개를 언급하세요. (2-3문장)",
+      "body1": "첫 번째 논거를 구체적인 예시와 함께 전개하세요. (4-5문장)",
+      "body2": "두 번째 논거를 설명하고 반론에 대한 답변을 포함하세요. (4-5문장)",
+      "conclusion": "입장을 재확인하고 더 넓은 의미의 마무리를 제시하세요. (2-3문장)"
+    },
+    "useful_phrases": [
+      "In my opinion, technology has had...",
+      "For example, the development of...",
+      "Furthermore, many argue that...",
+      "However, I believe that...",
+      "In conclusion, the benefits of technology..."
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer spending more time with friends. Others prefer spending more time with family. Which do you prefer and why? Include specific reasons and details.",
-    "model_sentences": [
-      "I personally prefer spending time with my family over friends because family relationships provide a deeper sense of belonging and support.",
-      "Family members know me throughout different stages of my life, so they understand my values and can offer more meaningful advice when I face challenges.",
-      "For example, when I was stressed about my college application, my parents not only listened to my concerns but also helped me prepare by reviewing my essays multiple times.",
-      "Friends are important too, but they tend to change more frequently, whereas family bonds are typically lifelong and unconditional.",
-      "That's why I believe investing time in family relationships is ultimately more valuable for long-term happiness and stability."
+    "prompt": "Some people prefer to work alone. Others prefer to work in groups. Which do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer working in groups because...",
+      "One reason is that collaboration helps me...",
+      "Another important point is that teamwork..."
+    ],
+    "sample_points": [
+      "집단 작업은 다양한 아이디어와 관점을 모아 더 창의적인 솔루션을 만들 수 있게 도움",
+      "팀 환경에서 다른 사람들로부터 배우고 피드백을 받아 개인의 기술과 지식을 발전시킬 수 있음"
     ]
   },
   "listening": {
-    "title": "Economics Lecture: Supply and Demand",
-    "type": "lecture",
-    "script": "Professor: Today we're going to explore one of the most fundamental concepts in economics—supply and demand. So, let's start with the basic principle. Demand refers to the quantity of a good or service that consumers are willing to purchase at a given price. Supply, on the other hand, is the quantity that producers are willing to offer at that price. Now, here's the interesting part: these two forces interact to determine market equilibrium. When demand exceeds supply, prices tend to increase, right? Producers see an opportunity to profit, so they increase production. Conversely, when supply exceeds demand, prices fall, and producers are incentivized to reduce output. Let me give you a practical example. During the COVID-19 pandemic, there was a sudden surge in demand for personal protective equipment, especially masks and hand sanitizer. However, production capacity couldn't keep up immediately, so we experienced severe shortages. Prices skyrocketed. Eventually, as manufacturers ramped up production, the supply increased, and prices stabilized. This is supply and demand in action. So remember, this equilibrium isn't static—it's constantly shifting based on consumer preferences and production capabilities.",
-    "vocabulary": [
-      {
-        "word": "equilibrium",
-        "meaning_ko": "수요와 공급이 균형을 이루는 상태"
-      },
-      {
-        "word": "incentivized",
-        "meaning_ko": "동기를 부여받은, 유인이 주어진"
-      },
-      {
-        "word": "surge",
-        "meaning_ko": "급격한 증가"
-      },
-      {
-        "word": "capacity",
-        "meaning_ko": "생산능력, 수용력"
-      },
-      {
-        "word": "ramped up",
-        "meaning_ko": "증가시키다, 상향 조정하다"
-      },
-      {
-        "word": "static",
-        "meaning_ko": "변하지 않는, 정적인"
-      }
-    ],
+    "title": "Student Advising Session",
+    "type": "conversation",
+    "script": "Student: I'm struggling with my course load this semester. I'm taking five classes and working part-time, and I'm not sure if I can manage everything. Advisor: That's a lot to balance. Let me ask you some questions. Which classes are most important for your major? Student: Well, organic chemistry and calculus are required for my engineering program, but I'm also taking general education electives. Advisor: I recommend focusing on the required courses first. You might consider dropping one elective to reduce your stress. Additionally, many students find it helpful to visit the tutoring center for chemistry and math. Student: That sounds reasonable. How much does tutoring cost? Advisor: It's free for all registered students. You can sign up online and schedule sessions at times that work for you. I also suggest reviewing your work schedule. Sometimes students can adjust their hours during heavy academic periods.",
     "questions": [
       {
-        "q": "What is the main topic of the lecture?",
+        "q": "What is the main problem the student is facing?",
         "options": [
-          "The history of economic crises",
-          "How supply and demand determine market prices",
-          "The causes of the COVID-19 pandemic",
-          "Different types of consumer preferences"
+          "Financial difficulties",
+          "Course overload and time management",
+          "Poor grades in classes",
+          "Difficulty finding tutoring"
         ],
         "answer": 1,
-        "explanation": "교수가 처음부터 'supply and demand'라는 기본 개념을 설명하겠다고 명시했으며, 전체 강의가 이를 중심으로 진행됩니다."
+        "explanation": "학생이 5개 과목을 수강하고 아르바이트를 하면서 모든 것을 관리할 수 없다고 말하고 있습니다."
       },
       {
-        "q": "According to the professor, what happens when demand exceeds supply?",
+        "q": "What does the advisor suggest the student do?",
         "options": [
-          "Producers decrease production",
-          "Prices tend to increase",
-          "Market equilibrium is reached",
-          "Consumer preferences change"
-        ],
-        "answer": 1,
-        "explanation": "교수가 명확하게 'When demand exceeds supply, prices tend to increase'라고 설명했습니다."
-      },
-      {
-        "q": "Why does the professor mention the pandemic and PPE shortages?",
-        "options": [
-          "To criticize government policies",
-          "To explain the history of mask production",
-          "To provide a real-world example of supply and demand dynamics",
-          "To discuss health and safety protocols"
+          "Take more electives",
+          "Quit the part-time job",
+          "Drop one elective and use tutoring",
+          "Change major programs"
         ],
         "answer": 2,
-        "explanation": "교수가 '실제 사례를 드리겠습니다(Let me give you a practical example)'라고 명시하고 팬데믹 상황을 수요초과→공급부족→가격상승→공급증가→가격안정화의 완벽한 공급-수요 사이클을 설명하는 예시로 사용했습니다."
+        "explanation": "조언자는 선택 과목 하나를 드롭하고 튜터링 센터를 이용할 것을 권장했습니다."
+      },
+      {
+        "q": "How much does tutoring cost at this university?",
+        "options": [
+          "$50 per hour",
+          "Free for registered students",
+          "$100 per month",
+          "Not mentioned"
+        ],
+        "answer": 1,
+        "explanation": "조언자가 등록된 모든 학생을 위해 무료라고 명시적으로 말했습니다."
       }
     ]
   }
