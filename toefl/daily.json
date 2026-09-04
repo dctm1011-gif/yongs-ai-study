@@ -1,109 +1,179 @@
 {
-  "date": "2026-09-04",
+  "date": "2026-09-05",
   "reading": {
-    "title": "Arctic Ice Melting and Climate Change",
-    "passage": "The Arctic ice sheet is melting at an unprecedented rate due to global warming. Scientists have observed that the average temperature in the Arctic has increased twice as fast as the global average over the past few decades. This rapid melting is causing sea levels to rise and affecting marine ecosystems. Polar bears and other Arctic animals face habitat loss and food scarcity. Additionally, the loss of white ice reduces the Earth's ability to reflect sunlight, creating a feedback loop that accelerates further warming.",
+    "title": "Exoplanet Discovery and the Search for Habitable Worlds",
+    "passage": "The discovery of exoplanets—planets orbiting stars outside our solar system—has fundamentally transformed our understanding of planetary systems and the potential for life beyond Earth. Since the first confirmed exoplanet discovery in 1995, astronomers have identified over 5,000 exoplanets, revealing that planetary formation is far more common and diverse than previously hypothesized. Advanced detection methods, particularly the transit photometry technique and radial velocity measurements, have enabled scientists to characterize these distant worlds and identify those within habitable zones where liquid water might exist.\n\nThe concept of a habitable zone, or \"Goldilocks zone,\" represents the orbital region around a star where conditions are neither too hot nor too cold for liquid water to persist on a planet's surface. Recent studies have demonstrated that numerous exoplanets satisfy this criterion, fundamentally challenging the notion that Earth-like conditions are rare. Notably, the discovery of planets orbiting Proxima Centauri and within the TRAPPIST-1 system has captured scientific and public attention, as these findings suggest that potentially habitable worlds may be relatively abundant throughout the universe. However, detecting atmospheric composition and biosignatures remains technically challenging, requiring next-generation telescopes currently under development.\n\nThe implications of exoplanet research extend beyond astronomy into astrobiology and philosophy. Understanding the prevalence of potentially habitable worlds informs our perspective on humanity's place in the cosmos and motivates continued investment in space exploration and biosignature detection technology.",
+    "vocabulary": [
+      {
+        "word": "exoplanet",
+        "meaning_ko": "태양계 밖의 다른 별을 공전하는 행성"
+      },
+      {
+        "word": "transit photometry",
+        "meaning_ko": "행성이 별 앞을 지나갈 때의 빛 변화를 측정하는 방법"
+      },
+      {
+        "word": "radial velocity",
+        "meaning_ko": "별이 관찰자를 향해 또는 멀어지는 방향으로 움직이는 속도"
+      },
+      {
+        "word": "habitable zone",
+        "meaning_ko": "액체 물이 존재할 수 있는 항성 주위의 궤도 영역"
+      },
+      {
+        "word": "biosignature",
+        "meaning_ko": "생명체의 존재를 나타내는 징후 또는 화학적 신호"
+      },
+      {
+        "word": "characterize",
+        "meaning_ko": "~의 특징을 파악하다, 묘사하다"
+      },
+      {
+        "word": "prevalent",
+        "meaning_ko": "널리 퍼져 있는, 일반적인"
+      }
+    ],
     "questions": [
       {
-        "q": "According to the passage, how does Arctic warming compare to global warming?",
+        "q": "According to the passage, what has been the primary result of exoplanet discoveries since 1995?",
         "options": [
-          "It is twice as fast",
-          "It is half as fast",
-          "It is the same rate",
-          "It is slower"
-        ],
-        "answer": 0,
-        "explanation": "본문에서 '평균 기온이 지난 수십 년간 지구 평균보다 두 배 빠르게 증가했다'고 명시되어 있습니다."
-      },
-      {
-        "q": "What is one consequence of Arctic ice melting mentioned in the passage?",
-        "options": [
-          "Increased snowfall",
-          "Rising sea levels",
-          "Cooler global temperatures",
-          "More ice formation"
+          "A) The confirmation that Earth is the only habitable planet in the universe",
+          "B) A demonstration that planetary formation is more common and diverse than previously thought",
+          "C) The development of new detection methods that have replaced transit photometry",
+          "D) The elimination of the need for further space exploration research"
         ],
         "answer": 1,
-        "explanation": "본문에서 얼음 녹음으로 인해 해수면이 상승한다고 직접 언급되어 있습니다."
+        "explanation": "첫 번째 문단에서 '5,000개 이상의 외계행성 발견이 행성 형성이 이전 예상보다 훨씬 더 흔하고 다양함을 보여주었다'고 명시되어 있습니다."
       },
       {
-        "q": "What does the passage explain about the feedback loop?",
+        "q": "What can be inferred from the passage about the habitable zone?",
         "options": [
-          "White ice helps warm the planet",
-          "Loss of ice reduces sunlight reflection",
-          "Animals prevent further warming",
-          "Oceans absorb all heat"
+          "A) It is a region that exists only around stars similar to our Sun",
+          "B) It is where conditions are suitable for liquid water to exist",
+          "C) It has never been detected around any exoplanet",
+          "D) It makes planets too cold to support any form of life"
         ],
         "answer": 1,
-        "explanation": "백색 얼음이 햇빛을 반사하는 능력을 잃으면 더 빠른 온난화가 가속화된다는 피드백 루프가 설명되어 있습니다."
+        "explanation": "두 번째 문단에서 거주 가능 지대를 '액체 물이 행성 표면에 존재할 수 있는 항성 주위의 궤도 영역'으로 정의하고 있습니다."
+      },
+      {
+        "q": "The word 'prevalent' in the third paragraph is closest in meaning to",
+        "options": [
+          "A) difficult to measure",
+          "B) scientifically impossible",
+          "C) widely distributed or common",
+          "D) recently discovered"
+        ],
+        "answer": 2,
+        "explanation": "'prevalent'은 '널리 퍼져 있는' 또는 '일반적인'을 의미하며, 문맥상 '잠재적으로 거주 가능한 세계들이 우주에 상대적으로 풍부할 수 있다'는 의미입니다."
+      },
+      {
+        "q": "Why does the author mention the TRAPPIST-1 system?",
+        "options": [
+          "A) To explain why exoplanet detection is impossible",
+          "B) To provide an example of a system with potentially habitable worlds that has attracted attention",
+          "C) To argue that all exoplanets are in the habitable zone",
+          "D) To demonstrate that telescope technology is no longer needed"
+        ],
+        "answer": 1,
+        "explanation": "저자는 TRAPPIST-1 시스템 발견이 '과학적 및 대중적 관심을 끌었다'고 언급하며 잠재적으로 거주 가능한 세계의 예시로 제시합니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Technology has more positive effects than negative effects on human society'?",
-    "structure": {
-      "intro": "자신의 입장을 명확히 제시하고 간단한 이유 2-3개를 언급하세요. (2-3문장)",
-      "body1": "첫 번째 논거를 구체적인 예시와 함께 전개하세요. (4-5문장)",
-      "body2": "두 번째 논거를 설명하고 반론에 대한 답변을 포함하세요. (4-5문장)",
-      "conclusion": "입장을 재확인하고 더 넓은 의미의 마무리를 제시하세요. (2-3문장)"
-    },
-    "useful_phrases": [
-      "In my opinion, technology has had...",
-      "For example, the development of...",
-      "Furthermore, many argue that...",
-      "However, I believe that...",
-      "In conclusion, the benefits of technology..."
+    "topic": "Artificial Intelligence Regulation",
+    "sentences": [
+      {
+        "original": "Advanced detection methods, particularly the transit photometry technique and radial velocity measurements, have enabled scientists to characterize these distant worlds.",
+        "paraphrase": "Scientists have been able to describe the characteristics of these distant worlds by utilizing advanced detection methods such as transit photometry and radial velocity measurements.",
+        "tip": "능동태를 수동태로 변환하고, 명사구를 전치사구로 재구성하여 문장 구조를 다양화했습니다."
+      },
+      {
+        "original": "The concept of a habitable zone represents the orbital region around a star where conditions are neither too hot nor too cold for liquid water to persist.",
+        "paraphrase": "A habitable zone can be defined as an area surrounding a star in which temperatures are moderate enough to allow liquid water to remain stable on planetary surfaces.",
+        "tip": "'neither...nor' 표현을 'moderate enough' 동의어로 치환하고, 명사적 표현을 동사구로 변환했습니다."
+      },
+      {
+        "original": "The implications of exoplanet research extend beyond astronomy into astrobiology and philosophy.",
+        "paraphrase": "Exoplanet research has ramifications that go far beyond the field of astronomy, affecting both astrobiology and philosophical perspectives.",
+        "tip": "동의어 'ramifications'로 'implications'을 치환하고, 'extend beyond'를 'go far beyond'로 다시 표현했습니다."
+      }
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to work alone. Others prefer to work in groups. Which do you prefer and why?",
-    "useful_expressions": [
-      "In my opinion, I prefer working in groups because...",
-      "One reason is that collaboration helps me...",
-      "Another important point is that teamwork..."
-    ],
-    "sample_points": [
-      "집단 작업은 다양한 아이디어와 관점을 모아 더 창의적인 솔루션을 만들 수 있게 도움",
-      "팀 환경에서 다른 사람들로부터 배우고 피드백을 받아 개인의 기술과 지식을 발전시킬 수 있음"
+    "topic": "Studying Alone vs. Group Study",
+    "prompt": "Some people prefer to study alone and focus on their own learning pace. Others prefer to study in groups and benefit from discussing ideas with peers. Which do you prefer and why? Include specific reasons and details in your response.",
+    "model_sentences": [
+      "Personally, I believe studying in groups is more beneficial than studying alone, especially for complex subjects.",
+      "First, when you study with others, you can discuss difficult concepts and get different perspectives, which helps you understand the material more deeply.",
+      "For example, when I was preparing for my biology exam, I joined a study group where we explained concepts to each other, and this method was much more effective than studying alone in my room.",
+      "Additionally, group study keeps me motivated and accountable because I don't want to let my peers down.",
+      "In conclusion, while solo study has its advantages, I prefer group study because the collaboration and interaction lead to better learning outcomes."
     ]
   },
   "listening": {
-    "title": "Student Advising Session",
+    "title": "Course Registration Problem Meeting with Professor",
     "type": "conversation",
-    "script": "Student: I'm struggling with my course load this semester. I'm taking five classes and working part-time, and I'm not sure if I can manage everything. Advisor: That's a lot to balance. Let me ask you some questions. Which classes are most important for your major? Student: Well, organic chemistry and calculus are required for my engineering program, but I'm also taking general education electives. Advisor: I recommend focusing on the required courses first. You might consider dropping one elective to reduce your stress. Additionally, many students find it helpful to visit the tutoring center for chemistry and math. Student: That sounds reasonable. How much does tutoring cost? Advisor: It's free for all registered students. You can sign up online and schedule sessions at times that work for you. I also suggest reviewing your work schedule. Sometimes students can adjust their hours during heavy academic periods.",
+    "script": "Student: Professor Johnson, thank you for meeting with me. I'm having trouble registering for your advanced astronomy course next semester. The system shows it's full, but I really need this course for my major requirements.\n\nProfessor: I understand your situation. The course does show capacity issues right now. However, I can add you to the waitlist. Typically, a few students drop the course before the semester begins, so your chances are reasonably good.\n\nStudent: How long does it usually take to know if I get in?\n\nProfessor: Most changes occur during the first two weeks of registration. If space opens up, you'll be notified automatically. In the meantime, I recommend attending the first class session anyway. You can sit in, and if a spot becomes available, you can officially enroll.\n\nStudent: That's a great idea! What if the course is still full by the add/drop deadline?\n\nProfessor: If that happens, I'd suggest taking the introductory astronomy course this semester and taking my advanced course next year. The foundational knowledge would actually benefit you. You could also email my department chair about potential exceptions, but I can't guarantee anything.",
+    "vocabulary": [
+      {
+        "word": "waitlist",
+        "meaning_ko": "자리가 나올 때까지 기다리는 목록"
+      },
+      {
+        "word": "capacity",
+        "meaning_ko": "용량, 수용 능력"
+      },
+      {
+        "word": "add/drop deadline",
+        "meaning_ko": "수강 추가 및 철회 마감일"
+      },
+      {
+        "word": "officially enroll",
+        "meaning_ko": "공식적으로 등록하다"
+      },
+      {
+        "word": "introductory",
+        "meaning_ko": "입문적인, 초급의"
+      },
+      {
+        "word": "foundational knowledge",
+        "meaning_ko": "기초 지식"
+      }
+    ],
     "questions": [
       {
         "q": "What is the main problem the student is facing?",
         "options": [
-          "Financial difficulties",
-          "Course overload and time management",
-          "Poor grades in classes",
-          "Difficulty finding tutoring"
+          "A) The professor doesn't want to teach advanced astronomy",
+          "B) The course the student wants to register for is already full",
+          "C) The student doesn't meet the prerequisites for the course",
+          "D) The student cannot attend the first class session"
         ],
         "answer": 1,
-        "explanation": "학생이 5개 과목을 수강하고 아르바이트를 하면서 모든 것을 관리할 수 없다고 말하고 있습니다."
+        "explanation": "학생은 강의가 정원이 찼다고 말하면서 시스템에서 이를 확인할 수 있다고 언급합니다."
       },
       {
-        "q": "What does the advisor suggest the student do?",
+        "q": "What does the professor suggest the student do immediately?",
         "options": [
-          "Take more electives",
-          "Quit the part-time job",
-          "Drop one elective and use tutoring",
-          "Change major programs"
+          "A) Contact the department chair right away",
+          "B) Attend the first class session even though the course appears full",
+          "C) Take the introductory course instead",
+          "D) Wait until next year to take the course"
+        ],
+        "answer": 1,
+        "explanation": "교수는 학생이 자리가 생기면 공식적으로 등록할 수 있도록 첫 수업에 참석할 것을 권유합니다."
+      },
+      {
+        "q": "Why does the professor recommend taking the introductory course if the advanced course remains full?",
+        "options": [
+          "A) Because the student doesn't have the necessary background knowledge",
+          "B) Because the introductory course is easier",
+          "C) Because foundational knowledge would actually benefit the student for the advanced course",
+          "D) Because the advanced course will not be offered again"
         ],
         "answer": 2,
-        "explanation": "조언자는 선택 과목 하나를 드롭하고 튜터링 센터를 이용할 것을 권장했습니다."
-      },
-      {
-        "q": "How much does tutoring cost at this university?",
-        "options": [
-          "$50 per hour",
-          "Free for registered students",
-          "$100 per month",
-          "Not mentioned"
-        ],
-        "answer": 1,
-        "explanation": "조언자가 등록된 모든 학생을 위해 무료라고 명시적으로 말했습니다."
+        "explanation": "교수는 '기초 지식이 실제로 당신에게 도움이 될 것'이라고 명확히 말하며 이것이 나중에 고급 과정을 더 잘 이해하는 데 도움이 될 것을 암시합니다."
       }
     ]
   }

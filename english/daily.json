@@ -1,206 +1,191 @@
 {
-  "date": "2026-09-04",
+  "date": "2026-09-05",
   "words": [
     {
-      "word": "bioaccumulation",
-      "part_of_speech": "noun",
-      "meaning_ko": "생물 축적",
-      "explanation": "유해 물질이 생물체 내에 축적되어 농도가 증가하는 현상으로, 시간이 지날수록 먹이사슬을 통해 더 높은 농도로 축적됨",
-      "example_from_convo": "Mercury bioaccumulation in fish makes them unsafe to eat.",
-      "example_ko": "생선의 수은 생물축적으로 인해 섭취가 위험해진다.",
-      "tip": "동의어: biomagnification / 반의어: biodegradation / 환경과학, 생물학 출제영역",
-      "emoji": "🐟"
-    },
-    {
-      "word": "geopolitical",
+      "word": "pedagogical",
       "part_of_speech": "adjective",
-      "meaning_ko": "지정학적인",
-      "explanation": "국가 간의 지리적 위치, 자원, 전략적 이익이 정치와 외교에 미치는 영향을 다루는 것",
-      "example_from_convo": "The geopolitical tensions in the region affect global oil prices.",
-      "example_ko": "그 지역의 지정학적 긴장은 글로벌 유가에 영향을 미친다.",
-      "tip": "동의어: strategic, diplomatic / 반의어: apolitical / 국제관계, 정치학 출제영역",
-      "emoji": "🌍"
+      "meaning_ko": "교육학적인, 교수법의",
+      "explanation": "Teaching methods and principles related to education; concerning the theory and practice of teaching.",
+      "example_from_convo": "The pedagogical approach emphasizes student engagement.",
+      "example_ko": "그 교육학적 방법론은 학생 참여를 강조한다.",
+      "tip": "동의어: educational, instructional / 반의어: non-educational / 출제영역: 교육학, 학술논문",
+      "emoji": "📚"
     },
     {
-      "word": "pecuniary",
-      "part_of_speech": "adjective",
-      "meaning_ko": "금전상의, 돈과 관련된",
-      "explanation": "금전이나 돈과 관련된 사항을 나타내는 형용사로, 주로 금전적 손실이나 이익을 설명할 때 사용",
-      "example_from_convo": "The company suffered severe pecuniary losses due to the scandal.",
-      "example_ko": "그 회사는 스캔들로 인해 심각한 금전적 손실을 입었다.",
-      "tip": "동의어: financial, monetary / 반의어: non-financial / 금융, 경제학 출제영역",
-      "emoji": "💰"
-    },
-    {
-      "word": "amortization",
+      "word": "aesthetics",
       "part_of_speech": "noun",
-      "meaning_ko": "상환, 분할상환",
-      "explanation": "대출금이나 채권을 일정 기간에 걸쳐 정기적으로 상환하는 과정, 또는 무형자산의 가치를 일정 기간에 걸쳐 비용으로 처리하는 회계 처리",
-      "example_from_convo": "The amortization schedule shows monthly mortgage payments over 30 years.",
-      "example_ko": "상환 스케줄은 30년에 걸친 월별 모기지 상환액을 보여준다.",
-      "tip": "동의어: repayment, depreciation / 반의어: lump-sum payment / 회계학, 금융 출제영역",
-      "emoji": "📊"
+      "meaning_ko": "미학, 미적 감각",
+      "explanation": "The philosophical study of beauty, taste, and the creation and appreciation of beauty; the principles concerning the appreciation and criticism of beauty.",
+      "example_from_convo": "The aesthetics of modern architecture differ greatly from classical design.",
+      "example_ko": "현대 건축의 미학은 고전 디자인과 크게 다르다.",
+      "tip": "동의어: beauty, artistic value / 반의어: ugliness / 출제영역: 미술, 철학, 문학비평",
+      "emoji": "🎨"
     },
     {
-      "word": "metacognition",
+      "word": "semiotics",
       "part_of_speech": "noun",
-      "meaning_ko": "메타인지, 인지에 대한 인지",
-      "explanation": "자신의 사고 과정과 학습 과정을 인식하고 모니터링하는 능력으로, '생각에 대해 생각하기'를 의미함",
-      "example_from_convo": "Good metacognition helps students identify their learning weaknesses.",
-      "example_ko": "좋은 메타인지는 학생들이 학습의 약점을 파악하는 데 도움이 된다.",
-      "tip": "동의어: self-awareness, self-monitoring / 반의어: unreflective thinking / 인지심리학, 교육학 출제영역",
-      "emoji": "🧠"
+      "meaning_ko": "기호학, 부호학",
+      "explanation": "The study of signs and symbols and their interpretation and use; the theory of how meaning is created and conveyed through signs.",
+      "example_from_convo": "Semiotics helps us understand how advertising uses visual symbols to communicate messages.",
+      "example_ko": "기호학은 광고가 시각 기호를 사용하여 메시지를 전달하는 방법을 이해하는 데 도움이 된다.",
+      "tip": "동의어: sign theory / 반의어: 없음 / 출제영역: 언어학, 미디어학, 철학",
+      "emoji": "🔤"
+    },
+    {
+      "word": "polarization",
+      "part_of_speech": "noun",
+      "meaning_ko": "양극화, 편극화",
+      "explanation": "The division into two sharply contrasting groups or sets of opinions; the process of becoming increasingly extreme or opposite in character.",
+      "example_from_convo": "Political polarization has increased significantly in recent years.",
+      "example_ko": "최근 몇 년간 정치적 양극화가 크게 증가했다.",
+      "tip": "동의어: division, split / 반의어: consensus, unity / 출제영역: 정치학, 사회학",
+      "emoji": "⚡"
+    },
+    {
+      "word": "incentive",
+      "part_of_speech": "noun",
+      "meaning_ko": "유인, 자극, 인센티브",
+      "explanation": "A thing that motivates or encourages someone to do something; a reward or benefit offered to stimulate desired behavior or action.",
+      "example_from_convo": "The company offered performance bonuses as an incentive for increased productivity.",
+      "example_ko": "회사는 생산성 증대를 위한 유인으로 실적 보너스를 제공했다.",
+      "tip": "동의어: motivation, stimulus, reward / 반의어: disincentive / 출제영역: 경제학, 경영학",
+      "emoji": "🎯"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "bioaccumulation",
-      "question": "What does bioaccumulation refer to?",
+      "word": "pedagogical",
+      "question": "Which of the following best defines 'pedagogical'?",
       "options": [
-        "The breakdown of harmful substances in the environment",
-        "The gradual increase of toxic substances in organisms over time",
-        "The rapid spread of pollutants through air and water",
-        "The prevention of chemical contamination in living organisms"
+        "Relating to the study of ancient languages",
+        "Concerning the theory and practice of teaching",
+        "Related to the political system of a country",
+        "Describing a work of artistic expression"
       ],
       "answer": 1,
-      "explanation": "Bioaccumulation is the process where harmful substances accumulate in living organisms, becoming more concentrated over time, particularly through food chains.",
-      "option_explanations": [
-        null,
-        "Correct: This is the primary definition of bioaccumulation.",
-        "This describes dispersal, not accumulation.",
-        "This describes prevention, which is the opposite concept."
-      ]
+      "explanation": "Pedagogical means relating to teaching methods and educational principles.",
+      "option_explanations": null
     },
     {
       "type": "meaning",
-      "word": "geopolitical",
-      "question": "Which of the following best describes a geopolitical issue?",
+      "word": "semiotics",
+      "question": "What is the primary focus of semiotics?",
       "options": [
-        "A disagreement between two friends about politics",
-        "The influence of geography and natural resources on international relations",
-        "The political system of a single country",
-        "A debate about environmental protection in cities"
+        "The history of written languages",
+        "The study of signs and symbols and their meaning",
+        "The psychological analysis of human behavior",
+        "The development of computer programming codes"
       ],
       "answer": 1,
-      "explanation": "Geopolitical issues involve how geographic location, natural resources, and strategic interests between nations influence their politics, diplomacy, and conflicts.",
-      "option_explanations": [
-        null,
-        "Correct: This captures the essence of geopolitical matters.",
-        "This is simply about one country's politics, not geopolitics.",
-        "This is environmental policy, not geopolitical strategy."
-      ]
+      "explanation": "Semiotics is the study of signs and symbols and how meaning is created and conveyed through them.",
+      "option_explanations": null
     },
     {
       "type": "meaning",
-      "word": "pecuniary",
-      "question": "What does pecuniary primarily concern?",
+      "word": "polarization",
+      "question": "Which statement correctly describes polarization?",
       "options": [
-        "Emotional distress and psychological damage",
-        "Legal proceedings and court decisions",
-        "Matters related to money or financial interests",
-        "Physical property and real estate ownership"
+        "The uniform agreement among all parties",
+        "The division into two sharply contrasting groups or opinions",
+        "The gradual improvement of social conditions",
+        "The integration of diverse cultural elements"
       ],
-      "answer": 2,
-      "explanation": "Pecuniary is an adjective that specifically relates to money and financial matters, often used in legal or formal contexts to describe monetary losses, damages, or compensation.",
-      "option_explanations": [
-        "This would be emotional or non-pecuniary damage.",
-        "This is legal procedure, though pecuniary damages can be involved.",
-        "Correct: Pecuniary specifically means relating to money.",
-        "This is real property, not pecuniary interest."
-      ]
+      "answer": 1,
+      "explanation": "Polarization refers to division into two sharply contrasting or opposing groups, opinions, or viewpoints.",
+      "option_explanations": null
     },
     {
       "type": "fill_blank",
-      "word": "amortization",
-      "sentence": "The bank provided an ___ schedule that outlined the monthly payments for the 20-year loan.",
-      "sentence_ko": "은행은 20년 대출금에 대한 월별 상환액을 명시한 _____ 스케줄을 제공했다.",
-      "answer": "amortization",
-      "hint": "This word describes a payment schedule for repaying loans or debts over time."
+      "word": "aesthetics",
+      "sentence": "The museum's collection demonstrates the ___ principles of Renaissance art.",
+      "sentence_ko": "그 박물관의 컬렉션은 르네상스 미술의 미학적 원칙을 보여준다.",
+      "answer": "aesthetic",
+      "hint": "Use the adjective form related to beauty and taste"
     },
     {
       "type": "fill_blank",
-      "word": "metacognition",
-      "sentence": "Students who practice ___ are better able to monitor their own learning progress and adjust their study strategies accordingly.",
-      "sentence_ko": "___를 실천하는 학생들은 자신의 학습 진도를 더 잘 모니터링하고 학습 전략을 그에 따라 조정할 수 있다.",
-      "answer": "metacognition",
-      "hint": "This term means thinking about one's own thinking processes."
+      "word": "incentive",
+      "sentence": "To boost employee morale, the management introduced a new ___ program with attractive bonuses.",
+      "sentence_ko": "직원 사기를 높이기 위해 경영진은 매력적인 보너스가 있는 새로운 인센티브 프로그램을 도입했다.",
+      "answer": "incentive",
+      "hint": "A motivating reward or benefit"
     },
     {
       "type": "fill_blank",
-      "word": "bioaccumulation",
-      "sentence": "Pesticides can cause ___ in aquatic ecosystems, becoming increasingly concentrated as they move up the food chain.",
-      "sentence_ko": "살충제는 수생태계에서 _____를 야기할 수 있으며, 먹이사슬을 따라 올라가면서 점점 더 농축된다.",
-      "answer": "bioaccumulation",
-      "hint": "This is the process where toxins build up in organisms over time."
+      "word": "pedagogical",
+      "sentence": "The professor developed a ___ strategy that combines traditional lectures with interactive group activities.",
+      "sentence_ko": "교수는 전통적 강의와 상호작용적 집단 활동을 결합한 교육학적 전략을 개발했다.",
+      "answer": "pedagogical",
+      "hint": "Adjective form meaning related to teaching methods"
     },
     {
       "type": "situation",
-      "word": "geopolitical",
-      "question": "A news analyst is discussing tensions between two neighboring countries over control of an oil-rich region and its impact on international trade routes. Which term best describes this situation?",
+      "word": "aesthetics",
+      "question": "A designer is discussing a new building project and says: 'I want to focus on the aesthetics of the structure to make it visually appealing while maintaining functionality.' What does the designer primarily care about?",
       "options": [
-        "Economic forecasting",
-        "Geopolitical conflict",
-        "Cultural exchange",
-        "Environmental assessment"
+        "The cost-effectiveness of construction materials",
+        "The beauty and visual appeal of the building's design",
+        "The speed of construction completion",
+        "The safety regulations of the building"
       ],
       "answer": 1,
-      "explanation": "This scenario involves the influence of geography (oil-rich region), national interests (control and resources), and international relations (trade routes), which are all core elements of geopolitical issues."
+      "explanation": "The designer is emphasizing aesthetics, which means they care about the beauty and visual appeal of the structure."
     },
     {
       "type": "situation",
-      "word": "pecuniary",
-      "question": "A court case determines that a company must pay damages to customers who were harmed by their faulty products. This type of compensation is best described as what?",
+      "word": "polarization",
+      "question": "A news analyst states: 'The recent election results show significant polarization between urban and rural voters.' What does this statement suggest?",
       "options": [
-        "Moral restitution",
-        "Pecuniary damages",
-        "Emotional support",
-        "Regulatory fine"
+        "The voters have reached a consensus on all issues",
+        "The voters are divided into two strongly contrasting groups with opposing views",
+        "There is a balanced mix of opinions across all regions",
+        "Voter turnout has significantly decreased"
       ],
       "answer": 1,
-      "explanation": "Pecuniary damages specifically refer to monetary compensation awarded in legal cases to cover financial losses or harm, which is exactly what this scenario describes."
+      "explanation": "The analyst is describing polarization, indicating that voters are sharply divided into two contrasting groups with differing viewpoints and values."
     }
   ],
   "sentences": [
     {
-      "word": "bioaccumulation",
-      "sentence": "The high levels of mercury found in predatory fish demonstrate the dangers of bioaccumulation in marine food webs.",
-      "sentence_ko": "포식성 생선에서 발견된 높은 수준의 수은은 해양 먹이사슬에서의 생물축적의 위험성을 보여준다.",
-      "nuance": "사실적 설명",
-      "context": "환경 과학, 생태계 논의",
-      "everyday_usage": "환경 뉴스나 과학 교육에서 자주 등장"
+      "word": "pedagogical",
+      "sentence": "Modern pedagogical methods emphasize critical thinking over rote memorization.",
+      "sentence_ko": "현대 교육학적 방법은 암기식 학습보다 비판적 사고를 강조한다.",
+      "nuance": "교육 방법론의 철학적 변화를 나타냄",
+      "context": "교육학 토론",
+      "everyday_usage": "교육 정책이나 교수법을 논할 때"
     },
     {
-      "word": "geopolitical",
-      "sentence": "The geopolitical landscape of Southeast Asia is constantly shifting due to competing interests from major powers.",
-      "sentence_ko": "동남아시아의 지정학적 환경은 강대국들의 경쟁적 이익으로 인해 끊임없이 변하고 있다.",
-      "nuance": "분석적 평가",
-      "context": "국제 정치, 외교 논의",
-      "everyday_usage": "국제 뉴스나 정치 분석에서 자주 사용"
+      "word": "aesthetics",
+      "sentence": "Japanese aesthetics often value simplicity and minimalism in design.",
+      "sentence_ko": "일본의 미학은 종종 디자인에서 단순성과 미니멀리즘을 가치 있게 여긴다.",
+      "nuance": "특정 문화의 미적 기준과 선호도",
+      "context": "예술 또는 문화 비평",
+      "everyday_usage": "예술, 디자인, 건축을 평가할 때"
     },
     {
-      "word": "pecuniary",
-      "sentence": "The divorce settlement included both non-pecuniary considerations like custody arrangements and pecuniary matters such as asset division.",
-      "sentence_ko": "이혼 합의에는 양육권 배치와 같은 비금전적 고려사항과 자산 분할 같은 금전적 사항이 모두 포함되었다.",
-      "nuance": "비교/대조",
-      "context": "법률, 개인적 문제",
-      "everyday_usage": "법률 문서나 공식적인 논의에서 등장"
+      "word": "semiotics",
+      "sentence": "The red traffic light is a semiotic sign that communicates the meaning 'stop' to drivers.",
+      "sentence_ko": "빨간 신호등은 운전자에게 '정지'의 의미를 전달하는 기호학적 기호이다.",
+      "nuance": "기호가 어떻게 의미를 전달하는지의 메커니즘",
+      "context": "기호학 또는 커뮤니케이션 이론",
+      "everyday_usage": "광고, 미디어, 언어 분석 시"
     },
     {
-      "word": "amortization",
-      "sentence": "Understanding amortization is essential for homeowners who want to see how much principal versus interest they're paying each month.",
-      "sentence_ko": "주택 소유자들이 매월 원금 대 이자를 얼마나 상환하고 있는지 파악하려면 분할상환을 이해하는 것이 필수적이다.",
-      "nuance": "교육적 조언",
-      "context": "금융 교육, 개인 재무",
-      "everyday_usage": "모기지나 대출 상담에서 중요한 개념"
+      "word": "polarization",
+      "sentence": "Social media has contributed to political polarization by creating echo chambers of like-minded users.",
+      "sentence_ko": "소셜 미디어는 유사한 생각을 가진 사용자들의 에코 챔버를 만들어 정치적 양극화에 기여했다.",
+      "nuance": "현대 사회 분열의 원인과 결과",
+      "context": "사회 분석 또는 정치 논평",
+      "everyday_usage": "사회 이슈, 정치 토론, 미디어 영향 분석"
     },
     {
-      "word": "metacognition",
-      "sentence": "Teachers encourage metacognition by asking students to reflect on what strategies work best for their learning style.",
-      "sentence_ko": "교사들은 학생들에게 자신의 학습 스타일에 가장 잘 맞는 전략이 무엇인지 성찰하도록 요구함으로써 메타인지를 장려한다.",
-      "nuance": "실천적 방법",
-      "context": "교육, 학습 방법론",
-      "everyday_usage": "학습 전략 논의나 교육 현장에서 자주 언급"
+      "word": "incentive",
+      "sentence": "Tax credits serve as an incentive for companies to invest in renewable energy projects.",
+      "sentence_ko": "세금 공제는 기업이 재생 에너지 프로젝트에 투자하도록 유인하는 역할을 한다.",
+      "nuance": "정책 도구로서의 유인의 효과",
+      "context": "경제 정책 또는 비즈니스 전략",
+      "everyday_usage": "경제 정책, 마케팅, 행동 변화 장려 시"
     }
   ]
 }

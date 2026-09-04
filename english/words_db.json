@@ -3290,5 +3290,65 @@
     "explanation": "자신의 사고 과정과 학습 과정을 인식하고 모니터링하는 능력으로, '생각에 대해 생각하기'를 의미함",
     "tip": "동의어: self-awareness, self-monitoring / 반의어: unreflective thinking / 인지심리학, 교육학 출제영역",
     "emoji": "🧠"
+  },
+  {
+    "id": "pedagogical",
+    "word": "pedagogical",
+    "pos": "adjective",
+    "date": "2026-09-05",
+    "meaning": "교육학적인, 교수법의",
+    "example_ko": "그 교육학적 방법론은 학생 참여를 강조한다.",
+    "example_en": "The pedagogical approach emphasizes student engagement.",
+    "explanation": "Teaching methods and principles related to education; concerning the theory and practice of teaching.",
+    "tip": "동의어: educational, instructional / 반의어: non-educational / 출제영역: 교육학, 학술논문",
+    "emoji": "📚"
+  },
+  {
+    "id": "aesthetics",
+    "word": "aesthetics",
+    "pos": "noun",
+    "date": "2026-09-05",
+    "meaning": "미학, 미적 감각",
+    "example_ko": "현대 건축의 미학은 고전 디자인과 크게 다르다.",
+    "example_en": "The aesthetics of modern architecture differ greatly from classical design.",
+    "explanation": "The philosophical study of beauty, taste, and the creation and appreciation of beauty; the principles concerning the appreciation and criticism of beauty.",
+    "tip": "동의어: beauty, artistic value / 반의어: ugliness / 출제영역: 미술, 철학, 문학비평",
+    "emoji": "🎨"
+  },
+  {
+    "id": "semiotics",
+    "word": "semiotics",
+    "pos": "noun",
+    "date": "2026-09-05",
+    "meaning": "기호학, 부호학",
+    "example_ko": "기호학은 광고가 시각 기호를 사용하여 메시지를 전달하는 방법을 이해하는 데 도움이 된다.",
+    "example_en": "Semiotics helps us understand how advertising uses visual symbols to communicate messages.",
+    "explanation": "The study of signs and symbols and their interpretation and use; the theory of how meaning is created and conveyed through signs.",
+    "tip": "동의어: sign theory / 반의어: 없음 / 출제영역: 언어학, 미디어학, 철학",
+    "emoji": "🔤"
+  },
+  {
+    "id": "polarization",
+    "word": "polarization",
+    "pos": "noun",
+    "date": "2026-09-05",
+    "meaning": "양극화, 편극화",
+    "example_ko": "최근 몇 년간 정치적 양극화가 크게 증가했다.",
+    "example_en": "Political polarization has increased significantly in recent years.",
+    "explanation": "The division into two sharply contrasting groups or sets of opinions; the process of becoming increasingly extreme or opposite in character.",
+    "tip": "동의어: division, split / 반의어: consensus, unity / 출제영역: 정치학, 사회학",
+    "emoji": "⚡"
+  },
+  {
+    "id": "incentive",
+    "word": "incentive",
+    "pos": "noun",
+    "date": "2026-09-05",
+    "meaning": "유인, 자극, 인센티브",
+    "example_ko": "회사는 생산성 증대를 위한 유인으로 실적 보너스를 제공했다.",
+    "example_en": "The company offered performance bonuses as an incentive for increased productivity.",
+    "explanation": "A thing that motivates or encourages someone to do something; a reward or benefit offered to stimulate desired behavior or action.",
+    "tip": "동의어: motivation, stimulus, reward / 반의어: disincentive / 출제영역: 경제학, 경영학",
+    "emoji": "🎯"
   }
 ]

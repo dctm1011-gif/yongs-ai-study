@@ -1,11 +1,6 @@
 [
   {
     "date": "2026-08-26",
-    "name": "삼성전자",
-    "ticker": "005930.KS"
-  },
-  {
-    "date": "2026-08-26",
     "name": "NVIDIA",
     "ticker": "NVDA"
   },
@@ -48,5 +43,10 @@
     "date": "2026-09-03",
     "name": "Broadcom",
     "ticker": "AVGO"
+  },
+  {
+    "date": "2026-09-04",
+    "name": "삼성전자",
+    "ticker": "005930.KS"
   }
 ]
