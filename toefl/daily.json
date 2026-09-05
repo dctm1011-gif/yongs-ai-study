@@ -1,175 +1,117 @@
 {
   "date": "2026-09-06",
   "reading": {
-    "title": "Ecosystem Resilience and Climate Change",
-    "passage": "Ecosystem resilience refers to the capacity of a biological community to withstand environmental disturbances and return to its original state after perturbation. Recent climate studies have demonstrated that rising global temperatures are fundamentally altering the resilience mechanisms of diverse ecosystems worldwide. For instance, coral reef systems, which harbor approximately 25% of all marine species despite occupying less than 1% of the ocean floor, have experienced unprecedented bleaching events due to elevated water temperatures. Coral bleaching occurs when zooxanthellae, the symbiotic algae that provide nutrition to coral polyps, are expelled under thermal stress, resulting in the coral's demise if conditions persist. Furthermore, terrestrial ecosystems face comparable challenges as shifting precipitation patterns disrupt plant phenology and migration cycles of fauna. Scientists predict that without substantial mitigation efforts, many ecosystems will lose their capacity to recover from future disturbances, potentially triggering cascading ecological failures across interconnected food webs.",
-    "vocabulary": [
-      {
-        "word": "resilience",
-        "meaning_ko": "회복력, 탄력성"
-      },
-      {
-        "word": "perturbation",
-        "meaning_ko": "방해, 교란"
-      },
-      {
-        "word": "zooxanthellae",
-        "meaning_ko": "공생하는 조류"
-      },
-      {
-        "word": "symbiotic",
-        "meaning_ko": "공생의"
-      },
-      {
-        "word": "phenology",
-        "meaning_ko": "생물계절학"
-      },
-      {
-        "word": "mitigation",
-        "meaning_ko": "완화, 경감"
-      },
-      {
-        "word": "cascading",
-        "meaning_ko": "연쇄적인"
-      }
-    ],
+    "title": "The Impact of Artificial Intelligence on Education",
+    "passage": "Artificial intelligence is revolutionizing education by personalizing learning experiences for students. AI-powered systems can adapt to individual learning styles, identify knowledge gaps, and provide targeted feedback in real-time. Teachers can use AI tools to automate grading and administrative tasks, allowing them to focus more on student engagement. However, concerns about data privacy and the potential reduction of human interaction in classrooms remain significant challenges that educators must address carefully.",
     "questions": [
       {
-        "q": "According to the passage, what percentage of marine species inhabit coral reefs?",
+        "q": "According to the passage, what is one benefit of AI in education?",
         "options": [
-          "Approximately 10%",
-          "Approximately 25%",
-          "Approximately 50%",
-          "Approximately 75%"
+          "A) It eliminates the need for teachers",
+          "B) It can personalize learning experiences",
+          "C) It reduces the cost of textbooks",
+          "D) It prevents students from making mistakes"
         ],
         "answer": 1,
-        "explanation": "지문에서 'coral reef systems, which harbor approximately 25% of all marine species'라고 명시되어 있습니다."
+        "explanation": "본문에서 'AI-powered systems can adapt to individual learning styles'라고 명시하고 있으므로, AI가 학습 경험을 개인화할 수 있다는 것이 정답입니다."
       },
       {
-        "q": "What can be inferred from the passage about ecosystem resilience in the face of climate change?",
+        "q": "What concern is mentioned regarding AI in education?",
         "options": [
-          "It is strengthening over time",
-          "It is being compromised by rising temperatures",
-          "It remains unaffected by human activities",
-          "It varies only in marine ecosystems"
+          "A) Students will become lazy",
+          "B) Technology costs too much",
+          "C) Data privacy concerns",
+          "D) AI cannot teach complex subjects"
         ],
-        "answer": 1,
-        "explanation": "지문에서 '리징 글로벌 온도는 근본적으로 생태계의 회복력 메커니즘을 변화시키고 있다'고 설명하며, 완화 노력 없이는 많은 생태계가 회복 능력을 잃을 것이라고 예측합니다."
+        "answer": 2,
+        "explanation": "본문 마지막 문장에서 'concerns about data privacy and the potential reduction of human interaction'이 언급되어 있습니다."
       },
       {
-        "q": "The word 'expelled' in the passage is closest in meaning to",
+        "q": "How can teachers benefit from using AI tools?",
         "options": [
-          "absorbed",
-          "forced out",
-          "generated",
-          "protected"
+          "A) They can work fewer hours",
+          "B) They can automate grading and focus on engagement",
+          "C) They no longer need qualifications",
+          "D) They can ignore student feedback"
         ],
         "answer": 1,
-        "explanation": "'expelled'는 '쫓아내다, 방출하다'라는 의미로, 열 스트레스로 인해 공생 조류가 산호에서 나가게 되는 과정을 설명합니다."
-      },
-      {
-        "q": "Why does the author mention that coral reefs occupy less than 1% of the ocean floor?",
-        "options": [
-          "To suggest they are unimportant ecosystems",
-          "To emphasize their vast biodiversity relative to their small size",
-          "To explain why they are resistant to temperature changes",
-          "To justify increased ocean exploration"
-        ],
-        "answer": 1,
-        "explanation": "저자는 산호초가 해양 바닥의 1% 미만을 차지하면서도 전체 해양 생물종의 25%를 포함한다는 점을 언급함으로써, 그들의 생물다양성의 중요성을 강조하고 있습니다."
+        "explanation": "'Teachers can use AI tools to automate grading and administrative tasks, allowing them to focus more on student engagement'에서 명확히 설명되어 있습니다."
       }
     ]
   },
   "writing": {
-    "topic": "도시 대중교통 확충의 필요성",
-    "task": "다음 제시문을 참고하여, 도시 대중교통 확충이 환경 및 사회 문제 해결에 얼마나 효과적인지에 대해 논할 것. 반드시 reading 지문의 문장을 패러프레이즈하여 최소 1회 이상 활용하고, 에세이 형식으로 3문단(도입-본론-결론) 작성. 200-250 단어.",
-    "paraphrase_exercises": [
-      {
-        "original": "Rising global temperatures are fundamentally altering the resilience mechanisms of diverse ecosystems worldwide.",
-        "paraphrase": "The capacity of various ecosystems to maintain stability is being significantly transformed by the escalating global thermal conditions.",
-        "tip": "능동형→능동형으로 다시 표현하되, 'rising global temperatures'를 'escalating global thermal conditions'로, 'altering the resilience mechanisms'를 'being significantly transformed the capacity to maintain stability'로 치환"
-      },
-      {
-        "original": "Without substantial mitigation efforts, many ecosystems will lose their capacity to recover from future disturbances.",
-        "paraphrase": "Unless significant intervention measures are implemented, numerous ecosystems may become incapable of restoring themselves after environmental disruptions.",
-        "tip": "명사 중심→동사 중심 표현으로 변환. 'mitigation efforts'→'intervention measures', 'lose their capacity'→'become incapable'"
-      },
-      {
-        "original": "Coral bleaching occurs when zooxanthellae are expelled under thermal stress.",
-        "paraphrase": "The expulsion of symbiotic algae due to elevated temperatures is responsible for initiating the bleaching process in coral systems.",
-        "tip": "When절 구조를 명사구 구조로 변환. 주어와 술어 위치를 재배치하여 수동형으로 변환"
-      }
+    "prompt": "Do you agree or disagree with the statement that artificial intelligence will have a more positive impact than negative impact on society in the next ten years?",
+    "structure": {
+      "intro": "당신의 입장을 명확히 제시하세요. 예: '나는 AI가 사회에 긍정적 영향을 미칠 것이라고 생각한다'는 식의 thesis statement를 작성합니다.",
+      "body1": "첫 번째 주장: AI가 의료, 교육, 생산성 향상 분야에서 긍정적 기여를 할 수 있다는 점을 구체적 예시와 함께 설명하세요.",
+      "body2": "두 번째 주장: AI가 취업 시장 변화와 프라이버시 문제 등의 부정적 측면이 있지만, 이러한 도전은 관리 가능하다는 점을 논증하세요.",
+      "conclusion": "도입부의 thesis를 재강조하면서, AI의 미래에 대한 신뢰와 준비의 필요성으로 마무리하세요."
+    },
+    "useful_phrases": [
+      "In my opinion,",
+      "I strongly believe that...",
+      "Furthermore,",
+      "In addition,",
+      "On the other hand,",
+      "However,",
+      "For example,",
+      "To conclude,",
+      "As a result,",
+      "It is clear that..."
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer living in urban areas with modern conveniences and diverse opportunities. Others prefer rural life with quieter environments and stronger community bonds. Which lifestyle do you prefer and why? Include specific reasons and details in your response.",
-    "model_sentences": [
-      "In my opinion, I prefer city life because it offers greater access to education, employment, and entertainment opportunities that align with my personal and professional goals.",
-      "First, urban environments provide superior public transportation systems, healthcare facilities, and cultural institutions that simply aren't available in rural areas.",
-      "For example, I can attend concerts, visit museums, and access specialized medical care within minutes, which significantly improves my quality of life.",
-      "Additionally, cities foster professional networking and career advancement opportunities that are essential in today's competitive job market.",
-      "While rural life has its charm with its peaceful atmosphere and tight-knit communities, the practical advantages and dynamic lifestyle of cities better suit my current priorities and aspirations."
+    "prompt": "Some people prefer to work in a traditional office environment. Others prefer to work remotely from home. Which do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer...",
+      "One reason is that...",
+      "Another important point is...",
+      "I believe that...",
+      "For instance...",
+      "In conclusion..."
+    ],
+    "sample_points": [
+      "원격근무의 장점: 출퇴근 시간 절약, 더 편안한 환경에서 일할 수 있음, 가족과 더 많은 시간을 보낼 수 있음",
+      "전통적 사무실의 장점: 동료들과 직접 협업, 빠른 피드백과 소통, 직무 교육과 멘토링 기회 증가"
     ]
   },
   "listening": {
-    "title": "Student Club Budget Allocation Discussion",
-    "type": "conversation",
-    "script": "Student A: Hey, did you attend the club meeting yesterday? They were discussing the budget for next semester. Student B: Yeah, I was there. The treasurer said we have $3,000 to allocate, but there's a lot of competition for funding. Student A: Right, I heard the environmental club wants $1,200 for their sustainability project. What about the debate team? Student B: They're requesting $800 for tournament registration and travel expenses. Student A: That's reasonable. What about our literature club? Student B: Well, here's the problem. The literature club is asking for $1,500 to organize a campus-wide book festival, but if we approve that, we won't have enough for the debate team or the environmental project. Student A: Hmm, that's tricky. Maybe we could reduce the book festival budget to $1,000? Student B: That could work, but it would limit the number of authors we could invite. Honestly, I think we should prioritize the environmental club because they're working on campus sustainability, which benefits everyone. Student A: That's a good point. What if we allocate $1,200 to the environmental club, $800 to the debate team, and $1,000 to the literature club? Student B: That adds up perfectly to $3,000. I think that's the fairest distribution.",
-    "vocabulary": [
-      {
-        "word": "allocate",
-        "meaning_ko": "배분하다, 할당하다"
-      },
-      {
-        "word": "treasurer",
-        "meaning_ko": "회계담당자"
-      },
-      {
-        "word": "sustainability",
-        "meaning_ko": "지속가능성"
-      },
-      {
-        "word": "prioritize",
-        "meaning_ko": "우선순위를 두다"
-      },
-      {
-        "word": "distribution",
-        "meaning_ko": "분배, 배분"
-      }
-    ],
+    "title": "Professor's Lecture on Climate Change",
+    "type": "lecture",
+    "script": "Professor: Today, I want to discuss the relationship between deforestation and climate change. As many of you know, forests play a crucial role in absorbing carbon dioxide from the atmosphere. When we cut down trees, we're not only removing these natural carbon sinks, but we're also releasing stored carbon back into the air. The Amazon rainforest, for instance, is often called the 'lungs of the Earth' because it produces about 20% of the world's oxygen. Recent studies show that deforestation in the Amazon has accelerated significantly over the past decade. This has led to increased greenhouse gas emissions and has contributed substantially to global warming. Furthermore, the loss of forest ecosystems disrupts wildlife habitats and reduces biodiversity. Many scientists believe that if we don't act now to preserve these forests, we'll reach a critical tipping point where the damage becomes irreversible. Education and policy changes are essential to address this pressing issue.",
     "questions": [
       {
-        "q": "What is the main topic of the conversation?",
+        "q": "What is the main topic of the professor's lecture?",
         "options": [
-          "Planning a campus book festival",
-          "Discussing club budget allocation for next semester",
-          "Registering the debate team for a tournament",
-          "Organizing an environmental sustainability project"
+          "A) The benefits of deforestation",
+          "B) The relationship between deforestation and climate change",
+          "C) How to plant more trees",
+          "D) The economic value of the Amazon"
         ],
         "answer": 1,
-        "explanation": "두 학생이 다양한 동아리에 3,000달러의 예산을 어떻게 배분할 것인지에 대해 논의하고 있습니다."
+        "explanation": "교수가 'I want to discuss the relationship between deforestation and climate change'라고 명시적으로 강의의 주제를 제시했습니다."
       },
       {
-        "q": "Why does Student B suggest prioritizing the environmental club?",
+        "q": "Why does the professor call the Amazon rainforest the 'lungs of the Earth'?",
         "options": [
-          "It requested the largest budget",
-          "It benefits the entire campus community through sustainability work",
-          "It has the most members",
-          "The debate team cannot afford their expenses"
+          "A) It is the largest forest",
+          "B) It produces about 20% of the world's oxygen",
+          "C) It is home to many animals",
+          "D) It has the oldest trees"
         ],
         "answer": 1,
-        "explanation": "Student B는 '환경 동아리가 캠퍼스 지속가능성을 위해 일하고 있으며, 이것이 모든 사람에게 이익이 된다'고 명시적으로 언급합니다."
+        "explanation": "교수의 설명 중 'The Amazon rainforest...is often called the lungs of the Earth because it produces about 20% of the world's oxygen'라는 부분에서 명확히 언급되었습니다."
       },
       {
-        "q": "What does Student A propose as a compromise for the literature club's budget?",
+        "q": "What does the professor suggest is necessary to address deforestation?",
         "options": [
-          "Reducing their request from $1,500 to $1,000",
-          "Increasing their allocation to $1,200",
-          "Eliminating their funding entirely",
-          "Combining their budget with the environmental club's"
+          "A) More technology and machinery",
+          "B) International trade agreements",
+          "C) Education and policy changes",
+          "D) Relocation of indigenous peoples"
         ],
-        "answer": 0,
-        "explanation": "Student A는 'Maybe we could reduce the book festival budget to $1,000?'라고 제안하여, 문학 동아리의 예산을 $1,500에서 $1,000으로 줄일 것을 제시합니다."
+        "answer": 2,
+        "explanation": "강의 마지막 부분에서 'Education and policy changes are essential to address this pressing issue'라고 명확히 제시되어 있습니다."
       }
     ]
   }
