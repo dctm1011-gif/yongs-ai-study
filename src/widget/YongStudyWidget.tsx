@@ -23,7 +23,7 @@ const ROW2 = [
   { key: 'reading', label: '독해' },
   { key: 'investment', label: '투자' },
   { key: 'toefl_reading', label: 'TOEFL' },
-  { key: 'sajaseongeo', label: '사자성어' },
+  { key: 'korean_diary', label: '일기' },
 ];
 
 function Badge({ done, label }: { done: boolean; label: string }) {
@@ -48,7 +48,8 @@ function Badge({ done, label }: { done: boolean; label: string }) {
   );
 }
 
-export function YongStudyWidget({ data }: { data: WidgetData }) {
+export function YongStudyWidget({ data, width, height }: { data: WidgetData; width?: number; height?: number }) {
+  console.warn('[Widget] render called, completed=' + data.completed + '/' + data.total);
   const pct = data.total > 0 ? Math.round((data.completed / data.total) * 100) : 0;
   const barColor = pct >= 80 ? '#22c55e' : pct >= 50 ? '#6366f1' : '#f59e0b';
   const filledFlex = Math.max(1, pct);

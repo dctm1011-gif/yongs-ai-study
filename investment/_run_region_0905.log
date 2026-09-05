@@ -1,0 +1,2 @@
+C:\Users\dctm1\YongStudyApp\investment\push_region_charts.py:20: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  return (datetime.utcnow() + timedelta(hours=9)).strftime("%Y-%m-%d")

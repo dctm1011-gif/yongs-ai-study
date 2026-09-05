@@ -2,7 +2,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
-import { View, ActivityIndicator, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, ActivityIndicator, TouchableOpacity, Text, StyleSheet, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Updates from 'expo-updates';
 import { useUpdates } from 'expo-updates';
@@ -21,6 +21,8 @@ import { useAnnouncements } from '../hooks/useAnnouncements';
 import { AnnouncementModal } from '../components/AnnouncementModal';
 import { refreshStudyNotifications } from '../utils/studyNotifications';
 import { writeDailySummary, backfillPublicSummaries } from '../utils/dailySummary';
+import { fetchWidgetData } from '../widget/widgetTaskHandler';
+import { YongStudyWidget } from '../widget/YongStudyWidget';
 import * as Notifications from 'expo-notifications';
 import { AuthProvider, useAuth } from '../context/AuthContext';
 
@@ -82,12 +84,33 @@ function MainTabs() {
     if (user?.uid) refreshStudyNotifications(user.uid);
   }, [user?.uid]);
 
-  // 앱 시작 및 1시간마다 전체 학습 요약을 공개 경로에 기록 (이메일 리포트용)
+  // 앱 시작 및 1시간마다 전체 학습 요약을 공개 경로에 기록 + 위젯 갱신
   useEffect(() => {
     if (!user?.uid) return;
-    writeDailySummary(user.uid).catch(() => {});
+    const updateAll = async (uid: string) => {
+      await writeDailySummary(uid).catch(() => {});
+      if (Platform.OS === 'android') {
+        try {
+          const { requestWidgetUpdate } = await import('react-native-android-widget');
+          console.warn('[Widget] requestWidgetUpdate 시작');
+          const data = await fetchWidgetData();
+          await requestWidgetUpdate({
+            widgetName: 'YongStudyWidget',
+            renderWidget: () => {
+              console.warn('[Widget] renderWidget 호출됨');
+              return React.createElement(YongStudyWidget, { data });
+            },
+            widgetNotFound: () => { console.warn('[Widget] widgetNotFound - 홈화면에 위젯 없음'); },
+          });
+          console.warn('[Widget] requestWidgetUpdate 완료');
+        } catch (e) {
+          console.warn('[Widget] requestWidgetUpdate 에러:', e);
+        }
+      }
+    };
+    updateAll(user.uid);
     backfillPublicSummaries().catch(() => {}); // 과거 30일 1회 백필
-    const interval = setInterval(() => writeDailySummary(user.uid!).catch(() => {}), 60 * 60 * 1000);
+    const interval = setInterval(() => updateAll(user.uid!), 60 * 60 * 1000);
     return () => clearInterval(interval);
   }, [user?.uid]);
 

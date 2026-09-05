@@ -1,115 +1,175 @@
 {
-  "date": "2026-09-05",
+  "date": "2026-09-06",
   "reading": {
-    "title": "Climate Change and Coral Reefs",
-    "passage": "Coral reefs are among the most biodiverse ecosystems on Earth, supporting over 25% of all marine species despite covering less than 1% of the ocean floor. However, rising ocean temperatures and acidification threaten their survival. When water temperatures increase even by 1-2 degrees Celsius, corals expel their symbiotic algae in a process called bleaching, which can lead to death. Conservation efforts including marine protected areas and reducing carbon emissions are essential to preserve these vital ecosystems for future generations.",
+    "title": "Ecosystem Resilience and Climate Change",
+    "passage": "Ecosystem resilience refers to the capacity of a biological community to withstand environmental disturbances and return to its original state after perturbation. Recent climate studies have demonstrated that rising global temperatures are fundamentally altering the resilience mechanisms of diverse ecosystems worldwide. For instance, coral reef systems, which harbor approximately 25% of all marine species despite occupying less than 1% of the ocean floor, have experienced unprecedented bleaching events due to elevated water temperatures. Coral bleaching occurs when zooxanthellae, the symbiotic algae that provide nutrition to coral polyps, are expelled under thermal stress, resulting in the coral's demise if conditions persist. Furthermore, terrestrial ecosystems face comparable challenges as shifting precipitation patterns disrupt plant phenology and migration cycles of fauna. Scientists predict that without substantial mitigation efforts, many ecosystems will lose their capacity to recover from future disturbances, potentially triggering cascading ecological failures across interconnected food webs.",
+    "vocabulary": [
+      {
+        "word": "resilience",
+        "meaning_ko": "회복력, 탄력성"
+      },
+      {
+        "word": "perturbation",
+        "meaning_ko": "방해, 교란"
+      },
+      {
+        "word": "zooxanthellae",
+        "meaning_ko": "공생하는 조류"
+      },
+      {
+        "word": "symbiotic",
+        "meaning_ko": "공생의"
+      },
+      {
+        "word": "phenology",
+        "meaning_ko": "생물계절학"
+      },
+      {
+        "word": "mitigation",
+        "meaning_ko": "완화, 경감"
+      },
+      {
+        "word": "cascading",
+        "meaning_ko": "연쇄적인"
+      }
+    ],
     "questions": [
       {
-        "q": "According to the passage, what percentage of marine species do coral reefs support?",
+        "q": "According to the passage, what percentage of marine species inhabit coral reefs?",
         "options": [
-          "Over 10%",
-          "Over 25%",
-          "Over 50%",
-          "Over 75%"
+          "Approximately 10%",
+          "Approximately 25%",
+          "Approximately 50%",
+          "Approximately 75%"
         ],
         "answer": 1,
-        "explanation": "지문에 'supporting over 25% of all marine species'라고 명시되어 있습니다."
+        "explanation": "지문에서 'coral reef systems, which harbor approximately 25% of all marine species'라고 명시되어 있습니다."
       },
       {
-        "q": "What does the term 'bleaching' refer to in the passage?",
+        "q": "What can be inferred from the passage about ecosystem resilience in the face of climate change?",
         "options": [
-          "The process of cleaning coral reefs",
-          "When corals expel their symbiotic algae",
-          "The formation of new coral colonies",
-          "The acidification of ocean water"
+          "It is strengthening over time",
+          "It is being compromised by rising temperatures",
+          "It remains unaffected by human activities",
+          "It varies only in marine ecosystems"
         ],
         "answer": 1,
-        "explanation": "본문에서 'corals expel their symbiotic algae in a process called bleaching'이라고 설명합니다."
+        "explanation": "지문에서 '리징 글로벌 온도는 근본적으로 생태계의 회복력 메커니즘을 변화시키고 있다'고 설명하며, 완화 노력 없이는 많은 생태계가 회복 능력을 잃을 것이라고 예측합니다."
       },
       {
-        "q": "Which of the following is NOT mentioned as a conservation effort?",
+        "q": "The word 'expelled' in the passage is closest in meaning to",
         "options": [
-          "Marine protected areas",
-          "Reducing carbon emissions",
-          "Installing artificial reefs",
-          "Temperature control"
+          "absorbed",
+          "forced out",
+          "generated",
+          "protected"
         ],
-        "answer": 2,
-        "explanation": "지문에서 언급된 보존 노력은 해양 보호 지역과 탄소 배출 감소뿐이며, 인공 산호초 설치는 언급되지 않았습니다."
+        "answer": 1,
+        "explanation": "'expelled'는 '쫓아내다, 방출하다'라는 의미로, 열 스트레스로 인해 공생 조류가 산호에서 나가게 되는 과정을 설명합니다."
+      },
+      {
+        "q": "Why does the author mention that coral reefs occupy less than 1% of the ocean floor?",
+        "options": [
+          "To suggest they are unimportant ecosystems",
+          "To emphasize their vast biodiversity relative to their small size",
+          "To explain why they are resistant to temperature changes",
+          "To justify increased ocean exploration"
+        ],
+        "answer": 1,
+        "explanation": "저자는 산호초가 해양 바닥의 1% 미만을 차지하면서도 전체 해양 생물종의 25%를 포함한다는 점을 언급함으로써, 그들의 생물다양성의 중요성을 강조하고 있습니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Remote work is more productive than working in an office'? Provide reasons and examples to support your position.",
-    "structure": {
-      "intro": "명확한 입장 제시 (동의/비동의)를 포함한 도입부 작성. 주제를 간단히 소개하고 자신의 관점을 명확히 하기",
-      "body1": "첫 번째 주요 근거: 원격 근무의 장점 또는 단점 중 하나를 선택하여 구체적인 예시와 함께 설명",
-      "body2": "두 번째 주요 근거: 다른 측면의 장점 또는 단점을 구체적인 상황이나 통계를 통해 전개",
-      "conclusion": "앞서 제시한 근거들을 요약하고 최종 입장을 재확인하며 마무리"
-    },
-    "useful_phrases": [
-      "In my opinion,",
-      "I strongly believe that...",
-      "One major advantage/disadvantage is that...",
-      "Furthermore, it is important to consider...",
-      "For example,",
-      "In conclusion,",
-      "This demonstrates that...",
-      "On the other hand,"
+    "topic": "도시 대중교통 확충의 필요성",
+    "task": "다음 제시문을 참고하여, 도시 대중교통 확충이 환경 및 사회 문제 해결에 얼마나 효과적인지에 대해 논할 것. 반드시 reading 지문의 문장을 패러프레이즈하여 최소 1회 이상 활용하고, 에세이 형식으로 3문단(도입-본론-결론) 작성. 200-250 단어.",
+    "paraphrase_exercises": [
+      {
+        "original": "Rising global temperatures are fundamentally altering the resilience mechanisms of diverse ecosystems worldwide.",
+        "paraphrase": "The capacity of various ecosystems to maintain stability is being significantly transformed by the escalating global thermal conditions.",
+        "tip": "능동형→능동형으로 다시 표현하되, 'rising global temperatures'를 'escalating global thermal conditions'로, 'altering the resilience mechanisms'를 'being significantly transformed the capacity to maintain stability'로 치환"
+      },
+      {
+        "original": "Without substantial mitigation efforts, many ecosystems will lose their capacity to recover from future disturbances.",
+        "paraphrase": "Unless significant intervention measures are implemented, numerous ecosystems may become incapable of restoring themselves after environmental disruptions.",
+        "tip": "명사 중심→동사 중심 표현으로 변환. 'mitigation efforts'→'intervention measures', 'lose their capacity'→'become incapable'"
+      },
+      {
+        "original": "Coral bleaching occurs when zooxanthellae are expelled under thermal stress.",
+        "paraphrase": "The expulsion of symbiotic algae due to elevated temperatures is responsible for initiating the bleaching process in coral systems.",
+        "tip": "When절 구조를 명사구 구조로 변환. 주어와 술어 위치를 재배치하여 수동형으로 변환"
+      }
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to study alone, while others prefer to study in groups. Which do you prefer and why?",
-    "useful_expressions": [
-      "In my opinion, I prefer studying in groups because...",
-      "One reason is that group study helps me...",
-      "Another advantage is that...",
-      "For instance,",
-      "This shows that...",
-      "In conclusion,"
-    ],
-    "sample_points": [
-      "집단 학습은 다양한 관점을 공유하고 서로 다른 문제 해결 방법을 배울 수 있는 기회를 제공한다",
-      "혼자 공부할 때보다 그룹에서 공부하면 동기 부여가 되고 책임감이 생겨 더 효과적인 학습이 가능하다"
+    "prompt": "Some people prefer living in urban areas with modern conveniences and diverse opportunities. Others prefer rural life with quieter environments and stronger community bonds. Which lifestyle do you prefer and why? Include specific reasons and details in your response.",
+    "model_sentences": [
+      "In my opinion, I prefer city life because it offers greater access to education, employment, and entertainment opportunities that align with my personal and professional goals.",
+      "First, urban environments provide superior public transportation systems, healthcare facilities, and cultural institutions that simply aren't available in rural areas.",
+      "For example, I can attend concerts, visit museums, and access specialized medical care within minutes, which significantly improves my quality of life.",
+      "Additionally, cities foster professional networking and career advancement opportunities that are essential in today's competitive job market.",
+      "While rural life has its charm with its peaceful atmosphere and tight-knit communities, the practical advantages and dynamic lifestyle of cities better suit my current priorities and aspirations."
     ]
   },
   "listening": {
-    "title": "University Library Services",
+    "title": "Student Club Budget Allocation Discussion",
     "type": "conversation",
-    "script": "Student: Excuse me, I'm new to the university and I'm not sure how to use the library resources. Librarian: Of course! Welcome to our library. We offer many services including access to online databases, research assistance, and study spaces. We have computers, quiet study areas, and group collaboration rooms. Student: That sounds great! Do I need any special registration? Librarian: You just need your student ID card. Also, we offer workshops every week on how to search databases effectively and cite sources properly. You can find the schedule on our website. Student: Perfect! One more question—what's the late fee for books? Librarian: Books are typically due in three weeks, and the late fee is one dollar per day. However, you can renew books online before the due date if you need them longer. Student: Thank you so much for the information! Librarian: You're welcome! Feel free to ask any of our staff if you need further assistance.",
+    "script": "Student A: Hey, did you attend the club meeting yesterday? They were discussing the budget for next semester. Student B: Yeah, I was there. The treasurer said we have $3,000 to allocate, but there's a lot of competition for funding. Student A: Right, I heard the environmental club wants $1,200 for their sustainability project. What about the debate team? Student B: They're requesting $800 for tournament registration and travel expenses. Student A: That's reasonable. What about our literature club? Student B: Well, here's the problem. The literature club is asking for $1,500 to organize a campus-wide book festival, but if we approve that, we won't have enough for the debate team or the environmental project. Student A: Hmm, that's tricky. Maybe we could reduce the book festival budget to $1,000? Student B: That could work, but it would limit the number of authors we could invite. Honestly, I think we should prioritize the environmental club because they're working on campus sustainability, which benefits everyone. Student A: That's a good point. What if we allocate $1,200 to the environmental club, $800 to the debate team, and $1,000 to the literature club? Student B: That adds up perfectly to $3,000. I think that's the fairest distribution.",
+    "vocabulary": [
+      {
+        "word": "allocate",
+        "meaning_ko": "배분하다, 할당하다"
+      },
+      {
+        "word": "treasurer",
+        "meaning_ko": "회계담당자"
+      },
+      {
+        "word": "sustainability",
+        "meaning_ko": "지속가능성"
+      },
+      {
+        "word": "prioritize",
+        "meaning_ko": "우선순위를 두다"
+      },
+      {
+        "word": "distribution",
+        "meaning_ko": "분배, 배분"
+      }
+    ],
     "questions": [
       {
-        "q": "What is the main purpose of this conversation?",
+        "q": "What is the main topic of the conversation?",
         "options": [
-          "To explain library policies to a new student",
-          "To discuss late fees and book renewal policies",
-          "To register the student for library access",
-          "To schedule a workshop on database searching"
-        ],
-        "answer": 0,
-        "explanation": "사서가 새로운 학생에게 도서관의 다양한 서비스와 자원에 대해 설명하고 있으므로, 주요 목적은 새로운 학생에게 도서관 정책을 설명하는 것입니다."
-      },
-      {
-        "q": "According to the librarian, what services are available for students?",
-        "options": [
-          "Only computer access and quiet study areas",
-          "Online databases, research assistance, study spaces, and workshops",
-          "Group study rooms and book lending only",
-          "Database access and book renewal services only"
+          "Planning a campus book festival",
+          "Discussing club budget allocation for next semester",
+          "Registering the debate team for a tournament",
+          "Organizing an environmental sustainability project"
         ],
         "answer": 1,
-        "explanation": "사서가 '온라인 데이터베이스 접근, 연구 지원, 스터디 공간, 그리고 정기적인 워크숍'을 제공한다고 언급했습니다."
+        "explanation": "두 학생이 다양한 동아리에 3,000달러의 예산을 어떻게 배분할 것인지에 대해 논의하고 있습니다."
       },
       {
-        "q": "What is the late fee for returning books after the due date?",
+        "q": "Why does Student B suggest prioritizing the environmental club?",
         "options": [
-          "Five dollars per day",
-          "One dollar per week",
-          "One dollar per day",
-          "No late fee with online renewal"
+          "It requested the largest budget",
+          "It benefits the entire campus community through sustainability work",
+          "It has the most members",
+          "The debate team cannot afford their expenses"
         ],
-        "answer": 2,
-        "explanation": "사서가 '연체료는 하루에 1달러'라고 명시했습니다."
+        "answer": 1,
+        "explanation": "Student B는 '환경 동아리가 캠퍼스 지속가능성을 위해 일하고 있으며, 이것이 모든 사람에게 이익이 된다'고 명시적으로 언급합니다."
+      },
+      {
+        "q": "What does Student A propose as a compromise for the literature club's budget?",
+        "options": [
+          "Reducing their request from $1,500 to $1,000",
+          "Increasing their allocation to $1,200",
+          "Eliminating their funding entirely",
+          "Combining their budget with the environmental club's"
+        ],
+        "answer": 0,
+        "explanation": "Student A는 'Maybe we could reduce the book festival budget to $1,000?'라고 제안하여, 문학 동아리의 예산을 $1,500에서 $1,000으로 줄일 것을 제시합니다."
       }
     ]
   }

@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  TextInput,
   Linking,
   Platform,
   Alert,
@@ -21,16 +22,11 @@ import { getFirebaseApp } from '../config/firebase';
 import { userRef } from '../utils/userDb';
 import { useAuth } from '../context/AuthContext';
 import { BookSection } from '../components/BookDiary';
-import KoreanOXQuiz, { OXItem } from '../components/KoreanOXQuiz';
 import {
   getDayIndex,
-  SAJASEONGEO_LIST,
-  SANGSHIK_LIST,
-  OX_FALLBACK_LIST,
-  Sajaseongeo,
-  Sangshik,
+  DiaryVocab,
+  DIARY_VOCAB_LIST,
 } from '../data/koreanContent';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function getKSTDateString(): string {
   return new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 10);
@@ -65,7 +61,7 @@ async function openMillie() {
 export default function CultureScreen() {
   const { user } = useAuth();
   const uid = user?.uid ?? '';
-  const cards = useStaggerFade(4, 70);
+  const cards = useStaggerFade(2, 70);
   const today = getKSTDateString();
 
   // ── 독서 ─────────────────────────────────────────────────────────
@@ -75,22 +71,14 @@ export default function CultureScreen() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  // ── 사자성어 ─────────────────────────────────────────────────────
-  const [sajaseongeo, setSajaseongeo] = useState<Sajaseongeo>(
-    SAJASEONGEO_LIST[getDayIndex(SAJASEONGEO_LIST.length)]
-  );
-  const [sajaExpanded, setSajaExpanded] = useState(false);
-  const [sajaDone, setSajaDone] = useState(false);
-
-  // ── 오늘의 상식 ──────────────────────────────────────────────────
-  const [sangshik, setSangshik] = useState<Sangshik>(
-    SANGSHIK_LIST[getDayIndex(SANGSHIK_LIST.length)]
-  );
-  const [selectedOption, setSelectedOption] = useState<number | null>(null);
-  const [sangshikDone, setSangshikDone] = useState(false);
-
-  // ── 어휘 O/X 퀴즈 ────────────────────────────────────────────────
-  const [oxItems, setOxItems] = useState<OXItem[]>(OX_FALLBACK_LIST);
+  // ── 어휘 일기 ────────────────────────────────────────────────────
+  // 리스트를 3등분(사자성어/속담/고급어휘)하여 각 구간에서 1개씩 → 매일 다른 조합
+  const _section = Math.floor(DIARY_VOCAB_LIST.length / 3);
+  const _d = getDayIndex(_section);
+  const vocabWords: DiaryVocab[] = [0, 1, 2].map(i => DIARY_VOCAB_LIST[_d + _section * i]);
+  const [diaryText, setDiaryText] = useState('');
+  const [diaryDone, setDiaryDone] = useState(false);
+  const [diarySaving, setDiarySaving] = useState(false);
 
   useEffect(() => {
     if (!uid) { setLoading(false); return; }
@@ -117,30 +105,13 @@ export default function CultureScreen() {
           setStreak(count);
         }
 
-        // 사자성어 완료
-        const sajaSnap = await get(ref(db, `users/${uid}/completion/sajaseongeo/${today}`));
-        if (sajaSnap.val() === true) setSajaDone(true);
-
-        // 상식 완료
-        const sangSnap = await get(ref(db, `users/${uid}/completion/sangshik/${today}`));
-        if (sangSnap.val() === true) setSangshikDone(true);
-
-        // AI 생성 콘텐츠 로드 (있으면 static 대체)
-        const koreanSnap = await get(ref(db, `korean/daily/${today}`));
-        if (koreanSnap.exists()) {
-          const daily = koreanSnap.val();
-          if (daily.sajaseongeo?.idiom) setSajaseongeo(daily.sajaseongeo);
-          if (
-            daily.sangshik?.question &&
-            Array.isArray(daily.sangshik.options) &&
-            daily.sangshik.options.length === 4 &&
-            typeof daily.sangshik.answer === 'number' &&
-            daily.sangshik.answer < daily.sangshik.options.length
-          ) setSangshik(daily.sangshik);
-          if (Array.isArray(daily.oxQuiz) && daily.oxQuiz.length >= 5) {
-            setOxItems(daily.oxQuiz);
-          } else {
-            setOxItems(OX_FALLBACK_LIST);
+        // 일기 로드
+        const diarySnap = await get(ref(db, `users/${uid}/diary/${today}`));
+        if (diarySnap.exists()) {
+          const saved = diarySnap.val();
+          if (typeof saved === 'string' && saved.length > 0) {
+            setDiaryText(saved);
+            setDiaryDone(true);
           }
         }
       } catch (e) {
@@ -152,10 +123,6 @@ export default function CultureScreen() {
 
     loadData();
 
-    // 사자성어 선택지 복원
-    AsyncStorage.getItem(`sangshik_selected_${today}`).then(v => {
-      if (v !== null) setSelectedOption(parseInt(v, 10));
-    });
   }, [uid, today]);
 
   const handleReadingComplete = useCallback(async () => {
@@ -173,29 +140,25 @@ export default function CultureScreen() {
     }
   }, [synced, saving, uid, today]);
 
-  const handleSajaComplete = useCallback(async () => {
-    if (sajaDone) return;
-    setSajaDone(true);
-    if (uid) {
-      dbSet(userRef(uid, `completion/sajaseongeo/${today}`), true).catch(() => {});
+  const handleDiarySave = useCallback(async () => {
+    if (diarySaving || diaryText.trim().length < 20) return;
+    setDiarySaving(true);
+    try {
+      if (uid) {
+        const db = getDatabase(getFirebaseApp());
+        await Promise.all([
+          dbSet(ref(db, `users/${uid}/diary/${today}`), diaryText.trim()),
+          dbSet(ref(db, `users/${uid}/completion/korean_diary/${today}`), true),
+        ]);
+      }
+      setDiaryDone(true);
+      ToastAndroid.show('✅ 일기가 저장됐어요!', ToastAndroid.SHORT);
+    } catch {
+      Alert.alert('오류', '저장에 실패했습니다. 다시 시도해주세요.');
+    } finally {
+      setDiarySaving(false);
     }
-    ToastAndroid.show('✅ 사자성어 학습 완료!', ToastAndroid.SHORT);
-  }, [sajaDone, uid, today]);
-
-  const handleOptionSelect = useCallback(async (idx: number) => {
-    if (selectedOption !== null) return;
-    setSelectedOption(idx);
-    await AsyncStorage.setItem(`sangshik_selected_${today}`, String(idx));
-  }, [selectedOption, today]);
-
-  const handleSangshikComplete = useCallback(async () => {
-    if (sangshikDone) return;
-    setSangshikDone(true);
-    if (uid) {
-      dbSet(userRef(uid, `completion/sangshik/${today}`), true).catch(() => {});
-    }
-    ToastAndroid.show('✅ 오늘의 상식 완료!', ToastAndroid.SHORT);
-  }, [sangshikDone, uid, today]);
+  }, [diarySaving, diaryText, uid, today]);
 
   if (loading) {
     return (
@@ -266,119 +229,66 @@ export default function CultureScreen() {
         <BookSection uid={uid} />
       </Animated.View>
 
-      {/* ── 사자성어 카드 ─────────────────────────────────────── */}
+      {/* ── 어휘 일기 카드 ──────────────────────────────────── */}
       <Animated.View style={[s.card, { opacity: cards[1].opacity, transform: [{ translateY: cards[1].translateY }] }]}>
         <View style={s.cardHeader}>
-          <MaterialIcons name="translate" size={24} color="#7c3aed" />
-          <Text style={s.cardTitle}>오늘의 사자성어</Text>
-          {sajaDone && (
+          <MaterialIcons name="edit-note" size={24} color="#059669" />
+          <Text style={s.cardTitle}>오늘의 어휘 일기</Text>
+          {diaryDone && (
             <View style={[s.streakBadge, { borderColor: '#bbf7d0', backgroundColor: '#f0fdf4' }]}>
               <Text style={[s.streakText, { color: '#16a34a' }]}>✅ 완료</Text>
             </View>
           )}
         </View>
 
-        <View style={s.sajaMain}>
-          <Text style={s.sajaIdiom}>{sajaseongeo.idiom}</Text>
-          <Text style={s.sajaHanja}>{sajaseongeo.hanja}</Text>
-        </View>
-        <Text style={s.sajaMeaning}>{sajaseongeo.meaning}</Text>
+        <Text style={s.diaryGuide}>아래 어휘 3개를 모두 사용해서 오늘 일기를 써보세요</Text>
 
-        <TouchableOpacity
-          style={s.sajaExpandBtn}
-          onPress={() => setSajaExpanded(v => !v)}
-          activeOpacity={0.7}
-        >
-          <Text style={s.sajaExpandText}>예문 {sajaExpanded ? '접기' : '보기'}</Text>
-          <MaterialIcons name={sajaExpanded ? 'expand-less' : 'expand-more'} size={18} color="#7c3aed" />
-        </TouchableOpacity>
-
-        {sajaExpanded && (
-          <View style={s.exampleBox}>
-            <Text style={s.exampleText}>"{sajaseongeo.example}"</Text>
-          </View>
-        )}
-
-        {!sajaDone && (
-          <TouchableOpacity style={[s.completeBtn, { backgroundColor: '#7c3aed', marginTop: 14 }]} onPress={handleSajaComplete} activeOpacity={0.85}>
-            <MaterialIcons name="check" size={18} color="#fff" />
-            <Text style={s.completeBtnText}>학습 완료</Text>
-          </TouchableOpacity>
-        )}
-      </Animated.View>
-
-      {/* ── 오늘의 상식 카드 ──────────────────────────────────── */}
-      <Animated.View style={[s.card, { opacity: cards[2].opacity, transform: [{ translateY: cards[2].translateY }] }]}>
-        <View style={s.cardHeader}>
-          <MaterialIcons name="lightbulb" size={24} color="#d97706" />
-          <Text style={s.cardTitle}>오늘의 상식</Text>
-          <View style={s.categoryBadge}>
-            <Text style={s.categoryText}>{sangshik.category}</Text>
-          </View>
-          {sangshikDone && (
-            <View style={[s.streakBadge, { borderColor: '#bbf7d0', backgroundColor: '#f0fdf4' }]}>
-              <Text style={[s.streakText, { color: '#16a34a' }]}>✅ 완료</Text>
-            </View>
-          )}
-        </View>
-
-        <Text style={s.quizQuestion}>{sangshik.question}</Text>
-
-        <View style={s.optionList}>
-          {sangshik.options.map((opt, i) => {
-            const isSelected = selectedOption === i;
-            const isCorrect = i === sangshik.answer;
-            const revealed = selectedOption !== null;
-            let bg = '#fafafa';
-            let border = '#dbdbdb';
-            let textColor = '#262626';
-            if (revealed) {
-              if (isCorrect) { bg = '#f0fdf4'; border = '#86efac'; textColor = '#16a34a'; }
-              else if (isSelected && !isCorrect) { bg = '#fef2f2'; border = '#fca5a5'; textColor = '#dc2626'; }
-            }
+        <View style={s.vocabList}>
+          {vocabWords.map((v, i) => {
+            const used = diaryText.includes(v.word);
             return (
-              <TouchableOpacity
-                key={i}
-                style={[s.optionBtn, { backgroundColor: bg, borderColor: border }]}
-                onPress={() => handleOptionSelect(i)}
-                disabled={revealed}
-                activeOpacity={0.75}
-              >
-                <Text style={[s.optionLabel, { color: textColor }]}>
-                  {['①', '②', '③', '④'][i]} {opt}
-                </Text>
-                {revealed && isCorrect && <MaterialIcons name="check-circle" size={16} color="#16a34a" />}
-                {revealed && isSelected && !isCorrect && <MaterialIcons name="cancel" size={16} color="#dc2626" />}
-              </TouchableOpacity>
+              <View key={i} style={[s.vocabChip, used && s.vocabChipUsed]}>
+                <View style={s.vocabChipTop}>
+                  <Text style={[s.vocabWord, used && s.vocabWordUsed]}>{v.word}</Text>
+                  {used && <MaterialIcons name="check-circle" size={16} color="#059669" />}
+                </View>
+                <Text style={[s.vocabMeaning, used && { color: '#059669' }]}>{v.meaning}</Text>
+              </View>
             );
           })}
         </View>
 
-        {selectedOption !== null && (
-          <View style={s.explanationBox}>
-            <MaterialIcons name="info-outline" size={14} color="#0095f6" />
-            <Text style={s.explanationText}>{sangshik.explanation}</Text>
+        {diaryDone ? (
+          <View style={s.diaryReadBox}>
+            <Text style={s.diaryReadText}>{diaryText}</Text>
           </View>
-        )}
-
-        {selectedOption !== null && !sangshikDone && (
-          <TouchableOpacity style={[s.completeBtn, { backgroundColor: '#d97706', marginTop: 10 }]} onPress={handleSangshikComplete} activeOpacity={0.85}>
-            <MaterialIcons name="check" size={18} color="#fff" />
-            <Text style={s.completeBtnText}>완료</Text>
-          </TouchableOpacity>
+        ) : (
+          <>
+            <TextInput
+              style={s.diaryInput}
+              placeholder="오늘 하루를 자유롭게 적어보세요..."
+              placeholderTextColor="#adb5bd"
+              multiline
+              value={diaryText}
+              onChangeText={setDiaryText}
+              textAlignVertical="top"
+            />
+            <Text style={s.diaryCharCount}>{diaryText.length}자</Text>
+            <TouchableOpacity
+              style={[s.completeBtn, { backgroundColor: '#059669' }, (diarySaving || diaryText.trim().length < 20) && s.btnDisabled]}
+              onPress={handleDiarySave}
+              disabled={diarySaving || diaryText.trim().length < 20}
+              activeOpacity={0.85}
+            >
+              {diarySaving ? (
+                <ActivityIndicator size="small" color="#fff" />
+              ) : (
+                <><MaterialIcons name="save" size={18} color="#fff" /><Text style={s.completeBtnText}>일기 저장</Text></>
+              )}
+            </TouchableOpacity>
+          </>
         )}
       </Animated.View>
-
-      {/* ── 한국어 어휘 O/X 퀴즈 ─────────────────────────────── */}
-      {oxItems.length > 0 && (
-        <Animated.View style={[s.card, { opacity: cards[3].opacity, transform: [{ translateY: cards[3].translateY }] }]}>
-          <View style={s.cardHeader}>
-            <MaterialIcons name="quiz" size={24} color="#0891b2" />
-            <Text style={s.cardTitle}>한국어 어휘 O/X</Text>
-          </View>
-          <KoreanOXQuiz items={oxItems} uid={uid} />
-        </Animated.View>
-      )}
 
     </ScrollView>
     </SafeAreaView>
@@ -431,28 +341,24 @@ const s = StyleSheet.create({
   millieArrow: { position: 'absolute', bottom: 16, right: 18 },
   millieBtnTitle: { color: '#fff', fontSize: 20, fontWeight: '800', letterSpacing: 0.5 },
   millieBtnSub: { color: 'rgba(255,255,255,0.72)', fontSize: 13, fontWeight: '500' },
-  // 사자성어
-  sajaMain: { flexDirection: 'row', alignItems: 'baseline', gap: 10, marginBottom: 8 },
-  sajaIdiom: { fontSize: 28, fontWeight: '800', color: '#7c3aed', letterSpacing: 1 },
-  sajaHanja: { fontSize: 14, color: '#a78bfa' },
-  sajaMeaning: { fontSize: 14, color: '#374151', lineHeight: 22, marginBottom: 10 },
-  sajaExpandBtn: { flexDirection: 'row', alignItems: 'center', gap: 4, alignSelf: 'flex-start' },
-  sajaExpandText: { fontSize: 13, color: '#7c3aed', fontWeight: '600' },
-  exampleBox: { backgroundColor: '#f5f3ff', borderRadius: 8, padding: 12, marginTop: 10 },
-  exampleText: { fontSize: 13, color: '#5b21b6', lineHeight: 20, fontStyle: 'italic' },
-  // 상식 퀴즈
-  categoryBadge: { backgroundColor: '#fef3c7', borderRadius: 12, paddingHorizontal: 8, paddingVertical: 2, borderWidth: 1, borderColor: '#fde68a' },
-  categoryText: { fontSize: 11, color: '#92400e', fontWeight: '600' },
-  quizQuestion: { fontSize: 16, fontWeight: '600', color: '#1f2937', lineHeight: 24, marginBottom: 14 },
-  optionList: { gap: 8 },
-  optionBtn: {
-    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
-    borderWidth: 1, borderRadius: 10, paddingVertical: 11, paddingHorizontal: 14,
+  // 어휘 일기
+  diaryGuide: { fontSize: 13, color: '#6b7280', marginBottom: 12, lineHeight: 19 },
+  vocabList: { gap: 8, marginBottom: 14 },
+  vocabChip: {
+    paddingVertical: 10, paddingHorizontal: 12,
+    borderRadius: 10, borderWidth: 1, borderColor: '#dbdbdb', backgroundColor: '#fafafa',
   },
-  optionLabel: { fontSize: 14, flex: 1, lineHeight: 20 },
-  explanationBox: {
-    flexDirection: 'row', gap: 6, alignItems: 'flex-start',
-    backgroundColor: '#eff6ff', borderRadius: 8, padding: 12, marginTop: 12,
+  vocabChipUsed: { borderColor: '#86efac', backgroundColor: '#f0fdf4' },
+  vocabChipTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 3 },
+  vocabWord: { fontSize: 15, fontWeight: '700', color: '#1f2937', flex: 1 },
+  vocabWordUsed: { color: '#059669' },
+  vocabMeaning: { fontSize: 12, color: '#6b7280', lineHeight: 17 },
+  diaryInput: {
+    borderWidth: 1, borderColor: '#dbdbdb', borderRadius: 10,
+    padding: 12, fontSize: 14, color: '#262626', lineHeight: 22,
+    minHeight: 130, backgroundColor: '#fafafa',
   },
-  explanationText: { flex: 1, fontSize: 13, color: '#1e40af', lineHeight: 20 },
+  diaryCharCount: { fontSize: 12, color: '#adb5bd', textAlign: 'right', marginTop: 4, marginBottom: 10 },
+  diaryReadBox: { backgroundColor: '#f0fdf4', borderRadius: 10, padding: 14, borderWidth: 1, borderColor: '#86efac' },
+  diaryReadText: { fontSize: 14, color: '#1f2937', lineHeight: 22 },
 });

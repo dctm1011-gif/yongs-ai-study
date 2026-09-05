@@ -16,12 +16,17 @@ function getDisplayDate(): string {
   return `${m}/${d}`;
 }
 
-async function fetchWidgetData(): Promise<WidgetData> {
+const TRACKED_KEYS = [
+  'english', 'english_review', 'english_news_reading', 'english_speaking',
+  'reading', 'korean_diary', 'investment', 'toefl_reading',
+];
+
+export async function fetchWidgetData(): Promise<WidgetData> {
   const date = getKSTDateString();
   const fallback: WidgetData = {
     date: getDisplayDate(),
     completed: 0,
-    total: 18,
+    total: TRACKED_KEYS.length,
     quizScore: null,
     quizDetail: '',
     poolActive: 0,
@@ -31,41 +36,37 @@ async function fetchWidgetData(): Promise<WidgetData> {
   };
 
   try {
-    const res = await fetch(`${DB_URL}/dailySummary/${date}.json`);
+    const res = await fetch(`${DB_URL}/english/summary/${date}.json`);
     if (!res.ok) return fallback;
     const data = await res.json();
     if (!data) return fallback;
 
-    const completionKeys: string[] = [
-      'sajaseongeo', 'english', 'english_review', 'reading',
-      'english_news_reading', 'english_speaking', 'investment',
-      'investment_reflection', 'toefl_reading', 'news_summary',
-      'shadowing', 'writing', 'grammar', 'journal', 'cultural_reading',
-      'vocabulary_expansion', 'pronunciation', 'listening_comprehension',
-    ];
+    const completion = data.completion ?? {};
+    const english = data.english ?? {};
 
     const activities: Record<string, boolean> = {};
     let completed = 0;
-    for (const key of completionKeys) {
-      const done = !!(data[key] === true || data[key] === 1 || data[key]?.completed);
+    for (const key of TRACKED_KEYS) {
+      const val = completion[key];
+      const done = !!(val === true || val === 1 || val?.completed);
       activities[key] = done;
       if (done) completed++;
     }
 
-    const quizCorrect = data.quiz_correct ?? null;
-    const quizTotal = data.quiz_total ?? null;
+    const quizCorrect = english.correct ?? null;
+    const quizTotal = english.total ?? null;
     const quizScore = quizCorrect !== null && quizTotal ? Math.round((quizCorrect / quizTotal) * 100) : null;
     const quizDetail = quizScore !== null ? `${quizCorrect}/${quizTotal}` : '';
 
     return {
       date: getDisplayDate(),
       completed,
-      total: completionKeys.length,
+      total: TRACKED_KEYS.length,
       quizScore,
       quizDetail,
-      poolActive: data.pool_active ?? 0,
-      poolGraduated: data.pool_graduated ?? 0,
-      streak: data.streak ?? 0,
+      poolActive: english.pool?.active ?? 0,
+      poolGraduated: english.pool?.graduated ?? 0,
+      streak: 0,
       activities,
     };
   } catch {
@@ -74,13 +75,19 @@ async function fetchWidgetData(): Promise<WidgetData> {
 }
 
 export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
-  const { widgetAction, renderWidget } = props;
+  const { widgetAction, widgetInfo, renderWidget } = props;
 
   if (widgetAction === 'WIDGET_DELETED') return;
+
+  console.warn('[Widget] action=' + widgetAction + ' w=' + widgetInfo.width + ' h=' + widgetInfo.height);
 
   const data = await fetchWidgetData();
 
   renderWidget(
-    React.createElement(YongStudyWidget, { data })
+    React.createElement(YongStudyWidget, {
+      data,
+      width: widgetInfo.width,
+      height: widgetInfo.height,
+    })
   );
 }

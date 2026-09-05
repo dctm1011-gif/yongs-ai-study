@@ -13,7 +13,7 @@ const COMPLETION_KEYS = [
   'english_scramble', 'english_sentence', 'english_word_match',
   'english_news_reading', 'english_news_listening',
   // 한국어
-  'reading', 'sajaseongeo', 'sangshik', 'korean_ox',
+  'reading', 'korean_diary',
   // 투자
   'investment',
   // TOEFL

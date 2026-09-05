@@ -3350,5 +3350,65 @@
     "explanation": "A thing that motivates or encourages someone to do something; a reward or benefit offered to stimulate desired behavior or action.",
     "tip": "동의어: motivation, stimulus, reward / 반의어: disincentive / 출제영역: 경제학, 경영학",
     "emoji": "🎯"
+  },
+  {
+    "id": "demographic",
+    "word": "demographic",
+    "pos": "adjective/noun",
+    "date": "2026-09-06",
+    "meaning": "인구통계학적, 인구통계",
+    "example_ko": "고령화 사회로의 인구통계학적 변화는 도전과 기회를 동시에 제시한다.",
+    "example_en": "The demographic shift toward an aging society presents both challenges and opportunities.",
+    "explanation": "A demographic refers to statistical data about a population, such as age, gender, income, and education level. Used to describe characteristics of specific population groups.",
+    "tip": "동의어: population statistics | 반의어: individual | TOEFL/IELTS/수능 영어",
+    "emoji": "👥"
+  },
+  {
+    "id": "equilibrium",
+    "word": "equilibrium",
+    "pos": "noun",
+    "date": "2026-09-06",
+    "meaning": "균형, 평형, 균형점",
+    "example_ko": "시장이 공급과 수요 사이의 균형에 도달했다.",
+    "example_en": "The market reached an equilibrium between supply and demand.",
+    "explanation": "A state of balance where opposing forces or factors are equal and stable. Used in economics, chemistry, psychology, and general contexts to describe stability.",
+    "tip": "동의어: balance, stability | 반의어: imbalance, disequilibrium | 경제학/과학 용어",
+    "emoji": "⚖️"
+  },
+  {
+    "id": "efficacy",
+    "word": "efficacy",
+    "pos": "noun",
+    "date": "2026-09-06",
+    "meaning": "효능, 효과, 유효성",
+    "example_ko": "새로운 백신의 효능이 임상시험에서 증명되었다.",
+    "example_en": "The efficacy of the new vaccine was proven in clinical trials.",
+    "explanation": "The ability to produce a desired or intended result; effectiveness. Often used in medical, pharmaceutical, or business contexts to measure how well something works.",
+    "tip": "동의어: effectiveness, potency | 반의어: ineffectiveness | 의학/약학 분야",
+    "emoji": "💊"
+  },
+  {
+    "id": "cognitive",
+    "word": "cognitive",
+    "pos": "adjective",
+    "date": "2026-09-06",
+    "meaning": "인지적, 인식의, 지적",
+    "example_ko": "아이들은 놀이와 교육을 통해 인지능력을 발달시킨다.",
+    "example_en": "Children develop cognitive skills through play and education.",
+    "explanation": "Relating to the mental processes of perception, memory, reasoning, and understanding. Commonly used in psychology, education, and neuroscience.",
+    "tip": "동의어: mental, intellectual | 반의어: physical | 심리학/교육학 분야",
+    "emoji": "🧠"
+  },
+  {
+    "id": "mitigation",
+    "word": "mitigation",
+    "pos": "noun",
+    "date": "2026-09-06",
+    "meaning": "완화, 경감, 완화책",
+    "example_ko": "기후변화 완화 전략은 미래 세대를 위해 필수적이다.",
+    "example_en": "Climate change mitigation strategies are essential for future generations.",
+    "explanation": "The action or process of reducing the severity, seriousness, or impact of something negative. Commonly used in contexts of climate change, disaster management, and legal matters.",
+    "tip": "동의어: reduction, alleviation | 반의어: aggravation, exacerbation | 환경/정책 분야",
+    "emoji": "🌍"
   }
 ]
