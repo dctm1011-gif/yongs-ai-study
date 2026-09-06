@@ -31,5 +31,38 @@
     "tip": "follow-up (명사)으로도 쓸 수 있어요: 'a follow-up email' (후속 이메일)",
     "emoji": "✉️",
     "date": "2026-09-06"
+  },
+  {
+    "id": "put-off",
+    "phrase": "put off",
+    "meaning_ko": "미루다, 연기하다",
+    "explanation": "하기 싫은 일을 자꾸만 나중으로 미루는 거 있죠? 바로 그걸 표현하는 거예요! 일상에서 정말 많이 써요 😅",
+    "example_en": "Don't put off your homework until the last minute!",
+    "example_ko": "숙제를 마지막 순간까지 미루지 마!",
+    "tip": "유사 표현: delay, postpone. 'put on'(입다)과 반대 의미예요!",
+    "emoji": "⏰",
+    "date": "2026-09-07"
+  },
+  {
+    "id": "come-up-with",
+    "phrase": "come up with",
+    "meaning_ko": "~을 생각해내다, 제시하다",
+    "explanation": "새로운 아이디어가 떠올랐을 때 쓰는 표현이에요! 회의나 프로젝트에서 자주 나와요 💡",
+    "example_en": "Our team came up with an innovative solution to the problem.",
+    "example_ko": "우리 팀이 그 문제에 대해 혁신적인 해결책을 제시했어요.",
+    "tip": "유사 표현: think of, suggest, propose. 'come up'(다가오다)과는 다른 의미!",
+    "emoji": "💡",
+    "date": "2026-09-07"
+  },
+  {
+    "id": "deal-with",
+    "phrase": "deal with",
+    "meaning_ko": "~을 다루다, 처리하다",
+    "explanation": "어려운 상황이나 문제를 대처하고 처리하는 거예요. 비즈니스와 일상 모두에서 쓰는 만능 표현이랍니다 💪",
+    "example_en": "The manager has to deal with customer complaints every day.",
+    "example_ko": "그 매니저는 매일 고객 불만을 처리해야 해요.",
+    "tip": "유사 표현: handle, manage, tackle. 'deal'은 거래, 처리 등 여러 뜻이 있어요!",
+    "emoji": "🤝",
+    "date": "2026-09-07"
   }
 ]

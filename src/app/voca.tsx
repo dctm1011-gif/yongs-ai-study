@@ -78,6 +78,17 @@ interface ReviewStory {
   wordNuances: { word: string; meaning: string; nuance: string }[];
 }
 
+interface Idiom {
+  id: string;
+  phrase: string;
+  meaning_ko: string;
+  explanation: string;
+  example_en: string;
+  example_ko: string;
+  tip?: string;
+  emoji?: string;
+}
+
 const ITEMS_PER_PAGE = 15; // Pagination size for FlatList
 
 async function fetchReadStatusFromFirebase(uid: string, today: string): Promise<Record<string, boolean>> {
@@ -206,6 +217,10 @@ export default function VocaScreen() {
   const [reviewStory, setReviewStory] = useState<ReviewStory | null>(null);
   const [reviewLoading, setReviewLoading] = useState(false);
   const [reviewWordIds, setReviewWordIds] = useState<string[]>([]);
+  const [idioms, setIdioms] = useState<Idiom[]>([]);
+  const [idiomReadSet, setIdiomReadSet] = useState<Set<string>>(new Set());
+  const [idiomSkipSet, setIdiomSkipSet] = useState<Set<string>>(new Set());
+  const [idiomRatings, setIdiomRatings] = useState<Record<string, number>>({});
   const [stats, setStats] = useState({ totalWords: 0, readWords: 0, quizzesCorrect: 0, quizzesTotal: 0 });
   const [completionToday, setCompletionToday] = useState<Record<string, boolean>>({});
   const [loading, setLoading] = useState(true);
@@ -311,6 +326,38 @@ export default function VocaScreen() {
 
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    const db = getDatabase(getFirebaseApp());
+    const today = getKSTDateString();
+    get(ref(db, `english/idioms/${today}`))
+      .then(snap => {
+        if (!snap.exists()) return;
+        const val = snap.val();
+        const arr = Array.isArray(val.idioms) ? val.idioms : Object.values(val.idioms ?? {});
+        setIdioms(arr as Idiom[]);
+      })
+      .catch(() => {});
+    Promise.all([
+      get(userRef(uid, `english/idiomReadStatus/${today}`)),
+      get(userRef(uid, 'english/idiomSkipList')),
+      get(ref(db, 'english/userRatings')),
+    ]).then(([readSnap, skipSnap, ratingSnap]) => {
+      if (readSnap.exists()) {
+        const d = readSnap.val();
+        setIdiomReadSet(new Set(Object.keys(d).filter(k => d[k])));
+      }
+      if (skipSnap.exists()) setIdiomSkipSet(new Set(Object.keys(skipSnap.val())));
+      if (ratingSnap.exists()) {
+        const rdata: Record<string, number> = {};
+        Object.entries(ratingSnap.val()).forEach(([k, v]: [string, any]) => {
+          if (k.startsWith('idiom_') && typeof v?.rating === 'number')
+            rdata[k.slice(6)] = v.rating;
+        });
+        setIdiomRatings(rdata);
+      }
+    }).catch(() => {});
+  }, [uid]);
 
   useEffect(() => {
     loadData();
@@ -654,6 +701,51 @@ export default function VocaScreen() {
       }
     }
   };
+
+  const toggleIdiomRead = (idiomId: string) => {
+    const idiom = idioms.find(p => p.id === idiomId);
+    if (!idiom) return;
+    const newRead = !idiomReadSet.has(idiomId);
+    setIdiomReadSet(prev => {
+      const next = new Set(prev);
+      if (newRead) next.add(idiomId); else next.delete(idiomId);
+      return next;
+    });
+    const today = getKSTDateString();
+    dbSet(userRef(uid, `english/idiomReadStatus/${today}/${idiomId}`), newRead).catch(() => {});
+    if (newRead && !idiomSkipSet.has(idiomId)) {
+      const poolRef = userRef(uid, `english/reviewPool/idiom_${idiomId}`);
+      get(poolRef).then(snap => {
+        if (!snap.exists()) {
+          dbSet(poolRef, {
+            word: idiom.phrase,
+            meaning: idiom.meaning_ko,
+            pos: '구동사',
+            emoji: idiom.emoji ?? '🔗',
+            count: 0,
+            lastReviewedDate: null,
+          }).catch(() => {});
+        }
+      }).catch(() => {});
+    }
+  };
+
+  const skipIdiom = (idiomId: string) => {
+    const idiom = idioms.find(p => p.id === idiomId);
+    if (!idiom || idiomSkipSet.has(idiomId)) return;
+    setIdiomReadSet(prev => new Set([...prev, idiomId]));
+    setIdiomSkipSet(prev => new Set([...prev, idiomId]));
+    const today = getKSTDateString();
+    dbSet(userRef(uid, `english/idiomReadStatus/${today}/${idiomId}`), true).catch(() => {});
+    dbSet(userRef(uid, `english/idiomSkipList/${idiomId}`), { phrase: idiom.phrase, skippedAt: new Date().toISOString() }).catch(() => {});
+    remove(userRef(uid, `english/reviewPool/idiom_${idiomId}`)).catch(() => {});
+  };
+
+  const rateIdiom = useCallback((idiomId: string, rating: number) => {
+    setIdiomRatings(prev => ({ ...prev, [idiomId]: rating }));
+    const db = getDatabase(getFirebaseApp());
+    dbSet(ref(db, `english/userRatings/idiom_${idiomId}`), { rating, ratedAt: new Date().toISOString() }).catch(() => {});
+  }, []);
 
   const rateWord = useCallback((wordId: string, rating: number) => {
     setWordRatings(prev => ({ ...prev, [wordId]: rating }));
@@ -1057,6 +1149,13 @@ export default function VocaScreen() {
           </View>
           <WordsView
             words={hideReadWords ? words.filter(w => !w.isRead) : words}
+            idioms={hideReadWords ? idioms.filter(p => !idiomReadSet.has(p.id)) : idioms}
+            idiomReadSet={idiomReadSet}
+            idiomSkipSet={idiomSkipSet}
+            idiomRatings={idiomRatings}
+            onIdiomToggleRead={toggleIdiomRead}
+            onIdiomSkip={skipIdiom}
+            onIdiomRate={rateIdiom}
             onToggleRead={toggleWordRead}
             onSkip={skipWord}
             skipSet={skipSet}
@@ -1171,8 +1270,12 @@ let _wcPlayId = 0;
 let _wcSound: Audio.Sound | null = null;
 
 // Memoized component to prevent unnecessary re-renders
-const WordsView = React.memo(({ words, onToggleRead, onSkip, skipSet, onRefresh, refreshing, playAllWordId, allWordsRead, onComplete, wordRatings, onRate }: {
+const WordsView = React.memo(({ words, idioms, idiomReadSet, idiomSkipSet, idiomRatings, onToggleRead, onSkip, skipSet, onRefresh, refreshing, playAllWordId, allWordsRead, onComplete, wordRatings, onRate, onIdiomToggleRead, onIdiomSkip, onIdiomRate }: {
   words: Word[],
+  idioms: Idiom[],
+  idiomReadSet: Set<string>,
+  idiomSkipSet: Set<string>,
+  idiomRatings: Record<string, number>,
   onToggleRead: (id: string) => void,
   onSkip: (id: string) => void,
   skipSet: Set<string>,
@@ -1183,7 +1286,32 @@ const WordsView = React.memo(({ words, onToggleRead, onSkip, skipSet, onRefresh,
   onComplete: () => void,
   wordRatings: Record<string, number>,
   onRate: (id: string, rating: number) => void,
+  onIdiomToggleRead: (id: string) => void,
+  onIdiomSkip: (id: string) => void,
+  onIdiomRate: (id: string, rating: number) => void,
 }) => {
+  const header = idioms.length > 0 ? (
+    <View style={styles.idiomSection}>
+      <View style={styles.idiomSectionHeader}>
+        <Text style={styles.idiomSectionTitle}>🔗 오늘의 구동사·숙어</Text>
+        <Text style={styles.idiomSectionCount}>{idioms.length}개</Text>
+      </View>
+      {idioms.map(idiom => (
+        <IdiomCard
+          key={idiom.id}
+          idiom={idiom}
+          isRead={idiomReadSet.has(idiom.id)}
+          isSkipped={idiomSkipSet.has(idiom.id)}
+          currentRating={idiomRatings[idiom.id]}
+          onToggleRead={onIdiomToggleRead}
+          onSkip={onIdiomSkip}
+          onRate={onIdiomRate}
+        />
+      ))}
+      <View style={styles.idiomDivider} />
+    </View>
+  ) : null;
+
   const footer = (
     <TouchableOpacity
       style={[styles.completeButton, !allWordsRead && styles.completeButtonDim]}
@@ -1206,6 +1334,7 @@ const WordsView = React.memo(({ words, onToggleRead, onSkip, skipSet, onRefresh,
       removeClippedSubviews={true}
       scrollEventThrottle={16}
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#0095f6']} />}
+      ListHeaderComponent={header}
       renderItem={({ item }) => (
         <WordCard
           word={item}
@@ -1221,6 +1350,86 @@ const WordsView = React.memo(({ words, onToggleRead, onSkip, skipSet, onRefresh,
     />
   );
 });
+
+// Idiom card — same UX as WordCard (read, skip, rating, reviewPool)
+function IdiomCard({ idiom, isRead, isSkipped, currentRating, onToggleRead, onSkip, onRate }: {
+  idiom: Idiom;
+  isRead: boolean;
+  isSkipped: boolean;
+  currentRating?: number;
+  onToggleRead: (id: string) => void;
+  onSkip: (id: string) => void;
+  onRate: (id: string, rating: number) => void;
+}) {
+  const ACCENT = '#7c3aed';
+  return (
+    <TouchableOpacity
+      style={[styles.card, isRead && styles.cardRead, { borderLeftColor: ACCENT }]}
+      onPress={() => onToggleRead(idiom.id)}
+      activeOpacity={0.85}
+    >
+      <View style={styles.cardHeader}>
+        <View style={styles.wordInfo}>
+          <Text style={styles.emoji}>{idiom.emoji ?? '🔗'}</Text>
+          <View style={styles.wordDetails}>
+            <Text style={[styles.word, { color: ACCENT }]}>{idiom.phrase}</Text>
+            <Text style={styles.pos}>구동사</Text>
+          </View>
+        </View>
+        <View style={styles.cardHeaderRight}>
+          {isSkipped
+            ? <Text style={[styles.readBadge, { color: '#aaa' }]}>skip</Text>
+            : <Text style={[styles.readBadge, isRead && { color: ACCENT }]}>{isRead ? '✓' : '○'}</Text>
+          }
+        </View>
+      </View>
+
+      <View style={styles.ratingRow}>
+        <Text style={styles.ratingLabel}>난이도</Text>
+        {[1,2,3,4,5].map(n => (
+          <TouchableOpacity
+            key={n}
+            style={[styles.ratingBtn, currentRating === n && { backgroundColor: ACCENT, borderColor: ACCENT }]}
+            onPress={(e) => { e.stopPropagation(); onRate(idiom.id, n); }}
+            hitSlop={{ top: 6, bottom: 6, left: 4, right: 4 }}
+          >
+            <Text style={[styles.ratingBtnText, currentRating === n && styles.ratingBtnTextActive]}>{n}</Text>
+          </TouchableOpacity>
+        ))}
+        {!currentRating && <Text style={styles.ratingHint}>← 난이도를 선택해주세요</Text>}
+      </View>
+
+      <Text style={[styles.meaning, { color: ACCENT }]}>{idiom.meaning_ko}</Text>
+      <Text style={styles.explanation}>{idiom.explanation}</Text>
+      <Text style={styles.example}>예: {idiom.example_en}</Text>
+      <Text style={[styles.example, { color: '#8e8e8e' }]}>{idiom.example_ko}</Text>
+
+      {idiom.tip ? (
+        <View style={styles.idiomTipBox}>
+          <Text style={styles.idiomTipText}>💡 {idiom.tip}</Text>
+        </View>
+      ) : null}
+
+      <View style={{ flexDirection: 'row', gap: 8, marginTop: 4 }}>
+        <TouchableOpacity
+          style={[styles.googleSearchBtn, { flex: 1 }]}
+          onPress={() => Linking.openURL(`https://www.google.com/search?q=${encodeURIComponent(idiom.phrase + ' phrasal verb')}&hl=ko`)}
+        >
+          <Text style={styles.googleSearchBtnText}>🔍 구글 검색</Text>
+        </TouchableOpacity>
+        {!isSkipped && !isRead && (
+          <TouchableOpacity
+            style={styles.skipBtn}
+            onPress={(e) => { e.stopPropagation(); onSkip(idiom.id); }}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.skipBtnText}>Skip</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+    </TouchableOpacity>
+  );
+}
 
 // Memoized word card component with expand + OpenAI TTS
 const WordCard = React.memo(({ word, onToggleRead, onSkip, isSkipped, isPlayingAll, currentRating, onRate }: {
@@ -1382,9 +1591,10 @@ const WordCard = React.memo(({ word, onToggleRead, onSkip, isSkipped, isPlayingA
     if (_wcPlayId === prevId) { isPlayingRef.current = false; setIsPlaying(false); }
   }, [word.word, word.meaning, word.explanation, word.example_en, loadSentenceData]);
 
+  const WORD_ACCENT = '#0095f6';
   return (
     <TouchableOpacity
-      style={[styles.card, word.isRead && styles.cardRead]}
+      style={[styles.card, word.isRead && styles.cardRead, { borderLeftColor: WORD_ACCENT }]}
       onPress={() => onToggleRead(word.id)}
       activeOpacity={0.85}
     >
@@ -1392,7 +1602,7 @@ const WordCard = React.memo(({ word, onToggleRead, onSkip, isSkipped, isPlayingA
         <View style={styles.wordInfo}>
           <Text style={styles.emoji}>{word.emoji}</Text>
           <View style={styles.wordDetails}>
-            <Text style={styles.word}>{word.word}</Text>
+            <Text style={[styles.word, { color: WORD_ACCENT }]}>{word.word}</Text>
             <Text style={styles.pos}>{word.pos}</Text>
           </View>
           <TouchableOpacity
@@ -1425,7 +1635,7 @@ const WordCard = React.memo(({ word, onToggleRead, onSkip, isSkipped, isPlayingA
         ))}
         {!currentRating && <Text style={styles.ratingHint}>← 이 단어 난이도를 선택해주세요</Text>}
       </View>
-      <Text style={styles.meaning}>{word.meaning}</Text>
+      <Text style={[styles.meaning, { color: WORD_ACCENT }]}>{word.meaning}</Text>
       <Text style={styles.explanation}>{word.explanation}</Text>
       <Text style={styles.example}>예: {word.example_en}</Text>
       <View style={styles.reviewDetails}>
@@ -2655,4 +2865,48 @@ const styles = StyleSheet.create({
   poolBarGraduated: {
     backgroundColor: '#16a34a',
   },
+
+  // Idiom section
+  idiomSection: { paddingBottom: 4 },
+  idiomSectionHeader: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+    paddingHorizontal: 16, paddingVertical: 10,
+  },
+  idiomSectionTitle: { fontSize: 13, fontWeight: '700', color: '#7c3aed' },
+  idiomSectionCount: {
+    fontSize: 11, fontWeight: '700', color: '#7c3aed',
+    backgroundColor: '#ede9fe', paddingHorizontal: 8, paddingVertical: 2, borderRadius: 10,
+  },
+  idiomDivider: { height: 1, backgroundColor: '#dbdbdb', marginHorizontal: 16, marginTop: 8, marginBottom: 4 },
+
+  // Idiom card
+  idiomCard: {
+    backgroundColor: '#faf5ff',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#ddd6fe',
+    borderLeftWidth: 4,
+    borderLeftColor: '#7c3aed',
+    padding: 14,
+    marginHorizontal: 16,
+    marginBottom: 10,
+  },
+  idiomCardHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 },
+  idiomPhrase: { fontSize: 18, fontWeight: '800', color: '#4c1d95' },
+  idiomBadge: { backgroundColor: '#7c3aed', paddingHorizontal: 8, paddingVertical: 2, borderRadius: 5 },
+  idiomBadgeText: { fontSize: 10, fontWeight: '800', color: '#fff', letterSpacing: 0.3 },
+  idiomMeaning: { fontSize: 14, fontWeight: '700', color: '#6d28d9', marginBottom: 6 },
+  idiomExplanation: { fontSize: 13, color: '#374151', lineHeight: 20, marginBottom: 8 },
+  idiomExampleBox: {
+    backgroundColor: '#ede9fe', borderRadius: 8, padding: 10, marginBottom: 8,
+  },
+  idiomExampleEn: { fontSize: 13, fontStyle: 'italic', color: '#4c1d95', marginBottom: 3 },
+  idiomExampleKo: { fontSize: 12, color: '#6b7280' },
+  idiomTipToggle: { marginTop: 2 },
+  idiomTipToggleText: { fontSize: 11, fontWeight: '700', color: '#7c3aed' },
+  idiomTipBox: {
+    marginTop: 6, padding: 10, backgroundColor: '#fff',
+    borderRadius: 8, borderWidth: 1, borderColor: '#ddd6fe',
+  },
+  idiomTipText: { fontSize: 12, color: '#374151', lineHeight: 18 },
 });

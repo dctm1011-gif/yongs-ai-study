@@ -3410,5 +3410,65 @@
     "explanation": "The action or process of reducing the severity, seriousness, or impact of something negative. Commonly used in contexts of climate change, disaster management, and legal matters.",
     "tip": "동의어: reduction, alleviation | 반의어: aggravation, exacerbation | 환경/정책 분야",
     "emoji": "🌍"
+  },
+  {
+    "id": "optimization",
+    "word": "optimization",
+    "pos": "noun",
+    "date": "2026-09-07",
+    "meaning": "최적화, 최적 조건의 달성",
+    "example_ko": "생산성을 높이기 위해 우리의 업무 흐름을 최적화할 필요가 있다.",
+    "example_en": "We need optimization of our workflow to increase productivity.",
+    "explanation": "어떤 것을 최대한 효율적이고 최상의 상태로 만드는 과정. 시간, 비용, 성능 등을 고려하여 가장 좋은 결과를 얻기 위한 조정",
+    "tip": "동의어: maximization, improvement | 반의어: deterioration | 출제영역: 경영, IT, 과학",
+    "emoji": "⚙️"
+  },
+  {
+    "id": "confluence",
+    "word": "confluence",
+    "pos": "noun",
+    "date": "2026-09-07",
+    "meaning": "합류, 수렴, 만남",
+    "example_ko": "서로 다른 문화의 합류가 활기찬 공동체를 만들었다.",
+    "example_en": "The confluence of different cultures created a vibrant community.",
+    "explanation": "두 개 이상의 강이나 사상, 영향력이 한 지점에서 만나 하나가 되는 현상. 물리적 만남뿐만 아니라 추상적 개념의 결합도 의미",
+    "tip": "동의어: convergence, junction | 반의어: divergence | 출제영역: 지리, 철학, 문화",
+    "emoji": "🌊"
+  },
+  {
+    "id": "permeability",
+    "word": "permeability",
+    "pos": "noun",
+    "date": "2026-09-07",
+    "meaning": "투과성, 침투성, 다공성",
+    "example_ko": "토양의 투과성은 물이 얼마나 빨리 빠져나가는지를 결정한다.",
+    "example_en": "The permeability of the soil determines how quickly water drains.",
+    "explanation": "물질이나 조직을 통해 액체나 가스가 통과할 수 있는 성질. 물리학, 지질학, 의학 등 여러 분야에서 중요한 개념",
+    "tip": "동의어: porosity, penetrability | 반의어: impermeability | 출제영역: 과학, 지질학, 공학",
+    "emoji": "💧"
+  },
+  {
+    "id": "demography",
+    "word": "demography",
+    "pos": "noun",
+    "date": "2026-09-07",
+    "meaning": "인구통계학, 인구동태학",
+    "example_ko": "인구통계학에 따르면 고령화는 선진국의 주요 과제이다.",
+    "example_en": "Demography shows that the aging population is a major challenge for developed nations.",
+    "explanation": "인구의 크기, 구조, 분포, 변화를 통계적으로 연구하는 학문. 연령, 성별, 직업, 종교 등 인구의 특성을 분석",
+    "tip": "동의어: population studies | 관련어: demographic | 출제영역: 사회학, 경제학, 정책",
+    "emoji": "📊"
+  },
+  {
+    "id": "commodification",
+    "word": "commodification",
+    "pos": "noun",
+    "date": "2026-09-07",
+    "meaning": "상품화, 상품으로의 전환",
+    "example_ko": "예술의 상품화는 진정성과 문화적 가치에 대한 우려를 낳았다.",
+    "example_en": "The commodification of art has raised concerns about authenticity and cultural value.",
+    "explanation": "본래 상품이 아니었던 것(예: 문화, 감정, 관계)을 상품으로 만들어 거래 대상으로 전환하는 과정. 자본주의 비판에서 중요한 개념",
+    "tip": "동의어: marketization | 관련어: commodify(동사) | 출제영역: 사회학, 철학, 경제학",
+    "emoji": "💰"
   }
 ]
