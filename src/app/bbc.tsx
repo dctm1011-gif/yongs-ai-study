@@ -31,13 +31,12 @@ function formatDuration(sec: number): string {
 }
 
 // ─── Types ────────────────────────────────────────────────────────────────
-interface PodcastKeyExpr { en: string; ko: string; analysis: string; }
-interface PodcastAnalysis { summary_ko: string; key_expressions: PodcastKeyExpr[]; }
+interface SpotlightSentence { speaker: string; en: string; ko: string; analysis: string; }
 interface PodcastEpisode {
-  source: string; title: string; script: string;
+  source: string; title: string;
   audio_url: string; duration_sec: number;
   pub_date: string; episode_url: string;
-  analysis?: PodcastAnalysis;
+  sentences?: SpotlightSentence[];
 }
 interface ArticleSentence { en: string; ko: string; analysis?: string; }
 interface KoreaNewsArticle {
@@ -65,12 +64,10 @@ function EpisodeCard({ ep, color, label }: { ep: PodcastEpisode; color: string; 
   const [loading, setLoading] = useState(false);
   const [positionSec, setPositionSec] = useState(0);
   const [durationSec, setDurationSec] = useState(ep.duration_sec || 0);
-  const [scriptOpen, setScriptOpen] = useState(true);
-  const [scriptFull, setScriptFull] = useState(false);
-  const [analysisOpen, setAnalysisOpen] = useState(false);
-  const [expandedExpr, setExpandedExpr] = useState<Set<number>>(new Set());
+  const [expandedSentence, setExpandedSentence] = useState<Set<number>>(new Set());
+  const [showAll, setShowAll] = useState(false);
 
-  const toggleExpr = (i: number) => setExpandedExpr(prev => {
+  const toggleSentence = (i: number) => setExpandedSentence(prev => {
     const next = new Set(prev);
     if (next.has(i)) next.delete(i); else next.add(i);
     return next;
@@ -113,10 +110,6 @@ function EpisodeCard({ ep, color, label }: { ep: PodcastEpisode; color: string; 
   };
 
   const pct = durationSec > 0 ? (positionSec / durationSec) * 100 : 0;
-  const cleanScript = ep.script ?? '';
-  const PREVIEW = 300;
-  const hasMore = cleanScript.length > PREVIEW;
-  const displayScript = scriptFull ? cleanScript : cleanScript.slice(0, PREVIEW);
 
   return (
     <View style={[styles.episodeCard, { borderLeftColor: color }]}>
@@ -158,77 +151,49 @@ function EpisodeCard({ ep, color, label }: { ep: PodcastEpisode; color: string; 
         )}
       </View>
 
-      {cleanScript ? (
-        <>
-          <TouchableOpacity style={styles.scriptToggle} onPress={() => setScriptOpen(v => !v)}>
-            <Text style={[styles.scriptToggleText, { color }]}>SCRIPT</Text>
-            <MaterialIcons name={scriptOpen ? 'expand-less' : 'expand-more'} size={18} color={color} />
-          </TouchableOpacity>
-          {scriptOpen && (
-            <View style={styles.scriptBox}>
-              {(scriptFull ? cleanScript : cleanScript.slice(0, PREVIEW) + (!scriptFull && hasMore ? '…' : ''))
-                .split('\n')
-                .map((line, i) => {
-                  const isVoice = line.startsWith('[') && line.endsWith(']');
-                  return (
-                    <Text
-                      key={i}
-                      style={isVoice ? [styles.scriptVoiceLabel, { color }] : styles.scriptLine}
-                    >
-                      {isVoice ? line.slice(1, -1) : line}
-                    </Text>
-                  );
-                })}
-              {hasMore && (
-                <TouchableOpacity onPress={() => setScriptFull(v => !v)} style={{ marginTop: 6 }}>
-                  <Text style={[styles.scriptMoreText, { color }]}>
-                    {scriptFull ? '접기 ▲' : `전체 보기 (${cleanScript.length.toLocaleString()}자) ▼`}
-                  </Text>
-                </TouchableOpacity>
-              )}
-            </View>
-          )}
-        </>
-      ) : null}
-
-      {ep.analysis?.summary_ko ? (
-        <>
-          <TouchableOpacity style={styles.scriptToggle} onPress={() => setAnalysisOpen(v => !v)}>
-            <Text style={[styles.scriptToggleText, { color }]}>요약 & 표현 분석</Text>
-            <MaterialIcons name={analysisOpen ? 'expand-less' : 'expand-more'} size={18} color={color} />
-          </TouchableOpacity>
-          {analysisOpen && (
-            <View style={styles.podAnalysisBox}>
-              <Text style={styles.podSummaryText}>{ep.analysis.summary_ko}</Text>
-              {ep.analysis.key_expressions?.length > 0 && (
-                <View style={styles.podExpressionsBlock}>
-                  <Text style={[styles.podExpressionsTitle, { color }]}>핵심 표현</Text>
-                  {ep.analysis.key_expressions.map((expr, i) => (
-                    <View key={i} style={styles.podExprRow}>
-                      <Text style={styles.podExprEn}>{expr.en}</Text>
-                      <Text style={styles.podExprKo}>{expr.ko}</Text>
-                      {expr.analysis ? (
-                        <>
-                          <TouchableOpacity onPress={() => toggleExpr(i)}>
-                            <Text style={[styles.analysisToggleText, { color }]}>
-                              {expandedExpr.has(i) ? '분석 접기 ▲' : '문장 분석 ▼'}
-                            </Text>
-                          </TouchableOpacity>
-                          {expandedExpr.has(i) && (
-                            <View style={[styles.analysisBox, { borderLeftColor: color }]}>
-                              <Text style={styles.analysisText}>{expr.analysis}</Text>
-                            </View>
-                          )}
-                        </>
-                      ) : null}
-                    </View>
-                  ))}
+      {ep.sentences?.length ? (() => {
+        const PREVIEW_COUNT = 5;
+        const visible = showAll ? ep.sentences : ep.sentences.slice(0, PREVIEW_COUNT);
+        return (
+          <View style={styles.sentenceListPod}>
+            {visible.map((s, i) => {
+              const prevSpeaker = i > 0 ? ep.sentences![i - 1].speaker : '';
+              const showSpeaker = s.speaker && s.speaker !== prevSpeaker;
+              const open = expandedSentence.has(i);
+              return (
+                <View key={i} style={[styles.sentenceRowPod, i > 0 && styles.sentenceRowBorder]}>
+                  {showSpeaker && (
+                    <Text style={[styles.speakerLabel, { color }]}>{s.speaker}</Text>
+                  )}
+                  <Text style={styles.sentenceEn}>{s.en}</Text>
+                  {s.ko ? <Text style={styles.sentenceKo}>{s.ko}</Text> : null}
+                  {s.analysis ? (
+                    <>
+                      <TouchableOpacity style={styles.analysisToggle} onPress={() => toggleSentence(i)}>
+                        <Text style={[styles.analysisToggleText, { color }]}>
+                          {open ? '분석 닫기 ▲' : '문장 분석 ▼'}
+                        </Text>
+                      </TouchableOpacity>
+                      {open && (
+                        <View style={[styles.analysisBox, { borderLeftColor: color }]}>
+                          <Text style={styles.analysisText}>{s.analysis}</Text>
+                        </View>
+                      )}
+                    </>
+                  ) : null}
                 </View>
-              )}
-            </View>
-          )}
-        </>
-      ) : null}
+              );
+            })}
+            {ep.sentences.length > PREVIEW_COUNT && (
+              <TouchableOpacity onPress={() => setShowAll(v => !v)} style={styles.showAllBtn}>
+                <Text style={[styles.scriptMoreText, { color }]}>
+                  {showAll ? '접기 ▲' : `전체 보기 (${ep.sentences.length}문장) ▼`}
+                </Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        );
+      })() : null}
     </View>
   );
 }
@@ -562,15 +527,11 @@ const styles = StyleSheet.create({
   playerTime: { fontSize: 10, color: '#9ca3af' },
   iconBtn: { padding: 4 },
 
-  scriptToggle: {
-    flexDirection: 'row', alignItems: 'center', gap: 4,
-    marginTop: 12, paddingTop: 10, borderTopWidth: 1, borderTopColor: '#f0f0f0',
-  },
-  scriptToggleText: { fontSize: 11, fontWeight: '700', letterSpacing: 0.5 },
-  scriptBox: { marginTop: 10, backgroundColor: '#f9fafb', borderRadius: 10, padding: 12, gap: 2 },
-  scriptVoiceLabel: { fontSize: 11, fontWeight: '700', letterSpacing: 0.5, marginTop: 10, marginBottom: 2 },
-  scriptLine: { fontSize: 14, color: '#1f2937', lineHeight: 22 },
-  scriptMoreText: { fontSize: 12, fontWeight: '600', marginTop: 8 },
+  sentenceListPod: { marginTop: 10, borderTopWidth: 1, borderTopColor: '#f0f0f0' },
+  sentenceRowPod: { paddingVertical: 10 },
+  speakerLabel: { fontSize: 11, fontWeight: '700', letterSpacing: 0.5, marginBottom: 4 },
+  showAllBtn: { paddingVertical: 8, alignItems: 'center' },
+  scriptMoreText: { fontSize: 12, fontWeight: '600' },
 
   podAnalysisBox: { marginTop: 10, padding: 12, backgroundColor: '#f8fafc', borderRadius: 10 },
   podSummaryText: { fontSize: 13, color: '#374151', lineHeight: 21 },
