@@ -106,12 +106,16 @@ def main():
     word_list = ", ".join(f"{w['word']} ({w['meaning']})" for w in words)
     print(f"[*] 단어 {len(words)}개: {word_list}")
 
-    prompt = f"""Write a short story (3-4 sentences) using ALL these words: {word_list}
+    prompt = f"""You have these English vocabulary words to review: {word_list}
 
-Rules: use every word naturally, bold each with **word**, add Korean translation per sentence.
+Create a review in two sections:
 
-Return ONLY JSON:
-{{"sentences":[{{"en":"Sentence with **vocab**.","ko":"한국어 번역."}}],"wordNuances":[{{"word":"word1","meaning":"뜻","nuance":"뉘앙스 1~2문장"}}]}}"""
+1. STORY: Write 3-4 sentences forming a coherent, natural story. Use as many words as fit naturally — do NOT force words that feel out of place. Bold each used word with **word**. Add Korean translation after each sentence.
+
+2. EXTRA: For any words that did not fit the story, write one natural standalone example sentence each. Bold the word. Add Korean translation.
+
+Return ONLY JSON (no markdown):
+{{"sentences":[{{"en":"Story sentence with **vocab**.","ko":"한국어 번역."}}],"extra":[{{"en":"Standalone sentence with **word**.","ko":"한국어 번역."}}],"wordNuances":[{{"word":"word1","meaning":"뜻","nuance":"뉘앙스 1~2문장"}}]}}"""
 
     print("[*] Claude 호출 중...")
     try:

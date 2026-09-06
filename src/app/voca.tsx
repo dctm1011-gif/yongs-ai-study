@@ -74,6 +74,7 @@ interface ReviewSentence {
 
 interface ReviewStory {
   sentences: { en: string; ko: string }[];
+  extra?: { en: string; ko: string }[];
   wordNuances: { word: string; meaning: string; nuance: string }[];
 }
 
@@ -1698,6 +1699,20 @@ const StoryReviewView = React.memo(({ story, loading, uid, onReload, onComplete 
             <Text style={styles.storyKo}>{s.ko}</Text>
           </View>
         ))}
+
+        {/* 스토리에 못 들어간 단어 개별 예문 */}
+        {story.extra && story.extra.length > 0 && (
+          <>
+            <Text style={styles.storyNuanceHeader}>📝 추가 예문</Text>
+            {story.extra.map((s, i) => (
+              <View key={i} style={styles.storyCard}>
+                <Text style={styles.storyParagraph}>{renderParagraph(s.en)}</Text>
+                <View style={styles.storySentenceDivider} />
+                <Text style={styles.storyKo}>{s.ko}</Text>
+              </View>
+            ))}
+          </>
+        )}
 
         {/* 단어 뉘앙스 */}
         <Text style={styles.storyNuanceHeader}>💡 단어 뉘앙스</Text>
