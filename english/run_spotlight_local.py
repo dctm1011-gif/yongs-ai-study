@@ -71,17 +71,21 @@ def parse_rss(xml):
             continue
         audio_url = audio_m.group(1)
 
-        # 스크립트 추출 (Voice 1/2/3/4 이후 <p> 태그)
+        # 스크립트 추출: Voice N 레이블(h5) + 본문(p) 순서대로
         script_parts = []
-        for p in re.finditer(r"<p[^>]*>([\s\S]*?)</p>", content):
-            text = strip_html(p.group(1))
-            if not text or len(text) < 15:
+        for tag in re.finditer(r"<(h5|p)[^>]*>([\s\S]*?)</(h5|p)>", content):
+            text = strip_html(tag.group(2))
+            if not text or len(text) < 3:
                 continue
             if "appeared first on" in text:
                 continue
             if "Click here to follow" in text:
                 continue
-            script_parts.append(text)
+            if tag.group(1) == "h5":
+                script_parts.append(f"[{text}]")
+            else:
+                if len(text) >= 15:
+                    script_parts.append(text)
 
         script = "\n".join(script_parts)
         if not script:

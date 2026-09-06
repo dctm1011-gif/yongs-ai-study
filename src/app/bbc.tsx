@@ -65,7 +65,7 @@ function EpisodeCard({ ep, color, label }: { ep: PodcastEpisode; color: string; 
   const [loading, setLoading] = useState(false);
   const [positionSec, setPositionSec] = useState(0);
   const [durationSec, setDurationSec] = useState(ep.duration_sec || 0);
-  const [scriptOpen, setScriptOpen] = useState(false);
+  const [scriptOpen, setScriptOpen] = useState(true);
   const [scriptFull, setScriptFull] = useState(false);
   const [analysisOpen, setAnalysisOpen] = useState(false);
   const [expandedExpr, setExpandedExpr] = useState<Set<number>>(new Set());
@@ -158,6 +158,39 @@ function EpisodeCard({ ep, color, label }: { ep: PodcastEpisode; color: string; 
         )}
       </View>
 
+      {cleanScript ? (
+        <>
+          <TouchableOpacity style={styles.scriptToggle} onPress={() => setScriptOpen(v => !v)}>
+            <Text style={[styles.scriptToggleText, { color }]}>SCRIPT</Text>
+            <MaterialIcons name={scriptOpen ? 'expand-less' : 'expand-more'} size={18} color={color} />
+          </TouchableOpacity>
+          {scriptOpen && (
+            <View style={styles.scriptBox}>
+              {(scriptFull ? cleanScript : cleanScript.slice(0, PREVIEW) + (!scriptFull && hasMore ? '…' : ''))
+                .split('\n')
+                .map((line, i) => {
+                  const isVoice = line.startsWith('[') && line.endsWith(']');
+                  return (
+                    <Text
+                      key={i}
+                      style={isVoice ? [styles.scriptVoiceLabel, { color }] : styles.scriptLine}
+                    >
+                      {isVoice ? line.slice(1, -1) : line}
+                    </Text>
+                  );
+                })}
+              {hasMore && (
+                <TouchableOpacity onPress={() => setScriptFull(v => !v)} style={{ marginTop: 6 }}>
+                  <Text style={[styles.scriptMoreText, { color }]}>
+                    {scriptFull ? '접기 ▲' : `전체 보기 (${cleanScript.length.toLocaleString()}자) ▼`}
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          )}
+        </>
+      ) : null}
+
       {ep.analysis?.summary_ko ? (
         <>
           <TouchableOpacity style={styles.scriptToggle} onPress={() => setAnalysisOpen(v => !v)}>
@@ -193,27 +226,6 @@ function EpisodeCard({ ep, color, label }: { ep: PodcastEpisode; color: string; 
                 </View>
               )}
             </View>
-          )}
-        </>
-      ) : null}
-
-      {cleanScript ? (
-        <>
-          <TouchableOpacity style={styles.scriptToggle} onPress={() => setScriptOpen(v => !v)}>
-            <Text style={[styles.scriptToggleText, { color }]}>SCRIPT</Text>
-            <MaterialIcons name={scriptOpen ? 'expand-less' : 'expand-more'} size={18} color={color} />
-          </TouchableOpacity>
-          {scriptOpen && (
-            <>
-              <Text style={styles.scriptText}>{displayScript}{!scriptFull && hasMore ? '…' : ''}</Text>
-              {hasMore && (
-                <TouchableOpacity onPress={() => setScriptFull(v => !v)}>
-                  <Text style={[styles.scriptMoreText, { color }]}>
-                    {scriptFull ? '접기 ▲' : `전체 보기 (${cleanScript.length.toLocaleString()}자) ▼`}
-                  </Text>
-                </TouchableOpacity>
-              )}
-            </>
           )}
         </>
       ) : null}
@@ -555,7 +567,9 @@ const styles = StyleSheet.create({
     marginTop: 12, paddingTop: 10, borderTopWidth: 1, borderTopColor: '#f0f0f0',
   },
   scriptToggleText: { fontSize: 11, fontWeight: '700', letterSpacing: 0.5 },
-  scriptText: { fontSize: 13, color: '#374151', lineHeight: 20, marginTop: 8 },
+  scriptBox: { marginTop: 10, backgroundColor: '#f9fafb', borderRadius: 10, padding: 12, gap: 2 },
+  scriptVoiceLabel: { fontSize: 11, fontWeight: '700', letterSpacing: 0.5, marginTop: 10, marginBottom: 2 },
+  scriptLine: { fontSize: 14, color: '#1f2937', lineHeight: 22 },
   scriptMoreText: { fontSize: 12, fontWeight: '600', marginTop: 8 },
 
   podAnalysisBox: { marginTop: 10, padding: 12, backgroundColor: '#f8fafc', borderRadius: 10 },
