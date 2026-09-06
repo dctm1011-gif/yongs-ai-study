@@ -55,9 +55,7 @@ const CATEGORY_COLORS: Record<string, string> = {
 };
 
 const PODCAST_SOURCES = [
-  { key: 'spotlight',       label: 'Spotlight English',   color: '#16a34a' },
-  { key: 'bbc_learning',    label: 'BBC Learning English', color: '#dc2626' },
-  { key: 'all_ears_english', label: 'All Ears English',    color: '#059669' },
+  { key: 'spotlight', label: 'Spotlight English', color: '#16a34a' },
 ] as const;
 
 // ─── Podcast episode card ─────────────────────────────────────────────────
