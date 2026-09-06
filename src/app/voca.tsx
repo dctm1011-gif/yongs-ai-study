@@ -836,72 +836,14 @@ export default function VocaScreen() {
   const loadReviewStory = async () => {
     if (reviewLoading) return;
     setReviewLoading(true);
-    const db = getDatabase(getFirebaseApp());
-    const today = getKSTDateString();
-
     try {
-      // 오늘치 스토리가 이미 Firebase에 있으면 바로 표시
-      const cached = await get(userRef(uid, `english/reviewStory/${today}`));
-      if (cached.exists()) {
-        setReviewStory(cached.val());
-        setReviewLoading(false);
-        return;
-      }
-
-      // 복습 풀 후보 선정
-      const poolSnap = await get(userRef(uid, 'english/reviewPool'));
-      let candidates: any[] = [];
-      if (poolSnap.exists()) {
-        const pool: Record<string, any> = poolSnap.val();
-        candidates = Object.entries(pool)
-          .filter(([_, v]: [string, any]) => (v.count ?? 0) < 10)
-          .sort(([_, a]: [string, any], [__, b]: [string, any]) => (a.count ?? 0) - (b.count ?? 0))
-          .slice(0, 10);
-      }
-
-      if (candidates.length === 0) {
-        setReviewWordIds([]);
-        setReviewLoading(false);
-        return;
-      }
-
-      setReviewWordIds((candidates as [string, any][]).map(([id]) => id));
-      const words = (candidates as [string, any][]).map(([_, entry]) => ({
-        word: entry.word,
-        meaning: entry.meaning ?? '',
-        pos: entry.pos ?? '',
-      }));
-
-      // 사용자 auth 토큰 획득 → 백그라운드 함수가 Firebase에 직접 기록하기 위해 필요
-      const { getAuth } = await import('firebase/auth');
-      const token = await getAuth(getFirebaseApp()).currentUser?.getIdToken() ?? '';
-
-      // Firebase 구독 먼저 걸어두기 (백그라운드 함수가 쓰면 즉시 감지)
-      const storyRef = ref(db, `users/${uid}/english/reviewStory/${today}`);
-      let unsub: (() => void) | null = null;
-      const timeout = setTimeout(() => {
-        unsub?.();
-        setReviewLoading(false);
-      }, 90000);
-
-      unsub = onValue(storyRef, snap => {
-        if (snap.exists()) {
-          clearTimeout(timeout);
-          unsub?.();
-          setReviewStory(snap.val());
-          setReviewLoading(false);
-        }
-      });
-
-      // 백그라운드 함수 호출 (즉시 202 반환 — 실제 생성은 서버에서 비동기)
-      fetch(`${NETLIFY_BASE_URL}/api/review-story-bg`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ words, uid, token }),
-      }).catch(() => {});
-
+      const today = getKSTDateString();
+      const snap = await get(userRef(uid, `english/reviewStory/${today}`));
+      setReviewStory(snap.exists() ? snap.val() : null);
     } catch (e) {
       console.warn('review story 로드 실패:', e);
+      setReviewStory(null);
+    } finally {
       setReviewLoading(false);
     }
   };
@@ -1715,7 +1657,7 @@ const StoryReviewView = React.memo(({ story, loading, uid, onReload, onComplete 
   if (!story) {
     return (
       <View style={styles.reviewEmpty}>
-        <Text style={styles.reviewEmptyText}>복습할 단어가 없어요.{'\n'}단어장에서 단어를 읽음 처리하면 여기에 나타나요.</Text>
+        <Text style={styles.reviewEmptyText}>오늘 스토리가 아직 없어요.{'\n'}매일 오전 자동 생성됩니다.</Text>
         <TouchableOpacity style={[styles.filterButton, { marginTop: 16 }]} onPress={onReload}>
           <Text style={styles.filterButtonText}>↺ 다시 시도</Text>
         </TouchableOpacity>

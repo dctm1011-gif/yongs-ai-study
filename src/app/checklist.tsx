@@ -3,6 +3,7 @@ import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-nati
 import { getDatabase, onValue, ref } from 'firebase/database';
 import { useAuth } from '../context/AuthContext';
 import { getFirebaseApp } from '../config/firebase';
+import { ProgressCalendar } from '../components/ProgressCalendar';
 
 function getKSTToday(): string {
   return new Date(Date.now() + 9 * 3600000).toISOString().split('T')[0];
@@ -37,10 +38,8 @@ const GROUPS: { title: string; items: CheckItem[] }[] = [
   {
     title: '한국어',
     items: [
-      { key: 'reading',      label: '독서',      emoji: '📕' },
-      { key: 'sajaseongeo',  label: '사자성어',  emoji: '🀄' },
-      { key: 'sangshik',     label: '상식 퀴즈', emoji: '🧠' },
-      { key: 'korean_ox',    label: '한국어 OX', emoji: '🇰🇷' },
+      { key: 'reading',      label: '독서',        emoji: '📕' },
+      { key: 'korean_diary', label: '어휘 일기',   emoji: '✏️' },
     ],
   },
 ];
@@ -92,6 +91,8 @@ export default function ChecklistScreen() {
           <View style={[s.fill, { width: `${pct}%` as any }]} />
         </View>
       </View>
+
+      <ProgressCalendar />
 
       {GROUPS.map(group => (
         <View key={group.title} style={s.group}>

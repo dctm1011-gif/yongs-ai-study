@@ -1,6 +1,7 @@
 import type { WidgetTaskHandlerProps } from 'react-native-android-widget';
 import React from 'react';
 import { YongStudyWidget, WidgetData } from './YongStudyWidget';
+import { CHECKLIST_KEYS, isDone } from '../constants/studyKeys';
 
 const DB_URL = 'https://yongstudy-1f242-default-rtdb.asia-southeast1.firebasedatabase.app';
 
@@ -16,17 +17,12 @@ function getDisplayDate(): string {
   return `${m}/${d}`;
 }
 
-const TRACKED_KEYS = [
-  'english', 'english_review', 'english_news_reading', 'english_speaking',
-  'reading', 'korean_diary', 'investment', 'toefl_reading',
-];
-
 export async function fetchWidgetData(): Promise<WidgetData> {
   const date = getKSTDateString();
   const fallback: WidgetData = {
     date: getDisplayDate(),
     completed: 0,
-    total: TRACKED_KEYS.length,
+    total: CHECKLIST_KEYS.length,
     quizScore: null,
     quizDetail: '',
     poolActive: 0,
@@ -36,7 +32,7 @@ export async function fetchWidgetData(): Promise<WidgetData> {
   };
 
   try {
-    const res = await fetch(`${DB_URL}/english/summary/${date}.json`);
+    const res = await fetch(`${DB_URL}/studySummary/${date}.json`);
     if (!res.ok) return fallback;
     const data = await res.json();
     if (!data) return fallback;
@@ -46,9 +42,8 @@ export async function fetchWidgetData(): Promise<WidgetData> {
 
     const activities: Record<string, boolean> = {};
     let completed = 0;
-    for (const key of TRACKED_KEYS) {
-      const val = completion[key];
-      const done = !!(val === true || val === 1 || val?.completed);
+    for (const key of CHECKLIST_KEYS) {
+      const done = isDone(completion[key]);
       activities[key] = done;
       if (done) completed++;
     }
@@ -61,7 +56,7 @@ export async function fetchWidgetData(): Promise<WidgetData> {
     return {
       date: getDisplayDate(),
       completed,
-      total: TRACKED_KEYS.length,
+      total: CHECKLIST_KEYS.length,
       quizScore,
       quizDetail,
       poolActive: english.pool?.active ?? 0,
@@ -75,19 +70,12 @@ export async function fetchWidgetData(): Promise<WidgetData> {
 }
 
 export async function widgetTaskHandler(props: WidgetTaskHandlerProps) {
-  const { widgetAction, widgetInfo, renderWidget } = props;
+  const { widgetAction, renderWidget } = props;
 
   if (widgetAction === 'WIDGET_DELETED') return;
 
-  console.warn('[Widget] action=' + widgetAction + ' w=' + widgetInfo.width + ' h=' + widgetInfo.height);
-
   const data = await fetchWidgetData();
 
-  renderWidget(
-    React.createElement(YongStudyWidget, {
-      data,
-      width: widgetInfo.width,
-      height: widgetInfo.height,
-    })
-  );
+  const element = React.createElement(YongStudyWidget, { data });
+  renderWidget({ light: element, dark: element });
 }

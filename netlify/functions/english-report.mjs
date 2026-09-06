@@ -64,7 +64,7 @@ export default async () => {
     // 지난 30일 데이터 수집
     const dates = Array.from({ length: 30 }, (_, i) => getKSTDateString(i));
     const [summaries, wordSets] = await Promise.all([
-      Promise.all(dates.map(d => fbGet(`english/summary/${d}`))),
+      Promise.all(dates.map(d => fbGet(`studySummary/${d}`))),
       Promise.all(dates.map(d => fbGet(`english/words/${d}`))),
     ]);
 
@@ -112,9 +112,7 @@ export default async () => {
       'english_news_reading': '뉴스 읽기',
       'english_news_listening': '뉴스 듣기',
       'reading': '한국어 독해',
-      'sajaseongeo': '사자성어',
-      'sangshik': '상식',
-      'korean_ox': '한국어 OX',
+      'korean_diary': '어휘 일기',
       'investment': '투자 칼럼',
       'toefl_reading': 'TOEFL 읽기',
       'toefl_listening': 'TOEFL 듣기',

@@ -14,16 +14,21 @@ export interface WidgetData {
 }
 
 const ROW1 = [
-  { key: 'english', label: 'Voca' },
-  { key: 'english_review', label: '복습' },
-  { key: 'english_news_reading', label: 'BBC' },
-  { key: 'english_speaking', label: 'Talk' },
+  { key: 'english',           label: '단어장' },
+  { key: 'english_word_match', label: '카드' },
+  { key: 'english_crossword', label: '퍼즐' },
+  { key: 'english_scramble',  label: '스크램블' },
 ];
 const ROW2 = [
-  { key: 'reading', label: '독해' },
-  { key: 'investment', label: '투자' },
-  { key: 'toefl_reading', label: 'TOEFL' },
-  { key: 'korean_diary', label: '일기' },
+  { key: 'english_sentence',       label: '예문OX' },
+  { key: 'english_review',         label: '복습' },
+  { key: 'english_news_reading',   label: '리딩' },
+  { key: 'english_news_listening', label: '리스닝' },
+];
+const ROW3 = [
+  { key: 'investment',   label: '투자' },
+  { key: 'reading',      label: '독서' },
+  { key: 'korean_diary', label: '어휘일기' },
 ];
 
 function Badge({ done, label }: { done: boolean; label: string }) {
@@ -34,7 +39,7 @@ function Badge({ done, label }: { done: boolean; label: string }) {
         backgroundColor: done ? '#14532d' : '#1e293b',
         borderRadius: 6,
         paddingVertical: 4,
-        marginRight: 4,
+        marginRight: 3,
         borderWidth: 1,
         borderColor: done ? '#16a34a' : '#334155',
         alignItems: 'center',
@@ -42,14 +47,13 @@ function Badge({ done, label }: { done: boolean; label: string }) {
     >
       <TextWidget
         text={`${done ? '✓' : '·'} ${label}`}
-        style={{ fontSize: 10, color: done ? '#86efac' : '#475569' }}
+        style={{ fontSize: 9, color: done ? '#86efac' : '#475569' }}
       />
     </FlexWidget>
   );
 }
 
-export function YongStudyWidget({ data, width, height }: { data: WidgetData; width?: number; height?: number }) {
-  console.warn('[Widget] render called, completed=' + data.completed + '/' + data.total);
+export function YongStudyWidget({ data }: { data: WidgetData }) {
   const pct = data.total > 0 ? Math.round((data.completed / data.total) * 100) : 0;
   const barColor = pct >= 80 ? '#22c55e' : pct >= 50 ? '#6366f1' : '#f59e0b';
   const filledFlex = Math.max(1, pct);
@@ -58,7 +62,8 @@ export function YongStudyWidget({ data, width, height }: { data: WidgetData; wid
   return (
     <FlexWidget
       style={{
-        flex: 1,
+        width: 'match_parent',
+        height: 'match_parent',
         backgroundColor: '#0f172a',
         borderRadius: 20,
         padding: 14,
@@ -66,8 +71,8 @@ export function YongStudyWidget({ data, width, height }: { data: WidgetData; wid
       }}
       clickAction="OPEN_APP"
     >
-      {/* Header row */}
-      <FlexWidget style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+      {/* Header */}
+      <FlexWidget style={{ width: 'match_parent', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
         <TextWidget
           text="📚 YongStudy"
           style={{ fontSize: 14, fontWeight: 'bold', color: '#a5b4fc' }}
@@ -87,48 +92,55 @@ export function YongStudyWidget({ data, width, height }: { data: WidgetData; wid
       </FlexWidget>
 
       {/* Progress label */}
-      <FlexWidget style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
+      <FlexWidget style={{ width: 'match_parent', flexDirection: 'row', justifyContent: 'space-between', marginTop: 8 }}>
         <TextWidget
           text={`완료 ${data.completed} / ${data.total}`}
-          style={{ fontSize: 13, color: '#e2e8f0', fontWeight: 'bold' }}
+          style={{ fontSize: 12, color: '#e2e8f0', fontWeight: 'bold' }}
         />
         <TextWidget
           text={`${pct}%`}
-          style={{ fontSize: 13, color: barColor, fontWeight: 'bold' }}
+          style={{ fontSize: 12, color: barColor, fontWeight: 'bold' }}
         />
       </FlexWidget>
 
-      {/* Progress bar using flex weights */}
+      {/* Progress bar */}
       <FlexWidget
-        style={{ flexDirection: 'row', height: 7, backgroundColor: '#1e293b', borderRadius: 4, marginTop: 5, overflow: 'hidden' }}
+        style={{ width: 'match_parent', flexDirection: 'row', height: 6, backgroundColor: '#1e293b', borderRadius: 4, marginTop: 4, overflow: 'hidden' }}
       >
         <FlexWidget style={{ flex: filledFlex, backgroundColor: barColor }} />
         <FlexWidget style={{ flex: emptyFlex, backgroundColor: '#1e293b' }} />
       </FlexWidget>
 
-      {/* Badge row 1 */}
-      <FlexWidget style={{ flexDirection: 'row', marginTop: 10 }}>
+      {/* Badge row 1 — 영어 A */}
+      <FlexWidget style={{ width: 'match_parent', flexDirection: 'row', marginTop: 8 }}>
         {ROW1.map(({ key, label }) => (
           <Badge key={key} done={!!data.activities[key]} label={label} />
         ))}
       </FlexWidget>
 
-      {/* Badge row 2 */}
-      <FlexWidget style={{ flexDirection: 'row', marginTop: 5 }}>
+      {/* Badge row 2 — 영어 B */}
+      <FlexWidget style={{ width: 'match_parent', flexDirection: 'row', marginTop: 4 }}>
         {ROW2.map(({ key, label }) => (
           <Badge key={key} done={!!data.activities[key]} label={label} />
         ))}
       </FlexWidget>
 
+      {/* Badge row 3 — 투자+한국어 */}
+      <FlexWidget style={{ width: 'match_parent', flexDirection: 'row', marginTop: 4 }}>
+        {ROW3.map(({ key, label }) => (
+          <Badge key={key} done={!!data.activities[key]} label={label} />
+        ))}
+      </FlexWidget>
+
       {/* Bottom stats */}
-      <FlexWidget style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
+      <FlexWidget style={{ width: 'match_parent', flexDirection: 'row', justifyContent: 'space-between', marginTop: 8 }}>
         <TextWidget
           text={data.quizScore !== null ? `🎯 ${data.quizScore}% (${data.quizDetail})` : '🎯 퀴즈 미완료'}
-          style={{ fontSize: 11, color: data.quizScore !== null ? '#fbbf24' : '#475569' }}
+          style={{ fontSize: 10, color: data.quizScore !== null ? '#fbbf24' : '#475569' }}
         />
         <TextWidget
           text={`📖${data.poolActive} 🎓${data.poolGraduated}`}
-          style={{ fontSize: 11, color: '#64748b' }}
+          style={{ fontSize: 10, color: '#64748b' }}
         />
       </FlexWidget>
     </FlexWidget>
