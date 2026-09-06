@@ -323,7 +323,11 @@ export default function BBCScreen() {
           .then(snap => {
             if (!snap.exists()) return [src.key, null] as const;
             const vals = Object.values(snap.val() as Record<string, PodcastEpisode>);
-            return [src.key, vals[0]] as const;
+            const ep = vals[0];
+            if (ep?.sentences && !Array.isArray(ep.sentences)) {
+              ep.sentences = Object.values(ep.sentences as any);
+            }
+            return [src.key, ep] as const;
           })
           .catch(() => [src.key, null] as const)
       )
