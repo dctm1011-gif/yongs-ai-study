@@ -113,7 +113,7 @@ function EpisodeCard({ ep, color, label }: { ep: PodcastEpisode; color: string; 
   };
 
   const pct = durationSec > 0 ? (positionSec / durationSec) * 100 : 0;
-  const cleanScript = ep.script ? stripHtml(ep.script) : '';
+  const cleanScript = ep.script ?? '';
   const PREVIEW = 300;
   const hasMore = cleanScript.length > PREVIEW;
   const displayScript = scriptFull ? cleanScript : cleanScript.slice(0, PREVIEW);
