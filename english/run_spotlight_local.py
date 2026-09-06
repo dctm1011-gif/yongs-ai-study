@@ -178,6 +178,16 @@ def main():
         print("[Spotlight] 파싱 가능한 에피소드 없음")
         return
 
+    # 어제(또는 최근 7일) 저장된 에피소드와 URL이 같으면 신규 에피소드 없음 → 스킵
+    for days_ago in range(1, 8):
+        past_date = (date.today() - timedelta(days=days_ago)).isoformat()
+        past = firebase_get(f"english/podcasts/spotlight/{past_date}")
+        if past and past.get("episode_url"):
+            if past["episode_url"] == episode["link"]:
+                print(f"[Spotlight] 신규 에피소드 없음 ({past_date}와 동일). 스킵.")
+                return
+            break  # 가장 최근 날 데이터 확인했으면 충분
+
     print(f"[Spotlight] 에피소드: {episode['title'][:60]}")
     print(f"[Spotlight] 오디오: {episode['audio_url'][:60]}")
 
