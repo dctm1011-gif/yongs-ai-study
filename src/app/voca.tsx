@@ -839,17 +839,18 @@ export default function VocaScreen() {
     const db = getDatabase(getFirebaseApp());
     const today = getKSTDateString();
 
-    const tryPublicCache = async (): Promise<ReviewStory | null> => {
-      try {
-        const snap = await get(ref(db, `english/reviewStory/${today}`));
-        return snap.exists() ? (snap.val() as ReviewStory) : null;
-      } catch { return null; }
-    };
-
     try {
+      // 오늘치 스토리가 이미 Firebase에 있으면 바로 표시
+      const cached = await get(userRef(uid, `english/reviewStory/${today}`));
+      if (cached.exists()) {
+        setReviewStory(cached.val());
+        setReviewLoading(false);
+        return;
+      }
+
+      // 복습 풀 후보 선정
       const poolSnap = await get(userRef(uid, 'english/reviewPool'));
       let candidates: any[] = [];
-
       if (poolSnap.exists()) {
         const pool: Record<string, any> = poolSnap.val();
         candidates = Object.entries(pool)
@@ -860,7 +861,7 @@ export default function VocaScreen() {
 
       if (candidates.length === 0) {
         setReviewWordIds([]);
-        setReviewStory(await tryPublicCache());
+        setReviewLoading(false);
         return;
       }
 
@@ -871,17 +872,36 @@ export default function VocaScreen() {
         pos: entry.pos ?? '',
       }));
 
-      const res = await fetch(`${NETLIFY_BASE_URL}/api/review-story`, {
+      // 사용자 auth 토큰 획득 → 백그라운드 함수가 Firebase에 직접 기록하기 위해 필요
+      const { getAuth } = await import('firebase/auth');
+      const token = await getAuth(getFirebaseApp()).currentUser?.getIdToken() ?? '';
+
+      // Firebase 구독 먼저 걸어두기 (백그라운드 함수가 쓰면 즉시 감지)
+      const storyRef = ref(db, `users/${uid}/english/reviewStory/${today}`);
+      let unsub: (() => void) | null = null;
+      const timeout = setTimeout(() => {
+        unsub?.();
+        setReviewLoading(false);
+      }, 90000);
+
+      unsub = onValue(storyRef, snap => {
+        if (snap.exists()) {
+          clearTimeout(timeout);
+          unsub?.();
+          setReviewStory(snap.val());
+          setReviewLoading(false);
+        }
+      });
+
+      // 백그라운드 함수 호출 (즉시 202 반환 — 실제 생성은 서버에서 비동기)
+      fetch(`${NETLIFY_BASE_URL}/api/review-story-bg`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ words }),
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      setReviewStory(await res.json());
+        body: JSON.stringify({ words, uid, token }),
+      }).catch(() => {});
+
     } catch (e) {
-      console.warn('review story 생성 실패:', e);
-      setReviewStory(await tryPublicCache());
-    } finally {
+      console.warn('review story 로드 실패:', e);
       setReviewLoading(false);
     }
   };
@@ -1687,7 +1707,7 @@ const StoryReviewView = React.memo(({ story, loading, uid, onReload, onComplete 
     return (
       <View style={styles.reviewEmpty}>
         <ActivityIndicator size="large" color="#0095f6" />
-        <Text style={[styles.reviewEmptyText, { marginTop: 12 }]}>스토리 생성 중... (10~20초)</Text>
+        <Text style={[styles.reviewEmptyText, { marginTop: 12 }]}>스토리 생성 중... (20~40초)</Text>
       </View>
     );
   }
