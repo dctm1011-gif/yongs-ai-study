@@ -10,6 +10,9 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
+[functions."review-story"]
+  timeout = 26
+
 # General API routes
 [[redirects]]
 from = "/api/*"
