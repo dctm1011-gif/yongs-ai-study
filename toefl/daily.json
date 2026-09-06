@@ -1,179 +1,114 @@
 {
   "date": "2026-09-07",
   "reading": {
-    "title": "The Rise and Fall of Mercantilism in Early Modern Europe",
-    "passage": "Mercantilism, an economic doctrine that dominated European thought from the sixteenth to eighteenth centuries, fundamentally shaped international trade policies and colonial expansion. This system was predicated on the belief that a nation's wealth was measured by its accumulation of precious metals, particularly gold and silver. Consequently, governments implemented protectionist policies, imposed tariffs on foreign goods, and encouraged exports while restricting imports to maintain a favorable balance of trade. The mercantilist approach led to fierce competition among European powers, driving the establishment of colonial empires and monopolistic trading companies such as the Dutch East India Company, which controlled vast commercial networks across Asia.\n\nHowever, mercantilist policies ultimately proved counterproductive to long-term economic growth. The rigid restrictions on trade limited consumer choice and prevented the efficient allocation of resources across markets. By the late eighteenth century, economists like Adam Smith challenged mercantilist assumptions, arguing that free trade and specialization would generate greater wealth for all nations. Smith's influential work, \"The Wealth of Nations,\" demonstrated that absolute and comparative advantage in production could benefit trading partners mutually. The gradual abandonment of mercantilist policies in favor of free-trade principles marked a pivotal transformation in economic thought, establishing the foundation for modern capitalism and international commerce.",
-    "vocabulary": [
-      {
-        "word": "predicated",
-        "meaning_ko": "~에 기초를 두다, 바탕으로 하다"
-      },
-      {
-        "word": "protectionist",
-        "meaning_ko": "보호무역주의의, 국내 산업 보호를 목표로 하는"
-      },
-      {
-        "word": "monopolistic",
-        "meaning_ko": "독점적인, 한 회사가 시장을 장악하는"
-      },
-      {
-        "word": "counterproductive",
-        "meaning_ko": "역효과를 내는, 반대 결과를 초래하는"
-      },
-      {
-        "word": "allocation",
-        "meaning_ko": "배분, 할당, 자원 분배"
-      },
-      {
-        "word": "comparative advantage",
-        "meaning_ko": "비교 우위, 상대적으로 더 효율적인 생산 능력"
-      },
-      {
-        "word": "pivotal",
-        "meaning_ko": "핵심적인, 결정적인, 중추적인"
-      }
-    ],
+    "title": "Bioluminescence in Deep Sea Creatures",
+    "passage": "Bioluminescence is the production of light by living organisms through chemical reactions. In the deep ocean, where sunlight cannot penetrate, many creatures have evolved this remarkable ability. Fish, squid, and jellyfish use bioluminescence for various purposes: attracting prey, communicating with potential mates, and confusing predators. The process involves a protein called luciferin that reacts with oxygen to produce light. Scientists estimate that approximately 90% of deep-sea creatures possess some form of bioluminescence, making it one of nature's most common adaptations in extreme environments.",
     "questions": [
       {
-        "q": "According to the passage, what was the primary goal of mercantilist governments?",
+        "q": "According to the passage, what is the primary purpose of bioluminescence in deep-sea creatures?",
         "options": [
-          "To maximize the production of manufactured goods",
-          "To accumulate precious metals through a favorable balance of trade",
-          "To establish free trade agreements with neighboring nations",
-          "To promote consumer choice and resource efficiency"
+          "A) To regulate body temperature",
+          "B) To attract prey, communicate, and defend against predators",
+          "C) To navigate through the water",
+          "D) To produce energy for movement"
         ],
         "answer": 1,
-        "explanation": "지문의 두 번째 문장에서 '국가의 부는 귀금속, 특히 금과 은의 축적으로 측정된다'고 명시되어 있고, 이를 달성하기 위해 보호무역주의 정책을 시행했다고 설명하고 있습니다."
+        "explanation": "지문에서 생물발광의 목적으로 '먹이를 끌어당기는 것, 짝짓기 대상과 소통하기, 포식자 혼동하기'를 명시적으로 언급했습니다."
       },
       {
-        "q": "What can be inferred from the passage about the Dutch East India Company?",
+        "q": "What protein is responsible for producing light in bioluminescent organisms?",
         "options": [
-          "It advocated for free-trade principles",
-          "It was established to challenge mercantilist policies",
-          "It benefited from monopolistic control granted by mercantilist governments",
-          "It prioritized consumer choice over profit margins"
+          "A) Chlorophyll",
+          "B) Hemoglobin",
+          "C) Luciferin",
+          "D) Keratin"
         ],
         "answer": 2,
-        "explanation": "지문에서 '네덜란드 동인도회사가 아시아 전역의 광범위한 상업 네트워크를 통제했다'고 언급되어 있으며, 이는 중상주의 체제 하에서 정부가 부여한 독점권으로부터 이익을 얻었음을 암시합니다."
+        "explanation": "지문의 'a protein called luciferin that reacts with oxygen to produce light' 부분에서 루시페린이 빛을 생성하는 단백질임을 명확히 합니다."
       },
       {
-        "q": "The word 'counterproductive' in the second paragraph is closest in meaning to",
+        "q": "According to the passage, approximately what percentage of deep-sea creatures have bioluminescence?",
         "options": [
-          "highly profitable",
-          "producing opposite or unintended results",
-          "economically efficient",
-          "temporarily beneficial"
-        ],
-        "answer": 1,
-        "explanation": "'Counterproductive'는 '의도와 반대의 결과를 낳는' 또는 '역효과를 내는'이라는 의미로, 지문에서 중상주의 정책이 장기적 경제 성장에 부정적인 영향을 미쳤음을 나타냅니다."
-      },
-      {
-        "q": "Why does the author mention Adam Smith's work in the passage?",
-        "options": [
-          "To criticize the establishment of colonial empires",
-          "To demonstrate how mercantilist policies protected domestic industries",
-          "To illustrate how new economic theories challenged and ultimately replaced mercantilist doctrine",
-          "To explain why European nations competed for precious metals"
+          "A) 50%",
+          "B) 70%",
+          "C) 90%",
+          "D) 100%"
         ],
         "answer": 2,
-        "explanation": "지문에서 Adam Smith의 \"The Wealth of Nations\"를 언급하는 것은 중상주의 가정에 대한 도전과 자유무역 원칙으로의 전환을 설명하기 위함입니다. 이는 경제 사상의 전환점을 나타냅니다."
+        "explanation": "지문의 마지막 문장에서 'approximately 90% of deep-sea creatures possess some form of bioluminescence'라고 명시되어 있습니다."
       }
     ]
   },
   "writing": {
-    "task": "Online Education Expansion",
-    "prompt": "Do you agree or disagree with the following statement? Online education should be expanded significantly as a primary mode of learning in universities. Use specific reasons and examples to support your position.",
-    "sentences": [
-      {
-        "original": "This system was predicated on the belief that a nation's wealth was measured by its accumulation of precious metals, particularly gold and silver.",
-        "paraphrase": "The underlying assumption of this system was that national prosperity could be quantified through the gathering of valuable minerals like gold and silver.",
-        "tip": "주요 명사를 동의어로 치환 (belief→assumption, wealth→prosperity, accumulation→gathering)"
-      },
-      {
-        "original": "Governments implemented protectionist policies, imposed tariffs on foreign goods, and encouraged exports while restricting imports to maintain a favorable balance of trade.",
-        "paraphrase": "To preserve a trade surplus, governments enacted measures such as enforcing tariffs against imported products and promoting domestic exports through import limitations.",
-        "tip": "문장 구조 재편성: 나열식 → 목적절과 함께 재구성 (to maintain → To preserve)"
-      },
-      {
-        "original": "The mercantilist approach led to fierce competition among European powers, driving the establishment of colonial empires and monopolistic trading companies.",
-        "paraphrase": "European nations engaged in intense rivalry as a result of mercantilist strategies, which catalyzed the expansion of colonial territories and the creation of exclusive commercial enterprises.",
-        "tip": "능동태 → 수동태 + 인과관계 강화 (led to → as a result of; driving → which catalyzed)"
-      }
+    "prompt": "Do you agree or disagree with the following statement: Technology has made human relationships stronger? Support your position with specific reasons and examples.",
+    "structure": {
+      "intro": "도입부: 자신의 입장을 명확하게 제시합니다. '동의한다/동의하지 않는다'를 명확히 선언하고 간단한 이유를 언급합니다.",
+      "body1": "본론1: 첫 번째 주요 이유를 설명하고 구체적인 예시를 제공합니다. (소셜 미디어로 먼 거리의 친구와 연결, 또는 대면 관계 감소)",
+      "body2": "본론2: 두 번째 주요 이유를 제시합니다. (의사소통의 편의성 증가 vs. 심층적 대화 부족)",
+      "conclusion": "결론부: 서론의 입장을 재강조하고 전체 논의를 요약합니다."
+    },
+    "useful_phrases": [
+      "In my opinion,",
+      "I strongly agree/disagree that",
+      "One significant reason is that",
+      "For example,",
+      "Furthermore,",
+      "On the other hand,",
+      "In conclusion,",
+      "This demonstrates that"
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer reading books to watching movies based on books. Others prefer watching movies. Which do you prefer and why? Include specific reasons and details in your response.",
-    "model_sentences": [
-      "I personally prefer reading books rather than watching movies because books offer a richer and more immersive experience.",
-      "When you read a novel, you engage your imagination and create vivid mental images of the characters and settings based on the author's descriptions.",
-      "For example, when I read \"The Lord of the Rings,\" I was able to visualize Middle-earth according to my own interpretation, which made the story feel more personal and meaningful to me.",
-      "In contrast, movies present a single, predetermined vision that leaves less room for individual imagination and creativity.",
-      "Therefore, I believe reading books is a superior way to experience stories because it encourages active thinking and personal engagement with the material."
+    "prompt": "Some people prefer to work in a team environment. Others prefer to work independently. Which do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer...",
+      "One reason is that teamwork allows...",
+      "Another important point is that...",
+      "For instance,",
+      "This is because..."
+    ],
+    "sample_points": [
+      "팀 환경: 다양한 관점과 아이디어 공유, 동료로부터 배우는 기회, 문제 해결 속도 향상",
+      "독립 업무: 개인의 창의성 발휘, 방해 없이 집중, 자신의 속도대로 진행 가능"
     ]
   },
   "listening": {
-    "title": "Discussing a Research Paper Topic with a Professor",
+    "title": "Office Lunch Preferences",
     "type": "conversation",
-    "script": "Professor: Good afternoon, Sarah. I'm glad you could make it to office hours. I wanted to discuss your research paper proposal on the history of mercantilism. Student: Thank you, Professor. I've been researching this topic, but I'm still unsure about narrowing down my focus. There's so much information available. Professor: That's a common challenge. Let me ask you this: What aspect of mercantilism interests you most? The economic policies, the colonial expansion, or the transition to free-trade economics? Student: I think I'm most interested in how mercantilist policies affected international trade relationships between European nations. Professor: Excellent choice. That's a more manageable scope. I'd suggest focusing on specific case studies, perhaps the competition between England and France during the seventeenth century. You could analyze how their trade policies influenced colonial rivalries. Student: That sounds really interesting. Should I include information about trading companies like the Dutch East India Company? Professor: Absolutely. Those companies were crucial actors in mercantilist systems. They demonstrate how economic theory translated into actual commercial practice. I recommend structuring your paper around three main arguments: first, the economic principles underlying mercantilism; second, the institutional mechanisms like trading companies; and third, the eventual decline of these policies. Student: This is very helpful. When would you like me to submit a preliminary outline? Professor: How about next Friday? That will give us time to review it and make adjustments before you start writing the full draft.",
-    "vocabulary": [
-      {
-        "word": "narrowing down",
-        "meaning_ko": "범위를 좁히다, 선택지를 줄이다"
-      },
-      {
-        "word": "scope",
-        "meaning_ko": "범위, 규모, 연구의 대상 범위"
-      },
-      {
-        "word": "case studies",
-        "meaning_ko": "사례 연구, 특정 사례를 깊이 있게 분석한 연구"
-      },
-      {
-        "word": "rivalry",
-        "meaning_ko": "경쟁, 대립, 경합"
-      },
-      {
-        "word": "institutional mechanisms",
-        "meaning_ko": "제도적 메커니즘, 조직 체계"
-      },
-      {
-        "word": "preliminary outline",
-        "meaning_ko": "초안 개요, 예비 개요"
-      }
-    ],
+    "script": "Student: Hi Maria, are you going to the cafeteria for lunch today? Maria: I was thinking about it, but I'm tired of the same old sandwiches and salads. Student: Yeah, I feel the same way. I heard there's a new food truck outside the building. They serve Mexican food. Maria: Really? I love Mexican food! What do they have? Student: According to the menu online, they have tacos, burritos, and quesadillas. Everything looks fresh. Plus, it's cheaper than the cafeteria. Maria: That sounds great! Let me go get my wallet. But first, I need to finish this email. Student: No problem. I'll meet you at the main entrance in fifteen minutes. We can walk over together. Maria: Perfect! See you soon.",
     "questions": [
       {
-        "q": "What is the main purpose of this conversation?",
+        "q": "What is the main reason the student suggests going to the food truck instead of the cafeteria?",
         "options": [
-          "The professor is explaining the history of mercantilism to the student",
-          "The professor and student are discussing how to focus and structure a research paper on mercantilism",
-          "The student is asking the professor about free-trade economics",
-          "The professor is assigning a new topic for the student to research"
+          "A) Maria specifically requested Mexican food",
+          "B) The food is fresher and more affordable",
+          "C) The cafeteria is closed today",
+          "D) They want to get exercise by walking"
         ],
         "answer": 1,
-        "explanation": "대화의 중심은 학생의 연구 논문 주제를 어떻게 좁히고 구성할 것인지에 관한 것입니다. 교수는 학생의 초기 주제를 더 관리 가능한 범위로 조정하도록 돕고 있습니다."
+        "explanation": "'Everything looks fresh. Plus, it's cheaper than the cafeteria'라는 대사에서 신선함과 가격이 주요 이유임을 알 수 있습니다."
       },
       {
-        "q": "What does the professor suggest as a strategy for narrowing down the paper's focus?",
+        "q": "How long will the student wait before meeting Maria at the entrance?",
         "options": [
-          "Focus only on the economic principles of mercantilism",
-          "Write about all aspects of mercantilism in equal detail",
-          "Use specific case studies, such as competition between England and France in the seventeenth century",
-          "Concentrate exclusively on the Dutch East India Company"
+          "A) 5 minutes",
+          "B) 10 minutes",
+          "C) 15 minutes",
+          "D) 20 minutes"
         ],
         "answer": 2,
-        "explanation": "교수는 '특정 사례 연구'에 초점을 맞추도록 제안하며, '17세기 영국과 프랑스 간의 경쟁'을 예로 들었습니다. 이는 주제를 더 구체적이고 관리 가능하게 만드는 전략입니다."
+        "explanation": "Student이 'I'll meet you at the main entrance in fifteen minutes'라고 명확히 말했습니다."
       },
       {
-        "q": "Why does the professor recommend including information about trading companies?",
+        "q": "What food items does the food truck NOT offer according to the conversation?",
         "options": [
-          "Because trading companies are the only important aspect of mercantilism",
-          "Because they demonstrate how economic theory was translated into actual commercial practice",
-          "Because the student asked specifically about trading companies",
-          "Because trading companies were more important than government policies"
+          "A) Tacos",
+          "B) Burritos",
+          "C) Pizza",
+          "D) Quesadillas"
         ],
-        "answer": 1,
-        "explanation": "교수는 '이러한 회사들은 경제 이론이 실제 상업 관행으로 어떻게 전환되었는지를 보여준다'고 명시적으로 설명했습니다. 이는 이론과 실제 적용 사이의 연결고리를 드러내기 위함입니다."
+        "answer": 2,
+        "explanation": "학생이 언급한 메뉴는 타코, 부리또, 케사디야이며, 피자는 언급되지 않았습니다."
       }
     ]
   }
