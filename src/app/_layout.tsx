@@ -20,7 +20,7 @@ import LoginScreen from './login';
 import { useAnnouncements } from '../hooks/useAnnouncements';
 import { AnnouncementModal } from '../components/AnnouncementModal';
 import { refreshStudyNotifications } from '../utils/studyNotifications';
-import { writeDailySummary, backfillPublicSummaries } from '../utils/dailySummary';
+import { writeDailySummary, backfillProgressHistory } from '../utils/dailySummary';
 import { fetchWidgetData } from '../widget/widgetTaskHandler';
 import { YongStudyWidget } from '../widget/YongStudyWidget';
 import * as Notifications from 'expo-notifications';
@@ -97,10 +97,10 @@ function MainTabs() {
           await requestWidgetUpdate({
             widgetName: 'YongStudyWidget',
             renderWidget: () => {
-              console.warn('[Widget] renderWidget 호출됨');
-              return React.createElement(YongStudyWidget, { data });
+              const element = React.createElement(YongStudyWidget, { data });
+              return { light: element, dark: element };
             },
-            widgetNotFound: () => { console.warn('[Widget] widgetNotFound - 홈화면에 위젯 없음'); },
+            widgetNotFound: () => {},
           });
           console.warn('[Widget] requestWidgetUpdate 완료');
         } catch (e) {
@@ -109,7 +109,7 @@ function MainTabs() {
       }
     };
     updateAll(user.uid);
-    backfillPublicSummaries().catch(() => {}); // 과거 30일 1회 백필
+    backfillProgressHistory(user.uid).catch(() => {}); // 과거 completion → progress 1회 백필
     const interval = setInterval(() => updateAll(user.uid!), 60 * 60 * 1000);
     return () => clearInterval(interval);
   }, [user?.uid]);

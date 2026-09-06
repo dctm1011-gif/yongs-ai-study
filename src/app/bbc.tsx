@@ -58,7 +58,10 @@ const PODCAST_SOURCES = [
 ] as const;
 
 // ─── Podcast episode card ─────────────────────────────────────────────────
-function EpisodeCard({ ep, color, label }: { ep: PodcastEpisode; color: string; label: string }) {
+function EpisodeCard({ ep, color, label, onComplete, isDone }: {
+  ep: PodcastEpisode; color: string; label: string;
+  onComplete?: () => void; isDone?: boolean;
+}) {
   const soundRef = useRef<Audio.Sound | null>(null);
   const [playing, setPlaying] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -109,91 +112,126 @@ function EpisodeCard({ ep, color, label }: { ep: PodcastEpisode; color: string; 
     setPlaying(false); setPositionSec(0);
   };
 
+  const handleSeek = async (deltaSec: number) => {
+    if (!soundRef.current) return;
+    const newPos = Math.max(0, Math.min(positionSec + deltaSec, durationSec || positionSec + Math.max(0, deltaSec)));
+    await soundRef.current.setPositionAsync(newPos * 1000);
+    setPositionSec(newPos);
+  };
+
   const pct = durationSec > 0 ? (positionSec / durationSec) * 100 : 0;
 
   return (
-    <View style={[styles.episodeCard, { borderLeftColor: color }]}>
-      <View style={styles.epHeader}>
-        <View style={[styles.badge, { backgroundColor: color }]}>
-          <Text style={styles.badgeText}>{label}</Text>
+    <View style={[styles.episodeCard, styles.episodeCardFull, { borderLeftColor: color }]}>
+      {/* STICKY: header + title + player */}
+      <View style={styles.stickyPlayerSection}>
+        <View style={styles.epHeader}>
+          <View style={[styles.badge, { backgroundColor: color }]}>
+            <Text style={styles.badgeText}>{label}</Text>
+          </View>
+          <Text style={styles.epDate}>{ep.pub_date}</Text>
+          {ep.episode_url ? (
+            <TouchableOpacity onPress={() => Linking.openURL(ep.episode_url)}>
+              <MaterialIcons name="open-in-new" size={14} color="#9ca3af" />
+            </TouchableOpacity>
+          ) : null}
         </View>
-        <Text style={styles.epDate}>{ep.pub_date}</Text>
-        {ep.episode_url ? (
-          <TouchableOpacity onPress={() => Linking.openURL(ep.episode_url)}>
-            <MaterialIcons name="open-in-new" size={14} color="#9ca3af" />
+        <Text style={styles.epTitle}>{ep.title}</Text>
+        <View style={styles.playerRow}>
+          <TouchableOpacity
+            style={[styles.playBtn, { backgroundColor: loading ? '#4b5563' : color }]}
+            onPress={handlePlayPause} disabled={loading}
+          >
+            {loading
+              ? <ActivityIndicator size="small" color="#fff" />
+              : <MaterialIcons name={playing ? 'pause' : 'play-arrow'} size={24} color="#fff" />}
           </TouchableOpacity>
-        ) : null}
+          <View style={styles.playerCenter}>
+            <View style={styles.progressBg}>
+              <View style={[styles.progressFill, { width: `${pct}%` as any, backgroundColor: color }]} />
+            </View>
+            <Text style={styles.playerTime}>
+              {positionSec > 0 ? `${formatDuration(positionSec)} / ` : ''}{formatDuration(durationSec)}
+            </Text>
+          </View>
+          {(playing || positionSec > 0) && (
+            <TouchableOpacity onPress={handleStop} style={styles.iconBtn}>
+              <MaterialIcons name="stop" size={18} color="#6b7280" />
+            </TouchableOpacity>
+          )}
+        </View>
+        <View style={styles.seekRow}>
+          {([[-60, '−1분'], [-10, '−10초'], [10, '+10초'], [60, '+1분']] as [number, string][]).map(([delta, label]) => (
+            <TouchableOpacity
+              key={label}
+              style={[styles.seekBtn, !soundRef.current && styles.seekBtnDisabled]}
+              onPress={() => handleSeek(delta)}
+              disabled={!soundRef.current}
+            >
+              <Text style={[styles.seekBtnText, !soundRef.current && styles.seekBtnTextDisabled]}>{label}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
 
-      <Text style={styles.epTitle}>{ep.title}</Text>
-
-      <View style={styles.playerRow}>
-        <TouchableOpacity
-          style={[styles.playBtn, { backgroundColor: loading ? '#4b5563' : color }]}
-          onPress={handlePlayPause} disabled={loading}
-        >
-          {loading
-            ? <ActivityIndicator size="small" color="#fff" />
-            : <MaterialIcons name={playing ? 'pause' : 'play-arrow'} size={24} color="#fff" />}
-        </TouchableOpacity>
-        <View style={styles.playerCenter}>
-          <View style={styles.progressBg}>
-            <View style={[styles.progressFill, { width: `${pct}%` as any, backgroundColor: color }]} />
-          </View>
-          <Text style={styles.playerTime}>
-            {positionSec > 0 ? `${formatDuration(positionSec)} / ` : ''}{formatDuration(durationSec)}
-          </Text>
-        </View>
-        {(playing || positionSec > 0) && (
-          <TouchableOpacity onPress={handleStop} style={styles.iconBtn}>
-            <MaterialIcons name="stop" size={18} color="#6b7280" />
+      {/* SCROLLABLE: sentences + done button */}
+      <ScrollView style={styles.flex} contentContainerStyle={styles.sentenceScrollContent}>
+        {ep.sentences?.length ? (() => {
+          const PREVIEW_COUNT = 5;
+          const visible = showAll ? ep.sentences : ep.sentences.slice(0, PREVIEW_COUNT);
+          return (
+            <View style={styles.sentenceListPod}>
+              {visible.map((s, i) => {
+                const prevSpeaker = i > 0 ? ep.sentences![i - 1].speaker : '';
+                const showSpeaker = s.speaker && s.speaker !== prevSpeaker;
+                const open = expandedSentence.has(i);
+                return (
+                  <View key={i} style={[styles.sentenceRowPod, i > 0 && styles.sentenceRowBorder]}>
+                    {showSpeaker && (
+                      <Text style={[styles.speakerLabel, { color }]}>{s.speaker}</Text>
+                    )}
+                    <Text style={styles.sentenceEn}>{s.en}</Text>
+                    {s.ko ? <Text style={styles.sentenceKo}>{s.ko}</Text> : null}
+                    {s.analysis ? (
+                      <>
+                        <TouchableOpacity style={styles.analysisToggle} onPress={() => toggleSentence(i)}>
+                          <Text style={[styles.analysisToggleText, { color }]}>
+                            {open ? '분석 닫기 ▲' : '문장 분석 ▼'}
+                          </Text>
+                        </TouchableOpacity>
+                        {open && (
+                          <View style={[styles.analysisBox, { borderLeftColor: color }]}>
+                            <Text style={styles.analysisText}>{s.analysis}</Text>
+                          </View>
+                        )}
+                      </>
+                    ) : null}
+                  </View>
+                );
+              })}
+              {ep.sentences.length > PREVIEW_COUNT && (
+                <TouchableOpacity onPress={() => setShowAll(v => !v)} style={styles.showAllBtn}>
+                  <Text style={[styles.scriptMoreText, { color }]}>
+                    {showAll ? '접기 ▲' : `전체 보기 (${ep.sentences.length}문장) ▼`}
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          );
+        })() : null}
+        {onComplete && (
+          <TouchableOpacity
+            style={[styles.doneBtn, isDone && styles.doneBtnDone]}
+            onPress={onComplete}
+            disabled={isDone}
+            activeOpacity={0.8}
+          >
+            <Text style={[styles.doneBtnText, isDone && styles.doneBtnTextDone]}>
+              {isDone ? '✓ 완료됨' : '완료'}
+            </Text>
           </TouchableOpacity>
         )}
-      </View>
-
-      {ep.sentences?.length ? (() => {
-        const PREVIEW_COUNT = 5;
-        const visible = showAll ? ep.sentences : ep.sentences.slice(0, PREVIEW_COUNT);
-        return (
-          <View style={styles.sentenceListPod}>
-            {visible.map((s, i) => {
-              const prevSpeaker = i > 0 ? ep.sentences![i - 1].speaker : '';
-              const showSpeaker = s.speaker && s.speaker !== prevSpeaker;
-              const open = expandedSentence.has(i);
-              return (
-                <View key={i} style={[styles.sentenceRowPod, i > 0 && styles.sentenceRowBorder]}>
-                  {showSpeaker && (
-                    <Text style={[styles.speakerLabel, { color }]}>{s.speaker}</Text>
-                  )}
-                  <Text style={styles.sentenceEn}>{s.en}</Text>
-                  {s.ko ? <Text style={styles.sentenceKo}>{s.ko}</Text> : null}
-                  {s.analysis ? (
-                    <>
-                      <TouchableOpacity style={styles.analysisToggle} onPress={() => toggleSentence(i)}>
-                        <Text style={[styles.analysisToggleText, { color }]}>
-                          {open ? '분석 닫기 ▲' : '문장 분석 ▼'}
-                        </Text>
-                      </TouchableOpacity>
-                      {open && (
-                        <View style={[styles.analysisBox, { borderLeftColor: color }]}>
-                          <Text style={styles.analysisText}>{s.analysis}</Text>
-                        </View>
-                      )}
-                    </>
-                  ) : null}
-                </View>
-              );
-            })}
-            {ep.sentences.length > PREVIEW_COUNT && (
-              <TouchableOpacity onPress={() => setShowAll(v => !v)} style={styles.showAllBtn}>
-                <Text style={[styles.scriptMoreText, { color }]}>
-                  {showAll ? '접기 ▲' : `전체 보기 (${ep.sentences.length}문장) ▼`}
-                </Text>
-              </TouchableOpacity>
-            )}
-          </View>
-        );
-      })() : null}
+      </ScrollView>
     </View>
   );
 }
@@ -387,39 +425,33 @@ export default function BBCScreen() {
         <TouchableOpacity style={styles.backBar} onPress={() => setView('home')}>
           <Text style={styles.backText}>← Listening</Text>
         </TouchableOpacity>
-        <ScrollView contentContainerStyle={styles.detailContent}>
-          <Text style={styles.dateLabel}>{today}</Text>
-          {loadingPodcasts ? (
-            <View style={styles.skeleton}>
-              <ActivityIndicator size="small" color="#9ca3af" />
-              <Text style={styles.skeletonText}>팟캐스트 불러오는 중...</Text>
-            </View>
-          ) : (
-            PODCAST_SOURCES.map(src => {
-              const ep = podcasts[src.key];
-              return ep ? (
-                <EpisodeCard key={src.key} ep={ep} color={src.color} label={src.label} />
-              ) : (
-                <View key={src.key} style={[styles.skeleton, { borderLeftWidth: 3, borderLeftColor: src.color }]}>
-                  <View style={[styles.badge, { backgroundColor: src.color }]}>
-                    <Text style={styles.badgeText}>{src.label}</Text>
-                  </View>
-                  <Text style={styles.skeletonText}>오늘의 에피소드 준비 중</Text>
+        {loadingPodcasts ? (
+          <View style={[styles.skeleton, { margin: 20 }]}>
+            <ActivityIndicator size="small" color="#9ca3af" />
+            <Text style={styles.skeletonText}>팟캐스트 불러오는 중...</Text>
+          </View>
+        ) : (
+          PODCAST_SOURCES.map(src => {
+            const ep = podcasts[src.key];
+            return ep ? (
+              <EpisodeCard
+                key={src.key}
+                ep={ep}
+                color={src.color}
+                label={src.label}
+                onComplete={() => markDone('english_news_listening', setListeningDone)}
+                isDone={listeningDone}
+              />
+            ) : (
+              <View key={src.key} style={[styles.skeleton, { margin: 20, borderLeftWidth: 3, borderLeftColor: src.color }]}>
+                <View style={[styles.badge, { backgroundColor: src.color }]}>
+                  <Text style={styles.badgeText}>{src.label}</Text>
                 </View>
-              );
-            })
-          )}
-          <TouchableOpacity
-            style={[styles.doneBtn, listeningDone && styles.doneBtnDone]}
-            onPress={() => markDone('english_news_listening', setListeningDone)}
-            disabled={listeningDone}
-            activeOpacity={0.8}
-          >
-            <Text style={[styles.doneBtnText, listeningDone && styles.doneBtnTextDone]}>
-              {listeningDone ? '✓ 완료됨' : '완료'}
-            </Text>
-          </TouchableOpacity>
-        </ScrollView>
+                <Text style={styles.skeletonText}>오늘의 에피소드 준비 중</Text>
+              </View>
+            );
+          })
+        )}
       </View>
     );
   }
@@ -519,6 +551,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#fafafa', borderRadius: 14, padding: 16,
     marginBottom: 12, borderWidth: 1, borderColor: '#e5e7eb', borderLeftWidth: 4,
   },
+  episodeCardFull: {
+    flex: 1, marginBottom: 0, borderRadius: 0,
+    borderTopWidth: 0, borderRightWidth: 0, borderBottomWidth: 0,
+  },
+  stickyPlayerSection: {
+    paddingBottom: 12, borderBottomWidth: 1, borderBottomColor: '#e5e7eb',
+  },
+  sentenceScrollContent: { paddingTop: 8, paddingBottom: 32 },
+
+  seekRow: { flexDirection: 'row', justifyContent: 'center', gap: 8, marginTop: 10 },
+  seekBtn: {
+    paddingHorizontal: 14, paddingVertical: 6,
+    borderRadius: 8, backgroundColor: '#f3f4f6', borderWidth: 1, borderColor: '#e5e7eb',
+  },
+  seekBtnDisabled: { backgroundColor: '#f9fafb', borderColor: '#f0f0f0' },
+  seekBtnText: { fontSize: 12, fontWeight: '600', color: '#374151' },
+  seekBtnTextDisabled: { color: '#d1d5db' },
   epHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 8 },
   epDate: { fontSize: 11, color: '#9ca3af', fontWeight: '600', flex: 1 },
   epTitle: { fontSize: 14, fontWeight: '700', color: '#111827', lineHeight: 20, marginBottom: 12 },

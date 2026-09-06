@@ -1,0 +1,35 @@
+[
+  {
+    "id": "pick-up",
+    "phrase": "pick up",
+    "meaning_ko": "집어들다, 배우다, 회복하다",
+    "explanation": "뭔가를 들어 올리는 것부터 시작해서, 새로운 기술을 배우거나 상황이 좋아지는 것까지 다양하게 쓰여요! 정말 유용한 친구예요 😊",
+    "example_en": "I picked up some French during my trip to Paris.",
+    "example_ko": "파리 여행 중에 프랑스어를 좀 배웠어요.",
+    "tip": "pick up speed(속도가 올라가다), pick up the phone(전화를 받다) 등 다양한 조합이 있어요!",
+    "emoji": "📚",
+    "date": "2026-09-06"
+  },
+  {
+    "id": "get-across",
+    "phrase": "get across",
+    "meaning_ko": "전달하다, 설득하다",
+    "explanation": "자신의 생각이나 의견을 상대방에게 제대로 전달하는 거예요. 발표할 때나 설명할 때 자주 써요!",
+    "example_en": "The presenter struggled to get her message across to the audience.",
+    "example_ko": "그 발표자는 청중에게 자신의 메시지를 전달하기 어려워했어요.",
+    "tip": "communicate, convey와 비슷하지만 '노력해서 전달한다'는 뉘앙스가 강해요!",
+    "emoji": "💬",
+    "date": "2026-09-06"
+  },
+  {
+    "id": "follow-up",
+    "phrase": "follow up",
+    "meaning_ko": "사후 조치를 하다, 후속 조치를 취하다",
+    "explanation": "처음 액션 후에 그다음 단계를 챙기는 거예요. 비즈니스에서 매우 중요한 표현이에요! 🤝",
+    "example_en": "Don't forget to follow up with the client after the meeting.",
+    "example_ko": "미팅 후에 클라이언트에게 사후 조치를 꼭 해야 해요.",
+    "tip": "follow-up (명사)으로도 쓸 수 있어요: 'a follow-up email' (후속 이메일)",
+    "emoji": "✉️",
+    "date": "2026-09-06"
+  }
+]

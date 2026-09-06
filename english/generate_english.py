@@ -15,6 +15,7 @@ import anthropic
 ROOT = Path(__file__).parent.parent
 OUTPUT_HTML = ROOT / "english" / "index.html"
 WORDS_DB_JSON = ROOT / "english" / "words_db.json"
+IDIOMS_DB_JSON = ROOT / "english" / "idioms_db.json"
 TOEFL_OUTPUT_HTML = ROOT / "toefl" / "index.html"
 
 sys.path.insert(0, str(ROOT / "history"))
@@ -2078,6 +2079,107 @@ def deploy_to_netlify(word_count: int = 0, quiz_count: int = 0, target_date=None
     _trigger_firebase_functions(date_str)
 
 
+def load_used_idioms() -> list:
+    """idioms_db.json에 등록된 구동사 목록 (중복 방지용)."""
+    if not IDIOMS_DB_JSON.exists():
+        return []
+    try:
+        entries = json.loads(IDIOMS_DB_JSON.read_text(encoding="utf-8"))
+        return [e.get("phrase", "") for e in entries if e.get("phrase")]
+    except Exception:
+        return []
+
+
+def generate_idioms(client, target_date: date) -> list:
+    """구동사·숙어 3개 생성 (Haiku)."""
+    import re as _re
+    used = load_used_idioms()
+    used_str = ", ".join(used[-30:]) if used else "없음"
+
+    prompt = (
+        "초보~중급 영어 학습자를 위한 실용 영어 구동사(phrasal verb) 또는 숙어(idiom) 3개를 생성하세요.\n"
+        "예시: range from, fall through, carry out, look into, come up with, break down, run out of, account for\n"
+        f"이미 사용됨(제외): {used_str}\n\n"
+        "규칙:\n"
+        "- 동사+전치사/부사 조합(구동사) 또는 2-3개 단어 숙어만\n"
+        "- 일상 대화·학술 글쓰기에서 실제로 자주 쓰이는 것\n"
+        "- 3개는 서로 다른 맥락(일상/학업/비즈니스 등)에서 선정\n"
+        "- explanation은 한국어로, 애교있는 말투로 쉽게 설명\n\n"
+        "JSON 배열만 반환 (다른 텍스트 없이):\n"
+        '[{"id":"carry-out","phrase":"carry out","meaning_ko":"수행하다, 실행하다",'
+        '"explanation":"계획이나 임무를 실제로 실행에 옮기는 거예요! 학술 글쓰기에서 특히 자주 보여요 🎯",'
+        '"example_en":"Scientists carry out experiments to test their hypotheses.",'
+        '"example_ko":"과학자들은 가설을 검증하기 위해 실험을 수행해요.",'
+        '"tip":"유사 표현: perform, conduct, execute. carry on(계속하다)과 혼동 주의!",'
+        '"emoji":"✅"}]'
+    )
+
+    for attempt in range(3):
+        resp = client.messages.create(
+            model="claude-haiku-4-5-20251001",
+            max_tokens=2000,
+            messages=[{"role": "user", "content": prompt}]
+        )
+        raw = resp.content[0].text.strip()
+        m = _re.search(r'\[[\s\S]*\]', raw)
+        if not m:
+            print(f"[Idioms] JSON 없음 (시도 {attempt+1})")
+            continue
+        try:
+            idioms = json.loads(m.group(0))
+            if len(idioms) >= 3:
+                return idioms[:3]
+        except json.JSONDecodeError as e:
+            print(f"[Idioms] JSON 파싱 실패 (시도 {attempt+1}): {e}")
+    return []
+
+
+def update_idioms_db(idioms: list, target_date: date) -> None:
+    """새 구동사를 idioms_db.json에 추가."""
+    existing = []
+    if IDIOMS_DB_JSON.exists():
+        try:
+            existing = json.loads(IDIOMS_DB_JSON.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+    existing_phrases = {e.get("phrase", "").lower() for e in existing}
+    new_entries = [
+        {**idiom, "date": str(target_date)}
+        for idiom in idioms
+        if idiom.get("phrase", "").lower() not in existing_phrases
+    ]
+    if new_entries:
+        existing.extend(new_entries)
+        IDIOMS_DB_JSON.write_text(json.dumps(existing, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"[Idioms] idioms_db.json에 {len(new_entries)}개 추가 (총 {len(existing)}개)")
+
+
+def write_idioms_to_firebase(idioms: list, target_date: date) -> None:
+    """구동사를 Firebase english/idioms/{date}에 PUT."""
+    import urllib.request as ur
+    db_url = os.environ.get(
+        "EXPO_PUBLIC_FIREBASE_DATABASE_URL",
+        "https://yongstudy-1f242-default-rtdb.asia-southeast1.firebasedatabase.app"
+    )
+    date_str = str(target_date)
+    try:
+        with ur.urlopen(f"{db_url}/english/idioms/{date_str}.json", timeout=5) as r:
+            existing = json.loads(r.read())
+            if existing and existing.get("idioms"):
+                print(f"[Idioms] 이미 완료됨: {date_str}, 스킵")
+                return
+    except Exception:
+        pass
+    payload = json.dumps({"date": date_str, "idioms": idioms}, ensure_ascii=False).encode("utf-8")
+    req = ur.Request(
+        f"{db_url}/english/idioms/{date_str}.json",
+        data=payload, method="PUT",
+        headers={"Content-Type": "application/json"}
+    )
+    with ur.urlopen(req, timeout=15) as r:
+        print(f"[Idioms] Firebase PUT {r.status}: {len(idioms)}개 구동사 저장 ({date_str})")
+
+
 def get_api_key() -> str:
     key = os.environ.get("ANTHROPIC_API_KEY", "")
     if key:
@@ -2147,6 +2249,17 @@ def main(target_date: date = None):
     except Exception as e:
         print(f"[!] TOEFL 생성 실패: {e}")
         notify(f"⚠️ **TOEFL 생성 실패**: {e}")
+
+    try:
+        idioms = generate_idioms(client, target_date)
+        if idioms:
+            write_idioms_to_firebase(idioms, target_date)
+            update_idioms_db(idioms, target_date)
+            print(f"[+] 구동사/숙어: {[i['phrase'] for i in idioms]}")
+        else:
+            print("[!] 구동사 생성 실패 (스킵)")
+    except Exception as e:
+        print(f"[!] 구동사 생성 오류: {e}")
 
     deploy_to_netlify(word_count=word_count, quiz_count=quiz_count, target_date=target_date)
 
