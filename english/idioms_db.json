@@ -64,5 +64,38 @@
     "tip": "유사 표현: handle, manage, tackle. 'deal'은 거래, 처리 등 여러 뜻이 있어요!",
     "emoji": "🤝",
     "date": "2026-09-07"
+  },
+  {
+    "id": "break-down",
+    "phrase": "break down",
+    "meaning_ko": "분석하다, 세분화하다",
+    "explanation": "복잡한 거를 작은 부분으로 쪼개서 이해하기 쉽게 만드는 거예요! 학업이나 업무에서 정말 많이 써요 📊",
+    "example_en": "Let me break down this problem into smaller steps.",
+    "example_ko": "이 문제를 더 작은 단계로 나눠서 설명해줄게.",
+    "tip": "breakdown(명사)으로도 사용돼요. 'emotional breakdown'처럼 말이에요!",
+    "emoji": "🔍",
+    "date": "2026-09-08"
+  },
+  {
+    "id": "run-out-of",
+    "phrase": "run out of",
+    "meaning_ko": "~이 떨어지다, 부족하다",
+    "explanation": "어떤 것이 다 없어져서 더 이상 없는 상태가 되는 거예요! 일상에서 가장 흔하게 쓰는 표현이에요 😅",
+    "example_en": "We ran out of coffee this morning, so I had to drink tea instead.",
+    "example_ko": "오늘 아침 커피가 떨어져서 차를 마셨어.",
+    "tip": "'run low on(거의 떨어지다)'보다 'run out of(완전히 떨어지다)'가 더 확실해요!",
+    "emoji": "⏳",
+    "date": "2026-09-08"
+  },
+  {
+    "id": "look-into",
+    "phrase": "look into",
+    "meaning_ko": "~을 조사하다, 살펴보다",
+    "explanation": "뭔가 의심스럽거나 궁금한 걸 자세히 조사해보는 거예요! 비즈니스 이메일에서도 자주 나와요 🔎",
+    "example_en": "The manager will look into the customer's complaint next week.",
+    "example_ko": "매니저가 다음주에 고객 불만을 조사할 거예요.",
+    "tip": "investigate와 비슷하지만 look into가 더 일상적이고 friendly해요!",
+    "emoji": "🕵️",
+    "date": "2026-09-08"
   }
 ]

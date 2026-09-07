@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   View,
   Text,
@@ -22,6 +22,7 @@ import { getFirebaseApp } from '../config/firebase';
 import { userRef } from '../utils/userDb';
 import { useAuth } from '../context/AuthContext';
 import { BookSection } from '../components/BookDiary';
+import { DiaryCalendarModal } from '../components/DiaryCalendar';
 import {
   getDayIndex,
   DiaryVocab,
@@ -63,6 +64,9 @@ export default function CultureScreen() {
   const uid = user?.uid ?? '';
   const cards = useStaggerFade(2, 70);
   const today = getKSTDateString();
+  const scrollViewRef = useRef<ScrollView>(null);
+  const diaryInputRef = useRef<TextInput>(null);
+  const [diaryModalVisible, setDiaryModalVisible] = useState(false);
 
   // ── 독서 ─────────────────────────────────────────────────────────
   const [readingDone, setReadingDone] = useState(false);
@@ -170,7 +174,7 @@ export default function CultureScreen() {
 
   return (
     <SafeAreaView style={s.safeArea} edges={['top']}>
-    <ScrollView style={s.container} contentContainerStyle={s.content} keyboardShouldPersistTaps="handled">
+    <ScrollView ref={scrollViewRef} style={s.container} contentContainerStyle={s.content} keyboardShouldPersistTaps="handled">
       <Text style={s.screenTitle}>Korean</Text>
 
       {/* ── 독서 카드 ─────────────────────────────────────────── */}
@@ -234,11 +238,19 @@ export default function CultureScreen() {
         <View style={s.cardHeader}>
           <MaterialIcons name="edit-note" size={24} color="#059669" />
           <Text style={s.cardTitle}>오늘의 어휘 일기</Text>
-          {diaryDone && (
-            <View style={[s.streakBadge, { borderColor: '#bbf7d0', backgroundColor: '#f0fdf4' }]}>
-              <Text style={[s.streakText, { color: '#16a34a' }]}>✅ 완료</Text>
-            </View>
-          )}
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+            {diaryDone && (
+              <View style={[s.streakBadge, { borderColor: '#bbf7d0', backgroundColor: '#f0fdf4' }]}>
+                <Text style={[s.streakText, { color: '#16a34a' }]}>✅ 완료</Text>
+              </View>
+            )}
+            <TouchableOpacity
+              onPress={() => setDiaryModalVisible(true)}
+              style={{ paddingHorizontal: 8, paddingVertical: 4, borderRadius: 8, backgroundColor: '#f0fdf4', borderWidth: 1, borderColor: '#bbf7d0' }}
+            >
+              <Text style={{ fontSize: 11, color: '#059669', fontWeight: '600' }}>📔 지난 일기</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
         <Text style={s.diaryGuide}>아래 어휘 3개를 모두 사용해서 오늘 일기를 써보세요</Text>
@@ -265,6 +277,7 @@ export default function CultureScreen() {
         ) : (
           <>
             <TextInput
+              ref={diaryInputRef}
               style={s.diaryInput}
               placeholder="오늘 하루를 자유롭게 적어보세요..."
               placeholderTextColor="#adb5bd"
@@ -272,6 +285,11 @@ export default function CultureScreen() {
               value={diaryText}
               onChangeText={setDiaryText}
               textAlignVertical="top"
+              onFocus={() => {
+                setTimeout(() => {
+                  scrollViewRef.current?.scrollToEnd({ animated: true });
+                }, 300);
+              }}
             />
             <Text style={s.diaryCharCount}>{diaryText.length}자</Text>
             <TouchableOpacity
@@ -291,6 +309,12 @@ export default function CultureScreen() {
       </Animated.View>
 
     </ScrollView>
+
+    <DiaryCalendarModal
+      uid={uid}
+      visible={diaryModalVisible}
+      onClose={() => setDiaryModalVisible(false)}
+    />
     </SafeAreaView>
   );
 }
@@ -299,7 +323,7 @@ const s = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: '#fff' },
   centered: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff' },
   container: { flex: 1, backgroundColor: '#fff' },
-  content: { padding: 16, paddingTop: 16, paddingBottom: 32 },
+  content: { padding: 16, paddingTop: 16, paddingBottom: 350 },
   screenTitle: { fontSize: 26, fontWeight: '600', color: '#262626', marginBottom: 20 },
   card: {
     backgroundColor: '#fff', borderRadius: 16, padding: 20,

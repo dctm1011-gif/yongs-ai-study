@@ -5,6 +5,38 @@ import { CHECKLIST_KEYS, isDone } from '../constants/studyKeys';
 
 const DB_URL = 'https://yongstudy-1f242-default-rtdb.asia-southeast1.firebasedatabase.app';
 
+function calcPct(completion: Record<string, any>): number {
+  const done = CHECKLIST_KEYS.filter(k => isDone(completion[k])).length;
+  return Math.round((done / CHECKLIST_KEYS.length) * 100);
+}
+
+async function fetchMonthCalendar(yr: number, mo: number): Promise<Record<string, number>> {
+  const mm = String(mo + 1).padStart(2, '0');
+  const start = `${yr}-${mm}-01`;
+  const end = `${yr}-${mm}-31`;
+  try {
+    const url = `${DB_URL}/studySummary.json?orderBy="$key"&startAt="${start}"&endAt="${end}"`;
+    const res = await fetch(url);
+    if (!res.ok) return {};
+    const json = await res.json();
+    if (!json) return {};
+    const result: Record<string, number> = {};
+    for (const [key, val] of Object.entries(json as Record<string, any>)) {
+      const d = val as any;
+      const pct =
+        typeof d.progress?.pct === 'number'
+          ? d.progress.pct
+          : d.completion
+          ? calcPct(d.completion)
+          : 0;
+      result[key] = pct;
+    }
+    return result;
+  } catch {
+    return {};
+  }
+}
+
 function getKSTDateString(): string {
   const now = new Date(Date.now() + 9 * 3600000);
   return now.toISOString().slice(0, 10);
@@ -19,6 +51,10 @@ function getDisplayDate(): string {
 
 export async function fetchWidgetData(): Promise<WidgetData> {
   const date = getKSTDateString();
+  const now = new Date(Date.now() + 9 * 3600000);
+  const yr = now.getUTCFullYear();
+  const mo = now.getUTCMonth();
+
   const fallback: WidgetData = {
     date: getDisplayDate(),
     completed: 0,
@@ -29,13 +65,17 @@ export async function fetchWidgetData(): Promise<WidgetData> {
     poolGraduated: 0,
     streak: 0,
     activities: {},
+    calendarData: {},
   };
 
   try {
-    const res = await fetch(`${DB_URL}/studySummary/${date}.json`);
-    if (!res.ok) return fallback;
+    const [res, calendarData] = await Promise.all([
+      fetch(`${DB_URL}/studySummary/${date}.json`),
+      fetchMonthCalendar(yr, mo),
+    ]);
+    if (!res.ok) return { ...fallback, calendarData };
     const data = await res.json();
-    if (!data) return fallback;
+    if (!data) return { ...fallback, calendarData };
 
     const completion = data.completion ?? {};
     const english = data.english ?? {};
@@ -63,6 +103,7 @@ export async function fetchWidgetData(): Promise<WidgetData> {
       poolGraduated: english.pool?.graduated ?? 0,
       streak: 0,
       activities,
+      calendarData,
     };
   } catch {
     return fallback;

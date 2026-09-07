@@ -1,10 +1,5 @@
 [
   {
-    "date": "2026-08-28",
-    "name": "NVIDIA",
-    "ticker": "NVDA"
-  },
-  {
     "date": "2026-08-29",
     "name": "PayPal",
     "ticker": "PYPL"
@@ -48,5 +43,10 @@
     "date": "2026-09-06",
     "name": "Intel",
     "ticker": "INTC"
+  },
+  {
+    "date": "2026-09-07",
+    "name": "Tesla",
+    "ticker": "TSLA"
   }
 ]

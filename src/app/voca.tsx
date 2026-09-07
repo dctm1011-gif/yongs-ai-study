@@ -932,9 +932,32 @@ export default function VocaScreen() {
     try {
       const today = getKSTDateString();
       const snap = await get(userRef(uid, `english/reviewStory/${today}`));
-      setReviewStory(snap.exists() ? snap.val() : null);
+      if (snap.exists()) {
+        setReviewStory(snap.val());
+        return;
+      }
+      // 스토리 없으면 온디맨드 생성
+      const readWords = words.filter(w => w.isRead).map(w => ({ word: w.word, meaning: w.meaning }));
+      if (readWords.length === 0) {
+        setReviewStory(null);
+        return;
+      }
+      const res = await fetch(`${NETLIFY_BASE_URL}/api/review-story`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ words: readWords }),
+      });
+      if (!res.ok) { setReviewStory(null); return; }
+      const story: ReviewStory = await res.json();
+      if (story?.sentences?.length) {
+        setReviewStory(story);
+        const db = getDatabase(getFirebaseApp());
+        dbSet(ref(db, `users/${uid}/english/reviewStory/${today}`), story).catch(() => {});
+      } else {
+        setReviewStory(null);
+      }
     } catch (e) {
-      console.warn('review story 로드 실패:', e);
+      console.warn('review story 로드/생성 실패:', e);
       setReviewStory(null);
     } finally {
       setReviewLoading(false);
@@ -1868,7 +1891,7 @@ const StoryReviewView = React.memo(({ story, loading, uid, onReload, onComplete 
   if (!story) {
     return (
       <View style={styles.reviewEmpty}>
-        <Text style={styles.reviewEmptyText}>오늘 스토리가 아직 없어요.{'\n'}매일 오전 자동 생성됩니다.</Text>
+        <Text style={styles.reviewEmptyText}>스토리 생성에 실패했어요.{'\n'}다시 시도해주세요.</Text>
         <TouchableOpacity style={[styles.filterButton, { marginTop: 16 }]} onPress={onReload}>
           <Text style={styles.filterButtonText}>↺ 다시 시도</Text>
         </TouchableOpacity>

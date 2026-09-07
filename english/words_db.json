@@ -3470,5 +3470,65 @@
     "explanation": "본래 상품이 아니었던 것(예: 문화, 감정, 관계)을 상품으로 만들어 거래 대상으로 전환하는 과정. 자본주의 비판에서 중요한 개념",
     "tip": "동의어: marketization | 관련어: commodify(동사) | 출제영역: 사회학, 철학, 경제학",
     "emoji": "💰"
+  },
+  {
+    "id": "proprietary",
+    "word": "proprietary",
+    "pos": "adjective",
+    "date": "2026-09-08",
+    "meaning": "독점적인, 전유의, 사유의",
+    "example_ko": "그 회사는 자신의 독점 소프트웨어를 경쟁사로부터 숨겨둔다.",
+    "example_en": "The company keeps its proprietary software hidden from competitors.",
+    "explanation": "owned or controlled exclusively by a particular person or company; not shared or made public",
+    "tip": "동의어: exclusive, confidential / 반의어: public, open / 출제영역: 비즈니스, 기술",
+    "emoji": "🔐"
+  },
+  {
+    "id": "hermeneutics",
+    "word": "hermeneutics",
+    "pos": "noun",
+    "date": "2026-09-08",
+    "meaning": "해석학, 텍스트 해석의 이론과 방법",
+    "example_ko": "성서 해석학은 학자들이 고대 종교 텍스트를 이해하는 데 도움을 준다.",
+    "example_en": "Biblical hermeneutics helps scholars understand ancient religious texts.",
+    "explanation": "the science and art of interpreting texts, especially religious or literary works; the study of interpretation principles",
+    "tip": "동의어: exegesis, interpretation / 출제영역: 인문학, 종교학, 철학",
+    "emoji": "📚"
+  },
+  {
+    "id": "demographics",
+    "word": "demographics",
+    "pos": "noun",
+    "date": "2026-09-08",
+    "meaning": "인구통계, 인구 구성",
+    "example_ko": "마케팅 팀은 이상적인 고객을 찾기 위해 인구통계를 분석한다.",
+    "example_en": "Marketing teams analyze demographics to target their ideal customers.",
+    "explanation": "statistical data relating to the population and groups within it, such as age, gender, income, and education level",
+    "tip": "동의어: statistics, population data / 관련어: demographic / 출제영역: 마케팅, 사회학, 통계",
+    "emoji": "📊"
+  },
+  {
+    "id": "cognitive-dissonance",
+    "word": "cognitive dissonance",
+    "pos": "noun phrase",
+    "date": "2026-09-08",
+    "meaning": "인지부조화, 인지적 불협화음",
+    "example_ko": "그는 자신의 행동이 표명한 가치관과 모순될 때 인지부조화를 느꼈다.",
+    "example_en": "He felt cognitive dissonance when his actions contradicted his stated values.",
+    "explanation": "the psychological discomfort experienced when holding contradictory beliefs, values, or attitudes simultaneously",
+    "tip": "동의어: mental conflict / 개념: 심리학의 Festinger 이론 / 출제영역: 심리학, 철학",
+    "emoji": "🧠"
+  },
+  {
+    "id": "iconography",
+    "word": "iconography",
+    "pos": "noun",
+    "date": "2026-09-08",
+    "meaning": "도상학, 상징 체계",
+    "example_ko": "르네상스 회화의 도상학은 종종 종교적 상징을 포함한다.",
+    "example_en": "The iconography in Renaissance paintings often includes religious symbolism.",
+    "explanation": "the study or interpretation of symbols and images; a system of symbols and images used to represent something",
+    "tip": "동의어: symbolism, imagery / 관련어: icon / 출제영역: 미술사, 문화학",
+    "emoji": "🎨"
   }
 ]

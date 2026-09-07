@@ -1,114 +1,187 @@
 {
-  "date": "2026-09-07",
+  "date": "2026-09-08",
   "reading": {
-    "title": "Bioluminescence in Deep Sea Creatures",
-    "passage": "Bioluminescence is the production of light by living organisms through chemical reactions. In the deep ocean, where sunlight cannot penetrate, many creatures have evolved this remarkable ability. Fish, squid, and jellyfish use bioluminescence for various purposes: attracting prey, communicating with potential mates, and confusing predators. The process involves a protein called luciferin that reacts with oxygen to produce light. Scientists estimate that approximately 90% of deep-sea creatures possess some form of bioluminescence, making it one of nature's most common adaptations in extreme environments.",
+    "title": "Ancient Pottery Techniques and Archaeological Significance",
+    "passage": "Pottery stands as one of the most valuable artifacts in archaeological research, offering profound insights into past civilizations. The analysis of ceramic techniques reveals not only the technological capabilities of ancient peoples but also their cultural values and trade networks. Archaeologists employ thermoluminescence dating, which measures the radiation accumulated in pottery clay over millennia, to establish chronological frameworks with remarkable precision. This method has revolutionized our understanding of settlement patterns and cultural diffusion across continents.\n\nFurthermore, pottery decoration patterns and vessel morphology provide critical information about social hierarchies and economic systems. Excavations in Mesopotamia, for instance, revealed that intricate painted designs were predominantly found in elite residences, suggesting a correlation between artistic sophistication and social status. The standardization of pottery shapes across regions indicates organized trade routes and cultural exchange. Recent studies utilizing neutron activation analysis have identified clay sources and traced pottery distributions, demonstrating how ancient merchants transported ceramics across vast distances, fundamentally transforming our comprehension of pre-industrial commerce.",
+    "vocabulary": [
+      {
+        "word": "artifact",
+        "meaning_ko": "고고학적 유물; 인공물"
+      },
+      {
+        "word": "thermoluminescence",
+        "meaning_ko": "열형광; 고열에 의해 방출되는 빛을 이용한 연대 측정법"
+      },
+      {
+        "word": "chronological",
+        "meaning_ko": "시간 순서대로 배열된; 연대순의"
+      },
+      {
+        "word": "morphology",
+        "meaning_ko": "형태; 구조적 형태"
+      },
+      {
+        "word": "diffusion",
+        "meaning_ko": "확산; 전파"
+      },
+      {
+        "word": "neutron activation analysis",
+        "meaning_ko": "중성자 방사능 분석; 원소 조성 분석 기법"
+      },
+      {
+        "word": "standardization",
+        "meaning_ko": "표준화; 규격화"
+      }
+    ],
     "questions": [
       {
-        "q": "According to the passage, what is the primary purpose of bioluminescence in deep-sea creatures?",
+        "q": "According to the passage, what can thermoluminescence dating measure in pottery?",
         "options": [
-          "A) To regulate body temperature",
-          "B) To attract prey, communicate, and defend against predators",
-          "C) To navigate through the water",
-          "D) To produce energy for movement"
+          "The decorative patterns applied by ancient artisans",
+          "The radiation accumulated in pottery clay over time",
+          "The social status of the individuals who owned the pottery",
+          "The specific trade routes used by ancient merchants"
         ],
         "answer": 1,
-        "explanation": "지문에서 생물발광의 목적으로 '먹이를 끌어당기는 것, 짝짓기 대상과 소통하기, 포식자 혼동하기'를 명시적으로 언급했습니다."
+        "explanation": "지문에서 '열형광 연대 측정은 수천년에 걸쳐 도자기 점토에 축적된 방사선을 측정한다'고 명시되어 있습니다."
       },
       {
-        "q": "What protein is responsible for producing light in bioluminescent organisms?",
+        "q": "What can be inferred from the passage about the relationship between pottery decoration and social status in Mesopotamia?",
         "options": [
-          "A) Chlorophyll",
-          "B) Hemoglobin",
-          "C) Luciferin",
-          "D) Keratin"
+          "Elaborate designs were equally common in all residential areas",
+          "Simple pottery designs were preferred by wealthy elites",
+          "Intricate painted designs were associated with higher social ranks",
+          "Pottery decoration had no connection to economic prosperity"
         ],
         "answer": 2,
-        "explanation": "지문의 'a protein called luciferin that reacts with oxygen to produce light' 부분에서 루시페린이 빛을 생성하는 단백질임을 명확히 합니다."
+        "explanation": "지문에서 정교한 회화 장식이 주로 엘리트 거주지에서 발견되었다고 하여, 예술적 정교함과 사회적 지위의 상관관계를 암시하고 있습니다."
       },
       {
-        "q": "According to the passage, approximately what percentage of deep-sea creatures have bioluminescence?",
+        "q": "The word 'standardization' in the final sentence is closest in meaning to",
         "options": [
-          "A) 50%",
-          "B) 70%",
-          "C) 90%",
-          "D) 100%"
+          "random variation in design",
+          "consistent uniformity of form across regions",
+          "the decline of artistic quality",
+          "individual customization of pottery shapes"
         ],
-        "answer": 2,
-        "explanation": "지문의 마지막 문장에서 'approximately 90% of deep-sea creatures possess some form of bioluminescence'라고 명시되어 있습니다."
+        "answer": 1,
+        "explanation": "'표준화'는 지역 간에 일관되고 균일한 형태를 유지하는 것을 의미합니다."
+      },
+      {
+        "q": "Why does the author mention neutron activation analysis in the passage?",
+        "options": [
+          "To criticize traditional archaeological methods",
+          "To explain how archaeologists identified clay sources and traced pottery distribution patterns",
+          "To suggest that ancient ceramics had no economic value",
+          "To argue that thermoluminescence dating is unreliable"
+        ],
+        "answer": 1,
+        "explanation": "저자는 중성자 방사능 분석이 점토 출처를 특정하고 도자기 분포를 추적하는 데 사용되었으며, 이를 통해 전산업 시대의 상업에 대한 이해를 변화시켰다고 언급합니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the following statement: Technology has made human relationships stronger? Support your position with specific reasons and examples.",
-    "structure": {
-      "intro": "도입부: 자신의 입장을 명확하게 제시합니다. '동의한다/동의하지 않는다'를 명확히 선언하고 간단한 이유를 언급합니다.",
-      "body1": "본론1: 첫 번째 주요 이유를 설명하고 구체적인 예시를 제공합니다. (소셜 미디어로 먼 거리의 친구와 연결, 또는 대면 관계 감소)",
-      "body2": "본론2: 두 번째 주요 이유를 제시합니다. (의사소통의 편의성 증가 vs. 심층적 대화 부족)",
-      "conclusion": "결론부: 서론의 입장을 재강조하고 전체 논의를 요약합니다."
-    },
-    "useful_phrases": [
-      "In my opinion,",
-      "I strongly agree/disagree that",
-      "One significant reason is that",
-      "For example,",
-      "Furthermore,",
-      "On the other hand,",
-      "In conclusion,",
-      "This demonstrates that"
+    "sentences": [
+      {
+        "original": "Pottery stands as one of the most valuable artifacts in archaeological research, offering profound insights into past civilizations.",
+        "paraphrase": "Archaeological investigations rely heavily on pottery as a crucial artifact category that enables researchers to gain deep understanding of ancient societies.",
+        "tip": "명사구(most valuable artifacts) → 동사구(rely on pottery)로 변환하고, 능동태 유지하면서 의미 재구성"
+      },
+      {
+        "original": "The analysis of ceramic techniques reveals not only the technological capabilities of ancient peoples but also their cultural values and trade networks.",
+        "paraphrase": "By examining ceramic production methods, archaeologists can uncover information regarding both technological advancement and the cultural beliefs and commercial connections of historical communities.",
+        "tip": "동의어 치환(analysis→examining, reveals→uncover) 및 명사구 확장(cultural values and trade networks→cultural beliefs and commercial connections)"
+      },
+      {
+        "original": "Archaeologists employ thermoluminescence dating, which measures the radiation accumulated in pottery clay over millennia, to establish chronological frameworks with remarkable precision.",
+        "paraphrase": "To create accurate timelines of historical periods, scientists utilize thermoluminescence dating methodology, a technique that quantifies the radioactive particles that have gathered within ceramic materials across thousands of years.",
+        "tip": "관계절 간소화 및 동의어 기법(employ→utilize, establish→create, remarkable precision→accurate timelines)"
+      },
+      {
+        "original": "Excavations in Mesopotamia revealed that intricate painted designs were predominantly found in elite residences, suggesting a correlation between artistic sophistication and social status.",
+        "paraphrase": "Archaeological digs conducted in Mesopotamia discovered that elaborate decorative patterns appeared primarily in wealthy households, implying a connection between aesthetic refinement and hierarchical position in society.",
+        "tip": "구체적 지역명 유지, 동의어 다수 사용(intricate→elaborate, elite→wealthy, suggesting→implying, correlation→connection)"
+      },
+      {
+        "original": "Recent studies utilizing neutron activation analysis have identified clay sources and traced pottery distributions, demonstrating how ancient merchants transported ceramics across vast distances.",
+        "paraphrase": "Modern research employing neutron activation analysis technology has successfully pinpointed the origins of clay materials and documented the geographic spread of pottery products, thereby illustrating the extensive commercial networks through which ancient traders distributed these ceramic goods.",
+        "tip": "능동→수동 혼합, 동의어 적극 활용(identified→pinpointed, traced→documented, demonstrating→illustrating)"
+      }
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to work in a team environment. Others prefer to work independently. Which do you prefer and why?",
-    "useful_expressions": [
-      "In my opinion, I prefer...",
-      "One reason is that teamwork allows...",
-      "Another important point is that...",
-      "For instance,",
-      "This is because..."
-    ],
-    "sample_points": [
-      "팀 환경: 다양한 관점과 아이디어 공유, 동료로부터 배우는 기회, 문제 해결 속도 향상",
-      "독립 업무: 개인의 창의성 발휘, 방해 없이 집중, 자신의 속도대로 진행 가능"
+    "prompt": "Some people prefer to shop online for convenience and variety. Others prefer to shop in physical stores for personal experience and immediate gratification. Which do you prefer and why? Include specific reasons and details.",
+    "model_sentences": [
+      "I personally prefer shopping in physical stores because I value the ability to examine products directly before making a purchase decision.",
+      "First, visiting a store allows me to see the actual quality, color, and size of items, which helps me avoid returning unsuitable purchases.",
+      "For example, when I bought clothes online last year, the color appeared different from the product description, and I had to go through a tedious return process that took several weeks.",
+      "Additionally, shopping in-store provides immediate satisfaction—I can use the product right away rather than waiting for shipping.",
+      "Although online shopping offers convenience, I believe the tangible benefits of in-store shopping, such as quality assurance and instant gratification, outweigh the time investment required."
     ]
   },
   "listening": {
-    "title": "Office Lunch Preferences",
+    "title": "Dormitory Housing Assignment Inquiry",
     "type": "conversation",
-    "script": "Student: Hi Maria, are you going to the cafeteria for lunch today? Maria: I was thinking about it, but I'm tired of the same old sandwiches and salads. Student: Yeah, I feel the same way. I heard there's a new food truck outside the building. They serve Mexican food. Maria: Really? I love Mexican food! What do they have? Student: According to the menu online, they have tacos, burritos, and quesadillas. Everything looks fresh. Plus, it's cheaper than the cafeteria. Maria: That sounds great! Let me go get my wallet. But first, I need to finish this email. Student: No problem. I'll meet you at the main entrance in fifteen minutes. We can walk over together. Maria: Perfect! See you soon.",
+    "script": "Student A: Hi, I'm calling about my dormitory housing assignment. I haven't received my room allocation yet, and classes start in two weeks.\n\nHousing Officer: Of course, I can help with that. Can I have your student ID number, please?\n\nStudent A: Sure, it's 847295.\n\nHousing Officer: Thank you. Let me check our system. I see here that your application was processed, but there's been a delay due to recent renovations in the east wing. We're finalizing the assignments now.\n\nStudent A: Oh, I see. When will I know my room number and building location?\n\nHousing Officer: You should receive an email notification by this Friday with all the details. Additionally, we're offering priority placement for students who submit their housing preferences online within 48 hours. This significantly increases your chances of getting a preferred dormitory.\n\nStudent A: That's helpful information. Is there anything else I should do to prepare?\n\nHousing Officer: Just confirm your acceptance of the assignment once you receive it, and bring your student ID to the move-in day. We'll have staff available to assist with questions.",
+    "vocabulary": [
+      {
+        "word": "allocation",
+        "meaning_ko": "할당; 배정"
+      },
+      {
+        "word": "renovations",
+        "meaning_ko": "개수; 리모델링"
+      },
+      {
+        "word": "preference",
+        "meaning_ko": "선호; 우선 선택"
+      },
+      {
+        "word": "priority placement",
+        "meaning_ko": "우선 배정"
+      },
+      {
+        "word": "notification",
+        "meaning_ko": "통지; 알림"
+      },
+      {
+        "word": "confirmation",
+        "meaning_ko": "확인; 승인"
+      }
+    ],
     "questions": [
       {
-        "q": "What is the main reason the student suggests going to the food truck instead of the cafeteria?",
+        "q": "What is the main reason for the delay in the student's housing assignment?",
         "options": [
-          "A) Maria specifically requested Mexican food",
-          "B) The food is fresher and more affordable",
-          "C) The cafeteria is closed today",
-          "D) They want to get exercise by walking"
+          "The student submitted the application too late",
+          "Recent renovations in the east wing caused processing delays",
+          "The housing office lost the student's application",
+          "The student has not yet submitted housing preferences"
         ],
         "answer": 1,
-        "explanation": "'Everything looks fresh. Plus, it's cheaper than the cafeteria'라는 대사에서 신선함과 가격이 주요 이유임을 알 수 있습니다."
+        "explanation": "주택 담당자가 '동쪽 건물의 최근 개수로 인해 지연이 발생했다'고 명시합니다."
       },
       {
-        "q": "How long will the student wait before meeting Maria at the entrance?",
+        "q": "What does the housing officer suggest to increase chances of getting a preferred dormitory?",
         "options": [
-          "A) 5 minutes",
-          "B) 10 minutes",
-          "C) 15 minutes",
-          "D) 20 minutes"
+          "Contacting the housing office in person",
+          "Requesting priority placement for a specific building",
+          "Submitting housing preferences online within 48 hours",
+          "Waiting until after Friday to confirm the assignment"
         ],
         "answer": 2,
-        "explanation": "Student이 'I'll meet you at the main entrance in fifteen minutes'라고 명확히 말했습니다."
+        "explanation": "담당자는 48시간 내에 온라인으로 주택 선호를 제출하면 선호하는 기숙사를 배정받을 가능성이 크게 높아진다고 제안합니다."
       },
       {
-        "q": "What food items does the food truck NOT offer according to the conversation?",
+        "q": "Why does the housing officer mention move-in day?",
         "options": [
-          "A) Tacos",
-          "B) Burritos",
-          "C) Pizza",
-          "D) Quesadillas"
+          "To inform the student that the dormitory is not available until then",
+          "To remind the student to bring identification and note that staff will be available for assistance",
+          "To explain that the housing assignment will be canceled if the student doesn't attend",
+          "To suggest that the student should delay moving into the dormitory"
         ],
-        "answer": 2,
-        "explanation": "학생이 언급한 메뉴는 타코, 부리또, 케사디야이며, 피자는 언급되지 않았습니다."
+        "answer": 1,
+        "explanation": "담당자는 입주일에 학생증을 지참하고 질문에 도움을 줄 직원이 있을 것임을 언급합니다."
       }
     ]
   }
