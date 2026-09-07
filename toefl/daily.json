@@ -1,187 +1,115 @@
 {
   "date": "2026-09-08",
   "reading": {
-    "title": "Ancient Pottery Techniques and Archaeological Significance",
-    "passage": "Pottery stands as one of the most valuable artifacts in archaeological research, offering profound insights into past civilizations. The analysis of ceramic techniques reveals not only the technological capabilities of ancient peoples but also their cultural values and trade networks. Archaeologists employ thermoluminescence dating, which measures the radiation accumulated in pottery clay over millennia, to establish chronological frameworks with remarkable precision. This method has revolutionized our understanding of settlement patterns and cultural diffusion across continents.\n\nFurthermore, pottery decoration patterns and vessel morphology provide critical information about social hierarchies and economic systems. Excavations in Mesopotamia, for instance, revealed that intricate painted designs were predominantly found in elite residences, suggesting a correlation between artistic sophistication and social status. The standardization of pottery shapes across regions indicates organized trade routes and cultural exchange. Recent studies utilizing neutron activation analysis have identified clay sources and traced pottery distributions, demonstrating how ancient merchants transported ceramics across vast distances, fundamentally transforming our comprehension of pre-industrial commerce.",
-    "vocabulary": [
-      {
-        "word": "artifact",
-        "meaning_ko": "고고학적 유물; 인공물"
-      },
-      {
-        "word": "thermoluminescence",
-        "meaning_ko": "열형광; 고열에 의해 방출되는 빛을 이용한 연대 측정법"
-      },
-      {
-        "word": "chronological",
-        "meaning_ko": "시간 순서대로 배열된; 연대순의"
-      },
-      {
-        "word": "morphology",
-        "meaning_ko": "형태; 구조적 형태"
-      },
-      {
-        "word": "diffusion",
-        "meaning_ko": "확산; 전파"
-      },
-      {
-        "word": "neutron activation analysis",
-        "meaning_ko": "중성자 방사능 분석; 원소 조성 분석 기법"
-      },
-      {
-        "word": "standardization",
-        "meaning_ko": "표준화; 규격화"
-      }
-    ],
+    "title": "The Impact of Remote Work on Productivity",
+    "passage": "Remote work has fundamentally transformed how companies operate in the 21st century. Studies show that employees working from home demonstrate increased productivity levels, particularly in roles requiring deep concentration. However, the lack of face-to-face interaction can hinder team collaboration and company culture development. Organizations must balance flexibility with structured communication protocols to maximize benefits while minimizing isolation effects. The future of work likely involves hybrid models combining remote and office environments.",
     "questions": [
       {
-        "q": "According to the passage, what can thermoluminescence dating measure in pottery?",
+        "q": "According to the passage, what is a potential disadvantage of remote work?",
         "options": [
-          "The decorative patterns applied by ancient artisans",
-          "The radiation accumulated in pottery clay over time",
-          "The social status of the individuals who owned the pottery",
-          "The specific trade routes used by ancient merchants"
+          "Increased productivity",
+          "Lack of face-to-face interaction",
+          "Better concentration",
+          "Flexible schedules"
         ],
         "answer": 1,
-        "explanation": "지문에서 '열형광 연대 측정은 수천년에 걸쳐 도자기 점토에 축적된 방사선을 측정한다'고 명시되어 있습니다."
+        "explanation": "지문에서 '원격 근무의 단점은 대면 상호작용의 부족'이라고 명시되어 있습니다."
       },
       {
-        "q": "What can be inferred from the passage about the relationship between pottery decoration and social status in Mesopotamia?",
+        "q": "What solution does the passage suggest for remote work challenges?",
         "options": [
-          "Elaborate designs were equally common in all residential areas",
-          "Simple pottery designs were preferred by wealthy elites",
-          "Intricate painted designs were associated with higher social ranks",
-          "Pottery decoration had no connection to economic prosperity"
-        ],
-        "answer": 2,
-        "explanation": "지문에서 정교한 회화 장식이 주로 엘리트 거주지에서 발견되었다고 하여, 예술적 정교함과 사회적 지위의 상관관계를 암시하고 있습니다."
-      },
-      {
-        "q": "The word 'standardization' in the final sentence is closest in meaning to",
-        "options": [
-          "random variation in design",
-          "consistent uniformity of form across regions",
-          "the decline of artistic quality",
-          "individual customization of pottery shapes"
+          "Return to office completely",
+          "Hybrid models combining remote and office",
+          "Eliminate communication",
+          "Reduce employee benefits"
         ],
         "answer": 1,
-        "explanation": "'표준화'는 지역 간에 일관되고 균일한 형태를 유지하는 것을 의미합니다."
+        "explanation": "지문의 마지막 문장에서 하이브리드 모델을 미래의 업무 형태로 제시하고 있습니다."
       },
       {
-        "q": "Why does the author mention neutron activation analysis in the passage?",
+        "q": "Which group of employees benefits most from remote work according to the passage?",
         "options": [
-          "To criticize traditional archaeological methods",
-          "To explain how archaeologists identified clay sources and traced pottery distribution patterns",
-          "To suggest that ancient ceramics had no economic value",
-          "To argue that thermoluminescence dating is unreliable"
+          "Team managers",
+          "Those requiring deep concentration",
+          "Client-facing roles",
+          "Administrative staff"
         ],
         "answer": 1,
-        "explanation": "저자는 중성자 방사능 분석이 점토 출처를 특정하고 도자기 분포를 추적하는 데 사용되었으며, 이를 통해 전산업 시대의 상업에 대한 이해를 변화시켰다고 언급합니다."
+        "explanation": "지문에서 '깊은 집중력이 필요한 역할에서 원격 근무자들의 생산성이 높다'고 설명합니다."
       }
     ]
   },
   "writing": {
-    "sentences": [
-      {
-        "original": "Pottery stands as one of the most valuable artifacts in archaeological research, offering profound insights into past civilizations.",
-        "paraphrase": "Archaeological investigations rely heavily on pottery as a crucial artifact category that enables researchers to gain deep understanding of ancient societies.",
-        "tip": "명사구(most valuable artifacts) → 동사구(rely on pottery)로 변환하고, 능동태 유지하면서 의미 재구성"
-      },
-      {
-        "original": "The analysis of ceramic techniques reveals not only the technological capabilities of ancient peoples but also their cultural values and trade networks.",
-        "paraphrase": "By examining ceramic production methods, archaeologists can uncover information regarding both technological advancement and the cultural beliefs and commercial connections of historical communities.",
-        "tip": "동의어 치환(analysis→examining, reveals→uncover) 및 명사구 확장(cultural values and trade networks→cultural beliefs and commercial connections)"
-      },
-      {
-        "original": "Archaeologists employ thermoluminescence dating, which measures the radiation accumulated in pottery clay over millennia, to establish chronological frameworks with remarkable precision.",
-        "paraphrase": "To create accurate timelines of historical periods, scientists utilize thermoluminescence dating methodology, a technique that quantifies the radioactive particles that have gathered within ceramic materials across thousands of years.",
-        "tip": "관계절 간소화 및 동의어 기법(employ→utilize, establish→create, remarkable precision→accurate timelines)"
-      },
-      {
-        "original": "Excavations in Mesopotamia revealed that intricate painted designs were predominantly found in elite residences, suggesting a correlation between artistic sophistication and social status.",
-        "paraphrase": "Archaeological digs conducted in Mesopotamia discovered that elaborate decorative patterns appeared primarily in wealthy households, implying a connection between aesthetic refinement and hierarchical position in society.",
-        "tip": "구체적 지역명 유지, 동의어 다수 사용(intricate→elaborate, elite→wealthy, suggesting→implying, correlation→connection)"
-      },
-      {
-        "original": "Recent studies utilizing neutron activation analysis have identified clay sources and traced pottery distributions, demonstrating how ancient merchants transported ceramics across vast distances.",
-        "paraphrase": "Modern research employing neutron activation analysis technology has successfully pinpointed the origins of clay materials and documented the geographic spread of pottery products, thereby illustrating the extensive commercial networks through which ancient traders distributed these ceramic goods.",
-        "tip": "능동→수동 혼합, 동의어 적극 활용(identified→pinpointed, traced→documented, demonstrating→illustrating)"
-      }
+    "prompt": "Do you agree or disagree with the following statement: Remote work is more productive than working in an office environment?",
+    "structure": {
+      "intro": "명확한 입장 제시. 예: 'I agree that remote work can be more productive than office work because...' 또는 'I disagree with the statement that...'",
+      "body1": "첫 번째 이유와 구체적 예시 제공. 각 문장이 명확하고 논리적으로 연결되어야 함.",
+      "body2": "상반된 의견을 인정하면서도 자신의 입장을 강화하는 추가 근거 제시.",
+      "conclusion": "입장을 재확인하고 전체 논의를 요약. 새로운 정보는 추가하지 않기."
+    },
+    "useful_phrases": [
+      "In my opinion,",
+      "Furthermore,",
+      "On the other hand,",
+      "To illustrate,",
+      "In conclusion,",
+      "However, it should be noted that",
+      "For example,",
+      "This is because"
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to shop online for convenience and variety. Others prefer to shop in physical stores for personal experience and immediate gratification. Which do you prefer and why? Include specific reasons and details.",
-    "model_sentences": [
-      "I personally prefer shopping in physical stores because I value the ability to examine products directly before making a purchase decision.",
-      "First, visiting a store allows me to see the actual quality, color, and size of items, which helps me avoid returning unsuitable purchases.",
-      "For example, when I bought clothes online last year, the color appeared different from the product description, and I had to go through a tedious return process that took several weeks.",
-      "Additionally, shopping in-store provides immediate satisfaction—I can use the product right away rather than waiting for shipping.",
-      "Although online shopping offers convenience, I believe the tangible benefits of in-store shopping, such as quality assurance and instant gratification, outweigh the time investment required."
+    "prompt": "Some people prefer working in an office environment where they can collaborate with colleagues. Others prefer working remotely from home. Which do you prefer and why?",
+    "useful_expressions": [
+      "In my opinion, I prefer...",
+      "One reason is that...",
+      "Another advantage is...",
+      "From my perspective,",
+      "This is beneficial because...",
+      "I believe that..."
+    ],
+    "sample_points": [
+      "원격 근무의 유연성과 개인적 집중력 향상 - 방해 없이 자신의 페이스대로 일할 수 있으며, 통근 시간 절약으로 더 많은 시간을 생산적으로 활용할 수 있음",
+      "대면 협업의 중요성 - 팀 동료와의 즉각적인 상호작용으로 아이디어 교환이 활발해지고, 회사 문화 형성과 새로운 직원의 온보딩이 더 효과적임"
     ]
   },
   "listening": {
-    "title": "Dormitory Housing Assignment Inquiry",
+    "title": "학생과 교수의 원격 학습 상담",
     "type": "conversation",
-    "script": "Student A: Hi, I'm calling about my dormitory housing assignment. I haven't received my room allocation yet, and classes start in two weeks.\n\nHousing Officer: Of course, I can help with that. Can I have your student ID number, please?\n\nStudent A: Sure, it's 847295.\n\nHousing Officer: Thank you. Let me check our system. I see here that your application was processed, but there's been a delay due to recent renovations in the east wing. We're finalizing the assignments now.\n\nStudent A: Oh, I see. When will I know my room number and building location?\n\nHousing Officer: You should receive an email notification by this Friday with all the details. Additionally, we're offering priority placement for students who submit their housing preferences online within 48 hours. This significantly increases your chances of getting a preferred dormitory.\n\nStudent A: That's helpful information. Is there anything else I should do to prepare?\n\nHousing Officer: Just confirm your acceptance of the assignment once you receive it, and bring your student ID to the move-in day. We'll have staff available to assist with questions.",
-    "vocabulary": [
-      {
-        "word": "allocation",
-        "meaning_ko": "할당; 배정"
-      },
-      {
-        "word": "renovations",
-        "meaning_ko": "개수; 리모델링"
-      },
-      {
-        "word": "preference",
-        "meaning_ko": "선호; 우선 선택"
-      },
-      {
-        "word": "priority placement",
-        "meaning_ko": "우선 배정"
-      },
-      {
-        "word": "notification",
-        "meaning_ko": "통지; 알림"
-      },
-      {
-        "word": "confirmation",
-        "meaning_ko": "확인; 승인"
-      }
-    ],
+    "script": "Student: Professor, I'm struggling with the transition to online classes. I find it hard to stay focused without the classroom environment. Professor: I understand your concern. Many students experience this adjustment period. However, online learning has several advantages. First, you can review recorded lectures multiple times. Second, you have more flexibility to study at your own pace. Have you tried creating a dedicated study space at home? Student: Not really, I usually study on my bed. Professor: That might be part of the problem. Try setting up a specific area with minimal distractions. Also, don't hesitate to use office hours—I'm available via video chat. Most importantly, stay organized and create a study schedule. These strategies have helped many students succeed in online environments. Student: Thank you, Professor. I'll try implementing these suggestions.",
     "questions": [
       {
-        "q": "What is the main reason for the delay in the student's housing assignment?",
+        "q": "What is the student's main concern about online classes?",
         "options": [
-          "The student submitted the application too late",
-          "Recent renovations in the east wing caused processing delays",
-          "The housing office lost the student's application",
-          "The student has not yet submitted housing preferences"
+          "The course material is too difficult",
+          "Finding it hard to stay focused without classroom environment",
+          "Limited access to professor",
+          "No recorded lectures available"
         ],
         "answer": 1,
-        "explanation": "주택 담당자가 '동쪽 건물의 최근 개수로 인해 지연이 발생했다'고 명시합니다."
+        "explanation": "학생이 처음으로 '교실 환경 없이 집중하기 어렵다'고 명시적으로 언급했습니다."
       },
       {
-        "q": "What does the housing officer suggest to increase chances of getting a preferred dormitory?",
+        "q": "Which of the following is NOT mentioned as an advantage of online learning?",
         "options": [
-          "Contacting the housing office in person",
-          "Requesting priority placement for a specific building",
-          "Submitting housing preferences online within 48 hours",
-          "Waiting until after Friday to confirm the assignment"
+          "Reviewing recorded lectures multiple times",
+          "Studying at your own pace",
+          "Better grades than in-person classes",
+          "Flexible schedule"
         ],
         "answer": 2,
-        "explanation": "담당자는 48시간 내에 온라인으로 주택 선호를 제출하면 선호하는 기숙사를 배정받을 가능성이 크게 높아진다고 제안합니다."
+        "explanation": "교수는 온라인 학습의 장점으로 강의 재시청, 자신의 페이스로 학습 가능, 유연한 일정을 언급했지만, '더 나은 성적'은 언급하지 않았습니다."
       },
       {
-        "q": "Why does the housing officer mention move-in day?",
+        "q": "What does the professor suggest as a practical solution?",
         "options": [
-          "To inform the student that the dormitory is not available until then",
-          "To remind the student to bring identification and note that staff will be available for assistance",
-          "To explain that the housing assignment will be canceled if the student doesn't attend",
-          "To suggest that the student should delay moving into the dormitory"
+          "Return to in-person classes",
+          "Study only at the library",
+          "Create a dedicated study space at home",
+          "Reduce course load"
         ],
-        "answer": 1,
-        "explanation": "담당자는 입주일에 학생증을 지참하고 질문에 도움을 줄 직원이 있을 것임을 언급합니다."
+        "answer": 2,
+        "explanation": "교수는 '집에서 방해 요소가 적은 특정 공간을 만들 것'을 구체적으로 제안했습니다."
       }
     ]
   }
