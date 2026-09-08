@@ -1,115 +1,192 @@
 {
-  "date": "2026-09-08",
+  "date": "2026-09-09",
   "reading": {
-    "title": "The Impact of Remote Work on Productivity",
-    "passage": "Remote work has fundamentally transformed how companies operate in the 21st century. Studies show that employees working from home demonstrate increased productivity levels, particularly in roles requiring deep concentration. However, the lack of face-to-face interaction can hinder team collaboration and company culture development. Organizations must balance flexibility with structured communication protocols to maximize benefits while minimizing isolation effects. The future of work likely involves hybrid models combining remote and office environments.",
+    "title": "신경가소성과 뇌의 적응 능력",
+    "passage": "신경가소성(neuroplasticity)은 학습과 경험에 반응하여 뇌의 물리적 구조와 기능이 변화하는 능력을 의미한다. 과거에는 성인의 뇌가 고정적이라고 믿어졌지만, 현대 신경과학 연구는 뇌가 평생에 걸쳐 재조직화될 수 있음을 입증했다. 신경영상 기술의 발전으로 과학자들은 뇌 손상 환자들이 새로운 신경 경로를 형성하여 잃어버린 기능을 회복하는 과정을 관찰할 수 있었다. 예를 들어, 뇌졸중 생존자들은 집중적인 재활 치료를 통해 손상된 뇌 영역의 기능을 다른 영역으로 대체할 수 있다.\n신경가소성의 메커니즘은 주로 시냅스 가소성(synaptic plasticity)에 기반한다. 신경세포 간 연결점인 시냅스는 반복적인 자극에 의해 강화되거나 약화될 수 있으며, 이 과정에서 새로운 신경세포와 신경연결이 형성된다. 연구에 따르면, 음악 학습자들의 뇌에서는 청각 및 운동 피질의 용적이 증가하는 현상이 관찰되었다. 이러한 발견은 신경가소성이 지속적인 학습과 훈련을 통해 뇌의 구조적 변화를 초래할 수 있음을 시사한다.",
+    "vocabulary": [
+      {
+        "word": "neuroplasticity",
+        "meaning_ko": "신경가소성; 뇌가 학습과 경험에 따라 구조와 기능을 변화시키는 능력"
+      },
+      {
+        "word": "synaptic plasticity",
+        "meaning_ko": "시냅스 가소성; 신경세포 간의 연결 강도가 변하는 현상"
+      },
+      {
+        "word": "cortex",
+        "meaning_ko": "대뇌피질; 뇌의 가장 바깥쪽 층으로 인지 기능을 담당"
+      },
+      {
+        "word": "rehabilitation",
+        "meaning_ko": "재활; 질병이나 손상으로부터 회복하기 위한 치료"
+      },
+      {
+        "word": "stroke",
+        "meaning_ko": "뇌졸중; 뇌의 혈관이 막히거나 터지는 질환"
+      },
+      {
+        "word": "facilitate",
+        "meaning_ko": "촉진하다; 어떤 일이 일어나기 쉽게 만들다"
+      },
+      {
+        "word": "innate",
+        "meaning_ko": "타고난; 선천적인"
+      }
+    ],
     "questions": [
       {
-        "q": "According to the passage, what is a potential disadvantage of remote work?",
+        "q": "According to the passage, what was the previous scientific belief about adult brains?",
         "options": [
-          "Increased productivity",
-          "Lack of face-to-face interaction",
-          "Better concentration",
-          "Flexible schedules"
+          "A) Adult brains could easily form new neural pathways",
+          "B) Adult brains were fixed and unchangeable",
+          "C) Adult brains could only change through music training",
+          "D) Adult brains had greater neuroplasticity than children's brains"
         ],
         "answer": 1,
-        "explanation": "지문에서 '원격 근무의 단점은 대면 상호작용의 부족'이라고 명시되어 있습니다."
+        "explanation": "지문의 첫 번째 문단에서 '과거에는 성인의 뇌가 고정적이라고 믿어졌다'고 명시되어 있습니다. 정답은 B입니다."
       },
       {
-        "q": "What solution does the passage suggest for remote work challenges?",
+        "q": "What can be inferred from the passage about stroke survivors?",
         "options": [
-          "Return to office completely",
-          "Hybrid models combining remote and office",
-          "Eliminate communication",
-          "Reduce employee benefits"
+          "A) They cannot recover lost brain functions",
+          "B) They require neuroimaging technology to recover",
+          "C) They can potentially restore lost functions through intensive rehabilitation",
+          "D) They experience automatic changes in their auditory cortex"
         ],
-        "answer": 1,
-        "explanation": "지문의 마지막 문장에서 하이브리드 모델을 미래의 업무 형태로 제시하고 있습니다."
+        "answer": 2,
+        "explanation": "지문에서 '뇌졸중 생존자들은 집중적인 재활 치료를 통해 손상된 뇌 영역의 기능을 다른 영역으로 대체할 수 있다'고 명시되어 있습니다. 정답은 C입니다."
       },
       {
-        "q": "Which group of employees benefits most from remote work according to the passage?",
+        "q": "The word 'substitute' in the context of the passage is closest in meaning to:",
         "options": [
-          "Team managers",
-          "Those requiring deep concentration",
-          "Client-facing roles",
-          "Administrative staff"
+          "A) strengthen",
+          "B) replace",
+          "C) observe",
+          "D) eliminate"
         ],
         "answer": 1,
-        "explanation": "지문에서 '깊은 집중력이 필요한 역할에서 원격 근무자들의 생산성이 높다'고 설명합니다."
+        "explanation": "지문에서 '다른 영역으로 대체할 수 있다'라는 의미의 'substitute'는 '교체하다' 또는 '대신하다'라는 의미의 'replace'와 같은 뜻입니다. 정답은 B입니다."
+      },
+      {
+        "q": "Why does the author mention music learners' brains in the second paragraph?",
+        "options": [
+          "A) To show that music training is more effective than rehabilitation",
+          "B) To provide evidence that repeated practice can cause structural brain changes",
+          "C) To explain how synaptic plasticity only occurs in the auditory cortex",
+          "D) To argue that neuroplasticity decreases with age"
+        ],
+        "answer": 1,
+        "explanation": "음악 학습자들의 뇌 변화 사례는 신경가소성이 지속적인 학습과 훈련을 통해 뇌의 구조적 변화를 초래할 수 있다는 주장의 근거로 제시됩니다. 정답은 B입니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the following statement: Remote work is more productive than working in an office environment?",
-    "structure": {
-      "intro": "명확한 입장 제시. 예: 'I agree that remote work can be more productive than office work because...' 또는 'I disagree with the statement that...'",
-      "body1": "첫 번째 이유와 구체적 예시 제공. 각 문장이 명확하고 논리적으로 연결되어야 함.",
-      "body2": "상반된 의견을 인정하면서도 자신의 입장을 강화하는 추가 근거 제시.",
-      "conclusion": "입장을 재확인하고 전체 논의를 요약. 새로운 정보는 추가하지 않기."
-    },
-    "useful_phrases": [
-      "In my opinion,",
-      "Furthermore,",
-      "On the other hand,",
-      "To illustrate,",
-      "In conclusion,",
-      "However, it should be noted that",
-      "For example,",
-      "This is because"
+    "topic": "동물실험 규제의 필요성",
+    "sentences": [
+      {
+        "original": "Over the past several decades, neuroplasticity research has revealed that the adult brain can reorganize itself in response to learning and experience.",
+        "paraphrase": "Recent decades of neuroplasticity studies have demonstrated the adult brain's capacity to reorganize in accordance with learning and experience.",
+        "tip": "수동태→능동태 변환 및 동의어 치환(revealed→demonstrated, in response to→in accordance with)"
+      },
+      {
+        "original": "Modern neuroimaging technology has enabled scientists to observe the process by which stroke patients recover lost brain function through forming new neural pathways.",
+        "paraphrase": "Scientists have been able to observe stroke patients' recovery of lost brain function via new neural pathway formation, thanks to advances in neuroimaging technology.",
+        "tip": "구조 재배열 및 명사구 활용(by which를 via로 단순화, enabled→thanks to)"
+      },
+      {
+        "original": "Synaptic plasticity, which is based on the strengthening or weakening of connections between neurons, underlies the mechanisms of neuroplasticity.",
+        "paraphrase": "The underlying mechanism of neuroplasticity relies on synaptic plasticity, a process involving the reinforcement or diminishment of neural connections.",
+        "tip": "관계절 단순화 및 복합 명사구 사용(strengthening or weakening→reinforcement or diminishment)"
+      },
+      {
+        "original": "Research has shown that music learners demonstrate increased volume in auditory and motor regions of the brain.",
+        "paraphrase": "The brains of music learners exhibit expanded auditory and motor cortical regions, as evidenced by research findings.",
+        "tip": "능동태→수동태 변환 및 술어 재배열(demonstrate→exhibit, Research has shown→as evidenced by research)"
+      },
+      {
+        "original": "These findings suggest that neuroplasticity can result in structural changes to the brain through continued learning and training.",
+        "paraphrase": "The capacity of sustained learning and training to induce structural brain modifications is suggested by these research outcomes.",
+        "tip": "목적어→주어로 변경하는 구조 재배열 및 동의어 치환(result in→induce, findings→outcomes)"
+      }
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer working in an office environment where they can collaborate with colleagues. Others prefer working remotely from home. Which do you prefer and why?",
-    "useful_expressions": [
-      "In my opinion, I prefer...",
-      "One reason is that...",
-      "Another advantage is...",
-      "From my perspective,",
-      "This is beneficial because...",
-      "I believe that..."
-    ],
-    "sample_points": [
-      "원격 근무의 유연성과 개인적 집중력 향상 - 방해 없이 자신의 페이스대로 일할 수 있으며, 통근 시간 절약으로 더 많은 시간을 생산적으로 활용할 수 있음",
-      "대면 협업의 중요성 - 팀 동료와의 즉각적인 상호작용으로 아이디어 교환이 활발해지고, 회사 문화 형성과 새로운 직원의 온보딩이 더 효과적임"
+    "prompt": "Some people are morning people who wake up early and feel energized. Others are night owls who stay up late and work better at night. Which do you prefer and why? Include specific reasons and details in your response.",
+    "model_sentences": [
+      "Personally, I prefer being a morning person because I find that I'm more productive and focused when I wake up early.",
+      "First, waking up early gives me a fresh start to my day, and I can tackle important tasks like studying or working before I get tired.",
+      "For example, I usually wake up at 6 AM and spend two hours on my most challenging subjects before my classes begin; by contrast, when I stay up late, I become easily distracted and less efficient.",
+      "Additionally, morning routines help me maintain better sleep schedules and overall health, which improves my concentration throughout the day.",
+      "In conclusion, being a morning person allows me to accomplish more and feel more energized, so I believe it's the better choice for my lifestyle and goals."
     ]
   },
   "listening": {
-    "title": "학생과 교수의 원격 학습 상담",
-    "type": "conversation",
-    "script": "Student: Professor, I'm struggling with the transition to online classes. I find it hard to stay focused without the classroom environment. Professor: I understand your concern. Many students experience this adjustment period. However, online learning has several advantages. First, you can review recorded lectures multiple times. Second, you have more flexibility to study at your own pace. Have you tried creating a dedicated study space at home? Student: Not really, I usually study on my bed. Professor: That might be part of the problem. Try setting up a specific area with minimal distractions. Also, don't hesitate to use office hours—I'm available via video chat. Most importantly, stay organized and create a study schedule. These strategies have helped many students succeed in online environments. Student: Thank you, Professor. I'll try implementing these suggestions.",
+    "title": "생물학 강의: 광합성의 밝은 반응",
+    "type": "lecture",
+    "script": "Professor: Good morning, everyone. Today I want to discuss the light-dependent reactions of photosynthesis, which occur in the thylakoid membranes. So, during this process, chlorophyll absorbs light energy and converts it into chemical energy in the form of ATP and NADPH. Student A: Professor, could you explain what happens to the electrons? Professor: Great question. When light photons strike the chlorophyll molecules, they excite electrons to higher energy levels. These electrons then move through an electron transport chain, which pumps protons into the thylakoid lumen, creating an electrochemical gradient. Student B: So the gradient drives ATP synthesis? Professor: Exactly. As protons flow back through ATP synthase, the enzyme uses that energy to phosphorylate ADP into ATP. Additionally, the electrons eventually reduce NADP+ to form NADPH, which serves as a reducing agent in the dark reactions. This entire process is essential because it converts light energy into forms that the cell can actually use. Any other questions?",
+    "vocabulary": [
+      {
+        "word": "thylakoid",
+        "meaning_ko": "틸라코이드; 엽록체 내에서 광합성의 밝은 반응이 일어나는 납작한 주머니 모양의 구조"
+      },
+      {
+        "word": "chlorophyll",
+        "meaning_ko": "엽록소; 광합성에서 빛을 흡수하는 녹색 색소"
+      },
+      {
+        "word": "electron transport chain",
+        "meaning_ko": "전자전달계; 전자가 순차적으로 이동하면서 에너지를 방출하는 과정"
+      },
+      {
+        "word": "electrochemical gradient",
+        "meaning_ko": "전기화학적 구배; 이온의 농도 차이와 전기적 전위의 차이로 인한 구배"
+      },
+      {
+        "word": "ATP synthase",
+        "meaning_ko": "ATP 합성효소; 양성자의 흐름을 이용하여 ATP를 만드는 효소"
+      },
+      {
+        "word": "phosphorylate",
+        "meaning_ko": "인산화하다; 분자에 인산기를 추가하다"
+      },
+      {
+        "word": "reduce",
+        "meaning_ko": "환원하다; 전자를 받아서 화학적으로 변화시키다"
+      }
+    ],
     "questions": [
       {
-        "q": "What is the student's main concern about online classes?",
+        "q": "What is the main topic of the lecture?",
         "options": [
-          "The course material is too difficult",
-          "Finding it hard to stay focused without classroom environment",
-          "Limited access to professor",
-          "No recorded lectures available"
+          "A) The dark reactions of photosynthesis",
+          "B) The light-dependent reactions occurring in thylakoid membranes",
+          "C) The structure of chlorophyll molecules",
+          "D) The ATP synthesis in mitochondria"
         ],
         "answer": 1,
-        "explanation": "학생이 처음으로 '교실 환경 없이 집중하기 어렵다'고 명시적으로 언급했습니다."
+        "explanation": "강의의 시작 부분에서 교수가 '오늘 우리는 틸라코이드 막에서 일어나는 광합성의 밝은 반응에 대해 논의하겠습니다'라고 명시합니다. 정답은 B입니다."
       },
       {
-        "q": "Which of the following is NOT mentioned as an advantage of online learning?",
+        "q": "According to the professor, what happens when light photons strike chlorophyll molecules?",
         "options": [
-          "Reviewing recorded lectures multiple times",
-          "Studying at your own pace",
-          "Better grades than in-person classes",
-          "Flexible schedule"
+          "A) They create an electrochemical gradient",
+          "B) They reduce NADP+ to NADPH",
+          "C) They excite electrons to higher energy levels",
+          "D) They directly synthesize ATP"
         ],
         "answer": 2,
-        "explanation": "교수는 온라인 학습의 장점으로 강의 재시청, 자신의 페이스로 학습 가능, 유연한 일정을 언급했지만, '더 나은 성적'은 언급하지 않았습니다."
+        "explanation": "교수는 '광자가 엽록소 분자에 충돌할 때, 전자를 더 높은 에너지 수준으로 여기시킨다'고 설명합니다. 정답은 C입니다."
       },
       {
-        "q": "What does the professor suggest as a practical solution?",
+        "q": "Why does the professor mention the electron transport chain?",
         "options": [
-          "Return to in-person classes",
-          "Study only at the library",
-          "Create a dedicated study space at home",
-          "Reduce course load"
+          "A) To explain how light energy is initially absorbed",
+          "B) To describe how protons are pumped to create a gradient that drives ATP synthesis",
+          "C) To show that electrons are reduced by NADP+",
+          "D) To illustrate the dark reactions of photosynthesis"
         ],
-        "answer": 2,
-        "explanation": "교수는 '집에서 방해 요소가 적은 특정 공간을 만들 것'을 구체적으로 제안했습니다."
+        "answer": 1,
+        "explanation": "교수는 전자전달계가 '틸라코이드 내강으로 양성자를 펌프질하여 전기화학적 구배를 만든다'고 언급합니다. 이 구배는 ATP 합성을 주도합니다. 정답은 B입니다."
       }
     ]
   }

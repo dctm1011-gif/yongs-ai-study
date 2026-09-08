@@ -97,5 +97,38 @@
     "tip": "investigate와 비슷하지만 look into가 더 일상적이고 friendly해요!",
     "emoji": "🕵️",
     "date": "2026-09-08"
+  },
+  {
+    "id": "set-up",
+    "phrase": "set up",
+    "meaning_ko": "설치하다, 준비하다, 창립하다",
+    "explanation": "뭔가를 준비하거나 설치할 때 쓰는 표현이에요! 회의 준비부터 회사 창립까지 다양하게 써요 🏗️",
+    "example_en": "We need to set up the equipment before the presentation.",
+    "example_ko": "발표 전에 장비를 설치해야 돼요.",
+    "tip": "유사 표현: prepare, install, establish. 'set up a meeting'처럼 자주 쓰여요!",
+    "emoji": "⚙️",
+    "date": "2026-09-09"
+  },
+  {
+    "id": "cut-down",
+    "phrase": "cut down",
+    "meaning_ko": "줄이다, 감소시키다",
+    "explanation": "비용, 시간, 칼로리 등을 줄일 때 쓰는 표현이에요. 일상생활에서 정말 많이 써요! ✂️",
+    "example_en": "I'm trying to cut down on sugar and coffee.",
+    "example_ko": "나는 설탕과 커피 섭취를 줄이려고 노력 중이야.",
+    "tip": "유사 표현: reduce, decrease, limit. 'cut down on' 형태로도 자주 사용돼요!",
+    "emoji": "📉",
+    "date": "2026-09-09"
+  },
+  {
+    "id": "go-over",
+    "phrase": "go over",
+    "meaning_ko": "검토하다, 다시 살펴보다",
+    "explanation": "문서를 검토하거나 내용을 다시 한 번 확인할 때 쓰는 표현이에요. 학업과 일에서 꼭 필요한 표현이랍니다! 📋",
+    "example_en": "Let me go over the contract before you sign it.",
+    "example_ko": "계약서에 서명하기 전에 한번 검토하게 해줄래.",
+    "tip": "유사 표현: review, check, examine. 'go through'와 비슷하지만 더 자세히 살펴본다는 뉘앙스!",
+    "emoji": "🔍",
+    "date": "2026-09-09"
   }
 ]

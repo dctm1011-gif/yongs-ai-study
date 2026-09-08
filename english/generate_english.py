@@ -377,6 +377,7 @@ def generate_default_words(client: anthropic.Anthropic, target_date: date, toefl
         "조건 (반드시 지킬 것):\n"
         f"- 난이도: {cefr_hint}\n"
         "- 여러 학문 분야에서 두루 쓰이는 단어 (예: scrutinize, prevalent, empirical, tangible, coherent)\n"
+        "- 학문·분야 이름 자체는 절대 금지 (예: biology, ecology, sociology, linguistics, neuroscience, archaeology, anthropology, geology, astronomy, theology 등 -ology/-ics/-istry 계열 명사 모두 금지)\n"
         "- 의학 전공술어·법률 라틴어·철학 전문용어 절대 금지 (예: etiopathogenesis, mens rea, apodictic 금지)\n"
         "- TOEFL iBT Reading/Writing에 실제 등장하는 수준\n"
         "- 슬랭·구어 금지\n\n"

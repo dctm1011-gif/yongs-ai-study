@@ -1,10 +1,5 @@
 [
   {
-    "date": "2026-08-29",
-    "name": "PayPal",
-    "ticker": "PYPL"
-  },
-  {
     "date": "2026-08-30",
     "name": "삼성전자",
     "ticker": "005930.KS"
@@ -48,5 +43,10 @@
     "date": "2026-09-07",
     "name": "Tesla",
     "ticker": "TSLA"
+  },
+  {
+    "date": "2026-09-08",
+    "name": "삼성전자",
+    "ticker": "005930.KS"
   }
 ]

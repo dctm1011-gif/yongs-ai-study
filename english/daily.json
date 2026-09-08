@@ -1,256 +1,162 @@
 {
-  "date": "2026-09-08",
+  "date": "2026-09-09",
   "words": [
     {
-      "word": "proprietary",
-      "part_of_speech": "adjective",
-      "meaning_ko": "독점적인, 전유의, 사유의",
-      "explanation": "owned or controlled exclusively by a particular person or company; not shared or made public",
-      "example_from_convo": "The company keeps its proprietary software hidden from competitors.",
-      "example_ko": "그 회사는 자신의 독점 소프트웨어를 경쟁사로부터 숨겨둔다.",
-      "tip": "동의어: exclusive, confidential / 반의어: public, open / 출제영역: 비즈니스, 기술",
-      "emoji": "🔐"
+      "word": "mitigate",
+      "part_of_speech": "동사",
+      "meaning_ko": "완화하다, 경감하다",
+      "explanation": "부정적인 영향이나 심각성을 줄이는 것. TOEFL 환경·정책 지문 최빈출 동사예요.",
+      "example_from_convo": "Building seawalls can help mitigate the effects of rising sea levels.",
+      "example_ko": "방파제 건설은 해수면 상승의 영향을 완화하는 데 도움이 돼요.",
+      "tip": "동의어: alleviate, reduce, lessen. 반의어: exacerbate, worsen. TOEFL Reading·Writing 필수.",
+      "emoji": "🛡️"
     },
     {
-      "word": "hermeneutics",
-      "part_of_speech": "noun",
-      "meaning_ko": "해석학, 텍스트 해석의 이론과 방법",
-      "explanation": "the science and art of interpreting texts, especially religious or literary works; the study of interpretation principles",
-      "example_from_convo": "Biblical hermeneutics helps scholars understand ancient religious texts.",
-      "example_ko": "성서 해석학은 학자들이 고대 종교 텍스트를 이해하는 데 도움을 준다.",
-      "tip": "동의어: exegesis, interpretation / 출제영역: 인문학, 종교학, 철학",
-      "emoji": "📚"
+      "word": "proliferate",
+      "part_of_speech": "동사",
+      "meaning_ko": "급속히 늘어나다, 확산되다",
+      "explanation": "수나 양이 빠르게 증가하는 것. TOEFL 과학·기술·사회 지문에 자주 나와요.",
+      "example_from_convo": "Social media platforms have proliferated over the past decade.",
+      "example_ko": "소셜 미디어 플랫폼은 지난 10년간 급속히 늘어났어요.",
+      "tip": "동의어: multiply, expand, spread. 반의어: diminish, decline. 명사형: proliferation.",
+      "emoji": "📈"
     },
     {
-      "word": "demographics",
-      "part_of_speech": "noun",
-      "meaning_ko": "인구통계, 인구 구성",
-      "explanation": "statistical data relating to the population and groups within it, such as age, gender, income, and education level",
-      "example_from_convo": "Marketing teams analyze demographics to target their ideal customers.",
-      "example_ko": "마케팅 팀은 이상적인 고객을 찾기 위해 인구통계를 분석한다.",
-      "tip": "동의어: statistics, population data / 관련어: demographic / 출제영역: 마케팅, 사회학, 통계",
-      "emoji": "📊"
+      "word": "sustain",
+      "part_of_speech": "동사",
+      "meaning_ko": "유지하다, 지속하다",
+      "explanation": "상태·노력을 계속 유지하는 것. TOEFL 전 영역 최빈출 동사 중 하나예요.",
+      "example_from_convo": "The ecosystem requires clean water to sustain biodiversity.",
+      "example_ko": "생태계는 생물 다양성을 유지하기 위해 깨끗한 물이 필요해요.",
+      "tip": "동의어: maintain, support, preserve. 형용사형: sustainable(지속 가능한). TOEFL 핵심 어휘.",
+      "emoji": "♻️"
     },
     {
-      "word": "cognitive dissonance",
-      "part_of_speech": "noun phrase",
-      "meaning_ko": "인지부조화, 인지적 불협화음",
-      "explanation": "the psychological discomfort experienced when holding contradictory beliefs, values, or attitudes simultaneously",
-      "example_from_convo": "He felt cognitive dissonance when his actions contradicted his stated values.",
-      "example_ko": "그는 자신의 행동이 표명한 가치관과 모순될 때 인지부조화를 느꼈다.",
-      "tip": "동의어: mental conflict / 개념: 심리학의 Festinger 이론 / 출제영역: 심리학, 철학",
-      "emoji": "🧠"
+      "word": "undermine",
+      "part_of_speech": "동사",
+      "meaning_ko": "약화시키다, 훼손하다",
+      "explanation": "기반이나 신뢰를 서서히 약하게 만드는 것. TOEFL 사회·정치 지문에 매우 자주 나와요.",
+      "example_from_convo": "Corruption can severely undermine public trust in government.",
+      "example_ko": "부패는 정부에 대한 국민의 신뢰를 심각하게 약화시킬 수 있어요.",
+      "tip": "동의어: weaken, erode, sabotage. 반의어: strengthen, bolster. 비유적 표현으로 자주 써요.",
+      "emoji": "⚠️"
     },
     {
-      "word": "iconography",
-      "part_of_speech": "noun",
-      "meaning_ko": "도상학, 상징 체계",
-      "explanation": "the study or interpretation of symbols and images; a system of symbols and images used to represent something",
-      "example_from_convo": "The iconography in Renaissance paintings often includes religious symbolism.",
-      "example_ko": "르네상스 회화의 도상학은 종종 종교적 상징을 포함한다.",
-      "tip": "동의어: symbolism, imagery / 관련어: icon / 출제영역: 미술사, 문화학",
-      "emoji": "🎨"
+      "word": "inherent",
+      "part_of_speech": "형용사",
+      "meaning_ko": "고유한, 내재된",
+      "explanation": "어떤 것의 본질적인 특성으로 처음부터 존재하는 것. TOEFL 학술 지문 전반에 등장해요.",
+      "example_from_convo": "There are inherent risks in any scientific experiment.",
+      "example_ko": "모든 과학 실험에는 내재된 위험이 있어요.",
+      "tip": "동의어: intrinsic, innate, built-in. 부사형: inherently. 'inherent in/to ~'로 자주 써요.",
+      "emoji": "🧬"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "proprietary",
-      "question": "What does 'proprietary' most closely mean?",
+      "word": "mitigate",
+      "question": "'mitigate'의 의미로 가장 적절한 것은?",
       "options": [
-        "belonging to or controlled by the public",
-        "owned exclusively by a particular person or company",
-        "related to property ownership laws",
-        "freely available to everyone"
+        "완화하다, 경감하다",
+        "강하게 반발하다",
+        "무관심한",
+        "일시적인"
       ],
-      "answer": 1,
-      "explanation": "Proprietary means something is exclusively owned or controlled by a specific person or organization, often kept confidential or not shared publicly.",
-      "option_explanations": [
-        "This is the opposite meaning; proprietary things are NOT public",
-        "Correct answer",
-        "While related, this is too narrow and doesn't capture the exclusivity meaning",
-        "Contradicts the core meaning of proprietary"
-      ]
+      "answer": 0,
+      "explanation": "mitigate = 완화하다, 경감하다."
+    },
+    {
+      "type": "fill_blank",
+      "word": "mitigate",
+      "sentence": "Building seawalls can help _____ the effects of rising sea levels.",
+      "sentence_ko": "방파제 건설은 해수면 상승의 영향을 완화하는 데 도움이 돼요.",
+      "answer": "mitigate",
+      "hint": "완화하다, 경감하다"
     },
     {
       "type": "meaning",
-      "word": "hermeneutics",
-      "question": "Which best describes hermeneutics?",
+      "word": "proliferate",
+      "question": "'proliferate'의 의미로 가장 적절한 것은?",
       "options": [
-        "the study of ancient history",
-        "the science of interpreting texts and understanding their meanings",
-        "the practice of writing literary works",
-        "the discipline of linguistics"
+        "급속히 늘어나다, 확산되다",
+        "강하게 반발하다",
+        "무관심한",
+        "일시적인"
       ],
-      "answer": 1,
-      "explanation": "Hermeneutics is the theory and practice of interpretation, particularly of written texts, religious scriptures, and literature. It provides frameworks for understanding what texts mean.",
-      "option_explanations": [
-        "Hermeneutics may involve historical texts but isn't limited to history study",
-        "Correct answer - hermeneutics is about interpretation methodology",
-        "This describes authorship, not interpretation",
-        "Linguistics focuses on language structure; hermeneutics focuses on meaning"
-      ]
+      "answer": 0,
+      "explanation": "proliferate = 급속히 늘어나다, 확산되다."
+    },
+    {
+      "type": "fill_blank",
+      "word": "proliferate",
+      "sentence": "Social media platforms have _____d over the past decade.",
+      "sentence_ko": "소셜 미디어 플랫폼은 지난 10년간 급속히 늘어났어요.",
+      "answer": "proliferate",
+      "hint": "급속히 늘어나다, 확산되다"
     },
     {
       "type": "meaning",
-      "word": "demographics",
-      "question": "What information would demographics typically include?",
+      "word": "sustain",
+      "question": "'sustain'의 의미로 가장 적절한 것은?",
       "options": [
-        "only financial data about companies",
-        "age, gender, income, education level, and similar population statistics",
-        "geographical maps and territorial boundaries",
-        "historical events and political movements"
+        "유지하다, 지속하다",
+        "강하게 반발하다",
+        "무관심한",
+        "일시적인"
       ],
-      "answer": 1,
-      "explanation": "Demographics refers to statistical characteristics of human populations, including age, gender, race, income level, education, and occupation - data used to understand and segment populations.",
-      "option_explanations": [
-        "Demographics is much broader than just financial data",
-        "Correct answer - these are core demographic variables",
-        "This is geography or geopolitics, not demographics",
-        "This is history, not demographics"
-      ]
+      "answer": 0,
+      "explanation": "sustain = 유지하다, 지속하다."
     },
     {
       "type": "fill_blank",
-      "word": "cognitive dissonance",
-      "sentence": "When Mark claimed to value environmental protection but drove an inefficient SUV daily, he experienced ___ about his lifestyle choices.",
-      "sentence_ko": "마크가 환경 보호를 중시한다고 주장하면서도 매일 비효율적인 SUV를 운전했을 때, 그는 자신의 생활 방식에 대해 ___를 느꼈다.",
-      "answer": "cognitive dissonance",
-      "hint": "the psychological discomfort from contradictory beliefs"
+      "word": "sustain",
+      "sentence": "The ecosystem requires clean water to _____ biodiversity.",
+      "sentence_ko": "생태계는 생물 다양성을 유지하기 위해 깨끗한 물이 필요해요.",
+      "answer": "sustain",
+      "hint": "유지하다, 지속하다"
+    },
+    {
+      "type": "meaning",
+      "word": "undermine",
+      "question": "'undermine'의 의미로 가장 적절한 것은?",
+      "options": [
+        "약화시키다, 훼손하다",
+        "강하게 반발하다",
+        "무관심한",
+        "일시적인"
+      ],
+      "answer": 0,
+      "explanation": "undermine = 약화시키다, 훼손하다."
     },
     {
       "type": "fill_blank",
-      "word": "proprietary",
-      "sentence": "The pharmaceutical company refused to share its ___ formula with competitors, maintaining its competitive advantage.",
-      "sentence_ko": "제약 회사는 자신의 ___ 공식을 경쟁사와 공유하기를 거부했고, 경쟁 우위를 유지했다.",
-      "answer": "proprietary",
-      "hint": "means exclusively owned or controlled"
+      "word": "undermine",
+      "sentence": "Corruption can severely _____ public trust in government.",
+      "sentence_ko": "부패는 정부에 대한 국민의 신뢰를 심각하게 약화시킬 수 있어요.",
+      "answer": "undermine",
+      "hint": "약화시키다, 훼손하다"
+    },
+    {
+      "type": "meaning",
+      "word": "inherent",
+      "question": "'inherent'의 의미로 가장 적절한 것은?",
+      "options": [
+        "고유한, 내재된",
+        "강하게 반발하다",
+        "무관심한",
+        "일시적인"
+      ],
+      "answer": 0,
+      "explanation": "inherent = 고유한, 내재된."
     },
     {
       "type": "fill_blank",
-      "word": "hermeneutics",
-      "sentence": "Advanced biblical ___ requires scholars to understand the historical and cultural context of ancient texts.",
-      "sentence_ko": "고급 성서 ___는 학자들이 고대 텍스트의 역사적, 문화적 맥락을 이해하기를 요구한다.",
-      "answer": "hermeneutics",
-      "hint": "the study of interpretation principles"
-    },
-    {
-      "type": "situation",
-      "word": "iconography",
-      "question": "A museum guide is explaining a medieval painting to visitors. What would they likely discuss?",
-      "options": [
-        "only the price and sale history of the artwork",
-        "the artist's personal biography and childhood",
-        "the symbols, religious meanings, and visual elements represented in the painting",
-        "the chemical composition of the paint used"
-      ],
-      "answer": 2,
-      "explanation": "When discussing medieval or Renaissance paintings, guides typically explain the iconography - the symbolic meanings of objects, figures, and colors used by the artist to convey religious or cultural messages.",
-      "option_explanations": [
-        "Auction data is relevant to art markets, not understanding the artwork's meaning",
-        "While biography provides context, it's not the primary focus when explaining visual elements",
-        "Correct answer - iconography is essential to understanding symbolic artistic meaning",
-        "Technical paint analysis is not part of standard art interpretation or museum education"
-      ]
-    },
-    {
-      "type": "situation",
-      "word": "demographics",
-      "question": "A clothing retailer wants to improve sales. Which approach would most effectively use demographic analysis?",
-      "options": [
-        "ignore customer data and rely only on intuition",
-        "survey random people about unrelated topics",
-        "identify age groups, income levels, and gender of current customers to tailor marketing strategies",
-        "only focus on selling to the wealthiest customers regardless of other factors"
-      ],
-      "answer": 2,
-      "explanation": "Demographics enable businesses to segment markets by identifying specific population characteristics. By understanding their customer demographics, retailers can target marketing messages, product selection, and pricing appropriately.",
-      "option_explanations": [
-        "Data-driven decisions consistently outperform intuition-only approaches",
-        "Unrelated surveys waste resources and provide no useful information",
-        "Correct answer - tailoring to customer demographics improves marketing effectiveness",
-        "Targeting only wealthy customers ignores significant market segments and wastes demographic insights"
-      ]
-    },
-    {
-      "type": "situation",
-      "word": "proprietary",
-      "question": "A software startup develops a new algorithm that gives it a significant advantage. What should the company do?",
-      "options": [
-        "immediately publish all code details online to gain popularity",
-        "keep the algorithm details secret and proprietary to maintain competitive advantage",
-        "share everything with all competitors to show goodwill",
-        "publicly announce every detail to potential customers"
-      ],
-      "answer": 1,
-      "explanation": "Companies typically protect their innovations as proprietary information to maintain competitive advantage and market position. Keeping technology proprietary allows them to capitalize on their R&D investment.",
-      "option_explanations": [
-        "Publishing details immediately destroys any competitive advantage gained from development",
-        "Correct answer - keeping technology proprietary protects business interests and market position",
-        "Sharing with competitors eliminates the company's advantage",
-        "Announcing details publicly makes it easy for competitors to replicate the technology"
-      ]
-    },
-    {
-      "type": "situation",
-      "word": "proprietary",
-      "question": "What is the primary reason companies mark software as 'proprietary'?",
-      "options": [
-        "to make the software easier for everyone to use",
-        "to prevent unauthorized access and maintain exclusive control over their intellectual property",
-        "to reduce the price of the product",
-        "to encourage other companies to copy their technology"
-      ],
-      "answer": 1,
-      "explanation": "Proprietary designation protects a company's intellectual property by restricting access and use to authorized parties only, preventing competitors from copying or reverse-engineering their work.",
-      "option_explanations": [
-        "Proprietary status actually restricts rather than broadens access",
-        "Correct answer - proprietary marking protects exclusive ownership and competitive advantage",
-        "Proprietary status typically supports premium pricing, not lower prices",
-        "Companies mark things proprietary to prevent copying, not encourage it"
-      ]
-    }
-  ],
-  "sentences": [
-    {
-      "word": "proprietary",
-      "sentence": "Apple's proprietary operating system gives the company control over hardware and software integration.",
-      "sentence_ko": "Apple의 독점 운영 체제는 회사가 하드웨어와 소프트웨어 통합을 제어할 수 있게 한다.",
-      "nuance": "exclusive and controlled by a single entity",
-      "context": "technology and business competitiveness",
-      "everyday_usage": "commonly used when discussing company advantages and intellectual property protection"
-    },
-    {
-      "word": "hermeneutics",
-      "sentence": "Literary hermeneutics has evolved significantly as scholars develop new frameworks for interpreting classic novels.",
-      "sentence_ko": "문학 해석학은 학자들이 고전 소설을 해석하기 위한 새로운 틀을 개발하면서 크게 발전했다.",
-      "nuance": "systematic approach to understanding and interpreting texts",
-      "context": "academic and scholarly discussion",
-      "everyday_usage": "used in humanities disciplines when discussing analytical methods"
-    },
-    {
-      "word": "demographics",
-      "sentence": "The company discovered through demographics research that their primary customers were women aged 25-40 with college education.",
-      "sentence_ko": "회사는 인구통계 조사를 통해 주요 고객이 대학 교육을 받은 25-40세 여성임을 발견했다.",
-      "nuance": "specific statistical characteristics of a population segment",
-      "context": "market research and business strategy",
-      "everyday_usage": "frequently used in marketing, advertising, and political analysis"
-    },
-    {
-      "word": "cognitive dissonance",
-      "sentence": "Many smokers experience cognitive dissonance because they know smoking is harmful yet continue the habit.",
-      "sentence_ko": "많은 흡연자들은 흡연이 해롭다는 것을 알면서도 계속 그 습관을 유지하기 때문에 인지부조화를 경험한다.",
-      "nuance": "uncomfortable mental state from conflicting thoughts or behaviors",
-      "context": "psychology and personal decision-making",
-      "everyday_usage": "describes internal psychological conflict in everyday situations"
-    },
-    {
-      "word": "iconography",
-      "sentence": "Christian iconography uses specific symbols like the cross, dove, and lamb to represent theological concepts.",
-      "sentence_ko": "기독교 도상학은 십자가, 비둘기, 어린 양과 같은 특정 기호를 사용하여 신학적 개념을 나타낸다.",
-      "nuance": "system of visual symbols carrying specific meanings",
-      "context": "art history, religion, and cultural studies",
-      "everyday_usage": "used when analyzing visual art, religious imagery, and cultural symbols"
+      "word": "inherent",
+      "sentence": "There are _____ risks in any scientific experiment.",
+      "sentence_ko": "모든 과학 실험에는 내재된 위험이 있어요.",
+      "answer": "inherent",
+      "hint": "고유한, 내재된"
     }
   ]
 }

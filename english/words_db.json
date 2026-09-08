@@ -3530,5 +3530,65 @@
     "explanation": "the study or interpretation of symbols and images; a system of symbols and images used to represent something",
     "tip": "동의어: symbolism, imagery / 관련어: icon / 출제영역: 미술사, 문화학",
     "emoji": "🎨"
+  },
+  {
+    "id": "resilience",
+    "word": "resilience",
+    "pos": "noun",
+    "date": "2026-09-08",
+    "meaning": "회복력, 탄력성",
+    "example_ko": "그 지역사회는 재난 후에 놀라운 회복력을 보여주었다.",
+    "example_en": "The community showed remarkable resilience after the disaster.",
+    "explanation": "어려운 상황에서 빠르게 회복하거나 적응하는 능력; 물체가 원래 상태로 돌아오는 성질",
+    "tip": "동의어: flexibility, adaptability / 반의어: fragility | TOEFL 시험 자주 출제 - 심리학, 사회학 분야",
+    "emoji": "💪"
+  },
+  {
+    "id": "substrate",
+    "word": "substrate",
+    "pos": "noun",
+    "date": "2026-09-08",
+    "meaning": "기질, 바탕, 기초",
+    "example_ko": "그 효소는 제대로 작동하기 위해 특정 기질이 필요하다.",
+    "example_en": "The enzyme requires a specific substrate to function properly.",
+    "explanation": "어떤 것이 자라거나 부착되는 기초 물질 또는 표면; 화학 반응에서 효소가 작용하는 물질",
+    "tip": "동의어: base, foundation, layer | 반의어: product | TOEFL 출제 영역 - 생물학, 화학",
+    "emoji": "🧪"
+  },
+  {
+    "id": "jurisdiction",
+    "word": "jurisdiction",
+    "pos": "noun",
+    "date": "2026-09-08",
+    "meaning": "관할권, 사법권",
+    "example_ko": "이 사건은 주(state) 관할권이 아니라 연방 관할권에 속한다.",
+    "example_en": "This case falls under federal jurisdiction, not state jurisdiction.",
+    "explanation": "법적 권한이나 행정 권한이 미치는 범위; 특정 법원이나 기관이 다룰 수 있는 사건의 범위",
+    "tip": "동의어: authority, domain, territory | TOEFL 시험 자주 출제 - 법학, 정치학 분야",
+    "emoji": "⚖️"
+  },
+  {
+    "id": "constituent",
+    "word": "constituent",
+    "pos": "noun, adjective",
+    "date": "2026-09-08",
+    "meaning": "구성요소, 성분; 선거인, 지역구민",
+    "example_ko": "물은 대부분의 유기 분자의 구성 요소이다.",
+    "example_en": "Water is a constituent of most organic molecules.",
+    "explanation": "전체를 이루는 부분; 의원이나 정치인을 대표하는 유권자",
+    "tip": "동의어: component, element, ingredient / 반의어: whole | TOEFL 출제 영역 - 정치학, 화학",
+    "emoji": "🔧"
+  },
+  {
+    "id": "volatility",
+    "word": "volatility",
+    "pos": "noun",
+    "date": "2026-09-08",
+    "meaning": "변동성, 불안정성",
+    "example_ko": "시장의 높은 변동성은 투자자들을 불안하게 만든다.",
+    "example_en": "The market's high volatility makes investors nervous.",
+    "explanation": "빠르게 변하거나 예측할 수 없는 성질; 주식 시장이나 화학물질의 불안정한 상태",
+    "tip": "동의어: instability, unpredictability / 반의어: stability, consistency | TOEFL 출제 영역 - 경제학, 화학",
+    "emoji": "📈"
   }
 ]
