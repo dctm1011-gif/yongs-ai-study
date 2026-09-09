@@ -1,114 +1,111 @@
 {
-  "date": "2026-09-09",
+  "date": "2026-09-10",
   "reading": {
-    "title": "Climate Change and Ocean Acidification",
-    "passage": "Ocean acidification is a critical consequence of climate change that occurs when carbon dioxide from the atmosphere dissolves in seawater, forming carbonic acid. This process lowers the ocean's pH level, making it more acidic. Marine organisms with calcium carbonate shells, such as corals and mollusks, are particularly vulnerable to these changes. The increasing acidity interferes with their ability to build and maintain their shells, threatening entire marine ecosystems and the food chains that depend on them.",
+    "title": "Bioluminescence in Deep Sea Creatures",
+    "passage": "Bioluminescence is the production of light by living organisms through chemical reactions. In deep ocean environments where sunlight cannot penetrate, many creatures use bioluminescence for communication, hunting, and defense. The anglerfish, for example, uses a glowing lure to attract prey in complete darkness. Scientists estimate that nearly 90% of deep-sea creatures possess some form of bioluminescence, making it one of nature's most remarkable adaptations to extreme environments.",
     "questions": [
       {
-        "q": "According to the passage, what is the primary cause of ocean acidification?",
+        "q": "According to the passage, what is the primary function of bioluminescence in deep-sea creatures?",
         "options": [
-          "Industrial pollution from factories",
-          "Carbon dioxide from the atmosphere dissolving in seawater",
-          "Natural volcanic activity",
-          "Overfishing in marine areas"
+          "To regulate body temperature",
+          "To communicate, hunt, and defend",
+          "To increase their swimming speed",
+          "To produce oxygen in darkness"
         ],
         "answer": 1,
-        "explanation": "글에서 대기의 이산화탄소가 해수에 용해되어 해양산성화를 일으킨다고 명시되어 있습니다."
+        "explanation": "본문에서 'bioluminescence for communication, hunting, and defense'라고 명시되어 있습니다."
       },
       {
-        "q": "Which marine organisms are mentioned as being particularly vulnerable to ocean acidification?",
+        "q": "Why can bioluminescence be considered an adaptation?",
         "options": [
-          "Fish and dolphins",
-          "Corals and mollusks",
-          "Seaweed and algae",
-          "Whales and sharks"
+          "It is found in all ocean creatures",
+          "It helps creatures survive in lightless deep-sea environments",
+          "It makes creatures more visible to predators",
+          "It reduces the need for food"
         ],
         "answer": 1,
-        "explanation": "산호와 연체동물(mollusks)이 탄산칼슘 껍질을 가지고 있어 산성화에 특히 취약하다고 설명되어 있습니다."
+        "explanation": "본문에서 '깊은 바다의 극한 환경에서의 적응'이라고 설명하고 있으며, 햇빛이 도달하지 않는 환경에서 생존하기 위한 진화적 특성입니다."
       },
       {
-        "q": "What does ocean acidification interfere with?",
+        "q": "What does the anglerfish example illustrate?",
         "options": [
-          "The migration patterns of whales",
-          "The reproduction of fish",
-          "Marine organisms' ability to build and maintain shells",
-          "The temperature of ocean water"
+          "Bioluminescence is used for hunting prey",
+          "All deep-sea fish use lures",
+          "Darkness prevents communication",
+          "Fish cannot see in the ocean"
         ],
-        "answer": 2,
-        "explanation": "글의 마지막 부분에서 산성화가 해양생물의 껍질 형성 및 유지 능력을 방해한다고 명시되어 있습니다."
+        "answer": 0,
+        "explanation": "앵글러피시의 예시는 생물발광을 이용해 먹이를 유인하는 사냥 방법을 보여줍니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Technology has made our lives better, but it has also created more problems than it solved.'",
+    "prompt": "Do you agree or disagree with the statement: 'Technology has improved human relationships'? Use specific examples to support your position.",
     "structure": {
-      "intro": "명확한 입장 표현 (동의/불동의)과 주요 이유 2-3개를 간단히 제시하세요.",
-      "body1": "첫 번째 주장: 기술의 긍정적 영향 또는 부정적 영향에 대한 구체적 예시 제시",
-      "body2": "두 번째 주장: 대조되는 관점 또는 보완적 논거를 구체적 근거와 함께 설명",
-      "conclusion": "초반 입장을 재확인하면서 양측의 주장을 종합적으로 정리하고 최종 의견 도출"
+      "intro": "명확한 입장 제시 - technology가 human relationships를 개선했는지 아닌지 입장 표명 (2-3문장)",
+      "body1": "첫 번째 주장 개발 - 기술의 긍정적 영향 또는 부정적 영향을 구체적 예시와 함께 설명 (4-5문장)",
+      "body2": "두 번째 주장 개발 - 다른 관점의 예시 제시하여 주장 강화 (4-5문장)",
+      "conclusion": "입장 재확인 및 전체 논의 요약 (2-3문장)"
     },
     "useful_phrases": [
-      "In my opinion,",
-      "I strongly agree/disagree with the statement",
-      "Furthermore,",
-      "On the other hand,",
-      "For example,",
-      "This demonstrates that",
-      "In conclusion,",
-      "Overall, I believe that"
+      "In my opinion, technology has significantly improved...",
+      "For example, social media platforms allow...",
+      "Furthermore, long-distance communication enables...",
+      "However, some argue that...",
+      "In conclusion, I believe that..."
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to work in large companies with many employees. Others prefer to work in small companies or as self-employed individuals. Which do you prefer and why?",
+    "prompt": "Some people prefer learning through hands-on experience. Others prefer learning through lectures and reading. Which approach do you prefer? Use specific reasons and examples to support your response.",
     "useful_expressions": [
-      "In my opinion, I prefer to work in a small company because...",
-      "One reason is that small companies offer more personal attention and opportunities for growth.",
-      "Another advantage is that I would have more flexibility and independence in my work decisions.",
-      "Furthermore, the work environment is usually more collaborative and less hierarchical.",
-      "On the other hand, larger companies provide job security and comprehensive benefits."
+      "I prefer learning through hands-on experience because...",
+      "One reason is that practical experience helps me retain information better",
+      "Another advantage is that I can immediately apply what I learn",
+      "In my opinion, combining both methods is ideal",
+      "For instance, in science classes, lab work reinforces lecture concepts"
     ],
     "sample_points": [
-      "소규모 회사는 더 많은 개인적 관심과 빠른 경력 발전 기회를 제공합니다. 직원들이 적기 때문에 개인의 기여가 더 눈에 띄고, 다양한 경험을 쌓을 수 있습니다.",
-      "소규모 회사나 자영업은 업무 방식과 스케줄에 대한 더 큰 자율성과 유연성을 제공합니다. 이를 통해 개인의 창의성과 혁신적 사고를 더 발휘할 수 있습니다."
+      "실습을 통한 학습은 개념을 더 깊이 이해하고 오래 기억하게 함 - 예를 들어 화학 실험을 직접 수행하면 이론을 더 잘 이해하게 됨",
+      "자신의 속도에 맞춰 학습할 수 있고 즉각적인 피드백을 받을 수 있음 - 예를 들어 악기 연습이나 프로그래밍 코딩은 직접 해봐야 실력이 늘어남"
     ]
   },
   "listening": {
-    "title": "University Recycling Program Discussion",
+    "title": "University Library Study Space Discussion",
     "type": "conversation",
-    "script": "Student: Hi Professor, I'm interested in starting a recycling program on campus. Could you give me some advice? Professor: That's a wonderful initiative! First, you'll need to survey students to understand their current recycling habits and identify barriers. Second, partner with your facilities department—they manage waste collection. Third, create an awareness campaign with posters and workshops. Many students don't recycle simply because they're unaware of the environmental impact. You should also consider incentivizing participation, perhaps with small rewards or recognition. Finally, track your progress with metrics so you can demonstrate success to the administration. Student: This is really helpful. How long do you think this project would take? Professor: If you're persistent, you could launch a pilot program within three to four months. Start small with one or two locations, then expand based on feedback.",
+    "script": "Student: Excuse me, I'm looking for a quiet study space in the library. Can you recommend a good spot? Librarian: Sure! I'd suggest the fourth floor. It's specifically designated for silent study. Most students don't know about it, so it's usually very quiet. The second floor has group study rooms if you need to work with classmates. We also recently renovated the third floor with individual study carrels. Each carrel has its own desk, lamp, and power outlet. Student: That sounds perfect! How do I reserve a carrel? Librarian: You don't need to reserve them. It's first-come, first-served. They're typically available after 3 PM on weekdays. Student: Great! One more question - what are the library hours? Librarian: We're open from 7 AM to 11 PM on weekdays and 9 AM to 8 PM on weekends.",
     "questions": [
       {
-        "q": "What is the main topic of this conversation?",
+        "q": "What is the main purpose of this conversation?",
         "options": [
-          "How to organize a campus environmental club",
-          "Advice on starting a university recycling program",
-          "The negative impact of waste on the environment",
-          "How to work with the facilities department"
+          "To discuss the library's renovation plans",
+          "To provide information about study spaces in the library",
+          "To explain how to reserve group study rooms",
+          "To introduce new library policies"
         ],
         "answer": 1,
-        "explanation": "학생이 캠퍼스 재활용 프로그램을 시작하려는 의도를 밝히고, 교수가 구체적인 조언을 제공하는 것이 주요 주제입니다."
+        "explanation": "학생이 조용한 공부 장소를 찾고 있고, 사서가 도서관의 여러 공부 공간에 대해 설명하고 있습니다."
       },
       {
-        "q": "According to the professor, what is one reason why students don't recycle?",
+        "q": "According to the librarian, when are the individual study carrels typically available?",
         "options": [
-          "Recycling facilities are too far away",
-          "Students lack awareness of environmental impact",
-          "Recycling programs are too expensive",
-          "The university doesn't support recycling"
+          "Before 3 PM on weekdays",
+          "After 3 PM on weekdays",
+          "All day on weekends",
+          "Only in the morning"
         ],
         "answer": 1,
-        "explanation": "교수가 '많은 학생들은 단순히 환경 영향에 대한 인식이 없어서 재활용하지 않는다'고 명시적으로 언급합니다."
+        "explanation": "사서가 'typically available after 3 PM on weekdays'라고 명시하였습니다."
       },
       {
-        "q": "What does the professor suggest as a way to encourage participation?",
+        "q": "Which floor is specifically designated for silent study?",
         "options": [
-          "Making recycling mandatory for all students",
-          "Offering financial scholarships",
-          "Providing small rewards or recognition",
-          "Requiring a recycling class for all students"
+          "Second floor",
+          "Third floor",
+          "Fourth floor",
+          "First floor"
         ],
         "answer": 2,
-        "explanation": "교수는 작은 보상이나 인정(small rewards or recognition)을 통해 참여를 장려할 수 있다고 제안했습니다."
+        "explanation": "사서가 'I'd suggest the fourth floor. It's specifically designated for silent study'라고 명확히 설명했습니다."
       }
     ]
   }
