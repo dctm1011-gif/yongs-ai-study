@@ -74,7 +74,7 @@ async function generateReviewStory(today) {
   const candidates = Object.entries(pool)
     .filter(([, v]) => (v.count || 0) < 10)
     .sort(([, a], [, b]) => (a.count || 0) - (b.count || 0))
-    .slice(0, 10);
+    .slice(0, 25);
 
   if (!candidates.length) {
     console.warn('[review story] 활성 단어 없음. 스킵.');
@@ -85,11 +85,11 @@ async function generateReviewStory(today) {
   const wordList = words.map(w => `${w.word} (${w.meaning})`).join(', ');
   console.log(`[review story] 단어 ${words.length}개: ${wordList}`);
 
-  const prompt = `You have these English vocabulary words to review: ${wordList}
+  const prompt = `You have these ${words.length} English vocabulary words to review: ${wordList}
 
 Create a review in two sections:
 
-1. STORY: Write 3-4 sentences forming a coherent, natural story. Use as many words as fit naturally — do NOT force words that feel out of place. Bold each used word with **word**. Add Korean translation after each sentence.
+1. STORY: Write 5-7 sentences forming a coherent, natural story. Use as many words as fit naturally — do NOT force words that feel out of place. Bold each used word with **word**. Add Korean translation after each sentence.
 
 2. EXTRA: For any words that did not fit the story, write one natural standalone example sentence each. Bold the word. Add Korean translation.
 
@@ -105,7 +105,7 @@ Return ONLY JSON (no markdown):
     },
     body: JSON.stringify({
       model: 'claude-haiku-4-5-20251001',
-      max_tokens: 2000,
+      max_tokens: 4000,
       messages: [{ role: 'user', content: prompt }],
     }),
   });

@@ -95,7 +95,7 @@ def main():
     candidates = sorted(
         [(wid, v) for wid, v in pool.items() if (v.get("count") or 0) < 10],
         key=lambda x: x[1].get("count") or 0
-    )[:10]
+    )[:25]
 
     if not candidates:
         print("[!] 활성 단어 없음 (전부 졸업). 종료.")
@@ -106,11 +106,11 @@ def main():
     word_list = ", ".join(f"{w['word']} ({w['meaning']})" for w in words)
     print(f"[*] 단어 {len(words)}개: {word_list}")
 
-    prompt = f"""You have these English vocabulary words to review: {word_list}
+    prompt = f"""You have these {len(words)} English vocabulary words to review: {word_list}
 
 Create a review in two sections:
 
-1. STORY: Write 3-4 sentences forming a coherent, natural story. Use as many words as fit naturally — do NOT force words that feel out of place. Bold each used word with **word**. Add Korean translation after each sentence.
+1. STORY: Write 5-7 sentences forming a coherent, natural story. Use as many words as fit naturally — do NOT force words that feel out of place. Bold each used word with **word**. Add Korean translation after each sentence.
 
 2. EXTRA: For any words that did not fit the story, write one natural standalone example sentence each. Bold the word. Add Korean translation.
 
