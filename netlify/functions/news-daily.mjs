@@ -173,6 +173,84 @@ async function processKbsNews(db, today) {
   console.log(`✅ korea_news/${today} — ${article.title.slice(0,40)} (${sentsEn.length}문장)`);
 }
 
+async function processSpotlight(db, today) {
+  const existing = await get(ref(db, `english/podcasts/spotlight/${today}`));
+  if (existing.exists() && existing.val()?.audio_url) {
+    console.log(`✅ podcasts/spotlight/${today} already complete`);
+    return;
+  }
+
+  function parseSpotlightRss(xml) {
+    const items = xml.match(/<item>([\s\S]*?)<\/item>/g) || [];
+    for (const item of items) {
+      const catM = item.match(/<category[^>]*><!\[CDATA\[(.*?)\]\]>/);
+      if (catM && catM[1].includes('Word of the Day')) continue;
+      const titleM = item.match(/<title><!\[CDATA\[(.*?)\]\]>|<title>(.*?)<\/title>/);
+      const linkM = item.match(/<link>(.*?)<\/link>/);
+      const dateM = item.match(/<pubDate>(.*?)<\/pubDate>/);
+      const contentM = item.match(/<content:encoded><!\[CDATA\[([\s\S]*?)\]\]>/);
+      if (!linkM || !contentM) continue;
+      const content = contentM[1];
+      const audioM = content.match(/<audio[^>]+src=["']([^"']+\.mp3[^"']*)['"]/);
+      if (!audioM) continue;
+      const rawSentences = [];
+      let speaker = '';
+      for (const tag of content.matchAll(/<(h5|p)[^>]*>([\s\S]*?)<\/(h5|p)>/g)) {
+        const text = stripHtml(tag[2]);
+        if (!text) continue;
+        if (text.includes('appeared first on') || text.includes('Click here to follow')) continue;
+        if (tag[1] === 'h5') { speaker = text; }
+        else if (text.length >= 15) rawSentences.push({ speaker, en: text });
+      }
+      if (!rawSentences.length) continue;
+      return {
+        title: stripHtml(titleM?.[1] || titleM?.[2] || ''),
+        link: linkM[1].trim(),
+        pub_date: dateM?.[1]?.trim() || '',
+        audio_url: audioM[1],
+        raw_sentences: rawSentences,
+      };
+    }
+    return null;
+  }
+
+  const rss = await fetchUrl('https://spotlightenglish.com/feed/');
+  if (!rss) { console.log('[Spotlight] RSS 실패'); return; }
+
+  const episode = parseSpotlightRss(rss);
+  if (!episode) { console.log('[Spotlight] 파싱 실패'); return; }
+
+  // 최근 7일 중복 에피소드 체크
+  for (let d = 1; d <= 7; d++) {
+    const past = new Date(Date.now() + 9*3600000 - d*86400000).toISOString().slice(0,10);
+    const pastSnap = await get(ref(db, `english/podcasts/spotlight/${past}`)).catch(() => null);
+    if (pastSnap?.exists() && pastSnap.val()?.episode_url === episode.link) {
+      console.log('[Spotlight] 신규 에피소드 없음. 스킵.');
+      return;
+    }
+  }
+
+  console.log(`[Spotlight] 에피소드: ${episode.title.slice(0, 50)} (${episode.raw_sentences.length}문장)`);
+  const analyzed = await translateAndAnalyze(episode.raw_sentences.map(s => s.en));
+  const sentences = episode.raw_sentences.map((s, i) => ({
+    speaker: s.speaker,
+    en: s.en,
+    ko: analyzed[i]?.ko || '',
+    analysis: analyzed[i]?.analysis || '',
+  }));
+
+  await set(ref(db, `english/podcasts/spotlight/${today}`), {
+    source: 'spotlight',
+    title: episode.title,
+    audio_url: episode.audio_url,
+    duration_sec: 0,
+    pub_date: episode.pub_date,
+    episode_url: episode.link,
+    sentences,
+  });
+  console.log(`✅ podcasts/spotlight/${today} — ${sentences.length}문장`);
+}
+
 async function processHeraldNews(db, today) {
   const existing = await get(ref(db, `english/korea_herald/${today}`));
   if (existing.exists()) {
@@ -211,6 +289,7 @@ export default async (req, context) => {
 
   await processKbsNews(db, today);
   await processHeraldNews(db, today);
+  await processSpotlight(db, today);
 
   return new Response(JSON.stringify({ ok: true, date: today }), {
     status: 200,
