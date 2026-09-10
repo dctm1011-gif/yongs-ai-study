@@ -1,111 +1,112 @@
 {
-  "date": "2026-09-10",
+  "date": "2026-09-11",
   "reading": {
-    "title": "Bioluminescence in Deep Sea Creatures",
-    "passage": "Bioluminescence is the production of light by living organisms through chemical reactions. In deep ocean environments where sunlight cannot penetrate, many creatures use bioluminescence for communication, hunting, and defense. The anglerfish, for example, uses a glowing lure to attract prey in complete darkness. Scientists estimate that nearly 90% of deep-sea creatures possess some form of bioluminescence, making it one of nature's most remarkable adaptations to extreme environments.",
+    "title": "The Impact of Renewable Energy on Global Economy",
+    "passage": "Renewable energy sources such as solar and wind power have revolutionized the global energy landscape over the past decade. Countries investing heavily in renewable infrastructure have experienced significant economic growth and job creation. The transition to clean energy not only reduces carbon emissions but also decreases dependence on fossil fuels, leading to more stable energy prices. However, the initial capital investment required for renewable projects remains substantial, posing challenges for developing nations.",
     "questions": [
       {
-        "q": "According to the passage, what is the primary function of bioluminescence in deep-sea creatures?",
+        "q": "According to the passage, which of the following is a benefit of renewable energy?",
         "options": [
-          "To regulate body temperature",
-          "To communicate, hunt, and defend",
-          "To increase their swimming speed",
-          "To produce oxygen in darkness"
+          "A) Increased fossil fuel consumption",
+          "B) Reduced carbon emissions and stable energy prices",
+          "C) Higher energy costs for consumers",
+          "D) Decreased job creation"
         ],
         "answer": 1,
-        "explanation": "본문에서 'bioluminescence for communication, hunting, and defense'라고 명시되어 있습니다."
+        "explanation": "본문에서 '깨끗한 에너지로의 전환은 탄소 배출을 감소시키고 화석 연료에 대한 의존도를 줄여 더 안정적인 에너지 가격으로 이어진다'고 명시되어 있습니다."
       },
       {
-        "q": "Why can bioluminescence be considered an adaptation?",
+        "q": "What is the main challenge mentioned for developing nations?",
         "options": [
-          "It is found in all ocean creatures",
-          "It helps creatures survive in lightless deep-sea environments",
-          "It makes creatures more visible to predators",
-          "It reduces the need for food"
+          "A) Lack of solar technology",
+          "B) High initial capital investment",
+          "C) Government opposition",
+          "D) Environmental regulations"
         ],
         "answer": 1,
-        "explanation": "본문에서 '깊은 바다의 극한 환경에서의 적응'이라고 설명하고 있으며, 햇빛이 도달하지 않는 환경에서 생존하기 위한 진화적 특성입니다."
+        "explanation": "마지막 문장에서 '재생에너지 프로젝트에 필요한 초기 자본 투자가 상당하여 개발 도상국에 도전을 제시한다'고 설명합니다."
       },
       {
-        "q": "What does the anglerfish example illustrate?",
+        "q": "Which countries have experienced positive economic outcomes?",
         "options": [
-          "Bioluminescence is used for hunting prey",
-          "All deep-sea fish use lures",
-          "Darkness prevents communication",
-          "Fish cannot see in the ocean"
+          "A) All countries",
+          "B) Only wealthy nations",
+          "C) Countries investing heavily in renewable infrastructure",
+          "D) Countries still using fossil fuels"
         ],
-        "answer": 0,
-        "explanation": "앵글러피시의 예시는 생물발광을 이용해 먹이를 유인하는 사냥 방법을 보여줍니다."
+        "answer": 2,
+        "explanation": "본문의 두 번째 문장에서 '재생 에너지 기반시설에 많이 투자한 국가들이 상당한 경제 성장과 일자리 창출을 경험했다'고 명시됩니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Technology has improved human relationships'? Use specific examples to support your position.",
+    "prompt": "Do you agree or disagree with the statement: 'Technology has made life easier but less meaningful.' Provide specific examples to support your position.",
     "structure": {
-      "intro": "명확한 입장 제시 - technology가 human relationships를 개선했는지 아닌지 입장 표명 (2-3문장)",
-      "body1": "첫 번째 주장 개발 - 기술의 긍정적 영향 또는 부정적 영향을 구체적 예시와 함께 설명 (4-5문장)",
-      "body2": "두 번째 주장 개발 - 다른 관점의 예시 제시하여 주장 강화 (4-5문장)",
-      "conclusion": "입장 재확인 및 전체 논의 요약 (2-3문장)"
+      "intro": "당신의 명확한 입장을 제시하세요. 예: 'In my opinion, technology has made life easier while also creating new forms of meaning and connection.'",
+      "body1": "첫 번째 주장: 기술이 일상 업무를 어떻게 단순화했는지 구체적 예시 제시 (예: 자동화, 의료 기술)",
+      "body2": "두 번째 주장: 기술이 새로운 기회나 의미 있는 경험을 어떻게 창출했는지 설명 (예: 온라인 교육, 소셜 네트워킹, 원격 근무)",
+      "conclusion": "양쪽 입장을 균형있게 정리하며 결론 도출. 예: '따라서 기술의 영향은 우리가 어떻게 사용하는지에 달려있습니다.'"
     },
     "useful_phrases": [
-      "In my opinion, technology has significantly improved...",
-      "For example, social media platforms allow...",
-      "Furthermore, long-distance communication enables...",
-      "However, some argue that...",
-      "In conclusion, I believe that..."
+      "In my opinion, technology has...",
+      "For example, smartphones allow us to...",
+      "Furthermore, the internet has enabled...",
+      "On the other hand, some argue that...",
+      "However, I believe that...",
+      "In conclusion, technology is a tool that..."
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer learning through hands-on experience. Others prefer learning through lectures and reading. Which approach do you prefer? Use specific reasons and examples to support your response.",
+    "prompt": "Some people prefer to work in a traditional office. Others prefer to work from home. Which do you prefer and why?",
     "useful_expressions": [
-      "I prefer learning through hands-on experience because...",
-      "One reason is that practical experience helps me retain information better",
-      "Another advantage is that I can immediately apply what I learn",
-      "In my opinion, combining both methods is ideal",
-      "For instance, in science classes, lab work reinforces lecture concepts"
+      "In my opinion, I prefer working from home because...",
+      "One reason is that remote work allows me to have more flexibility...",
+      "Another advantage is that I can save time and money on commuting...",
+      "Furthermore, I find it easier to concentrate in a quiet home environment...",
+      "However, I understand that some people need the social interaction of an office..."
     ],
     "sample_points": [
-      "실습을 통한 학습은 개념을 더 깊이 이해하고 오래 기억하게 함 - 예를 들어 화학 실험을 직접 수행하면 이론을 더 잘 이해하게 됨",
-      "자신의 속도에 맞춰 학습할 수 있고 즉각적인 피드백을 받을 수 있음 - 예를 들어 악기 연습이나 프로그래밍 코딩은 직접 해봐야 실력이 늘어남"
+      "원격 근무의 유연성: 자신의 일정에 맞춰 작업할 수 있고 통근 시간 절약 가능",
+      "생산성 향상: 집중력 저해 요소 감소로 업무 효율성 증가, 개인의 일-생활 균형 개선"
     ]
   },
   "listening": {
-    "title": "University Library Study Space Discussion",
+    "title": "Campus Library Renovation Project",
     "type": "conversation",
-    "script": "Student: Excuse me, I'm looking for a quiet study space in the library. Can you recommend a good spot? Librarian: Sure! I'd suggest the fourth floor. It's specifically designated for silent study. Most students don't know about it, so it's usually very quiet. The second floor has group study rooms if you need to work with classmates. We also recently renovated the third floor with individual study carrels. Each carrel has its own desk, lamp, and power outlet. Student: That sounds perfect! How do I reserve a carrel? Librarian: You don't need to reserve them. It's first-come, first-served. They're typically available after 3 PM on weekdays. Student: Great! One more question - what are the library hours? Librarian: We're open from 7 AM to 11 PM on weekdays and 9 AM to 8 PM on weekends.",
+    "script": "Student: Excuse me, I heard the library is being renovated. How long will it take? Librarian: Yes, we're upgrading our facilities to include more study spaces and modern technology. The project should take about four months, starting next month. We're renovating the third floor first to add quiet study rooms and collaborative workspaces. Student: Will we still be able to access the books during construction? Librarian: Absolutely. We've arranged temporary shelving on the first two floors, and the circulation desk will remain open. We're also implementing a digital catalog system, so you can search and request books online. Student: That sounds helpful. When will the new study spaces be available? Librarian: The quiet study rooms should be ready in about six weeks, and the collaborative spaces will be completed by the end of the project. We're also adding charging stations and better lighting throughout the library.",
     "questions": [
       {
-        "q": "What is the main purpose of this conversation?",
+        "q": "What is the main purpose of the library renovation?",
         "options": [
-          "To discuss the library's renovation plans",
-          "To provide information about study spaces in the library",
-          "To explain how to reserve group study rooms",
-          "To introduce new library policies"
+          "A) To reduce operating costs",
+          "B) To upgrade facilities with more study spaces and modern technology",
+          "C) To close the library temporarily",
+          "D) To reduce the number of books"
         ],
         "answer": 1,
-        "explanation": "학생이 조용한 공부 장소를 찾고 있고, 사서가 도서관의 여러 공부 공간에 대해 설명하고 있습니다."
+        "explanation": "사서가 '더 많은 학습 공간과 최신 기술을 포함하여 시설을 업그레이드하고 있다'고 명확히 설명합니다."
       },
       {
-        "q": "According to the librarian, when are the individual study carrels typically available?",
+        "q": "How long is the renovation expected to take?",
         "options": [
-          "Before 3 PM on weekdays",
-          "After 3 PM on weekdays",
-          "All day on weekends",
-          "Only in the morning"
-        ],
-        "answer": 1,
-        "explanation": "사서가 'typically available after 3 PM on weekdays'라고 명시하였습니다."
-      },
-      {
-        "q": "Which floor is specifically designated for silent study?",
-        "options": [
-          "Second floor",
-          "Third floor",
-          "Fourth floor",
-          "First floor"
+          "A) Two months",
+          "B) Three months",
+          "C) Four months",
+          "D) Six months"
         ],
         "answer": 2,
-        "explanation": "사서가 'I'd suggest the fourth floor. It's specifically designated for silent study'라고 명확히 설명했습니다."
+        "explanation": "사서가 '프로젝트는 약 4개월이 걸릴 것으로 예상된다'고 명시합니다."
+      },
+      {
+        "q": "Which feature will be available first?",
+        "options": [
+          "A) Collaborative workspaces",
+          "B) Digital catalog system",
+          "C) Quiet study rooms",
+          "D) Charging stations"
+        ],
+        "answer": 2,
+        "explanation": "사서가 '조용한 학습실은 약 6주 안에 준비될 것'이라고 언급하여 다른 시설보다 먼저 완성될 것으로 설명합니다."
       }
     ]
   }
