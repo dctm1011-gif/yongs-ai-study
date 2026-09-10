@@ -1,162 +1,206 @@
 {
-  "date": "2026-09-09",
+  "date": "2026-09-10",
   "words": [
     {
-      "word": "mitigate",
-      "part_of_speech": "동사",
-      "meaning_ko": "완화하다, 경감하다",
-      "explanation": "부정적인 영향이나 심각성을 줄이는 것. TOEFL 환경·정책 지문 최빈출 동사예요.",
-      "example_from_convo": "Building seawalls can help mitigate the effects of rising sea levels.",
-      "example_ko": "방파제 건설은 해수면 상승의 영향을 완화하는 데 도움이 돼요.",
-      "tip": "동의어: alleviate, reduce, lessen. 반의어: exacerbate, worsen. TOEFL Reading·Writing 필수.",
-      "emoji": "🛡️"
+      "word": "jurisdiction",
+      "part_of_speech": "noun",
+      "meaning_ko": "관할권, 사법권",
+      "explanation": "특정 법원이나 정부 기관이 법적 권한을 행사할 수 있는 지역이나 사건의 범위",
+      "example_from_convo": "This case falls under federal jurisdiction.",
+      "example_ko": "이 사건은 연방 관할권에 속한다.",
+      "tip": "동의어: authority, domain | 반의어: exemption | TOEFL 법률/정치 영역",
+      "emoji": "⚖️"
     },
     {
-      "word": "proliferate",
-      "part_of_speech": "동사",
-      "meaning_ko": "급속히 늘어나다, 확산되다",
-      "explanation": "수나 양이 빠르게 증가하는 것. TOEFL 과학·기술·사회 지문에 자주 나와요.",
-      "example_from_convo": "Social media platforms have proliferated over the past decade.",
-      "example_ko": "소셜 미디어 플랫폼은 지난 10년간 급속히 늘어났어요.",
-      "tip": "동의어: multiply, expand, spread. 반의어: diminish, decline. 명사형: proliferation.",
-      "emoji": "📈"
+      "word": "retention",
+      "part_of_speech": "noun",
+      "meaning_ko": "유지, 보유, 보존",
+      "explanation": "무언가를 계속 가지고 있거나 유지하는 행위 또는 상태",
+      "example_from_convo": "The company improved employee retention by offering better benefits.",
+      "example_ko": "그 회사는 더 나은 혜택을 제공함으로써 직원 보유를 개선했다.",
+      "tip": "동의어: preservation, maintenance | 반의어: loss, release | TOEFL 비즈니스/심리학",
+      "emoji": "📌"
     },
     {
-      "word": "sustain",
-      "part_of_speech": "동사",
-      "meaning_ko": "유지하다, 지속하다",
-      "explanation": "상태·노력을 계속 유지하는 것. TOEFL 전 영역 최빈출 동사 중 하나예요.",
-      "example_from_convo": "The ecosystem requires clean water to sustain biodiversity.",
-      "example_ko": "생태계는 생물 다양성을 유지하기 위해 깨끗한 물이 필요해요.",
-      "tip": "동의어: maintain, support, preserve. 형용사형: sustainable(지속 가능한). TOEFL 핵심 어휘.",
-      "emoji": "♻️"
+      "word": "narrative",
+      "part_of_speech": "noun",
+      "meaning_ko": "이야기, 서사, 설명",
+      "explanation": "사건이나 경험을 순서대로 말하거나 쓴 것; 특정한 관점에서 제시된 이야기",
+      "example_from_convo": "The news report presented a different narrative of the incident.",
+      "example_ko": "그 뉴스 보도는 그 사건에 대한 다른 서사를 제시했다.",
+      "tip": "동의어: story, account | 반의어: silence, suppression | TOEFL 문학/미디어",
+      "emoji": "📖"
     },
     {
-      "word": "undermine",
-      "part_of_speech": "동사",
-      "meaning_ko": "약화시키다, 훼손하다",
-      "explanation": "기반이나 신뢰를 서서히 약하게 만드는 것. TOEFL 사회·정치 지문에 매우 자주 나와요.",
-      "example_from_convo": "Corruption can severely undermine public trust in government.",
-      "example_ko": "부패는 정부에 대한 국민의 신뢰를 심각하게 약화시킬 수 있어요.",
-      "tip": "동의어: weaken, erode, sabotage. 반의어: strengthen, bolster. 비유적 표현으로 자주 써요.",
-      "emoji": "⚠️"
+      "word": "volatility",
+      "part_of_speech": "noun",
+      "meaning_ko": "변동성, 불안정성, 동요",
+      "explanation": "빠르고 예측 불가능하게 변하는 성질; 특히 금융 시장에서 가격의 급격한 변화",
+      "example_from_convo": "Market volatility increased investors' concerns about their portfolios.",
+      "example_ko": "시장 변동성은 투자자들의 포트폴리오에 대한 우려를 증가시켰다.",
+      "tip": "동의어: instability, turbulence | 반의어: stability, consistency | TOEFL 금융/과학",
+      "emoji": "📉"
     },
     {
-      "word": "inherent",
-      "part_of_speech": "형용사",
-      "meaning_ko": "고유한, 내재된",
-      "explanation": "어떤 것의 본질적인 특성으로 처음부터 존재하는 것. TOEFL 학술 지문 전반에 등장해요.",
-      "example_from_convo": "There are inherent risks in any scientific experiment.",
-      "example_ko": "모든 과학 실험에는 내재된 위험이 있어요.",
-      "tip": "동의어: intrinsic, innate, built-in. 부사형: inherently. 'inherent in/to ~'로 자주 써요.",
-      "emoji": "🧬"
+      "word": "fortitude",
+      "part_of_speech": "noun",
+      "meaning_ko": "용기, 불굴의 정신, 담대함",
+      "explanation": "어려운 상황에서 두려움 없이 견디고 극복하는 강인한 정신력",
+      "example_from_convo": "She faced her illness with remarkable fortitude.",
+      "example_ko": "그녀는 눈에 띄는 용기를 가지고 병과 맞섰다.",
+      "tip": "동의어: courage, determination | 반의어: cowardice, weakness | TOEFL 인물/성격 묘사",
+      "emoji": "💪"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "mitigate",
-      "question": "'mitigate'의 의미로 가장 적절한 것은?",
+      "word": "jurisdiction",
+      "question": "Which best defines jurisdiction?",
       "options": [
-        "완화하다, 경감하다",
-        "강하게 반발하다",
-        "무관심한",
-        "일시적인"
+        "The power and authority to make legal decisions in a specific area or over certain cases",
+        "The process of appealing a court decision to a higher court",
+        "The punishment given to someone convicted of a crime",
+        "The evidence presented in a trial"
       ],
       "answer": 0,
-      "explanation": "mitigate = 완화하다, 경감하다."
-    },
-    {
-      "type": "fill_blank",
-      "word": "mitigate",
-      "sentence": "Building seawalls can help _____ the effects of rising sea levels.",
-      "sentence_ko": "방파제 건설은 해수면 상승의 영향을 완화하는 데 도움이 돼요.",
-      "answer": "mitigate",
-      "hint": "완화하다, 경감하다"
+      "explanation": "Jurisdiction refers to the legal authority of a court or government body to hear and decide cases within a specific territory or subject matter.",
+      "option_explanations": [
+        null,
+        "This describes appeal process",
+        "This describes sentencing",
+        "This describes evidence"
+      ]
     },
     {
       "type": "meaning",
-      "word": "proliferate",
-      "question": "'proliferate'의 의미로 가장 적절한 것은?",
+      "word": "volatility",
+      "question": "What does volatility most commonly refer to in financial contexts?",
       "options": [
-        "급속히 늘어나다, 확산되다",
-        "강하게 반발하다",
-        "무관심한",
-        "일시적인"
+        "The permanent loss of investment value",
+        "Rapid and unpredictable price fluctuations",
+        "The total return on an investment",
+        "The amount of money borrowed for trading"
       ],
-      "answer": 0,
-      "explanation": "proliferate = 급속히 늘어나다, 확산되다."
-    },
-    {
-      "type": "fill_blank",
-      "word": "proliferate",
-      "sentence": "Social media platforms have _____d over the past decade.",
-      "sentence_ko": "소셜 미디어 플랫폼은 지난 10년간 급속히 늘어났어요.",
-      "answer": "proliferate",
-      "hint": "급속히 늘어나다, 확산되다"
+      "answer": 1,
+      "explanation": "Volatility in finance describes how dramatically and unpredictably asset prices change over time.",
+      "option_explanations": [
+        null,
+        "This describes permanent loss",
+        "This describes returns",
+        "This describes leverage"
+      ]
     },
     {
       "type": "meaning",
-      "word": "sustain",
-      "question": "'sustain'의 의미로 가장 적절한 것은?",
+      "word": "fortitude",
+      "question": "Which scenario best demonstrates fortitude?",
       "options": [
-        "유지하다, 지속하다",
-        "강하게 반발하다",
-        "무관심한",
-        "일시적인"
+        "Avoiding difficult tasks at all costs",
+        "Facing adversity with courage and determination despite fear",
+        "Achieving success without any challenges",
+        "Seeking help immediately when problems arise"
       ],
-      "answer": 0,
-      "explanation": "sustain = 유지하다, 지속하다."
+      "answer": 1,
+      "explanation": "Fortitude is the strength to endure and overcome difficulties with courage, not avoiding them or giving in to fear.",
+      "option_explanations": [
+        null,
+        "This shows avoidance",
+        "This contradicts fortitude concept",
+        "This may lack courage"
+      ]
     },
     {
       "type": "fill_blank",
-      "word": "sustain",
-      "sentence": "The ecosystem requires clean water to _____ biodiversity.",
-      "sentence_ko": "생태계는 생물 다양성을 유지하기 위해 깨끗한 물이 필요해요.",
-      "answer": "sustain",
-      "hint": "유지하다, 지속하다"
-    },
-    {
-      "type": "meaning",
-      "word": "undermine",
-      "question": "'undermine'의 의미로 가장 적절한 것은?",
-      "options": [
-        "약화시키다, 훼손하다",
-        "강하게 반발하다",
-        "무관심한",
-        "일시적인"
-      ],
-      "answer": 0,
-      "explanation": "undermine = 약화시키다, 훼손하다."
+      "word": "retention",
+      "sentence": "The company implemented new policies to improve employee ___ and reduce turnover rates.",
+      "sentence_ko": "그 회사는 직원 ___을 개선하고 이직률을 줄이기 위해 새로운 정책을 시행했다.",
+      "answer": "retention",
+      "hint": "것들을 계속 가지고 있거나 유지하는 행위"
     },
     {
       "type": "fill_blank",
-      "word": "undermine",
-      "sentence": "Corruption can severely _____ public trust in government.",
-      "sentence_ko": "부패는 정부에 대한 국민의 신뢰를 심각하게 약화시킬 수 있어요.",
-      "answer": "undermine",
-      "hint": "약화시키다, 훼손하다"
-    },
-    {
-      "type": "meaning",
-      "word": "inherent",
-      "question": "'inherent'의 의미로 가장 적절한 것은?",
-      "options": [
-        "고유한, 내재된",
-        "강하게 반발하다",
-        "무관심한",
-        "일시적인"
-      ],
-      "answer": 0,
-      "explanation": "inherent = 고유한, 내재된."
+      "word": "narrative",
+      "sentence": "The historian challenged the traditional ___ of the war by presenting previously unknown documents.",
+      "sentence_ko": "그 역사가는 이전에 알려지지 않은 문서를 제시함으로써 전쟁에 대한 전통적인 ___에 도전했다.",
+      "answer": "narrative",
+      "hint": "특정 관점에서 제시된 이야기나 설명"
     },
     {
       "type": "fill_blank",
-      "word": "inherent",
-      "sentence": "There are _____ risks in any scientific experiment.",
-      "sentence_ko": "모든 과학 실험에는 내재된 위험이 있어요.",
-      "answer": "inherent",
-      "hint": "고유한, 내재된"
+      "word": "jurisdiction",
+      "sentence": "The international court claimed ___ over cases involving human rights violations across multiple countries.",
+      "sentence_ko": "국제 법원은 여러 국가에 걸친 인권 침해 사건에 대한 ___을 주장했다.",
+      "answer": "jurisdiction",
+      "hint": "법적 권한과 권력을 행사할 수 있는 범위"
+    },
+    {
+      "type": "situation",
+      "word": "volatility",
+      "question": "A stock market experiences significant price swings of 10% daily due to uncertainty about future economic policy. What term best describes this market condition?",
+      "options": [
+        "Stability",
+        "Volatility",
+        "Liquidity",
+        "Maturity"
+      ],
+      "answer": 1,
+      "explanation": "The unpredictable and dramatic daily price fluctuations of 10% exemplify market volatility, which creates uncertainty for investors."
+    },
+    {
+      "type": "situation",
+      "word": "fortitude",
+      "question": "Despite facing severe criticism and setbacks, an athlete continues training rigorously for the Olympics without losing confidence. What quality does this demonstrate?",
+      "options": [
+        "Arrogance",
+        "Indifference",
+        "Fortitude",
+        "Recklessness"
+      ],
+      "answer": 2,
+      "explanation": "The athlete's ability to persist through criticism and setbacks while maintaining confidence demonstrates fortitude—the strength to endure adversity."
+    }
+  ],
+  "sentences": [
+    {
+      "word": "jurisdiction",
+      "sentence": "The local court lacks jurisdiction over federal crimes, which must be tried in federal court.",
+      "sentence_ko": "지방 법원은 연방 범죄에 대한 관할권이 없으며, 이는 연방 법원에서 재판받아야 한다.",
+      "nuance": "법적 제한을 강조하며 권한의 경계를 명확히 함",
+      "context": "법적 절차나 법원 시스템 논의",
+      "everyday_usage": "특정 조직이나 기관이 결정할 수 있는 범위를 설명할 때 사용"
+    },
+    {
+      "word": "retention",
+      "sentence": "Data retention policies require companies to keep customer information for at least two years.",
+      "sentence_ko": "데이터 보관 정책은 회사들이 고객 정보를 최소 2년 동안 보유하도록 요구한다.",
+      "nuance": "규정이나 의무적 보관을 의미함",
+      "context": "기업 정책, 법규 준수 논의",
+      "everyday_usage": "기간 동안 무언가를 계속 보유해야 하는 필요성을 나타낼 때"
+    },
+    {
+      "word": "narrative",
+      "sentence": "Each culture has its own unique narrative about the origins of humanity.",
+      "sentence_ko": "각 문화는 인류의 기원에 대한 고유한 서사를 가지고 있다.",
+      "nuance": "특정 문화나 집단의 관점이 반영된 이야기",
+      "context": "문화, 역사, 철학적 논의",
+      "everyday_usage": "어떤 사건이나 현상에 대해 사람들이 공유하는 이야기를 설명할 때"
+    },
+    {
+      "word": "volatility",
+      "sentence": "The volatility of cryptocurrency prices makes it a risky investment for conservative investors.",
+      "sentence_ko": "암호화폐 가격의 변동성은 보수적인 투자자들에게 위험한 투자가 되게 만든다.",
+      "nuance": "위험성과 불확실성을 함축함",
+      "context": "투자, 금융, 시장 분석",
+      "everyday_usage": "어떤 것이 예측 불가능하고 불안정하다는 것을 나타낼 때"
+    },
+    {
+      "word": "fortitude",
+      "sentence": "The firefighters showed tremendous fortitude as they rushed into the burning building to rescue people.",
+      "sentence_ko": "소방관들은 사람들을 구하기 위해 불에 타는 건물로 뛰어들면서 놀라운 용기를 보였다.",
+      "nuance": "위험한 상황에서도 흔들리지 않는 강인한 정신력",
+      "context": "영웅적 행동, 도덕성 또는 용감함 논의",
+      "everyday_usage": "누군가가 어려운 상황에서 보여주는 강한 정신력을 칭찬할 때"
     }
   ]
 }

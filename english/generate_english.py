@@ -284,9 +284,11 @@ def get_default_words(target_date: date) -> dict:
     used_lower_set = {w.lower() for w in load_used_words()}
     available = [c for c in candidate_pool if c["word"].lower() not in used_lower_set]
 
-    # 미사용 단어가 5개 미만이면 전체 풀에서 선택
     if len(available) < 5:
-        available = candidate_pool
+        # 미사용 단어가 부족하면 전체 풀 중 used_lower 포함해도 되지만,
+        # 최소한 available 있는 것 먼저 쓰고 나머지는 뒤에서 채움
+        used_words = [c for c in candidate_pool if c["word"].lower() in used_lower_set]
+        available = available + used_words
 
     selected = available[:5]
     words = selected
@@ -350,6 +352,17 @@ def generate_default_words(client: anthropic.Anthropic, target_date: date, toefl
     used_lower = {w.lower() for w in all_used_words}
     recent_50 = ", ".join(all_used_words[-50:])
 
+    # 어근 집합: 6자 접두어 기반 파생어 중복 방지
+    def _stem(w):
+        return w.lower().replace(" ", "").replace("-", "")[:6]
+    used_stems = {_stem(w) for w in all_used_words if len(w.replace(" ","")) >= 6}
+
+    def _is_stem_dup(word):
+        for token in word.lower().split():
+            if len(token) >= 6 and token[:6] in used_stems:
+                return True
+        return False
+
     # 사용자 난이도 평가 기반 CEFR 조정
     ratings = fetch_user_ratings()
     avg = ratings["avg"]
@@ -402,7 +415,9 @@ def generate_default_words(client: anthropic.Anthropic, target_date: date, toefl
         except json.JSONDecodeError:
             continue
         for c in batch:
-            if c.get("word","").lower() not in used_lower and c["word"] not in [x["word"] for x in candidates]:
+            if (c.get("word","").lower() not in used_lower
+                    and not _is_stem_dup(c["word"])
+                    and c["word"] not in [x["word"] for x in candidates]):
                 candidates.append(c)
         if len(candidates) >= 5:
             break

@@ -24,6 +24,16 @@ used_lower = {w.lower() for w in all_words}
 recent_50 = ", ".join(all_words[-50:])
 print(f"DB 단어 수: {len(all_words)}")
 
+def _stem(w):
+    return w.lower().replace(" ", "").replace("-", "")[:6]
+used_stems = {_stem(w) for w in all_words if len(w.replace(" ", "")) >= 6}
+
+def is_stem_dup(word):
+    for token in word.lower().split():
+        if len(token) >= 6 and token[:6] in used_stems:
+            return True
+    return False
+
 client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 
 # 1단계: 범학문 AWL B2-C1 후보 단어 선정
@@ -54,7 +64,7 @@ if not m:
 candidates = json.loads(m.group(0))
 print(f"후보: {[(c['word'],c.get('domain','')) for c in candidates]}")
 
-valid = [c for c in candidates if c.get("word","").lower() not in used_lower]
+valid = [c for c in candidates if c.get("word","").lower() not in used_lower and not is_stem_dup(c["word"])]
 print(f"유효: {[c['word'] for c in valid]}")
 
 if len(valid) < 5:
@@ -152,4 +162,33 @@ with urllib.request.urlopen(req, timeout=15) as r:
 (ROOT / "english" / "daily.json").write_text(
     json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8"
 )
+
+# words_db.json에 오늘 단어 추가 (중복 방지)
+try:
+    db_path = ROOT / "english" / "words_db.json"
+    db = json.loads(db_path.read_text(encoding="utf-8"))
+    db_lower = {e.get("word","").lower() for e in db if e.get("word")}
+    added_to_db = 0
+    for w in result.get("words", []):
+        word = w.get("word","")
+        if word and word.lower() not in db_lower:
+            db.append({
+                "id": word, "word": word,
+                "pos": w.get("part_of_speech",""),
+                "date": str(today),
+                "meaning": w.get("meaning_ko",""),
+                "example_ko": w.get("example_ko",""),
+                "example_en": w.get("example_from_convo",""),
+                "explanation": w.get("explanation",""),
+                "tip": w.get("tip",""),
+                "emoji": w.get("emoji",""),
+            })
+            db_lower.add(word.lower())
+            added_to_db += 1
+    if added_to_db:
+        db_path.write_text(json.dumps(db, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"words_db.json +{added_to_db}개 추가 (총 {len(db)}개)")
+except Exception as e:
+    print(f"[!] words_db 업데이트 실패 (무시): {e}")
+
 print(f"\n완료! 오늘 단어: {[w['word'] for w in result.get('words',[])]}")
