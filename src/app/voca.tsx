@@ -212,6 +212,7 @@ export default function VocaScreen() {
   const { user } = useAuth();
   const uid = user!.uid;
   const [view, setView] = useState<ViewType>('game');
+  const [todayDate, setTodayDate] = useState(getKSTDateString());
   const [words, setWords] = useState<Word[]>([]);
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [reviewStory, setReviewStory] = useState<ReviewStory | null>(null);
@@ -363,6 +364,21 @@ export default function VocaScreen() {
     loadData();
   }, []);
 
+  // 자정이 지나면 todayDate 갱신 → onValue 구독이 새 날짜 경로로 재등록됨
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newDate = getKSTDateString();
+      if (newDate !== todayDate) {
+        setTodayDate(newDate);
+        setWords([]);
+        setQuizzes([]);
+        AsyncStorage.removeItem('english_words').catch(() => {});
+        AsyncStorage.removeItem('english_quizzes').catch(() => {});
+      }
+    }, 60 * 1000);
+    return () => clearInterval(interval);
+  }, [todayDate]);
+
   // 화면을 완전히 벗어날 때 진행 중인 playAllWords 루프 취소 + 사운드 해제.
   // 다음 _wcPlayId !== myId 체크에서 루프가 멈춘다.
   useEffect(() => {
@@ -382,8 +398,7 @@ export default function VocaScreen() {
   // scheduled function writes new data, without needing to reopen the tab.
   useEffect(() => {
     const db = getDatabase(getFirebaseApp());
-    const today = getKSTDateString();
-    const wordsRef = ref(db, `english/words/${today}`);
+    const wordsRef = ref(db, `english/words/${todayDate}`);
 
     const unsubscribe = onValue(
       wordsRef,
@@ -393,7 +408,7 @@ export default function VocaScreen() {
           return;
         }
 
-        const netlifyData = mapFirebaseWords(snapshot.val(), today);
+        const netlifyData = mapFirebaseWords(snapshot.val(), todayDate);
         if (netlifyData.length === 0) return;
 
         console.log(`📚 Loaded ${netlifyData.length} daily Voca phrases from Firebase`);
@@ -411,7 +426,6 @@ export default function VocaScreen() {
 
         if (newWordIds === oldWordIds && localWords.length > 0) {
           // Words are up-to-date, but check if quizzes have stale fill_blank entries (no options).
-          // This happens when the cached quiz data was generated before the options fix.
           const savedQuizzes = await AsyncStorage.getItem('english_quizzes');
           let cachedQuizzes: any = null;
           try { cachedQuizzes = savedQuizzes ? JSON.parse(savedQuizzes) : null; } catch {}
@@ -425,7 +439,7 @@ export default function VocaScreen() {
           (acc: any, w) => ({ ...acc, [w.id]: w.isRead }),
           {}
         );
-        const remoteReadStatus = await fetchReadStatusFromFirebase(uid, today);
+        const remoteReadStatus = await fetchReadStatusFromFirebase(uid, todayDate);
         const mergedWords = netlifyData.map(w => ({
           ...w,
           isRead: remoteReadStatus[w.id] ?? savedReadStatus[w.id] ?? false,
@@ -439,7 +453,7 @@ export default function VocaScreen() {
 
         const fbQuizzes = mapFirebaseQuizzes(snapshot.val());
         const baseQuizzes = fbQuizzes.length > 0 ? fbQuizzes : generateQuizzes(mergedWords);
-        const remoteQuizStatus = await fetchQuizStatusFromFirebase(uid, today);
+        const remoteQuizStatus = await fetchQuizStatusFromFirebase(uid, todayDate);
         const newQuizzes = baseQuizzes.map(q => {
           const saved = remoteQuizStatus[q.id];
           if (saved?.answered) {
@@ -449,8 +463,6 @@ export default function VocaScreen() {
         });
         setQuizzes(newQuizzes);
         await AsyncStorage.setItem('english_quizzes', JSON.stringify(newQuizzes));
-
-        // Daily sentences are not saved to reviewSentences — review tab loads from reviewPool directly
       },
       error => {
         console.error('Firebase subscription error:', error);
@@ -458,7 +470,7 @@ export default function VocaScreen() {
     );
 
     return () => unsubscribe();
-  }, []);
+  }, [todayDate]);
 
   useEffect(() => {
     updateStats();
@@ -497,10 +509,8 @@ export default function VocaScreen() {
 
         // review story is generated on demand, not cached
       } else {
-        // 캐시가 없거나 예전 형식(배열이 아님)으로 남아있으면 기본값으로 폴백
-        loadedWords = getDefaultWords();
-        setWords(loadedWords);
-        setQuizzes(generateQuizzes(loadedWords));
+        // 캐시 없음 — Firebase onValue 구독이 로드 완료 후 단어를 세팅함
+        loadedWords = [];
       }
 
       // 다른 기기/재설치 등으로 로컬 캐시가 없어도 읽음 상태는 Firebase에서 복원.
@@ -527,9 +537,6 @@ export default function VocaScreen() {
       }
     } catch (error) {
       console.error('Failed to load Voca data:', error);
-      const defaultWords = getDefaultWords();
-      setWords(defaultWords);
-      setQuizzes(generateQuizzes(defaultWords));
     } finally {
       setLoading(false);
     }
@@ -936,19 +943,54 @@ export default function VocaScreen() {
         setReviewStory(snap.val());
         return;
       }
-      // 스토리 없으면 온디맨드 생성
-      const readWords = words.filter(w => w.isRead).map(w => ({ word: w.word, meaning: w.meaning }));
-      if (readWords.length === 0) {
+      // 스토리 없으면 온디맨드 생성 — reviewPool에서 25개 우선, 없으면 오늘 읽은 단어
+      const poolSnap = await get(userRef(uid, 'english/reviewPool')).catch(() => null);
+      let reviewWords: { word: string; meaning: string }[] = [];
+      if (poolSnap?.exists()) {
+        const pool = poolSnap.val() as Record<string, any>;
+        reviewWords = Object.values(pool)
+          .filter(v => (v.count || 0) < 10)
+          .sort((a, b) => (a.count || 0) - (b.count || 0))
+          .slice(0, 25)
+          .map(v => ({ word: v.word, meaning: v.meaning || '' }));
+      }
+      if (reviewWords.length === 0) {
+        reviewWords = words.filter(w => w.isRead).map(w => ({ word: w.word, meaning: w.meaning }));
+      }
+      if (reviewWords.length === 0) {
         setReviewStory(null);
         return;
       }
-      const res = await fetch(`${NETLIFY_BASE_URL}/api/review-story`, {
+      const wordList = reviewWords.map(w => `${w.word} (${w.meaning})`).join(', ');
+      const prompt = `You have these ${reviewWords.length} English vocabulary words to review: ${wordList}
+
+Create a review in two sections:
+
+1. STORY: Write 5-7 sentences forming a coherent, natural story. Use as many words as fit naturally — do NOT force words that feel out of place. Bold each used word with **word**. Add Korean translation after each sentence.
+
+2. EXTRA: For any words that did not fit the story, write one natural standalone example sentence each. Bold the word. Add Korean translation.
+
+Return ONLY JSON (no markdown):
+{"sentences":[{"en":"Story sentence with **vocab**.","ko":"한국어 번역."}],"extra":[{"en":"Standalone sentence with **word**.","ko":"한국어 번역."}],"wordNuances":[{"word":"word1","meaning":"뜻","nuance":"뉘앙스 1~2문장"}]}`;
+      const apiKey = process.env.EXPO_PUBLIC_ANTHROPIC_API_KEY;
+      const aiRes = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ words: readWords }),
+        headers: {
+          'x-api-key': apiKey ?? '',
+          'anthropic-version': '2023-06-01',
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 4000,
+          messages: [{ role: 'user', content: prompt }],
+        }),
       });
-      if (!res.ok) { setReviewStory(null); return; }
-      const story: ReviewStory = await res.json();
+      const aiData = await aiRes.json();
+      const text = (aiData.content?.[0]?.text ?? '') as string;
+      const m = text.match(/\{[\s\S]*\}/);
+      if (!m) { setReviewStory(null); return; }
+      const story: ReviewStory = JSON.parse(m[0]);
       if (story?.sentences?.length) {
         setReviewStory(story);
         const db = getDatabase(getFirebaseApp());
