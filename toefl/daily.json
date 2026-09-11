@@ -1,112 +1,114 @@
 {
-  "date": "2026-09-11",
+  "date": "2026-09-12",
   "reading": {
-    "title": "The Impact of Renewable Energy on Global Economy",
-    "passage": "Renewable energy sources such as solar and wind power have revolutionized the global energy landscape over the past decade. Countries investing heavily in renewable infrastructure have experienced significant economic growth and job creation. The transition to clean energy not only reduces carbon emissions but also decreases dependence on fossil fuels, leading to more stable energy prices. However, the initial capital investment required for renewable projects remains substantial, posing challenges for developing nations.",
+    "title": "The Impact of Artificial Intelligence on Education",
+    "passage": "Artificial intelligence is transforming the education sector by personalizing learning experiences for students. AI-powered tutoring systems can adapt to individual learning paces, identifying knowledge gaps and providing targeted feedback. Teachers can use AI tools to automate administrative tasks, allowing them to focus more on student engagement and critical thinking development. However, concerns about data privacy and the potential reduction of human interaction in education remain significant challenges that institutions must address carefully.",
     "questions": [
       {
-        "q": "According to the passage, which of the following is a benefit of renewable energy?",
+        "q": "According to the passage, what is one benefit of AI in education?",
         "options": [
-          "A) Increased fossil fuel consumption",
-          "B) Reduced carbon emissions and stable energy prices",
-          "C) Higher energy costs for consumers",
-          "D) Decreased job creation"
+          "It eliminates the need for teachers",
+          "It personalizes learning experiences for students",
+          "It reduces the cost of textbooks",
+          "It prevents all knowledge gaps"
         ],
         "answer": 1,
-        "explanation": "본문에서 '깨끗한 에너지로의 전환은 탄소 배출을 감소시키고 화석 연료에 대한 의존도를 줄여 더 안정적인 에너지 가격으로 이어진다'고 명시되어 있습니다."
+        "explanation": "지문에서 'AI-powered tutoring systems can adapt to individual learning paces'라고 명시되어 있으며, AI가 학생들을 위해 개인화된 학습 경험을 제공한다고 설명합니다."
       },
       {
-        "q": "What is the main challenge mentioned for developing nations?",
+        "q": "What concern is mentioned about AI in education?",
         "options": [
-          "A) Lack of solar technology",
-          "B) High initial capital investment",
-          "C) Government opposition",
-          "D) Environmental regulations"
-        ],
-        "answer": 1,
-        "explanation": "마지막 문장에서 '재생에너지 프로젝트에 필요한 초기 자본 투자가 상당하여 개발 도상국에 도전을 제시한다'고 설명합니다."
-      },
-      {
-        "q": "Which countries have experienced positive economic outcomes?",
-        "options": [
-          "A) All countries",
-          "B) Only wealthy nations",
-          "C) Countries investing heavily in renewable infrastructure",
-          "D) Countries still using fossil fuels"
+          "It is too expensive",
+          "It works only for advanced students",
+          "Data privacy and reduction of human interaction",
+          "It replaces all teaching methods"
         ],
         "answer": 2,
-        "explanation": "본문의 두 번째 문장에서 '재생 에너지 기반시설에 많이 투자한 국가들이 상당한 경제 성장과 일자리 창출을 경험했다'고 명시됩니다."
+        "explanation": "지문의 마지막 문장에서 'concerns about data privacy and the potential reduction of human interaction in education remain significant challenges'라고 명확히 언급되어 있습니다."
+      },
+      {
+        "q": "How can teachers benefit from AI tools according to the passage?",
+        "options": [
+          "They can teach fewer hours",
+          "They can automate administrative tasks and focus on engagement",
+          "They can eliminate student feedback",
+          "They can reduce curriculum requirements"
+        ],
+        "answer": 1,
+        "explanation": "지문에서 'Teachers can use AI tools to automate administrative tasks, allowing them to focus more on student engagement'라고 설명합니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Technology has made life easier but less meaningful.' Provide specific examples to support your position.",
+    "prompt": "Do you agree or disagree with the statement: 'Remote work is more productive than working in an office.' Provide specific reasons and examples to support your position.",
     "structure": {
-      "intro": "당신의 명확한 입장을 제시하세요. 예: 'In my opinion, technology has made life easier while also creating new forms of meaning and connection.'",
-      "body1": "첫 번째 주장: 기술이 일상 업무를 어떻게 단순화했는지 구체적 예시 제시 (예: 자동화, 의료 기술)",
-      "body2": "두 번째 주장: 기술이 새로운 기회나 의미 있는 경험을 어떻게 창출했는지 설명 (예: 온라인 교육, 소셜 네트워킹, 원격 근무)",
-      "conclusion": "양쪽 입장을 균형있게 정리하며 결론 도출. 예: '따라서 기술의 영향은 우리가 어떻게 사용하는지에 달려있습니다.'"
+      "intro": "도입부에서는 찬성 또는 반대 입장을 명확히 제시하고, 주요 이유 2-3개를 간단히 언급하세요. (2-3문장)",
+      "body1": "첫 번째 이유를 상세히 설명하고 구체적인 예시를 제시하세요. 예: 몰입도 증가, 통근 시간 감소 등 (4-5문장)",
+      "body2": "두 번째 이유를 설명하고 반박 가능한 주장도 포함하세요. 예: 팀 협력, 소통의 어려움 등 (4-5문장)",
+      "conclusion": "결론에서는 입장을 재확인하고 전체 논의를 종합하세요. (2-3문장)"
     },
     "useful_phrases": [
-      "In my opinion, technology has...",
-      "For example, smartphones allow us to...",
-      "Furthermore, the internet has enabled...",
-      "On the other hand, some argue that...",
-      "However, I believe that...",
-      "In conclusion, technology is a tool that..."
+      "In my opinion,",
+      "I strongly believe that",
+      "One reason is that",
+      "Furthermore,",
+      "For example,",
+      "On the other hand,",
+      "In conclusion,",
+      "To summarize,"
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to work in a traditional office. Others prefer to work from home. Which do you prefer and why?",
+    "prompt": "Some people prefer to study alone. Others prefer to study in groups. Which do you prefer and why?",
     "useful_expressions": [
-      "In my opinion, I prefer working from home because...",
-      "One reason is that remote work allows me to have more flexibility...",
-      "Another advantage is that I can save time and money on commuting...",
-      "Furthermore, I find it easier to concentrate in a quiet home environment...",
-      "However, I understand that some people need the social interaction of an office..."
+      "In my opinion, I prefer to study alone because",
+      "One reason is that studying alone helps me concentrate better",
+      "Another advantage is that I can work at my own pace",
+      "However, I also recognize that group study has benefits",
+      "To sum up, I believe that"
     ],
     "sample_points": [
-      "원격 근무의 유연성: 자신의 일정에 맞춰 작업할 수 있고 통근 시간 절약 가능",
-      "생산성 향상: 집중력 저해 요소 감소로 업무 효율성 증가, 개인의 일-생활 균형 개선"
+      "집중력 향상: 혼자 공부할 때는 방해 요소가 적어 더 깊이 있는 학습이 가능합니다. 특히 복잡한 주제를 공부할 때 자신의 속도에 맞춰 진행할 수 있습니다.",
+      "자유로운 시간 관리: 혼자 공부하면 자신의 일정에 맞춰 유연하게 공부 계획을 세울 수 있으며, 다른 사람을 기다릴 필요가 없습니다."
     ]
   },
   "listening": {
-    "title": "Campus Library Renovation Project",
+    "title": "Campus Library Services",
     "type": "conversation",
-    "script": "Student: Excuse me, I heard the library is being renovated. How long will it take? Librarian: Yes, we're upgrading our facilities to include more study spaces and modern technology. The project should take about four months, starting next month. We're renovating the third floor first to add quiet study rooms and collaborative workspaces. Student: Will we still be able to access the books during construction? Librarian: Absolutely. We've arranged temporary shelving on the first two floors, and the circulation desk will remain open. We're also implementing a digital catalog system, so you can search and request books online. Student: That sounds helpful. When will the new study spaces be available? Librarian: The quiet study rooms should be ready in about six weeks, and the collaborative spaces will be completed by the end of the project. We're also adding charging stations and better lighting throughout the library.",
+    "script": "Student: Excuse me, I'm looking for information about the library's new study rooms. Librarian: Of course! We recently opened five new private study rooms on the third floor. They're equipped with computers, whiteboards, and high-speed internet. Each room can accommodate up to four students. Student: That sounds great! How do I reserve one? Librarian: You can reserve them online through our library website or come to the front desk. Reservations can be made up to two weeks in advance, and each session is limited to three hours. Student: What about the cost? Librarian: It's completely free for all registered students. We also have group study areas on the second floor if you prefer a more open environment. Student: Perfect! Thank you for the information.",
     "questions": [
       {
-        "q": "What is the main purpose of the library renovation?",
+        "q": "Where are the new study rooms located?",
         "options": [
-          "A) To reduce operating costs",
-          "B) To upgrade facilities with more study spaces and modern technology",
-          "C) To close the library temporarily",
-          "D) To reduce the number of books"
+          "On the second floor",
+          "On the third floor",
+          "On the first floor",
+          "On the fourth floor"
         ],
         "answer": 1,
-        "explanation": "사서가 '더 많은 학습 공간과 최신 기술을 포함하여 시설을 업그레이드하고 있다'고 명확히 설명합니다."
+        "explanation": "사서가 'We recently opened five new private study rooms on the third floor'라고 명시하였습니다."
       },
       {
-        "q": "How long is the renovation expected to take?",
+        "q": "How far in advance can students make reservations?",
         "options": [
-          "A) Two months",
-          "B) Three months",
-          "C) Four months",
-          "D) Six months"
+          "One week",
+          "Two weeks",
+          "One month",
+          "One day"
         ],
-        "answer": 2,
-        "explanation": "사서가 '프로젝트는 약 4개월이 걸릴 것으로 예상된다'고 명시합니다."
+        "answer": 1,
+        "explanation": "대화에서 'Reservations can be made up to two weeks in advance'라고 언급되었습니다."
       },
       {
-        "q": "Which feature will be available first?",
+        "q": "What is the cost of using the private study rooms?",
         "options": [
-          "A) Collaborative workspaces",
-          "B) Digital catalog system",
-          "C) Quiet study rooms",
-          "D) Charging stations"
+          "$10 per hour",
+          "$20 per session",
+          "It is free for registered students",
+          "$5 per day"
         ],
         "answer": 2,
-        "explanation": "사서가 '조용한 학습실은 약 6주 안에 준비될 것'이라고 언급하여 다른 시설보다 먼저 완성될 것으로 설명합니다."
+        "explanation": "사서가 'It's completely free for all registered students'라고 명확하게 답변했습니다."
       }
     ]
   }
