@@ -334,12 +334,9 @@ export default function BBCScreen() {
     if (!uid) return;
     const db = getDatabase(getFirebaseApp());
     await set(ref(db, `users/${uid}/completion/english_listening_${sourceKey}/${today}`), true);
-    // 컨텐츠 있는 소스 전부 완료 시 Today탭 반영
-    const sourcesWithContent = PODCAST_SOURCES.filter(s => podcasts[s.key]);
-    if (sourcesWithContent.every(s => newDone[s.key])) {
-      setListeningDone(true);
-      await set(ref(db, `users/${uid}/completion/english_news_listening/${today}`), true);
-    }
+    // 소스 하나라도 완료되면 Today탭 반영 (각 소스는 독립)
+    setListeningDone(true);
+    await set(ref(db, `users/${uid}/completion/english_news_listening/${today}`), true);
   };
 
   useEffect(() => {

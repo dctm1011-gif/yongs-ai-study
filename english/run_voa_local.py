@@ -170,7 +170,7 @@ def check_yesterday_listening_done() -> bool:
     if not uid or not secret:
         return True
     yesterday = str(date.today() - timedelta(days=1))
-    url = f"{DB_URL}/users/{uid}/completion/english_news_listening/{yesterday}.json?auth={secret}"
+    url = f"{DB_URL}/users/{uid}/completion/english_listening_voa/{yesterday}.json?auth={secret}"
     try:
         with urllib.request.urlopen(url, timeout=5) as r:
             val = json.loads(r.read())
