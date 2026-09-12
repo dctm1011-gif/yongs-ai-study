@@ -163,7 +163,7 @@ def extract_article(html):
     return {"title": title, "audio_url": audio_url, "paragraphs": texts}
 
 
-def split_sentences(paragraphs, max_n=22):
+def split_sentences(paragraphs, max_n=50):
     combined = " ".join(paragraphs)
     sents = re.split(r"(?<=[.!?])\s+(?=[A-Z\"'“])", combined)
     result = []
