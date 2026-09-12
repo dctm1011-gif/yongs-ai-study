@@ -163,6 +163,23 @@ def extract_article(html):
     return {"title": title, "audio_url": audio_url, "paragraphs": texts}
 
 
+def check_yesterday_listening_done() -> bool:
+    """어제 english_news_listening 완료 여부 확인. 환경변수 없으면 True 반환(스킵 안 함)."""
+    uid = os.environ.get("FIREBASE_USER_UID")
+    secret = os.environ.get("FIREBASE_DATABASE_SECRET")
+    if not uid or not secret:
+        return True
+    yesterday = str(date.today() - timedelta(days=1))
+    url = f"{DB_URL}/users/{uid}/completion/english_news_listening/{yesterday}.json?auth={secret}"
+    try:
+        with urllib.request.urlopen(url, timeout=5) as r:
+            val = json.loads(r.read())
+        return bool(val)
+    except Exception as e:
+        print(f"[VOA] 완료 확인 오류: {e} → 실행 허용")
+        return True
+
+
 def split_sentences(paragraphs):
     combined = " ".join(paragraphs)
     sents = re.split(r'(?<=[.!?])\s+(?=[A-Z])', combined)
@@ -216,6 +233,12 @@ def main():
     api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
         print("[!] ANTHROPIC_API_KEY 없음"); sys.exit(1)
+
+    # 어제 리스닝 미완료 시 오늘 업데이트 스킵
+    if not check_yesterday_listening_done():
+        yesterday = str(date.today() - timedelta(days=1))
+        print(f"[VOA] 어제({yesterday}) 리스닝 미완료 → 오늘 업데이트 스킵")
+        return
 
     # 이미 오늘 데이터 있으면 스킵
     existing = firebase_get(f"english/podcasts/voa/{TODAY}")
