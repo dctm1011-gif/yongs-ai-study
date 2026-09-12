@@ -163,15 +163,10 @@ def extract_article(html):
     return {"title": title, "audio_url": audio_url, "paragraphs": texts}
 
 
-def split_sentences(paragraphs, max_n=50):
+def split_sentences(paragraphs):
     combined = " ".join(paragraphs)
-    sents = re.split(r"(?<=[.!?])\s+(?=[A-Z\"'“])", combined)
-    result = []
-    for s in sents:
-        s = s.strip()
-        if len(s) > 20:
-            result.append(s)
-    return result[:max_n]
+    sents = re.split(r'(?<=[.!?])\s+(?=[A-Z])', combined)
+    return [s.strip() for s in sents if len(s.strip()) > 20]
 
 
 def translate_and_analyze(client, sentences):
@@ -202,11 +197,15 @@ def translate_and_analyze(client, sentences):
         txt = resp.content[0].text.strip()
         m = re.search(r"\[[\s\S]*\]", txt)
         if m:
-            parsed = json.loads(m.group(0))
-            results.extend(
-                {"ko": str(r.get("ko", "")), "analysis": str(r.get("analysis", ""))}
-                for r in parsed
-            )
+            try:
+                parsed = json.loads(m.group(0))
+                results.extend(
+                    {"ko": str(r.get("ko", "")), "analysis": str(r.get("analysis", ""))}
+                    for r in parsed
+                )
+            except (json.JSONDecodeError, TypeError) as e:
+                print(f"  [!] JSON 파싱 실패 (배치 {i//BATCH+1}): {e} — 빈값으로 대체")
+                results.extend({"ko": "", "analysis": ""} for _ in batch)
         else:
             results.extend({"ko": "", "analysis": ""} for _ in batch)
     return results
