@@ -196,5 +196,38 @@
     "tip": "유사 표현: reduce, decrease, diminish. cut down on도 같은 의미로 쓰여요!",
     "emoji": "✂️",
     "date": "2026-09-12"
+  },
+  {
+    "id": "hold-on",
+    "phrase": "hold on",
+    "meaning_ko": "잠깐만 기다리다, 버티다",
+    "explanation": "누군가에게 '잠깐만!'이라고 말할 때 쓰는 표현이에요. 일상 대화에서 정말 자주 나온답니다! 📞",
+    "example_en": "Hold on, I'll be there in 5 minutes.",
+    "example_ko": "잠깐만, 5분 안에 갈게.",
+    "tip": "전화 통화 중에 '잠시만요'라고 할 때도 쓰여요. hold up(지연되다)과는 다르니까 주의!",
+    "emoji": "⏳",
+    "date": "2026-09-13"
+  },
+  {
+    "id": "point-out",
+    "phrase": "point out",
+    "meaning_ko": "지적하다, 언급하다",
+    "explanation": "누군가 놓친 부분을 '아, 이거 봤어?'라고 가르쳐주는 거예요. 학술 글쓰기나 토론에서 자주 써요! 👉",
+    "example_en": "The professor pointed out that we made a critical error in our analysis.",
+    "example_ko": "교수님이 우리의 분석에 중대한 오류가 있다고 지적하셨어요.",
+    "tip": "mention(언급하다)보다 좀 더 강조하는 느낌이에요. 상대방이 모를 수 있는 것을 알려줄 때 딱이야!",
+    "emoji": "👉",
+    "date": "2026-09-13"
+  },
+  {
+    "id": "take-charge",
+    "phrase": "take charge",
+    "meaning_ko": "책임을 지다, 리더십을 발휘하다",
+    "explanation": "프로젝트나 상황의 주도권을 잡는 거예요. 비즈니스나 팀 협업에서 자주 들어요! 💪",
+    "example_en": "When the manager left, Sarah took charge of the meeting.",
+    "example_ko": "매니저가 나가자 Sarah가 회의를 주도했어요.",
+    "tip": "take control(통제하다)과 비슷하지만, take charge는 더 긍정적이고 책임감 있는 느낌이에요!",
+    "emoji": "💪",
+    "date": "2026-09-13"
   }
 ]
