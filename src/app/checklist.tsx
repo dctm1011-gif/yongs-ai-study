@@ -5,9 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { getFirebaseApp } from '../config/firebase';
 import { ProgressCalendar } from '../components/ProgressCalendar';
 
-function getKSTToday(): string {
-  return new Date(Date.now() + 9 * 3600000).toISOString().split('T')[0];
-}
+import { getKSTDateString as getKSTToday } from '../utils/dateUtils';
 
 interface CheckItem {
   key: string;
@@ -27,6 +25,7 @@ const GROUPS: { title: string; items: CheckItem[] }[] = [
       { key: 'english_review',       label: '문장복습',     emoji: '📋' },
       { key: 'english_news_reading',   label: '영어 리딩',  emoji: '📰' },
       { key: 'english_news_listening', label: '영어 리스닝', emoji: '🎙️' },
+      { key: 'english_speaking',       label: '스피킹',     emoji: '💬' },
     ],
   },
   {

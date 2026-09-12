@@ -2,6 +2,7 @@
 export const CHECKLIST_KEYS = [
   'english', 'english_word_match', 'english_crossword', 'english_scramble',
   'english_sentence', 'english_review', 'english_news_reading', 'english_news_listening',
+  'english_speaking',
   'investment',
   'reading', 'korean_diary',
 ] as const;

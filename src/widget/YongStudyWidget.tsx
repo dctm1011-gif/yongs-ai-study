@@ -27,9 +27,10 @@ const ROW2 = [
   { key: 'english_news_listening', label: '리스닝' },
 ];
 const ROW3 = [
-  { key: 'investment',   label: '투자' },
-  { key: 'reading',      label: '독서' },
-  { key: 'korean_diary', label: '어휘일기' },
+  { key: 'english_speaking', label: '스피킹' },
+  { key: 'investment',       label: '투자' },
+  { key: 'reading',          label: '독서' },
+  { key: 'korean_diary',     label: '어휘일기' },
 ];
 
 function calCellBg(pct: number | undefined): string {
@@ -48,7 +49,7 @@ function calCellText(bg: string): string {
 }
 
 function MiniCalendar({ calendarData }: { calendarData: Record<string, number> }) {
-  const now = new Date(Date.now() + 9 * 3600000);
+  const now = new Date(Date.now() + 6 * 3600000);
   const yr = now.getUTCFullYear();
   const mo = now.getUTCMonth();
   const todayStr = now.toISOString().slice(0, 10);
