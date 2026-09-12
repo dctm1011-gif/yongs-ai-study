@@ -130,5 +130,71 @@
     "tip": "유사 표현: review, check, examine. 'go through'와 비슷하지만 더 자세히 살펴본다는 뉘앙스!",
     "emoji": "🔍",
     "date": "2026-09-09"
+  },
+  {
+    "id": "get-along",
+    "phrase": "get along",
+    "meaning_ko": "잘 지내다, 사이좋게 지내다",
+    "explanation": "사람들과의 관계가 순조롭고 편안한 상태를 나타내요. 일상 대화에서 정말 많이 써요!",
+    "example_en": "I get along really well with my roommate.",
+    "example_ko": "나는 룸메이트와 정말 잘 지내요.",
+    "tip": "with와 함께 쓰여요. 'get along with + 사람'",
+    "emoji": "🤝",
+    "date": "2026-09-11"
+  },
+  {
+    "id": "turn-in",
+    "phrase": "turn in",
+    "meaning_ko": "제출하다, 제시하다",
+    "explanation": "과제나 문서를 누군가에게 건네주거나 제출하는 거예요. 학교에서 정말 자주 들을 거예요!",
+    "example_en": "Students need to turn in their assignments by Friday.",
+    "example_ko": "학생들은 금요일까지 과제를 제출해야 해요.",
+    "tip": "submit과 비슷하지만 더 일상적이에요",
+    "emoji": "📝",
+    "date": "2026-09-11"
+  },
+  {
+    "id": "bring-up",
+    "phrase": "bring up",
+    "meaning_ko": "언급하다, 말꺼내다",
+    "explanation": "대화나 회의 중에 특정 주제를 꺼내는 거예요. 비즈니스 미팅에서 정말 유용해요!",
+    "example_en": "I'll bring up the budget issue at the next meeting.",
+    "example_ko": "다음 회의에서 예산 문제를 언급하겠어요.",
+    "tip": "raise와 비슷한 의미예요. 좀 더 자연스러운 표현이랍니다",
+    "emoji": "💬",
+    "date": "2026-09-11"
+  },
+  {
+    "id": "put-up-with",
+    "phrase": "put up with",
+    "meaning_ko": "참다, 견디다",
+    "explanation": "싫어하지만 어쩔 수 없이 견뎌내야 하는 상황이 있잖아요? 바로 그럴 때 쓰는 표현이에요! 😅",
+    "example_en": "I can't put up with the noise from the construction site anymore.",
+    "example_ko": "더 이상 공사장 소음을 견딜 수 없어요.",
+    "tip": "유사 표현: tolerate, bear, stand. put up(숙박하다)와는 다른 의미니까 주의!",
+    "emoji": "😤",
+    "date": "2026-09-12"
+  },
+  {
+    "id": "figure-out",
+    "phrase": "figure out",
+    "meaning_ko": "파악하다, 알아내다",
+    "explanation": "미스터리를 푸는 것처럼 문제나 방법을 이해하게 되는 거! 학교 숙제부터 일상 대화까지 정말 많이 써요 🕵️",
+    "example_en": "I finally figured out how to use this software.",
+    "example_ko": "드디어 이 소프트웨어 사용 방법을 알아냈어요.",
+    "tip": "유사 표현: understand, work out, solve. 일상 영어에서 가장 자주 쓰는 표현 중 하나!",
+    "emoji": "💡",
+    "date": "2026-09-12"
+  },
+  {
+    "id": "cut-back-on",
+    "phrase": "cut back on",
+    "meaning_ko": "줄이다, 감소시키다",
+    "explanation": "비용이나 양을 줄여야 할 때 쓰는 표현! 비즈니스 미팅이나 건강 관련 얘기에서 자주 들려요 📉",
+    "example_en": "The company decided to cut back on spending due to the economic crisis.",
+    "example_ko": "그 회사는 경제 위기로 인해 지출을 줄이기로 결정했어요.",
+    "tip": "유사 표현: reduce, decrease, diminish. cut down on도 같은 의미로 쓰여요!",
+    "emoji": "✂️",
+    "date": "2026-09-12"
   }
 ]
