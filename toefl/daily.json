@@ -1,114 +1,115 @@
 {
-  "date": "2026-09-12",
+  "date": "2026-09-13",
   "reading": {
-    "title": "The Impact of Artificial Intelligence on Education",
-    "passage": "Artificial intelligence is transforming the education sector by personalizing learning experiences for students. AI-powered tutoring systems can adapt to individual learning paces, identifying knowledge gaps and providing targeted feedback. Teachers can use AI tools to automate administrative tasks, allowing them to focus more on student engagement and critical thinking development. However, concerns about data privacy and the potential reduction of human interaction in education remain significant challenges that institutions must address carefully.",
+    "title": "The Impact of Urban Green Spaces",
+    "passage": "Urban green spaces such as parks and gardens play a crucial role in improving city residents' quality of life. These areas provide numerous environmental benefits, including reducing air pollution, lowering urban temperatures, and supporting biodiversity. Beyond environmental advantages, research demonstrates that access to green spaces significantly improves mental health by reducing stress and anxiety. Cities that prioritize the development and maintenance of parks experience higher levels of community engagement and social interaction. Furthermore, green spaces increase property values in surrounding neighborhoods, making them economically beneficial investments for urban development.",
     "questions": [
       {
-        "q": "According to the passage, what is one benefit of AI in education?",
+        "q": "According to the passage, what is one environmental benefit of urban green spaces?",
         "options": [
-          "It eliminates the need for teachers",
-          "It personalizes learning experiences for students",
-          "It reduces the cost of textbooks",
-          "It prevents all knowledge gaps"
+          "Increasing traffic congestion",
+          "Reducing air pollution",
+          "Decreasing property values",
+          "Limiting social interaction"
         ],
         "answer": 1,
-        "explanation": "지문에서 'AI-powered tutoring systems can adapt to individual learning paces'라고 명시되어 있으며, AI가 학생들을 위해 개인화된 학습 경험을 제공한다고 설명합니다."
+        "explanation": "본문에서 '환경 오염 감소, 도시 온도 저하, 생물 다양성 지원'이라고 명시되어 있습니다. 정답은 'Reducing air pollution'입니다."
       },
       {
-        "q": "What concern is mentioned about AI in education?",
+        "q": "How do green spaces affect mental health according to the passage?",
         "options": [
-          "It is too expensive",
-          "It works only for advanced students",
-          "Data privacy and reduction of human interaction",
-          "It replaces all teaching methods"
-        ],
-        "answer": 2,
-        "explanation": "지문의 마지막 문장에서 'concerns about data privacy and the potential reduction of human interaction in education remain significant challenges'라고 명확히 언급되어 있습니다."
-      },
-      {
-        "q": "How can teachers benefit from AI tools according to the passage?",
-        "options": [
-          "They can teach fewer hours",
-          "They can automate administrative tasks and focus on engagement",
-          "They can eliminate student feedback",
-          "They can reduce curriculum requirements"
+          "They increase work-related stress",
+          "They reduce stress and anxiety",
+          "They have no significant impact",
+          "They primarily benefit only elderly people"
         ],
         "answer": 1,
-        "explanation": "지문에서 'Teachers can use AI tools to automate administrative tasks, allowing them to focus more on student engagement'라고 설명합니다."
+        "explanation": "본문에서 '녹지에 대한 접근이 스트레스와 불안을 줄임으로써 정신 건강을 크게 개선한다'고 명시되어 있습니다."
+      },
+      {
+        "q": "What economic benefit is mentioned about green spaces?",
+        "options": [
+          "They reduce government spending",
+          "They increase property values",
+          "They eliminate housing costs",
+          "They decrease commercial activities"
+        ],
+        "answer": 1,
+        "explanation": "본문의 마지막 부분에서 '녹지는 주변 지역의 부동산 가치를 증가시킨다'고 명확히 기술되어 있습니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Remote work is more productive than working in an office.' Provide specific reasons and examples to support your position.",
+    "prompt": "Do you agree or disagree with the statement: 'Remote work has had a positive impact on employee productivity and work-life balance'?",
     "structure": {
-      "intro": "도입부에서는 찬성 또는 반대 입장을 명확히 제시하고, 주요 이유 2-3개를 간단히 언급하세요. (2-3문장)",
-      "body1": "첫 번째 이유를 상세히 설명하고 구체적인 예시를 제시하세요. 예: 몰입도 증가, 통근 시간 감소 등 (4-5문장)",
-      "body2": "두 번째 이유를 설명하고 반박 가능한 주장도 포함하세요. 예: 팀 협력, 소통의 어려움 등 (4-5문장)",
-      "conclusion": "결론에서는 입장을 재확인하고 전체 논의를 종합하세요. (2-3문장)"
+      "intro": "명확한 입장 표현 (동의 또는 반대)과 2-3개의 주요 이유를 미리 언급하기",
+      "body1": "첫 번째 이유: 재택근무가 통근 시간 절감으로 생산성 증대 또는 가족 시간 증가",
+      "body2": "두 번째 이유: 자유로운 업무 환경 조성으로 집중력 향상 또는 스트레스 감소",
+      "conclusion": "주요 입장을 다시 한 번 명확히 하고, 전체 주장을 요약하기"
     },
     "useful_phrases": [
       "In my opinion,",
-      "I strongly believe that",
-      "One reason is that",
+      "I strongly agree/disagree that",
+      "One significant reason is that",
       "Furthermore,",
+      "Additionally,",
       "For example,",
-      "On the other hand,",
       "In conclusion,",
-      "To summarize,"
+      "This demonstrates that"
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to study alone. Others prefer to study in groups. Which do you prefer and why?",
+    "prompt": "Some people prefer to work in a traditional office environment. Others prefer to work remotely from home. Which do you prefer and why?",
     "useful_expressions": [
-      "In my opinion, I prefer to study alone because",
-      "One reason is that studying alone helps me concentrate better",
-      "Another advantage is that I can work at my own pace",
-      "However, I also recognize that group study has benefits",
-      "To sum up, I believe that"
+      "In my opinion, I prefer... because",
+      "One reason is that...",
+      "Another advantage/disadvantage is...",
+      "For instance,",
+      "This is important because",
+      "To summarize,"
     ],
     "sample_points": [
-      "집중력 향상: 혼자 공부할 때는 방해 요소가 적어 더 깊이 있는 학습이 가능합니다. 특히 복잡한 주제를 공부할 때 자신의 속도에 맞춰 진행할 수 있습니다.",
-      "자유로운 시간 관리: 혼자 공부하면 자신의 일정에 맞춰 유연하게 공부 계획을 세울 수 있으며, 다른 사람을 기다릴 필요가 없습니다."
+      "원격근무: 통근 시간 절약으로 더 많은 휴식 시간 확보 가능, 가족과의 시간 증가",
+      "원격근무: 자신의 페이스대로 집중할 수 있는 조용한 환경 제공, 스트레스 감소"
     ]
   },
   "listening": {
-    "title": "Campus Library Services",
+    "title": "Campus Library Technology Update",
     "type": "conversation",
-    "script": "Student: Excuse me, I'm looking for information about the library's new study rooms. Librarian: Of course! We recently opened five new private study rooms on the third floor. They're equipped with computers, whiteboards, and high-speed internet. Each room can accommodate up to four students. Student: That sounds great! How do I reserve one? Librarian: You can reserve them online through our library website or come to the front desk. Reservations can be made up to two weeks in advance, and each session is limited to three hours. Student: What about the cost? Librarian: It's completely free for all registered students. We also have group study areas on the second floor if you prefer a more open environment. Student: Perfect! Thank you for the information.",
+    "script": "Librarian: Good morning! I'm excited to tell you about our new digital library system that launched yesterday. Student: Oh, what kind of features does it have? Librarian: Well, you can now access thousands of journals and databases from anywhere, anytime. You'll also be able to reserve books online and pick them up at your convenience. The system uses AI to recommend resources based on your research interests. Student: That sounds amazing! Will it help me find scholarly sources more easily? Librarian: Absolutely. The new search function is much more sophisticated. You can filter by publication date, author, subject, and even relevance to your topic. We've also added a virtual reference service where you can chat with a librarian in real-time. Student: This is fantastic. When will all students have access? Librarian: Starting next week, all registered students can create an account and start using it. We're also holding free training sessions every day at 2 PM for anyone who needs help getting started.",
     "questions": [
       {
-        "q": "Where are the new study rooms located?",
+        "q": "What is the main purpose of this conversation?",
         "options": [
-          "On the second floor",
-          "On the third floor",
-          "On the first floor",
-          "On the fourth floor"
+          "To discuss the cost of library membership",
+          "To introduce new features of the library's digital system",
+          "To complain about outdated library resources",
+          "To schedule a library meeting"
         ],
         "answer": 1,
-        "explanation": "사서가 'We recently opened five new private study rooms on the third floor'라고 명시하였습니다."
+        "explanation": "대화의 주요 목적은 새로운 도서관 디지털 시스템의 기능을 소개하는 것입니다. 사서가 처음부터 'excited to tell you about our new digital library system'이라고 언급하고 있습니다."
       },
       {
-        "q": "How far in advance can students make reservations?",
+        "q": "According to the librarian, which of the following is NOT mentioned as a feature of the new system?",
         "options": [
-          "One week",
-          "Two weeks",
-          "One month",
-          "One day"
-        ],
-        "answer": 1,
-        "explanation": "대화에서 'Reservations can be made up to two weeks in advance'라고 언급되었습니다."
-      },
-      {
-        "q": "What is the cost of using the private study rooms?",
-        "options": [
-          "$10 per hour",
-          "$20 per session",
-          "It is free for registered students",
-          "$5 per day"
+          "Online book reservations",
+          "AI-powered resource recommendations",
+          "Free printing services",
+          "Virtual reference chat service"
         ],
         "answer": 2,
-        "explanation": "사서가 'It's completely free for all registered students'라고 명확하게 답변했습니다."
+        "explanation": "대화 내용을 검토하면, 온라인 예약, AI 추천, 가상 참고 서비스는 언급되었지만, 무료 인쇄 서비스는 전혀 언급되지 않았습니다."
+      },
+      {
+        "q": "When will the training sessions be available?",
+        "options": [
+          "Every day at 1 PM",
+          "Every day at 2 PM starting next week",
+          "Only on weekends",
+          "By appointment only"
+        ],
+        "answer": 1,
+        "explanation": "사서는 'We're also holding free training sessions every day at 2 PM'이라고 명시했습니다. 이는 다음 주부터 시작되는 시스템 시작과 함께 제공됩니다."
       }
     ]
   }
