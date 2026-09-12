@@ -74,7 +74,7 @@ async function generateReviewStory(today) {
   const candidates = Object.entries(pool)
     .filter(([, v]) => (v.count || 0) < 10)
     .sort(([, a], [, b]) => (a.count || 0) - (b.count || 0))
-    .slice(0, 25);
+    .slice(0, 15);
 
   if (!candidates.length) {
     console.warn('[review story] 활성 단어 없음. 스킵.');

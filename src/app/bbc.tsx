@@ -17,11 +17,7 @@ function stripHtml(s: string): string {
     .replace(/\s+/g, ' ').trim();
 }
 
-function getKSTDateString(): string {
-  const now = new Date();
-  const kst = new Date(now.getTime() + 9 * 3600_000);
-  return kst.toISOString().slice(0, 10);
-}
+import { getKSTDateString } from '../utils/dateUtils';
 
 function formatDuration(sec: number): string {
   if (!sec) return '';
@@ -55,6 +51,7 @@ const CATEGORY_COLORS: Record<string, string> = {
 
 const PODCAST_SOURCES = [
   { key: 'spotlight', label: 'Spotlight English', color: '#16a34a' },
+  { key: 'voa', label: 'VOA Learning English', color: '#1d4ed8' },
 ] as const;
 
 // ─── Podcast episode card ─────────────────────────────────────────────────
@@ -314,9 +311,12 @@ export default function BBCScreen() {
   const [herald, setHerald] = useState<KoreaNewsArticle[]>([]);
   const [loadingHerald, setLoadingHerald] = useState(true);
   const [podcasts, setPodcasts] = useState<Record<string, PodcastEpisode | null>>({});
+  const [podcastDates, setPodcastDates] = useState<Record<string, string>>({});
   const [loadingPodcasts, setLoadingPodcasts] = useState(true);
   const [readingDone, setReadingDone] = useState(false);
   const [listeningDone, setListeningDone] = useState(false);
+  const [sourceDone, setSourceDone] = useState<Record<string, boolean>>({});
+  const [selectedSource, setSelectedSource] = useState<string>(PODCAST_SOURCES[0].key);
   const today = getKSTDateString();
 
   const markDone = async (key: string, setDone: (v: boolean) => void) => {
@@ -325,6 +325,21 @@ export default function BBCScreen() {
     if (!uid) return;
     const db = getDatabase(getFirebaseApp());
     await set(ref(db, `users/${uid}/completion/${key}/${today}`), true);
+  };
+
+  const markSourceDone = async (sourceKey: string) => {
+    const newDone = { ...sourceDone, [sourceKey]: true };
+    setSourceDone(newDone);
+    const uid = user?.uid;
+    if (!uid) return;
+    const db = getDatabase(getFirebaseApp());
+    await set(ref(db, `users/${uid}/completion/english_listening_${sourceKey}/${today}`), true);
+    // 컨텐츠 있는 소스 전부 완료 시 Today탭 반영
+    const sourcesWithContent = PODCAST_SOURCES.filter(s => podcasts[s.key]);
+    if (sourcesWithContent.every(s => newDone[s.key])) {
+      setListeningDone(true);
+      await set(ref(db, `users/${uid}/completion/english_news_listening/${today}`), true);
+    }
   };
 
   useEffect(() => {
@@ -355,26 +370,40 @@ export default function BBCScreen() {
 
   useEffect(() => {
     const db = getDatabase(getFirebaseApp());
-    Promise.all(
-      PODCAST_SOURCES.map(src =>
+    const uid = user?.uid;
+    Promise.all([
+      ...PODCAST_SOURCES.map(src =>
         get(query(ref(db, `english/podcasts/${src.key}`), orderByKey(), limitToLast(1)))
           .then(snap => {
-            if (!snap.exists()) return [src.key, null] as const;
-            const vals = Object.values(snap.val() as Record<string, PodcastEpisode>);
-            const ep = vals[0];
+            if (!snap.exists()) return { key: src.key, ep: null, dateKey: '' };
+            const entries = Object.entries(snap.val() as Record<string, PodcastEpisode>);
+            const [dateKey, ep] = entries[0];
             if (ep?.sentences && !Array.isArray(ep.sentences)) {
               ep.sentences = Object.values(ep.sentences as any);
             }
-            return [src.key, ep] as const;
+            return { key: src.key, ep, dateKey };
           })
-          .catch(() => [src.key, null] as const)
-      )
-    ).then(results => {
-      const map: Record<string, PodcastEpisode | null> = {};
-      results.forEach(([k, v]) => { map[k] = v; });
-      setPodcasts(map);
+          .catch(() => ({ key: src.key, ep: null, dateKey: '' }))
+      ),
+      // 소스별 완료 상태 로드
+      ...(uid ? PODCAST_SOURCES.map(src =>
+        get(ref(db, `users/${uid}/completion/english_listening_${src.key}/${today}`))
+          .then(snap => ({ doneKey: src.key, done: snap.exists() && snap.val() === true }))
+          .catch(() => ({ doneKey: src.key, done: false }))
+      ) : []),
+    ]).then(results => {
+      const epMap: Record<string, PodcastEpisode | null> = {};
+      const dateMap: Record<string, string> = {};
+      const doneMap: Record<string, boolean> = {};
+      results.forEach(r => {
+        if ('ep' in r) { epMap[r.key] = r.ep; dateMap[r.key] = r.dateKey; }
+        if ('doneKey' in r) { doneMap[r.doneKey] = r.done; }
+      });
+      setPodcasts(epMap);
+      setPodcastDates(dateMap);
+      setSourceDone(doneMap);
     }).finally(() => setLoadingPodcasts(false));
-  }, [today]);
+  }, [today, user?.uid]);
 
   // ── Reading view ─────────────────────────────────────────────────────────
   if (view === 'reading') {
@@ -420,37 +449,62 @@ export default function BBCScreen() {
 
   // ── Listening view ────────────────────────────────────────────────────────
   if (view === 'listening') {
+    const activeSrc = PODCAST_SOURCES.find(s => s.key === selectedSource) ?? PODCAST_SOURCES[0];
+    const activeEp = podcasts[activeSrc.key];
     return (
       <View style={styles.flex}>
         <TouchableOpacity style={styles.backBar} onPress={() => setView('home')}>
           <Text style={styles.backText}>← Listening</Text>
         </TouchableOpacity>
+        {/* 소스 탭 */}
+        <View style={styles.sourceTabRow}>
+          {PODCAST_SOURCES.map(src => {
+            const isSelected = selectedSource === src.key;
+            const isNew = !loadingPodcasts && podcastDates[src.key] === today;
+            const isDone = sourceDone[src.key];
+            return (
+              <TouchableOpacity
+                key={src.key}
+                style={[styles.sourceTab, isSelected && { borderBottomColor: src.color, borderBottomWidth: 2 }]}
+                onPress={() => setSelectedSource(src.key)}
+                activeOpacity={0.7}
+              >
+                <View style={styles.sourceTabInner}>
+                  <Text style={[styles.sourceTabText, isSelected && { color: src.color, fontWeight: '700' }]}>
+                    {src.label}
+                  </Text>
+                  {isDone && <Text style={styles.sourceTabDone}> ✓</Text>}
+                  {isNew && !isDone && (
+                    <View style={[styles.newBadge, { backgroundColor: src.color }]}>
+                      <Text style={styles.newBadgeText}>NEW</Text>
+                    </View>
+                  )}
+                </View>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
         {loadingPodcasts ? (
           <View style={[styles.skeleton, { margin: 20 }]}>
             <ActivityIndicator size="small" color="#9ca3af" />
             <Text style={styles.skeletonText}>팟캐스트 불러오는 중...</Text>
           </View>
+        ) : activeEp ? (
+          <EpisodeCard
+            key={activeSrc.key}
+            ep={activeEp}
+            color={activeSrc.color}
+            label={activeSrc.label}
+            onComplete={() => markSourceDone(activeSrc.key)}
+            isDone={sourceDone[activeSrc.key] ?? false}
+          />
         ) : (
-          PODCAST_SOURCES.map(src => {
-            const ep = podcasts[src.key];
-            return ep ? (
-              <EpisodeCard
-                key={src.key}
-                ep={ep}
-                color={src.color}
-                label={src.label}
-                onComplete={() => markDone('english_news_listening', setListeningDone)}
-                isDone={listeningDone}
-              />
-            ) : (
-              <View key={src.key} style={[styles.skeleton, { margin: 20, borderLeftWidth: 3, borderLeftColor: src.color }]}>
-                <View style={[styles.badge, { backgroundColor: src.color }]}>
-                  <Text style={styles.badgeText}>{src.label}</Text>
-                </View>
-                <Text style={styles.skeletonText}>오늘의 에피소드 준비 중</Text>
-              </View>
-            );
-          })
+          <View style={[styles.skeleton, { margin: 20, borderLeftWidth: 3, borderLeftColor: activeSrc.color }]}>
+            <View style={[styles.badge, { backgroundColor: activeSrc.color }]}>
+              <Text style={styles.badgeText}>{activeSrc.label}</Text>
+            </View>
+            <Text style={styles.skeletonText}>오늘의 에피소드 준비 중</Text>
+          </View>
         )}
       </View>
     );
@@ -474,7 +528,7 @@ export default function BBCScreen() {
         <MaterialIcons name="headphones" size={36} color="#7c3aed" />
         <View style={styles.hubCardBody}>
           <Text style={styles.hubCardName}>Listening</Text>
-          <Text style={styles.hubCardDesc}>BBC Learning English · All Ears English</Text>
+          <Text style={styles.hubCardDesc}>Spotlight English · VOA Learning English</Text>
         </View>
         <Text style={styles.hubArrow}>›</Text>
       </TouchableOpacity>
@@ -491,6 +545,31 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16, paddingVertical: 13, minHeight: 44,
     justifyContent: 'center', backgroundColor: '#fff',
     borderBottomWidth: 1, borderBottomColor: '#e5e7eb',
+  },
+
+  // Source tab selector
+  sourceTabRow: {
+    flexDirection: 'row', backgroundColor: '#fff',
+    borderBottomWidth: 1, borderBottomColor: '#e5e7eb',
+  },
+  sourceTab: {
+    flex: 1, paddingVertical: 10, alignItems: 'center',
+    borderBottomWidth: 2, borderBottomColor: 'transparent',
+  },
+  sourceTabInner: {
+    flexDirection: 'row', alignItems: 'center', gap: 4,
+  },
+  sourceTabText: {
+    fontSize: 13, color: '#6b7280', fontWeight: '500',
+  },
+  sourceTabDone: {
+    fontSize: 13, color: '#16a34a', fontWeight: '700',
+  },
+  newBadge: {
+    borderRadius: 4, paddingHorizontal: 4, paddingVertical: 1,
+  },
+  newBadgeText: {
+    fontSize: 9, color: '#fff', fontWeight: '800', letterSpacing: 0.5,
   },
   backText: { fontSize: 14, fontWeight: '600', color: '#1d4ed8' },
 

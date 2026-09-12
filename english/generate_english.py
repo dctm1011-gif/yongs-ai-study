@@ -281,16 +281,16 @@ def get_default_words(target_date: date) -> dict:
         },
     ]
 
+    import random as _random
     used_lower_set = {w.lower() for w in load_used_words()}
     available = [c for c in candidate_pool if c["word"].lower() not in used_lower_set]
 
     if len(available) < 5:
-        # 미사용 단어가 부족하면 전체 풀 중 used_lower 포함해도 되지만,
-        # 최소한 available 있는 것 먼저 쓰고 나머지는 뒤에서 채움
+        # 미사용 단어 부족 시 전체 풀에서 무작위 선택 (항상 같은 단어 반복 방지)
         used_words = [c for c in candidate_pool if c["word"].lower() in used_lower_set]
-        available = available + used_words
+        available = available + _random.sample(used_words, min(len(used_words), max(5 - len(available), 0)))
 
-    selected = available[:5]
+    selected = _random.sample(available, min(len(available), 5)) if len(available) > 5 else available[:5]
     words = selected
 
     quiz = []
@@ -400,19 +400,25 @@ def generate_default_words(client: anthropic.Anthropic, target_date: date, toefl
 
     candidates = []
     for attempt in range(3):
-        resp = client.messages.create(
-            model="claude-haiku-4-5-20251001", max_tokens=700,
-            messages=[{"role": "user", "content": step1_prompt if attempt == 0
-                       else step1_prompt + f"\n이미 선택됨(금지): {[c['word'] for c in candidates]}"}]
-        )
+        try:
+            resp = client.messages.create(
+                model="claude-haiku-4-5-20251001", max_tokens=2000,
+                messages=[{"role": "user", "content": step1_prompt if attempt == 0
+                           else step1_prompt + f"\n이미 선택됨(금지): {[c['word'] for c in candidates]}"}]
+            )
+        except Exception as api_err:
+            print(f"[!] Step1 API 오류 (시도 {attempt+1}): {api_err}")
+            continue
         raw = resp.content[0].text.strip()
         raw = _re.sub(r'^```[a-z]*\n?', '', raw, flags=_re.M).strip().rstrip('`').strip()
         m = _re.search(r'\[[\s\S]*\]', raw)
         if not m:
+            print(f"[!] Step1 JSON 없음 (시도 {attempt+1}): {raw[:100]}")
             continue
         try:
             batch = json.loads(m.group(0))
-        except json.JSONDecodeError:
+        except json.JSONDecodeError as e:
+            print(f"[!] Step1 JSON 파싱 실패 (시도 {attempt+1}): {e}")
             continue
         for c in batch:
             if (c.get("word","").lower() not in used_lower
@@ -446,10 +452,14 @@ def generate_default_words(client: anthropic.Anthropic, target_date: date, toefl
     )
 
     for attempt in range(3):
-        resp2 = client.messages.create(
-            model="claude-haiku-4-5-20251001", max_tokens=8000,
-            messages=[{"role": "user", "content": step2_prompt}]
-        )
+        try:
+            resp2 = client.messages.create(
+                model="claude-haiku-4-5-20251001", max_tokens=8000,
+                messages=[{"role": "user", "content": step2_prompt}]
+            )
+        except Exception as api_err:
+            print(f"[!] Step2 API 오류 (시도 {attempt+1}): {api_err}")
+            continue
         raw2 = resp2.content[0].text.strip()
         raw2 = _re.sub(r'^```[a-z]*\n?', '', raw2, flags=_re.M).strip().rstrip('`').strip()
         m2 = _re.search(r'\{[\s\S]*\}', raw2)
@@ -1131,7 +1141,7 @@ def update_words_db(words: list, target_date) -> None:
     if WORDS_DB_JSON.exists():
         existing = json.loads(WORDS_DB_JSON.read_text(encoding="utf-8"))
 
-    existing_ids = {w["id"] for w in existing}
+    existing_ids = {w.get("id", "") for w in existing if w.get("id")}
     existing_dates = {w.get("date") for w in existing}
     new_entries = []  # date_str이 이미 존재해 스킵되는 경우에도 아래에서 참조되므로 미리 초기화
 
@@ -2036,39 +2046,72 @@ localStorage.setItem('toefl_visited_' + new Date().toISOString().slice(0,10), '1
 
 
 def _trigger_firebase_functions(date_str: str):
+    # english-daily는 scheduled function이라 POST 트리거 불가 (403)
+    # → git push 후 Netlify 배포된 daily.json을 직접 Firebase에 업로드
     import urllib.request as _ur
-    endpoints = [
-        "https://illustrious-cuchufli-7c4e58.netlify.app/.netlify/functions/english-daily",
-        "https://illustrious-cuchufli-7c4e58.netlify.app/.netlify/functions/toefl-daily",
-    ]
-    for url in endpoints:
-        try:
-            req = _ur.Request(url, data=b'{}', method='POST')
-            req.add_header('Content-Type', 'application/json')
-            with _ur.urlopen(req, timeout=30) as r:
-                body = r.read().decode()
-                print(f"[+] 함수 트리거 완료 ({url.split('/')[-1]}): {body}")
-        except Exception as e:
-            print(f"[!] 함수 트리거 실패 ({url.split('/')[-1]}): {e}")
-            notify(f"⚠️ Firebase 함수 트리거 실패 ({date_str}): {e}")
+    try:
+        daily_json = ROOT / "english" / "daily.json"
+        import json as _json
+        daily_data = _json.loads(daily_json.read_text(encoding="utf-8"))
+        if daily_data.get("date") == date_str:
+            db_url = "https://yongstudy-1f242-default-rtdb.asia-southeast1.firebasedatabase.app"
+            import datetime as _dt
+            payload = _json.dumps({**daily_data, "timestamp": _dt.datetime.now(_dt.timezone.utc).isoformat(), "date": date_str},
+                                   ensure_ascii=False).encode("utf-8")
+            req = _ur.Request(f"{db_url}/english/words/{date_str}.json", data=payload, method="PUT",
+                              headers={"Content-Type": "application/json"})
+            with _ur.urlopen(req, timeout=15) as r:
+                print(f"[+] Firebase english/words/{date_str} 업로드 완료 (status={r.status})")
+        else:
+            print(f"[!] daily.json 날짜 불일치 ({daily_data.get('date')} ≠ {date_str}), Firebase 업로드 스킵")
+    except Exception as e:
+        print(f"[!] Firebase 직접 업로드 실패: {e}")
+        notify(f"⚠️ Firebase english 업로드 실패 ({date_str}): {e}")
+
+    # toefl-daily는 일반 HTTP 함수 → POST 트리거 가능
+    toefl_url = "https://illustrious-cuchufli-7c4e58.netlify.app/.netlify/functions/toefl-daily"
+    try:
+        req = _ur.Request(toefl_url, data=b'{}', method='POST')
+        req.add_header('Content-Type', 'application/json')
+        with _ur.urlopen(req, timeout=30) as r:
+            body = r.read().decode()
+            print(f"[+] 함수 트리거 완료 (toefl-daily): {body}")
+    except Exception as e:
+        print(f"[!] 함수 트리거 실패 (toefl-daily): {e}")
 
 
 def deploy_to_netlify(word_count: int = 0, quiz_count: int = 0, target_date=None):
     GIT = "git"  # PATH의 git 사용
     print("[*] GitHub Pages 배포 중...")
-    subprocess.run([GIT, "pull", "--rebase", "origin", "main"], cwd=str(ROOT))
-    subprocess.run([GIT, "add", "-A"], cwd=str(ROOT))
+    # english 관련 파일만 커밋 (TOEFL은 별도 태스크가 커밋하므로 race condition 방지)
+    english_files = [
+        "english/daily.json",
+        "english/index.html",
+        "english/words_db.json",
+        "english/idioms_db.json",
+    ]
     date_str = str(target_date) if target_date else str(date.today())
+
+    subprocess.run([GIT, "pull", "--rebase", "origin", "main"], cwd=str(ROOT))
+    for f in english_files:
+        subprocess.run([GIT, "add", f], cwd=str(ROOT))
     msg = f"auto: update english {date_str} words={word_count} quiz={quiz_count}"
     r1 = subprocess.run([GIT, "commit", "-m", msg], cwd=str(ROOT))
     if r1.returncode != 0:
         print("[*] 커밋할 변경 없음 - 배포 생략")
         return
+
+    # push 실패 시 rebase 후 1회 재시도 (TOEFL 등 다른 태스크와 race condition 대응)
     result = subprocess.run([GIT, "push"], cwd=str(ROOT))
+    if result.returncode != 0:
+        print("[!] git push 실패 — rebase 후 재시도...")
+        subprocess.run([GIT, "pull", "--rebase", "origin", "main"], cwd=str(ROOT))
+        result = subprocess.run([GIT, "push"], cwd=str(ROOT))
+
     if result.returncode == 0:
         print("[+] GitHub Pages 배포 완료")
         notify(
-            f"📚 **영어공부 + TOEFL 업데이트 완료** ({date_str})\n"
+            f"📚 **영어공부 업데이트 완료** ({date_str})\n"
             f"> 단어 {word_count}개 · 퀴즈 {quiz_count}개\n"
             f"> https://dctm1011-gif.github.io/yongs-ai-study/english/"
         )
@@ -2277,13 +2320,45 @@ def main(target_date: date = None):
     except Exception as e:
         print(f"[!] 구동사 생성 오류: {e}")
 
-    deploy_to_netlify(word_count=word_count, quiz_count=quiz_count, target_date=target_date)
+    try:
+        deploy_to_netlify(word_count=word_count, quiz_count=quiz_count, target_date=target_date)
+    except Exception as e:
+        print(f"[!] deploy_to_netlify 오류: {e}")
+        notify(f"❌ **영어공부 배포 오류**: {e}")
 
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        from datetime import datetime
-        d = datetime.strptime(sys.argv[1], "%Y-%m-%d").date()
-        main(d)
-    else:
-        main()
+    import traceback
+    LOG_FILE = Path(__file__).parent / "generate_english_last.log"
+    log_fh = LOG_FILE.open("w", encoding="utf-8")
+    import sys as _sys
+
+    class _Tee:
+        def __init__(self, *streams):
+            self.streams = streams
+        def write(self, data):
+            for s in self.streams:
+                s.write(data)
+        def flush(self):
+            for s in self.streams:
+                s.flush()
+
+    _orig_stdout = _sys.stdout
+    _orig_stderr = _sys.stderr
+    _sys.stdout = _Tee(_orig_stdout, log_fh)
+    _sys.stderr = _Tee(_orig_stderr, log_fh)
+
+    try:
+        if len(sys.argv) > 1:
+            from datetime import datetime
+            d = datetime.strptime(sys.argv[1], "%Y-%m-%d").date()
+            main(d)
+        else:
+            main()
+    except Exception:
+        traceback.print_exc()
+        sys.exit(1)
+    finally:
+        _sys.stdout = _orig_stdout
+        _sys.stderr = _orig_stderr
+        log_fh.close()
