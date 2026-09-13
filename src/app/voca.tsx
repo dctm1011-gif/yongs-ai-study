@@ -187,7 +187,7 @@ function idiomsToPhrasalQuizzes(idioms: Idiom[]): Quiz[] {
     quizzes.push({
       id: `pq_meaning_${idiom.id}`,
       wordId: idiom.id,
-      type: 'phrasal' as const,
+      type: 'meaning' as const,
       question: `What does "${idiom.phrase}" mean?`,
       options: shuffleArrayStatic([idiom.meaning_ko, ...otherMeanings]),
       correct: idiom.meaning_ko,
