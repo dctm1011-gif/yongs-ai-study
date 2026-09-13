@@ -1832,6 +1832,13 @@ const QuizView = React.memo(({ quizzes, words, onAnswer, onComplete }: {
   );
 });
 
+const QUIZ_TYPE_CONFIG: Record<string, { label: string; color: string; bg: string; emoji: string }> = {
+  meaning:   { label: '뜻',  color: '#3b82f6', bg: '#eff6ff', emoji: '📖' },
+  blanks:    { label: '빈칸', color: '#8b5cf6', bg: '#f5f3ff', emoji: '✏️' },
+  situation: { label: '상황', color: '#f59e0b', bg: '#fffbeb', emoji: '💬' },
+  phrasal:   { label: '숙어', color: '#10b981', bg: '#ecfdf5', emoji: '🔗' },
+};
+
 // Memoized quiz card
 const QuizCard = React.memo(({ quiz, wordName, onAnswer }: { quiz: Quiz, wordName: string, onAnswer: (id: string, selected: string) => void }) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(quiz.selectedOption ?? null);
@@ -1843,14 +1850,53 @@ const QuizCard = React.memo(({ quiz, wordName, onAnswer }: { quiz: Quiz, wordNam
   };
 
   const wasWrong = quiz.answered && quiz.correct_answer === false;
+  const tc = QUIZ_TYPE_CONFIG[quiz.type] ?? QUIZ_TYPE_CONFIG.meaning;
+
+  const renderQuestion = () => {
+    if (quiz.type === 'blanks') {
+      const parts = quiz.question.split('___');
+      return (
+        <View style={styles.blankSentenceBox}>
+          <Text style={styles.blankSentenceText}>
+            {parts.map((part, i) => (
+              <React.Fragment key={i}>
+                <Text>{part}</Text>
+                {i < parts.length - 1 && <Text style={styles.blankPlaceholder}>______</Text>}
+              </React.Fragment>
+            ))}
+          </Text>
+        </View>
+      );
+    }
+    if (quiz.type === 'situation') {
+      return (
+        <View style={styles.situationBox}>
+          <Text style={styles.situationText}>{quiz.question}</Text>
+        </View>
+      );
+    }
+    if (quiz.type === 'phrasal') {
+      const match = quiz.question.match(/"([^"]+)"/);
+      const phrase = match ? match[1] : '';
+      return (
+        <>
+          {phrase ? <View style={styles.phrasalPill}><Text style={styles.phrasalPillText}>{phrase}</Text></View> : null}
+          <Text style={styles.quizQuestion}>{quiz.question}</Text>
+        </>
+      );
+    }
+    return <Text style={styles.quizQuestion}>{quiz.question}</Text>;
+  };
 
   return (
-    <View style={styles.quizCard}>
-      <Text style={styles.quizQuestion}>{quiz.question}</Text>
+    <View style={[styles.quizCard, { borderLeftColor: tc.color, borderLeftWidth: 3 }]}>
+      <View style={[styles.quizTypeBadge, { backgroundColor: tc.bg }]}>
+        <Text style={[styles.quizTypeBadgeText, { color: tc.color }]}>{tc.emoji} {tc.label}</Text>
+      </View>
+      {renderQuestion()}
       <View style={styles.optionsContainer}>
         {quiz.options.map((option, idx) => {
           const isCorrectOpt = option === quiz.correct;
-          const isSelectedWrong = quiz.answered && !isCorrectOpt && (selectedOption === option || (wasWrong && option === selectedOption));
           return (
             <TouchableOpacity
               key={idx}
@@ -2665,6 +2711,63 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#dbdbdb',
     elevation: 0,
+  },
+  quizTypeBadge: {
+    alignSelf: 'flex-start',
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 6,
+    marginBottom: 10,
+  },
+  quizTypeBadgeText: {
+    fontSize: 11,
+    fontWeight: '700',
+  },
+  blankSentenceBox: {
+    backgroundColor: '#f5f3ff',
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 12,
+  },
+  blankSentenceText: {
+    fontSize: 15,
+    color: '#262626',
+    lineHeight: 24,
+    fontWeight: '500',
+  },
+  blankPlaceholder: {
+    color: '#8b5cf6',
+    fontWeight: '800',
+    textDecorationLine: 'underline',
+  },
+  situationBox: {
+    backgroundColor: '#fffbeb',
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 12,
+    borderLeftWidth: 3,
+    borderLeftColor: '#f59e0b',
+  },
+  situationText: {
+    fontSize: 14,
+    color: '#78350f',
+    lineHeight: 22,
+    fontWeight: '500',
+  },
+  phrasalPill: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#ecfdf5',
+    paddingHorizontal: 14,
+    paddingVertical: 5,
+    borderRadius: 20,
+    marginBottom: 8,
+    borderWidth: 1,
+    borderColor: '#10b981',
+  },
+  phrasalPillText: {
+    fontSize: 17,
+    fontWeight: '800',
+    color: '#065f46',
   },
   quizWord: {
     fontSize: 16,

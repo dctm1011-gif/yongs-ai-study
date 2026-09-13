@@ -440,6 +440,13 @@ def generate_default_words(client: anthropic.Anthropic, target_date: date, toefl
         '{"type":"situation","word":"","question":"영어상황질문","options":["","","",""],"answer":0,"explanation":""}],'
         '"sentences":[{"word":"","sentence":"","sentence_ko":"","nuance":"","context":"","everyday_usage":""}]}\n\n'
         "규칙: words 5개, quiz는 meaning 3+fill_blank 3+situation 2=8개, sentences 5개\n"
+        "퀴즈 퀄리티 지침:\n"
+        "- meaning: 'What does X mean?' 패턴만 반복 금지. 다양하게:\n"
+        "  'Which word best completes...?', 'X is MOST similar to...?', 'In a news context, X refers to...?'\n"
+        "- fill_blank: 뉴스/직장/일상 맥락의 자연스러운 문장. ___ 1개만. 단어 선택지 4개\n"
+        "- situation: 반드시 현실 시나리오로 시작. 예:\n"
+        "  'Your editor says \"We need more X in this story.\" What does she want?'\n"
+        "  options도 상황에 맞는 실제 반응/행동으로 작성\n"
         "모든 question은 영어로. JSON만 반환."
     )
 
