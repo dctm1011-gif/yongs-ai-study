@@ -1833,10 +1833,10 @@ const QuizView = React.memo(({ quizzes, words, onAnswer, onComplete }: {
 });
 
 const QUIZ_TYPE_CONFIG: Record<string, { label: string; color: string; bg: string; emoji: string }> = {
-  meaning:   { label: '뜻',  color: '#3b82f6', bg: '#eff6ff', emoji: '📖' },
-  blanks:    { label: '빈칸', color: '#8b5cf6', bg: '#f5f3ff', emoji: '✏️' },
-  situation: { label: '상황', color: '#f59e0b', bg: '#fffbeb', emoji: '💬' },
-  phrasal:   { label: '숙어', color: '#10b981', bg: '#ecfdf5', emoji: '🔗' },
+  meaning:   { label: '뜻 맞추기',   color: '#3b82f6', bg: '#eff6ff', emoji: '📖' },
+  blanks:    { label: '빈칸 채우기', color: '#8b5cf6', bg: '#f5f3ff', emoji: '✏️' },
+  situation: { label: '상황 문제',   color: '#f59e0b', bg: '#fffbeb', emoji: '💬' },
+  phrasal:   { label: '구동사·숙어', color: '#10b981', bg: '#ecfdf5', emoji: '🔗' },
 };
 
 // Memoized quiz card
@@ -1858,12 +1858,7 @@ const QuizCard = React.memo(({ quiz, wordName, onAnswer }: { quiz: Quiz, wordNam
       return (
         <View style={styles.blankSentenceBox}>
           <Text style={styles.blankSentenceText}>
-            {parts.map((part, i) => (
-              <React.Fragment key={i}>
-                <Text>{part}</Text>
-                {i < parts.length - 1 && <Text style={styles.blankPlaceholder}>______</Text>}
-              </React.Fragment>
-            ))}
+            {parts[0] || ''}<Text style={styles.blankPlaceholder}>[______]</Text>{parts[1] || ''}
           </Text>
         </View>
       );
@@ -1890,7 +1885,7 @@ const QuizCard = React.memo(({ quiz, wordName, onAnswer }: { quiz: Quiz, wordNam
 
   return (
     <View style={[styles.quizCard, { borderLeftColor: tc.color, borderLeftWidth: 3 }]}>
-      <View style={[styles.quizTypeBadge, { backgroundColor: tc.bg }]}>
+      <View style={[styles.quizTypeBadge, { backgroundColor: tc.bg, borderColor: tc.color }]}>
         <Text style={[styles.quizTypeBadgeText, { color: tc.color }]}>{tc.emoji} {tc.label}</Text>
       </View>
       {renderQuestion()}
@@ -2714,13 +2709,14 @@ const styles = StyleSheet.create({
   },
   quizTypeBadge: {
     alignSelf: 'flex-start',
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 6,
-    marginBottom: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 8,
+    marginBottom: 12,
+    borderWidth: 1,
   },
   quizTypeBadgeText: {
-    fontSize: 11,
+    fontSize: 13,
     fontWeight: '700',
   },
   blankSentenceBox: {
