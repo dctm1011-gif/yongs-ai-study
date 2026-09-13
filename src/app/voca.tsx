@@ -175,6 +175,22 @@ function mapFirebaseQuizzes(data: any): Quiz[] {
   });
 }
 
+function idiomsToPhrasalQuizzes(idioms: Idiom[]): Quiz[] {
+  if (idioms.length < 2) return [];
+  return idioms.map((idiom, idx) => {
+    const others = idioms.filter((_, i) => i !== idx).map(i => i.meaning_ko);
+    return {
+      id: `pq_${idiom.id}`,
+      wordId: idiom.id,
+      type: 'phrasal' as const,
+      question: `What does "${idiom.phrase}" mean?`,
+      options: shuffleArrayStatic([idiom.meaning_ko, ...others]),
+      correct: idiom.meaning_ko,
+      explanation: idiom.explanation,
+    };
+  });
+}
+
 // 읽음 처리된 단어를 reviewPool에 동기화. toggleWordRead를 거치지 않고
 // readStatus가 복원된 단어(재설치·타기기·레이스컨디션)도 pool에 등록되도록 보장한다.
 async function syncReadWordsToPool(uid: string, readWords: Word[]): Promise<void> {
@@ -208,6 +224,7 @@ export default function VocaScreen() {
   const [todayDate, setTodayDate] = useState(getKSTDateString());
   const [words, setWords] = useState<Word[]>([]);
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
+  const [phrasalQuizzes, setPhrasalQuizzes] = useState<Quiz[]>([]);
   const [reviewStory, setReviewStory] = useState<ReviewStory | null>(null);
   const [reviewLoading, setReviewLoading] = useState(false);
   const [reviewWordIds, setReviewWordIds] = useState<string[]>([]);
@@ -356,6 +373,16 @@ export default function VocaScreen() {
   useEffect(() => {
     loadData();
   }, []);
+
+  // idioms 로드/변경 시 phrasal 퀴즈 재빌드
+  useEffect(() => {
+    setPhrasalQuizzes(idiomsToPhrasalQuizzes(idioms));
+  }, [idioms]);
+
+  const allQuizzes = React.useMemo(
+    () => [...quizzes, ...phrasalQuizzes],
+    [quizzes, phrasalQuizzes]
+  );
 
   // 자정이 지나면 todayDate 갱신 → onValue 구독이 새 날짜 경로로 재등록됨
   useEffect(() => {
@@ -861,6 +888,19 @@ export default function VocaScreen() {
   }, [words, hideReadWords]);
 
   const answerQuiz = (quizId: string, selectedOption: string) => {
+    if (quizId.startsWith('pq_')) {
+      setPhrasalQuizzes(prev => prev.map(q => {
+        if (q.id !== quizId) return q;
+        const isCorrect = selectedOption === q.correct;
+        if (uid) {
+          dbSet(userRef(uid, `english/quizStatus/${getKSTDateString()}/${quizId}`), {
+            answered: true, correct_answer: isCorrect, selectedOption,
+          }).catch(() => {});
+        }
+        return { ...q, answered: true, correct_answer: isCorrect, selectedOption };
+      }));
+      return;
+    }
     const updated = quizzes.map(q => {
       if (q.id === quizId) {
         const isCorrect = selectedOption === q.correct;
@@ -1241,8 +1281,8 @@ Return ONLY JSON (no markdown):
         ToastAndroid.show('문장복습 완료! 📖 +1', ToastAndroid.SHORT);
       }} />}
       {view === 'stats' && <ReviewPoolView uid={uid} />}
-      {view === 'quiz' && <QuizView quizzes={quizzes.filter(q => !skipSet.has(q.wordId))} words={words} onAnswer={answerQuiz} onComplete={() => {
-        const active = quizzes.filter(q => !skipSet.has(q.wordId));
+      {view === 'quiz' && <QuizView quizzes={allQuizzes.filter(q => !skipSet.has(q.wordId))} words={words} onAnswer={answerQuiz} onComplete={() => {
+        const active = allQuizzes.filter(q => !skipSet.has(q.wordId));
         const correct = active.filter(q => q.correct_answer).length;
         ToastAndroid.show(`완료! ${correct}/${active.length} 정답 저장됨`, ToastAndroid.SHORT);
       }} />}

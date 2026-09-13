@@ -435,14 +435,12 @@ def generate_default_words(client: anthropic.Anthropic, target_date: date, toefl
         '{"date":"' + str(target_date) + '",'
         '"words":[{"word":"","part_of_speech":"","meaning_ko":"","explanation":"","example_from_convo":"","example_ko":"","tip":"동의어/반의어+출제영역","emoji":""}],'
         '"quiz":['
-        '{"type":"meaning","word":"","question":"영어질문","options":["한국어뜻1","한국어뜻2","한국어뜻3","한국어뜻4"],"answer":0,"explanation":"","option_explanations":[null,"","",""]},'
+        '{"type":"meaning","word":"","question":"영어질문","options":["","","",""],"answer":0,"explanation":"","option_explanations":[null,"","",""]},'
         '{"type":"fill_blank","word":"","sentence":"영어 ___ 문장","sentence_ko":"","answer":"","hint":""},'
-        '{"type":"situation","word":"","question":"영어상황질문","options":["","","",""],"answer":0,"explanation":""},'
-        '{"type":"phrasal","word":"구동사/숙어 표현","question":"What does \\"구동사\\" mean?","options":["한국어뜻1","한국어뜻2","한국어뜻3","한국어뜻4"],"answer":0,"explanation":"한국어 해설"}],'
+        '{"type":"situation","word":"","question":"영어상황질문","options":["","","",""],"answer":0,"explanation":""}],'
         '"sentences":[{"word":"","sentence":"","sentence_ko":"","nuance":"","context":"","everyday_usage":""}]}\n\n'
-        "규칙: words 5개, quiz는 meaning 3+fill_blank 3+situation 2+phrasal 2=10개, sentences 5개\n"
-        "phrasal 퀴즈: 오늘 단어들과 관련된 실용적인 구동사/숙어 2개 (예: run into, bring up, carry out, break down)\n"
-        "phrasal의 options는 반드시 한국어 뜻 4개, question은 영어로. JSON만 반환."
+        "규칙: words 5개, quiz는 meaning 3+fill_blank 3+situation 2=8개, sentences 5개\n"
+        "모든 question은 영어로. JSON만 반환."
     )
 
     for attempt in range(3):
@@ -465,7 +463,7 @@ def generate_default_words(client: anthropic.Anthropic, target_date: date, toefl
         except json.JSONDecodeError as e:
             print(f"[!] JSON 파싱 실패 (시도 {attempt+1}): {e}")
             continue
-        if len(data.get("words",[])) >= 5 and len(data.get("quiz",[])) >= 8:  # phrasal 포함 10개 목표, 8개도 허용
+        if len(data.get("words",[])) >= 5 and len(data.get("quiz",[])) >= 8:
             print(f"[+] 콘텐츠 생성 완료: {[w['word'] for w in data['words']]}")
             return data
 
