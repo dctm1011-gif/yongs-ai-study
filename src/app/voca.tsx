@@ -175,26 +175,47 @@ function mapFirebaseQuizzes(data: any): Quiz[] {
   });
 }
 
+// 구동사 퀴즈 4지선다용 distractor 풀
+const PHRASAL_EXTRA: { phrase: string; meaning: string }[] = [
+  { phrase: 'look up',     meaning: '찾아보다, 올려다보다' },
+  { phrase: 'get over',    meaning: '극복하다, 회복하다' },
+  { phrase: 'turn down',   meaning: '거절하다, 줄이다' },
+  { phrase: 'put off',     meaning: '미루다, 연기하다' },
+  { phrase: 'go along',    meaning: '동의하다, 따라가다' },
+  { phrase: 'make up',     meaning: '화해하다, 구성하다' },
+  { phrase: 'bring about', meaning: '야기하다, 초래하다' },
+  { phrase: 'set aside',   meaning: '따로 두다, 무시하다' },
+  { phrase: 'come across', meaning: '우연히 마주치다' },
+  { phrase: 'give in',     meaning: '항복하다, 굴복하다' },
+  { phrase: 'figure out',  meaning: '알아내다, 이해하다' },
+  { phrase: 'show up',     meaning: '나타나다, 드러내다' },
+];
+
 function idiomsToPhrasalQuizzes(idioms: Idiom[]): Quiz[] {
   if (idioms.length < 2) return [];
   const quizzes: Quiz[] = [];
+  const todayPhrases = new Set(idioms.map(i => i.phrase.toLowerCase()));
+
+  // 오늘 idioms와 겹치지 않는 distractor 선택
+  const extraPool = PHRASAL_EXTRA.filter(d => !todayPhrases.has(d.phrase.toLowerCase()));
 
   idioms.forEach((idiom, idx) => {
     const otherMeanings = idioms.filter((_, i) => i !== idx).map(i => i.meaning_ko);
     const otherPhrases  = idioms.filter((_, i) => i !== idx).map(i => i.phrase);
+    const extra = extraPool[idx % extraPool.length];
 
-    // 1. 뜻 맞추기: "What does 'X' mean?" → 한국어 뜻 선택
+    // 1. 뜻 맞추기: 4지선다 (오늘 idiom 뜻 3개 + extra distractor 1개)
     quizzes.push({
       id: `pq_meaning_${idiom.id}`,
       wordId: idiom.id,
       type: 'meaning' as const,
       question: `What does "${idiom.phrase}" mean?`,
-      options: shuffleArrayStatic([idiom.meaning_ko, ...otherMeanings]),
+      options: shuffleArrayStatic([idiom.meaning_ko, ...otherMeanings, extra.meaning]),
       correct: idiom.meaning_ko,
       explanation: idiom.explanation,
     });
 
-    // 2. 빈칸 채우기: 예문에서 구동사를 ___ 로 교체 → 구동사 선택
+    // 2. 빈칸 채우기: 4지선다 (오늘 phrase 3개 + extra phrase 1개)
     if (idiom.example_en && idiom.phrase) {
       const regex = new RegExp(idiom.phrase.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&'), 'i');
       const blanked = idiom.example_en.replace(regex, '___');
@@ -204,7 +225,7 @@ function idiomsToPhrasalQuizzes(idioms: Idiom[]): Quiz[] {
           wordId: idiom.id,
           type: 'blanks' as const,
           question: blanked,
-          options: shuffleArrayStatic([idiom.phrase, ...otherPhrases]),
+          options: shuffleArrayStatic([idiom.phrase, ...otherPhrases, extra.phrase]),
           correct: idiom.phrase,
           correctMeaning: idiom.meaning_ko,
           explanation: idiom.explanation,
@@ -212,16 +233,17 @@ function idiomsToPhrasalQuizzes(idioms: Idiom[]): Quiz[] {
       }
     }
 
-    // 3. 상황 문제: 한국어 예문 상황 → 어떤 구동사?
-    if (idiom.example_ko && idiom.phrase) {
+    // 3. 상황 문제: explanation으로 상황 설명 (example_ko 직역 금지) + 4지선다
+    if (idiom.explanation && idiom.phrase) {
+      const cleanExp = idiom.explanation.replace(/[\u{1F300}-\u{1FFFF}]/gu, '').trim();
       quizzes.push({
         id: `pq_situation_${idiom.id}`,
         wordId: idiom.id,
         type: 'situation' as const,
-        question: `"${idiom.example_ko}" — 이 상황에 쓸 수 있는 표현은?`,
-        options: shuffleArrayStatic([idiom.phrase, ...otherPhrases]),
+        question: `${cleanExp}\n\n위 설명에 해당하는 표현은?`,
+        options: shuffleArrayStatic([idiom.phrase, ...otherPhrases, extra.phrase]),
         correct: idiom.phrase,
-        explanation: `"${idiom.phrase}" = ${idiom.meaning_ko}. 예) ${idiom.example_en}`,
+        explanation: `"${idiom.phrase}" = ${idiom.meaning_ko}\n예) ${idiom.example_en}`,
       });
     }
   });
