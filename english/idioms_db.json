@@ -295,5 +295,27 @@
     "tip": "cancel과 비슷하지만 call off는 더 갑작스럽거나 급할 때 써요. 유사: cancel, postpone, abandon",
     "emoji": "⛔",
     "date": "2026-09-13"
+  },
+  {
+    "id": "catch-up",
+    "phrase": "catch up",
+    "meaning_ko": "따라잡다, (소식을) 주고받다",
+    "explanation": "뒤처진 것을 따라가거나, 오랜만에 친구와 근황을 나누는 거예요! 정말 일상적인 표현이에요 👥",
+    "example_en": "Let's grab coffee this weekend to catch up.",
+    "example_ko": "이번 주말에 커피 마시면서 근황 얘기해요.",
+    "tip": "유사 표현: keep up with, get caught up. 'catch up on(∼을 따라잡다)'도 자주 쓰여요!",
+    "emoji": "☕",
+    "date": "2026-09-13"
+  },
+  {
+    "id": "take-over",
+    "phrase": "take over",
+    "meaning_ko": "인수하다, 넘겨받다, 장악하다",
+    "explanation": "어떤 책임이나 통제권을 받아서 관리하는 거예요! 비즈니스나 학술 문맥에서 자주 나타나요 💼",
+    "example_en": "The new CEO will take over the company next month.",
+    "example_ko": "새로운 최고경영자가 다음 달에 회사를 인수할 거예요.",
+    "tip": "유사 표현: take charge of, assume control. 'take over from(∼을 대신하다)'는 형태도 있어요!",
+    "emoji": "🤝",
+    "date": "2026-09-13"
   }
 ]
