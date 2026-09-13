@@ -262,5 +262,38 @@
     "tip": "학생들이 시험 준비할 때 정말 자주 써요. 'freshen up'과도 비슷한 의미!",
     "emoji": "📚",
     "date": "2026-09-13"
+  },
+  {
+    "id": "stand-out",
+    "phrase": "stand out",
+    "meaning_ko": "두드러지다, 눈에 띄다",
+    "explanation": "무리 속에서 확 눈에 띄는 것처럼, 다른 것들보다 특별하거나 뛰어난 모습을 나타내요! 일상 회화에서 자주 써요 ✨",
+    "example_en": "Your presentation really stood out among all the other projects.",
+    "example_ko": "너의 발표가 다른 프로젝트들 중에서 정말 눈에 띄었어.",
+    "tip": "stand out from, stand out as 형태로도 사용 가능. 유사: be prominent, be distinctive",
+    "emoji": "⭐",
+    "date": "2026-09-13"
+  },
+  {
+    "id": "wrap-up",
+    "phrase": "wrap up",
+    "meaning_ko": "마무리하다, 정리하다",
+    "explanation": "선물을 포장하는 것처럼 일이나 회의를 깔끔하게 정리해서 마무리하는 거예요! 비즈니스 상황에서 정말 많이 써요 📦",
+    "example_en": "Let's wrap up this meeting and send out the action items tomorrow.",
+    "example_ko": "이 회의를 마무리하고 내일 할 일 목록을 보내자.",
+    "tip": "명사로도 쓰여요: 'wrap-up meeting(종료 회의)'. 유사: conclude, finalize, finish up",
+    "emoji": "🎁",
+    "date": "2026-09-13"
+  },
+  {
+    "id": "call-off",
+    "phrase": "call off",
+    "meaning_ko": "취소하다, 중지하다",
+    "explanation": "예정되어 있던 계획을 갑자기 취소하거나 중단하는 거예요. 일상에서도 자주 듣는 표현이에요 ❌",
+    "example_en": "The soccer game was called off due to bad weather.",
+    "example_ko": "악천후로 인해 축구 경기가 취소됐어.",
+    "tip": "cancel과 비슷하지만 call off는 더 갑작스럽거나 급할 때 써요. 유사: cancel, postpone, abandon",
+    "emoji": "⛔",
+    "date": "2026-09-13"
   }
 ]
