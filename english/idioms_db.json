@@ -350,5 +350,41 @@
     "tip": "fall apart(깨지다, 무너지다)와 비슷하지만, fall through는 '계획이나 거래'가 안 될 때만 써요!",
     "emoji": "❌",
     "date": "2026-09-13"
+  },
+  {
+    "id": "run-into",
+    "phrase": "run into",
+    "meaning_ko": "우연히 만나다, 문제에 부닥치다",
+    "meaning_en": "to encounter someone by chance or face a problem",
+    "explanation": "우연히 옛날 친구를 만나거나, 예상치 못한 어려움에 직면할 때 써요! 학술 글쓰기에서도 '문제에 직면하다'의 의미로 자주 나와요 🤝",
+    "example_en": "I ran into an old classmate at the coffee shop.",
+    "example_ko": "커피숍에서 옛날 같은 반 친구를 우연히 만났어요.",
+    "tip": "come across와 유사하지만, run into는 '사람'과 만날 때 더 자연스러워요!",
+    "emoji": "👥",
+    "date": "2026-09-13"
+  },
+  {
+    "id": "scale-up",
+    "phrase": "scale up",
+    "meaning_ko": "확대하다, 규모를 늘리다",
+    "meaning_en": "to increase the size or scope of something",
+    "explanation": "작은 프로젝트를 큰 규모로 키우거나, 사업을 확장할 때 쓰는 비즈니스 표현이에요! 스타트업 문화에서 정말 대세 표현이랍니다 🚀",
+    "example_en": "The company plans to scale up production next year.",
+    "example_ko": "그 회사는 내년에 생산 규모를 확대할 계획이에요.",
+    "tip": "scale down = 축소하다 (반대 의미). 비즈니스·기술 분야에서 자주 써요!",
+    "emoji": "📈",
+    "date": "2026-09-13"
+  },
+  {
+    "id": "keep-up-with",
+    "phrase": "keep up with",
+    "meaning_ko": "~와 같은 속도로 따라가다, 최신 정보를 얻다",
+    "meaning_en": "to stay informed or maintain the same pace",
+    "explanation": "빠르게 변하는 세상에서 뒤떨어지지 않으려고 열심히 따라가는 거예요! 요즘 SNS 시대에 많이 쓰여요 ⚡",
+    "example_en": "It's hard to keep up with the latest technology trends.",
+    "example_ko": "최신 기술 트렌드를 따라가기가 정말 어려워요.",
+    "tip": "catch up with(따라잡다)는 뒤처진 후 따라잡는 뉘앙스, keep up은 계속 따라가는 느낌!",
+    "emoji": "🏃",
+    "date": "2026-09-14"
   }
 ]

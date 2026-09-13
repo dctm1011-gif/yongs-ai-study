@@ -1,256 +1,218 @@
 {
-  "date": "2026-09-13",
+  "date": "2026-09-14",
   "words": [
     {
-      "word": "headline",
+      "word": "circulation",
       "part_of_speech": "noun",
-      "meaning_ko": "제목, 헤드라인",
-      "explanation": "신문이나 뉴스에서 기사의 가장 위에 있는 큰 제목으로, 독자의 관심을 끌기 위해 만들어짐",
-      "example_from_convo": "The headline read 'Breaking News: Major Policy Change Announced'",
-      "example_ko": "그 헤드라인은 '속보: 주요 정책 변화 발표됨'이라고 읽혀 있었다",
-      "tip": "동의어: title, heading / 반의어: body text / 출제영역: 뉴스, 미디어",
-      "emoji": "📰"
+      "meaning_ko": "순환, 유통, 발행부수",
+      "explanation": "The movement or flow of something through a system, or the number of copies of a newspaper/magazine distributed.",
+      "example_from_convo": "The newspaper's circulation increased by 20% this year.",
+      "example_ko": "신문의 발행부수가 올해 20% 증가했다.",
+      "tip": "동의어: distribution, flow | 반의어: stagnation | 출제영역: 뉴스/미디어",
+      "emoji": "🔄"
     },
     {
-      "word": "correspondent",
+      "word": "milestone",
       "part_of_speech": "noun",
-      "meaning_ko": "특파원, 통신원",
-      "explanation": "특정 지역이나 분야에서 뉴스를 수집하여 보도하는 기자 또는 통신사의 직원",
-      "example_from_convo": "Our foreign correspondent reported live from the capital city",
-      "example_ko": "우리의 해외 특파원이 수도에서 실시간으로 보도했다",
-      "tip": "동의어: reporter, journalist / 반의어: editor / 출제영역: 언론, 직업",
-      "emoji": "🎙️"
+      "meaning_ko": "이정표, 중요한 사건",
+      "explanation": "A significant stage or event in the development or history of something; a marker of progress.",
+      "example_from_convo": "Graduating from university was a major milestone in her life.",
+      "example_ko": "대학 졸업은 그녀의 인생에서 주요 이정표였다.",
+      "tip": "동의어: landmark, achievement | 출제영역: 커리어/인생",
+      "emoji": "🎯"
     },
     {
-      "word": "coverage",
+      "word": "itinerary",
       "part_of_speech": "noun",
-      "meaning_ko": "보도, 범위",
-      "explanation": "뉴스 매체가 어떤 사건이나 주제에 대해 얼마나 광범위하게 보도하는지를 나타냄",
-      "example_from_convo": "The election received extensive coverage from all major networks",
-      "example_ko": "그 선거는 모든 주요 방송국으로부터 광범위한 보도를 받았다",
-      "tip": "동의어: reporting, publicity / 반의어: obscurity / 출제영역: 미디어, 저널리즘",
-      "emoji": "📺"
+      "meaning_ko": "여행 일정, 계획 경로",
+      "explanation": "A planned route or journey, typically including a list of places to visit and dates for each stop.",
+      "example_from_convo": "We prepared a detailed itinerary for our two-week European tour.",
+      "example_ko": "우리는 2주간의 유럽 여행을 위해 자세한 일정을 준비했다.",
+      "tip": "동의어: schedule, plan, route | 출제영역: 여행/계획",
+      "emoji": "✈️"
     },
     {
-      "word": "delegate",
-      "part_of_speech": "verb/noun",
-      "meaning_ko": "위임하다, 대표",
-      "explanation": "업무나 책임을 다른 사람에게 맡기거나, 다른 사람을 대신하여 권력이나 의견을 표현하는 사람",
-      "example_from_convo": "The manager decided to delegate the project to his team members",
-      "example_ko": "그 관리자는 그 프로젝트를 팀 멤버들에게 위임하기로 결정했다",
-      "tip": "동의어: assign, authorize / 반의어: retain, monopolize / 출제영역: 비즈니스, 직장",
-      "emoji": "👥"
-    },
-    {
-      "word": "consolidate",
+      "word": "accommodate",
       "part_of_speech": "verb",
-      "meaning_ko": "통합하다, 강화하다",
-      "explanation": "여러 개의 것들을 하나로 합치거나, 어떤 상태나 위치를 더욱 견고하게 만드는 것",
-      "example_from_convo": "The company decided to consolidate its regional offices into one headquarters",
-      "example_ko": "그 회사는 지역 지사들을 하나의 본사로 통합하기로 결정했다",
-      "tip": "동의어: combine, merge / 반의어: separate, divide / 출제영역: 비즈니스, 조직",
-      "emoji": "🔗"
+      "meaning_ko": "수용하다, 제공하다, 적응하다",
+      "explanation": "To provide lodging or sufficient space for; to adjust or adapt to meet someone's needs.",
+      "example_from_convo": "This hotel can accommodate up to 500 guests comfortably.",
+      "example_ko": "이 호텔은 최대 500명의 손님을 편하게 수용할 수 있다.",
+      "tip": "동의어: house, lodge, adapt | 출제영역: 여행/비즈니스",
+      "emoji": "🏨"
+    },
+    {
+      "word": "commute",
+      "part_of_speech": "verb/noun",
+      "meaning_ko": "출퇴근하다, 출퇴근",
+      "explanation": "To travel regularly between one's place of residence and place of work; the journey itself.",
+      "example_from_convo": "She commutes two hours every day to reach the downtown office.",
+      "example_ko": "그녀는 매일 시내 사무실에 도착하기 위해 2시간을 출퇴근한다.",
+      "tip": "동의어: travel, journey | 출제영역: 일상/직장",
+      "emoji": "🚇"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "headline",
-      "question": "In a news context, a headline is MOST similar to which of the following?",
+      "word": "circulation",
+      "question": "In a publishing context, which of the following BEST describes what 'circulation' means?",
       "options": [
-        "A detailed analysis of an event",
-        "The main title of a news article designed to grab attention",
-        "A personal opinion about a topic",
-        "The body text of a story"
+        "The printing speed of a newspaper",
+        "The number of copies of a publication distributed to readers",
+        "The direction of blood flow in the body",
+        "The rotation of a wheel"
       ],
       "answer": 1,
-      "explanation": "A headline is the prominent title at the top of a news article meant to capture readers' interest, similar to how a title summarizes content.",
+      "explanation": "Circulation in publishing refers to the distribution and number of copies spread to readers, often used as a measure of a publication's reach and success.",
       "option_explanations": [
-        "This describes an editorial or op-ed, not a headline",
-        "Correct - this is the definition of a headline",
-        "This is opinion writing, not a headline",
-        "This is the main content, not the headline"
+        "Incorrect - this refers to production speed, not circulation",
+        "Correct - circulation measures distribution volume",
+        "Incorrect - this is a medical term",
+        "Incorrect - this describes mechanical rotation"
       ]
     },
     {
       "type": "meaning",
-      "word": "correspondent",
-      "question": "Which word best completes this sentence? 'A foreign ___ works in another country to report news back to their home network.'",
+      "word": "milestone",
+      "question": "Your company celebrates reaching 1 million customers. This event is MOST similar to which concept?",
       "options": [
-        "editor",
-        "correspondent",
-        "publisher",
-        "commentator"
+        "A daily routine",
+        "A landmark achievement in progress",
+        "A temporary setback",
+        "A seasonal change"
       ],
       "answer": 1,
-      "explanation": "A correspondent is a journalist who reports news from a specific location or region, typically working for a news organization.",
+      "explanation": "A milestone represents a significant marker or achievement in progress, making reaching 1 million customers a major milestone worth celebrating.",
       "option_explanations": [
-        "An editor supervises writers but doesn't typically report from foreign locations",
-        "Correct - a correspondent reports news from specific regions",
-        "A publisher prints or distributes content",
-        "A commentator offers analysis and opinions"
+        "Incorrect - milestones are significant, not routine",
+        "Correct - milestones mark important achievements",
+        "Incorrect - milestones represent progress, not setbacks",
+        "Incorrect - milestones are major events, not regular cycles"
       ]
     },
     {
       "type": "meaning",
-      "word": "coverage",
-      "question": "What does extensive news coverage of an event typically indicate?",
+      "word": "accommodate",
+      "question": "When a hotel manager says 'We can accommodate your dietary restrictions,' what does 'accommodate' mean?",
       "options": [
-        "The event was ignored by media",
-        "The event received detailed and widespread reporting from multiple sources",
-        "The event happened in a remote location",
-        "The event was not important enough for news"
+        "Refuse your request",
+        "Provide and adjust services to meet your needs",
+        "Charge you extra fees",
+        "Apologize for inconvenience"
       ],
       "answer": 1,
-      "explanation": "Extensive coverage means many media outlets reported on the event in detail and from various angles.",
+      "explanation": "Accommodate means to provide necessary adjustments and services to fulfill someone's specific needs or requirements.",
       "option_explanations": [
-        "Opposite of extensive coverage",
-        "Correct - extensive coverage means widespread and detailed reporting",
-        "Coverage amount is independent of location",
-        "Extensive coverage shows importance"
+        "Incorrect - accommodate means to fulfill, not refuse",
+        "Correct - to provide and adjust services to meet needs",
+        "Incorrect - accommodate doesn't involve extra costs",
+        "Incorrect - accommodate means to provide solutions, not just apologize"
       ]
     },
     {
-      "type": "meaning",
-      "word": "consolidate",
-      "question": "When a business consolidates its departments, what does it do?",
+      "type": "fill_blank",
+      "word": "circulation",
+      "sentence": "The magazine improved its marketing strategy to boost ___ among young adult readers.",
+      "sentence_ko": "그 잡지는 젊은 성인 독자들 사이에서 발행부수를 높이기 위해 마케팅 전략을 개선했다.",
+      "answer": "circulation",
+      "hint": "신문이나 잡지가 독자들에게 배포되는 양을 나타내는 단어입니다."
+    },
+    {
+      "type": "fill_blank",
+      "word": "itinerary",
+      "sentence": "Before the business trip, I shared the complete ___ with all team members including flight times and hotel details.",
+      "sentence_ko": "출장 전에 항공편 시간과 호텔 세부사항을 포함하여 전체 일정을 모든 팀원과 공유했다.",
+      "answer": "itinerary",
+      "hint": "여행이나 출장의 구체적인 일정과 계획을 의미합니다."
+    },
+    {
+      "type": "fill_blank",
+      "word": "commute",
+      "sentence": "After moving closer to the office, she now ___ only 20 minutes instead of two hours.",
+      "sentence_ko": "사무실 근처로 이사한 후, 그녀는 이제 2시간 대신 20분만 출퇴근한다.",
+      "answer": "commute",
+      "hint": "매일 집과 직장 사이를 이동하는 것을 나타내는 동사입니다."
+    },
+    {
+      "type": "situation",
+      "word": "milestone",
+      "question": "Your startup just reached profitability for the first time after three years. You want to tell your investors about this achievement. What would you call this moment?",
       "options": [
-        "It hires more employees",
-        "It closes all operations",
-        "It merges multiple departments into one unified structure",
-        "It moves to a different country"
+        "A routine business update",
+        "An important milestone in your company's growth",
+        "A minor adjustment to the budget",
+        "A temporary financial fluctuation"
+      ],
+      "answer": 1,
+      "explanation": "Reaching profitability after years is a significant milestone - a major achievement marking important progress in the company's development.",
+      "option_explanations": [
+        "Incorrect - profitability for the first time is significant, not routine",
+        "Correct - this is a major achievement and important milestone",
+        "Incorrect - this represents substantial progress, not a minor adjustment",
+        "Incorrect - becoming profitable is permanent progress, not temporary"
+      ]
+    },
+    {
+      "type": "situation",
+      "word": "accommodate",
+      "question": "A corporate event planner receives a request from a guest who needs wheelchair accessibility and dietary accommodations. How should the planner respond?",
+      "options": [
+        "Reject the request as too complicated",
+        "Apologize but explain it's not possible",
+        "Ensure all necessary adjustments and services are provided to meet the guest's needs",
+        "Suggest the guest find a different venue"
       ],
       "answer": 2,
-      "explanation": "To consolidate means to combine separate entities or functions into one integrated whole to improve efficiency or strength.",
+      "explanation": "The event planner should accommodate the guest by providing wheelchair access and addressing dietary requirements - this is what accommodate means in a service context.",
       "option_explanations": [
-        "Consolidation may reduce or redistribute staff, not necessarily hire",
-        "Consolidation improves the business; it doesn't close it",
-        "Correct - consolidation merges separate units into one",
-        "Consolidation is typically about internal restructuring"
-      ]
-    },
-    {
-      "type": "meaning",
-      "word": "delegate",
-      "question": "Which situation best demonstrates the meaning of 'to delegate'?",
-      "options": [
-        "A manager completes all the work herself to ensure quality",
-        "A manager assigns specific tasks to team members and trusts them to complete the work",
-        "A manager criticizes her team for poor performance",
-        "A manager cancels a project entirely"
-      ],
-      "answer": 1,
-      "explanation": "Delegating means assigning responsibility or tasks to others, trusting them to handle the work.",
-      "option_explanations": [
-        "This is the opposite of delegating",
-        "Correct - delegating involves assigning tasks to others",
-        "This is criticism, not delegation",
-        "This is cancellation, not delegation"
-      ]
-    },
-    {
-      "type": "fill_blank",
-      "word": "headline",
-      "sentence": "The newspaper's front-page ___ announced the discovery of a new renewable energy source that could revolutionize the industry.",
-      "sentence_ko": "그 신문의 1면 제목은 산업에 혁명을 일으킬 수 있는 새로운 재생 에너지원의 발견을 발표했다.",
-      "answer": "headline",
-      "hint": "신문 기사의 맨 위에 있는 큰 제목"
-    },
-    {
-      "type": "fill_blank",
-      "word": "correspondent",
-      "sentence": "The network sent its senior ___ to cover the international summit and provide live updates throughout the day.",
-      "sentence_ko": "그 네트워크는 국제 정상회담을 취재하고 하루 종일 실시간 업데이트를 제공하기 위해 자신의 선임 기자를 보냈다.",
-      "answer": "correspondent",
-      "hint": "특정 지역에서 뉴스를 보도하는 기자"
-    },
-    {
-      "type": "fill_blank",
-      "word": "consolidate",
-      "sentence": "After the merger, the company plans to ___ all its warehouses in three major cities to reduce operating costs.",
-      "sentence_ko": "합병 후, 그 회사는 운영 비용을 줄이기 위해 모든 창고를 세 개의 주요 도시로 통합할 계획이다.",
-      "answer": "consolidate",
-      "hint": "여러 개의 것을 하나로 합치다"
-    },
-    {
-      "type": "situation",
-      "word": "coverage",
-      "question": "Your editor says 'We need more coverage of this story. The readers want to know every angle.' What does she want you to do?",
-      "options": [
-        "Write fewer articles about the topic",
-        "Research and report the story from multiple perspectives and in greater detail",
-        "Ignore the story completely",
-        "Publish only one short article"
-      ],
-      "answer": 1,
-      "explanation": "Asking for more coverage means requesting more detailed and comprehensive reporting from different angles and viewpoints.",
-      "option_explanations": [
-        "More coverage requires more articles, not fewer",
-        "Correct - more coverage means broader and deeper reporting from multiple angles",
-        "More coverage requires engagement with the story",
-        "More coverage requires substantial reporting, not just one short piece"
-      ]
-    },
-    {
-      "type": "situation",
-      "word": "delegate",
-      "question": "Your manager says 'I'm delegating the event planning to you and your team. I trust you to make the decisions.' What responsibility have you just received?",
-      "options": [
-        "You must report to the manager every hour about progress",
-        "You and your team are now responsible for organizing the event and making decisions about it",
-        "You must do all the work by yourself without any team help",
-        "The manager will still make all the important decisions about the event"
-      ],
-      "answer": 1,
-      "explanation": "When someone delegates a task, they give you the authority and responsibility to handle it, trusting your judgment and decision-making.",
-      "option_explanations": [
-        "Delegation includes trust and autonomy, not constant micromanagement",
-        "Correct - delegation means you and your team are responsible for the task",
-        "Delegation distributes work to the team, not concentrates it",
-        "Delegation means you have decision-making authority"
+        "Incorrect - the planner should work to fulfill these requests",
+        "Incorrect - accommodate means finding solutions, not making excuses",
+        "Correct - accommodate means providing necessary adjustments and services",
+        "Incorrect - a good planner accommodates guests' needs rather than turning them away"
       ]
     }
   ],
   "sentences": [
     {
-      "word": "headline",
-      "sentence": "The breaking news headline was shared across social media within minutes of the announcement.",
-      "sentence_ko": "그 속보 헤드라인은 발표 후 몇 분 안에 소셜 미디어에서 공유되었다.",
-      "nuance": "즉각적이고 광범위한 전파",
-      "context": "디지털 시대의 뉴스 유포",
-      "everyday_usage": "뉴스 기사의 제목을 지칭할 때 자주 사용됨"
+      "word": "circulation",
+      "sentence": "The newspaper's circulation has dropped significantly due to the rise of digital media.",
+      "sentence_ko": "신문의 발행부수는 디지털 미디어의 증가로 인해 급격히 감소했다.",
+      "nuance": "사실적 관찰",
+      "context": "미디어 산업의 변화",
+      "everyday_usage": "미디어/출판 분야에서 자주 사용"
     },
     {
-      "word": "correspondent",
-      "sentence": "The war correspondent risked her life to report the truth from the conflict zone.",
-      "sentence_ko": "그 전쟁 특파원은 분쟁 지역에서 진실을 보도하기 위해 자신의 생명을 위험에 빠뜨렸다.",
-      "nuance": "용감함과 헌신",
-      "context": "위험한 환경에서의 저널리즘",
-      "everyday_usage": "특정 지역을 담당하는 기자를 나타낼 때 사용"
+      "word": "milestone",
+      "sentence": "Getting her driver's license was the first major milestone of her teenage years.",
+      "sentence_ko": "운전면허증을 취득하는 것은 그녀의 십대 시절의 첫 번째 주요 이정표였다.",
+      "nuance": "개인적 성취감",
+      "context": "인생의 중요한 순간",
+      "everyday_usage": "개인의 삶과 성장에 대해 이야기할 때"
     },
     {
-      "word": "coverage",
-      "sentence": "The Olympic Games received 24/7 coverage from broadcasters around the world.",
-      "sentence_ko": "올림픽 게임은 전 세계 방송사로부터 24시간 지속적인 보도를 받았다.",
-      "nuance": "광범위하고 지속적인 보도",
-      "context": "대규모 국제 행사",
-      "everyday_usage": "미디어가 사건을 보도하는 정도를 설명할 때"
+      "word": "itinerary",
+      "sentence": "The tour guide distributed the day's itinerary, which included three museum visits and a dinner reservation.",
+      "sentence_ko": "투어 가이드는 박물관 3곳 방문과 저녁 식사 예약을 포함한 당일 일정을 배포했다.",
+      "nuance": "구체적이고 계획적",
+      "context": "단체 여행이나 투어",
+      "everyday_usage": "여행 계획을 짤 때 매우 유용한 표현"
     },
     {
-      "word": "consolidate",
-      "sentence": "The startup decided to consolidate its product line and focus on three core offerings instead of ten.",
-      "sentence_ko": "그 스타트업은 자신의 제품군을 통합하고 10개 대신 3개의 핵심 제품에 집중하기로 결정했다.",
-      "nuance": "효율성과 전략적 집중",
-      "context": "비즈니스 전략",
-      "everyday_usage": "여러 항목을 간소화하거나 통합할 때 사용"
+      "word": "accommodate",
+      "sentence": "The new office space can accommodate our growing team of 150 employees.",
+      "sentence_ko": "새로운 사무실 공간은 우리의 150명으로 증가하는 팀을 수용할 수 있다.",
+      "nuance": "물리적 공간 수용",
+      "context": "직장이나 조직의 확장",
+      "everyday_usage": "건물이나 시설의 수용력을 설명할 때"
     },
     {
-      "word": "delegate",
-      "sentence": "A good leader knows how to delegate tasks effectively without losing sight of the overall project goals.",
-      "sentence_ko": "좋은 리더는 전체 프로젝트 목표를 잃지 않으면서 효과적으로 업무를 위임하는 방법을 안다.",
-      "nuance": "신뢰와 책임의 배분",
-      "context": "리더십과 관리",
-      "everyday_usage": "직장에서 업무를 다른 사람에게 맡길 때 사용"
+      "word": "commute",
+      "sentence": "Many professionals are now choosing to work remotely to avoid the daily commute.",
+      "sentence_ko": "많은 전문직들은 일일 출퇴근을 피하기 위해 원격 근무를 선택하고 있다.",
+      "nuance": "시간 절약과 편의성",
+      "context": "현대 직장 문화",
+      "everyday_usage": "근무 형태와 생활 방식의 변화를 논할 때"
     }
   ]
 }
