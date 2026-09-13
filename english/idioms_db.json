@@ -229,5 +229,38 @@
     "tip": "take control(통제하다)과 비슷하지만, take charge는 더 긍정적이고 책임감 있는 느낌이에요!",
     "emoji": "💪",
     "date": "2026-09-13"
+  },
+  {
+    "id": "run-by",
+    "phrase": "run by",
+    "meaning_ko": "~에게 의견을 구하다, ~와 상의하다",
+    "explanation": "누군가에게 아이디어나 계획을 말해서 의견을 듣는 거예요. 마치 그 사람 옆을 지나가면서 빠르게 물어보는 느낌이랄까? 😊",
+    "example_en": "Can I run this idea by you before the meeting?",
+    "example_ko": "회의 전에 이 아이디어를 당신한테 한번 물어봐도 될까?",
+    "tip": "비즈니스 상황에서 정말 많이 써요. 'run it by me'는 '나한테 말해봐'라는 뜻!",
+    "emoji": "💬",
+    "date": "2026-09-13"
+  },
+  {
+    "id": "narrow-down",
+    "phrase": "narrow down",
+    "meaning_ko": "범위를 좁히다, 선택지를 줄이다",
+    "explanation": "많은 선택지 중에서 가장 가능성 있는 것들만 쏙쏙 골라내는 거예요. 마치 필터질하는 것처럼요! 🎯",
+    "example_en": "We need to narrow down our choices for the new office location.",
+    "example_ko": "새 사무실 위치 선택을 좁혀야 해요.",
+    "tip": "학업, 구직, 쇼핑 등 거의 모든 상황에서 써요. 'narrow it down to three options'처럼 사용!",
+    "emoji": "📍",
+    "date": "2026-09-13"
+  },
+  {
+    "id": "brush-up-on",
+    "phrase": "brush up on",
+    "meaning_ko": "~을 다시 익히다, 복습하다",
+    "explanation": "예전에 배웠던 거 기억 안 나면 다시 복습하는 거! 마치 먼지를 털어내듯이 말이에요. ✨",
+    "example_en": "I need to brush up on my Spanish before the trip.",
+    "example_ko": "여행 가기 전에 스페인어를 좀 다시 복습해야 해.",
+    "tip": "학생들이 시험 준비할 때 정말 자주 써요. 'freshen up'과도 비슷한 의미!",
+    "emoji": "📚",
+    "date": "2026-09-13"
   }
 ]
