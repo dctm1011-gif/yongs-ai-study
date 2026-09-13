@@ -373,17 +373,18 @@ def generate_default_words(client: anthropic.Anthropic, target_date: date, toefl
     else:
         cefr_hint = "B2~C1 수준 (평가 데이터 부족 — 기본값)"
 
-    # 1단계: 범학문 AWL 후보 단어 선정 (최근 50개만 금지 — 짧아야 Haiku가 지킴)
+    # 1단계: 실생활 고빈도 어휘 선정 (최근 50개만 금지 — 짧아야 Haiku가 지킴)
     step1_prompt = (
-        f"15개의 영어 학술 단어를 선정하세요. 5개 영역에서 각 3개씩:\n"
-        "1. 자연과학/환경  2. 사회/정치  3. 경제/경영  4. 심리/교육  5. 문화/예술\n\n"
+        f"15개의 영어 단어를 선정하세요. 5개 영역에서 각 3개씩:\n"
+        "1. 뉴스/미디어  2. 직장/비즈니스  3. 일상생활/여행  4. 건강/환경  5. 사회/관계\n\n"
         f"절대 금지: {recent_50}\n"
         "조건 (반드시 지킬 것):\n"
         f"- 난이도: {cefr_hint}\n"
-        "- 여러 학문 분야에서 두루 쓰이는 단어 (예: scrutinize, prevalent, empirical, tangible, coherent)\n"
-        "- 학문·분야 이름 자체는 절대 금지 (예: biology, ecology, sociology, linguistics, neuroscience, archaeology, anthropology, geology, astronomy, theology 등 -ology/-ics/-istry 계열 명사 모두 금지)\n"
-        "- 의학 전공술어·법률 라틴어·철학 전문용어 절대 금지 (예: etiopathogenesis, mens rea, apodictic 금지)\n"
-        "- TOEFL iBT Reading/Writing에 실제 등장하는 수준\n"
+        "- BBC/CNN 뉴스, 직장 이메일, 일상 대화, 여행에서 실제로 자주 접하는 단어\n"
+        "  (예: resilient, scrutinize, prevalent, concise, collaborate, advocate, bias, initiative)\n"
+        "- 특정 전문 학문 분야에서만 쓰이는 단어 절대 금지\n"
+        "  (hermeneutics, epistemology, ontology, semiotics, jurisprudence, etiopathogenesis 같은 단어들 금지)\n"
+        "- 학문·분야 이름 자체도 금지 (-ology/-ics/-istry 계열 명사)\n"
         "- 슬랭·구어 금지\n\n"
         'JSON 배열만 반환:\n'
         '[{"word":"단어","domain":"도메인","pos":"품사","meaning_ko":"뜻"}]'
