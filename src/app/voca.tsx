@@ -18,14 +18,7 @@ import GameHub from '../components/GameHub';
 
 const NETLIFY_BASE_URL = 'https://illustrious-cuchufli-7c4e58.netlify.app';
 
-// Firebase Functions run in UTC; KST (UTC+9) doesn't roll to the next
-// calendar day until 09:00 UTC, so a plain UTC date lags KST by a day
-// for 9 hours each morning. Shift the clock forward before formatting,
-// matching the same helper used in the netlify/functions/*-daily.mjs writers.
-function getKSTDateString(): string {
-  const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
-  return kst.toISOString().split('T')[0];
-}
+import { getKSTDateString } from '../utils/dateUtils';
 
 interface NetlifyWord {
   id: string;
@@ -47,7 +40,7 @@ interface Word extends NetlifyWord {
 interface Quiz {
   id: string;
   wordId: string;
-  type: 'meaning' | 'blanks' | 'situation';
+  type: 'meaning' | 'blanks' | 'situation' | 'phrasal';
   question: string;
   options: string[];
   correct: string;
@@ -150,7 +143,7 @@ function mapFirebaseQuizzes(data: any): Quiz[] {
     : [];
   return rawQuizzes.map((q: any, idx: number) => {
     const wordId = (q.word || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-    const type: Quiz['type'] = q.type === 'fill_blank' ? 'blanks' : (q.type === 'situation' ? 'situation' : 'meaning');
+    const type: Quiz['type'] = q.type === 'fill_blank' ? 'blanks' : q.type === 'situation' ? 'situation' : q.type === 'phrasal' ? 'phrasal' : 'meaning';
     let rawOptions: string[] = Array.isArray(q.options) ? q.options : [];
     // fill_blank quizzes in daily.json omit options — generate from today's word list
     if (type === 'blanks' && rawOptions.length === 0) {
@@ -335,7 +328,7 @@ export default function VocaScreen() {
       .then(snap => {
         if (!snap.exists()) return;
         const val = snap.val();
-        const arr = Array.isArray(val.idioms) ? val.idioms : Object.values(val.idioms ?? {});
+        const arr = Array.isArray(val) ? val : Array.isArray(val.idioms) ? val.idioms : Object.values(val.idioms ?? {});
         setIdioms(arr as Idiom[]);
       })
       .catch(() => {});
@@ -2023,9 +2016,7 @@ interface PoolWord { id: string; word: string; meaning: string; count: number; }
 const POOL_SNAPSHOT_KEY = 'reviewPool_snapshot';
 const POOL_SNAPSHOT_DATE_KEY = 'reviewPool_snapshot_date';
 
-function getKSTDateStr(): string {
-  return new Date(Date.now() + 9 * 3600_000).toISOString().slice(0, 10);
-}
+function getKSTDateStr(): string { return getKSTDateString(); }
 
 const ReviewPoolView = React.memo(({ uid }: { uid: string }) => {
   const [loading, setLoading] = useState(true);
