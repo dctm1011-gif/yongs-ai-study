@@ -1,115 +1,119 @@
 {
-  "date": "2026-09-13",
+  "date": "2026-09-14",
   "reading": {
-    "title": "The Impact of Urban Green Spaces",
-    "passage": "Urban green spaces such as parks and gardens play a crucial role in improving city residents' quality of life. These areas provide numerous environmental benefits, including reducing air pollution, lowering urban temperatures, and supporting biodiversity. Beyond environmental advantages, research demonstrates that access to green spaces significantly improves mental health by reducing stress and anxiety. Cities that prioritize the development and maintenance of parks experience higher levels of community engagement and social interaction. Furthermore, green spaces increase property values in surrounding neighborhoods, making them economically beneficial investments for urban development.",
+    "title": "The Impact of Artificial Intelligence on Education",
+    "passage": "Artificial intelligence is transforming education by personalizing learning experiences for students. AI-powered systems can analyze individual learning patterns and adapt content to match each student's pace and style. Teachers use AI tools to automate grading and identify students who need additional support. However, concerns exist about over-reliance on technology and the potential loss of human interaction in classrooms. Despite these challenges, AI represents a significant opportunity to make quality education more accessible to students worldwide.",
     "questions": [
       {
-        "q": "According to the passage, what is one environmental benefit of urban green spaces?",
+        "q": "According to the passage, how does AI personalize learning experiences?",
         "options": [
-          "Increasing traffic congestion",
-          "Reducing air pollution",
-          "Decreasing property values",
-          "Limiting social interaction"
+          "By replacing teachers with robots",
+          "By analyzing individual learning patterns and adapting content",
+          "By reducing the number of students in classrooms",
+          "By providing only online education"
         ],
         "answer": 1,
-        "explanation": "본문에서 '환경 오염 감소, 도시 온도 저하, 생물 다양성 지원'이라고 명시되어 있습니다. 정답은 'Reducing air pollution'입니다."
+        "explanation": "지문에서 AI 시스템이 개별 학습 패턴을 분석하고 각 학생의 속도와 스타일에 맞게 콘텐츠를 조정한다고 명시되어 있습니다."
       },
       {
-        "q": "How do green spaces affect mental health according to the passage?",
+        "q": "What is a concern mentioned about AI in education?",
         "options": [
-          "They increase work-related stress",
-          "They reduce stress and anxiety",
-          "They have no significant impact",
-          "They primarily benefit only elderly people"
+          "It is too expensive",
+          "Over-reliance on technology and loss of human interaction",
+          "Students learn too quickly",
+          "Teachers earn more money"
         ],
         "answer": 1,
-        "explanation": "본문에서 '녹지에 대한 접근이 스트레스와 불안을 줄임으로써 정신 건강을 크게 개선한다'고 명시되어 있습니다."
+        "explanation": "지문의 마지막 문장 앞부분에서 기술에 대한 과도한 의존과 교실에서의 인간적 상호작용 상실에 대한 우려가 언급되어 있습니다."
       },
       {
-        "q": "What economic benefit is mentioned about green spaces?",
+        "q": "What is the overall tone of the passage?",
         "options": [
-          "They reduce government spending",
-          "They increase property values",
-          "They eliminate housing costs",
-          "They decrease commercial activities"
+          "Completely negative",
+          "Cautiously optimistic",
+          "Neutral and detached",
+          "Highly critical"
         ],
         "answer": 1,
-        "explanation": "본문의 마지막 부분에서 '녹지는 주변 지역의 부동산 가치를 증가시킨다'고 명확히 기술되어 있습니다."
+        "explanation": "지문은 AI의 이점을 언급하면서도 우려사항을 인정하고, 마지막에 AI가 중요한 기회를 나타낸다고 결론지어 신중한 낙관주의를 보여줍니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Remote work has had a positive impact on employee productivity and work-life balance'?",
+    "prompt": "Do you agree or disagree with the statement: Technology should play a major role in modern education?",
     "structure": {
-      "intro": "명확한 입장 표현 (동의 또는 반대)과 2-3개의 주요 이유를 미리 언급하기",
-      "body1": "첫 번째 이유: 재택근무가 통근 시간 절감으로 생산성 증대 또는 가족 시간 증가",
-      "body2": "두 번째 이유: 자유로운 업무 환경 조성으로 집중력 향상 또는 스트레스 감소",
-      "conclusion": "주요 입장을 다시 한 번 명확히 하고, 전체 주장을 요약하기"
+      "intro": "명확한 입장 제시 (동의/반대) 및 주요 이유 2-3가지를 간단히 소개합니다. 예: 'I strongly agree that technology should play a major role in modern education because it enhances accessibility, personalizes learning, and prepares students for the digital world.'",
+      "body1": "첫 번째 주요 논거를 구체적인 예시와 함께 설명합니다. 예: 기술이 장애를 가진 학생들에게 교육 접근성을 높여주는 방식",
+      "body2": "두 번째 주요 논거를 다양한 관점에서 제시합니다. 예: 기술이 학생들의 비판적 사고력과 디지털 리터러시를 발달시키는 방식",
+      "conclusion": "입장을 재확인하고 전체 논거를 요약하며, 미래에 대한 시사점으로 마무리합니다."
     },
     "useful_phrases": [
       "In my opinion,",
       "I strongly agree/disagree that",
-      "One significant reason is that",
       "Furthermore,",
-      "Additionally,",
+      "Moreover,",
+      "On the other hand,",
       "For example,",
+      "This demonstrates that",
       "In conclusion,",
-      "This demonstrates that"
+      "To sum up,",
+      "As a result,"
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to work in a traditional office environment. Others prefer to work remotely from home. Which do you prefer and why?",
+    "prompt": "Some people prefer to study in a quiet library environment. Others prefer to study in busy public spaces like cafes. Which environment do you prefer for studying, and why?",
     "useful_expressions": [
-      "In my opinion, I prefer... because",
+      "In my opinion, I prefer studying in a quiet library because...",
       "One reason is that...",
-      "Another advantage/disadvantage is...",
-      "For instance,",
-      "This is important because",
-      "To summarize,"
+      "Another advantage of this approach is...",
+      "This is important because...",
+      "For example,",
+      "Therefore,",
+      "In contrast,",
+      "As a result,"
     ],
     "sample_points": [
-      "원격근무: 통근 시간 절약으로 더 많은 휴식 시간 확보 가능, 가족과의 시간 증가",
-      "원격근무: 자신의 페이스대로 집중할 수 있는 조용한 환경 제공, 스트레스 감소"
+      "조용한 환경은 집중력을 높여주고 방해 요소가 적어서 학습 효율성이 증대됩니다. 복잡한 개념이나 어려운 문제에 더 잘 집중할 수 있습니다.",
+      "그러나 카페와 같은 공개 공간에서는 주변 소음이 실제로 생산성을 높일 수 있다는 연구 결과가 있으며, 또한 사람들 주변에 있으면 동기부여가 되고 사회적 상호작용을 통해 다양한 관점을 얻을 수 있습니다."
     ]
   },
   "listening": {
-    "title": "Campus Library Technology Update",
-    "type": "conversation",
-    "script": "Librarian: Good morning! I'm excited to tell you about our new digital library system that launched yesterday. Student: Oh, what kind of features does it have? Librarian: Well, you can now access thousands of journals and databases from anywhere, anytime. You'll also be able to reserve books online and pick them up at your convenience. The system uses AI to recommend resources based on your research interests. Student: That sounds amazing! Will it help me find scholarly sources more easily? Librarian: Absolutely. The new search function is much more sophisticated. You can filter by publication date, author, subject, and even relevance to your topic. We've also added a virtual reference service where you can chat with a librarian in real-time. Student: This is fantastic. When will all students have access? Librarian: Starting next week, all registered students can create an account and start using it. We're also holding free training sessions every day at 2 PM for anyone who needs help getting started.",
+    "title": "Professor's Lecture on Climate Change",
+    "type": "lecture",
+    "script": "Good morning everyone. Today I want to discuss the relationship between deforestation and climate change. Over the past few decades, we've lost approximately fifteen percent of the world's forests. This is concerning because trees play a crucial role in absorbing carbon dioxide from the atmosphere. When we cut down forests, we not only eliminate this natural carbon sink, but we also release the carbon stored in the trees into the atmosphere. Additionally, deforestation leads to soil erosion and reduces biodiversity. The consequences extend beyond environmental damage. Communities that depend on forests for their livelihoods face economic hardship. Furthermore, the loss of forests affects weather patterns and water cycles globally. Several solutions exist, including reforestation programs and sustainable logging practices. Many countries are now implementing policies to protect remaining forests and restore degraded areas. However, these efforts require international cooperation and significant financial investment.",
     "questions": [
       {
-        "q": "What is the main purpose of this conversation?",
+        "q": "What is the main topic of the lecture?",
         "options": [
-          "To discuss the cost of library membership",
-          "To introduce new features of the library's digital system",
-          "To complain about outdated library resources",
-          "To schedule a library meeting"
+          "The economic benefits of logging",
+          "The relationship between deforestation and climate change",
+          "How to plant trees efficiently",
+          "The history of global environmental policies"
         ],
         "answer": 1,
-        "explanation": "대화의 주요 목적은 새로운 도서관 디지털 시스템의 기능을 소개하는 것입니다. 사서가 처음부터 'excited to tell you about our new digital library system'이라고 언급하고 있습니다."
+        "explanation": "강의는 삼림 벌채와 기후 변화 간의 관계에 초점을 맞추고 있습니다. 교수는 나무가 탄소를 흡수하는 역할을 하며, 삼림 벌채로 인해 탄소가 대기로 방출된다고 설명합니다."
       },
       {
-        "q": "According to the librarian, which of the following is NOT mentioned as a feature of the new system?",
+        "q": "According to the professor, what percentage of the world's forests have been lost?",
         "options": [
-          "Online book reservations",
-          "AI-powered resource recommendations",
-          "Free printing services",
-          "Virtual reference chat service"
+          "Five percent",
+          "Ten percent",
+          "Fifteen percent",
+          "Twenty percent"
         ],
         "answer": 2,
-        "explanation": "대화 내용을 검토하면, 온라인 예약, AI 추천, 가상 참고 서비스는 언급되었지만, 무료 인쇄 서비스는 전혀 언급되지 않았습니다."
+        "explanation": "강의 초반부에서 교수가 지난 수십 년 동안 세계 산림의 약 15%가 손실되었다고 명시적으로 언급합니다."
       },
       {
-        "q": "When will the training sessions be available?",
+        "q": "What solutions does the professor mention for addressing deforestation?",
         "options": [
-          "Every day at 1 PM",
-          "Every day at 2 PM starting next week",
-          "Only on weekends",
-          "By appointment only"
+          "Only restricting all human activity in forests",
+          "Reforestation programs and sustainable logging practices",
+          "Replacing forests with agricultural land",
+          "Waiting for natural forest regeneration"
         ],
         "answer": 1,
-        "explanation": "사서는 'We're also holding free training sessions every day at 2 PM'이라고 명시했습니다. 이는 다음 주부터 시작되는 시스템 시작과 함께 제공됩니다."
+        "explanation": "강의에서 교수는 재조림 프로그램과 지속 가능한 벌목 관행이 삼림 벌채를 해결하기 위한 솔루션이라고 제시합니다."
       }
     ]
   }
