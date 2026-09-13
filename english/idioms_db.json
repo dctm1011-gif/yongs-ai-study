@@ -317,5 +317,38 @@
     "tip": "유사 표현: take charge of, assume control. 'take over from(∼을 대신하다)'는 형태도 있어요!",
     "emoji": "🤝",
     "date": "2026-09-13"
+  },
+  {
+    "id": "account-for",
+    "phrase": "account for",
+    "meaning_ko": "설명하다, 차지하다",
+    "explanation": "어떤 일이 왜 일어났는지 설명하거나, 전체의 몇 %를 차지하는지 나타낼 때 써요! 학술 글쓰기와 비즈니스 보고서에서 정말 자주 나온답니다 📊",
+    "example_en": "Social media accounts for 60% of their marketing budget.",
+    "example_ko": "SNS가 그들의 마케팅 예산의 60%를 차지해요.",
+    "tip": "be responsible for(책임지다)와 비슷하지만, account for는 '설명' 또는 '구성 비율'에 더 가까워요!",
+    "emoji": "📈",
+    "date": "2026-09-13"
+  },
+  {
+    "id": "come-across",
+    "phrase": "come across",
+    "meaning_ko": "우연히 만나다, ~인 인상을 주다",
+    "explanation": "길을 가다가 친구를 우연히 만나거나, 누군가가 어떤 인상(착한, 이상한 등)을 줄 때 쓰는 표현이에요! 일상 대화에서 정~말 많이 써요 😊",
+    "example_en": "I came across an old friend at the coffee shop yesterday.",
+    "example_ko": "어제 카페에서 옛날 친구를 우연히 만났어요.",
+    "tip": "come across + 형용사면 '인상을 주다'라는 뜻이 돼요! (He comes across as friendly = 그는 친절한 인상을 줘요)",
+    "emoji": "🤝",
+    "date": "2026-09-13"
+  },
+  {
+    "id": "fall-through",
+    "phrase": "fall through",
+    "meaning_ko": "무산되다, 실패하다",
+    "explanation": "계획하던 거나 거래가 끝내 안 되고 무산될 때 쓰는 표현이에요! 비즈니스 상황에서 특히 유용하답니다 💔",
+    "example_en": "The deal fell through because both sides couldn't agree on the price.",
+    "example_ko": "양쪽이 가격에 동의하지 못해서 거래가 무산됐어요.",
+    "tip": "fall apart(깨지다, 무너지다)와 비슷하지만, fall through는 '계획이나 거래'가 안 될 때만 써요!",
+    "emoji": "❌",
+    "date": "2026-09-13"
   }
 ]
