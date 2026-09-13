@@ -177,18 +177,56 @@ function mapFirebaseQuizzes(data: any): Quiz[] {
 
 function idiomsToPhrasalQuizzes(idioms: Idiom[]): Quiz[] {
   if (idioms.length < 2) return [];
-  return idioms.map((idiom, idx) => {
-    const others = idioms.filter((_, i) => i !== idx).map(i => i.meaning_ko);
-    return {
-      id: `pq_${idiom.id}`,
+  const quizzes: Quiz[] = [];
+
+  idioms.forEach((idiom, idx) => {
+    const otherMeanings = idioms.filter((_, i) => i !== idx).map(i => i.meaning_ko);
+    const otherPhrases  = idioms.filter((_, i) => i !== idx).map(i => i.phrase);
+
+    // 1. 뜻 맞추기: "What does 'X' mean?" → 한국어 뜻 선택
+    quizzes.push({
+      id: `pq_meaning_${idiom.id}`,
       wordId: idiom.id,
       type: 'phrasal' as const,
       question: `What does "${idiom.phrase}" mean?`,
-      options: shuffleArrayStatic([idiom.meaning_ko, ...others]),
+      options: shuffleArrayStatic([idiom.meaning_ko, ...otherMeanings]),
       correct: idiom.meaning_ko,
       explanation: idiom.explanation,
-    };
+    });
+
+    // 2. 빈칸 채우기: 예문에서 구동사를 ___ 로 교체 → 구동사 선택
+    if (idiom.example_en && idiom.phrase) {
+      const regex = new RegExp(idiom.phrase.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&'), 'i');
+      const blanked = idiom.example_en.replace(regex, '___');
+      if (blanked !== idiom.example_en) {
+        quizzes.push({
+          id: `pq_blank_${idiom.id}`,
+          wordId: idiom.id,
+          type: 'blanks' as const,
+          question: blanked,
+          options: shuffleArrayStatic([idiom.phrase, ...otherPhrases]),
+          correct: idiom.phrase,
+          correctMeaning: idiom.meaning_ko,
+          explanation: idiom.explanation,
+        });
+      }
+    }
+
+    // 3. 상황 문제: 한국어 예문 상황 → 어떤 구동사?
+    if (idiom.example_ko && idiom.phrase) {
+      quizzes.push({
+        id: `pq_situation_${idiom.id}`,
+        wordId: idiom.id,
+        type: 'situation' as const,
+        question: `"${idiom.example_ko}" — 이 상황에 쓸 수 있는 표현은?`,
+        options: shuffleArrayStatic([idiom.phrase, ...otherPhrases]),
+        correct: idiom.phrase,
+        explanation: `"${idiom.phrase}" = ${idiom.meaning_ko}. 예) ${idiom.example_en}`,
+      });
+    }
   });
+
+  return quizzes;
 }
 
 // 읽음 처리된 단어를 reviewPool에 동기화. toggleWordRead를 거치지 않고
