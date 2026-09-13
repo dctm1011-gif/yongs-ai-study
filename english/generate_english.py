@@ -139,10 +139,9 @@ def fetch_user_ratings() -> dict:
 
 
 def get_default_words(target_date: date) -> dict:
-    """API 최대 실패 시 비상 fallback — words_db에 없는 단어를 동적으로 선택"""
+    """generate_default_words 실패 시 비상 fallback — 하드코딩 TOEFL 풀에서 미사용 단어 선택."""
+    import random as _random
     used_lower = {w.lower() for w in load_used_words()}
-
-    # 충분히 큰 후보 풀에서 미사용 단어를 골라 fallback 구성
     candidate_pool = [
         {
             "word": "mitigate", "part_of_speech": "동사",
@@ -352,16 +351,8 @@ def generate_default_words(client: anthropic.Anthropic, target_date: date, toefl
     used_lower = {w.lower() for w in all_used_words}
     recent_50 = ", ".join(all_used_words[-50:])
 
-    # 어근 집합: 6자 접두어 기반 파생어 중복 방지
-    def _stem(w):
-        return w.lower().replace(" ", "").replace("-", "")[:6]
-    used_stems = {_stem(w) for w in all_used_words if len(w.replace(" ","")) >= 6}
-
     def _is_stem_dup(word):
-        for token in word.lower().split():
-            if len(token) >= 6 and token[:6] in used_stems:
-                return True
-        return False
+        return False  # stem 차단 제거 — 정확히 같은 단어만 used_lower로 걸러냄
 
     # 사용자 난이도 평가 기반 CEFR 조정
     ratings = fetch_user_ratings()
@@ -384,7 +375,7 @@ def generate_default_words(client: anthropic.Anthropic, target_date: date, toefl
 
     # 1단계: 범학문 AWL 후보 단어 선정 (최근 50개만 금지 — 짧아야 Haiku가 지킴)
     step1_prompt = (
-        f"10개의 영어 학술 단어를 선정하세요. 5개 영역에서 각 2개씩:\n"
+        f"15개의 영어 학술 단어를 선정하세요. 5개 영역에서 각 3개씩:\n"
         "1. 자연과학/환경  2. 사회/정치  3. 경제/경영  4. 심리/교육  5. 문화/예술\n\n"
         f"절대 금지: {recent_50}\n"
         "조건 (반드시 지킬 것):\n"

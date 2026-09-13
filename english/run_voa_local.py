@@ -188,14 +188,17 @@ def split_sentences(paragraphs):
 
 def translate_and_analyze(client, sentences):
     BATCH = 8
-    results = []
+    results = [{"ko": "", "analysis": ""} for _ in sentences]
     for i in range(0, len(sentences), BATCH):
         batch = sentences[i:i + BATCH]
+        # 각 문장에 전역 인덱스를 붙여서 Claude가 돌려줄 때 매칭에 사용
+        indexed_batch = [{"i": i + j, "text": s} for j, s in enumerate(batch)]
         prompt = (
             "You are a cheerful 20-year-old Korean woman explaining English sentences to your boyfriend in Korean. "
             "Use emojis naturally, be warm and casual (친구한테 말하듯이), and make it fun to read. "
             "Write the analysis as one flowing paragraph — no rigid bullet points, just talk naturally.\n\n"
             "For each English sentence below, return a JSON array where each element has:\n"
+            '- "i": the same integer index as the input\n'
             '- "ko": natural Korean translation\n'
             '- "analysis": a friendly Korean explanation that naturally covers:\n'
             "  · 문장 구조나 핵심 표현을 쉽게 설명\n"
@@ -203,8 +206,9 @@ def translate_and_analyze(client, sentences):
             "  · 동사+전치사 조합이나 숙어가 있으면 용법 설명\n"
             "  · 일상 영어에서 어떻게 더 캐주얼하게 말하는지 — 실제 영어 표현을 직접 보여줄 것\n"
             "  · 기억에 남을 팁이나 재미있는 비유\n\n"
-            "Return ONLY valid JSON array, no other text.\n\n"
-            f"{json.dumps(batch, ensure_ascii=False)}"
+            "IMPORTANT: Return ONLY a valid JSON array. Include exactly one object per input sentence. "
+            "Each object MUST have the same 'i' value as the corresponding input.\n\n"
+            f"{json.dumps(indexed_batch, ensure_ascii=False)}"
         )
         resp = client.messages.create(
             model="claude-haiku-4-5-20251001",
@@ -216,33 +220,37 @@ def translate_and_analyze(client, sentences):
         if m:
             try:
                 parsed = json.loads(m.group(0))
-                results.extend(
-                    {"ko": str(r.get("ko", "")), "analysis": str(r.get("analysis", ""))}
-                    for r in parsed
-                )
+                # 인덱스로 매칭 — 순서나 개수가 틀려도 안전
+                for r in parsed:
+                    idx = r.get("i")
+                    if isinstance(idx, int) and 0 <= idx < len(sentences):
+                        results[idx] = {
+                            "ko": str(r.get("ko", "")),
+                            "analysis": str(r.get("analysis", "")),
+                        }
             except (json.JSONDecodeError, TypeError) as e:
-                print(f"  [!] JSON 파싱 실패 (배치 {i//BATCH+1}): {e} — 빈값으로 대체")
-                results.extend({"ko": "", "analysis": ""} for _ in batch)
+                print(f"  [!] JSON 파싱 실패 (배치 {i//BATCH+1}): {e} — 빈값 유지")
         else:
-            results.extend({"ko": "", "analysis": ""} for _ in batch)
+            print(f"  [!] JSON 없음 (배치 {i//BATCH+1}) — 빈값 유지")
     return results
 
 
 def main():
     load_env()
+    force = "--force" in sys.argv
     api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
         print("[!] ANTHROPIC_API_KEY 없음"); sys.exit(1)
 
     # 어제 리스닝 미완료 시 오늘 업데이트 스킵
-    if not check_yesterday_listening_done():
+    if not force and not check_yesterday_listening_done():
         yesterday = str(date.today() - timedelta(days=1))
         print(f"[VOA] 어제({yesterday}) 리스닝 미완료 → 오늘 업데이트 스킵")
         return
 
     # 이미 오늘 데이터 있으면 스킵
     existing = firebase_get(f"english/podcasts/voa/{TODAY}")
-    if existing and existing.get("sentences"):
+    if not force and existing and existing.get("sentences"):
         print(f"[VOA] 이미 완료됨: {existing.get('title', '')[:50]}")
         return
 
