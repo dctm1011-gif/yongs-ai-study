@@ -1,119 +1,114 @@
 {
-  "date": "2026-09-14",
+  "date": "2026-09-15",
   "reading": {
-    "title": "The Impact of Artificial Intelligence on Education",
-    "passage": "Artificial intelligence is transforming education by personalizing learning experiences for students. AI-powered systems can analyze individual learning patterns and adapt content to match each student's pace and style. Teachers use AI tools to automate grading and identify students who need additional support. However, concerns exist about over-reliance on technology and the potential loss of human interaction in classrooms. Despite these challenges, AI represents a significant opportunity to make quality education more accessible to students worldwide.",
+    "title": "The Impact of Remote Work on Urban Development",
+    "passage": "The rise of remote work has fundamentally transformed urban development patterns. As companies embrace flexible work arrangements, fewer employees commute to downtown offices, reducing demand for commercial real estate in city centers. Consequently, some urban areas have experienced economic challenges, while others have adapted by converting office spaces into residential apartments and entertainment venues. This shift prompts cities to reconsider their infrastructure investments and urban planning strategies to remain competitive in an increasingly distributed workforce economy.",
     "questions": [
       {
-        "q": "According to the passage, how does AI personalize learning experiences?",
+        "q": "According to the passage, what is one consequence of increased remote work?",
         "options": [
-          "By replacing teachers with robots",
-          "By analyzing individual learning patterns and adapting content",
-          "By reducing the number of students in classrooms",
-          "By providing only online education"
+          "Increased demand for downtown offices",
+          "Reduced commercial real estate demand in city centers",
+          "Higher employee commute times",
+          "Expansion of traditional office spaces"
         ],
         "answer": 1,
-        "explanation": "지문에서 AI 시스템이 개별 학습 패턴을 분석하고 각 학생의 속도와 스타일에 맞게 콘텐츠를 조정한다고 명시되어 있습니다."
+        "explanation": "본문에서 'fewer employees commute to downtown offices, reducing demand for commercial real estate in city centers'라고 명시되어 있습니다. 따라서 도시 중심부의 상업용 부동산 수요 감소가 정답입니다."
       },
       {
-        "q": "What is a concern mentioned about AI in education?",
+        "q": "How have some cities adapted to these changes?",
         "options": [
-          "It is too expensive",
-          "Over-reliance on technology and loss of human interaction",
-          "Students learn too quickly",
-          "Teachers earn more money"
+          "Building more office buildings",
+          "Converting office spaces into residential apartments and entertainment venues",
+          "Increasing downtown parking",
+          "Reducing public transportation"
         ],
         "answer": 1,
-        "explanation": "지문의 마지막 문장 앞부분에서 기술에 대한 과도한 의존과 교실에서의 인간적 상호작용 상실에 대한 우려가 언급되어 있습니다."
+        "explanation": "지문의 'converting office spaces into residential apartments and entertainment venues'에서 도시들이 사무실 공간을 주거 및 엔터테인먼트 시설로 전환했다고 설명하고 있습니다."
       },
       {
-        "q": "What is the overall tone of the passage?",
+        "q": "What does the passage suggest cities must do?",
         "options": [
-          "Completely negative",
-          "Cautiously optimistic",
-          "Neutral and detached",
-          "Highly critical"
+          "Eliminate all remote work policies",
+          "Maintain only traditional office buildings",
+          "Reconsider infrastructure investments and urban planning strategies",
+          "Encourage more commuting"
         ],
-        "answer": 1,
-        "explanation": "지문은 AI의 이점을 언급하면서도 우려사항을 인정하고, 마지막에 AI가 중요한 기회를 나타낸다고 결론지어 신중한 낙관주의를 보여줍니다."
+        "answer": 2,
+        "explanation": "'cities to reconsider their infrastructure investments and urban planning strategies'라는 표현에서 도시들이 인프라 투자와 도시 계획 전략을 재검토해야 한다고 제시하고 있습니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: Technology should play a major role in modern education?",
+    "prompt": "Do you agree or disagree with the statement: Remote work has more advantages than disadvantages for employees and employers?",
     "structure": {
-      "intro": "명확한 입장 제시 (동의/반대) 및 주요 이유 2-3가지를 간단히 소개합니다. 예: 'I strongly agree that technology should play a major role in modern education because it enhances accessibility, personalizes learning, and prepares students for the digital world.'",
-      "body1": "첫 번째 주요 논거를 구체적인 예시와 함께 설명합니다. 예: 기술이 장애를 가진 학생들에게 교육 접근성을 높여주는 방식",
-      "body2": "두 번째 주요 논거를 다양한 관점에서 제시합니다. 예: 기술이 학생들의 비판적 사고력과 디지털 리터러시를 발달시키는 방식",
-      "conclusion": "입장을 재확인하고 전체 논거를 요약하며, 미래에 대한 시사점으로 마무리합니다."
+      "intro": "명확한 입장 표현 (동의/불동의)과 주요 이유 2가지를 간단히 소개합니다. 예: 'I strongly agree that remote work offers more benefits than drawbacks for both parties because it increases flexibility and reduces overhead costs.'",
+      "body1": "첫 번째 주요 이점 설명. 예: 직원의 업무-생활 균형 개선, 출퇴근 시간 절감, 생산성 향상 등을 구체적인 예시와 함께 설명합니다.",
+      "body2": "두 번째 주요 이점 설명. 예: 회사의 운영비 절감, 채용 지역 확대, 직원 유지율 증가 등을 논리적으로 전개합니다.",
+      "conclusion": "입장을 재확인하고, 원격 근무가 미래 직업 환경에 미칠 긍정적 영향을 요약하며 마무리합니다."
     },
     "useful_phrases": [
       "In my opinion,",
-      "I strongly agree/disagree that",
+      "I firmly believe that",
       "Furthermore,",
-      "Moreover,",
-      "On the other hand,",
-      "For example,",
+      "In addition to this,",
+      "For instance,",
       "This demonstrates that",
       "In conclusion,",
-      "To sum up,",
       "As a result,"
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to study in a quiet library environment. Others prefer to study in busy public spaces like cafes. Which environment do you prefer for studying, and why?",
+    "prompt": "Some people prefer working in an office environment with colleagues. Others prefer working remotely from home. Which do you prefer and why?",
     "useful_expressions": [
-      "In my opinion, I prefer studying in a quiet library because...",
-      "One reason is that...",
-      "Another advantage of this approach is...",
-      "This is important because...",
-      "For example,",
-      "Therefore,",
-      "In contrast,",
-      "As a result,"
+      "In my opinion, I prefer remote work because...",
+      "One reason is that remote work allows me to...",
+      "Another advantage is that I can...",
+      "However, some people argue that...",
+      "In conclusion, remote work better suits my lifestyle because..."
     ],
     "sample_points": [
-      "조용한 환경은 집중력을 높여주고 방해 요소가 적어서 학습 효율성이 증대됩니다. 복잡한 개념이나 어려운 문제에 더 잘 집중할 수 있습니다.",
-      "그러나 카페와 같은 공개 공간에서는 주변 소음이 실제로 생산성을 높일 수 있다는 연구 결과가 있으며, 또한 사람들 주변에 있으면 동기부여가 되고 사회적 상호작용을 통해 다양한 관점을 얻을 수 있습니다."
+      "원격 근무의 유연성과 개인 시간 활용 가능성: 출퇴근 시간 절감, 점심 시간 자유로움, 업무 일정 자체 조정 가능",
+      "집중력 증진과 방해 요소 감소: 사무실의 소음과 불필요한 회의 줄어들어 실제 업무에 집중할 수 있음"
     ]
   },
   "listening": {
-    "title": "Professor's Lecture on Climate Change",
-    "type": "lecture",
-    "script": "Good morning everyone. Today I want to discuss the relationship between deforestation and climate change. Over the past few decades, we've lost approximately fifteen percent of the world's forests. This is concerning because trees play a crucial role in absorbing carbon dioxide from the atmosphere. When we cut down forests, we not only eliminate this natural carbon sink, but we also release the carbon stored in the trees into the atmosphere. Additionally, deforestation leads to soil erosion and reduces biodiversity. The consequences extend beyond environmental damage. Communities that depend on forests for their livelihoods face economic hardship. Furthermore, the loss of forests affects weather patterns and water cycles globally. Several solutions exist, including reforestation programs and sustainable logging practices. Many countries are now implementing policies to protect remaining forests and restore degraded areas. However, these efforts require international cooperation and significant financial investment.",
+    "title": "Campus Career Services Discussion",
+    "type": "conversation",
+    "script": "Student: Hi, I'm interested in learning about remote internship opportunities. I've been struggling to find positions near campus. Career Advisor: That's a great question! Remote internships have become much more common, especially in tech and marketing fields. Many companies now offer flexible arrangements for students. Student: That sounds promising. What are the main advantages? Career Advisor: Well, you can gain experience without relocating, and you'll often have better work-life balance. Plus, remote positions tend to offer competitive compensation. However, you might miss some face-to-face mentoring. Student: I see. Do employers value remote internships? Career Advisor: Absolutely! Most employers recognize that remote interns develop strong communication and self-management skills. These are highly valued in today's workplace. I'd recommend checking our online database for current listings.",
     "questions": [
       {
-        "q": "What is the main topic of the lecture?",
+        "q": "What is the main purpose of this conversation?",
         "options": [
-          "The economic benefits of logging",
-          "The relationship between deforestation and climate change",
-          "How to plant trees efficiently",
-          "The history of global environmental policies"
+          "To discourage students from pursuing internships",
+          "To discuss the advantages and considerations of remote internships",
+          "To explain why on-campus internships are better",
+          "To recruit the student for a specific company"
         ],
         "answer": 1,
-        "explanation": "강의는 삼림 벌채와 기후 변화 간의 관계에 초점을 맞추고 있습니다. 교수는 나무가 탄소를 흡수하는 역할을 하며, 삼림 벌채로 인해 탄소가 대기로 방출된다고 설명합니다."
+        "explanation": "진학 상담가와 학생이 원격 인턴십의 장점(유연성, 보상, 기술 개발)과 단점(대면 멘토링 부족)에 대해 논의하고 있으므로, 원격 인턴십의 여러 측면을 다루는 것이 대화의 주목적입니다."
       },
       {
-        "q": "According to the professor, what percentage of the world's forests have been lost?",
+        "q": "According to the career advisor, what skills do remote interns develop?",
         "options": [
-          "Five percent",
-          "Ten percent",
-          "Fifteen percent",
-          "Twenty percent"
+          "Only technical programming skills",
+          "Communication and self-management skills",
+          "Leadership and team management skills",
+          "Public speaking and presentation skills"
+        ],
+        "answer": 1,
+        "explanation": "상담가가 'remote interns develop strong communication and self-management skills'라고 명시적으로 설명하고 있습니다."
+      },
+      {
+        "q": "What does the career advisor suggest the student do?",
+        "options": [
+          "Apply immediately to a specific company",
+          "Only pursue on-campus internships",
+          "Check the online database for current remote internship listings",
+          "Relocate to a major city"
         ],
         "answer": 2,
-        "explanation": "강의 초반부에서 교수가 지난 수십 년 동안 세계 산림의 약 15%가 손실되었다고 명시적으로 언급합니다."
-      },
-      {
-        "q": "What solutions does the professor mention for addressing deforestation?",
-        "options": [
-          "Only restricting all human activity in forests",
-          "Reforestation programs and sustainable logging practices",
-          "Replacing forests with agricultural land",
-          "Waiting for natural forest regeneration"
-        ],
-        "answer": 1,
-        "explanation": "강의에서 교수는 재조림 프로그램과 지속 가능한 벌목 관행이 삼림 벌채를 해결하기 위한 솔루션이라고 제시합니다."
+        "explanation": "대화의 마지막 부분에서 상담가가 'I'd recommend checking our online database for current listings'라고 학생에게 온라인 데이터베이스를 확인하도록 권장하고 있습니다."
       }
     ]
   }
