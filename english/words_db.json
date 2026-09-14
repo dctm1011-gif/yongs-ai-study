@@ -3920,5 +3920,65 @@
     "explanation": "To travel regularly between one's place of residence and place of work; the journey itself.",
     "tip": "동의어: travel, journey | 출제영역: 일상/직장",
     "emoji": "🚇"
+  },
+  {
+    "id": "editorial",
+    "word": "editorial",
+    "pos": "noun, adjective",
+    "date": "2026-09-15",
+    "meaning": "사설, 논설; 편집의, 편집상의",
+    "example_ko": "그 신문의 사설은 정부 정책을 비판했다.",
+    "example_en": "The newspaper's editorial criticized the government's policy.",
+    "explanation": "신문이나 잡지에서 편집자의 의견을 담은 글. 또는 출판물의 편집과 관련된 것을 나타냄.",
+    "tip": "동의어: opinion piece, column / TOEIC/신문 어휘",
+    "emoji": ""
+  },
+  {
+    "id": "feasibility",
+    "word": "feasibility",
+    "pos": "noun",
+    "date": "2026-09-15",
+    "meaning": "타당성, 실현 가능성",
+    "example_ko": "새로운 제품 출시의 타당성을 검토해야 한다.",
+    "example_en": "We need to study the feasibility of the new product launch.",
+    "explanation": "어떤 계획이나 프로젝트가 실제로 실행할 수 있는 정도를 나타냄. 가능성과 현실성을 평가하는 개념.",
+    "tip": "동의어: viability, practicability / TOEIC/비즈니스 어휘",
+    "emoji": ""
+  },
+  {
+    "id": "liaison",
+    "word": "liaison",
+    "pos": "noun",
+    "date": "2026-09-15",
+    "meaning": "연락, 협력, 중개; 연락담당자",
+    "example_ko": "그녀는 마케팅과 영업 부서 사이의 연락담당자로 역할한다.",
+    "example_en": "She serves as a liaison between the marketing and sales departments.",
+    "explanation": "두 개 이상의 조직이나 사람 사이의 의사소통과 협력을 위한 연결 역할. 또는 그 역할을 하는 사람.",
+    "tip": "동의어: connection, intermediary / 발음:[liˈeɪzɑːn] / TOEIC/직장 어휘",
+    "emoji": ""
+  },
+  {
+    "id": "accommodation",
+    "word": "accommodation",
+    "pos": "noun",
+    "date": "2026-09-15",
+    "meaning": "숙박, 숙소; 편의, 배려, 수용",
+    "example_ko": "학회 주최자들은 모든 참석자를 위해 숙박을 제공했다.",
+    "example_en": "The conference organizers provided accommodation for all attendees.",
+    "explanation": "여행 시 머물 수 있는 장소(호텔, 숙박시설), 또는 다른 사람의 요구나 필요를 받아들이고 맞춰주는 행위.",
+    "tip": "동의어: lodging, housing / 반의어: rejection / 영국 영어에서 자주 사용 / TOEIC/여행 어휘",
+    "emoji": ""
+  },
+  {
+    "id": "transit",
+    "word": "transit",
+    "pos": "noun, verb",
+    "date": "2026-09-15",
+    "meaning": "통과, 운송; (대중)교통, 환승",
+    "example_ko": "도시의 대중교통은 효율적이고 저렴하다.",
+    "example_en": "Public transit in the city is efficient and affordable.",
+    "explanation": "한 장소에서 다른 장소로 이동하거나 물품이 운송되는 과정. 또는 대중교통 시스템을 의미함.",
+    "tip": "동의어: transportation, passage / in transit(운송 중) 표현 자주 사용 / TOEIC/일상 어휘",
+    "emoji": ""
   }
 ]
