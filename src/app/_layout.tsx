@@ -225,6 +225,8 @@ function MainTabs() {
       )}
       <NavigationContainer independent={true} ref={navigationRef}>
         <Tab.Navigator
+        // 앱을 열면 오늘 할 일부터 보이도록 Today를 첫 탭이자 시작 탭으로 둔다
+        initialRouteName="Checklist"
         screenOptions={{
           headerShown: false,
           tabBarActiveTintColor: '#262626',
@@ -250,6 +252,16 @@ function MainTabs() {
           },
         }}
       >
+        <Tab.Screen
+          name="Checklist"
+          component={ChecklistScreen}
+          options={{
+            title: 'Today',
+            tabBarIcon: ({ color }) => (
+              <MaterialIcons name="check-circle-outline" size={26} color={color} />
+            ),
+          }}
+        />
         <Tab.Screen
           name="Voca"
           component={VocaScreen}
@@ -299,16 +311,6 @@ function MainTabs() {
             title: 'Korean',
             tabBarIcon: ({ color }) => (
               <MaterialIcons name="menu-book" size={26} color={color} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Checklist"
-          component={ChecklistScreen}
-          options={{
-            title: 'Today',
-            tabBarIcon: ({ color }) => (
-              <MaterialIcons name="check-circle-outline" size={26} color={color} />
             ),
           }}
         />
