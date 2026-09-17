@@ -151,14 +151,20 @@ export default function ChecklistScreen() {
       };
       const weekDates = Array.from({ length: 7 }, (_, i) => daysBack(today, i));
 
+      // 읽는 중인 책 가운데 가장 최근에 기록한 것
       let book: Dashboard['book'] = null;
+      let bookReadAt = '';
       if (books) {
         for (const b of Object.values(books) as any[]) {
           const logs = b?.logs ? Object.entries(b.logs as Record<string, any>).sort((x, y) => x[0].localeCompare(y[0])) : [];
-          const page = logs.length ? (logs[logs.length - 1][1]?.endPage ?? 0) : 0;
+          if (!logs.length) continue;
+          const [lastDate, lastLog] = logs[logs.length - 1];
+          const page = lastLog?.endPage ?? 0;
           const total = b?.info?.totalPages ?? 0;
-          // 시작했지만 아직 다 못 읽은 책 중 가장 최근 것
-          if (page > 0 && total > 0 && page < total) book = { title: b.info?.title ?? '', page, total };
+          if (page > 0 && total > 0 && page < total && lastDate > bookReadAt) {
+            bookReadAt = lastDate;
+            book = { title: b.info?.title ?? '', page, total };
+          }
         }
       }
 
