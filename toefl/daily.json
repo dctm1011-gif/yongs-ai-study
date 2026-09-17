@@ -1,114 +1,113 @@
 {
-  "date": "2026-09-15",
+  "date": "2026-09-18",
   "reading": {
-    "title": "The Impact of Remote Work on Urban Development",
-    "passage": "The rise of remote work has fundamentally transformed urban development patterns. As companies embrace flexible work arrangements, fewer employees commute to downtown offices, reducing demand for commercial real estate in city centers. Consequently, some urban areas have experienced economic challenges, while others have adapted by converting office spaces into residential apartments and entertainment venues. This shift prompts cities to reconsider their infrastructure investments and urban planning strategies to remain competitive in an increasingly distributed workforce economy.",
+    "title": "Urban Green Spaces and Mental Health",
+    "passage": "Recent studies demonstrate that urban green spaces significantly improve mental health and well-being. Parks and gardens provide residents with natural environments that reduce stress and anxiety. Cities investing in green infrastructure report higher levels of citizen satisfaction and lower rates of depression. Research shows that even brief exposure to nature, such as walking through a park for fifteen minutes, can enhance mood and cognitive function. Urban planners increasingly recognize that incorporating trees, gardens, and natural areas into city design is essential for creating healthier, more livable communities.",
     "questions": [
       {
-        "q": "According to the passage, what is one consequence of increased remote work?",
+        "q": "According to the passage, what is one benefit of urban green spaces?",
         "options": [
-          "Increased demand for downtown offices",
-          "Reduced commercial real estate demand in city centers",
-          "Higher employee commute times",
-          "Expansion of traditional office spaces"
+          "A) They increase pollution",
+          "B) They reduce stress and anxiety",
+          "C) They decrease property values",
+          "D) They require minimal maintenance"
         ],
         "answer": 1,
-        "explanation": "본문에서 'fewer employees commute to downtown offices, reducing demand for commercial real estate in city centers'라고 명시되어 있습니다. 따라서 도시 중심부의 상업용 부동산 수요 감소가 정답입니다."
+        "explanation": "패시지에서 'Parks and gardens provide residents with natural environments that reduce stress and anxiety'라고 명시되어 있습니다. 따라서 정답은 B입니다."
       },
       {
-        "q": "How have some cities adapted to these changes?",
+        "q": "How long does the passage suggest is needed to improve mood through nature exposure?",
         "options": [
-          "Building more office buildings",
-          "Converting office spaces into residential apartments and entertainment venues",
-          "Increasing downtown parking",
-          "Reducing public transportation"
-        ],
-        "answer": 1,
-        "explanation": "지문의 'converting office spaces into residential apartments and entertainment venues'에서 도시들이 사무실 공간을 주거 및 엔터테인먼트 시설로 전환했다고 설명하고 있습니다."
-      },
-      {
-        "q": "What does the passage suggest cities must do?",
-        "options": [
-          "Eliminate all remote work policies",
-          "Maintain only traditional office buildings",
-          "Reconsider infrastructure investments and urban planning strategies",
-          "Encourage more commuting"
+          "A) Five minutes",
+          "B) Thirty minutes",
+          "C) Fifteen minutes",
+          "D) One hour"
         ],
         "answer": 2,
-        "explanation": "'cities to reconsider their infrastructure investments and urban planning strategies'라는 표현에서 도시들이 인프라 투자와 도시 계획 전략을 재검토해야 한다고 제시하고 있습니다."
+        "explanation": "'walking through a park for fifteen minutes, can enhance mood and cognitive function'라는 문장에서 15분이 충분하다고 언급되었습니다. 정답은 C입니다."
+      },
+      {
+        "q": "What is the main idea of the passage?",
+        "options": [
+          "A) Parks are too expensive to maintain",
+          "B) Green spaces are important for urban mental health",
+          "C) Cities should eliminate all parks",
+          "D) Nature has no effect on humans"
+        ],
+        "answer": 1,
+        "explanation": "전체 패시지의 중심 주제는 도시 녹지 공간이 정신 건강에 미치는 긍정적인 영향입니다. 정답은 B입니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: Remote work has more advantages than disadvantages for employees and employers?",
+    "prompt": "Do you agree or disagree with the following statement: Technology has improved human relationships more than it has damaged them?",
     "structure": {
-      "intro": "명확한 입장 표현 (동의/불동의)과 주요 이유 2가지를 간단히 소개합니다. 예: 'I strongly agree that remote work offers more benefits than drawbacks for both parties because it increases flexibility and reduces overhead costs.'",
-      "body1": "첫 번째 주요 이점 설명. 예: 직원의 업무-생활 균형 개선, 출퇴근 시간 절감, 생산성 향상 등을 구체적인 예시와 함께 설명합니다.",
-      "body2": "두 번째 주요 이점 설명. 예: 회사의 운영비 절감, 채용 지역 확대, 직원 유지율 증가 등을 논리적으로 전개합니다.",
-      "conclusion": "입장을 재확인하고, 원격 근무가 미래 직업 환경에 미칠 긍정적 영향을 요약하며 마무리합니다."
+      "intro": "명확한 입장 표현 (동의 또는 비동의). 예: 'I strongly agree that technology has positively impacted human relationships because...'",
+      "body1": "첫 번째 주장 - 기술이 장거리 연결을 가능하게 함. 소셜 미디어, 비디오 콜, 메시징 앱 등의 예시 제시",
+      "body2": "두 번째 주장 - 기술이 면대면 상호작용을 감소시킬 수 있음. 스마트폰 과다 사용, 가족 모임 중 개인 기기 사용 등의 반대 관점 고려",
+      "conclusion": "주요 아이디어 재정리 및 입장 재확인. 전체 논리의 일관성 확보"
     },
     "useful_phrases": [
       "In my opinion,",
-      "I firmly believe that",
       "Furthermore,",
-      "In addition to this,",
-      "For instance,",
-      "This demonstrates that",
+      "On the other hand,",
+      "For example,",
+      "Therefore,",
       "In conclusion,",
-      "As a result,"
+      "Although some people argue that..."
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer working in an office environment with colleagues. Others prefer working remotely from home. Which do you prefer and why?",
+    "prompt": "Some people prefer working in a team environment. Others prefer working independently. Which do you prefer and why?",
     "useful_expressions": [
-      "In my opinion, I prefer remote work because...",
-      "One reason is that remote work allows me to...",
-      "Another advantage is that I can...",
-      "However, some people argue that...",
-      "In conclusion, remote work better suits my lifestyle because..."
+      "In my opinion, I prefer...",
+      "One reason is that...",
+      "Another advantage of... is that...",
+      "For example,",
+      "This is because..."
     ],
     "sample_points": [
-      "원격 근무의 유연성과 개인 시간 활용 가능성: 출퇴근 시간 절감, 점심 시간 자유로움, 업무 일정 자체 조정 가능",
-      "집중력 증진과 방해 요소 감소: 사무실의 소음과 불필요한 회의 줄어들어 실제 업무에 집중할 수 있음"
+      "팀 환경에서는 다양한 아이디어와 관점을 얻을 수 있으며, 협력을 통해 더 창의적인 해결책을 도출할 수 있습니다.",
+      "독립적 작업은 집중력이 높고 개인의 페이스대로 진행할 수 있으며, 더 효율적일 수 있습니다."
     ]
   },
   "listening": {
-    "title": "Campus Career Services Discussion",
+    "title": "Studying Abroad Decision",
     "type": "conversation",
-    "script": "Student: Hi, I'm interested in learning about remote internship opportunities. I've been struggling to find positions near campus. Career Advisor: That's a great question! Remote internships have become much more common, especially in tech and marketing fields. Many companies now offer flexible arrangements for students. Student: That sounds promising. What are the main advantages? Career Advisor: Well, you can gain experience without relocating, and you'll often have better work-life balance. Plus, remote positions tend to offer competitive compensation. However, you might miss some face-to-face mentoring. Student: I see. Do employers value remote internships? Career Advisor: Absolutely! Most employers recognize that remote interns develop strong communication and self-management skills. These are highly valued in today's workplace. I'd recommend checking our online database for current listings.",
+    "script": "Student: Hi Professor, I'm considering studying abroad next year, but I'm worried about leaving my family and friends. Do you think it's worth it? Professor: That's a great question. Studying abroad offers incredible opportunities. You'll gain independence, experience new cultures, and build international connections. Many of my former students said it was transformative. Student: But what about the cost? Isn't it very expensive? Professor: Yes, it can be. However, there are many scholarships available. Look into grants, government programs, and university partnerships. Also, many employers value international experience highly, so it might lead to better career prospects. Student: That's helpful. I hadn't considered the career benefits. Professor: One more thing—the homesickness is temporary, but the memories and skills you gain are permanent. I'd encourage you to apply.",
     "questions": [
       {
-        "q": "What is the main purpose of this conversation?",
+        "q": "What is the student's main concern about studying abroad?",
         "options": [
-          "To discourage students from pursuing internships",
-          "To discuss the advantages and considerations of remote internships",
-          "To explain why on-campus internships are better",
-          "To recruit the student for a specific company"
+          "A) The quality of education",
+          "B) Leaving family and friends",
+          "C) The language barrier",
+          "D) The weather conditions"
         ],
         "answer": 1,
-        "explanation": "진학 상담가와 학생이 원격 인턴십의 장점(유연성, 보상, 기술 개발)과 단점(대면 멘토링 부족)에 대해 논의하고 있으므로, 원격 인턴십의 여러 측면을 다루는 것이 대화의 주목적입니다."
+        "explanation": "대화 초반에 학생이 'I'm worried about leaving my family and friends'라고 명시적으로 말했습니다. 정답은 B입니다."
       },
       {
-        "q": "According to the career advisor, what skills do remote interns develop?",
+        "q": "According to the professor, what is one benefit of studying abroad?",
         "options": [
-          "Only technical programming skills",
-          "Communication and self-management skills",
-          "Leadership and team management skills",
-          "Public speaking and presentation skills"
-        ],
-        "answer": 1,
-        "explanation": "상담가가 'remote interns develop strong communication and self-management skills'라고 명시적으로 설명하고 있습니다."
-      },
-      {
-        "q": "What does the career advisor suggest the student do?",
-        "options": [
-          "Apply immediately to a specific company",
-          "Only pursue on-campus internships",
-          "Check the online database for current remote internship listings",
-          "Relocate to a major city"
+          "A) It's the cheapest option",
+          "B) It requires no preparation",
+          "C) It provides better career prospects",
+          "D) It guarantees a job"
         ],
         "answer": 2,
-        "explanation": "대화의 마지막 부분에서 상담가가 'I'd recommend checking our online database for current listings'라고 학생에게 온라인 데이터베이스를 확인하도록 권장하고 있습니다."
+        "explanation": "교수는 'many employers value international experience highly, so it might lead to better career prospects'라고 설명했습니다. 정답은 C입니다."
+      },
+      {
+        "q": "What solutions does the professor suggest for the cost problem?",
+        "options": [
+          "A) Take a loan immediately",
+          "B) Look into scholarships and grants",
+          "C) Work full-time first",
+          "D) Ask parents for money"
+        ],
+        "answer": 1,
+        "explanation": "교수는 'There are many scholarships available. Look into grants, government programs, and university partnerships'라고 조언했습니다. 정답은 B입니다."
       }
     ]
   }
