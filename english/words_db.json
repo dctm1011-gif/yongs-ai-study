@@ -4040,5 +4040,65 @@
     "explanation": "편안함이나 즐거움을 제공하는 시설이나 서비스. 호텔, 아파트, 공항 등에서 제공되는 추가 서비스",
     "tip": "동의어: facilities, conveniences | 반의어: inconveniences | 출제영역: 부동산, 호텔, 일상",
     "emoji": "🏢"
+  },
+  {
+    "id": "bias",
+    "word": "bias",
+    "pos": "noun",
+    "date": "2026-09-18",
+    "meaning": "편견, 치우침",
+    "example_ko": "그 기자는 선거를 보도할 때 자신의 개인적 편견을 인정했다.",
+    "example_en": "The journalist acknowledged her personal bias when covering the election.",
+    "explanation": "A tendency to favor or oppose something in an unfair way; a prejudiced viewpoint that prevents objective judgment",
+    "tip": "동의어: prejudice, discrimination / 반의어: objectivity, fairness / TOEFL, 논술",
+    "emoji": "⚖️"
+  },
+  {
+    "id": "portfolio",
+    "word": "portfolio",
+    "pos": "noun",
+    "date": "2026-09-18",
+    "meaning": "포트폴리오, 자산 보유 현황",
+    "example_ko": "그 디자이너는 잠재 고객에게 자신의 포트폴리오를 보여주었다.",
+    "example_en": "The designer showed her portfolio to the prospective client.",
+    "explanation": "A collection of investments, artworks, or work samples that demonstrates one's capabilities and accomplishments; also refers to a set of financial assets",
+    "tip": "동의어: collection, assets / 출제영역: 금융, 직업, 교육",
+    "emoji": "📂"
+  },
+  {
+    "id": "reconcile",
+    "word": "reconcile",
+    "pos": "verb",
+    "date": "2026-09-18",
+    "meaning": "조화시키다, 해결하다, 화해하다",
+    "example_ko": "그 부부는 치료사와 함께 그들의 차이를 해결하려고 노력했다.",
+    "example_en": "The couple worked with a therapist to reconcile their differences.",
+    "explanation": "To restore friendly relations; to make two conflicting things compatible; to settle or resolve differences",
+    "tip": "동의어: resolve, settle, harmonize / 반의어: conflict, divide / GRE, IELTS",
+    "emoji": "🤝"
+  },
+  {
+    "id": "empathy",
+    "word": "empathy",
+    "pos": "noun",
+    "date": "2026-09-18",
+    "meaning": "공감, 감정이입",
+    "example_ko": "공감 능력이 있는 리더는 팀의 우려를 더 잘 이해할 수 있다.",
+    "example_en": "Leaders with empathy can better understand their team's concerns.",
+    "explanation": "The ability to understand and share the feelings of another person; the capacity to put oneself in someone else's emotional position",
+    "tip": "동의어: compassion, understanding / 반의어: apathy, indifference / 심리학, 경영학",
+    "emoji": "💚"
+  },
+  {
+    "id": "discord",
+    "word": "discord",
+    "pos": "noun",
+    "date": "2026-09-18",
+    "meaning": "불화, 불일치, 갈등",
+    "example_ko": "두 부서 간의 불화는 프로젝트 일정에 영향을 미쳤다.",
+    "example_en": "The discord between the two departments affected the project timeline.",
+    "explanation": "Lack of agreement or harmony; conflict or disagreement between people or ideas; a harsh, inharmonious sound",
+    "tip": "동의어: conflict, disagreement, strife / 반의어: harmony, agreement, accord / 뉴스, 사회학",
+    "emoji": "⚡"
   }
 ]

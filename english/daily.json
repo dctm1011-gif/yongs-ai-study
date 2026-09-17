@@ -1,218 +1,275 @@
 {
-  "date": "2026-09-17",
+  "date": "2026-09-18",
   "words": [
     {
-      "word": "disclosure",
+      "word": "bias",
       "part_of_speech": "noun",
-      "meaning_ko": "공개, 폭로",
-      "explanation": "정보나 사실을 공개적으로 드러내는 행위. 특히 이전에 숨겨진 정보를 밝힐 때 사용",
-      "example_from_convo": "The company made a full disclosure of its financial records.",
-      "example_ko": "그 회사는 재정 기록을 완전히 공개했다.",
-      "tip": "동의어: revelation, exposure | 반의어: concealment | 출제영역: 비즈니스, 뉴스",
-      "emoji": "📋"
+      "meaning_ko": "편견, 치우침",
+      "explanation": "A tendency to favor or oppose something in an unfair way; a prejudiced viewpoint that prevents objective judgment",
+      "example_from_convo": "The journalist acknowledged her personal bias when covering the election.",
+      "example_ko": "그 기자는 선거를 보도할 때 자신의 개인적 편견을 인정했다.",
+      "tip": "동의어: prejudice, discrimination / 반의어: objectivity, fairness / TOEFL, 논술",
+      "emoji": "⚖️"
     },
     {
-      "word": "alleged",
-      "part_of_speech": "adjective",
-      "meaning_ko": "주장된, 의심되는",
-      "explanation": "확실하지 않지만 그렇다고 말해지거나 주장되는. 법적/뉴스 언어에서 증명되지 않은 사실을 설명할 때 사용",
-      "example_from_convo": "The alleged criminal was arrested last week.",
-      "example_ko": "의심되는 범인이 지난주에 체포되었다.",
-      "tip": "동의어: claimed, purported | 반의어: proven, confirmed | 출제영역: 뉴스, 법률",
-      "emoji": "🔍"
+      "word": "portfolio",
+      "part_of_speech": "noun",
+      "meaning_ko": "포트폴리오, 자산 보유 현황",
+      "explanation": "A collection of investments, artworks, or work samples that demonstrates one's capabilities and accomplishments; also refers to a set of financial assets",
+      "example_from_convo": "The designer showed her portfolio to the prospective client.",
+      "example_ko": "그 디자이너는 잠재 고객에게 자신의 포트폴리오를 보여주었다.",
+      "tip": "동의어: collection, assets / 출제영역: 금융, 직업, 교육",
+      "emoji": "📂"
     },
     {
-      "word": "streamline",
+      "word": "reconcile",
       "part_of_speech": "verb",
-      "meaning_ko": "간소화하다, 효율화하다",
-      "explanation": "무언가를 더 간단하고 효율적으로 만들기 위해 불필요한 부분을 제거하는 것. 업무 프로세스나 디자인 최적화 시 사용",
-      "example_from_convo": "We need to streamline our approval process to save time.",
-      "example_ko": "시간을 절약하기 위해 승인 절차를 간소화해야 한다.",
-      "tip": "동의어: simplify, optimize | 반의어: complicate | 출제영역: 비즈니스, 기술",
-      "emoji": "⚙️"
+      "meaning_ko": "조화시키다, 해결하다, 화해하다",
+      "explanation": "To restore friendly relations; to make two conflicting things compatible; to settle or resolve differences",
+      "example_from_convo": "The couple worked with a therapist to reconcile their differences.",
+      "example_ko": "그 부부는 치료사와 함께 그들의 차이를 해결하려고 노력했다.",
+      "tip": "동의어: resolve, settle, harmonize / 반의어: conflict, divide / GRE, IELTS",
+      "emoji": "🤝"
     },
     {
-      "word": "stakeholder",
+      "word": "empathy",
       "part_of_speech": "noun",
-      "meaning_ko": "이해관계자",
-      "explanation": "어떤 일이나 조직에 이해관계가 있는 모든 당사자. 직원, 고객, 투자자, 지역사회 등이 포함될 수 있음",
-      "example_from_convo": "All stakeholders must be consulted before making this decision.",
-      "example_ko": "이 결정을 내리기 전에 모든 이해관계자와 상담해야 한다.",
-      "tip": "동의어: shareholder, party concerned | 반의어: outsider | 출제영역: 비즈니스, 관리",
-      "emoji": "👥"
+      "meaning_ko": "공감, 감정이입",
+      "explanation": "The ability to understand and share the feelings of another person; the capacity to put oneself in someone else's emotional position",
+      "example_from_convo": "Leaders with empathy can better understand their team's concerns.",
+      "example_ko": "공감 능력이 있는 리더는 팀의 우려를 더 잘 이해할 수 있다.",
+      "tip": "동의어: compassion, understanding / 반의어: apathy, indifference / 심리학, 경영학",
+      "emoji": "💚"
     },
     {
-      "word": "amenities",
+      "word": "discord",
       "part_of_speech": "noun",
-      "meaning_ko": "편의시설",
-      "explanation": "편안함이나 즐거움을 제공하는 시설이나 서비스. 호텔, 아파트, 공항 등에서 제공되는 추가 서비스",
-      "example_from_convo": "The new office building includes great amenities like a gym and cafeteria.",
-      "example_ko": "새 사무실 건물은 체육관과 카페테리아 같은 훌륭한 편의시설을 포함한다.",
-      "tip": "동의어: facilities, conveniences | 반의어: inconveniences | 출제영역: 부동산, 호텔, 일상",
-      "emoji": "🏢"
+      "meaning_ko": "불화, 불일치, 갈등",
+      "explanation": "Lack of agreement or harmony; conflict or disagreement between people or ideas; a harsh, inharmonious sound",
+      "example_from_convo": "The discord between the two departments affected the project timeline.",
+      "example_ko": "두 부서 간의 불화는 프로젝트 일정에 영향을 미쳤다.",
+      "tip": "동의어: conflict, disagreement, strife / 반의어: harmony, agreement, accord / 뉴스, 사회학",
+      "emoji": "⚡"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "disclosure",
-      "question": "In a news context, what does 'disclosure' primarily refer to?",
+      "word": "bias",
+      "question": "In a research context, which of the following BEST describes what 'bias' means?",
       "options": [
-        "A legal penalty imposed by courts",
-        "The act of revealing or making information public",
-        "A strategy to hide evidence",
-        "A type of insurance policy"
+        "A fair and objective perspective on a topic",
+        "A tendency to favor one side unfairly, affecting judgment",
+        "A statistical method used in data analysis",
+        "The main theme of a research paper"
       ],
       "answer": 1,
-      "explanation": "Disclosure means the act of revealing information that was previously hidden or unknown, commonly used in news and legal contexts.",
+      "explanation": "Bias refers to an unfair tendency that prevents objective judgment. In research, recognizing bias is critical for validity.",
       "option_explanations": [
-        "Incorrect. Disclosure is not a penalty.",
-        "Correct. Disclosure refers to making information public.",
-        "Incorrect. This is the opposite of disclosure.",
-        "Incorrect. This is not related to disclosure."
+        "This is the opposite of bias—objectivity",
+        "Correct. This is the definition of bias in research.",
+        "This confuses bias with statistical methods",
+        "This describes a thesis or central argument, not bias"
       ]
     },
     {
       "type": "meaning",
-      "word": "alleged",
-      "question": "Which word is MOST similar to 'alleged' in meaning?",
+      "word": "portfolio",
+      "question": "Which statement MOST accurately reflects the use of 'portfolio' in a business context?",
       "options": [
-        "Proven",
-        "Claimed",
-        "Confirmed",
-        "Verified"
+        "A detailed business plan document",
+        "A collection of investments or work samples representing someone's capabilities",
+        "A financial report submitted to the government",
+        "A list of employees in a company"
       ],
       "answer": 1,
-      "explanation": "'Alleged' means claimed or purported without definite proof, so 'claimed' is the most similar alternative.",
+      "explanation": "A portfolio is a curated collection—whether investments, artwork, or work samples—that showcases someone's competence and achievements.",
       "option_explanations": [
-        "Incorrect. This is the opposite of alleged.",
-        "Correct. Both mean stated without proof.",
-        "Incorrect. This contradicts alleged.",
-        "Incorrect. This contradicts alleged."
+        "That's a business plan, not a portfolio",
+        "Correct. Portfolio shows range and quality of work or assets.",
+        "That would be a financial statement or tax return",
+        "That's an employee roster or directory"
       ]
     },
     {
       "type": "meaning",
-      "word": "amenities",
-      "question": "What does 'amenities' typically include in a hotel setting?",
+      "word": "reconcile",
+      "question": "When a manager says 'We need to reconcile these two approaches,' what is she asking the team to do?",
       "options": [
-        "Guest complaints and negative feedback",
-        "Physical or service features that provide comfort or convenience",
-        "The cost of the room",
-        "Historical information about the building"
+        "Choose one approach and abandon the other",
+        "Find a way to make the conflicting approaches compatible or compatible",
+        "Explain why one approach is clearly superior",
+        "Document the differences in writing"
       ],
       "answer": 1,
-      "explanation": "Amenities refer to facilities and services provided for comfort and convenience, such as gyms, pools, restaurants, and room service in hotels.",
+      "explanation": "To reconcile means to resolve conflicts or make incompatible things work together harmoniously. The manager wants the team to find a solution that addresses both approaches.",
       "option_explanations": [
-        "Incorrect. This is the opposite.",
-        "Correct. Amenities are comfort and convenience features.",
-        "Incorrect. Amenities are not pricing.",
-        "Incorrect. This is historical context, not amenities."
+        "That's elimination, not reconciliation",
+        "Correct. Reconciliation seeks compatibility and resolution.",
+        "That's comparison or evaluation, not reconciliation",
+        "That's documentation, not actually solving the problem"
       ]
     },
     {
       "type": "fill_blank",
-      "word": "streamline",
-      "sentence": "The company hired a consultant to ___ their hiring process and reduce the time needed to fill job positions.",
-      "sentence_ko": "그 회사는 채용 절차를 간소화하고 공석을 채우는 데 필요한 시간을 줄이기 위해 컨설턴트를 고용했다.",
-      "answer": "streamline",
-      "hint": "This verb means to simplify and make more efficient."
+      "word": "empathy",
+      "sentence": "A good nurse must show ___ toward patients who are anxious about their upcoming surgery.",
+      "sentence_ko": "좋은 간호사는 수술을 앞두고 불안해하는 환자들에게 ___ 를 보여야 한다.",
+      "answer": "empathy",
+      "hint": "The ability to understand and share someone's feelings; important in healthcare"
     },
     {
       "type": "fill_blank",
-      "word": "stakeholder",
-      "sentence": "Before launching the new product, we must get feedback from all ___ including customers, employees, and investors.",
-      "sentence_ko": "새로운 제품을 출시하기 전에 고객, 직원, 투자자를 포함한 모든 이해관계자로부터 피드백을 받아야 한다.",
-      "answer": "stakeholder",
-      "hint": "This word refers to people who have an interest in the company's decisions."
+      "word": "discord",
+      "sentence": "The ___ between management and staff over salary negotiations delayed the contract signing by three months.",
+      "sentence_ko": "급여 협상을 둘러싼 경영진과 직원 간의 ___ 는 계약 서명을 3개월 연기했다.",
+      "answer": "discord",
+      "hint": "Conflict or disagreement between groups"
     },
     {
       "type": "fill_blank",
-      "word": "alleged",
-      "sentence": "The ___ suspect was released after police found insufficient evidence to charge him with the crime.",
-      "sentence_ko": "경찰이 그를 범죄로 기소할 충분한 증거를 찾지 못한 후 의심되는 용의자가 석방되었다.",
-      "answer": "alleged",
-      "hint": "This adjective describes something that is claimed but not yet proven."
+      "word": "bias",
+      "sentence": "To ensure fair reporting, journalists must be aware of their own ___ and strive for objectivity.",
+      "sentence_ko": "공정한 보도를 보장하기 위해 기자들은 자신의 ___ 을 인식하고 객관성을 위해 노력해야 한다.",
+      "answer": "bias",
+      "hint": "A tendency to favor or oppose something unfairly"
     },
     {
       "type": "situation",
-      "word": "disclosure",
-      "question": "Your company's CEO tells the board: 'We need to make full disclosure about last quarter's financial losses before the annual report is published.' What is the CEO asking for?",
+      "word": "reconcile",
+      "question": "Your company's marketing team wants to focus on social media advertising, but your finance team insists that traditional media is more cost-effective. As a project manager, your boss asks you to 'reconcile these two strategies.' What should you do?",
       "options": [
-        "Hide the losses from public view",
-        "Conceal information from stakeholders",
-        "Reveal the truthful information to the public and investors",
-        "Wait until the losses are recovered before mentioning them"
+        "Tell the finance team they are wrong and go with social media only",
+        "Find a way to integrate both approaches—perhaps allocating budget to both channels based on data and audience overlap",
+        "Create a separate budget for each team so they don't have to work together",
+        "Request that one team be reassigned to a different project"
       ],
-      "answer": 2,
-      "explanation": "The CEO is requesting full disclosure, which means revealing all relevant information publicly and honestly to stakeholders and the public.",
+      "answer": 1,
+      "explanation": "Reconciling strategies means finding a solution that incorporates valid elements from both sides. A balanced budget approach leverages both social media and traditional media strengths.",
       "option_explanations": [
-        "Incorrect. Disclosure means doing the opposite.",
-        "Incorrect. Disclosure requires transparency.",
-        "Correct. Full disclosure means revealing all truthful information.",
-        "Incorrect. Disclosure cannot be delayed."
+        "This ignores one team's concerns; it's not reconciliation",
+        "Correct. This finds compatibility between both strategies.",
+        "This avoids the real problem rather than solving it",
+        "This removes people from the discussion instead of resolving the conflict"
       ]
     },
     {
       "type": "situation",
-      "word": "amenities",
-      "question": "A real estate agent is showing you a new apartment and highlights 'great amenities.' Which of these would typically fall under amenities?",
+      "word": "bias",
+      "question": "Your marketing research shows that your product appeals much more to one age group, but your boss says, 'We can't let that bias influence how we advertise to everyone.' What is your boss warning against?",
       "options": [
-        "The price per square meter",
-        "Access to a gym, swimming pool, and community center",
-        "The age of the building",
-        "The location's historical significance"
+        "Collecting data about different age groups",
+        "Allowing a preference for one group to unfairly limit or exclude other potential customers",
+        "Using customer feedback in advertising decisions",
+        "Focusing marketing efforts where the data shows strong interest"
       ],
       "answer": 1,
-      "explanation": "Amenities refer to facilities and services provided for residents' comfort and convenience, such as gyms, pools, and community centers.",
+      "explanation": "Your boss is warning against letting the observed preference become a prejudiced assumption that limits marketing to only that group. Good marketing acknowledges the data but doesn't exclude other audiences unfairly.",
       "option_explanations": [
-        "Incorrect. Price is not an amenity.",
-        "Correct. These are facilities that provide comfort and convenience.",
-        "Incorrect. Building age is not an amenity.",
-        "Incorrect. Historical significance is not an amenity."
+        "Data collection itself isn't bias",
+        "Correct. This is exactly what bias means—unfair favoritism.",
+        "Feedback is valuable market information, not bias",
+        "This is data-driven strategy, not bias"
+      ]
+    },
+    {
+      "type": "situation",
+      "word": "portfolio",
+      "question": "You're a freelance graphic designer meeting with a potential client. The client says, 'Walk me through your portfolio.' What should you present?",
+      "options": [
+        "Your resume and educational certificates",
+        "A collection of your best design work samples, previous projects, and case studies showing your skills",
+        "Your list of competitors and market rates",
+        "Your personal background and work history timeline"
+      ],
+      "answer": 1,
+      "explanation": "A portfolio is a curated collection of work samples that demonstrates your abilities and experience. This is exactly what a client wants to see to evaluate your capability for their project.",
+      "option_explanations": [
+        "Credentials are important but not the portfolio itself",
+        "Correct. Portfolio showcases your skills through actual work.",
+        "This is irrelevant to evaluating your capabilities",
+        "This is a resume or CV, not a portfolio"
+      ]
+    },
+    {
+      "type": "situation",
+      "word": "empathy",
+      "question": "During a team meeting, an employee shares that they're struggling with childcare arrangements affecting their work performance. If your manager shows 'empathy,' what should they do?",
+      "options": [
+        "Immediately demand improved performance regardless of circumstances",
+        "Acknowledge the employee's feelings, listen actively, and explore flexible solutions that might help",
+        "Tell the employee that personal problems shouldn't affect work",
+        "Suggest the employee find a new job that better fits their situation"
+      ],
+      "answer": 1,
+      "explanation": "Empathy means genuinely understanding and sharing in the employee's feelings—not just sympathizing, but taking action to acknowledge their difficult situation and explore constructive solutions.",
+      "option_explanations": [
+        "This dismisses the employee's struggle; it lacks empathy",
+        "Correct. This demonstrates genuine understanding and helpful action.",
+        "This minimizes the real challenge; it's dismissive",
+        "This abandons the employee rather than supporting them"
+      ]
+    },
+    {
+      "type": "situation",
+      "word": "reconcile",
+      "question": "Your company's accounting department discovers a $5,000 discrepancy between the sales records and the actual deposits. The sales manager says the numbers are correct, but the accountant disagrees. To 'reconcile' these accounts, what must happen?",
+      "options": [
+        "Accept whichever number is larger",
+        "Investigate and resolve the difference until both sets of records match and agree",
+        "Fire one of the employees for making an error",
+        "Use the average of the two numbers"
+      ],
+      "answer": 1,
+      "explanation": "Reconcile means to investigate and resolve discrepancies until records match.",
+      "option_explanations": [
+        "This ignores the actual problem",
+        "Correct. Reconciliation requires identifying and fixing the discrepancy.",
+        "This doesn't solve the underlying problem",
+        "This creates false data rather than true reconciliation"
       ]
     }
   ],
   "sentences": [
     {
-      "word": "disclosure",
-      "sentence": "The Securities and Exchange Commission requires public companies to make timely disclosure of material information that could affect investors' decisions.",
-      "sentence_ko": "증권거래위원회는 상장 기업이 투자자의 결정에 영향을 미칠 수 있는 중요 정보를 적시에 공개하도록 요구한다.",
-      "nuance": "의무적이고 정식적인 공개",
-      "context": "금융/법률",
-      "everyday_usage": "중요한 정보를 숨김없이 공개할 때 사용"
+      "word": "bias",
+      "sentence": "Unconscious bias in hiring practices can prevent companies from finding the most qualified candidates.",
+      "sentence_ko": "채용 관행의 무의식적 편견은 기업이 가장 적합한 후보자를 찾지 못하게 할 수 있다.",
+      "nuance": "Refers to automatic, unintentional prejudice that affects decision-making",
+      "context": "Human Resources, workplace diversity discussions",
+      "everyday_usage": "Common phrase: 'That's a bias I wasn't aware of'"
     },
     {
-      "word": "alleged",
-      "sentence": "The newspaper reported on the alleged misconduct by the company's executives, but made clear that the accusations had not been legally proven.",
-      "sentence_ko": "신문은 회사 경영진의 의심되는 부당행위를 보도했지만, 그 혐의가 법적으로 증명되지 않았음을 명확히 했다.",
-      "nuance": "아직 증명되지 않은 주장",
-      "context": "뉴스/법률",
-      "everyday_usage": "아직 확실하지 않은 정보를 신중하게 표현할 때"
+      "word": "portfolio",
+      "sentence": "After graduating, Maria spent months building a strong portfolio of design work to attract potential employers.",
+      "sentence_ko": "졸업 후 Maria는 잠재 고용주를 유치하기 위해 강력한 디자인 포트폴리오를 구축하는 데 몇 개월을 보냈다.",
+      "nuance": "Shows the cumulative nature of building professional credibility over time",
+      "context": "Job search, career development, creative industries",
+      "everyday_usage": "'Let me add this project to my portfolio' = building credentials"
     },
     {
-      "word": "streamline",
-      "sentence": "After the merger, the new management decided to streamline operations by closing redundant offices and consolidating departments.",
-      "sentence_ko": "합병 후 신경영진은 중복된 사무실을 폐쇄하고 부서를 통합함으로써 운영을 간소화하기로 결정했다.",
-      "nuance": "효율성과 비용 절감을 위한 개선",
-      "context": "비즈니스/조직",
-      "everyday_usage": "복잡한 시스템이나 프로세스를 더 간단하게 만들 때"
+      "word": "reconcile",
+      "sentence": "The couple used marriage counseling to reconcile after years of growing apart.",
+      "sentence_ko": "그 부부는 오랫동안 멀어진 후 결혼 상담을 통해 화해했다.",
+      "nuance": "Emphasizes restoration of harmony after significant conflict",
+      "context": "Personal relationships, conflict resolution",
+      "everyday_usage": "'We finally reconciled' = made peace and restored relationship"
     },
     {
-      "word": "stakeholder",
-      "sentence": "The environmental project manager held meetings with all stakeholders, from government officials to local community members, to ensure everyone's concerns were addressed.",
-      "sentence_ko": "환경 프로젝트 관리자는 정부 관계자부터 지역사회 주민까지 모든 이해관계자와 회의를 열어 모든 관심사가 해결되도록 했다.",
-      "nuance": "다양한 입장과 이익을 가진 당사자들",
-      "context": "프로젝트/정책",
-      "everyday_usage": "의사결정 과정에서 영향을 받을 수 있는 모든 당사자를 고려할 때"
+      "word": "empathy",
+      "sentence": "The social worker's empathy allowed her to connect deeply with clients facing homelessness and poverty.",
+      "sentence_ko": "사회 복지사의 공감은 노숙과 빈곤에 직면한 고객들과 깊은 연결을 만들어냈다.",
+      "nuance": "Emotional intelligence that creates meaningful human connection and trust",
+      "context": "Healthcare, social services, counseling, leadership",
+      "everyday_usage": "'I have empathy for what you're going through' = I understand your feelings"
     },
     {
-      "word": "amenities",
-      "sentence": "The luxury resort advertises its world-class amenities, including a five-star restaurant, spa, and private beach access, to attract high-end clientele.",
-      "sentence_ko": "럭셔리 리조트는 5성급 레스토랑, 스파, 전용 해변 이용 등 세계 수준의 편의시설을 광고하여 고급 고객층을 유치한다.",
-      "nuance": "품질과 편안함을 강조하는 추가 서비스",
-      "context": "호텔/부동산",
-      "everyday_usage": "시설이나 서비스의 질을 강조할 때"
+      "word": "discord",
+      "sentence": "The sharp discord between the violin and the synthesizer made the experimental music difficult to listen to.",
+      "sentence_ko": "바이올린과 신스사이저 사이의 날카로운 불협화음은 그 실험적 음악을 듣기 어렵게 만들었다.",
+      "nuance": "Can literally mean harsh, unpleasant sounds in addition to metaphorical conflict",
+      "context": "Music, art, interpersonal relationships",
+      "everyday_usage": "'There's discord among the board members' = disagreement and tension"
     }
   ]
 }

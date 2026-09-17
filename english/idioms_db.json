@@ -349,5 +349,41 @@
     "tip": "유사 표현: finish, conclude, wind up. 명사로도 쓸 수 있어요: 'wrap-up' (마무리 회의)",
     "emoji": "🎬",
     "date": "2026-09-17"
+  },
+  {
+    "id": "run-into",
+    "phrase": "run into",
+    "meaning_ko": "우연히 만나다, 문제에 봉착하다",
+    "meaning_en": "to meet someone by chance or encounter a problem",
+    "explanation": "길에서 우연히 친구를 만나거나, 예상치 못한 문제가 생길 때 쓰는 표현이에요! 일상 회화에서 정말 많이 써요 😊",
+    "example_en": "I ran into my old classmate at the grocery store yesterday.",
+    "example_ko": "어제 마트에서 옛날 반 친구를 우연히 만났어요.",
+    "tip": "bump into와 거의 같은 의미! 'run into trouble(문제가 생기다)'도 자주 쓰여요.",
+    "emoji": "👋",
+    "date": "2026-09-18"
+  },
+  {
+    "id": "come-down-to",
+    "phrase": "come down to",
+    "meaning_ko": "결국 ~로 귀결되다, 핵심은 ~이다",
+    "meaning_en": "to be essentially or fundamentally about something",
+    "explanation": "복잡한 상황이나 논의가 결국 뭐가 가장 중요한지 정리할 때 쓰는 거예요. 학술 토론이나 분석 글쓰기에 딱이야요! 🎯",
+    "example_en": "It all comes down to whether you're willing to work hard.",
+    "example_ko": "결국 당신이 열심히 일할 의지가 있는지가 핵심이에요.",
+    "tip": "basically, essentially과 비슷한 느낌! 원인이나 핵심을 강조할 때 쓰면 좋아요.",
+    "emoji": "🔑",
+    "date": "2026-09-18"
+  },
+  {
+    "id": "scale-back",
+    "phrase": "scale back",
+    "meaning_ko": "축소하다, 줄이다",
+    "meaning_en": "to reduce the size or amount of something",
+    "explanation": "비즈니스나 프로젝트 규모를 줄일 때 쓰는 표현이에요. 뉴스나 기업 공시에서 정말 자주 볼 수 있어요! 📉",
+    "example_en": "The company decided to scale back its expansion plans due to budget cuts.",
+    "example_ko": "그 회사는 예산 부족으로 인해 확장 계획을 축소하기로 결정했어요.",
+    "tip": "reduce, cut down과 비슷하지만 'scale back'이 더 비즈니스스러워요! scale up(확대)의 반대 개념이에요.",
+    "emoji": "📊",
+    "date": "2026-09-18"
   }
 ]
