@@ -1065,15 +1065,18 @@ export default function VocaScreen() {
     setView(p.view);
   }, [(route.params as any)?.ts]);
 
-  const loadReviewStory = async () => {
+  const loadReviewStory = async (forceNew = false) => {
     if (reviewLoading) return;
     setReviewLoading(true);
     try {
       const today = getKSTDateString();
-      const snap = await get(userRef(uid, `english/reviewStory/${today}`));
-      if (snap.exists()) {
-        setReviewStory(snap.val());
-        return;
+      // forceNew(새 스토리 버튼)이면 저장된 오늘 스토리를 무시하고 새로 생성한다.
+      if (!forceNew) {
+        const snap = await get(userRef(uid, `english/reviewStory/${today}`));
+        if (snap.exists()) {
+          setReviewStory(snap.val());
+          return;
+        }
       }
       // 스토리 없으면 온디맨드 생성 — 오늘 읽은 단어 우선 + reviewPool에서 보충
       const poolSnap = await get(userRef(uid, 'english/reviewPool')).catch(() => null);
@@ -1082,9 +1085,18 @@ export default function VocaScreen() {
       let reviewWords: { word: string; meaning: string }[] = [...todayRead];
       if (poolSnap?.exists()) {
         const pool = poolSnap.val() as Record<string, any>;
-        const poolWords = Object.values(pool)
+        // count 낮은(덜 익힌) 단어 우선하되, 매일 똑같은 15개만 나오지 않도록
+        // 하위 후보군(최대 40개)에서 랜덤으로 15개를 뽑는다.
+        const candidates = Object.values(pool)
           .filter(v => (v.count || 0) < 10 && !todayWordSet.has((v.word || '').toLowerCase()))
           .sort((a, b) => (a.count || 0) - (b.count || 0))
+          .slice(0, 40);
+        // Fisher-Yates 셔플 후 앞 15개 선택
+        for (let i = candidates.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [candidates[i], candidates[j]] = [candidates[j], candidates[i]];
+        }
+        const poolWords = candidates
           .slice(0, 15)
           .map(v => ({ word: v.word, meaning: v.meaning || '' }));
         reviewWords = [...todayRead, ...poolWords];
@@ -1369,7 +1381,7 @@ Return ONLY JSON (no markdown):
           />
         </View>
       )}
-      {view === 'review' && <StoryReviewView story={reviewStory} loading={reviewLoading} uid={uid} onReload={loadReviewStory} onComplete={() => {
+      {view === 'review' && <StoryReviewView story={reviewStory} loading={reviewLoading} uid={uid} onReload={() => loadReviewStory(true)} onComplete={() => {
         if (reviewWordIds.length > 0) {
           const db = getDatabase(getFirebaseApp());
           const today = getKSTDateString();
@@ -2321,7 +2333,7 @@ const ReviewPoolView = React.memo(({ uid }: { uid: string }) => {
   const totalDelta = Object.values(deltas).reduce((a, b) => a + b, 0);
 
   const renderWord = ({ item }: { item: PoolWord }) => {
-    const pct = Math.min(item.count / 10, 1);
+    const pct = Math.min(item.count / GRADUATE_AT, 1);
     const isGraduated = item.count >= GRADUATE_AT;
     const delta = deltas[item.id] ?? 0;
     return (
@@ -2333,7 +2345,7 @@ const ReviewPoolView = React.memo(({ uid }: { uid: string }) => {
         <View style={styles.poolCountCol}>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, justifyContent: 'flex-end' }}>
             <Text style={[styles.poolCount, isGraduated && styles.poolCountGraduated]}>
-              {item.count}/10
+              {item.count}/{GRADUATE_AT}
             </Text>
             {delta > 0 && <Text style={styles.poolDelta}>+{delta}</Text>}
           </View>
