@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import WordMatchGame from './WordMatchGame';
 import CrosswordGame from './CrosswordGame';
 import ScrambleGame from './ScrambleGame';
 import SentenceQuizGame from './SentenceQuizGame';
 
-type Mode = 'select' | 'match' | 'crossword' | 'scramble' | 'sentence';
+export type GameMode = 'match' | 'crossword' | 'scramble' | 'sentence';
+type Mode = 'select' | GameMode;
 
-export default function GameHub() {
-  const [mode, setMode] = useState<Mode>('select');
+/**
+ * Today 탭에서 특정 게임을 눌러 들어온 경우 그 게임을 바로 연다.
+ * seed는 이동할 때마다 바뀌는 값이라, 같은 게임을 다시 선택해도 다시 열린다.
+ */
+export default function GameHub({ initialGame, seed }: { initialGame?: GameMode; seed?: number } = {}) {
+  const [mode, setMode] = useState<Mode>(initialGame ?? 'select');
+
+  useEffect(() => {
+    if (initialGame) setMode(initialGame);
+  }, [seed, initialGame]);
 
   if (mode === 'match') {
     return (

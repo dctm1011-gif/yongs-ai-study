@@ -15,7 +15,8 @@ import { getFirebaseApp } from '../config/firebase';
 import { useAuth } from '../context/AuthContext';
 import { userRef } from '../utils/userDb';
 import { GRADUATE_AT, recordWrongWords, clearWrongWords } from '../utils/reviewPool';
-import GameHub from '../components/GameHub';
+import GameHub, { GameMode } from '../components/GameHub';
+import { useRoute } from '@react-navigation/native';
 
 const NETLIFY_BASE_URL = 'https://illustrious-cuchufli-7c4e58.netlify.app';
 
@@ -284,6 +285,7 @@ async function syncReadWordsToPool(uid: string, readWords: Word[]): Promise<void
 export default function VocaScreen() {
   const { user } = useAuth();
   const uid = user!.uid;
+  const route = useRoute();
   const [view, setView] = useState<ViewType>('game');
   const [todayDate, setTodayDate] = useState(getKSTDateString());
   const [words, setWords] = useState<Word[]>([]);
@@ -298,6 +300,7 @@ export default function VocaScreen() {
   const [idiomRatings, setIdiomRatings] = useState<Record<string, number>>({});
   const [stats, setStats] = useState({ totalWords: 0, readWords: 0, quizzesCorrect: 0, quizzesTotal: 0 });
   const [completionToday, setCompletionToday] = useState<Record<string, boolean>>({});
+  const [gameSeed, setGameSeed] = useState<{ game: GameMode; ts: number } | null>(null);
   const [loading, setLoading] = useState(true);
   const [hideReadWords, setHideReadWords] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -1039,6 +1042,29 @@ export default function VocaScreen() {
     }
   };
 
+  // Today 탭에서 특정 항목을 눌러 들어온 경우 해당 화면/게임으로 바로 이동.
+  // 단, 이 탭은 게임 → 단어장 → 퀴즈 → 문장복습 순으로 잠겨 있으므로 잠긴 화면 요청은 무시한다.
+  useEffect(() => {
+    const p: any = route.params;
+    if (!p?.ts) return;
+    if (p.game) {
+      setView('game');
+      setGameSeed({ game: p.game, ts: p.ts });
+      return;
+    }
+    if (!p.view) return;
+    const gamesAllDone = ['english_word_match', 'english_crossword', 'english_scramble', 'english_sentence']
+      .every(k => completionToday[k]);
+    if (p.view === 'words' && !gamesAllDone) return;
+    if (p.view === 'review') {
+      if (!completionToday['english']) return;
+      setView('review');
+      loadReviewStory();
+      return;
+    }
+    setView(p.view);
+  }, [(route.params as any)?.ts]);
+
   const loadReviewStory = async () => {
     if (reviewLoading) return;
     setReviewLoading(true);
@@ -1362,7 +1388,7 @@ Return ONLY JSON (no markdown):
         const correct = active.filter(q => q.correct_answer).length;
         ToastAndroid.show(`완료! ${correct}/${active.length} 정답 저장됨`, ToastAndroid.SHORT);
       }} />}
-      {view === 'game' && <GameHub />}
+      {view === 'game' && <GameHub initialGame={gameSeed?.game} seed={gameSeed?.ts} />}
 
       {/* 알림 디버그 모달 */}
       <Modal visible={showDebug} transparent animationType="slide" onRequestClose={() => setShowDebug(false)}>

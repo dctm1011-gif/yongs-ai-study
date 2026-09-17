@@ -7,6 +7,7 @@ import { getDatabase, onValue, ref } from 'firebase/database';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../context/AuthContext';
 import { getFirebaseApp } from '../config/firebase';
+import { MaterialIcons } from '@expo/vector-icons';
 import { ProgressCalendar } from '../components/ProgressCalendar';
 import { colors, categoryColors, space, radius, fontSize, duration } from '../theme';
 
@@ -18,21 +19,26 @@ interface CheckItem {
   emoji: string;
   /** 탭하면 이동할 탭 이름 (_layout.tsx의 Tab.Screen name) */
   target: string;
+  /** Voca 탭 안에서 바로 열 게임 / 화면 */
+  game?: 'match' | 'crossword' | 'scramble' | 'sentence';
+  view?: 'words' | 'review';
 }
 
 const STUDY_HUB_URL = 'https://claude.ai/artifact/Cw11iAcshpwDw1PyLq8cdu';
 
 const GROUPS: { title: string; color: string; items: CheckItem[] }[] = [
   {
+    // Voca 탭은 게임 4종 → 단어장 → 퀴즈 → 문장복습 순으로 잠금이 풀리므로
+    // 체크리스트도 그 순서를 따른다. (안 그러면 "다음 학습"이 아직 못 하는 걸 가리킨다)
     title: '영어',
     color: categoryColors.english,
     items: [
-      { key: 'english',                label: '단어장',      emoji: '📖', target: 'Voca' },
-      { key: 'english_word_match',     label: '카드 매칭',   emoji: '🃏', target: 'Voca' },
-      { key: 'english_crossword',      label: '낱말 퍼즐',   emoji: '📝', target: 'Voca' },
-      { key: 'english_scramble',       label: '스크램블',    emoji: '🔀', target: 'Voca' },
-      { key: 'english_sentence',       label: '예문 OX',     emoji: '🔍', target: 'Voca' },
-      { key: 'english_review',         label: '문장복습',    emoji: '📋', target: 'Voca' },
+      { key: 'english_word_match',     label: '카드 매칭',   emoji: '🃏', target: 'Voca', game: 'match' },
+      { key: 'english_crossword',      label: '낱말 퍼즐',   emoji: '📝', target: 'Voca', game: 'crossword' },
+      { key: 'english_scramble',       label: '스크램블',    emoji: '🔀', target: 'Voca', game: 'scramble' },
+      { key: 'english_sentence',       label: '예문 OX',     emoji: '🔍', target: 'Voca', game: 'sentence' },
+      { key: 'english',                label: '단어장·퀴즈', emoji: '📖', target: 'Voca', view: 'words' },
+      { key: 'english_review',         label: '문장복습',    emoji: '📋', target: 'Voca', view: 'review' },
       { key: 'english_news_reading',   label: '영어 리딩',   emoji: '📰', target: 'BBC' },
       { key: 'english_news_listening', label: '영어 리스닝', emoji: '🎙️', target: 'BBC' },
       { key: 'english_speaking',       label: '스피킹',      emoji: '💬', target: 'Speaking' },
@@ -247,9 +253,13 @@ export default function ChecklistScreen() {
     Animated.spring(celebrate, { toValue: 1, friction: 4, tension: 120, useNativeDriver: true }).start();
   }, [allDone]);
 
-  const go = (target: string) => {
+  const go = (item: CheckItem) => {
     try {
-      navigation.navigate(target);
+      // ts를 같이 넘겨야 같은 항목을 다시 눌러도 대상 화면이 반응한다
+      const params = item.game || item.view
+        ? { game: item.game, view: item.view, ts: Date.now() }
+        : undefined;
+      navigation.navigate(item.target, params);
     } catch {
       // 변형 빌드에서 없는 탭(Investment 등)일 수 있음 — 무시
     }
@@ -264,7 +274,7 @@ export default function ChecklistScreen() {
 
       {/* 다음 할 것 바로가기 */}
       {nextItem && (
-        <TouchableOpacity style={s.nextCta} onPress={() => go(nextItem.target)} activeOpacity={0.85}>
+        <TouchableOpacity style={s.nextCta} onPress={() => go(nextItem)} activeOpacity={0.85}>
           <Text style={s.nextCtaEmoji}>{nextItem.emoji}</Text>
           <View style={s.nextCtaBody}>
             <Text style={s.nextCtaLabel}>다음 학습</Text>
@@ -295,7 +305,7 @@ export default function ChecklistScreen() {
               <Text style={[s.groupCount, groupAllDone && { color: colors.success }]}>
                 {groupDone}/{group.items.length}
               </Text>
-              <Text style={[s.groupToggle, collapsed && s.groupToggleCollapsed]}>⌃</Text>
+              <MaterialIcons name={collapsed ? 'expand-more' : 'expand-less'} size={20} color={colors.inkMuted} style={{ marginLeft: space.sm }} />
             </TouchableOpacity>
             {!collapsed && group.items.map((item, i) => (
               <ChecklistRow
@@ -304,7 +314,7 @@ export default function ChecklistScreen() {
                 isDone={!!done[item.key]}
                 isNext={nextItem?.key === item.key}
                 index={i}
-                onPress={() => go(item.target)}
+                onPress={() => go(item)}
               />
             ))}
           </View>
@@ -379,11 +389,6 @@ const s = StyleSheet.create({
     textTransform: 'uppercase', letterSpacing: 0.8,
   },
   groupCount: { fontSize: fontSize.caption, fontWeight: '600', color: colors.inkMuted, marginLeft: 'auto' },
-  groupToggle: {
-    fontSize: fontSize.label, color: colors.inkMuted, marginLeft: space.sm,
-    transform: [{ rotate: '0deg' }],
-  },
-  groupToggleCollapsed: { transform: [{ rotate: '180deg' }] },
 
   row: {
     flexDirection: 'row',
