@@ -213,15 +213,17 @@ function MainTabs() {
     return () => sub.remove();
   }, []);
 
-  // 알림 탭 시 Voca 탭으로 이동 (백그라운드에서 탭한 경우 + 앱 완전 종료 후 탭한 경우)
+  // 알림 탭 시 Today 탭으로 이동 (백그라운드에서 탭한 경우 + 앱 완전 종료 후 탭한 경우).
+  // 알림은 대부분 단어 알림이지만, Today가 관문이 된 뒤로는 여기서 오늘 상태를 보고
+  // 필요한 곳으로 넘어가는 흐름이 자연스럽다. (단어는 Today의 "단어 복습" 타일에서 한 번에 이동)
   useEffect(() => {
     // 앱이 완전히 꺼진 상태에서 알림을 탭해 실행된 경우 처리
     Notifications.getLastNotificationResponseAsync().then(response => {
-      if (response) navigationRef.current?.navigate('Voca');
+      if (response) navigationRef.current?.navigate('Checklist');
     });
     // 앱이 실행 중이거나 백그라운드에 있을 때 알림을 탭한 경우 처리
     const responseSub = Notifications.addNotificationResponseReceivedListener(() => {
-      navigationRef.current?.navigate('Voca');
+      navigationRef.current?.navigate('Checklist');
     });
     return () => responseSub.remove();
   }, []);
