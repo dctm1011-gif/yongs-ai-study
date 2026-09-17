@@ -52,10 +52,7 @@ function ChatImage({ uri, style }: { uri: string; style: any }) {
   return <Image source={{ uri }} style={style} resizeMode="cover" onError={() => setFailed(true)} />;
 }
 
-function getKSTDateString(): string {
-  const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
-  return kst.toISOString().split('T')[0];
-}
+import { getKSTDateString } from '../utils/dateUtils';
 
 interface Message {
   id: string;
@@ -64,7 +61,9 @@ interface Message {
   imageUrl?: string | null;
 }
 
-type ChatResponse = { text: string; imageUrl?: string | null; summary?: string | null };
+interface Correction { wrong: string; correct: string; note: string; }
+
+type ChatResponse = { text: string; imageUrl?: string | null; summary?: string | null; corrections?: Correction[] };
 
 type ViewState = 'idle' | 'loading' | 'chatting' | 'ending' | 'done';
 
@@ -166,7 +165,10 @@ export default function SpeakingScreen() {
     const data = await res.json();
     const raw = (data.reply as string) ?? '';
     const text = isFeedbackRequest ? stripMarkdown(raw) : raw;
-    return { text, imageUrl: data.imageUrl ?? null, summary: data.summary ?? null };
+    return {
+      text, imageUrl: data.imageUrl ?? null, summary: data.summary ?? null,
+      corrections: Array.isArray(data.corrections) ? data.corrections : [],
+    };
   }
 
   async function startConversation() {
@@ -208,6 +210,7 @@ export default function SpeakingScreen() {
     setViewState('ending');
     let feedback = '';
     let summary: string | null = null;
+    let corrections: Correction[] = [];
     try {
       const res = await callChat(
         messages.map(m => ({ role: m.role, content: m.content })),
@@ -215,6 +218,7 @@ export default function SpeakingScreen() {
       );
       feedback = res.text ?? '';
       summary = res.summary ?? null;
+      corrections = res.corrections ?? [];
     } catch {}
 
     setMessages(prev => [...prev, {
@@ -235,6 +239,11 @@ export default function SpeakingScreen() {
       if (summary) {
         tasks.push(dbSet(ref(db, `users/${user.uid}/speaking_history/${today}`), {
           date: today, topic, summary, exchanges: userMsgCount, ts: Date.now(),
+        }));
+      }
+      if (corrections.length > 0) {
+        tasks.push(dbSet(ref(db, `users/${user.uid}/speaking_corrections/${today}`), {
+          date: today, topic, corrections, ts: Date.now(),
         }));
       }
       await Promise.all(tasks).catch(() => {});

@@ -82,17 +82,32 @@ ${history?.length
   // Run feedback + summary generation in parallel when ending conversation
   let reply = '';
   let summary = null;
+  let corrections = [];
 
   if (isFeedbackRequest) {
     const summaryPrompt = `Summarize this English conversation in 1-2 sentences in English. Focus on: what topics the user discussed, their English level, and any notable strengths or patterns. Be specific and concise. Return only the summary text, nothing else.`;
 
-    const [feedbackData, summaryData] = await Promise.all([
+    const correctionsPrompt = `Review this English conversation (student's messages only) and list up to 5 grammar or phrasing corrections.
+Return ONLY valid JSON, no other text: {"corrections": [{"wrong": "the student's incorrect phrase", "correct": "the corrected phrase", "note": "brief reason, in Korean, under 20 words"}]}
+If there are no notable errors, return {"corrections": []}.`;
+
+    const [feedbackData, summaryData, correctionsData] = await Promise.all([
       callHaiku(systemPrompt, messages, 800),
       callHaiku(summaryPrompt, messages, 150),
+      callHaiku(correctionsPrompt, messages, 500),
     ]);
 
     reply = feedbackData.content?.[0]?.text ?? '';
     summary = summaryData.content?.[0]?.text?.trim() ?? null;
+
+    try {
+      const rawCorrections = correctionsData.content?.[0]?.text ?? '{}';
+      const jsonMatch = rawCorrections.match(/\{[\s\S]*\}/);
+      const parsed = JSON.parse(jsonMatch ? jsonMatch[0] : rawCorrections);
+      if (Array.isArray(parsed.corrections)) corrections = parsed.corrections;
+    } catch {
+      corrections = [];
+    }
   } else {
     const data = await callHaiku(systemPrompt, messages, 500);
     reply = data.content?.[0]?.text ?? '';
@@ -107,7 +122,7 @@ ${history?.length
     imageUrl = await resolveImageUrl(query);
   }
 
-  return new Response(JSON.stringify({ reply, imageUrl, summary }), {
+  return new Response(JSON.stringify({ reply, imageUrl, summary, corrections }), {
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
