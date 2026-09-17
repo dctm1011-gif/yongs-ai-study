@@ -2,11 +2,11 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
-import { View, ActivityIndicator, TouchableOpacity, Text, StyleSheet, Platform, Alert, Linking } from 'react-native';
+import { View, ActivityIndicator, TouchableOpacity, Text, StyleSheet, Platform, Alert, Linking, AppState } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Updates from 'expo-updates';
 import { useUpdates } from 'expo-updates';
-import { getDatabase, ref, set } from 'firebase/database';
+import { getDatabase, ref, set, onValue } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
 import VocaScreen from './voca';
 import InvestmentScreen from './investment';
@@ -26,6 +26,7 @@ import { YongStudyWidget } from '../widget/YongStudyWidget';
 import * as Notifications from 'expo-notifications';
 import { AuthProvider, useAuth } from '../context/AuthContext';
 import { getKSTDateString } from '../utils/dateUtils';
+import { CHECKLIST_KEYS, isDone } from '../constants/studyKeys';
 
 export const NOTIF_LOG_KEY = 'debug_notif_received_log';
 
@@ -169,6 +170,35 @@ function MainTabs() {
     return () => sub.remove();
   }, [user?.uid]);
 
+  // 탭바 배지용 — 오늘 남은 학습 개수 (다른 탭에 있어도 보이게)
+  const [remaining, setRemaining] = useState<number | null>(null);
+  useEffect(() => {
+    if (!user?.uid) return;
+    const db = getDatabase(getFirebaseApp());
+    const unsub = onValue(ref(db, `users/${user.uid}/completion`), snap => {
+      const data = snap.val() ?? {};
+      const today = getKSTDateString();
+      setRemaining(CHECKLIST_KEYS.filter(k => !isDone(data[k]?.[today])).length);
+    });
+    return () => unsub();
+  }, [user?.uid]);
+
+  // 한참 떠나 있다 돌아오면 Today부터 다시 보여준다.
+  // (탭을 오가는 짧은 이탈까지 되돌리면 하던 작업을 잃으므로 30분 기준을 둔다)
+  useEffect(() => {
+    const AWAY_MS = 30 * 60 * 1000;
+    let leftAt = 0;
+    const sub = AppState.addEventListener('change', state => {
+      if (state === 'background' || state === 'inactive') {
+        leftAt = Date.now();
+      } else if (state === 'active' && leftAt && Date.now() - leftAt > AWAY_MS) {
+        leftAt = 0;
+        navigationRef.current?.navigate('Checklist');
+      }
+    });
+    return () => sub.remove();
+  }, []);
+
   // 알림 수신 시 로그 기록 (디버그용)
   useEffect(() => {
     const sub = Notifications.addNotificationReceivedListener(async (notification) => {
@@ -257,8 +287,15 @@ function MainTabs() {
           component={ChecklistScreen}
           options={{
             title: 'Today',
+            // 남은 개수를 배지로 — 다른 탭에 있어도 오늘 할 일이 남았다는 게 보인다
+            tabBarBadge: remaining ? remaining : undefined,
+            tabBarBadgeStyle: { backgroundColor: '#ef4444', fontSize: 10, lineHeight: 13, minWidth: 17, height: 17 },
             tabBarIcon: ({ color }) => (
-              <MaterialIcons name="check-circle-outline" size={26} color={color} />
+              <MaterialIcons
+                name={remaining === 0 ? 'check-circle' : 'check-circle-outline'}
+                size={26}
+                color={remaining === 0 ? '#16a34a' : color}
+              />
             ),
           }}
         />
