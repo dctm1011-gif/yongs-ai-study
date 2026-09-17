@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Linking, Animated, Easing } from 'react-native';
+import {
+  View, Text, ScrollView, StyleSheet, TouchableOpacity, Linking, Animated, Easing,
+  LayoutAnimation, Platform, UIManager,
+} from 'react-native';
 import { getDatabase, onValue, ref } from 'firebase/database';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../context/AuthContext';
@@ -53,6 +56,16 @@ const GROUPS: { title: string; color: string; items: CheckItem[] }[] = [
 ];
 
 const ALL_ITEMS = GROUPS.flatMap(g => g.items.map(i => ({ ...i, groupColor: g.color })));
+
+if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
+
+function formatKoreanDate(iso: string): string {
+  const [y, m, d] = iso.split('-').map(Number);
+  const weekday = ['일', '월', '화', '수', '목', '금', '토'][new Date(y, m - 1, d).getDay()];
+  return `${m}월 ${d}일 ${weekday}요일`;
+}
 
 // ── 진행률 바 + 퍼센트 카운트업 ──────────────────────────────────────────────
 function AnimatedProgress({ done, total }: { done: number; total: number }) {
@@ -196,7 +209,13 @@ export default function ChecklistScreen() {
   const uid = user?.uid ?? '';
   const [done, setDone] = useState<Record<string, boolean>>({});
   const [today, setToday] = useState(getKSTToday());
+  const [collapsedGroups, setCollapsedGroups] = useState<Record<string, boolean>>({});
   const celebrate = useRef(new Animated.Value(0)).current;
+
+  const toggleGroup = (title: string, currentlyCollapsed: boolean) => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setCollapsedGroups(prev => ({ ...prev, [title]: !currentlyCollapsed }));
+  };
 
   useEffect(() => {
     setToday(getKSTToday());
@@ -239,7 +258,7 @@ export default function ChecklistScreen() {
   return (
     <ScrollView style={s.container} contentContainerStyle={s.content}>
       <Text style={s.header}>오늘의 학습</Text>
-      <Text style={s.date}>{today}</Text>
+      <Text style={s.date}>{formatKoreanDate(today)}</Text>
 
       <AnimatedProgress done={doneCount} total={totalItems} />
 
@@ -264,17 +283,21 @@ export default function ChecklistScreen() {
         <Text style={s.hubArrow}>›</Text>
       </TouchableOpacity>
 
-      <ProgressCalendar />
-
       {GROUPS.map(group => {
         const groupDone = group.items.filter(i => done[i.key]).length;
+        const groupAllDone = groupDone === group.items.length;
+        // 다 끝낸 분류는 접어서 남은 할 일이 눈에 먼저 들어오게 한다 (탭하면 다시 펼침)
+        const collapsed = collapsedGroups[group.title] ?? groupAllDone;
         return (
           <View key={group.title} style={s.group}>
-            <View style={s.groupHeader}>
+            <TouchableOpacity style={s.groupHeader} onPress={() => toggleGroup(group.title, collapsed)} activeOpacity={0.6}>
               <Text style={[s.groupTitle, { color: group.color }]}>{group.title}</Text>
-              <Text style={s.groupCount}>{groupDone}/{group.items.length}</Text>
-            </View>
-            {group.items.map((item, i) => (
+              <Text style={[s.groupCount, groupAllDone && { color: colors.success }]}>
+                {groupDone}/{group.items.length}
+              </Text>
+              <Text style={[s.groupToggle, collapsed && s.groupToggleCollapsed]}>⌃</Text>
+            </TouchableOpacity>
+            {!collapsed && group.items.map((item, i) => (
               <ChecklistRow
                 key={item.key}
                 item={{ ...item, groupColor: group.color }}
@@ -287,6 +310,8 @@ export default function ChecklistScreen() {
           </View>
         );
       })}
+
+      <ProgressCalendar />
 
       {allDone && (
         <Animated.View
@@ -353,7 +378,12 @@ const s = StyleSheet.create({
     fontSize: fontSize.label, fontWeight: '700',
     textTransform: 'uppercase', letterSpacing: 0.8,
   },
-  groupCount: { fontSize: fontSize.caption, fontWeight: '600', color: colors.inkMuted },
+  groupCount: { fontSize: fontSize.caption, fontWeight: '600', color: colors.inkMuted, marginLeft: 'auto' },
+  groupToggle: {
+    fontSize: fontSize.label, color: colors.inkMuted, marginLeft: space.sm,
+    transform: [{ rotate: '0deg' }],
+  },
+  groupToggleCollapsed: { transform: [{ rotate: '180deg' }] },
 
   row: {
     flexDirection: 'row',
