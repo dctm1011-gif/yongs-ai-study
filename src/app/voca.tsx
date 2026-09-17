@@ -301,6 +301,8 @@ export default function VocaScreen() {
   const [stats, setStats] = useState({ totalWords: 0, readWords: 0, quizzesCorrect: 0, quizzesTotal: 0 });
   const [completionToday, setCompletionToday] = useState<Record<string, boolean>>({});
   const [gameSeed, setGameSeed] = useState<{ game: GameMode; ts: number } | null>(null);
+  // 게임을 하는 동안에는 헤더와 탭 버튼을 접어 화면을 게임에 내준다
+  const [inGame, setInGame] = useState(false);
   const [loading, setLoading] = useState(true);
   const [hideReadWords, setHideReadWords] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -1285,24 +1287,28 @@ Return ONLY JSON (no markdown):
   return (
     <SafeAreaView style={styles.screen}>
       <Animated.View style={{ flex: 1, opacity, transform: [{ translateY }] }}>
+      {!inGame && (
       <View style={styles.header}>
         <View style={styles.headerTop}>
           <View>
-            <Text style={styles.headerTitle}>📚 Voca</Text>
-            <Text style={styles.headerSubtitle}>Netlify 실시간 동기화</Text>
+            <Text style={styles.headerTitle}>📚 단어</Text>
+            {/* 서버 캐시 상태(Netlify·남은 시간) 대신 학습 정보를 보여준다.
+                동기화 시각은 🔔(디버그) 화면에 남아 있다. */}
+            <Text style={styles.headerSubtitle}>
+              {loading
+                ? '불러오는 중…'
+                : `오늘의 새 단어 ${words.length}개 · 읽음 ${words.filter(w => w.isRead).length}/${words.length}`}
+            </Text>
           </View>
           <TouchableOpacity onPress={openDebug} style={styles.refreshButton}>
               <Text style={styles.refreshIcon}>🔔</Text>
             </TouchableOpacity>
         </View>
-        <View style={styles.headerInfo}>
-          <Text style={styles.headerInfoText}>⏰ 마지막 업데이트: {formatLastUpdateTime(lastUpdateTime)}</Text>
-          <Text style={styles.headerInfoText}>💾 {cacheTimeLeft}</Text>
-        </View>
       </View>
+      )}
 
-      {/* Tab buttons */}
-      {(() => {
+      {/* Tab buttons — 게임 중에는 함께 접는다 */}
+      {!inGame && (() => {
         const GAME_KEYS = ['english_word_match', 'english_crossword', 'english_scramble', 'english_sentence'];
         const gamesAllDone = GAME_KEYS.every(k => completionToday[k]);
         const allWordsRead = !loading && words.length > 0 && words.every(w => w.isRead);
@@ -1400,7 +1406,14 @@ Return ONLY JSON (no markdown):
         const correct = active.filter(q => q.correct_answer).length;
         ToastAndroid.show(`완료! ${correct}/${active.length} 정답 저장됨`, ToastAndroid.SHORT);
       }} />}
-      {view === 'game' && <GameHub initialGame={gameSeed?.game} seed={gameSeed?.ts} />}
+      {view === 'game' && (
+        <GameHub
+          initialGame={gameSeed?.game}
+          seed={gameSeed?.ts}
+          completion={completionToday}
+          onModeChange={setInGame}
+        />
+      )}
 
       {/* 알림 디버그 모달 */}
       <Modal visible={showDebug} transparent animationType="slide" onRequestClose={() => setShowDebug(false)}>

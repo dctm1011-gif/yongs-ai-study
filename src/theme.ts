@@ -17,6 +17,8 @@ export const colors = {
 
   surface: '#ffffff',
   surfaceAlt: '#fafafa',
+  /** 카드가 떠 보이도록 화면 바닥에 살짝 색을 깐다 (Today 탭 "소프트 카드" 방향) */
+  canvas: '#f6f7fb',
 
   success: '#16a34a',
   successSoft: '#f0fdf4',
@@ -48,4 +50,22 @@ export const fontSize = {
 
 export const duration = {
   fast: 140, base: 240, slow: 420,
+} as const;
+
+/** 카드 그림자 — Android는 elevation, iOS는 shadow* 를 함께 준다. */
+export const shadow = {
+  card: {
+    shadowColor: '#1a2340',
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
+  },
+  lifted: {
+    shadowColor: '#0f4c8a',
+    shadowOpacity: 0.16,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 4,
+  },
 } as const;

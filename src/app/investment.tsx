@@ -27,6 +27,7 @@ import { getFirebaseApp } from '../config/firebase';
 import { useAuth } from '../context/AuthContext';
 import { userRef } from '../utils/userDb';
 import { useScreenFade } from '../hooks/useScreenFade';
+import { getKSTDateString } from '../utils/dateUtils';
 
 const { width } = Dimensions.get('window');
 
@@ -649,7 +650,7 @@ const TermOfDayCard: React.FC<{ term: DailyTerm }> = React.memo(({ term }) => {
   const { user } = useAuth();
   const tagColor = TERM_CATEGORY_COLORS[term.category] ?? '#8e8e8e';
 
-  const today = new Date(Date.now() + 9 * 3600000).toISOString().split('T')[0];
+  const today = getKSTDateString();
   const storageKey = `term_done_${today}`;
 
   useEffect(() => {
@@ -660,7 +661,7 @@ const TermOfDayCard: React.FC<{ term: DailyTerm }> = React.memo(({ term }) => {
     if (done) return;
     setDone(true);
     await AsyncStorage.setItem(storageKey, 'true');
-    const today = new Date(Date.now() + 9 * 3600000).toISOString().split('T')[0];
+    const today = getKSTDateString();
     if (user?.uid) dbSet(userRef(user.uid, `completion/investment/${today}`), true).catch(() => {});
     ToastAndroid.show('✅ 용어 학습 완료!', ToastAndroid.SHORT);
   };
@@ -1988,7 +1989,7 @@ const DetailModal: React.FC<DetailModalProps> = React.memo(
           <TouchableOpacity
             style={styles.readCompleteButton}
             onPress={() => {
-              const today = new Date(Date.now() + 9 * 3600000).toISOString().split('T')[0];
+              const today = getKSTDateString();
               if (user?.uid) dbSet(userRef(user.uid, `completion/investment/${today}`), true).catch(() => {});
               onClose();
             }}
@@ -2170,9 +2171,20 @@ const MiniSparkBars: React.FC<{
   activeColor?: string;
   inactiveColor?: string;
   emptyColor?: string;
-}> = ({ values, activeColor = '#0095f6', inactiveColor = '#bfdbfe', emptyColor = '#e5e7eb' }) => {
+  /**
+   * 가격처럼 값이 0 근처가 아니라 좁은 구간에서 움직이는 계열은 반드시 켤 것.
+   * 0을 바닥으로 그리면 월 변동이 1~3%인 시세는 (값/최댓값)이 0.97~1.00이라
+   * 모든 막대가 같은 높이로 찍혀 추세가 보이지 않는다. (거래건수처럼 0에서
+   * 시작하는 게 맞는 계열은 끈 채로 둔다.)
+   */
+  fromMin?: boolean;
+}> = ({ values, activeColor = '#0095f6', inactiveColor = '#bfdbfe', emptyColor = '#e5e7eb', fromMin = false }) => {
   if (!values || values.length === 0) return null;
+  const positives = values.filter(v => v > 0);
   const maxVal = Math.max(...values, 0.001);
+  const minVal = fromMin && positives.length ? Math.min(...positives) : 0;
+  // 구간이 0이면(값이 모두 같음) 0으로 나누지 않도록 방어
+  const span = Math.max(maxVal - minVal, 0.001);
   const BAR_H = 14;
   const BAR_W = 5;
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -2186,7 +2198,7 @@ const MiniSparkBars: React.FC<{
           key={i}
           style={{
             width: BAR_W,
-            height: v > 0 ? Math.max(2, Math.round((v / maxVal) * BAR_H)) : 2,
+            height: v > 0 ? Math.max(2, Math.round(((v - minVal) / span) * (BAR_H - 3)) + 3) : 2,
             backgroundColor: v === 0 ? emptyColor : (i === values.length - 1 ? activeColor : inactiveColor),
             borderRadius: 1,
           }}
@@ -2284,7 +2296,7 @@ const DongTableRow: React.FC<{ stat: NonNullable<ReturnType<typeof computeDongSt
     <Text style={{ width: 72, fontSize: 13, fontWeight: '500', color: dongColor }}>{stat.dong}</Text>
     <Text style={{ width: 56, fontSize: 13, fontWeight: '700', color: '#0095f6', textAlign: 'right' }}>{stat.dongMedian.toFixed(1)}억</Text>
     <View style={{ width: 68, alignItems: 'flex-end' }}>
-      <MiniSparkBars values={stat.monthlyMedians} activeColor="#7c3aed" inactiveColor="#c4b5fd" />
+      <MiniSparkBars values={stat.monthlyMedians} activeColor="#7c3aed" inactiveColor="#c4b5fd" fromMin />
     </View>
     <View style={{ width: 60, alignItems: 'flex-end', gap: 2 }}>
       <Text style={{ fontSize: 10, color: '#8e8e8e' }}>{stat.totalCount}건</Text>
@@ -2325,6 +2337,12 @@ const GuSection: React.FC<{
         <View style={{ paddingHorizontal: 12, paddingBottom: 8 }}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false} nestedScrollEnabled={true}>
             <View style={{ borderWidth: 1, borderColor: '#dbdbdb', borderRadius: 8, overflow: 'hidden', minWidth: 352 }}>
+              <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8, paddingHorizontal: 10, paddingTop: 7, paddingBottom: 2, backgroundColor: '#fafafa' }}>
+                <Text style={{ fontSize: 9, color: '#8e8e8e' }}>동 이름 색:</Text>
+                <Text style={{ fontSize: 9, color: '#ef4444', fontWeight: '700' }}>가격↑ 거래량↓</Text>
+                <Text style={{ fontSize: 9, color: '#1d4ed8', fontWeight: '700' }}>가격↓ 거래량↑</Text>
+                <Text style={{ fontSize: 9, color: '#60a5fa', fontWeight: '700' }}>가격↓</Text>
+              </View>
               <View style={{ flexDirection: 'row', backgroundColor: '#fafafa', paddingVertical: 7, paddingHorizontal: 10, alignItems: 'center' }}>
                 <Text style={{ width: 72, fontSize: 11, fontWeight: '600', color: '#8e8e8e' }}>동</Text>
                 <Text style={{ width: 56, fontSize: 11, fontWeight: '600', color: '#8e8e8e', textAlign: 'right' }}>현재가</Text>
@@ -2913,7 +2931,7 @@ const DongComplexTable: React.FC<{ dongName: string; complexes: JukjeonComplex[]
                       return <Text style={{ width: 44, fontSize: 12, fontWeight: '600', color: khaiColor, textAlign: 'right' }}>{khai}</Text>;
                     })()}
                     <View style={{ width: 68, alignItems: 'flex-end' }}>
-                      <MiniSparkBars values={priceValues} activeColor="#7c3aed" inactiveColor="#c4b5fd" />
+                      <MiniSparkBars values={priceValues} activeColor="#7c3aed" inactiveColor="#c4b5fd" fromMin />
                     </View>
                     <View style={{ width: 60, alignItems: 'flex-end', gap: 2 }}>
                       <Text style={{ fontSize: 10, color: '#8e8e8e' }}>{totalCount}건</Text>
