@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Linking } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Linking, Animated, Easing } from 'react-native';
 import { getDatabase, onValue, ref } from 'firebase/database';
+import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../context/AuthContext';
 import { getFirebaseApp } from '../config/firebase';
 import { ProgressCalendar } from '../components/ProgressCalendar';
+import { colors, categoryColors, space, radius, fontSize, duration } from '../theme';
 
 import { getKSTDateString as getKSTToday } from '../utils/dateUtils';
 
@@ -11,45 +13,190 @@ interface CheckItem {
   key: string;
   label: string;
   emoji: string;
+  /** 탭하면 이동할 탭 이름 (_layout.tsx의 Tab.Screen name) */
+  target: string;
 }
 
 const STUDY_HUB_URL = 'https://claude.ai/artifact/Cw11iAcshpwDw1PyLq8cdu';
 
-const GROUPS: { title: string; items: CheckItem[] }[] = [
+const GROUPS: { title: string; color: string; items: CheckItem[] }[] = [
   {
     title: '영어',
+    color: categoryColors.english,
     items: [
-      { key: 'english',              label: '단어장',       emoji: '📖' },
-      { key: 'english_word_match',   label: '카드 매칭',    emoji: '🃏' },
-      { key: 'english_crossword',    label: '낱말 퍼즐',    emoji: '📝' },
-      { key: 'english_scramble',     label: '스크램블',     emoji: '🔀' },
-      { key: 'english_sentence',     label: '예문 OX',      emoji: '🔍' },
-      { key: 'english_review',       label: '문장복습',     emoji: '📋' },
-      { key: 'english_news_reading',   label: '영어 리딩',  emoji: '📰' },
-      { key: 'english_news_listening', label: '영어 리스닝', emoji: '🎙️' },
-      { key: 'english_speaking',       label: '스피킹',     emoji: '💬' },
+      { key: 'english',                label: '단어장',      emoji: '📖', target: 'Voca' },
+      { key: 'english_word_match',     label: '카드 매칭',   emoji: '🃏', target: 'Voca' },
+      { key: 'english_crossword',      label: '낱말 퍼즐',   emoji: '📝', target: 'Voca' },
+      { key: 'english_scramble',       label: '스크램블',    emoji: '🔀', target: 'Voca' },
+      { key: 'english_sentence',       label: '예문 OX',     emoji: '🔍', target: 'Voca' },
+      { key: 'english_review',         label: '문장복습',    emoji: '📋', target: 'Voca' },
+      { key: 'english_news_reading',   label: '영어 리딩',   emoji: '📰', target: 'BBC' },
+      { key: 'english_news_listening', label: '영어 리스닝', emoji: '🎙️', target: 'BBC' },
+      { key: 'english_speaking',       label: '스피킹',      emoji: '💬', target: 'Speaking' },
     ],
   },
   {
     title: '투자',
+    color: categoryColors.investment,
     items: [
-      { key: 'investment', label: '투자 학습', emoji: '📈' },
+      { key: 'investment', label: '투자 학습', emoji: '📈', target: 'Investment' },
     ],
   },
   {
     title: '한국어',
+    color: categoryColors.korean,
     items: [
-      { key: 'reading',      label: '독서',        emoji: '📕' },
-      { key: 'korean_diary', label: '어휘 일기',   emoji: '✏️' },
+      { key: 'reading',      label: '독서',      emoji: '📕', target: 'Culture' },
+      { key: 'korean_diary', label: '어휘 일기', emoji: '✏️', target: 'Culture' },
     ],
   },
 ];
 
+const ALL_ITEMS = GROUPS.flatMap(g => g.items.map(i => ({ ...i, groupColor: g.color })));
+
+// ── 진행률 바 + 퍼센트 카운트업 ──────────────────────────────────────────────
+function AnimatedProgress({ done, total }: { done: number; total: number }) {
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  const widthAnim = useRef(new Animated.Value(0)).current;
+  const [shownPct, setShownPct] = useState(0);
+
+  useEffect(() => {
+    Animated.timing(widthAnim, {
+      toValue: pct,
+      duration: duration.slow,
+      easing: Easing.out(Easing.cubic),
+      useNativeDriver: false, // width는 네이티브 드라이버 미지원
+    }).start();
+    const id = widthAnim.addListener(({ value }) => setShownPct(Math.round(value)));
+    return () => widthAnim.removeListener(id);
+  }, [pct]);
+
+  const isAllDone = done === total && total > 0;
+
+  return (
+    <View style={s.progressBox}>
+      <View style={s.progressRow}>
+        <Text style={s.progressLabel}>{done} / {total} 완료</Text>
+        <Text style={[s.progressPct, isAllDone && { color: colors.success }]}>{shownPct}%</Text>
+      </View>
+      <View style={s.bar}>
+        <Animated.View
+          style={[
+            s.fill,
+            {
+              width: widthAnim.interpolate({ inputRange: [0, 100], outputRange: ['0%', '100%'] }),
+              backgroundColor: isAllDone ? colors.success : colors.accent,
+            },
+          ]}
+        />
+      </View>
+    </View>
+  );
+}
+
+// ── 체크리스트 한 줄 ────────────────────────────────────────────────────────
+function ChecklistRow({
+  item, isDone, isNext, index, onPress,
+}: {
+  item: CheckItem & { groupColor: string };
+  isDone: boolean;
+  isNext: boolean;
+  index: number;
+  onPress: () => void;
+}) {
+  const enter = useRef(new Animated.Value(0)).current;   // 첫 진입 시 페이드+슬라이드
+  const press = useRef(new Animated.Value(1)).current;   // 누를 때 살짝 축소
+  const pop = useRef(new Animated.Value(isDone ? 1 : 0)).current; // 완료 체크 팝
+  const glow = useRef(new Animated.Value(0)).current;    // "지금 이거" 맥동
+  const wasDone = useRef(isDone);
+
+  useEffect(() => {
+    Animated.timing(enter, {
+      toValue: 1,
+      duration: duration.base,
+      delay: Math.min(index * 45, 400),
+      easing: Easing.out(Easing.quad),
+      useNativeDriver: true,
+    }).start();
+  }, []);
+
+  // 방금 완료된 항목만 체크 표시를 튕겨준다 (이미 완료 상태로 들어온 건 그대로)
+  useEffect(() => {
+    if (isDone && !wasDone.current) {
+      pop.setValue(0);
+      Animated.spring(pop, { toValue: 1, friction: 4, tension: 140, useNativeDriver: true }).start();
+    } else if (!isDone) {
+      pop.setValue(0);
+    }
+    wasDone.current = isDone;
+  }, [isDone]);
+
+  useEffect(() => {
+    if (!isNext) { glow.setValue(0); return; }
+    const loop = Animated.loop(
+      Animated.sequence([
+        Animated.timing(glow, { toValue: 1, duration: 900, easing: Easing.inOut(Easing.quad), useNativeDriver: true }),
+        Animated.timing(glow, { toValue: 0, duration: 900, easing: Easing.inOut(Easing.quad), useNativeDriver: true }),
+      ]),
+    );
+    loop.start();
+    return () => loop.stop();
+  }, [isNext]);
+
+  return (
+    <Animated.View
+      style={{
+        opacity: enter,
+        transform: [
+          { translateY: enter.interpolate({ inputRange: [0, 1], outputRange: [10, 0] }) },
+          { scale: press },
+        ],
+      }}
+    >
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={onPress}
+        onPressIn={() => Animated.timing(press, { toValue: 0.975, duration: duration.fast, useNativeDriver: true }).start()}
+        onPressOut={() => Animated.spring(press, { toValue: 1, friction: 5, useNativeDriver: true }).start()}
+        style={[
+          s.row,
+          isDone && s.rowDone,
+          isNext && { borderColor: item.groupColor, backgroundColor: colors.surface },
+        ]}
+      >
+        {/* 왼쪽 분류 색 스트라이프 — 완료되면 초록으로 */}
+        <View style={[s.stripe, { backgroundColor: isDone ? colors.success : item.groupColor }]} />
+
+        <Text style={s.emoji}>{item.emoji}</Text>
+
+        <View style={s.rowBody}>
+          <Text style={[s.label, isDone && s.labelDone]}>{item.label}</Text>
+          {isNext && (
+            <Animated.Text style={[s.nextHint, { color: item.groupColor, opacity: glow.interpolate({ inputRange: [0, 1], outputRange: [0.45, 1] }) }]}>
+              지금 이거 · 탭하면 바로 이동
+            </Animated.Text>
+          )}
+        </View>
+
+        {isDone ? (
+          <Animated.Text style={[s.check, s.checkDone, { transform: [{ scale: pop.interpolate({ inputRange: [0, 1], outputRange: [0.6, 1] }) }] }]}>
+            ✓
+          </Animated.Text>
+        ) : (
+          <Text style={s.chevron}>›</Text>
+        )}
+      </TouchableOpacity>
+    </Animated.View>
+  );
+}
+
 export default function ChecklistScreen() {
   const { user } = useAuth();
+  const navigation = useNavigation<any>();
   const uid = user?.uid ?? '';
   const [done, setDone] = useState<Record<string, boolean>>({});
   const [today, setToday] = useState(getKSTToday());
+  const celebrate = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     setToday(getKSTToday());
@@ -71,33 +218,44 @@ export default function ChecklistScreen() {
     return () => unsub();
   }, [uid, today]);
 
-  const totalItems = GROUPS.reduce((n, g) => n + g.items.length, 0);
-  const doneCount = GROUPS.reduce(
-    (n, g) => n + g.items.filter(i => done[i.key]).length, 0
-  );
-  const pct = totalItems > 0 ? Math.round((doneCount / totalItems) * 100) : 0;
+  const totalItems = ALL_ITEMS.length;
+  const doneCount = ALL_ITEMS.filter(i => done[i.key]).length;
+  const allDone = doneCount === totalItems;
+  const nextItem = ALL_ITEMS.find(i => !done[i.key]);
+
+  useEffect(() => {
+    if (!allDone) { celebrate.setValue(0); return; }
+    Animated.spring(celebrate, { toValue: 1, friction: 4, tension: 120, useNativeDriver: true }).start();
+  }, [allDone]);
+
+  const go = (target: string) => {
+    try {
+      navigation.navigate(target);
+    } catch {
+      // 변형 빌드에서 없는 탭(Investment 등)일 수 있음 — 무시
+    }
+  };
 
   return (
     <ScrollView style={s.container} contentContainerStyle={s.content}>
       <Text style={s.header}>오늘의 학습</Text>
       <Text style={s.date}>{today}</Text>
 
-      {/* 진행률 */}
-      <View style={s.progressBox}>
-        <View style={s.progressRow}>
-          <Text style={s.progressLabel}>{doneCount} / {totalItems} 완료</Text>
-          <Text style={s.progressPct}>{pct}%</Text>
-        </View>
-        <View style={s.bar}>
-          <View style={[s.fill, { width: `${pct}%` as any }]} />
-        </View>
-      </View>
+      <AnimatedProgress done={doneCount} total={totalItems} />
 
-      <TouchableOpacity
-        style={s.hubCard}
-        onPress={() => Linking.openURL(STUDY_HUB_URL)}
-        activeOpacity={0.8}
-      >
+      {/* 다음 할 것 바로가기 */}
+      {nextItem && (
+        <TouchableOpacity style={s.nextCta} onPress={() => go(nextItem.target)} activeOpacity={0.85}>
+          <Text style={s.nextCtaEmoji}>{nextItem.emoji}</Text>
+          <View style={s.nextCtaBody}>
+            <Text style={s.nextCtaLabel}>다음 학습</Text>
+            <Text style={s.nextCtaTitle}>{nextItem.label} 시작하기</Text>
+          </View>
+          <Text style={s.nextCtaArrow}>→</Text>
+        </TouchableOpacity>
+      )}
+
+      <TouchableOpacity style={s.hubCard} onPress={() => Linking.openURL(STUDY_HUB_URL)} activeOpacity={0.8}>
         <Text style={s.hubEmoji}>📚</Text>
         <View style={s.hubBody}>
           <Text style={s.hubTitle}>보충학습 허브</Text>
@@ -108,91 +266,122 @@ export default function ChecklistScreen() {
 
       <ProgressCalendar />
 
-      {GROUPS.map(group => (
-        <View key={group.title} style={s.group}>
-          <Text style={s.groupTitle}>{group.title}</Text>
-          {group.items.map(item => {
-            const isDone = !!done[item.key];
-            return (
-              <View key={item.key} style={[s.row, isDone && s.rowDone]}>
-                <Text style={s.emoji}>{item.emoji}</Text>
-                <Text style={[s.label, isDone && s.labelDone]}>{item.label}</Text>
-                <Text style={[s.check, isDone && s.checkDone]}>
-                  {isDone ? '✓' : '○'}
-                </Text>
-              </View>
-            );
-          })}
-        </View>
-      ))}
+      {GROUPS.map(group => {
+        const groupDone = group.items.filter(i => done[i.key]).length;
+        return (
+          <View key={group.title} style={s.group}>
+            <View style={s.groupHeader}>
+              <Text style={[s.groupTitle, { color: group.color }]}>{group.title}</Text>
+              <Text style={s.groupCount}>{groupDone}/{group.items.length}</Text>
+            </View>
+            {group.items.map((item, i) => (
+              <ChecklistRow
+                key={item.key}
+                item={{ ...item, groupColor: group.color }}
+                isDone={!!done[item.key]}
+                isNext={nextItem?.key === item.key}
+                index={i}
+                onPress={() => go(item.target)}
+              />
+            ))}
+          </View>
+        );
+      })}
 
-      {doneCount === totalItems && (
-        <View style={s.allDone}>
+      {allDone && (
+        <Animated.View
+          style={[s.allDone, {
+            opacity: celebrate,
+            transform: [{ scale: celebrate.interpolate({ inputRange: [0, 1], outputRange: [0.85, 1] }) }],
+          }]}
+        >
           <Text style={s.allDoneEmoji}>🎉</Text>
           <Text style={s.allDoneText}>오늘 모든 학습 완료!</Text>
-        </View>
+        </Animated.View>
       )}
     </ScrollView>
   );
 }
 
 const s = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
-  content: { paddingHorizontal: 20, paddingTop: 60, paddingBottom: 40 },
-  header: { fontSize: 24, fontWeight: '700', color: '#262626', marginBottom: 2 },
-  date: { fontSize: 13, color: '#8e8e8e', marginBottom: 20 },
+  container: { flex: 1, backgroundColor: colors.surface },
+  content: { paddingHorizontal: space.xl, paddingTop: 60, paddingBottom: 40 },
+  header: { fontSize: fontSize.display, fontWeight: '700', color: colors.ink, marginBottom: 2 },
+  date: { fontSize: fontSize.label, color: colors.inkMuted, marginBottom: space.xl },
 
   progressBox: {
-    backgroundColor: '#f8f8f8',
-    borderRadius: 14,
-    padding: 16,
-    marginBottom: 24,
+    backgroundColor: colors.surfaceAlt,
+    borderRadius: radius.lg,
+    padding: space.lg,
+    marginBottom: space.lg,
   },
-  progressRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 },
-  progressLabel: { fontSize: 14, fontWeight: '600', color: '#262626' },
-  progressPct: { fontSize: 14, fontWeight: '700', color: '#0095f6' },
-  bar: { height: 8, backgroundColor: '#dbdbdb', borderRadius: 4, overflow: 'hidden' },
-  fill: { height: '100%', backgroundColor: '#0095f6', borderRadius: 4 },
+  progressRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: space.sm },
+  progressLabel: { fontSize: fontSize.body, fontWeight: '600', color: colors.ink },
+  progressPct: { fontSize: fontSize.body, fontWeight: '700', color: colors.accent },
+  bar: { height: 8, backgroundColor: colors.border, borderRadius: radius.sm, overflow: 'hidden' },
+  fill: { height: '100%', borderRadius: radius.sm },
+
+  nextCta: {
+    flexDirection: 'row', alignItems: 'center', gap: space.md,
+    backgroundColor: colors.accentSoft,
+    borderRadius: radius.lg, padding: space.lg, marginBottom: space.md,
+    borderWidth: 1, borderColor: colors.accent,
+  },
+  nextCtaEmoji: { fontSize: 24 },
+  nextCtaBody: { flex: 1 },
+  nextCtaLabel: { fontSize: fontSize.caption, fontWeight: '700', color: colors.accent, letterSpacing: 0.5 },
+  nextCtaTitle: { fontSize: fontSize.body, fontWeight: '700', color: colors.ink, marginTop: 2 },
+  nextCtaArrow: { fontSize: fontSize.title, color: colors.accent, fontWeight: '700' },
 
   hubCard: {
-    flexDirection: 'row', alignItems: 'center',
-    backgroundColor: '#f5f3ff', borderRadius: 14, padding: 16,
-    marginBottom: 20, borderWidth: 1, borderColor: '#ddd6fe', gap: 14,
+    flexDirection: 'row', alignItems: 'center', gap: space.lg,
+    backgroundColor: '#f5f3ff', borderRadius: radius.lg, padding: space.lg,
+    marginBottom: space.xl, borderWidth: 1, borderColor: '#ddd6fe',
   },
   hubEmoji: { fontSize: 28 },
   hubBody: { flex: 1 },
-  hubTitle: { fontSize: 15, fontWeight: '700', color: '#262626', marginBottom: 2 },
-  hubDesc: { fontSize: 12, color: '#8e8e8e' },
+  hubTitle: { fontSize: fontSize.body, fontWeight: '700', color: colors.ink, marginBottom: 2 },
+  hubDesc: { fontSize: fontSize.caption, color: colors.inkMuted },
   hubArrow: { fontSize: 22, color: '#a78bfa', fontWeight: '300' },
 
-  group: { marginBottom: 20 },
-  groupTitle: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: '#8e8e8e',
-    textTransform: 'uppercase',
-    letterSpacing: 0.8,
-    marginBottom: 8,
+  group: { marginBottom: space.xl },
+  groupHeader: {
+    flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between',
+    marginBottom: space.sm,
   },
+  groupTitle: {
+    fontSize: fontSize.label, fontWeight: '700',
+    textTransform: 'uppercase', letterSpacing: 0.8,
+  },
+  groupCount: { fontSize: fontSize.caption, fontWeight: '600', color: colors.inkMuted },
+
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 14,
-    backgroundColor: '#fafafa',
-    borderRadius: 12,
+    paddingVertical: space.md,
+    paddingRight: space.lg,
+    paddingLeft: space.md,
+    backgroundColor: colors.surfaceAlt,
+    borderRadius: radius.md,
     marginBottom: 6,
     borderWidth: 1,
     borderColor: '#efefef',
+    overflow: 'hidden',
   },
-  rowDone: { backgroundColor: '#f0fdf4', borderColor: '#bbf7d0' },
-  emoji: { fontSize: 20, marginRight: 12 },
-  label: { flex: 1, fontSize: 15, color: '#262626', fontWeight: '500' },
-  labelDone: { color: '#16a34a' },
-  check: { fontSize: 18, color: '#dbdbdb', fontWeight: '600' },
-  checkDone: { color: '#16a34a' },
+  rowDone: { backgroundColor: colors.successSoft, borderColor: colors.successBorder },
+  stripe: {
+    position: 'absolute', left: 0, top: 0, bottom: 0, width: 3,
+  },
+  emoji: { fontSize: 20, marginRight: space.md },
+  rowBody: { flex: 1 },
+  label: { fontSize: fontSize.body, color: colors.ink, fontWeight: '500' },
+  labelDone: { color: colors.success },
+  nextHint: { fontSize: fontSize.caption, fontWeight: '600', marginTop: 2 },
+  check: { fontSize: fontSize.title, color: colors.border, fontWeight: '600' },
+  checkDone: { color: colors.success },
+  chevron: { fontSize: 20, color: colors.border, fontWeight: '300' },
 
-  allDone: { alignItems: 'center', marginTop: 16, paddingVertical: 20 },
-  allDoneEmoji: { fontSize: 48, marginBottom: 8 },
-  allDoneText: { fontSize: 18, fontWeight: '700', color: '#16a34a' },
+  allDone: { alignItems: 'center', marginTop: space.lg, paddingVertical: space.xl },
+  allDoneEmoji: { fontSize: 48, marginBottom: space.sm },
+  allDoneText: { fontSize: fontSize.title, fontWeight: '700', color: colors.success },
 });
