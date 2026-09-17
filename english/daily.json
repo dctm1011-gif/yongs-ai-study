@@ -1,251 +1,218 @@
 {
-  "date": "2026-09-15",
+  "date": "2026-09-17",
   "words": [
     {
-      "word": "editorial",
-      "part_of_speech": "noun, adjective",
-      "meaning_ko": "사설, 논설; 편집의, 편집상의",
-      "explanation": "신문이나 잡지에서 편집자의 의견을 담은 글. 또는 출판물의 편집과 관련된 것을 나타냄.",
-      "example_from_convo": "The newspaper's editorial criticized the government's policy.",
-      "example_ko": "그 신문의 사설은 정부 정책을 비판했다.",
-      "tip": "동의어: opinion piece, column / TOEIC/신문 어휘"
-    },
-    {
-      "word": "feasibility",
+      "word": "disclosure",
       "part_of_speech": "noun",
-      "meaning_ko": "타당성, 실현 가능성",
-      "explanation": "어떤 계획이나 프로젝트가 실제로 실행할 수 있는 정도를 나타냄. 가능성과 현실성을 평가하는 개념.",
-      "example_from_convo": "We need to study the feasibility of the new product launch.",
-      "example_ko": "새로운 제품 출시의 타당성을 검토해야 한다.",
-      "tip": "동의어: viability, practicability / TOEIC/비즈니스 어휘"
+      "meaning_ko": "공개, 폭로",
+      "explanation": "정보나 사실을 공개적으로 드러내는 행위. 특히 이전에 숨겨진 정보를 밝힐 때 사용",
+      "example_from_convo": "The company made a full disclosure of its financial records.",
+      "example_ko": "그 회사는 재정 기록을 완전히 공개했다.",
+      "tip": "동의어: revelation, exposure | 반의어: concealment | 출제영역: 비즈니스, 뉴스",
+      "emoji": "📋"
     },
     {
-      "word": "liaison",
+      "word": "alleged",
+      "part_of_speech": "adjective",
+      "meaning_ko": "주장된, 의심되는",
+      "explanation": "확실하지 않지만 그렇다고 말해지거나 주장되는. 법적/뉴스 언어에서 증명되지 않은 사실을 설명할 때 사용",
+      "example_from_convo": "The alleged criminal was arrested last week.",
+      "example_ko": "의심되는 범인이 지난주에 체포되었다.",
+      "tip": "동의어: claimed, purported | 반의어: proven, confirmed | 출제영역: 뉴스, 법률",
+      "emoji": "🔍"
+    },
+    {
+      "word": "streamline",
+      "part_of_speech": "verb",
+      "meaning_ko": "간소화하다, 효율화하다",
+      "explanation": "무언가를 더 간단하고 효율적으로 만들기 위해 불필요한 부분을 제거하는 것. 업무 프로세스나 디자인 최적화 시 사용",
+      "example_from_convo": "We need to streamline our approval process to save time.",
+      "example_ko": "시간을 절약하기 위해 승인 절차를 간소화해야 한다.",
+      "tip": "동의어: simplify, optimize | 반의어: complicate | 출제영역: 비즈니스, 기술",
+      "emoji": "⚙️"
+    },
+    {
+      "word": "stakeholder",
       "part_of_speech": "noun",
-      "meaning_ko": "연락, 협력, 중개; 연락담당자",
-      "explanation": "두 개 이상의 조직이나 사람 사이의 의사소통과 협력을 위한 연결 역할. 또는 그 역할을 하는 사람.",
-      "example_from_convo": "She serves as a liaison between the marketing and sales departments.",
-      "example_ko": "그녀는 마케팅과 영업 부서 사이의 연락담당자로 역할한다.",
-      "tip": "동의어: connection, intermediary / 발음:[liˈeɪzɑːn] / TOEIC/직장 어휘"
+      "meaning_ko": "이해관계자",
+      "explanation": "어떤 일이나 조직에 이해관계가 있는 모든 당사자. 직원, 고객, 투자자, 지역사회 등이 포함될 수 있음",
+      "example_from_convo": "All stakeholders must be consulted before making this decision.",
+      "example_ko": "이 결정을 내리기 전에 모든 이해관계자와 상담해야 한다.",
+      "tip": "동의어: shareholder, party concerned | 반의어: outsider | 출제영역: 비즈니스, 관리",
+      "emoji": "👥"
     },
     {
-      "word": "accommodation",
+      "word": "amenities",
       "part_of_speech": "noun",
-      "meaning_ko": "숙박, 숙소; 편의, 배려, 수용",
-      "explanation": "여행 시 머물 수 있는 장소(호텔, 숙박시설), 또는 다른 사람의 요구나 필요를 받아들이고 맞춰주는 행위.",
-      "example_from_convo": "The conference organizers provided accommodation for all attendees.",
-      "example_ko": "학회 주최자들은 모든 참석자를 위해 숙박을 제공했다.",
-      "tip": "동의어: lodging, housing / 반의어: rejection / 영국 영어에서 자주 사용 / TOEIC/여행 어휘"
-    },
-    {
-      "word": "transit",
-      "part_of_speech": "noun, verb",
-      "meaning_ko": "통과, 운송; (대중)교통, 환승",
-      "explanation": "한 장소에서 다른 장소로 이동하거나 물품이 운송되는 과정. 또는 대중교통 시스템을 의미함.",
-      "example_from_convo": "Public transit in the city is efficient and affordable.",
-      "example_ko": "도시의 대중교통은 효율적이고 저렴하다.",
-      "tip": "동의어: transportation, passage / in transit(운송 중) 표현 자주 사용 / TOEIC/일상 어휘"
+      "meaning_ko": "편의시설",
+      "explanation": "편안함이나 즐거움을 제공하는 시설이나 서비스. 호텔, 아파트, 공항 등에서 제공되는 추가 서비스",
+      "example_from_convo": "The new office building includes great amenities like a gym and cafeteria.",
+      "example_ko": "새 사무실 건물은 체육관과 카페테리아 같은 훌륭한 편의시설을 포함한다.",
+      "tip": "동의어: facilities, conveniences | 반의어: inconveniences | 출제영역: 부동산, 호텔, 일상",
+      "emoji": "🏢"
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "editorial",
-      "question": "In a news context, an editorial MOST likely refers to:",
+      "word": "disclosure",
+      "question": "In a news context, what does 'disclosure' primarily refer to?",
       "options": [
-        "A report of current events written by journalists",
-        "An opinion piece written by the newspaper's editors",
-        "A detailed analysis of weather patterns",
-        "A section containing classified advertisements"
+        "A legal penalty imposed by courts",
+        "The act of revealing or making information public",
+        "A strategy to hide evidence",
+        "A type of insurance policy"
       ],
       "answer": 1,
-      "explanation": "An editorial is an article that expresses the opinions and views of a newspaper or magazine's editorial board.",
+      "explanation": "Disclosure means the act of revealing information that was previously hidden or unknown, commonly used in news and legal contexts.",
       "option_explanations": [
-        "This describes news reporting, not editorial content.",
-        "Correct - editorials are opinion pieces from editors.",
-        "News publications don't typically publish this in editorials.",
-        "This is a different newspaper section."
+        "Incorrect. Disclosure is not a penalty.",
+        "Correct. Disclosure refers to making information public.",
+        "Incorrect. This is the opposite of disclosure.",
+        "Incorrect. This is not related to disclosure."
       ]
     },
     {
       "type": "meaning",
-      "word": "feasibility",
-      "question": "Which word is MOST similar to feasibility in a business proposal context?",
+      "word": "alleged",
+      "question": "Which word is MOST similar to 'alleged' in meaning?",
       "options": [
-        "Difficulty",
-        "Viability",
-        "Profitability",
-        "Complexity"
+        "Proven",
+        "Claimed",
+        "Confirmed",
+        "Verified"
       ],
       "answer": 1,
-      "explanation": "Viability and feasibility both refer to whether something is practical and possible to execute.",
+      "explanation": "'Alleged' means claimed or purported without definite proof, so 'claimed' is the most similar alternative.",
       "option_explanations": [
-        "Difficulty is about how hard something is, not if it's possible.",
-        "Correct - both refer to practical possibility.",
-        "Profitability is about making money, not possibility.",
-        "Complexity refers to how complicated something is."
+        "Incorrect. This is the opposite of alleged.",
+        "Correct. Both mean stated without proof.",
+        "Incorrect. This contradicts alleged.",
+        "Incorrect. This contradicts alleged."
       ]
     },
     {
       "type": "meaning",
-      "word": "accommodation",
-      "question": "What does accommodation mean when discussing travel arrangements?",
+      "word": "amenities",
+      "question": "What does 'amenities' typically include in a hotel setting?",
       "options": [
-        "A means of transportation",
-        "A place to stay overnight",
-        "A meal plan or dining service",
-        "Travel insurance coverage"
+        "Guest complaints and negative feedback",
+        "Physical or service features that provide comfort or convenience",
+        "The cost of the room",
+        "Historical information about the building"
       ],
       "answer": 1,
-      "explanation": "In travel context, accommodation refers to lodging or places where travelers can sleep and stay.",
+      "explanation": "Amenities refer to facilities and services provided for comfort and convenience, such as gyms, pools, restaurants, and room service in hotels.",
       "option_explanations": [
-        "Transportation is a different aspect of travel.",
-        "Correct - accommodation means lodging.",
-        "This is related to meals, not accommodation.",
-        "Insurance is a separate travel service."
+        "Incorrect. This is the opposite.",
+        "Correct. Amenities are comfort and convenience features.",
+        "Incorrect. Amenities are not pricing.",
+        "Incorrect. This is historical context, not amenities."
       ]
     },
     {
       "type": "fill_blank",
-      "word": "editorial",
-      "sentence": "The newspaper published an ___ criticizing the mayor's decision to close the public library.",
-      "sentence_ko": "그 신문은 시장의 공공도서관 폐쇄 결정을 비판하는 ___를 게시했다.",
-      "answer": "editorial",
-      "hint": "신문에 나오는 의견 글의 종류"
+      "word": "streamline",
+      "sentence": "The company hired a consultant to ___ their hiring process and reduce the time needed to fill job positions.",
+      "sentence_ko": "그 회사는 채용 절차를 간소화하고 공석을 채우는 데 필요한 시간을 줄이기 위해 컨설턴트를 고용했다.",
+      "answer": "streamline",
+      "hint": "This verb means to simplify and make more efficient."
     },
     {
       "type": "fill_blank",
-      "word": "feasibility",
-      "sentence": "Before investing millions in the project, the company conducted a detailed ___ study to ensure it could be completed on time and within budget.",
-      "sentence_ko": "회사는 수백만 달러를 투자하기 전에 프로젝트가 기한 내에 예산 범위 내에서 완료될 수 있는지 확인하기 위해 상세한 ___ 연구를 수행했다.",
-      "answer": "feasibility",
-      "hint": "어떤 계획이 실제 가능한지를 나타내는 단어"
+      "word": "stakeholder",
+      "sentence": "Before launching the new product, we must get feedback from all ___ including customers, employees, and investors.",
+      "sentence_ko": "새로운 제품을 출시하기 전에 고객, 직원, 투자자를 포함한 모든 이해관계자로부터 피드백을 받아야 한다.",
+      "answer": "stakeholder",
+      "hint": "This word refers to people who have an interest in the company's decisions."
     },
     {
       "type": "fill_blank",
-      "word": "transit",
-      "sentence": "Please ensure all packages are properly labeled while in ___ to avoid confusion at the distribution center.",
-      "sentence_ko": "배포 센터에서의 혼동을 피하기 위해 ___ 중인 모든 소포가 올바르게 표시되어 있는지 확인하세요.",
-      "answer": "transit",
-      "hint": "운송/이동 중인 상태를 나타내는 단어"
+      "word": "alleged",
+      "sentence": "The ___ suspect was released after police found insufficient evidence to charge him with the crime.",
+      "sentence_ko": "경찰이 그를 범죄로 기소할 충분한 증거를 찾지 못한 후 의심되는 용의자가 석방되었다.",
+      "answer": "alleged",
+      "hint": "This adjective describes something that is claimed but not yet proven."
     },
     {
       "type": "situation",
-      "word": "liaison",
-      "question": "Your company is launching a new partnership between the IT department and the HR department, and they've never worked together before. The manager asks you to take on a specific role. What is most likely being asked of you?",
+      "word": "disclosure",
+      "question": "Your company's CEO tells the board: 'We need to make full disclosure about last quarter's financial losses before the annual report is published.' What is the CEO asking for?",
       "options": [
-        "To replace the IT department director",
-        "To serve as a liaison and communicate between both departments",
-        "To train all HR employees in computer skills",
-        "To merge the two departments into one"
-      ],
-      "answer": 1,
-      "explanation": "In this situation, you're being asked to facilitate communication and cooperation between two departments that don't normally interact - this is the role of a liaison.",
-      "option_explanations": [
-        "No departmental replacement is necessary.",
-        "Correct - a liaison bridges communication between separate groups.",
-        "This isn't necessary for partnership coordination.",
-        "The departments remain separate; coordination is needed."
-      ]
-    },
-    {
-      "type": "situation",
-      "word": "accommodation",
-      "question": "You're organizing a conference for 200 international delegates arriving next month. A colleague asks, 'Have you arranged the accommodation yet?' What is she asking about?",
-      "options": [
-        "The schedule of conference sessions",
-        "Where the attendees will sleep and stay",
-        "The meals that will be served",
-        "The transportation between airports and venues"
-      ],
-      "answer": 1,
-      "explanation": "When discussing conference planning, accommodation refers to lodging arrangements where attendees will stay during the event.",
-      "option_explanations": [
-        "The schedule is typically called the agenda or program.",
-        "Correct - accommodation means hotel/lodging arrangements.",
-        "Meals are catering, not accommodation.",
-        "This is transportation, not accommodation."
-      ]
-    },
-    {
-      "type": "situation",
-      "word": "feasibility",
-      "question": "During a product development meeting, your director says, 'I love the innovation, but we need to verify the feasibility before moving forward.' What does she want to know?",
-      "options": [
-        "Whether the product will win design awards",
-        "Whether the concept can actually be built and implemented with available resources",
-        "Whether customers will prefer this product over competitors",
-        "Whether the company's stock price will increase"
-      ],
-      "answer": 1,
-      "explanation": "Feasibility refers to whether something is practical and possible to achieve - the director wants assurance the product can actually be developed and manufactured.",
-      "option_explanations": [
-        "Awards aren't a measure of feasibility.",
-        "Correct - feasibility means it's actually doable within constraints.",
-        "Market preference is separate from technical feasibility.",
-        "Stock performance isn't related to project feasibility."
-      ]
-    },
-    {
-      "type": "situation",
-      "word": "transit",
-      "question": "You're tracking a shipment from the warehouse to a customer's store. The status shows 'In Transit.' What does this tell you?",
-      "options": [
-        "The package has been delivered to the customer",
-        "The package is at a warehouse waiting to be shipped",
-        "The package is currently being transported and hasn't reached its destination yet",
-        "The package was lost during shipping"
+        "Hide the losses from public view",
+        "Conceal information from stakeholders",
+        "Reveal the truthful information to the public and investors",
+        "Wait until the losses are recovered before mentioning them"
       ],
       "answer": 2,
-      "explanation": "'In transit' means the shipment is actively being transported from one location to another and will arrive soon at its final destination.",
+      "explanation": "The CEO is requesting full disclosure, which means revealing all relevant information publicly and honestly to stakeholders and the public.",
       "option_explanations": [
-        "Delivered would be the status if it arrived.",
-        "This would show 'At Warehouse' or 'Pending Shipment.'",
-        "Correct - in transit means it's on its way.",
-        "Lost shipments have a different status designation."
+        "Incorrect. Disclosure means doing the opposite.",
+        "Incorrect. Disclosure requires transparency.",
+        "Correct. Full disclosure means revealing all truthful information.",
+        "Incorrect. Disclosure cannot be delayed."
+      ]
+    },
+    {
+      "type": "situation",
+      "word": "amenities",
+      "question": "A real estate agent is showing you a new apartment and highlights 'great amenities.' Which of these would typically fall under amenities?",
+      "options": [
+        "The price per square meter",
+        "Access to a gym, swimming pool, and community center",
+        "The age of the building",
+        "The location's historical significance"
+      ],
+      "answer": 1,
+      "explanation": "Amenities refer to facilities and services provided for residents' comfort and convenience, such as gyms, pools, and community centers.",
+      "option_explanations": [
+        "Incorrect. Price is not an amenity.",
+        "Correct. These are facilities that provide comfort and convenience.",
+        "Incorrect. Building age is not an amenity.",
+        "Incorrect. Historical significance is not an amenity."
       ]
     }
   ],
   "sentences": [
     {
-      "word": "editorial",
-      "sentence": "The magazine's editorial team spent weeks researching before publishing their groundbreaking editorial on climate change.",
-      "sentence_ko": "그 잡지의 편집팀은 기후 변화에 관한 획기적인 사설을 게시하기 전에 수주간 조사했다.",
-      "nuance": "편집팀의 전문적인 작업을 강조",
-      "context": "미디어/저널리즘",
-      "everyday_usage": "뉴스매체나 출판물에서 자주 사용되는 용어"
+      "word": "disclosure",
+      "sentence": "The Securities and Exchange Commission requires public companies to make timely disclosure of material information that could affect investors' decisions.",
+      "sentence_ko": "증권거래위원회는 상장 기업이 투자자의 결정에 영향을 미칠 수 있는 중요 정보를 적시에 공개하도록 요구한다.",
+      "nuance": "의무적이고 정식적인 공개",
+      "context": "금융/법률",
+      "everyday_usage": "중요한 정보를 숨김없이 공개할 때 사용"
     },
     {
-      "word": "feasibility",
-      "sentence": "The architect presented a feasibility report showing that constructing the bridge was technically possible but would require significant government funding.",
-      "sentence_ko": "건축가는 다리 건설이 기술적으로 가능하지만 상당한 정부 자금이 필요하다는 타당성 보고서를 제시했다.",
-      "nuance": "실제 프로젝트의 현실적 가능성 평가",
-      "context": "건설/대규모 프로젝트",
-      "everyday_usage": "비즈니스 제안이나 공학 프로젝트에서 핵심 개념"
+      "word": "alleged",
+      "sentence": "The newspaper reported on the alleged misconduct by the company's executives, but made clear that the accusations had not been legally proven.",
+      "sentence_ko": "신문은 회사 경영진의 의심되는 부당행위를 보도했지만, 그 혐의가 법적으로 증명되지 않았음을 명확히 했다.",
+      "nuance": "아직 증명되지 않은 주장",
+      "context": "뉴스/법률",
+      "everyday_usage": "아직 확실하지 않은 정보를 신중하게 표현할 때"
     },
     {
-      "word": "liaison",
-      "sentence": "The international liaison officer facilitated communication between the American embassy and local government agencies during the crisis.",
-      "sentence_ko": "국제 연락담당관은 위기 상황에서 미국 대사관과 지역 정부 기관 간의 의사소통을 중개했다.",
-      "nuance": "중개자로서의 중요한 역할 강조",
-      "context": "외교/국제관계",
-      "everyday_usage": "조직 간 또는 국가 간 협력에서 사용"
+      "word": "streamline",
+      "sentence": "After the merger, the new management decided to streamline operations by closing redundant offices and consolidating departments.",
+      "sentence_ko": "합병 후 신경영진은 중복된 사무실을 폐쇄하고 부서를 통합함으로써 운영을 간소화하기로 결정했다.",
+      "nuance": "효율성과 비용 절감을 위한 개선",
+      "context": "비즈니스/조직",
+      "everyday_usage": "복잡한 시스템이나 프로세스를 더 간단하게 만들 때"
     },
     {
-      "word": "accommodation",
-      "sentence": "The hotel offered special accommodations for guests with disabilities, including wheelchair-accessible rooms and elevators.",
-      "sentence_ko": "그 호텔은 휠체어 접근 가능한 객실과 엘리베이터를 포함하여 장애인 손님들을 위한 특별한 편의를 제공했다.",
-      "nuance": "다양한 필요에 맞춘 배려와 편의를 제공",
-      "context": "서비스업/여행",
-      "everyday_usage": "호텔이나 항공사에서 고객 만족도를 높이기 위해 사용"
+      "word": "stakeholder",
+      "sentence": "The environmental project manager held meetings with all stakeholders, from government officials to local community members, to ensure everyone's concerns were addressed.",
+      "sentence_ko": "환경 프로젝트 관리자는 정부 관계자부터 지역사회 주민까지 모든 이해관계자와 회의를 열어 모든 관심사가 해결되도록 했다.",
+      "nuance": "다양한 입장과 이익을 가진 당사자들",
+      "context": "프로젝트/정책",
+      "everyday_usage": "의사결정 과정에서 영향을 받을 수 있는 모든 당사자를 고려할 때"
     },
     {
-      "word": "transit",
-      "sentence": "The new subway system reduced commute times by providing faster transit options for millions of daily passengers.",
-      "sentence_ko": "새로운 지하철 시스템은 수백만 명의 일일 승객들을 위한 더 빠른 대중교통 옵션을 제공함으로써 통근 시간을 단축했다.",
-      "nuance": "대중교통 인프라와 효율성 강조",
-      "context": "도시계획/교통",
-      "everyday_usage": "도시 생활에서 일상적으로 사용되는 용어"
+      "word": "amenities",
+      "sentence": "The luxury resort advertises its world-class amenities, including a five-star restaurant, spa, and private beach access, to attract high-end clientele.",
+      "sentence_ko": "럭셔리 리조트는 5성급 레스토랑, 스파, 전용 해변 이용 등 세계 수준의 편의시설을 광고하여 고급 고객층을 유치한다.",
+      "nuance": "품질과 편안함을 강조하는 추가 서비스",
+      "context": "호텔/부동산",
+      "everyday_usage": "시설이나 서비스의 질을 강조할 때"
     }
   ]
 }

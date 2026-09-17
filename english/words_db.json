@@ -3980,5 +3980,65 @@
     "explanation": "한 장소에서 다른 장소로 이동하거나 물품이 운송되는 과정. 또는 대중교통 시스템을 의미함.",
     "tip": "동의어: transportation, passage / in transit(운송 중) 표현 자주 사용 / TOEIC/일상 어휘",
     "emoji": ""
+  },
+  {
+    "id": "disclosure",
+    "word": "disclosure",
+    "pos": "noun",
+    "date": "2026-09-17",
+    "meaning": "공개, 폭로",
+    "example_ko": "그 회사는 재정 기록을 완전히 공개했다.",
+    "example_en": "The company made a full disclosure of its financial records.",
+    "explanation": "정보나 사실을 공개적으로 드러내는 행위. 특히 이전에 숨겨진 정보를 밝힐 때 사용",
+    "tip": "동의어: revelation, exposure | 반의어: concealment | 출제영역: 비즈니스, 뉴스",
+    "emoji": "📋"
+  },
+  {
+    "id": "alleged",
+    "word": "alleged",
+    "pos": "adjective",
+    "date": "2026-09-17",
+    "meaning": "주장된, 의심되는",
+    "example_ko": "의심되는 범인이 지난주에 체포되었다.",
+    "example_en": "The alleged criminal was arrested last week.",
+    "explanation": "확실하지 않지만 그렇다고 말해지거나 주장되는. 법적/뉴스 언어에서 증명되지 않은 사실을 설명할 때 사용",
+    "tip": "동의어: claimed, purported | 반의어: proven, confirmed | 출제영역: 뉴스, 법률",
+    "emoji": "🔍"
+  },
+  {
+    "id": "streamline",
+    "word": "streamline",
+    "pos": "verb",
+    "date": "2026-09-17",
+    "meaning": "간소화하다, 효율화하다",
+    "example_ko": "시간을 절약하기 위해 승인 절차를 간소화해야 한다.",
+    "example_en": "We need to streamline our approval process to save time.",
+    "explanation": "무언가를 더 간단하고 효율적으로 만들기 위해 불필요한 부분을 제거하는 것. 업무 프로세스나 디자인 최적화 시 사용",
+    "tip": "동의어: simplify, optimize | 반의어: complicate | 출제영역: 비즈니스, 기술",
+    "emoji": "⚙️"
+  },
+  {
+    "id": "stakeholder",
+    "word": "stakeholder",
+    "pos": "noun",
+    "date": "2026-09-17",
+    "meaning": "이해관계자",
+    "example_ko": "이 결정을 내리기 전에 모든 이해관계자와 상담해야 한다.",
+    "example_en": "All stakeholders must be consulted before making this decision.",
+    "explanation": "어떤 일이나 조직에 이해관계가 있는 모든 당사자. 직원, 고객, 투자자, 지역사회 등이 포함될 수 있음",
+    "tip": "동의어: shareholder, party concerned | 반의어: outsider | 출제영역: 비즈니스, 관리",
+    "emoji": "👥"
+  },
+  {
+    "id": "amenities",
+    "word": "amenities",
+    "pos": "noun",
+    "date": "2026-09-17",
+    "meaning": "편의시설",
+    "example_ko": "새 사무실 건물은 체육관과 카페테리아 같은 훌륭한 편의시설을 포함한다.",
+    "example_en": "The new office building includes great amenities like a gym and cafeteria.",
+    "explanation": "편안함이나 즐거움을 제공하는 시설이나 서비스. 호텔, 아파트, 공항 등에서 제공되는 추가 서비스",
+    "tip": "동의어: facilities, conveniences | 반의어: inconveniences | 출제영역: 부동산, 호텔, 일상",
+    "emoji": "🏢"
   }
 ]

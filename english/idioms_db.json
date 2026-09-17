@@ -313,5 +313,41 @@
     "tip": "catch up on(어떤 일을 따라잡다)과 catch up with(누군가를 따라잡다)로 더 세분화되지만, catch up만 알아도 충분해요!",
     "emoji": "☕",
     "date": "2026-09-15"
+  },
+  {
+    "id": "drop-out",
+    "phrase": "drop out",
+    "meaning_ko": "중퇴하다, 포기하다",
+    "meaning_en": "to quit school or an activity before completion",
+    "explanation": "학교나 프로그램을 중간에 그만두는 거예요. 일상에서도 자주 들리는 표현이라 꼭 알아두면 좋아요! 📚",
+    "example_en": "He decided to drop out of college to start his own business.",
+    "example_ko": "그는 자신의 사업을 시작하기 위해 대학을 중퇴하기로 결정했어요.",
+    "tip": "유사 표현: quit, withdraw. 'drop out of + 명사' 형태로 많이 쓰여요!",
+    "emoji": "🚪",
+    "date": "2026-09-17"
+  },
+  {
+    "id": "get-by",
+    "phrase": "get by",
+    "meaning_ko": "간신히 버티다, 겨우 생활하다",
+    "meaning_en": "to manage or survive with difficulty or minimal resources",
+    "explanation": "충분하지 않지만 어떻게든 괜찮게 지내는 상황을 말해요. 일상 대화에서 진짜 많이 써요! 💪",
+    "example_en": "On a tight budget, we try to get by with what we have.",
+    "example_ko": "빠듯한 예산으로 우리는 있는 것으로 겨우 버티고 있어요.",
+    "tip": "유사 표현: manage, survive, make do. 'get by on'은 '~으로 버티다' 뜻이에요!",
+    "emoji": "💰",
+    "date": "2026-09-17"
+  },
+  {
+    "id": "wrap-up",
+    "phrase": "wrap up",
+    "meaning_ko": "마무리하다, 정리하다",
+    "meaning_en": "to finish or conclude something, especially a meeting or project",
+    "explanation": "회의나 프로젝트를 깔끔하게 마무리하는 거예요. 비즈니스 상황에서 정말 자주 쓰인답니다! 🎁",
+    "example_en": "Let's wrap up this meeting and discuss the action items.",
+    "example_ko": "이 회의를 마무리하고 실행 항목들을 논의해요.",
+    "tip": "유사 표현: finish, conclude, wind up. 명사로도 쓸 수 있어요: 'wrap-up' (마무리 회의)",
+    "emoji": "🎬",
+    "date": "2026-09-17"
   }
 ]
