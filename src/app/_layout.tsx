@@ -2,7 +2,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
-import { View, ActivityIndicator, TouchableOpacity, Text, StyleSheet, Platform } from 'react-native';
+import { View, ActivityIndicator, TouchableOpacity, Text, StyleSheet, Platform, Alert, Linking } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Updates from 'expo-updates';
 import { useUpdates } from 'expo-updates';
@@ -25,6 +25,7 @@ import { fetchWidgetData } from '../widget/widgetTaskHandler';
 import { YongStudyWidget } from '../widget/YongStudyWidget';
 import * as Notifications from 'expo-notifications';
 import { AuthProvider, useAuth } from '../context/AuthContext';
+import { getKSTDateString } from '../utils/dateUtils';
 
 export const NOTIF_LOG_KEY = 'debug_notif_received_log';
 
@@ -132,6 +133,36 @@ function MainTabs() {
     })();
   }, [user?.uid]);
 
+  // 보충학습 허브(클로드 아티팩트)의 "완료" 버튼 → yongstudy://complete?keys=a,b&date=YYYY-MM-DD 딥링크로
+  // 즉시 완료 처리 + Today 탭/위젯에 반영. keys는 completion/{key}/{date} 경로 여러 개를 콤마로 지정.
+  useEffect(() => {
+    const handleCompleteLink = async (url: string) => {
+      if (!url.startsWith('yongstudy://complete')) return;
+      const uid = user?.uid;
+      if (!uid) return;
+      const query = url.split('?')[1] ?? '';
+      const params = Object.fromEntries(
+        query.split('&').filter(Boolean).map(kv => kv.split('=').map(decodeURIComponent))
+      );
+      const keys = (params.keys ?? params.key ?? '').split(',').map(k => k.trim()).filter(Boolean);
+      const date = params.date || getKSTDateString();
+      if (keys.length === 0) return;
+      try {
+        const db = getDatabase(getFirebaseApp());
+        await Promise.all(keys.map(key => set(ref(db, `users/${uid}/completion/${key}/${date}`), true)));
+        await writeDailySummary(uid).catch(() => {});
+        navigationRef.current?.navigate('Checklist');
+        Alert.alert('반영 완료', `보충학습 허브에서 완료한 ${keys.length}개 항목을 Today 탭에 반영했어요.`);
+      } catch (e) {
+        Alert.alert('반영 실패', '네트워크 상태를 확인하고 다시 시도해주세요.');
+      }
+    };
+
+    Linking.getInitialURL().then(url => { if (url) handleCompleteLink(url); });
+    const sub = Linking.addEventListener('url', ({ url }) => handleCompleteLink(url));
+    return () => sub.remove();
+  }, [user?.uid]);
+
   // 알림 수신 시 로그 기록 (디버그용)
   useEffect(() => {
     const sub = Notifications.addNotificationReceivedListener(async (notification) => {
@@ -168,7 +199,12 @@ function MainTabs() {
 
   const applyUpdate = async () => {
     setApplying(true);
-    await Updates.reloadAsync();
+    try {
+      await Updates.reloadAsync();
+    } catch (e) {
+      setApplying(false);
+      Alert.alert('업데이트 실패', '앱을 완전히 종료했다가 다시 열어주세요.');
+    }
   };
 
   return (

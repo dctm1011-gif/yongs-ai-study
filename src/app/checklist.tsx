@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Linking } from 'react-native';
 import { getDatabase, onValue, ref } from 'firebase/database';
 import { useAuth } from '../context/AuthContext';
 import { getFirebaseApp } from '../config/firebase';
@@ -12,6 +12,8 @@ interface CheckItem {
   label: string;
   emoji: string;
 }
+
+const STUDY_HUB_URL = 'https://claude.ai/artifact/Cw11iAcshpwDw1PyLq8cdu';
 
 const GROUPS: { title: string; items: CheckItem[] }[] = [
   {
@@ -91,6 +93,19 @@ export default function ChecklistScreen() {
         </View>
       </View>
 
+      <TouchableOpacity
+        style={s.hubCard}
+        onPress={() => Linking.openURL(STUDY_HUB_URL)}
+        activeOpacity={0.8}
+      >
+        <Text style={s.hubEmoji}>📚</Text>
+        <View style={s.hubBody}>
+          <Text style={s.hubTitle}>보충학습 허브</Text>
+          <Text style={s.hubDesc}>단어 복습 · 리스닝 카드 · 스피킹 저널</Text>
+        </View>
+        <Text style={s.hubArrow}>›</Text>
+      </TouchableOpacity>
+
       <ProgressCalendar />
 
       {GROUPS.map(group => (
@@ -138,6 +153,17 @@ const s = StyleSheet.create({
   progressPct: { fontSize: 14, fontWeight: '700', color: '#0095f6' },
   bar: { height: 8, backgroundColor: '#dbdbdb', borderRadius: 4, overflow: 'hidden' },
   fill: { height: '100%', backgroundColor: '#0095f6', borderRadius: 4 },
+
+  hubCard: {
+    flexDirection: 'row', alignItems: 'center',
+    backgroundColor: '#f5f3ff', borderRadius: 14, padding: 16,
+    marginBottom: 20, borderWidth: 1, borderColor: '#ddd6fe', gap: 14,
+  },
+  hubEmoji: { fontSize: 28 },
+  hubBody: { flex: 1 },
+  hubTitle: { fontSize: 15, fontWeight: '700', color: '#262626', marginBottom: 2 },
+  hubDesc: { fontSize: 12, color: '#8e8e8e' },
+  hubArrow: { fontSize: 22, color: '#a78bfa', fontWeight: '300' },
 
   group: { marginBottom: 20 },
   groupTitle: {
