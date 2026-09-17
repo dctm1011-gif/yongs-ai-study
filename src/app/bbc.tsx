@@ -19,6 +19,13 @@ function stripHtml(s: string): string {
 
 import { getKSTDateString } from '../utils/dateUtils';
 
+/** "2026-09-18" → "9월 18일 금요일" */
+function formatToday(iso: string): string {
+  const [y, m, d] = iso.split('-').map(Number);
+  const w = ['일', '월', '화', '수', '목', '금', '토'][new Date(y, m - 1, d).getDay()];
+  return `${m}월 ${d}일 ${w}요일`;
+}
+
 /** RSS 원문("Mon, 14 Sep 2026 05:00:00 +0000")을 "9월 14일"로 */
 function formatPubDate(raw: string): string {
   if (!raw) return '';
@@ -560,7 +567,7 @@ export default function BBCScreen() {
 
   return (
     <View style={styles.homeContainer}>
-      <Text style={styles.dateLabel}>{today}</Text>
+      <Text style={styles.dateLabel}>{formatToday(today)}</Text>
 
       <TouchableOpacity style={styles.hubCard} onPress={() => setView('reading')} activeOpacity={0.8}>
         <MaterialIcons name="menu-book" size={36} color="#1d4ed8" />
