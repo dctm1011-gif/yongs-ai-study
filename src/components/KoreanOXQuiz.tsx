@@ -22,9 +22,8 @@ interface Props {
 
 type Phase = 'waiting' | 'correct' | 'wrong';
 
-function getKSTDate() {
-  return new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 10);
-}
+import { getKSTDateString } from '../utils/dateUtils';
+function getKSTDate() { return getKSTDateString(); }
 
 export default function KoreanOXQuiz({ items, uid }: Props) {
   const today = getKSTDate();

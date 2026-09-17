@@ -11,11 +11,8 @@ import { getFirebaseApp } from '../config/firebase';
 import { useAuth } from '../context/AuthContext';
 import { userRef } from '../utils/userDb';
 
-// Firebase Functions run in UTC; KST (UTC+9) doesn't roll to the next
-// calendar day until 09:00 UTC, so a plain UTC date lags KST by a day
-// for 9 hours each morning (and the daily reset below would fire 9h late).
-// Shift the clock forward before formatting, matching the helper used in
-// netlify/functions/*-daily.mjs.
+import { getKSTDateString } from '../utils/dateUtils';
+
 const SCREEN_W = Dimensions.get('window').width;
 
 // 지문 내 단어 꾹 누르기 → 사전 API 조회 → 단어 바로 아래 팝업
@@ -121,10 +118,6 @@ const PassageWithLookup = React.memo(({ text, vocabulary, textStyle }: {
   );
 });
 
-function getKSTDateString(): string {
-  const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
-  return kst.toISOString().split('T')[0];
-}
 
 interface TOEFLSection {
   id: 'reading' | 'listening' | 'writing' | 'speaking';
@@ -172,7 +165,7 @@ const PARAPHRASE_SENTENCES = [
 ];
 
 function getDailySentence(): string {
-  const dayOfYear = Math.floor((Date.now() + 9 * 3600000) / 86400000);
+  const dayOfYear = Math.floor((Date.now() + 6 * 3600000) / 86400000);
   return PARAPHRASE_SENTENCES[dayOfYear % PARAPHRASE_SENTENCES.length];
 }
 
