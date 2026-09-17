@@ -19,6 +19,15 @@ function stripHtml(s: string): string {
 
 import { getKSTDateString } from '../utils/dateUtils';
 
+/** RSS 원문("Mon, 14 Sep 2026 05:00:00 +0000")을 "9월 14일"로 */
+function formatPubDate(raw: string): string {
+  if (!raw) return '';
+  const t = Date.parse(raw);
+  if (Number.isNaN(t)) return raw;
+  const d = new Date(t);
+  return `${d.getMonth() + 1}월 ${d.getDate()}일`;
+}
+
 function formatDuration(sec: number): string {
   if (!sec) return '';
   const m = Math.floor(sec / 60);
@@ -66,6 +75,13 @@ function EpisodeCard({ ep, color, label, onComplete, isDone }: {
   const [durationSec, setDurationSec] = useState(ep.duration_sec || 0);
   const [expandedSentence, setExpandedSentence] = useState<Set<number>>(new Set());
   const [showAll, setShowAll] = useState(false);
+  // 듣기 훈련인데 번역이 늘 보이면 먼저 읽게 된다. 기본은 접어둔다.
+  const [shownKo, setShownKo] = useState<Set<number>>(new Set());
+  const toggleKo = (i: number) => setShownKo(prev => {
+    const next = new Set(prev);
+    if (next.has(i)) next.delete(i); else next.add(i);
+    return next;
+  });
 
   const toggleSentence = (i: number) => setExpandedSentence(prev => {
     const next = new Set(prev);
@@ -126,7 +142,9 @@ function EpisodeCard({ ep, color, label, onComplete, isDone }: {
           <View style={[styles.badge, { backgroundColor: color }]}>
             <Text style={styles.badgeText}>{label}</Text>
           </View>
-          <Text style={styles.epDate}>{ep.pub_date}</Text>
+          <Text style={styles.epDate}>
+            {formatPubDate(ep.pub_date)}{ep.sentences?.length ? ` · ${ep.sentences.length}문장` : ''}
+          </Text>
           {ep.episode_url ? (
             <TouchableOpacity onPress={() => Linking.openURL(ep.episode_url)}>
               <MaterialIcons name="open-in-new" size={14} color="#9ca3af" />
@@ -188,7 +206,15 @@ function EpisodeCard({ ep, color, label, onComplete, isDone }: {
                       <Text style={[styles.speakerLabel, { color }]}>{s.speaker}</Text>
                     )}
                     <Text style={styles.sentenceEn}>{s.en}</Text>
-                    {s.ko ? <Text style={styles.sentenceKo}>{s.ko}</Text> : null}
+                    {s.ko ? (
+                      shownKo.has(i) ? (
+                        <Text style={styles.sentenceKo}>{s.ko}</Text>
+                      ) : (
+                        <TouchableOpacity onPress={() => toggleKo(i)} activeOpacity={0.7}>
+                          <Text style={[styles.analysisToggleText, { color, marginTop: 5 }]}>번역 보기</Text>
+                        </TouchableOpacity>
+                      )
+                    ) : null}
                     {s.analysis ? (
                       <>
                         <TouchableOpacity style={styles.analysisToggle} onPress={() => toggleSentence(i)}>
@@ -238,6 +264,13 @@ function NewsCard({ article, sourceName, sourceColor }: {
   article: KoreaNewsArticle; sourceName: string; sourceColor: string;
 }) {
   const [expandedSet, setExpandedSet] = useState<Set<number>>(new Set());
+  // 번역이 늘 펼쳐져 있으면 영어를 읽기 전에 답이 먼저 보인다. 기본은 접어둔다.
+  const [shownKo, setShownKo] = useState<Set<number>>(new Set());
+  const toggleKo = (i: number) => setShownKo(prev => {
+    const next = new Set(prev);
+    if (next.has(i)) next.delete(i); else next.add(i);
+    return next;
+  });
   const catColor = CATEGORY_COLORS[article.category] ?? '#6b7280';
   const hasSentences = article.sentences && article.sentences.length > 0;
 
@@ -262,6 +295,9 @@ function NewsCard({ article, sourceName, sourceColor }: {
         ) : null}
       </View>
       <Text style={styles.newsTitle}>{article.title}</Text>
+      {hasSentences ? (
+        <Text style={styles.newsMeta}>{article.sentences!.length}문장</Text>
+      ) : null}
 
       {hasSentences ? (
         <View style={[styles.sentenceList, { borderTopColor: sourceColor + '33' }]}>
@@ -270,7 +306,15 @@ function NewsCard({ article, sourceName, sourceColor }: {
             return (
               <View key={i} style={[styles.sentenceRow, i > 0 && styles.sentenceRowBorder]}>
                 <Text style={styles.sentenceEn}>{s.en}</Text>
-                {s.ko ? <Text style={styles.sentenceKo}>{s.ko}</Text> : null}
+                {s.ko ? (
+                  shownKo.has(i) ? (
+                    <Text style={styles.sentenceKo}>{s.ko}</Text>
+                  ) : (
+                    <TouchableOpacity onPress={() => toggleKo(i)} activeOpacity={0.7}>
+                      <Text style={[styles.analysisToggleText, { color: sourceColor, marginTop: 5 }]}>번역 보기</Text>
+                    </TouchableOpacity>
+                  )
+                ) : null}
                 {s.analysis ? (
                   <>
                     <TouchableOpacity
@@ -301,11 +345,11 @@ function NewsCard({ article, sourceName, sourceColor }: {
 }
 
 // ─── Main screen ──────────────────────────────────────────────────────────
-type View = 'home' | 'reading' | 'listening';
+type BBCView = 'home' | 'reading' | 'listening';
 
 export default function BBCScreen() {
   const { user } = useAuth();
-  const [view, setView] = useState<View>('home');
+  const [view, setView] = useState<BBCView>('home');
   const [koreaNews, setKoreaNews] = useState<KoreaNewsArticle[]>([]);
   const [loadingKorea, setLoadingKorea] = useState(true);
   const [herald, setHerald] = useState<KoreaNewsArticle[]>([]);
@@ -508,6 +552,12 @@ export default function BBCScreen() {
   }
 
   // ── Home view ─────────────────────────────────────────────────────────────
+  // 출처 이름만 적혀 있어서 눌러보기 전엔 오늘 뭐가 왔는지 몰랐다.
+  // 기사 제목과 새 회차 여부를 카드에 바로 보여준다.
+  const readingTitle = koreaNews[0]?.title ?? herald[0]?.title ?? null;
+  const readingCount = (koreaNews[0] ? 1 : 0) + (herald[0] ? 1 : 0);
+  const newSources = PODCAST_SOURCES.filter(src => podcastDates[src.key] === today);
+
   return (
     <View style={styles.homeContainer}>
       <Text style={styles.dateLabel}>{today}</Text>
@@ -515,8 +565,20 @@ export default function BBCScreen() {
       <TouchableOpacity style={styles.hubCard} onPress={() => setView('reading')} activeOpacity={0.8}>
         <MaterialIcons name="menu-book" size={36} color="#1d4ed8" />
         <View style={styles.hubCardBody}>
-          <Text style={styles.hubCardName}>Reading</Text>
-          <Text style={styles.hubCardDesc}>KBS World · Korea Herald</Text>
+          <View style={styles.hubCardTop}>
+            <Text style={styles.hubCardName}>리딩</Text>
+            {readingDone && <Text style={styles.hubDone}>✓ 완료</Text>}
+          </View>
+          {loadingKorea || loadingHerald ? (
+            <Text style={styles.hubCardDesc}>불러오는 중…</Text>
+          ) : readingTitle ? (
+            <>
+              <Text style={styles.hubPreview} numberOfLines={2}>{readingTitle}</Text>
+              <Text style={styles.hubCardDesc}>KBS World · Korea Herald · 기사 {readingCount}개</Text>
+            </>
+          ) : (
+            <Text style={styles.hubCardDesc}>오늘 기사 준비 중</Text>
+          )}
         </View>
         <Text style={styles.hubArrow}>›</Text>
       </TouchableOpacity>
@@ -524,8 +586,30 @@ export default function BBCScreen() {
       <TouchableOpacity style={styles.hubCard} onPress={() => setView('listening')} activeOpacity={0.8}>
         <MaterialIcons name="headphones" size={36} color="#7c3aed" />
         <View style={styles.hubCardBody}>
-          <Text style={styles.hubCardName}>Listening</Text>
-          <Text style={styles.hubCardDesc}>Spotlight English · VOA Learning English</Text>
+          <View style={styles.hubCardTop}>
+            <Text style={styles.hubCardName}>리스닝</Text>
+            {newSources.map(src => (
+              <View key={src.key} style={[styles.newBadge, { backgroundColor: src.color }]}>
+                <Text style={styles.newBadgeText}>{src.label.split(' ')[0]} NEW</Text>
+              </View>
+            ))}
+          </View>
+          {loadingPodcasts ? (
+            <Text style={styles.hubCardDesc}>불러오는 중…</Text>
+          ) : (
+            <>
+              {PODCAST_SOURCES.map(src => {
+                const ep = podcasts[src.key];
+                if (!ep) return null;
+                return (
+                  <Text key={src.key} style={styles.hubPreview} numberOfLines={1}>
+                    {sourceDone[src.key] ? '✓ ' : ''}{ep.title}
+                  </Text>
+                );
+              })}
+              <Text style={styles.hubCardDesc}>Spotlight · VOA</Text>
+            </>
+          )}
         </View>
         <Text style={styles.hubArrow}>›</Text>
       </TouchableOpacity>
@@ -583,6 +667,9 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   hubCardBody: { flex: 1 },
+  hubCardTop: { flexDirection: 'row', alignItems: 'center', gap: 6, flexWrap: 'wrap' },
+  hubDone: { fontSize: 11, fontWeight: '700', color: '#16a34a' },
+  hubPreview: { fontSize: 12.5, color: '#374151', fontWeight: '600', lineHeight: 17, marginTop: 3 },
   hubCardName: { fontSize: 17, fontWeight: '700', color: '#111827', marginBottom: 4 },
   hubCardDesc: { fontSize: 12, color: '#9ca3af' },
   hubArrow: { fontSize: 26, color: '#9ca3af', fontWeight: '300' },
@@ -609,6 +696,7 @@ const styles = StyleSheet.create({
   newsCardMeta: { flexDirection: 'row', gap: 6, marginBottom: 8, flexWrap: 'wrap' },
   newsTitle: { fontSize: 15, fontWeight: '700', color: '#111827', lineHeight: 22, marginBottom: 4 },
   newsSummary: { fontSize: 13, color: '#4b5563', lineHeight: 19 },
+  newsMeta: { fontSize: 11, color: '#9ca3af', marginTop: 2 },
   sentenceList: { marginTop: 10, borderTopWidth: 1 },
   sentenceRow: { paddingVertical: 8 },
   sentenceRowBorder: { borderTopWidth: 1, borderTopColor: '#f0f0f0' },

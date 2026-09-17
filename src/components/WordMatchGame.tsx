@@ -54,6 +54,8 @@ export default function WordMatchGame() {
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [synced, setSynced] = useState(false);
   const [wordMeta, setWordMeta] = useState<Record<string, { count: number; lastReviewedDate: string | null }>>({});
+  // "한 판 더"로 시작한 판 — 복습 횟수와 완료 기록에 반영하지 않는다
+  const [practice, setPractice] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const stopTimer = useCallback(() => {
@@ -63,8 +65,9 @@ export default function WordMatchGame() {
     }
   }, []);
 
-  const startRound = useCallback(async () => {
+  const startRound = useCallback(async (asPractice = false) => {
     stopTimer();
+    setPractice(asPractice);
     setGameState('loading');
     setMistakes(0);
     setElapsedSeconds(0);
@@ -75,7 +78,7 @@ export default function WordMatchGame() {
     try {
       const today = getKSTDateString();
       const lastPlayed = await AsyncStorage.getItem(DAILY_PLAY_KEY);
-      if (lastPlayed === today) {
+      if (!asPractice && lastPlayed === today) {
         const saved = await AsyncStorage.getItem(DAILY_STATS_KEY);
         if (saved) {
           const { cards: savedCards, elapsed, mistakes: mis, synced: syn } = JSON.parse(saved);
@@ -141,7 +144,7 @@ export default function WordMatchGame() {
   useEffect(() => {
     startRound();
     return () => stopTimer();
-  }, [startRound, stopTimer]);
+  }, []);
 
   const onCardPress = (card: Card) => {
     if (busy || card.matched || flippedIds.includes(card.cardId)) return;
@@ -164,13 +167,13 @@ export default function WordMatchGame() {
       // 매칭 성공 — 실제로 맞힌 단어만 복습 1회로 인정 (하루 1회 캡)
       const today = getKSTDateString();
       const meta = wordMeta[first.wordId];
-      if (meta && meta.lastReviewedDate !== today) {
+      if (!practice && meta && meta.lastReviewedDate !== today) {
         update(userRef(uid, `english/reviewPool/${first.wordId}`), {
           count: Math.min(meta.count + 1, GRADUATE_AT),
           lastReviewedDate: today,
         }).catch(error => console.warn('리뷰 카운트 반영 실패:', error));
       }
-      clearWrongWords(uid, [first.wordId]);
+      if (!practice) clearWrongWords(uid, [first.wordId]);
 
       const updatedCards = cards.map(c =>
         c.wordId === first.wordId ? { ...c, matched: true } : c
@@ -181,6 +184,7 @@ export default function WordMatchGame() {
       if (updatedCards.every(c => c.matched)) {
         stopTimer();
         setGameState('complete');
+        if (practice) return; // 연습 판은 오늘 기록을 덮어쓰지 않는다
         // 오늘 날짜 + 결과 저장 (하루 1회 제한)
         const today = getKSTDateString();
         AsyncStorage.setItem(DAILY_PLAY_KEY, today).catch(() => {});
@@ -275,16 +279,22 @@ export default function WordMatchGame() {
             <Text style={styles.completeEmoji}>🎉</Text>
             <Text style={styles.completeTitle}>완료!</Text>
             <Text style={styles.completeSub}>{elapsedSeconds}초 · 틀린 시도 {mistakes}번</Text>
-            <TouchableOpacity
-              style={[styles.completeBtn, synced && styles.completeBtnDone]}
-              onPress={handleComplete}
-              disabled={synced}
-            >
-              <Text style={styles.completeBtnText}>
-                {synced ? '✓ Google Tasks 기록됨' : '완료'}
-              </Text>
+            {practice ? (
+              <Text style={styles.completeDailyNote}>연습 판이라 기록에는 반영되지 않았어요</Text>
+            ) : (
+              <TouchableOpacity
+                style={[styles.completeBtn, synced && styles.completeBtnDone]}
+                onPress={handleComplete}
+                disabled={synced}
+              >
+                <Text style={styles.completeBtnText}>
+                  {synced ? '✓ 오늘 학습에 기록됨' : '완료'}
+                </Text>
+              </TouchableOpacity>
+            )}
+            <TouchableOpacity style={styles.practiceBtn} onPress={() => startRound(true)}>
+              <Text style={styles.practiceBtnText}>한 판 더 (기록 반영 안 됨)</Text>
             </TouchableOpacity>
-            <Text style={styles.completeDailyNote}>내일 다시 도전하세요</Text>
           </View>
         )}
       </View>
@@ -293,6 +303,11 @@ export default function WordMatchGame() {
 }
 
 const styles = StyleSheet.create({
+  practiceBtn: {
+    marginTop: 10, paddingVertical: 9, paddingHorizontal: 18,
+    borderRadius: 10, borderWidth: 1, borderColor: '#dbdbdb', backgroundColor: '#fff',
+  },
+  practiceBtnText: { fontSize: 13, fontWeight: '600', color: '#4a4a4a' },
   container: {
     flex: 1,
     backgroundColor: '#fff',

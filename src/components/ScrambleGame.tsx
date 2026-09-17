@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import {
-  View, Text, TouchableOpacity, StyleSheet, ActivityIndicator, Animated, ScrollView,
+  View, Text, TouchableOpacity, StyleSheet, ActivityIndicator, Animated, ScrollView, Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getDatabase, get, set as dbSet, update } from 'firebase/database';
@@ -194,6 +194,19 @@ export default function ScrambleGame() {
     setScrambledTiles(prev => [...prev, last]);
   }, [selectedTiles, feedback]);
 
+  // 정답을 보면 그 단어는 복습 0회로 돌아간다. 누르기 전에 알려준다.
+  const confirmReveal = useCallback(() => {
+    if (!currentWord || feedback !== 'none') return;
+    Alert.alert(
+      '정답을 볼까요?',
+      `"${currentWord.meaning}"의 답을 보면 이 단어는 복습 0회로 돌아가 다시 처음부터 나옵니다.`,
+      [
+        { text: '조금 더 생각할게요', style: 'cancel' },
+        { text: '정답 보기', style: 'destructive', onPress: () => { handleReveal(); } },
+      ],
+    );
+  }, [currentWord, feedback]);
+
   const handleReveal = useCallback(async () => {
     if (!currentWord || feedback !== 'none') return;
     const stripped = currentWord.word.replace(/\s+/g, '');
@@ -379,7 +392,7 @@ export default function ScrambleGame() {
             </TouchableOpacity>
           )}
           {feedback === 'none' && (
-            <TouchableOpacity style={s.answerBtn} onPress={handleReveal} activeOpacity={0.7}>
+            <TouchableOpacity style={s.answerBtn} onPress={confirmReveal} activeOpacity={0.7}>
               <Text style={s.answerBtnText}>정답보기</Text>
             </TouchableOpacity>
           )}

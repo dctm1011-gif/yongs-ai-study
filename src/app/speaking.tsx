@@ -13,6 +13,7 @@ import { GRADUATE_AT } from '../utils/reviewPool';
 const CHAT_URL = 'https://illustrious-cuchufli-7c4e58.netlify.app/.netlify/functions/speaking-chat';
 const MIN_EXCHANGES = 8;
 const TARGET_WORD_COUNT = 3; // 오늘 대화에서 써볼 취약 단어 수
+const WEEKLY_GOAL = 4;        // 주간 스피킹 목표 횟수
 
 const DAILY_TOPICS = [
   'Your weekend plans',
@@ -86,6 +87,7 @@ export default function SpeakingScreen() {
   const [userMsgCount, setUserMsgCount] = useState(0);
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [targetWords, setTargetWords] = useState<TargetWord[]>([]);
+  const [weekCount, setWeekCount] = useState(0);
   const listRef = useRef<FlatList>(null);
 
   const scrollToBottom = (animated = true) => {
@@ -146,6 +148,25 @@ export default function SpeakingScreen() {
     get(ref(db, `users/${user.uid}/completion/english_speaking/${today}`))
       .then(snap => { if (snap.exists() && snap.val()?.done) setViewState('done'); })
       .catch(() => {});
+  }, [user?.uid]);
+
+  // 이번 주(최근 7일) 스피킹 횟수 — 헤더에 목표 대비로 보여준다
+  useEffect(() => {
+    if (!user?.uid) return;
+    const db = getDatabase(getFirebaseApp());
+    get(ref(db, `users/${user.uid}/completion/english_speaking`)).then(snap => {
+      if (!snap.exists()) return;
+      const data = snap.val() as Record<string, any>;
+      const [y, m, d] = today.split('-').map(Number);
+      let n = 0;
+      for (let i = 0; i < 7; i++) {
+        const dt = new Date(y, m - 1, d - i);
+        const key = `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, '0')}-${String(dt.getDate()).padStart(2, '0')}`;
+        const v = data[key];
+        if (v === true || (typeof v === 'object' && v !== null && v.done === true)) n++;
+      }
+      setWeekCount(n);
+    }).catch(() => {});
   }, [user?.uid]);
 
   // 오늘 대화에서 써볼 취약 단어 — 오답 이력 우선, 그다음 복습 횟수가 적은 순
@@ -299,8 +320,8 @@ export default function SpeakingScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>🗣️ AI English Talk</Text>
-          <Text style={styles.topicLabel}>Topic: {topic}</Text>
+          <Text style={styles.headerTitle}>스피킹</Text>
+          <Text style={styles.topicLabel}>이번 주 {weekCount}회 · 목표 {WEEKLY_GOAL}회</Text>
         </View>
         <View style={styles.centeredContent}>
           <Text style={styles.doneEmoji}>✅</Text>
@@ -317,8 +338,10 @@ export default function SpeakingScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>🗣️ AI English Talk</Text>
-        <Text style={styles.topicLabel}>Topic: {topic}</Text>
+        <Text style={styles.headerTitle}>스피킹</Text>
+        <Text style={styles.topicLabel}>
+          이번 주 {weekCount}회 · 목표 {WEEKLY_GOAL}회
+        </Text>
       </View>
 
       {viewState === 'idle' && (
@@ -342,6 +365,21 @@ export default function SpeakingScreen() {
           <TouchableOpacity style={styles.startBtn} onPress={startConversation}>
             <Text style={styles.startBtnText}>대화 시작</Text>
           </TouchableOpacity>
+
+          {/* 지난 대화가 화면 어디에도 없어서, 어제 무슨 얘기를 했는지 모른 채 새로 시작하게 됐다 */}
+          {history.length > 0 && (
+            <View style={styles.historyBox}>
+              <Text style={styles.historyLabel}>지난 대화</Text>
+              {history.slice(0, 3).map(h => (
+                <View key={h.date} style={styles.historyRow}>
+                  <Text style={styles.historyTopic} numberOfLines={1}>{h.topic}</Text>
+                  <Text style={styles.historyMeta}>
+                    {h.date.slice(5).replace('-', '/')} · {h.exchanges}턴
+                  </Text>
+                </View>
+              ))}
+            </View>
+          )}
         </View>
       )}
 
@@ -439,9 +477,9 @@ export default function SpeakingScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#f8fafc' },
-  header: { backgroundColor: '#6366f1', padding: 16, paddingBottom: 12 },
-  headerTitle: { color: '#fff', fontSize: 18, fontWeight: '800' },
-  topicLabel: { color: 'rgba(255,255,255,0.8)', fontSize: 12, marginTop: 2 },
+  header: { backgroundColor: '#fff', padding: 16, paddingBottom: 12, borderBottomWidth: 1, borderBottomColor: '#e2e8f0' },
+  headerTitle: { color: '#262626', fontSize: 18, fontWeight: '800' },
+  topicLabel: { color: '#8e8e8e', fontSize: 12, marginTop: 2 },
   centeredContent: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 },
   topicBig: { fontSize: 22, fontWeight: '700', color: '#1e293b', textAlign: 'center', marginBottom: 12 },
   startHint: { fontSize: 13, color: '#64748b', textAlign: 'center', lineHeight: 20, marginBottom: 28 },
@@ -452,6 +490,11 @@ const styles = StyleSheet.create({
   targetTitle: { fontSize: 11, fontWeight: '800', color: '#6366f1', letterSpacing: 0.5, marginBottom: 8 },
   targetWord: { fontSize: 15, fontWeight: '700', color: '#1e293b', marginBottom: 4 },
   targetMeaning: { fontSize: 13, fontWeight: '400', color: '#64748b' },
+  historyBox: { alignSelf: 'stretch', marginTop: 26, borderTopWidth: 1, borderTopColor: '#e2e8f0', paddingTop: 14 },
+  historyLabel: { fontSize: 11, fontWeight: '800', color: '#94a3b8', letterSpacing: 0.5, marginBottom: 8 },
+  historyRow: { flexDirection: 'row', alignItems: 'baseline', gap: 8, paddingVertical: 6 },
+  historyTopic: { flex: 1, fontSize: 13, fontWeight: '600', color: '#1e293b' },
+  historyMeta: { fontSize: 11, color: '#94a3b8' },
   startBtn: { backgroundColor: '#6366f1', borderRadius: 14, paddingVertical: 14, paddingHorizontal: 40 },
   startBtnText: { color: '#fff', fontSize: 16, fontWeight: '700' },
   doneEmoji: { fontSize: 56, marginBottom: 12 },

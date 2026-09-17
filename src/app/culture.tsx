@@ -29,9 +29,7 @@ import {
   DIARY_VOCAB_LIST,
 } from '../data/koreanContent';
 
-function getKSTDateString(): string {
-  return new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 10);
-}
+import { getKSTDateString } from '../utils/dateUtils';
 
 const READING_GOAL_PAGES = 20;
 
@@ -101,7 +99,7 @@ export default function CultureScreen() {
         if (allSnap.exists()) {
           const data: Record<string, boolean> = allSnap.val();
           let count = 0;
-          let d = new Date(Date.now() + 9 * 3600000);
+          let d = new Date(Date.now() + 6 * 3600000);
           while (true) {
             const key = d.toISOString().slice(0, 10);
             if (data[key]) { count++; d.setDate(d.getDate() - 1); } else break;
@@ -172,6 +170,8 @@ export default function CultureScreen() {
     );
   }
 
+  const usedCount = vocabWords.filter(v => diaryText.includes(v.word)).length;
+
   return (
     <SafeAreaView style={s.safeArea} edges={['top']}>
     <ScrollView ref={scrollViewRef} style={s.container} contentContainerStyle={s.content} keyboardShouldPersistTaps="handled">
@@ -212,7 +212,7 @@ export default function CultureScreen() {
           <View style={s.doneBox}>
             <MaterialIcons name="check-circle" size={28} color="#16a34a" />
             <Text style={s.doneText}>오늘 독서 완료!</Text>
-            <Text style={s.doneSub}>✓ Google Tasks 기록됨</Text>
+            <Text style={s.doneSub}>✓ 오늘 학습에 기록됨</Text>
           </View>
         ) : (
           <TouchableOpacity
@@ -253,7 +253,13 @@ export default function CultureScreen() {
           </View>
         </View>
 
-        <Text style={s.diaryGuide}>아래 어휘 3개를 모두 사용해서 오늘 일기를 써보세요</Text>
+        <View style={s.diaryGuideRow}>
+          <Text style={s.diaryGuide}>아래 어휘 3개를 모두 사용해서 오늘 일기를 써보세요</Text>
+          {/* 단어별 체크 표시는 이미 있었지만 몇 개를 썼는지는 세어주지 않았다 */}
+          <Text style={[s.diaryUsedCount, usedCount === vocabWords.length && s.diaryUsedCountDone]}>
+            {usedCount}/{vocabWords.length}
+          </Text>
+        </View>
 
         <View style={s.vocabList}>
           {vocabWords.map((v, i) => {
@@ -301,7 +307,9 @@ export default function CultureScreen() {
               {diarySaving ? (
                 <ActivityIndicator size="small" color="#fff" />
               ) : (
-                <><MaterialIcons name="save" size={18} color="#fff" /><Text style={s.completeBtnText}>일기 저장</Text></>
+                <><MaterialIcons name="save" size={18} color="#fff" /><Text style={s.completeBtnText}>
+                  {usedCount >= vocabWords.length ? '일기 저장' : `일기 저장 · 어휘 ${vocabWords.length - usedCount}개 더`}
+                </Text></>
               )}
             </TouchableOpacity>
           </>
@@ -367,6 +375,9 @@ const s = StyleSheet.create({
   millieBtnSub: { color: 'rgba(255,255,255,0.72)', fontSize: 13, fontWeight: '500' },
   // 어휘 일기
   diaryGuide: { fontSize: 13, color: '#6b7280', marginBottom: 12, lineHeight: 19 },
+  diaryGuideRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
+  diaryUsedCount: { fontSize: 12, fontWeight: '700', color: '#8e8e8e' },
+  diaryUsedCountDone: { color: '#059669' },
   vocabList: { gap: 8, marginBottom: 14 },
   vocabChip: {
     paddingVertical: 10, paddingHorizontal: 12,

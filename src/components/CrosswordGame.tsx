@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import {
   View, Text, TouchableOpacity, StyleSheet, ScrollView,
-  ActivityIndicator, Dimensions,
+  ActivityIndicator, Dimensions, Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getDatabase, ref, get, set as dbSet, update } from 'firebase/database';
@@ -319,6 +319,19 @@ export default function CrosswordGame() {
     }
   }, [grid, selectedWordId, cursorCell, gameState]);
 
+  // 정답을 보면 그 단어는 복습 0회로 돌아간다. 지금까지 아무 안내 없이 처리돼서 확인을 받는다.
+  const confirmShowAnswer = useCallback(() => {
+    if (!selectedWord || gameState !== 'playing') return;
+    Alert.alert(
+      '정답을 볼까요?',
+      `"${selectedWord.meaning}"의 답을 보면 이 단어는 복습 0회로 돌아가 다시 처음부터 나옵니다.`,
+      [
+        { text: '조금 더 생각할게요', style: 'cancel' },
+        { text: '정답 보기', style: 'destructive', onPress: () => { handleShowAnswer(); } },
+      ],
+    );
+  }, [selectedWord, gameState]);
+
   const handleShowAnswer = useCallback(async () => {
     if (!selectedWord || gameState !== 'playing') return;
     const cells = wordCells(selectedWord);
@@ -376,7 +389,7 @@ export default function CrosswordGame() {
     }
   }, [userInputs, placedWords, gameState, grid, bounds]);
 
-  // Google Tasks 연동 완료 처리
+  // 오늘 학습 완료 기록
   const handleComplete = useCallback(async () => {
     if (synced) return;
     try {
@@ -494,7 +507,7 @@ export default function CrosswordGame() {
               disabled={synced}
             >
               <Text style={s.completeBtnText}>
-                {synced ? '✓ Google Tasks 기록됨' : '완료'}
+                {synced ? '✓ 오늘 학습에 기록됨' : '완료'}
               </Text>
             </TouchableOpacity>
             {revealedWordIds.size > 0 && (
@@ -525,7 +538,7 @@ export default function CrosswordGame() {
             <Text style={s.clueText} numberOfLines={2}>
               {selectedWord?.meaning ?? '단어를 선택하세요'}
             </Text>
-            <TouchableOpacity style={s.answerBtn} onPress={handleShowAnswer} activeOpacity={0.7}>
+            <TouchableOpacity style={s.answerBtn} onPress={confirmShowAnswer} activeOpacity={0.7}>
               <Text style={s.answerBtnText}>정답보기</Text>
             </TouchableOpacity>
           </View>
