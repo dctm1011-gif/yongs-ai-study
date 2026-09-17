@@ -16,7 +16,6 @@ export class CacheManager {
   private cacheConfig: CacheConfig = {
     'english_words': 24 * 60 * 60 * 1000, // 24 hours
     'english_quizzes': 24 * 60 * 60 * 1000, // 24 hours
-    'toefl_sections': 24 * 60 * 60 * 1000, // 24 hours
     'papers_list': 12 * 60 * 60 * 1000, // 12 hours
     'papers_trends': 6 * 60 * 60 * 1000, // 6 hours
     'announcements': 1 * 60 * 60 * 1000, // 1 hour

@@ -3,10 +3,7 @@ import { getFirebaseApp } from '../config/firebase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CHECKLIST_KEYS, isDone } from '../constants/studyKeys';
 
-function getKSTDateString(): string {
-  const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
-  return kst.toISOString().split('T')[0];
-}
+import { getKSTDateString } from './dateUtils';
 
 // completion 기록 대상 전체 키 (진행도 계산 대상인 CHECKLIST_KEYS보다 범위가 넓음)
 const ALL_COMPLETION_KEYS = [
@@ -15,14 +12,14 @@ const ALL_COMPLETION_KEYS = [
   'english_scramble', 'english_sentence', 'english_word_match',
   'english_news_reading', 'english_news_listening',
   // 한국어
-  'reading', 'korean_diary', 'sajaseongeo', 'sangshik', 'korean_ox',
+  'reading', 'korean_diary',
   // 투자
   'investment',
-  // TOEFL
-  'toefl_reading', 'toefl_listening', 'toefl_writing', 'toefl_speaking',
   // AI 스피킹
   'english_speaking',
 ];
+// 2026-09-18: 화면이 없어진 항목(사자성어·상식·한국어 OX·TOEFL 4종)은 수집 목록에서 뺐다.
+// 지난 기록은 Firebase에 그대로 두었다 — 8~9월에 실제로 한 학습이라 지우지 않는다.
 
 // 과거 completion 원본 → 날짜별 progress 백필 (앱 시작 시 1회)
 export async function backfillProgressHistory(uid: string): Promise<void> {
