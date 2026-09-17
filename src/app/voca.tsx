@@ -14,6 +14,7 @@ import { NOTIF_LOG_KEY } from './_layout';
 import { getFirebaseApp } from '../config/firebase';
 import { useAuth } from '../context/AuthContext';
 import { userRef } from '../utils/userDb';
+import { GRADUATE_AT, recordWrongWords, clearWrongWords } from '../utils/reviewPool';
 import GameHub from '../components/GameHub';
 
 const NETLIFY_BASE_URL = 'https://illustrious-cuchufli-7c4e58.netlify.app';
@@ -75,6 +76,7 @@ interface Idiom {
   id: string;
   phrase: string;
   meaning_ko: string;
+  meaning_en?: string;
   explanation: string;
   example_en: string;
   example_ko: string;
@@ -177,18 +179,18 @@ function mapFirebaseQuizzes(data: any): Quiz[] {
 
 // 구동사 퀴즈 4지선다용 distractor 풀
 const PHRASAL_EXTRA: { phrase: string; meaning: string }[] = [
-  { phrase: 'look up',     meaning: '찾아보다, 올려다보다' },
-  { phrase: 'get over',    meaning: '극복하다, 회복하다' },
-  { phrase: 'turn down',   meaning: '거절하다, 줄이다' },
-  { phrase: 'put off',     meaning: '미루다, 연기하다' },
-  { phrase: 'go along',    meaning: '동의하다, 따라가다' },
-  { phrase: 'make up',     meaning: '화해하다, 구성하다' },
-  { phrase: 'bring about', meaning: '야기하다, 초래하다' },
-  { phrase: 'set aside',   meaning: '따로 두다, 무시하다' },
-  { phrase: 'come across', meaning: '우연히 마주치다' },
-  { phrase: 'give in',     meaning: '항복하다, 굴복하다' },
-  { phrase: 'figure out',  meaning: '알아내다, 이해하다' },
-  { phrase: 'show up',     meaning: '나타나다, 드러내다' },
+  { phrase: 'look up',     meaning: 'to search for information or look at something above' },
+  { phrase: 'get over',    meaning: 'to recover from an illness or disappointment' },
+  { phrase: 'turn down',   meaning: 'to refuse an offer or reduce the level of something' },
+  { phrase: 'put off',     meaning: 'to delay or postpone something until a later time' },
+  { phrase: 'go along',    meaning: 'to agree with or follow someone else' },
+  { phrase: 'make up',     meaning: 'to reconcile after an argument or invent a story' },
+  { phrase: 'bring about', meaning: 'to cause something to happen' },
+  { phrase: 'set aside',   meaning: 'to save something for a purpose or to ignore it' },
+  { phrase: 'come across', meaning: 'to find or meet someone or something by chance' },
+  { phrase: 'give in',     meaning: 'to surrender or stop resisting' },
+  { phrase: 'figure out',  meaning: 'to understand or find the solution to something' },
+  { phrase: 'show up',     meaning: 'to arrive or appear somewhere, often unexpectedly' },
 ];
 
 function idiomsToPhrasalQuizzes(idioms: Idiom[]): Quiz[] {
@@ -196,26 +198,28 @@ function idiomsToPhrasalQuizzes(idioms: Idiom[]): Quiz[] {
   const quizzes: Quiz[] = [];
   const todayPhrases = new Set(idioms.map(i => i.phrase.toLowerCase()));
 
-  // 오늘 idioms와 겹치지 않는 distractor 선택
   const extraPool = PHRASAL_EXTRA.filter(d => !todayPhrases.has(d.phrase.toLowerCase()));
 
   idioms.forEach((idiom, idx) => {
-    const otherMeanings = idioms.filter((_, i) => i !== idx).map(i => i.meaning_ko);
-    const otherPhrases  = idioms.filter((_, i) => i !== idx).map(i => i.phrase);
+    const otherPhrases = idioms.filter((_, i) => i !== idx).map(i => i.phrase);
     const extra = extraPool[idx % extraPool.length];
+    const meaningEn = idiom.meaning_en;
 
-    // 1. 뜻 맞추기: 4지선다 (오늘 idiom 뜻 3개 + extra distractor 1개)
-    quizzes.push({
-      id: `pq_meaning_${idiom.id}`,
-      wordId: idiom.id,
-      type: 'meaning' as const,
-      question: `What does "${idiom.phrase}" mean?`,
-      options: shuffleArrayStatic([idiom.meaning_ko, ...otherMeanings, extra.meaning]),
-      correct: idiom.meaning_ko,
-      explanation: idiom.explanation,
-    });
+    // 1. 뜻 맞추기: English definitions (requires meaning_en from Firebase)
+    if (meaningEn) {
+      const otherMeaningsEn = idioms.filter((_, i) => i !== idx).map(i => i.meaning_en || i.phrase);
+      quizzes.push({
+        id: `pq_meaning_${idiom.id}`,
+        wordId: idiom.id,
+        type: 'meaning' as const,
+        question: `What does "${idiom.phrase}" mean?`,
+        options: shuffleArrayStatic([meaningEn, ...otherMeaningsEn, extra.meaning]),
+        correct: meaningEn,
+        explanation: `"${idiom.phrase}": ${meaningEn}\nEx: ${idiom.example_en}`,
+      });
+    }
 
-    // 2. 빈칸 채우기: 4지선다 (오늘 phrase 3개 + extra phrase 1개)
+    // 2. 빈칸 채우기: fill in the phrase (all English)
     if (idiom.example_en && idiom.phrase) {
       const regex = new RegExp(idiom.phrase.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&'), 'i');
       const blanked = idiom.example_en.replace(regex, '___');
@@ -227,23 +231,23 @@ function idiomsToPhrasalQuizzes(idioms: Idiom[]): Quiz[] {
           question: blanked,
           options: shuffleArrayStatic([idiom.phrase, ...otherPhrases, extra.phrase]),
           correct: idiom.phrase,
-          correctMeaning: idiom.meaning_ko,
-          explanation: idiom.explanation,
+          correctMeaning: meaningEn,
+          explanation: meaningEn ? `"${idiom.phrase}": ${meaningEn}\nEx: ${idiom.example_en}` : undefined,
         });
       }
     }
 
-    // 3. 상황 문제: explanation으로 상황 설명 (example_ko 직역 금지) + 4지선다
-    if (idiom.explanation && idiom.phrase) {
-      const cleanExp = idiom.explanation.replace(/[\u{1F300}-\u{1FFFF}]/gu, '').trim();
+    // 3. 상황 문제: English-only scenario → pick the phrase (requires meaning_en)
+    if (meaningEn && idiom.phrase) {
+      const scenario = meaningEn.replace(/^to /, '');
       quizzes.push({
         id: `pq_situation_${idiom.id}`,
         wordId: idiom.id,
         type: 'situation' as const,
-        question: `${cleanExp}\n\n위 설명에 해당하는 표현은?`,
+        question: `You want to ${scenario}.\n\nWhich phrase would you use?`,
         options: shuffleArrayStatic([idiom.phrase, ...otherPhrases, extra.phrase]),
         correct: idiom.phrase,
-        explanation: `"${idiom.phrase}" = ${idiom.meaning_ko}\n예) ${idiom.example_en}`,
+        explanation: `"${idiom.phrase}": ${meaningEn}\nEx: ${idiom.example_en}`,
       });
     }
   });
@@ -972,23 +976,30 @@ export default function VocaScreen() {
             selectedOption,
           }).catch(() => {});
         }
-        if (!isCorrect && uid) {
-          // 오답 단어를 reviewPool에서 count=0으로 리셋 → 알림/게임 최우선 복습
+        if (uid) {
           const word = words.find(w => w.id === q.wordId);
-          if (word) {
-            const poolRef = userRef(uid, `english/reviewPool/${q.wordId}`);
-            get(poolRef).then(snap => {
-              const entry = snap.exists() ? snap.val() : {};
-              dbSet(poolRef, {
-                word: word.word,
-                meaning: word.meaning,
-                pos: word.pos,
-                emoji: word.emoji,
-                ...entry,
-                count: 0,
-                lastReviewedDate: null,
+          if (!isCorrect) {
+            // 오답 단어를 reviewPool에서 count=0으로 리셋 + 오답 풀에 기록.
+            // count는 다른 게임이 며칠이면 되돌려놓기 때문에, 다시 맞힐 때까지 유지되는
+            // 오답 풀이 있어야 실제로 우선 출제된다.
+            recordWrongWords(uid, [{ wordId: q.wordId, word: word?.word }]);
+            if (word) {
+              const poolRef = userRef(uid, `english/reviewPool/${q.wordId}`);
+              get(poolRef).then(snap => {
+                const entry = snap.exists() ? snap.val() : {};
+                dbSet(poolRef, {
+                  word: word.word,
+                  meaning: word.meaning,
+                  pos: word.pos,
+                  emoji: word.emoji,
+                  ...entry,
+                  count: 0,
+                  lastReviewedDate: null,
+                }).catch(() => {});
               }).catch(() => {});
-            }).catch(() => {});
+            }
+          } else {
+            clearWrongWords(uid, [q.wordId]);
           }
         }
         return { ...q, answered: true, correct_answer: isCorrect, selectedOption };
@@ -1008,13 +1019,15 @@ export default function VocaScreen() {
       const db = getDatabase(getFirebaseApp());
       get(ref(db, `users/${uid}/english/reviewPool`)).then(snap => {
         const pool = snap.exists() ? Object.values(snap.val() as Record<string, any>) : [];
-        const active = pool.filter((e: any) => (e.count ?? 0) < 10).length;
-        const graduated = pool.filter((e: any) => (e.count ?? 0) >= 10).length;
+        const active = pool.filter((e: any) => (e.count ?? 0) < GRADUATE_AT).length;
+        const graduated = pool.filter((e: any) => (e.count ?? 0) >= GRADUATE_AT).length;
         return dbSet(ref(db, `english/dailySummary/${today}`), {
           correct,
           total: activeQuizzes.length,
           quizDetails: activeQuizzes.map(q => ({
-            word: q.word,
+            // Quiz에는 word 필드가 없어서 undefined가 들어갔고, Firebase가 undefined를 거부해
+            // 이 dailySummary 쓰기 자체가 매번 실패하고 있었다. wordId가 곧 단어 문자열이다.
+            word: q.wordId,
             wordId: q.wordId,
             correct_answer: q.correct_answer ?? false,
             selectedOption: q.selectedOption ?? '',
@@ -1036,19 +1049,22 @@ export default function VocaScreen() {
         setReviewStory(snap.val());
         return;
       }
-      // 스토리 없으면 온디맨드 생성 — reviewPool에서 25개 우선, 없으면 오늘 읽은 단어
+      // 스토리 없으면 온디맨드 생성 — 오늘 읽은 단어 우선 + reviewPool에서 보충
       const poolSnap = await get(userRef(uid, 'english/reviewPool')).catch(() => null);
-      let reviewWords: { word: string; meaning: string }[] = [];
+      const todayRead = words.filter(w => w.isRead).map(w => ({ word: w.word, meaning: w.meaning }));
+      const todayWordSet = new Set(todayRead.map(w => w.word.toLowerCase()));
+      let reviewWords: { word: string; meaning: string }[] = [...todayRead];
       if (poolSnap?.exists()) {
         const pool = poolSnap.val() as Record<string, any>;
-        reviewWords = Object.values(pool)
-          .filter(v => (v.count || 0) < 10)
+        const poolWords = Object.values(pool)
+          .filter(v => (v.count || 0) < 10 && !todayWordSet.has((v.word || '').toLowerCase()))
           .sort((a, b) => (a.count || 0) - (b.count || 0))
-          .slice(0, 25)
+          .slice(0, 15)
           .map(v => ({ word: v.word, meaning: v.meaning || '' }));
+        reviewWords = [...todayRead, ...poolWords];
       }
       if (reviewWords.length === 0) {
-        reviewWords = words.filter(w => w.isRead).map(w => ({ word: w.word, meaning: w.meaning }));
+        reviewWords = todayRead;
       }
       if (reviewWords.length === 0) {
         setReviewStory(null);
@@ -1117,7 +1133,7 @@ Return ONLY JSON (no markdown):
       ]);
       const poolVals: any[] = poolSnap.exists() ? Object.values(poolSnap.val()) : [];
       const total = poolVals.length;
-      const graduated = poolVals.filter(w => (w.count ?? 0) >= 10).length;
+      const graduated = poolVals.filter(w => (w.count ?? 0) >= GRADUATE_AT).length;
       const playDays = playSnap.exists() ? Object.keys(playSnap.val()).length : 0;
       setDebugPoolStats({ total, graduated, playDays });
 
@@ -1366,7 +1382,7 @@ Return ONLY JSON (no markdown):
                 ? <Text style={styles.debugEmpty}>조회 중...</Text>
                 : <>
                     <Text style={styles.debugRow}>전체 단어: <Text style={styles.debugVal}>{debugPoolStats.total}개</Text></Text>
-                    <Text style={styles.debugRow}>졸업(count≥10): <Text style={styles.debugVal}>{debugPoolStats.graduated}개</Text></Text>
+                    <Text style={styles.debugRow}>졸업(count≥{GRADUATE_AT}): <Text style={styles.debugVal}>{debugPoolStats.graduated}개</Text></Text>
                     <Text style={styles.debugRow}>활성 단어: <Text style={styles.debugVal}>{debugPoolStats.total - debugPoolStats.graduated}개</Text></Text>
                     <Text style={styles.debugRow}>게임 플레이일수: <Text style={styles.debugVal}>{debugPoolStats.playDays}일</Text></Text>
                   </>
@@ -2275,12 +2291,12 @@ const ReviewPoolView = React.memo(({ uid }: { uid: string }) => {
   }
 
   const active = poolWords.filter(w => w.count < 10);
-  const graduated = poolWords.filter(w => w.count >= 10);
+  const graduated = poolWords.filter(w => w.count >= GRADUATE_AT);
   const totalDelta = Object.values(deltas).reduce((a, b) => a + b, 0);
 
   const renderWord = ({ item }: { item: PoolWord }) => {
     const pct = Math.min(item.count / 10, 1);
-    const isGraduated = item.count >= 10;
+    const isGraduated = item.count >= GRADUATE_AT;
     const delta = deltas[item.id] ?? 0;
     return (
       <View style={styles.poolRow}>

@@ -141,15 +141,21 @@ function MainTabs() {
       const uid = user?.uid;
       if (!uid) return;
       const query = url.split('?')[1] ?? '';
-      const params = Object.fromEntries(
-        query.split('&').filter(Boolean).map(kv => kv.split('=').map(decodeURIComponent))
+      const params: Record<string, string> = Object.fromEntries(
+        query.split('&').filter(Boolean).map(kv => {
+          const [k, v = ''] = kv.split('=');
+          return [decodeURIComponent(k), decodeURIComponent(v)];
+        })
       );
-      const keys = (params.keys ?? params.key ?? '').split(',').map(k => k.trim()).filter(Boolean);
+      const keys = (params.keys ?? params.key ?? '')
+        .split(',')
+        .map((k: string) => k.trim())
+        .filter(Boolean);
       const date = params.date || getKSTDateString();
       if (keys.length === 0) return;
       try {
         const db = getDatabase(getFirebaseApp());
-        await Promise.all(keys.map(key => set(ref(db, `users/${uid}/completion/${key}/${date}`), true)));
+        await Promise.all(keys.map((key: string) => set(ref(db, `users/${uid}/completion/${key}/${date}`), true)));
         await writeDailySummary(uid).catch(() => {});
         navigationRef.current?.navigate('Checklist');
         Alert.alert('반영 완료', `보충학습 허브에서 완료한 ${keys.length}개 항목을 Today 탭에 반영했어요.`);

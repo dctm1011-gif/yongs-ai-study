@@ -8,6 +8,7 @@ import { getDatabase, ref, get, set as dbSet, update } from 'firebase/database';
 import { useAuth } from '../context/AuthContext';
 import { userRef } from '../utils/userDb';
 import { getFirebaseApp } from '../config/firebase';
+import { GRADUATE_AT, getWrongWordIds, recordWrongWords, clearWrongWords, wrongFirst } from '../utils/reviewPool';
 
 const GRID_SIZE = 15;
 const MAX_WORDS = 8;
@@ -185,11 +186,7 @@ function getBounds(placed: PlacedWord[]) {
   return { minR, maxR, minC, maxC };
 }
 
-// --- KST date helper ---
-function getKSTDateString(): string {
-  const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
-  return kst.toISOString().split('T')[0];
-}
+import { getKSTDateString } from '../utils/dateUtils';
 
 // --- Component ---
 
@@ -236,26 +233,36 @@ export default function CrosswordGame() {
       if (!snapshot.exists()) { setGameState('empty'); return; }
 
       const pool = snapshot.val() as Record<string, any>;
+      // 졸업한 단어라도 그 뒤에 틀린 적이 있으면 다시 출제 대상에 넣는다
+      const wrongIds = await getWrongWordIds(uid);
       const countMap: Record<string, number> = {};
       const lastReviewedMap: Record<string, string | undefined> = {};
       const wordList: WordData[] = Object.entries(pool)
         .map(([wordId, v]: [string, any]) => {
           countMap[wordId] = v.count ?? 0;
           lastReviewedMap[wordId] = v.lastReviewedDate;
-          return { wordId, word: v.word ?? '', meaning: v.meaning ?? '' };
+          const originalWord: string = v.word ?? '';
+          const isPhrase = originalWord.includes(' ');
+          return {
+            wordId,
+            word: originalWord,
+            meaning: isPhrase ? `${v.meaning ?? ''} (숙어/구동사)` : v.meaning ?? '',
+          };
         })
-        .filter(w => /^[a-zA-Z]{3,}$/.test(w.word));
+        .filter(w => /^[a-zA-Z][a-zA-Z\s-]*[a-zA-Z]$/.test(w.word) && w.word.replace(/\s+/g, '').length >= 3
+          && ((countMap[w.wordId] ?? 0) < GRADUATE_AT || wrongIds.has(w.wordId)));
       setWordCountMap(countMap);
 
       if (wordList.length < 2) { setGameState('empty'); return; }
 
-      const shuffled = [...wordList].sort((a, b) => {
+      const ranked = [...wordList].sort((a, b) => {
         const aC = countMap[a.wordId] ?? 0;
         const bC = countMap[b.wordId] ?? 0;
         const aD = lastReviewedMap[a.wordId] ? Math.floor((Date.parse(today) - Date.parse(lastReviewedMap[a.wordId]!)) / 86400000) : 999;
         const bD = lastReviewedMap[b.wordId] ? Math.floor((Date.parse(today) - Date.parse(lastReviewedMap[b.wordId]!)) / 86400000) : 999;
         return (bD - bC * 3) - (aD - aC * 3);
-      }).slice(0, MAX_WORDS);
+      });
+      const shuffled = wrongFirst(ranked, wrongIds).slice(0, MAX_WORDS);
       const { placed, grid: g } = generateCrossword(shuffled);
 
       if (placed.length < 2) { setGameState('empty'); return; }
@@ -377,14 +384,15 @@ export default function CrosswordGame() {
       const db = getDatabase(getFirebaseApp());
 
       // 자력으로 푼 단어(정답 보기 미사용)만 count +1, lastReviewedDate 갱신
-      const GRADUATE_AT = 10;
+      const selfSolved = placedWords.filter(pw => !revealedWordIds.has(pw.wordId));
+      const revealed = placedWords.filter(pw => revealedWordIds.has(pw.wordId));
+      await recordWrongWords(uid, revealed.map(pw => ({ wordId: pw.wordId, word: pw.word })));
+      await clearWrongWords(uid, selfSolved.map(pw => pw.wordId));
       await Promise.all(
-        placedWords
-          .filter(pw => !revealedWordIds.has(pw.wordId))
-          .map(pw => {
-            const next = Math.min((wordCountMap[pw.wordId] ?? 0) + 1, GRADUATE_AT);
-            return update(userRef(uid, `english/reviewPool/${pw.wordId}`), { count: next, lastReviewedDate: today });
-          })
+        selfSolved.map(pw => {
+          const next = Math.min((wordCountMap[pw.wordId] ?? 0) + 1, GRADUATE_AT);
+          return update(userRef(uid, `english/reviewPool/${pw.wordId}`), { count: next, lastReviewedDate: today });
+        })
       );
 
       await dbSet(userRef(uid, `completion/english_crossword/${today}`), true);

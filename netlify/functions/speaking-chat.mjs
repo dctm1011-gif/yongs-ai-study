@@ -35,7 +35,10 @@ export default async (req) => {
     });
   }
 
-  const { messages, topic, isFeedbackRequest, history } = await req.json();
+  const { messages, topic, isFeedbackRequest, history, targetWords } = await req.json();
+
+  const targets = Array.isArray(targetWords) ? targetWords.filter(t => t?.word) : [];
+  const targetList = targets.map(t => `${t.word} (${t.meaning ?? ''})`).join(', ');
 
   const systemPrompt = isFeedbackRequest
     ? `당신은 친절한 영어 튜터입니다. 학생과의 대화 내역을 분석하여 상세한 피드백을 한국어로 작성하세요.
@@ -54,13 +57,15 @@ export default async (req) => {
 
 다음에 써볼 표현
 오늘 주제와 관련해서 다음 대화에서 사용해보면 좋을 영어 표현이나 단어 2가지를 알려줍니다. 예문도 함께 써주세요.
-
+${targets.length ? `\n오늘의 복습 단어 체크\n오늘 목표 단어는 ${targetList} 였습니다. 각 단어마다 학생이 실제로 대화에서 썼는지 "썼음/안 썼음"으로 표시하고, 쓴 단어는 어떻게 썼는지 한 줄로 짚어줍니다. 안 쓴 단어는 이번 주제에서 쓸 수 있었을 예문을 하나씩 만들어 줍니다.\n` : ''}
 격려
 한 줄로 따뜻하게 마무리합니다.`
     : `You are a friendly English conversation partner for a Korean learner at B2-C1 level.
 Today's topic: "${topic}"
 ${history?.length
   ? `\nYour memory of past conversations with this user (last ${history.length} sessions):\n${history.map(h => `- ${h.date} [Topic: ${h.topic}]: ${h.summary}`).join('\n')}\n\nIMPORTANT: You genuinely remember these past conversations. When the user asks "do you remember...?" or mentions something from before, check your memory above and respond naturally — confirm what you remember, reference specific details, and connect it to the current conversation. Never say you don't have memory of previous conversations.\n`
+  : ''}${targets.length
+  ? `\nTARGET WORDS the learner is trying to practice today: ${targetList}\nSteer the conversation so these words naturally fit — ask questions where they would be a natural answer, and use one or two of them yourself so the learner sees them in context. Never list them or tell the learner to use them; just create the opening.\n`
   : ''}Rules:
 - Keep responses to 2-4 sentences maximum. Be concise.
 - Use natural everyday English.

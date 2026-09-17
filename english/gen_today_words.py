@@ -1,5 +1,5 @@
 """오늘 단어 생성 스크립트 (도메인 방식)"""
-import json, os, re, sys
+import json, os, re, sys, urllib.request
 from pathlib import Path
 from datetime import date
 import anthropic
@@ -7,6 +7,10 @@ import anthropic
 ROOT = Path(__file__).parent.parent
 WORDS_DB = ROOT / "english" / "words_db.json"
 today = date.today()
+
+# 하루 신규 단어 수. 복습 풀 유입이 유출(졸업)보다 많아 풀이 무한히 커지던 문제 때문에
+# 2026-09-17에 5 → 3으로 낮춤 (졸업 기준도 10 → 5로 함께 조정).
+WORDS_PER_DAY = 3
 
 def load_env():
     env = ROOT / ".env"
@@ -18,10 +22,47 @@ def load_env():
 
 load_env()
 
+DB_URL = os.environ.get("EXPO_PUBLIC_FIREBASE_DATABASE_URL", "https://yongstudy-1f242-default-rtdb.asia-southeast1.firebasedatabase.app")
+
+# ── 멱등성 체크: 오늘 Firebase에 이미 데이터 있으면 words_db만 동기화 후 종료 ──
+try:
+    with urllib.request.urlopen(f"{DB_URL}/english/words/{today}.json", timeout=10) as _r:
+        _existing = json.loads(_r.read())
+    if (_existing and isinstance(_existing, dict)
+            and _existing.get("words")
+            and str(_existing.get("date", "")) == str(today)):
+        print(f"[*] 오늘({today}) 이미 업로드됨 ({len(_existing.get('words', []))}개) — words_db 동기화 후 종료")
+        _db = json.loads(WORDS_DB.read_text(encoding="utf-8"))
+        _db_lower = {e.get("word", "").lower() for e in _db if e.get("word")}
+        _added = 0
+        for _w in _existing.get("words", []):
+            _word = _w.get("word", "")
+            if _word and _word.lower() not in _db_lower:
+                _db.append({
+                    "id": _word, "word": _word,
+                    "pos": _w.get("part_of_speech", ""),
+                    "date": str(today),
+                    "meaning": _w.get("meaning_ko", ""),
+                    "example_ko": _w.get("example_ko", ""),
+                    "example_en": _w.get("example_from_convo", ""),
+                    "explanation": _w.get("explanation", ""),
+                    "tip": _w.get("tip", ""),
+                    "emoji": _w.get("emoji", ""),
+                })
+                _db_lower.add(_word.lower())
+                _added += 1
+        if _added:
+            WORDS_DB.write_text(json.dumps(_db, ensure_ascii=False, indent=2), encoding="utf-8")
+            print(f"[*] words_db +{_added}개 동기화")
+        sys.exit(0)
+except Exception:
+    pass  # Firebase 확인 실패 → 정상 진행
+# ─────────────────────────────────────────────────────────────────────────────
+
 db = json.loads(WORDS_DB.read_text(encoding="utf-8"))
 all_words = [e.get("word","") for e in db if e.get("word")]
 used_lower = {w.lower() for w in all_words}
-recent_50 = ", ".join(all_words[-50:])
+recent_50 = ", ".join(all_words[-20:])
 print(f"DB 단어 수: {len(all_words)}")
 
 def _stem(w):
@@ -67,14 +108,14 @@ print(f"후보: {[(c['word'],c.get('domain','')) for c in candidates]}")
 valid = [c for c in candidates if c.get("word","").lower() not in used_lower and not is_stem_dup(c["word"])]
 print(f"유효: {[c['word'] for c in valid]}")
 
-if len(valid) < 5:
+if len(valid) < WORDS_PER_DAY:
     resp2 = client.messages.create(
         model="claude-haiku-4-5-20251001",
         max_tokens=700,
         messages=[{"role": "user", "content": f"""이미 선택된 단어: {[c['word'] for c in candidates]}
 추가로 금지: {recent_50}
 
-5개 도메인에서 각 1개씩, 위 금지 목록에 없는 단어 5개만:
+{WORDS_PER_DAY}개 도메인에서 각 1개씩, 위 금지 목록에 없는 단어 {WORDS_PER_DAY}개만:
 [{{"word":"단어","domain":"도메인","pos":"품사","meaning_ko":"뜻"}}]"""}]
     )
     raw2 = resp2.content[0].text.strip()
@@ -84,11 +125,11 @@ if len(valid) < 5:
         for c in extra:
             if c.get("word","").lower() not in used_lower and c["word"] not in [v["word"] for v in valid]:
                 valid.append(c)
-                if len(valid) >= 5:
+                if len(valid) >= WORDS_PER_DAY:
                     break
 
-final = valid[:5]
-if len(final) < 5:
+final = valid[:WORDS_PER_DAY]
+if len(final) < WORDS_PER_DAY:
     print(f"[!] {len(final)}개만 확보 — 중단")
     sys.exit(1)
 
@@ -98,8 +139,8 @@ print(f"\n최종 단어: {words_str}")
 # 2단계: 전체 콘텐츠 생성
 resp3 = client.messages.create(
     model="claude-haiku-4-5-20251001",
-    max_tokens=8000,
-    messages=[{"role": "user", "content": f"""단어 5개: {words_str}
+    max_tokens=4000,
+    messages=[{"role": "user", "content": f"""단어 {WORDS_PER_DAY}개: {words_str}
 날짜: {today}
 
 아래 JSON 구조로 학습 자료를 생성하세요. JSON만 반환 (마크다운 코드블록 없이):
@@ -128,7 +169,7 @@ resp3 = client.messages.create(
   ]
 }}
 
-규칙: words 5개, quiz는 meaning 3개+fill_blank 3개+situation 2개=총 8개, sentences 5개
+규칙: words {WORDS_PER_DAY}개, quiz는 meaning 2개+fill_blank 2개+situation 2개=총 6개, sentences {WORDS_PER_DAY}개
 모든 question 필드는 영어로 작성
 JSON만 반환 (```없음)"""}]
 )
@@ -147,9 +188,33 @@ if not m3:
 result = json.loads(m3.group(0))
 print(f"생성: 단어 {len(result.get('words',[]))}개, 퀴즈 {len(result.get('quiz',[]))}개, 문장 {len(result.get('sentences',[]))}개")
 
-# Firebase 업로드
-import urllib.request
-DB_URL = os.environ.get("EXPO_PUBLIC_FIREBASE_DATABASE_URL","https://yongstudy-1f242-default-rtdb.asia-southeast1.firebasedatabase.app")
+# ── words_db.json 업데이트 (Firebase PUT 이전 — 중단 시 재실행 가능하도록) ──
+db_path = ROOT / "english" / "words_db.json"
+db_current = json.loads(db_path.read_text(encoding="utf-8"))
+db_lower = {e.get("word", "").lower() for e in db_current if e.get("word")}
+added_to_db = 0
+for w in result.get("words", []):
+    word = w.get("word", "")
+    if word and word.lower() not in db_lower:
+        db_current.append({
+            "id": word, "word": word,
+            "pos": w.get("part_of_speech", ""),
+            "date": str(today),
+            "meaning": w.get("meaning_ko", ""),
+            "example_ko": w.get("example_ko", ""),
+            "example_en": w.get("example_from_convo", ""),
+            "explanation": w.get("explanation", ""),
+            "tip": w.get("tip", ""),
+            "emoji": w.get("emoji", ""),
+        })
+        db_lower.add(word.lower())
+        added_to_db += 1
+if added_to_db:
+    db_path.write_text(json.dumps(db_current, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"words_db.json +{added_to_db}개 추가 (총 {len(db_current)}개)")
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Firebase 업로드 (words_db 기록 완료 후)
 payload = json.dumps({**result, "timestamp": str(today), "date": str(today)}, ensure_ascii=False).encode("utf-8")
 req = urllib.request.Request(
     f"{DB_URL}/english/words/{today}.json",
@@ -162,33 +227,5 @@ with urllib.request.urlopen(req, timeout=15) as r:
 (ROOT / "english" / "daily.json").write_text(
     json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8"
 )
-
-# words_db.json에 오늘 단어 추가 (중복 방지)
-try:
-    db_path = ROOT / "english" / "words_db.json"
-    db = json.loads(db_path.read_text(encoding="utf-8"))
-    db_lower = {e.get("word","").lower() for e in db if e.get("word")}
-    added_to_db = 0
-    for w in result.get("words", []):
-        word = w.get("word","")
-        if word and word.lower() not in db_lower:
-            db.append({
-                "id": word, "word": word,
-                "pos": w.get("part_of_speech",""),
-                "date": str(today),
-                "meaning": w.get("meaning_ko",""),
-                "example_ko": w.get("example_ko",""),
-                "example_en": w.get("example_from_convo",""),
-                "explanation": w.get("explanation",""),
-                "tip": w.get("tip",""),
-                "emoji": w.get("emoji",""),
-            })
-            db_lower.add(word.lower())
-            added_to_db += 1
-    if added_to_db:
-        db_path.write_text(json.dumps(db, ensure_ascii=False, indent=2), encoding="utf-8")
-        print(f"words_db.json +{added_to_db}개 추가 (총 {len(db)}개)")
-except Exception as e:
-    print(f"[!] words_db 업데이트 실패 (무시): {e}")
 
 print(f"\n완료! 오늘 단어: {[w['word'] for w in result.get('words',[])]}")

@@ -6,21 +6,14 @@ import { getDatabase, get, update, set as dbSet } from 'firebase/database';
 import { useAuth } from '../context/AuthContext';
 import { userRef } from '../utils/userDb';
 import { getFirebaseApp } from '../config/firebase';
+import { GRADUATE_AT, getWrongWordIds, clearWrongWords, wrongFirst } from '../utils/reviewPool';
 
 const DAILY_PLAY_KEY = 'wordmatch_last_played';
 const DAILY_STATS_KEY = 'wordmatch_last_stats';
 
-// Netlify Functions run in UTC; KST (UTC+9) doesn't roll to the next
-// calendar day until 09:00 UTC, so a plain UTC date lags KST by a day
-// for 9 hours each morning. Shift the clock forward before formatting,
-// matching the same helper used elsewhere in the app.
-function getKSTDateString(): string {
-  const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
-  return kst.toISOString().split('T')[0];
-}
+import { getKSTDateString } from '../utils/dateUtils';
 
 const ROUND_SIZE = 10; // 최대 10쌍(20장) 출제
-const GRADUATE_AT = 10; // 리뷰 10회 완료 시 게임 출제 대상에서 제외
 const MISMATCH_DELAY_MS = 600;
 
 interface ReviewWord {
@@ -60,6 +53,7 @@ export default function WordMatchGame() {
   const [mistakes, setMistakes] = useState(0);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [synced, setSynced] = useState(false);
+  const [wordMeta, setWordMeta] = useState<Record<string, { count: number; lastReviewedDate: string | null }>>({});
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const stopTimer = useCallback(() => {
@@ -104,6 +98,8 @@ export default function WordMatchGame() {
       }
 
       const pool = snapshot.val() as Record<string, any>;
+      // 졸업한 단어라도 그 뒤에 틀린 적이 있으면(오답 풀에 있으면) 다시 출제 대상에 넣는다
+      const wrongIds = await getWrongWordIds(uid);
       const candidates: ReviewWord[] = Object.entries(pool)
         .map(([wordId, v]: [string, any]) => ({
           wordId,
@@ -112,27 +108,19 @@ export default function WordMatchGame() {
           count: v.count ?? 0,
           lastReviewedDate: v.lastReviewedDate ?? null,
         }))
-        .filter(w => w.count < GRADUATE_AT);
+        .filter(w => w.count < GRADUATE_AT || wrongIds.has(w.wordId));
 
       if (candidates.length === 0) {
         setGameState('empty');
         return;
       }
 
-      // 리뷰 횟수 오름차순 우선 + 같은 횟수끼리는 무작위
-      const sorted = shuffle(candidates).sort((a, b) => a.count - b.count);
+      // 오답 이력 단어 우선 + 리뷰 횟수 오름차순 + 같은 횟수끼리는 무작위
+      const sorted = wrongFirst(shuffle(candidates).sort((a, b) => a.count - b.count), wrongIds);
       const selected = sorted.slice(0, Math.min(ROUND_SIZE, sorted.length));
-
-      // "오늘 처음 출제"인 단어만 카운트 반영 (등장 자체가 리뷰, 하루 1회 캡)
-      const today = getKSTDateString();
-      for (const w of selected) {
-        if (w.lastReviewedDate !== today) {
-          update(userRef(uid, `english/reviewPool/${w.wordId}`), {
-            count: w.count + 1,
-            lastReviewedDate: today,
-          }).catch(error => console.warn('리뷰 카운트 반영 실패:', error));
-        }
-      }
+      setWordMeta(Object.fromEntries(
+        selected.map(w => [w.wordId, { count: w.count, lastReviewedDate: w.lastReviewedDate }]),
+      ));
 
       const newCards: Card[] = shuffle(
         selected.flatMap(w => [
@@ -173,7 +161,17 @@ export default function WordMatchGame() {
     const second = cards.find(c => c.cardId === secondId)!;
 
     if (first.wordId === second.wordId && first.type !== second.type) {
-      // 매칭 성공
+      // 매칭 성공 — 실제로 맞힌 단어만 복습 1회로 인정 (하루 1회 캡)
+      const today = getKSTDateString();
+      const meta = wordMeta[first.wordId];
+      if (meta && meta.lastReviewedDate !== today) {
+        update(userRef(uid, `english/reviewPool/${first.wordId}`), {
+          count: Math.min(meta.count + 1, GRADUATE_AT),
+          lastReviewedDate: today,
+        }).catch(error => console.warn('리뷰 카운트 반영 실패:', error));
+      }
+      clearWrongWords(uid, [first.wordId]);
+
       const updatedCards = cards.map(c =>
         c.wordId === first.wordId ? { ...c, matched: true } : c
       );

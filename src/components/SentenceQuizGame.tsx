@@ -8,16 +8,13 @@ import { getDatabase } from 'firebase/database';
 import { useAuth } from '../context/AuthContext';
 import { userRef } from '../utils/userDb';
 import { getFirebaseApp } from '../config/firebase';
+import { GRADUATE_AT, getWrongWordIds, recordWrongWords, clearWrongWords, wrongFirst } from '../utils/reviewPool';
 
-function getKSTDateString(): string {
-  const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
-  return kst.toISOString().split('T')[0];
-}
+import { getKSTDateString } from '../utils/dateUtils';
 
 const NETLIFY_BASE = 'https://illustrious-cuchufli-7c4e58.netlify.app';
 const CACHE_PREFIX = 'sentence_quiz_v1_';
 const ROUND_SIZE = 8;
-const GRADUATE_AT = 10;
 
 interface ReviewWord {
   id: string;
@@ -117,18 +114,21 @@ export default function SentenceQuizGame({ onComplete }: Props) {
       const snap = await get(userRef(uid, 'english/reviewPool'));
       if (!snap.exists()) { setGameState('empty'); return; }
 
+      // 졸업한 단어라도 그 뒤에 틀린 적이 있으면 다시 출제 대상에 넣는다
+      const wrongIds = await getWrongWordIds(uid);
       const pool: ReviewWord[] = Object.entries(snap.val())
         .map(([id, v]: [string, any]) => ({ ...v, id } as ReviewWord))
-        .filter(w => w.word && w.meaning && (w.count ?? 0) < GRADUATE_AT);
+        .filter(w => w.word && w.meaning && ((w.count ?? 0) < GRADUATE_AT || wrongIds.has(w.id)));
 
       if (pool.length === 0) { setGameState('empty'); return; }
 
       const today = getKSTDateString();
-      const selected = [...pool].sort((a, b) => {
+      const ranked = [...pool].sort((a, b) => {
         const aD = a.lastReviewedDate ? Math.floor((Date.parse(today) - Date.parse(a.lastReviewedDate)) / 86400000) : 999;
         const bD = b.lastReviewedDate ? Math.floor((Date.parse(today) - Date.parse(b.lastReviewedDate)) / 86400000) : 999;
         return (bD - (b.count ?? 0) * 3) - (aD - (a.count ?? 0) * 3);
-      }).slice(0, ROUND_SIZE);
+      });
+      const selected = wrongFirst(ranked, wrongIds, w => w.id).slice(0, ROUND_SIZE);
 
       setLoadTotal(selected.length);
 
@@ -183,9 +183,15 @@ export default function SentenceQuizGame({ onComplete }: Props) {
     setUserPicked(pickedO);
     setAnswerState(correct ? 'correct' : 'wrong');
     if (correct) setScore(s => s + 1);
-    const db = getDatabase(getFirebaseApp());
     const today = getKSTDateString();
-    update(userRef(uid, `english/reviewPool/${item.id}`), { count: increment(1), lastReviewedDate: today }).catch(() => {});
+    if (correct) {
+      update(userRef(uid, `english/reviewPool/${item.id}`), { count: increment(1), lastReviewedDate: today }).catch(() => {});
+      clearWrongWords(uid, [item.id]);
+    } else {
+      // 오답은 복습으로 인정하지 않고 다른 게임과 동일하게 count를 0으로 되돌린다
+      dbSet(userRef(uid, `english/reviewPool/${item.id}/count`), 0).catch(() => {});
+      recordWrongWords(uid, [{ wordId: item.id, word: item.word }]);
+    }
   }, [answerState, items, current, uid]);
 
   const handleNext = useCallback(() => {

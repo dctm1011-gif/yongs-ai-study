@@ -8,9 +8,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getDatabase, ref, set as dbSet, get } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
 import { useAuth } from '../context/AuthContext';
+import { GRADUATE_AT } from '../utils/reviewPool';
 
 const CHAT_URL = 'https://illustrious-cuchufli-7c4e58.netlify.app/.netlify/functions/speaking-chat';
-const MIN_EXCHANGES = 5;
+const MIN_EXCHANGES = 8;
+const TARGET_WORD_COUNT = 3; // 오늘 대화에서 써볼 취약 단어 수
 
 const DAILY_TOPICS = [
   'Your weekend plans',
@@ -74,6 +76,8 @@ interface HistoryEntry {
   exchanges: number;
 }
 
+interface TargetWord { word: string; meaning: string; }
+
 export default function SpeakingScreen() {
   const { user } = useAuth();
   const [viewState, setViewState] = useState<ViewState>('idle');
@@ -81,6 +85,7 @@ export default function SpeakingScreen() {
   const [input, setInput] = useState('');
   const [userMsgCount, setUserMsgCount] = useState(0);
   const [history, setHistory] = useState<HistoryEntry[]>([]);
+  const [targetWords, setTargetWords] = useState<TargetWord[]>([]);
   const listRef = useRef<FlatList>(null);
 
   const scrollToBottom = (animated = true) => {
@@ -143,6 +148,30 @@ export default function SpeakingScreen() {
       .catch(() => {});
   }, [user?.uid]);
 
+  // 오늘 대화에서 써볼 취약 단어 — 오답 이력 우선, 그다음 복습 횟수가 적은 순
+  useEffect(() => {
+    if (!user?.uid) return;
+    const db = getDatabase(getFirebaseApp());
+    Promise.all([
+      get(ref(db, `users/${user.uid}/english/reviewPool`)),
+      get(ref(db, `users/${user.uid}/wrongPool/english`)),
+    ]).then(([poolSnap, wrongSnap]) => {
+      if (!poolSnap.exists()) return;
+      const wrongIds = new Set(wrongSnap.exists() ? Object.keys(wrongSnap.val()) : []);
+      const picked = Object.entries(poolSnap.val() as Record<string, any>)
+        .map(([id, v]) => ({ id, word: v.word as string, meaning: v.meaning as string, count: v.count ?? 0 }))
+        .filter(w => w.word && w.count < GRADUATE_AT)
+        .sort((a, b) => {
+          const aw = wrongIds.has(a.id) ? 0 : 1;
+          const bw = wrongIds.has(b.id) ? 0 : 1;
+          return aw !== bw ? aw - bw : a.count - b.count;
+        })
+        .slice(0, TARGET_WORD_COUNT)
+        .map(w => ({ word: w.word, meaning: w.meaning }));
+      setTargetWords(picked);
+    }).catch(() => {});
+  }, [user?.uid]);
+
   function stripMarkdown(text: string): string {
     return text
       .replace(/\*\*(.*?)\*\*/g, '$1')
@@ -160,7 +189,7 @@ export default function SpeakingScreen() {
     const res = await fetch(CHAT_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: msgs, topic, isFeedbackRequest, history }),
+      body: JSON.stringify({ messages: msgs, topic, isFeedbackRequest, history, targetWords }),
     });
     const data = await res.json();
     const raw = (data.reply as string) ?? '';
@@ -300,6 +329,16 @@ export default function SpeakingScreen() {
             {`${MIN_EXCHANGES}번 이상 답변하면 종료할 수 있어요.\n`}
             {'사진이 보고 싶으면 "show me a picture of ..." 라고 해보세요!'}
           </Text>
+          {targetWords.length > 0 && (
+            <View style={styles.targetBox}>
+              <Text style={styles.targetTitle}>오늘 써볼 단어</Text>
+              {targetWords.map(t => (
+                <Text key={t.word} style={styles.targetWord}>
+                  {t.word} <Text style={styles.targetMeaning}>{t.meaning}</Text>
+                </Text>
+              ))}
+            </View>
+          )}
           <TouchableOpacity style={styles.startBtn} onPress={startConversation}>
             <Text style={styles.startBtnText}>대화 시작</Text>
           </TouchableOpacity>
@@ -406,6 +445,13 @@ const styles = StyleSheet.create({
   centeredContent: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 },
   topicBig: { fontSize: 22, fontWeight: '700', color: '#1e293b', textAlign: 'center', marginBottom: 12 },
   startHint: { fontSize: 13, color: '#64748b', textAlign: 'center', lineHeight: 20, marginBottom: 28 },
+  targetBox: {
+    backgroundColor: '#eef2ff', borderRadius: 14, paddingVertical: 14, paddingHorizontal: 18,
+    marginBottom: 24, alignSelf: 'stretch', borderWidth: 1, borderColor: '#c7d2fe',
+  },
+  targetTitle: { fontSize: 11, fontWeight: '800', color: '#6366f1', letterSpacing: 0.5, marginBottom: 8 },
+  targetWord: { fontSize: 15, fontWeight: '700', color: '#1e293b', marginBottom: 4 },
+  targetMeaning: { fontSize: 13, fontWeight: '400', color: '#64748b' },
   startBtn: { backgroundColor: '#6366f1', borderRadius: 14, paddingVertical: 14, paddingHorizontal: 40 },
   startBtnText: { color: '#fff', fontSize: 16, fontWeight: '700' },
   doneEmoji: { fontSize: 56, marginBottom: 12 },

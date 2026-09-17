@@ -7,15 +7,13 @@ import { getDatabase, get, set as dbSet, update } from 'firebase/database';
 import { useAuth } from '../context/AuthContext';
 import { userRef } from '../utils/userDb';
 import { getFirebaseApp } from '../config/firebase';
+import { GRADUATE_AT, getWrongWordIds, recordWrongWords, clearWrongWords, wrongFirst } from '../utils/reviewPool';
 
 const DAILY_PLAY_KEY = 'scramble_last_played';
 const DAILY_STATS_KEY = 'scramble_last_stats';
 const ROUND_SIZE = 8;
-const GRADUATE_AT = 10;
 
-function getKSTDateString(): string {
-  return new Date(Date.now() + 9 * 60 * 60 * 1000).toISOString().split('T')[0];
-}
+import { getKSTDateString } from '../utils/dateUtils';
 
 interface ReviewWord {
   wordId: string;
@@ -65,7 +63,7 @@ export default function ScrambleGame() {
   const currentWord = words[currentIndex] ?? null;
 
   const setupWord = useCallback((word: ReviewWord) => {
-    setScrambledTiles(scramble(word.word));
+    setScrambledTiles(scramble(word.word.replace(/\s+/g, '')));
     setSelectedTiles([]);
     setFeedback('none');
   }, []);
@@ -95,22 +93,26 @@ export default function ScrambleGame() {
       if (!snap.exists()) { setGameState('empty'); return; }
 
       const pool = snap.val() as Record<string, any>;
+      // 졸업한 단어라도 그 뒤에 틀린 적이 있으면 다시 출제 대상에 넣는다
+      const wrongIds = await getWrongWordIds(uid);
       const countMap: Record<string, number> = {};
       const candidates: ReviewWord[] = Object.entries(pool)
         .map(([wordId, v]: [string, any]) => {
           countMap[wordId] = v.count ?? 0;
           return { wordId, word: (v.word ?? '').toLowerCase(), meaning: v.meaning ?? '', count: v.count ?? 0, lastReviewedDate: v.lastReviewedDate };
         })
-        .filter(w => /^[a-z]{3,}$/.test(w.word) && w.count < GRADUATE_AT);
+        .filter(w => /^[a-z][a-z\s-]*[a-z]$/.test(w.word) && w.word.replace(/\s+/g, '').length >= 3
+          && (w.count < GRADUATE_AT || wrongIds.has(w.wordId)));
 
       if (candidates.length === 0) { setGameState('empty'); return; }
 
       setWordCounts(countMap);
-      const selected = [...candidates].sort((a, b) => {
+      const ranked = [...candidates].sort((a, b) => {
         const aD = a.lastReviewedDate ? Math.floor((Date.parse(today) - Date.parse(a.lastReviewedDate)) / 86400000) : 999;
         const bD = b.lastReviewedDate ? Math.floor((Date.parse(today) - Date.parse(b.lastReviewedDate)) / 86400000) : 999;
         return (bD - b.count * 3) - (aD - a.count * 3);
-      }).slice(0, ROUND_SIZE);
+      });
+      const selected = wrongFirst(ranked, wrongIds).slice(0, ROUND_SIZE);
       setWords(selected);
       setCurrentIndex(0);
       setSolvedWordIds([]);
@@ -164,9 +166,10 @@ export default function ScrambleGame() {
     setSelectedTiles(newSelected);
     setScrambledTiles(prev => prev.filter(t => t.id !== tile.id));
 
-    if (newSelected.length === currentWord.word.length) {
+    const stripped = currentWord.word.replace(/\s+/g, '');
+    if (newSelected.length === stripped.length) {
       const answer = newSelected.map(t => t.letter).join('').toLowerCase();
-      if (answer === currentWord.word) {
+      if (answer === stripped) {
         setFeedback('correct');
         const newSolved = [...solvedWordIds, currentWord.wordId];
         setSolvedWordIds(newSolved);
@@ -176,7 +179,7 @@ export default function ScrambleGame() {
         setWrongWordIds(prev => new Set([...prev, currentWord.wordId]));
         doShake();
         setTimeout(() => {
-          setScrambledTiles(scramble(currentWord.word));
+          setScrambledTiles(scramble(stripped));
           setSelectedTiles([]);
           setFeedback('none');
         }, 750);
@@ -193,7 +196,8 @@ export default function ScrambleGame() {
 
   const handleReveal = useCallback(async () => {
     if (!currentWord || feedback !== 'none') return;
-    const correctTiles = currentWord.word.toUpperCase().split('').map((l, i) => ({ id: `rev-${i}`, letter: l }));
+    const stripped = currentWord.word.replace(/\s+/g, '');
+    const correctTiles = stripped.toUpperCase().split('').map((l, i) => ({ id: `rev-${i}`, letter: l }));
     setSelectedTiles(correctTiles);
     setScrambledTiles([]);
     setFeedback('revealed');
@@ -215,6 +219,10 @@ export default function ScrambleGame() {
       const today = getKSTDateString();
       const penaltyIds = new Set([...Array.from(wrongWordIds), ...Array.from(revealedWordIds)]);
       const cleanSolvedIds = solvedWordIds.filter(id => !penaltyIds.has(id));
+      await recordWrongWords(uid, Array.from(penaltyIds).map(wordId => ({
+        wordId, word: words.find(w => w.wordId === wordId)?.word,
+      })));
+      await clearWrongWords(uid, cleanSolvedIds);
       await Promise.all([
         ...Array.from(penaltyIds).map(wordId =>
           dbSet(userRef(uid, `english/reviewPool/${wordId}/count`), 0)
@@ -234,7 +242,7 @@ export default function ScrambleGame() {
     } catch (e) {
       console.warn('스크램블 완료 기록 실패:', e);
     }
-  }, [synced, solvedWordIds, wrongWordIds, revealedWordIds, wordCounts, uid]);
+  }, [synced, solvedWordIds, wrongWordIds, revealedWordIds, wordCounts, words, uid]);
 
   // ── 로딩 ─────────────────────────────────────────────────────────────────
   if (gameState === 'loading') {
@@ -286,7 +294,8 @@ export default function ScrambleGame() {
   if (!currentWord) return null;
 
   // ── 게임 플레이 ───────────────────────────────────────────────────────────
-  const wordLen = currentWord.word.length;
+  const stripped = currentWord.word.replace(/\s+/g, '');
+  const wordLen = stripped.length;
   const tileSize = wordLen <= 5 ? 50 : wordLen <= 8 ? 44 : 37;
   const tileFontSize = wordLen <= 5 ? 22 : wordLen <= 8 ? 18 : 15;
 
@@ -313,6 +322,9 @@ export default function ScrambleGame() {
       {/* 뜻 */}
       <View style={s.meaningBox}>
         <Text style={s.meaningHint}>이 단어의 뜻은?</Text>
+        {currentWord.word.includes(' ') && (
+          <Text style={s.phraseHint}>(숙어/구동사)</Text>
+        )}
         <Text style={s.meaningText}>{currentWord.meaning}</Text>
       </View>
 
@@ -413,7 +425,8 @@ const s = StyleSheet.create({
   progressLabel: { fontSize: 12, color: '#8e8e8e', textAlign: 'right', marginBottom: 20, fontWeight: '600' },
 
   meaningBox: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 12 },
-  meaningHint: { fontSize: 13, color: '#8e8e8e', fontWeight: '600', marginBottom: 10, letterSpacing: 0.5 },
+  meaningHint: { fontSize: 13, color: '#8e8e8e', fontWeight: '600', marginBottom: 6, letterSpacing: 0.5 },
+  phraseHint: { fontSize: 11, color: '#7c3aed', fontWeight: '600', marginBottom: 6 },
   meaningText: { fontSize: 24, fontWeight: '600', color: '#262626', textAlign: 'center', lineHeight: 34 },
 
   answerArea: {
