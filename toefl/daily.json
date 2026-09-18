@@ -1,113 +1,109 @@
 {
-  "date": "2026-09-18",
+  "date": "2026-09-19",
   "reading": {
-    "title": "Urban Green Spaces and Mental Health",
-    "passage": "Recent studies demonstrate that urban green spaces significantly improve mental health and well-being. Parks and gardens provide residents with natural environments that reduce stress and anxiety. Cities investing in green infrastructure report higher levels of citizen satisfaction and lower rates of depression. Research shows that even brief exposure to nature, such as walking through a park for fifteen minutes, can enhance mood and cognitive function. Urban planners increasingly recognize that incorporating trees, gardens, and natural areas into city design is essential for creating healthier, more livable communities.",
+    "title": "The Impact of Renewable Energy on Urban Development",
+    "passage": "Renewable energy sources such as solar and wind power are transforming urban landscapes across the globe. Cities are increasingly installing solar panels on rooftops and constructing wind farms on their outskirts to meet growing energy demands sustainably. This shift not only reduces carbon emissions but also creates thousands of jobs in green technology sectors. Furthermore, renewable energy infrastructure encourages innovative urban planning that integrates technology with environmental consciousness. As cities continue to adopt these sustainable practices, they set examples for developing nations seeking to balance economic growth with environmental protection.",
     "questions": [
       {
-        "q": "According to the passage, what is one benefit of urban green spaces?",
+        "q": "According to the passage, what are two main benefits of renewable energy in cities?",
         "options": [
-          "A) They increase pollution",
-          "B) They reduce stress and anxiety",
-          "C) They decrease property values",
-          "D) They require minimal maintenance"
+          "A) Reducing costs and increasing tourism",
+          "B) Creating jobs and reducing carbon emissions",
+          "C) Improving transportation and housing",
+          "D) Attracting foreign investment and technology companies"
         ],
         "answer": 1,
-        "explanation": "패시지에서 'Parks and gardens provide residents with natural environments that reduce stress and anxiety'라고 명시되어 있습니다. 따라서 정답은 B입니다."
+        "explanation": "본문에서 '일자리 창출(creates thousands of jobs)'과 '탄소 배출 감소(reduces carbon emissions)'가 명확히 언급되었습니다."
       },
       {
-        "q": "How long does the passage suggest is needed to improve mood through nature exposure?",
+        "q": "What does the passage suggest about developing nations?",
         "options": [
-          "A) Five minutes",
-          "B) Thirty minutes",
-          "C) Fifteen minutes",
-          "D) One hour"
+          "A) They cannot afford renewable energy",
+          "B) They are already leaders in green technology",
+          "C) They can learn from cities adopting sustainable practices",
+          "D) They should focus on traditional energy sources"
         ],
         "answer": 2,
-        "explanation": "'walking through a park for fifteen minutes, can enhance mood and cognitive function'라는 문장에서 15분이 충분하다고 언급되었습니다. 정답은 C입니다."
+        "explanation": "마지막 문장에서 개발도상국들이 도시들의 지속 가능한 실천을 본보기로 삼을 수 있다고 제시합니다."
       },
       {
-        "q": "What is the main idea of the passage?",
+        "q": "Which type of renewable energy is mentioned in the passage?",
         "options": [
-          "A) Parks are too expensive to maintain",
-          "B) Green spaces are important for urban mental health",
-          "C) Cities should eliminate all parks",
-          "D) Nature has no effect on humans"
+          "A) Hydroelectric and geothermal power",
+          "B) Solar and wind power",
+          "C) Nuclear and biomass energy",
+          "D) Tidal and wave energy"
         ],
         "answer": 1,
-        "explanation": "전체 패시지의 중심 주제는 도시 녹지 공간이 정신 건강에 미치는 긍정적인 영향입니다. 정답은 B입니다."
+        "explanation": "첫 번째 문장에서 '태양열과 풍력(solar and wind power)'이 명시적으로 언급됩니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the following statement: Technology has improved human relationships more than it has damaged them?",
+    "prompt": "Do you agree or disagree with the statement: 'Cities should prioritize renewable energy development over other urban infrastructure projects'?",
     "structure": {
-      "intro": "명확한 입장 표현 (동의 또는 비동의). 예: 'I strongly agree that technology has positively impacted human relationships because...'",
-      "body1": "첫 번째 주장 - 기술이 장거리 연결을 가능하게 함. 소셜 미디어, 비디오 콜, 메시징 앱 등의 예시 제시",
-      "body2": "두 번째 주장 - 기술이 면대면 상호작용을 감소시킬 수 있음. 스마트폰 과다 사용, 가족 모임 중 개인 기기 사용 등의 반대 관점 고려",
-      "conclusion": "주요 아이디어 재정리 및 입장 재확인. 전체 논리의 일관성 확보"
+      "intro": "명확한 입장 제시: 동의 또는 비동의를 명확히 표현하고, 2-3개의 주요 이유를 미리 언급합니다.",
+      "body1": "첫 번째 주요 이유: 환경적 이점(탄소 감소, 기후 변화 완화) 또는 경제적 이점(장기적 비용 절감, 일자리 창출) 제시",
+      "body2": "두 번째 주요 이유: 사회적 이점(공중 보건, 에너지 독립성) 또는 다른 인프라와의 균형 논의",
+      "conclusion": "입장을 재확인하고, 도시 발전에 미치는 광범위한 영향을 요약합니다."
     },
     "useful_phrases": [
-      "In my opinion,",
-      "Furthermore,",
-      "On the other hand,",
-      "For example,",
-      "Therefore,",
-      "In conclusion,",
-      "Although some people argue that..."
+      "In my opinion, renewable energy should be prioritized because...",
+      "Furthermore, this approach would lead to...",
+      "For instance, cities like Copenhagen have demonstrated...",
+      "In conclusion, the long-term benefits outweigh the initial challenges.",
+      "On the other hand, some may argue that..."
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer working in a team environment. Others prefer working independently. Which do you prefer and why?",
+    "prompt": "Some people believe cities should invest heavily in renewable energy infrastructure. Others think other urban projects like public transportation and affordable housing are more important. Which do you prefer and why?",
     "useful_expressions": [
-      "In my opinion, I prefer...",
-      "One reason is that...",
-      "Another advantage of... is that...",
-      "For example,",
-      "This is because..."
+      "I believe that renewable energy is more important because...",
+      "One significant reason is that investing in clean energy creates...",
+      "For example, cities that have prioritized solar power have seen..."
     ],
     "sample_points": [
-      "팀 환경에서는 다양한 아이디어와 관점을 얻을 수 있으며, 협력을 통해 더 창의적인 해결책을 도출할 수 있습니다.",
-      "독립적 작업은 집중력이 높고 개인의 페이스대로 진행할 수 있으며, 더 효율적일 수 있습니다."
+      "재생 에너지는 장기적으로 환경 문제를 해결하고 모든 사람에게 이익이 되는 반면, 대중교통은 단기적 편의만 제공합니다.",
+      "에너지 인프라 개선은 공공주택과 운송을 포함한 다른 모든 도시 프로젝트의 지속 가능성을 보장합니다."
     ]
   },
   "listening": {
-    "title": "Studying Abroad Decision",
-    "type": "conversation",
-    "script": "Student: Hi Professor, I'm considering studying abroad next year, but I'm worried about leaving my family and friends. Do you think it's worth it? Professor: That's a great question. Studying abroad offers incredible opportunities. You'll gain independence, experience new cultures, and build international connections. Many of my former students said it was transformative. Student: But what about the cost? Isn't it very expensive? Professor: Yes, it can be. However, there are many scholarships available. Look into grants, government programs, and university partnerships. Also, many employers value international experience highly, so it might lead to better career prospects. Student: That's helpful. I hadn't considered the career benefits. Professor: One more thing—the homesickness is temporary, but the memories and skills you gain are permanent. I'd encourage you to apply.",
+    "title": "University Lecture: Sustainable City Planning",
+    "type": "lecture",
+    "script": "Professor: Good morning, everyone. Today we're discussing how cities worldwide are transforming through renewable energy adoption. Let me give you a specific example. Copenhagen, the capital of Denmark, has set an ambitious goal to become carbon-neutral by 2025. They've invested significantly in wind energy—in fact, about 45% of their electricity comes from wind turbines. Beyond wind, the city has also implemented an extensive district heating system powered by renewable sources. This integrated approach demonstrates that renewable energy isn't just about individual projects; it's about creating a comprehensive, sustainable ecosystem. Additionally, Copenhagen's commitment to green energy has attracted global companies in the clean tech industry, boosting their economy. The city also saw improved air quality, which reduced respiratory health issues among residents. What's particularly interesting is how this transition wasn't sudden. It took careful planning, government support, and community engagement over several decades. This case shows us that sustainable urban development requires patience, vision, and commitment from multiple stakeholders.",
     "questions": [
       {
-        "q": "What is the student's main concern about studying abroad?",
+        "q": "What is Copenhagen's primary renewable energy source according to the lecture?",
         "options": [
-          "A) The quality of education",
-          "B) Leaving family and friends",
-          "C) The language barrier",
-          "D) The weather conditions"
-        ],
-        "answer": 1,
-        "explanation": "대화 초반에 학생이 'I'm worried about leaving my family and friends'라고 명시적으로 말했습니다. 정답은 B입니다."
-      },
-      {
-        "q": "According to the professor, what is one benefit of studying abroad?",
-        "options": [
-          "A) It's the cheapest option",
-          "B) It requires no preparation",
-          "C) It provides better career prospects",
-          "D) It guarantees a job"
+          "A) Solar power",
+          "B) Geothermal energy",
+          "C) Wind energy",
+          "D) Hydroelectric power"
         ],
         "answer": 2,
-        "explanation": "교수는 'many employers value international experience highly, so it might lead to better career prospects'라고 설명했습니다. 정답은 C입니다."
+        "explanation": "교수가 코펜하겐의 전기의 약 45%가 풍력 터빈에서 나온다고 명시적으로 언급했습니다."
       },
       {
-        "q": "What solutions does the professor suggest for the cost problem?",
+        "q": "What benefits of Copenhagen's renewable energy transition are mentioned?",
         "options": [
-          "A) Take a loan immediately",
-          "B) Look into scholarships and grants",
-          "C) Work full-time first",
-          "D) Ask parents for money"
+          "A) Only economic growth and job creation",
+          "B) Environmental improvement and company attraction",
+          "C) Cheaper energy and faster transportation",
+          "D) Better housing and reduced pollution alone"
         ],
         "answer": 1,
-        "explanation": "교수는 'There are many scholarships available. Look into grants, government programs, and university partnerships'라고 조언했습니다. 정답은 B입니다."
+        "explanation": "강의에서 공기질 개선(air quality improvement), 건강 문제 감소, 그리고 청정 기술 산업 회사 유치를 언급했습니다."
+      },
+      {
+        "q": "How long did it take Copenhagen to achieve their sustainable energy transition?",
+        "options": [
+          "A) Less than 5 years",
+          "B) About 10 years",
+          "C) Several decades",
+          "D) The lecture doesn't specify"
+        ],
+        "answer": 2,
+        "explanation": "교수가 '수십 년에 걸친 신중한 계획(careful planning over several decades)'이 필요했다고 명시했습니다."
       }
     ]
   }
