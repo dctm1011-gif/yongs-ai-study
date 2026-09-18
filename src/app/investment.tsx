@@ -2302,7 +2302,6 @@ const DongTableRow: React.FC<{ stat: NonNullable<ReturnType<typeof computeDongSt
       <Text style={{ fontSize: 10, color: '#8e8e8e' }}>{stat.totalCount}건</Text>
       <MiniSparkBars values={stat.monthlyTradeCounts} />
     </View>
-    <Text style={{ width: 38, fontSize: 10, color: '#8e8e8e', textAlign: 'right' }}>{stat.refMonth}</Text>
   </View>
   );
 });
@@ -2338,6 +2337,12 @@ const GuSection: React.FC<{
           <ScrollView horizontal showsHorizontalScrollIndicator={false} nestedScrollEnabled={true}>
             <View style={{ borderWidth: 1, borderColor: '#dbdbdb', borderRadius: 8, overflow: 'hidden', minWidth: 352 }}>
               <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8, paddingHorizontal: 10, paddingTop: 7, paddingBottom: 2, backgroundColor: '#fafafa' }}>
+                {/* 모든 행에 같은 값이 반복되던 "기준" 열을 없애고 여기서 한 번만 말한다 */}
+                {dongStats[0]?.refMonth ? (
+                  <Text style={{ fontSize: 9, color: '#8e8e8e', width: '100%' }}>
+                    {dongStats[0].refMonth} 기준 실거래가
+                  </Text>
+                ) : null}
                 <Text style={{ fontSize: 9, color: '#8e8e8e' }}>동 이름 색:</Text>
                 <Text style={{ fontSize: 9, color: '#ef4444', fontWeight: '700' }}>가격↑ 거래량↓</Text>
                 <Text style={{ fontSize: 9, color: '#1d4ed8', fontWeight: '700' }}>가격↓ 거래량↑</Text>
@@ -2348,7 +2353,7 @@ const GuSection: React.FC<{
                 <Text style={{ width: 56, fontSize: 11, fontWeight: '600', color: '#8e8e8e', textAlign: 'right' }}>현재가</Text>
                 <View style={{ width: 68, alignItems: 'flex-end' }}><Text style={{ fontSize: 11, fontWeight: '600', color: '#8e8e8e' }}>가격추세</Text></View>
                 <View style={{ width: 60, alignItems: 'flex-end' }}><Text style={{ fontSize: 11, fontWeight: '600', color: '#8e8e8e' }}>거래건수</Text></View>
-                <Text style={{ width: 38, fontSize: 11, fontWeight: '600', color: '#8e8e8e', textAlign: 'right' }}>기준</Text>
+
               </View>
               {dongStats.map((stat, idx) => <DongTableRow key={stat.dong} stat={stat} idx={idx} />)}
             </View>
@@ -3155,20 +3160,19 @@ export default function InvestmentScreen() {
             <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
           }
         >
-          {complexUpdateReminder?.active && (
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => {}}
-              style={{ marginHorizontal: 12, marginTop: 12, backgroundColor: '#fff8e1', borderRadius: 12, borderWidth: 1, borderColor: '#f59e0b', flexDirection: 'row', alignItems: 'center', paddingHorizontal: 14, paddingVertical: 10, gap: 10 }}
-            >
-              <MaterialIcons name="update" size={18} color="#f59e0b" />
-              <View style={{ flex: 1 }}>
-                <Text style={{ fontSize: 13, fontWeight: '600', color: '#92400e' }}>부동산 데이터 업데이트 필요</Text>
-                <Text style={{ fontSize: 11, color: '#b45309', marginTop: 2 }}>{complexUpdateReminder.targetMonth} 기준 · push_jukjeon_complexes.py 실행</Text>
-              </View>
-            </TouchableOpacity>
-          )}
+          {/* 매일 하는 학습을 맨 위로. 데이터 상태는 아래에서 한 줄로 알린다
+              (스크립트 파일명은 앱 사용자에게 의미가 없어 뺐다) */}
           {termOfDay && <AnimatedCard delay={0}><TermOfDayCard term={termOfDay} /></AnimatedCard>}
+          {complexUpdateReminder?.active && (
+            <View
+              style={{ marginHorizontal: 12, marginTop: 10, flexDirection: 'row', alignItems: 'center', gap: 6 }}
+            >
+              <MaterialIcons name="update" size={13} color="#b45309" />
+              <Text style={{ flex: 1, fontSize: 11, color: '#b45309' }}>
+                시세가 {complexUpdateReminder.targetMonth} 기준이에요 · 당겨서 새로고침
+              </Text>
+            </View>
+          )}
           {regionCharts.length > 0 && (
             <AnimatedCard delay={120}>
               <FloatingCard>

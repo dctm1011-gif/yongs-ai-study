@@ -30,13 +30,15 @@ export default function GameHub({ initialGame, seed, completion, onModeChange }:
     onModeChange?.(mode !== 'select');
   }, [mode]);
 
-  const GAMES: { mode: GameMode; key: string; emoji: string; name: string; desc: string }[] = [
-    { mode: 'match',     key: 'english_word_match', emoji: '🃏', name: '카드 매칭', desc: '단어와 뜻을 짝지어보세요' },
-    { mode: 'crossword', key: 'english_crossword',  emoji: '📝', name: '낱말 퍼즐', desc: '가로세로 크로스워드' },
-    { mode: 'scramble',  key: 'english_scramble',   emoji: '🔀', name: '스크램블',  desc: '섞인 글자를 순서대로 탭하세요' },
-    { mode: 'sentence',  key: 'english_sentence',   emoji: '🔍', name: '예문 O/X',  desc: '예문이 자연스러운지 판단하세요' },
+  const GAMES: { mode: GameMode; key: string; emoji: string; name: string; desc: string; size: number }[] = [
+    { mode: 'match',     key: 'english_word_match', emoji: '🃏', name: '카드 매칭', desc: '단어와 뜻을 짝지어보세요',        size: 10 },
+    { mode: 'crossword', key: 'english_crossword',  emoji: '📝', name: '낱말 퍼즐', desc: '가로세로 크로스워드',            size: 8 },
+    { mode: 'scramble',  key: 'english_scramble',   emoji: '🔀', name: '스크램블',  desc: '섞인 글자를 순서대로 탭하세요',   size: 8 },
+    { mode: 'sentence',  key: 'english_sentence',   emoji: '🔍', name: '예문 O/X',  desc: '예문이 자연스러운지 판단하세요',  size: 8 },
   ];
   const doneCount = GAMES.filter(g => completion?.[g.key]).length;
+  // 4개를 연달아 하는 흐름이라 "다음에 할 것"을 표시해준다
+  const nextGame = GAMES.find(g => !completion?.[g.key])?.mode ?? null;
 
   if (mode === 'match') {
     return (
@@ -106,8 +108,13 @@ export default function GameHub({ initialGame, seed, completion, onModeChange }:
           >
             <Text style={s.cardEmoji}>{g.emoji}</Text>
             <View style={s.cardBody}>
-              <Text style={[s.cardName, isDone && s.cardNameDone]}>{g.name}</Text>
-              <Text style={s.cardDesc}>{isDone ? '오늘 완료 · 다시 하면 기록에는 반영 안 돼요' : g.desc}</Text>
+              <View style={s.cardNameRow}>
+                <Text style={[s.cardName, isDone && s.cardNameDone]}>{g.name}</Text>
+                {!isDone && g.mode === nextGame && <Text style={s.nextTag}>다음</Text>}
+              </View>
+              <Text style={s.cardDesc}>
+                {isDone ? '오늘 완료 · 다시 하면 기록에는 반영 안 돼요' : `${g.desc} · 오늘 ${g.size}단어`}
+              </Text>
             </View>
             <Text style={isDone ? s.check : s.arrow}>{isDone ? '✓' : '›'}</Text>
           </TouchableOpacity>
@@ -148,6 +155,8 @@ const s = StyleSheet.create({
   progressTrack: { height: 4, backgroundColor: '#dce8fb', borderRadius: 99, marginTop: 8, overflow: 'hidden' },
   progressFill: { height: '100%', backgroundColor: '#0095f6', borderRadius: 99 },
   cardDone: { backgroundColor: '#f4fbf6', borderColor: '#cfe9d8' },
+  cardNameRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  nextTag: { fontSize: 9.5, fontWeight: '800', color: '#0095f6', backgroundColor: '#e8f3ff', paddingHorizontal: 6, paddingVertical: 2, borderRadius: 5, overflow: 'hidden' },
   cardNameDone: { color: '#16a34a' },
   check: { fontSize: 18, color: '#16a34a', fontWeight: '700' },
   card: {

@@ -189,14 +189,20 @@ export default function CultureScreen() {
           )}
         </View>
 
+        {/* 읽는 중인 책이 이 화면에서 가장 쓸모 있는 정보인데 스크롤 아래에 있었다 */}
+        <BookSection uid={uid} />
+        <View style={s.divider} />
+
         <TouchableOpacity style={s.millieBtn} onPress={openMillie} activeOpacity={0.85}>
           <View style={s.millieDeco1} /><View style={s.millieDeco2} /><View style={s.millieDeco3} />
           <View style={s.millieInner}>
             <View style={s.millieIconBox}>
-              <MaterialIcons name="menu-book" size={52} color="#fff" />
+              <MaterialIcons name="menu-book" size={24} color="#fff" />
             </View>
-            <Text style={s.millieBtnTitle}>밀리의서재</Text>
-            <Text style={s.millieBtnSub}>지금 바로 독서 시작하기</Text>
+            <View>
+              <Text style={s.millieBtnTitle}>밀리의서재</Text>
+              <Text style={s.millieBtnSub}>지금 바로 독서 시작하기</Text>
+            </View>
           </View>
           <View style={s.millieArrow}>
             <MaterialIcons name="arrow-forward" size={20} color="rgba(255,255,255,0.7)" />
@@ -229,8 +235,6 @@ export default function CultureScreen() {
           </TouchableOpacity>
         )}
 
-        <View style={s.divider} />
-        <BookSection uid={uid} />
       </Animated.View>
 
       {/* ── 어휘 일기 카드 ──────────────────────────────────── */}
@@ -362,17 +366,17 @@ const s = StyleSheet.create({
   millieBtn: {
     alignItems: 'center', justifyContent: 'center',
     backgroundColor: '#5b21b6', borderRadius: 20,
-    paddingVertical: 36, paddingHorizontal: 16,
-    marginBottom: 14, overflow: 'hidden', height: 220,
+    paddingVertical: 16, paddingHorizontal: 16,
+    marginBottom: 14, overflow: 'hidden', height: 92,
   },
   millieDeco1: { position: 'absolute', width: 180, height: 180, borderRadius: 90, backgroundColor: 'rgba(255,255,255,0.07)', right: -50, top: -60 },
   millieDeco2: { position: 'absolute', width: 120, height: 120, borderRadius: 60, backgroundColor: 'rgba(255,255,255,0.05)', left: -30, bottom: -40 },
   millieDeco3: { position: 'absolute', width: 80, height: 80, borderRadius: 40, backgroundColor: 'rgba(255,255,255,0.06)', right: 40, bottom: 10 },
-  millieInner: { alignItems: 'center', gap: 10 },
-  millieIconBox: { width: 80, height: 80, borderRadius: 24, backgroundColor: 'rgba(255,255,255,0.18)', alignItems: 'center', justifyContent: 'center', marginBottom: 4 },
+  millieInner: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+  millieIconBox: { width: 38, height: 38, borderRadius: 12, backgroundColor: 'rgba(255,255,255,0.18)', alignItems: 'center', justifyContent: 'center' },
   millieArrow: { position: 'absolute', bottom: 16, right: 18 },
-  millieBtnTitle: { color: '#fff', fontSize: 20, fontWeight: '800', letterSpacing: 0.5 },
-  millieBtnSub: { color: 'rgba(255,255,255,0.72)', fontSize: 13, fontWeight: '500' },
+  millieBtnTitle: { color: '#fff', fontSize: 16, fontWeight: '800', letterSpacing: 0.3 },
+  millieBtnSub: { color: 'rgba(255,255,255,0.72)', fontSize: 11.5, fontWeight: '500' },
   // 어휘 일기
   diaryGuide: { fontSize: 13, color: '#6b7280', marginBottom: 12, lineHeight: 19 },
   diaryGuideRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8 },

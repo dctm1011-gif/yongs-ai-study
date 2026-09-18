@@ -14,7 +14,7 @@ import { NOTIF_LOG_KEY } from './_layout';
 import { getFirebaseApp } from '../config/firebase';
 import { useAuth } from '../context/AuthContext';
 import { userRef } from '../utils/userDb';
-import { GRADUATE_AT, recordWrongWords, clearWrongWords } from '../utils/reviewPool';
+import { GRADUATE_AT, recordWrongWords, clearWrongWords, getWrongWordIds } from '../utils/reviewPool';
 import GameHub, { GameMode } from '../components/GameHub';
 import { useRoute } from '@react-navigation/native';
 
@@ -305,6 +305,14 @@ export default function VocaScreen() {
   const [inGame, setInGame] = useState(false);
   const [loading, setLoading] = useState(true);
   const [hideReadWords, setHideReadWords] = useState(true);
+
+  // 단어를 다 읽으면 "미읽음만" 필터에 걸려 목록이 텅 비어버렸다.
+  // 필터를 끄는 방법을 찾기 어려우니 다 읽은 시점에 저절로 풀어준다.
+  useEffect(() => {
+    if (!loading && words.length > 0 && words.every(w => w.isRead)) {
+      setHideReadWords(false);
+    }
+  }, [words, loading]);
   const [refreshing, setRefreshing] = useState(false);
   const [loadStartTime] = useState(Date.now());
   const [isCached, setIsCached] = useState(false);
@@ -1315,11 +1323,17 @@ Return ONLY JSON (no markdown):
         const activeQuizzes = quizzes.filter(q => !skipSet.has(q.wordId));
         const quizAllDone = activeQuizzes.length > 0 && activeQuizzes.every(q => q.answered);
 
-        const tabDefs: { key: ViewType; label: string; unlocked: boolean; hint: string; onPress: () => void }[] = [
+        // 잠금 힌트에 남은 개수를 넣는다 — "게임을 모두 완료하세요"만으로는
+        // 몇 개가 남았는지 알 수 없어 얼마나 더 해야 할지 가늠이 안 됐다.
+        const gamesLeft = GAME_KEYS.filter(k => !completionToday[k]).length;
+        const wordsLeft = words.filter(w => !w.isRead).length;
+        const quizLeft = activeQuizzes.filter(q => !q.answered).length;
+
+        const tabDefs: { key: ViewType; label: string; unlocked: boolean; hint: string; goTo?: ViewType; onPress: () => void }[] = [
           { key: 'game',   label: '게임',    unlocked: true,          hint: '',                          onPress: () => setView('game') },
-          { key: 'words',  label: '단어장',  unlocked: gamesAllDone,  hint: '게임을 모두 완료하세요',      onPress: () => setView('words') },
-          { key: 'quiz',   label: '퀴즈',    unlocked: allWordsRead,  hint: '단어장을 모두 읽으세요',      onPress: () => setView('quiz') },
-          { key: 'review', label: '문장복습', unlocked: quizAllDone,   hint: '퀴즈를 먼저 완료하세요',     onPress: () => { setView('review'); loadReviewStory(); } },
+          { key: 'words',  label: '단어장',  unlocked: gamesAllDone,  hint: `게임 ${gamesLeft}개가 남았어요 · 게임으로 이동`,   goTo: 'game',  onPress: () => setView('words') },
+          { key: 'quiz',   label: '퀴즈',    unlocked: allWordsRead,  hint: `단어장 ${wordsLeft}개를 더 읽어야 해요 · 단어장으로 이동`, goTo: 'words', onPress: () => setView('quiz') },
+          { key: 'review', label: '문장복습', unlocked: quizAllDone,   hint: `퀴즈 ${quizLeft}문제가 남았어요 · 퀴즈로 이동`,    goTo: 'quiz',  onPress: () => { setView('review'); loadReviewStory(); } },
           { key: 'stats',  label: '통계',    unlocked: true,          hint: '',                          onPress: () => setView('stats') },
         ];
 
@@ -1330,7 +1344,11 @@ Return ONLY JSON (no markdown):
                 key={tab.key}
                 style={[styles.tabButton, view === tab.key && styles.tabButtonActive, !tab.unlocked && styles.tabButtonLocked]}
                 onPress={() => {
-                  if (!tab.unlocked) { ToastAndroid.show(tab.hint, ToastAndroid.SHORT); return; }
+                  if (!tab.unlocked) {
+                    ToastAndroid.show(tab.hint, ToastAndroid.SHORT);
+                    if (tab.goTo) setView(tab.goTo); // 안내만 하고 멈추지 않고 그 단계로 데려간다
+                    return;
+                  }
                   tab.onPress();
                 }}
                 activeOpacity={tab.unlocked ? 0.7 : 1}
@@ -2230,6 +2248,7 @@ const ReviewPoolView = React.memo(({ uid }: { uid: string }) => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [poolWords, setPoolWords] = useState<PoolWord[]>([]);
+  const [wrongSet, setWrongSet] = useState<Set<string>>(new Set());
   const [search, setSearch] = useState('');
   const [deltas, setDeltas] = useState<Record<string, number>>({});
 
@@ -2282,8 +2301,20 @@ const ReviewPoolView = React.memo(({ uid }: { uid: string }) => {
           setDeltas(newDeltas);
         }
 
-        poolWordsRef.current = vals;
-        setPoolWords(vals);
+        // 틀린 적 있는 단어를 맨 위로 — 어제 만든 오답 풀을 통계에서도 쓴다
+        getWrongWordIds(uid).then(wrongIds => {
+          const ranked = [...vals].sort((a, b) => {
+            const aw = wrongIds.has(a.id) ? 0 : 1;
+            const bw = wrongIds.has(b.id) ? 0 : 1;
+            return aw !== bw ? aw - bw : a.count - b.count;
+          });
+          setWrongSet(wrongIds);
+          poolWordsRef.current = ranked;
+          setPoolWords(ranked);
+        }).catch(() => {
+          poolWordsRef.current = vals;
+          setPoolWords(vals);
+        });
         setLoading(false);
         setRefreshing(false);
       });
@@ -2317,13 +2348,30 @@ const ReviewPoolView = React.memo(({ uid }: { uid: string }) => {
     setTimeout(() => setRefreshing(false), 400);
   }, [uid]);
 
+  // 222개를 한 줄씩 훑는 수밖에 없었다. 복습 횟수로 거를 수 있게 한다.
+  const [countFilter, setCountFilter] = useState<number | 'all' | 'grad'>('all');
+
   const filteredWords = useMemo(() => {
     const q = search.trim().toLowerCase();
-    if (!q) return poolWords;
-    return poolWords.filter(w =>
-      w.word.toLowerCase().includes(q) || w.meaning.includes(search.trim())
-    );
-  }, [poolWords, search]);
+    let list = poolWords;
+    if (countFilter === 'grad') list = list.filter(w => w.count >= GRADUATE_AT);
+    else if (countFilter !== 'all') list = list.filter(w => w.count === countFilter && w.count < GRADUATE_AT);
+    if (q) {
+      list = list.filter(w => w.word.toLowerCase().includes(q) || w.meaning.includes(search.trim()));
+    }
+    return list;
+  }, [poolWords, search, countFilter]);
+
+  // 구간별 개수 — 버튼에 그대로 표시
+  const countBuckets = useMemo(() => {
+    const b: Record<string, number> = { grad: 0 };
+    for (let i = 0; i < GRADUATE_AT; i++) b[i] = 0;
+    for (const w of poolWords) {
+      if (w.count >= GRADUATE_AT) b.grad++;
+      else b[Math.max(0, w.count)]++;
+    }
+    return b;
+  }, [poolWords]);
 
   if (loading) {
     return (
@@ -2352,7 +2400,11 @@ const ReviewPoolView = React.memo(({ uid }: { uid: string }) => {
     return (
       <View style={styles.poolRow}>
         <View style={{ flex: 1 }}>
-          <Text style={styles.poolWord}>{item.word || '(단어 없음)'}</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+            <Text style={styles.poolWord}>{item.word || '(단어 없음)'}</Text>
+            {/* 왜 위에 있는지 이유를 보여준다 */}
+            {wrongSet.has(item.id) && <Text style={styles.wrongTag}>틀린 적 있음</Text>}
+          </View>
           <Text style={styles.poolMeaning}>{item.meaning}</Text>
         </View>
         <View style={styles.poolCountCol}>
@@ -2398,6 +2450,23 @@ const ReviewPoolView = React.memo(({ uid }: { uid: string }) => {
             {search.trim() ? ` · 검색결과 ${filteredWords.length}개` : ''}
             {totalDelta > 0 ? `  🟢 오늘 +${totalDelta}` : ''}
           </Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.bucketRow}>
+            {([['all', '전체', poolWords.length]] as [any, string, number][])
+              .concat(Array.from({ length: GRADUATE_AT }, (_, i) => [i, `${i}회`, countBuckets[i] ?? 0] as [any, string, number]))
+              .concat([['grad', '졸업', countBuckets.grad ?? 0]] as [any, string, number][])
+              .map(([key, label, n]) => (
+                <TouchableOpacity
+                  key={String(key)}
+                  style={[styles.bucketChip, countFilter === key && styles.bucketChipOn]}
+                  onPress={() => setCountFilter(key)}
+                  activeOpacity={0.7}
+                >
+                  <Text style={[styles.bucketChipText, countFilter === key && styles.bucketChipTextOn]}>
+                    {label} {n}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+          </ScrollView>
         </View>
       }
       ListEmptyComponent={
@@ -3119,6 +3188,12 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#0095f6',
   },
+  wrongTag: { fontSize: 9.5, fontWeight: '700', color: '#c2410c', backgroundColor: '#fdecea', paddingHorizontal: 5, paddingVertical: 1.5, borderRadius: 4, overflow: 'hidden' },
+  bucketRow: { gap: 6, paddingHorizontal: 16, paddingBottom: 8 },
+  bucketChip: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: 99, borderWidth: 1, borderColor: '#e3e3e3', backgroundColor: '#fff' },
+  bucketChipOn: { backgroundColor: '#0095f6', borderColor: '#0095f6' },
+  bucketChipText: { fontSize: 11, fontWeight: '600', color: '#8e8e8e' },
+  bucketChipTextOn: { color: '#fff' },
   poolSearchInput: {
     marginHorizontal: 16,
     marginTop: 10,
