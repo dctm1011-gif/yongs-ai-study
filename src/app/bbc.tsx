@@ -317,32 +317,30 @@ function NewsCard({ article, sourceName, sourceColor }: {
             return (
               <View key={i} style={[styles.sentenceRow, i > 0 && styles.sentenceRowBorder]}>
                 <Text style={styles.sentenceEn}>{s.en}</Text>
-                {s.ko ? (
-                  shownKo.has(i) ? (
-                    <Text style={styles.sentenceKo}>{s.ko}</Text>
-                  ) : (
+                {s.ko && shownKo.has(i) ? <Text style={styles.sentenceKo}>{s.ko}</Text> : null}
+
+                {/* 번역·분석 링크가 문장마다 한 줄씩 차지해 7문장이면 링크만 14줄이었다 */}
+                <View style={styles.sentenceActions}>
+                  {s.ko ? (
                     <TouchableOpacity onPress={() => toggleKo(i)} activeOpacity={0.7}>
-                      <Text style={[styles.analysisToggleText, { color: sourceColor, marginTop: 5 }]}>번역 보기</Text>
+                      <Text style={[styles.analysisToggleText, { color: shownKo.has(i) ? '#9ca3af' : sourceColor }]}>
+                        {shownKo.has(i) ? '번역 닫기' : '번역 보기'}
+                      </Text>
                     </TouchableOpacity>
-                  )
-                ) : null}
-                {s.analysis ? (
-                  <>
-                    <TouchableOpacity
-                      style={styles.analysisToggle}
-                      onPress={() => toggleAnalysis(i)}
-                      activeOpacity={0.7}
-                    >
-                      <Text style={[styles.analysisToggleText, { color: sourceColor }]}>
+                  ) : null}
+                  {s.analysis ? (
+                    <TouchableOpacity onPress={() => toggleAnalysis(i)} activeOpacity={0.7}>
+                      <Text style={[styles.analysisToggleText, { color: open ? '#9ca3af' : sourceColor }]}>
                         {open ? '분석 닫기 ▲' : '문장 분석 ▼'}
                       </Text>
                     </TouchableOpacity>
-                    {open ? (
-                      <View style={[styles.analysisBox, { borderLeftColor: sourceColor }]}>
-                        <Text style={styles.analysisText}>{s.analysis}</Text>
-                      </View>
-                    ) : null}
-                  </>
+                  ) : null}
+                </View>
+
+                {s.analysis && open ? (
+                  <View style={[styles.analysisBox, { borderLeftColor: sourceColor }]}>
+                    <Text style={styles.analysisText}>{s.analysis}</Text>
+                  </View>
                 ) : null}
               </View>
             );
@@ -712,14 +710,15 @@ const styles = StyleSheet.create({
     marginBottom: 12, borderWidth: 1, borderColor: '#e5e7eb',
   },
   newsCardMeta: { flexDirection: 'row', gap: 6, marginBottom: 8, flexWrap: 'wrap' },
-  newsTitle: { fontSize: 15, fontWeight: '700', color: '#111827', lineHeight: 22, marginBottom: 4 },
+  newsTitle: { fontSize: 17, fontWeight: '800', color: '#111827', lineHeight: 24, marginBottom: 4 },
   newsSummary: { fontSize: 13, color: '#4b5563', lineHeight: 19 },
+  sentenceActions: { flexDirection: 'row', alignItems: 'center', gap: 14, marginTop: 5 },
   newsMeta: { fontSize: 11, color: '#9ca3af', marginTop: 2 },
   readingMeta: { fontSize: 11.5, color: '#6b7280', textAlign: 'center', marginTop: -4, marginBottom: 10 },
   sentenceList: { marginTop: 10, borderTopWidth: 1 },
   sentenceRow: { paddingVertical: 8 },
   sentenceRowBorder: { borderTopWidth: 1, borderTopColor: '#f0f0f0' },
-  sentenceEn: { fontSize: 14, color: '#111827', lineHeight: 21 },
+  sentenceEn: { fontSize: 13.5, color: '#111827', lineHeight: 20 },
   sentenceKo: { fontSize: 13, color: '#6b7280', lineHeight: 20, marginTop: 4 },
   analysisToggle: { marginTop: 6 },
   analysisToggleText: { fontSize: 11, fontWeight: '700', letterSpacing: 0.3 },
