@@ -4100,5 +4100,65 @@
     "explanation": "Lack of agreement or harmony; conflict or disagreement between people or ideas; a harsh, inharmonious sound",
     "tip": "동의어: conflict, disagreement, strife / 반의어: harmony, agreement, accord / 뉴스, 사회학",
     "emoji": "⚡"
+  },
+  {
+    "id": "allegation",
+    "word": "allegation",
+    "pos": "noun",
+    "date": "2026-09-19",
+    "meaning": "주장, 혐의, 주장된 사실",
+    "example_ko": "스캔들은 회사 CEO의 재정 부정행위 혐의로 시작되었다.",
+    "example_en": "The scandal began with allegations of financial misconduct by the company's CEO.",
+    "explanation": "어떤 사실이라고 주장하는 것, 특히 증거 없이 또는 법적 맥락에서 누군가를 비난하는 것",
+    "tip": "동의어: claim, accusation, assertion / 반의어: proof, evidence / 법률/뉴스 출제영역",
+    "emoji": ""
+  },
+  {
+    "id": "contingency",
+    "word": "contingency",
+    "pos": "noun",
+    "date": "2026-09-19",
+    "meaning": "불확실한 사건, 긴급 상황, 대비책",
+    "example_ko": "재난 구호팀은 폭풍이 악화될 경우에 대비한 대비 계획을 세웠다.",
+    "example_en": "The disaster relief team had a contingency plan in case the storm worsened.",
+    "explanation": "미래에 일어날 수 있는 예상하지 못한 상황이나 그에 대한 대비 계획",
+    "tip": "동의어: emergency plan, backup plan / 반의어: certainty / 비즈니스/시험 출제영역",
+    "emoji": ""
+  },
+  {
+    "id": "incumbent",
+    "word": "incumbent",
+    "pos": "adjective/noun",
+    "date": "2026-09-19",
+    "meaning": "현직의(형용사), 현직자(명사)",
+    "example_ko": "현직 대통령은 선거에서 도전자로부터 강한 반발에 직면했다.",
+    "example_en": "The incumbent president faced strong opposition from the challenger in the election.",
+    "explanation": "현재 직책을 맡고 있는 사람 또는 그 사람의; 의무적인",
+    "tip": "동의어: current, sitting (형용사) / 반의어: former, previous / 정치/경영 출제영역",
+    "emoji": ""
+  },
+  {
+    "id": "metabolic",
+    "word": "metabolic",
+    "pos": "adjective",
+    "date": "2026-09-19",
+    "meaning": "신진대사의, 대사 관련의",
+    "example_ko": "규칙적인 운동은 신진대사 속도를 개선하고 체중 관리에 도움이 된다.",
+    "example_en": "Regular exercise improves metabolic rate and helps with weight management.",
+    "explanation": "신체가 음식을 에너지로 변환하는 과정과 관련된",
+    "tip": "동의어: digestive (유사), biochemical / 명사형: metabolism / 과학/의학 출제영역",
+    "emoji": ""
+  },
+  {
+    "id": "deplete",
+    "word": "deplete",
+    "pos": "verb",
+    "date": "2026-09-19",
+    "meaning": "고갈시키다, 소진하다",
+    "example_ko": "항생제의 과다 사용은 신체의 자연적인 감염 방어 능력을 고갈시킬 수 있다.",
+    "example_en": "Overuse of antibiotics can deplete the body's natural defenses against infection.",
+    "explanation": "자원이나 에너지, 저장량을 줄여서 거의 없게 만들다",
+    "tip": "동의어: exhaust, drain, reduce / 반의어: replenish, restore / 환경/과학 출제영역",
+    "emoji": ""
   }
 ]

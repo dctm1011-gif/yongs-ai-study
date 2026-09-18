@@ -385,5 +385,41 @@
     "tip": "reduce, cut down과 비슷하지만 'scale back'이 더 비즈니스스러워요! scale up(확대)의 반대 개념이에요.",
     "emoji": "📊",
     "date": "2026-09-18"
+  },
+  {
+    "id": "bring-about",
+    "phrase": "bring about",
+    "meaning_ko": "야기하다, 초래하다",
+    "meaning_en": "to cause something to happen or occur",
+    "explanation": "어떤 변화나 결과를 일으키는 거예요! '~를 가져오다'라는 뜻으로 학술 글쓰기나 뉴스에서 자주 나와요 📰",
+    "example_en": "The new policy brought about significant changes in education.",
+    "example_ko": "그 새로운 정책은 교육에 상당한 변화를 초래했어요.",
+    "tip": "유사 표현: cause, trigger, lead to. 객관적 상황 변화를 설명할 때 딱이에요!",
+    "emoji": "🔄",
+    "date": "2026-09-19"
+  },
+  {
+    "id": "back-up",
+    "phrase": "back up",
+    "meaning_ko": "지지하다, 뒷받침하다",
+    "meaning_en": "to support or provide evidence for a claim",
+    "explanation": "주장이나 의견을 증거로 뒷받침하는 거야! 비즈니스 회의나 토론에서 '그 말을 증명해줄 자료 있어?'할 때 쓰면 멋있어요 💼",
+    "example_en": "Can you back up your argument with some data?",
+    "example_ko": "너의 주장을 데이터로 뒷받침할 수 있어?",
+    "tip": "유사 표현: support, substantiate, verify. 명사 backup(백업)과도 관련 있어요!",
+    "emoji": "💪",
+    "date": "2026-09-19"
+  },
+  {
+    "id": "check-out",
+    "phrase": "check out",
+    "meaning_ko": "확인하다, 살펴보다",
+    "meaning_en": "to examine or investigate something closely",
+    "explanation": "뭔가를 자세히 살펴보거나 확인해보는 거야! 일상 대화에서 엄청 자주 써요. '한번 봐봐' 이럴 때 쓰면 돼요 👀",
+    "example_en": "You should check out that new coffee shop downtown.",
+    "example_ko": "시내에 있는 그 새 카페 한번 가봐야지!",
+    "tip": "유사 표현: examine, look at, investigate. checkout(계산)과는 다른 의미니까 주의!",
+    "emoji": "🔍",
+    "date": "2026-09-19"
   }
 ]
