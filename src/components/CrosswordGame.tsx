@@ -204,6 +204,7 @@ export default function CrosswordGame() {
   const [bounds, setBounds] = useState({ minR: 0, maxR: 0, minC: 0, maxC: 0 });
   const [synced, setSynced] = useState(false);
   const [revealedWordIds, setRevealedWordIds] = useState<Set<string>>(new Set());
+  const [showClues, setShowClues] = useState(false);
   const [wordCountMap, setWordCountMap] = useState<Record<string, number>>({});
 
   const loadGame = useCallback(async () => {
@@ -296,6 +297,12 @@ export default function CrosswordGame() {
       row: pw.direction === 'down' ? pw.startRow + i : pw.startRow,
       col: pw.direction === 'across' ? pw.startCol + i : pw.startCol,
     })), []
+  );
+
+  // 그 단어의 칸이 모두 올바른 글자로 채워졌는지 — 단서 목록에서 완료 표시에 쓴다
+  const wordSolved = useCallback((pw: PlacedWord) =>
+    wordCells(pw).every((c, i) => (userInputs[ck(c.row, c.col)] ?? '') === pw.word[i]),
+    [userInputs, wordCells],
   );
 
   const activeCellSet = useMemo(() => {
@@ -538,10 +545,45 @@ export default function CrosswordGame() {
             <Text style={s.clueText} numberOfLines={2}>
               {selectedWord?.meaning ?? '단어를 선택하세요'}
             </Text>
+            <TouchableOpacity style={s.clueListBtn} onPress={() => setShowClues(v => !v)} activeOpacity={0.7}>
+              <Text style={s.clueListBtnText}>{showClues ? '단서 닫기' : '단서 전체'}</Text>
+            </TouchableOpacity>
             <TouchableOpacity style={s.answerBtn} onPress={confirmShowAnswer} activeOpacity={0.7}>
               <Text style={s.answerBtnText}>정답보기</Text>
             </TouchableOpacity>
           </View>
+
+          {/* 선택한 단어 하나만 보였다. 가로/세로 단서를 함께 보는 게 크로스워드의 기본이다. */}
+          {showClues && (
+            <ScrollView style={s.clueList} contentContainerStyle={{ paddingBottom: 6 }}>
+              {(['across', 'down'] as const).map(dir => {
+                const list = placedWords.filter(w => w.direction === dir);
+                if (list.length === 0) return null;
+                return (
+                  <View key={dir}>
+                    <Text style={s.clueListHead}>{dir === 'across' ? '가로' : '세로'}</Text>
+                    {list.map(pw => {
+                      const solved = wordSolved(pw);
+                      return (
+                        <TouchableOpacity
+                          key={pw.wordId}
+                          style={s.clueListRow}
+                          onPress={() => { setSelectedWordId(pw.wordId); setShowClues(false); }}
+                          activeOpacity={0.7}
+                        >
+                          <Text style={s.clueListNum}>{pw.clueNumber}</Text>
+                          <Text style={[s.clueListText, solved && s.clueListTextDone]} numberOfLines={1}>
+                            {pw.meaning}
+                          </Text>
+                          <Text style={s.clueListLen}>{solved ? '✓' : `${pw.word.length}자`}</Text>
+                        </TouchableOpacity>
+                      );
+                    })}
+                  </View>
+                );
+              })}
+            </ScrollView>
+          )}
           <View style={s.keyboard}>
             {KEYBOARD_ROWS.map((row, ri) => (
               <View key={ri} style={s.keyRow}>
@@ -639,6 +681,15 @@ const s = StyleSheet.create({
   },
   clueLabel: { fontSize: 14, fontWeight: '600', color: '#0095f6', marginRight: 10, minWidth: 32 },
   clueText: { flex: 1, fontSize: 13, color: '#262626', lineHeight: 19 },
+  clueListBtn: { paddingHorizontal: 9, paddingVertical: 6, borderRadius: 8, borderWidth: 1, borderColor: '#dbdbdb' },
+  clueListBtnText: { fontSize: 11, fontWeight: '600', color: '#4a4a4a' },
+  clueList: { maxHeight: 190, backgroundColor: '#fafafa', borderTopWidth: 1, borderTopColor: '#ededed', paddingHorizontal: 14 },
+  clueListHead: { fontSize: 10.5, fontWeight: '800', color: '#8e8e8e', letterSpacing: 0.4, marginTop: 9, marginBottom: 3 },
+  clueListRow: { flexDirection: 'row', alignItems: 'center', gap: 9, paddingVertical: 6 },
+  clueListNum: { width: 16, fontSize: 11, fontWeight: '700', color: '#0095f6' },
+  clueListText: { flex: 1, fontSize: 12.5, color: '#262626' },
+  clueListTextDone: { color: '#16a34a', textDecorationLine: 'line-through' },
+  clueListLen: { fontSize: 10.5, color: '#8e8e8e' },
   answerBtn: {
     marginLeft: 8, paddingVertical: 6, paddingHorizontal: 10,
     backgroundColor: '#fff', borderWidth: 1, borderColor: '#dbdbdb',

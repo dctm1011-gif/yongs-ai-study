@@ -79,6 +79,7 @@ export default function CultureScreen() {
   const _d = getDayIndex(_section);
   const vocabWords: DiaryVocab[] = [0, 1, 2].map(i => DIARY_VOCAB_LIST[_d + _section * i]);
   const [diaryText, setDiaryText] = useState('');
+  const [recentDiaries, setRecentDiaries] = useState<{ date: string; text: string }[]>([]);
   const [diaryDone, setDiaryDone] = useState(false);
   const [diarySaving, setDiarySaving] = useState(false);
 
@@ -108,6 +109,17 @@ export default function CultureScreen() {
         }
 
         // 일기 로드
+        // 최근 일기 몇 개를 같이 읽어 카드 안에서 바로 보여준다
+        get(ref(db, `users/${uid}/diary`)).then(all => {
+          if (!all.exists()) return;
+          const entries = Object.entries(all.val() as Record<string, string>)
+            .filter(([d, t]) => d < today && typeof t === 'string' && t.trim())
+            .sort((a, b) => b[0].localeCompare(a[0]))
+            .slice(0, 3)
+            .map(([date, text]) => ({ date, text }));
+          setRecentDiaries(entries);
+        }).catch(() => {});
+
         const diarySnap = await get(ref(db, `users/${uid}/diary/${today}`));
         if (diarySnap.exists()) {
           const saved = diarySnap.val();
@@ -257,6 +269,17 @@ export default function CultureScreen() {
           </View>
         </View>
 
+        {recentDiaries.length > 0 && (
+          <View style={s.pastDiaryBox}>
+            {recentDiaries.map(d => (
+              <TouchableOpacity key={d.date} style={s.pastDiaryRow} onPress={() => setDiaryModalVisible(true)} activeOpacity={0.7}>
+                <Text style={s.pastDiaryDate}>{d.date.slice(5).replace('-', '/')}</Text>
+                <Text style={s.pastDiaryText} numberOfLines={1}>{d.text.trim()}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
+
         <View style={s.diaryGuideRow}>
           <Text style={s.diaryGuide}>아래 어휘 3개를 모두 사용해서 오늘 일기를 써보세요</Text>
           {/* 단어별 체크 표시는 이미 있었지만 몇 개를 썼는지는 세어주지 않았다 */}
@@ -379,6 +402,10 @@ const s = StyleSheet.create({
   millieBtnSub: { color: 'rgba(255,255,255,0.72)', fontSize: 11.5, fontWeight: '500' },
   // 어휘 일기
   diaryGuide: { fontSize: 13, color: '#6b7280', marginBottom: 12, lineHeight: 19 },
+  pastDiaryBox: { backgroundColor: '#f8fafc', borderRadius: 10, padding: 8, marginBottom: 12, gap: 2 },
+  pastDiaryRow: { flexDirection: 'row', alignItems: 'baseline', gap: 8, paddingVertical: 3 },
+  pastDiaryDate: { fontSize: 10.5, fontWeight: '700', color: '#94a3b8', width: 34 },
+  pastDiaryText: { flex: 1, fontSize: 11.5, color: '#475569' },
   diaryGuideRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
   diaryUsedCount: { fontSize: 12, fontWeight: '700', color: '#8e8e8e' },
   diaryUsedCountDone: { color: '#059669' },

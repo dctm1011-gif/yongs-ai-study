@@ -388,6 +388,37 @@ export default function SpeakingScreen() {
           style={{ flex: 1 }}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
+          {/* 목표 단어와 남은 턴은 대화 위로 스크롤되어 사라지곤 했다. 여기서 고정한다. */}
+          {viewState === 'chatting' && (
+            <View style={styles.liveBar}>
+              <View style={styles.liveBarTop}>
+                <Text style={styles.liveBarText}>
+                  {userMsgCount >= MIN_EXCHANGES
+                    ? `${userMsgCount}턴 · 언제든 마칠 수 있어요`
+                    : `${userMsgCount}/${MIN_EXCHANGES}턴`}
+                </Text>
+                <View style={styles.liveTrack}>
+                  <View style={[styles.liveFill, { width: `${Math.min(userMsgCount / MIN_EXCHANGES, 1) * 100}%` }]} />
+                </View>
+              </View>
+              {targetWords.length > 0 && (
+                <View style={styles.liveChips}>
+                  {targetWords.map(w => {
+                    const used = messages.some(m =>
+                      m.role === 'user' && m.content.toLowerCase().includes(w.word.toLowerCase()));
+                    return (
+                      <View key={w.word} style={[styles.liveChip, used && styles.liveChipOn]}>
+                        <Text style={[styles.liveChipText, used && styles.liveChipTextOn]}>
+                          {used ? '✓ ' : ''}{w.word}
+                        </Text>
+                      </View>
+                    );
+                  })}
+                </View>
+              )}
+            </View>
+          )}
+
           <FlatList
             ref={listRef}
             data={messages}
@@ -490,6 +521,16 @@ const styles = StyleSheet.create({
   targetTitle: { fontSize: 11, fontWeight: '800', color: '#6366f1', letterSpacing: 0.5, marginBottom: 8 },
   targetWord: { fontSize: 15, fontWeight: '700', color: '#1e293b', marginBottom: 4 },
   targetMeaning: { fontSize: 13, fontWeight: '400', color: '#64748b' },
+  liveBar: { backgroundColor: '#f8fafc', borderBottomWidth: 1, borderBottomColor: '#e2e8f0', paddingHorizontal: 14, paddingVertical: 8, gap: 7 },
+  liveBarTop: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  liveBarText: { fontSize: 11, fontWeight: '700', color: '#475569' },
+  liveTrack: { flex: 1, height: 4, backgroundColor: '#e2e8f0', borderRadius: 99, overflow: 'hidden' },
+  liveFill: { height: '100%', backgroundColor: '#6366f1', borderRadius: 99 },
+  liveChips: { flexDirection: 'row', flexWrap: 'wrap', gap: 5 },
+  liveChip: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 99, backgroundColor: '#fff', borderWidth: 1, borderColor: '#cbd5e1' },
+  liveChipOn: { backgroundColor: '#dcfce7', borderColor: '#86efac' },
+  liveChipText: { fontSize: 11, fontWeight: '600', color: '#64748b' },
+  liveChipTextOn: { color: '#15803d' },
   historyBox: { alignSelf: 'stretch', marginTop: 26, borderTopWidth: 1, borderTopColor: '#e2e8f0', paddingTop: 14 },
   historyLabel: { fontSize: 11, fontWeight: '800', color: '#94a3b8', letterSpacing: 0.5, marginBottom: 8 },
   historyRow: { flexDirection: 'row', alignItems: 'baseline', gap: 8, paddingVertical: 6 },

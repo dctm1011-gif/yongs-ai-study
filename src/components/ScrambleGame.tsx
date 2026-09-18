@@ -58,6 +58,7 @@ export default function ScrambleGame() {
   const [wrongWordIds, setWrongWordIds] = useState<Set<string>>(new Set());
   const [revealedWordIds, setRevealedWordIds] = useState<Set<string>>(new Set());
   const [synced, setSynced] = useState(false);
+  const [hintShown, setHintShown] = useState(false);
   const shakeAnim = useRef(new Animated.Value(0)).current;
 
   const currentWord = words[currentIndex] ?? null;
@@ -66,6 +67,7 @@ export default function ScrambleGame() {
     setScrambledTiles(scramble(word.word.replace(/\s+/g, '')));
     setSelectedTiles([]);
     setFeedback('none');
+    setHintShown(false);
   }, []);
 
   const loadGame = useCallback(async () => {
@@ -328,9 +330,9 @@ export default function ScrambleGame() {
     <View style={s.container}>
       {/* 진행도 */}
       <View style={s.progressBar}>
-        <View style={[s.progressFill, { width: `${(currentIndex / words.length) * 100}%` }]} />
+        <View style={[s.progressFill, { width: `${((currentIndex + 1) / words.length) * 100}%` }]} />
       </View>
-      <Text style={s.progressLabel}>{currentIndex + 1} / {words.length}</Text>
+      <Text style={s.progressLabel}>{currentIndex + 1}번째 · 전체 {words.length}문제</Text>
 
       {/* 뜻 */}
       <View style={s.meaningBox}>
@@ -392,9 +394,23 @@ export default function ScrambleGame() {
             </TouchableOpacity>
           )}
           {feedback === 'none' && (
+            <>
+            <TouchableOpacity
+              style={s.hintBtn}
+              onPress={() => setHintShown(true)}
+              activeOpacity={0.7}
+              disabled={hintShown}
+            >
+              <Text style={s.hintBtnText}>
+                {hintShown
+                  ? `첫 글자 ${currentWord.word[0].toUpperCase()} · ${currentWord.word.replace(/\s+/g, '').length}자`
+                  : '힌트 (페널티 없음)'}
+              </Text>
+            </TouchableOpacity>
             <TouchableOpacity style={s.answerBtn} onPress={confirmReveal} activeOpacity={0.7}>
               <Text style={s.answerBtnText}>정답보기</Text>
             </TouchableOpacity>
+            </>
           )}
         </View>
       </View>
@@ -433,9 +449,9 @@ const s = StyleSheet.create({
   reviewMeaning: { fontSize: 13, color: '#8e8e8e', flex: 1, textAlign: 'right', marginLeft: 8 },
 
   container: { flex: 1, backgroundColor: '#fff', paddingHorizontal: 20, paddingBottom: 20 },
-  progressBar: { height: 5, backgroundColor: '#fafafa', borderWidth: 1, borderColor: '#dbdbdb', borderRadius: 3, marginTop: 14, marginBottom: 4 },
-  progressFill: { height: 5, backgroundColor: '#0095f6', borderRadius: 3 },
-  progressLabel: { fontSize: 12, color: '#8e8e8e', textAlign: 'right', marginBottom: 20, fontWeight: '600' },
+  progressBar: { height: 8, backgroundColor: '#eef1f5', borderRadius: 99, marginTop: 14, marginBottom: 5, overflow: 'hidden' },
+  progressFill: { height: 8, backgroundColor: '#0095f6', borderRadius: 99 },
+  progressLabel: { fontSize: 12, color: '#6b7280', textAlign: 'right', marginBottom: 20, fontWeight: '700' },
 
   meaningBox: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 12 },
   meaningHint: { fontSize: 13, color: '#8e8e8e', fontWeight: '600', marginBottom: 6, letterSpacing: 0.5 },
@@ -482,6 +498,8 @@ const s = StyleSheet.create({
     borderWidth: 1, borderColor: '#dbdbdb',
   },
   backspaceText: { fontSize: 16, color: '#8e8e8e', fontWeight: '600' },
+  hintBtn: { paddingHorizontal: 12, paddingVertical: 9, borderRadius: 9, borderWidth: 1, borderColor: '#cfe0ff', backgroundColor: '#f2f7ff' },
+  hintBtnText: { fontSize: 12, fontWeight: '700', color: '#31558f' },
   answerBtn: {
     paddingVertical: 11, paddingHorizontal: 16,
     backgroundColor: '#fff', borderWidth: 1, borderColor: '#dbdbdb',

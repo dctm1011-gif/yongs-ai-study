@@ -173,7 +173,11 @@ function EpisodeCard({ ep, color, label, onComplete, isDone }: {
               <View style={[styles.progressFill, { width: `${pct}%` as any, backgroundColor: color }]} />
             </View>
             <Text style={styles.playerTime}>
-              {positionSec > 0 ? `${formatDuration(positionSec)} / ` : ''}{formatDuration(durationSec)}
+              {/* 수집 단계에서 duration_sec이 0으로 저장돼 재생 전에는 길이를 모른다.
+                  재생을 시작하면 플레이어가 실제 길이를 알려주므로, 그전까지는
+                  "0:00"이라는 틀린 숫자 대신 아무것도 보여주지 않는다. */}
+              {positionSec > 0 ? `${formatDuration(positionSec)}` : ''}
+              {durationSec > 0 ? `${positionSec > 0 ? ' / ' : ''}${formatDuration(durationSec)}` : ''}
             </Text>
           </View>
           {(playing || positionSec > 0) && (
@@ -464,7 +468,14 @@ export default function BBCScreen() {
           <Text style={styles.backText}>← Reading</Text>
         </TouchableOpacity>
         <ScrollView contentContainerStyle={styles.detailContent}>
-          <Text style={styles.dateLabel}>{today}</Text>
+          <Text style={styles.dateLabel}>{formatToday(today)}</Text>
+          {!loading && (kbsArticle || heraldArticle) ? (
+            <Text style={styles.readingMeta}>
+              기사 {[kbsArticle, heraldArticle].filter(Boolean).length}개 ·{' '}
+              {[kbsArticle, heraldArticle].filter(Boolean)
+                .reduce((n, a) => n + (a!.sentences?.length ?? 0), 0)}문장
+            </Text>
+          ) : null}
           {loading ? (
             <View style={styles.skeleton}>
               <ActivityIndicator size="small" color="#9ca3af" />
@@ -704,6 +715,7 @@ const styles = StyleSheet.create({
   newsTitle: { fontSize: 15, fontWeight: '700', color: '#111827', lineHeight: 22, marginBottom: 4 },
   newsSummary: { fontSize: 13, color: '#4b5563', lineHeight: 19 },
   newsMeta: { fontSize: 11, color: '#9ca3af', marginTop: 2 },
+  readingMeta: { fontSize: 11.5, color: '#6b7280', textAlign: 'center', marginTop: -4, marginBottom: 10 },
   sentenceList: { marginTop: 10, borderTopWidth: 1 },
   sentenceRow: { paddingVertical: 8 },
   sentenceRowBorder: { borderTopWidth: 1, borderTopColor: '#f0f0f0' },
