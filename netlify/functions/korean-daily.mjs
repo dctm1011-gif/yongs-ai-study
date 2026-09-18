@@ -1,9 +1,13 @@
 import { initializeApp, getApps } from 'firebase/app';
 import { getDatabase, ref, set, get } from 'firebase/database';
 
-export const config = {
-  schedule: '0 21 * * *', // 매일 06:00 KST
-};
+// 비활성화 (2026-09-18) — 사자성어·상식·맞춤법 OX를 매일 만들어 왔지만
+// 이 내용을 보여주는 화면이 앱에도 웹에도 없다. 쓰지 않는 콘텐츠에 매일
+// 토큰이 나가고 있어서 스케줄을 끈다. 되살리려면 아래 주석을 풀고,
+// korean/daily를 읽는 화면을 함께 붙일 것.
+// export const config = {
+//   schedule: '0 21 * * *', // 매일 06:00 KST
+// };
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,

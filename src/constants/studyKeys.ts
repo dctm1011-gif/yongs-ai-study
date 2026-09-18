@@ -4,7 +4,7 @@ export const CHECKLIST_KEYS = [
   'english_sentence', 'english_review', 'english_news_reading', 'english_news_listening',
   'english_speaking',
   'investment',
-  'reading', 'korean_diary', 'korean_ox',
+  'reading', 'korean_diary',
 ] as const;
 
 export type ChecklistKey = (typeof CHECKLIST_KEYS)[number];

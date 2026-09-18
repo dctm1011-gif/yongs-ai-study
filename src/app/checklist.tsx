@@ -58,7 +58,6 @@ const GROUPS: { title: string; color: string; items: CheckItem[] }[] = [
     items: [
       { key: 'reading',      label: '독서',      emoji: '📕', target: 'Culture' },
       { key: 'korean_diary', label: '어휘 일기', emoji: '✏️', target: 'Culture' },
-      { key: 'korean_ox',    label: '맞춤법 OX', emoji: '🇰🇷', target: 'Culture' },
     ],
   },
 ];
