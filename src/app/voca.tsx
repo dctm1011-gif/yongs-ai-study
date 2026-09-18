@@ -2389,7 +2389,9 @@ const ReviewPoolView = React.memo(({ uid }: { uid: string }) => {
     );
   }
 
-  const active = poolWords.filter(w => w.count < 10);
+  // 졸업 기준을 10회에서 5회로 바꿀 때 놓친 자리. 10이 박혀 있어 "복습 중"에
+  // 졸업한 단어까지 들어갔고, 그래서 복습 중 230 + 졸업 44 > 전체 230이 됐다.
+  const active = poolWords.filter(w => w.count < GRADUATE_AT);
   const graduated = poolWords.filter(w => w.count >= GRADUATE_AT);
   const totalDelta = Object.values(deltas).reduce((a, b) => a + b, 0);
 

@@ -188,6 +188,8 @@ export default function ChecklistScreen() {
   const doneCount = ALL_ITEMS.filter(i => done[i.key]).length;
   const allDone = doneCount === totalItems;
   const nextItem = ALL_ITEMS.find(i => !done[i.key]);
+  const readingDone = !!done.english_news_reading;
+  const listeningDone = !!done.english_news_listening;
 
   useEffect(() => {
     if (!allDone) { celebrate.setValue(0); return; }
@@ -230,18 +232,31 @@ export default function ChecklistScreen() {
           emoji="🗂"
           label="단어 복습"
           value={dash ? `${dash.reviewDue}개 대기` : '—'}
-          sub={dash ? (dash.wrongCount > 0 ? `틀린 단어 ${dash.wrongCount}개 · 오늘 새 단어 ${dash.newWords}개` : `오늘 새 단어 ${dash.newWords}개`) : ' '}
+          sub={dash ? (dash.wrongCount > 0 ? `틀린 단어 ${dash.wrongCount}개 · 새 단어 ${dash.newWords}개` : `오늘 새 단어 ${dash.newWords}개`) : ' '}
           accent={categoryColors.english}
-          alert={!!dash && dash.wrongCount > 0}
+          /* 오답은 늘 조금씩 있어서, 오늘 단어 학습을 마쳤으면 점을 끈다 */
+          alert={!!dash && dash.wrongCount > 0 && !done.english}
           onPress={() => go({ target: 'Voca' })}
         />
         <StatusTile
           emoji="📰"
           label="읽기·듣기"
-          value={dash ? (dash.newEpisode ? `${dash.newEpisode} 새 회차` : dash.hasArticle ? '오늘 기사 있음' : '준비 중') : '—'}
-          sub={dash ? (dash.hasArticle ? 'KBS·헤럴드 기사 대기' : '오늘 자료 없음') : ' '}
+          value={
+            !dash ? '—'
+              : readingDone && listeningDone ? '오늘 완료'
+              : dash.newEpisode ? `${dash.newEpisode} 새 회차`
+              : dash.hasArticle ? '오늘 기사 있음' : '준비 중'
+          }
+          sub={
+            !dash ? ' '
+              : readingDone && listeningDone ? '리딩·리스닝 모두 마침'
+              : readingDone ? '리딩 완료 · 리스닝 남음'
+              : listeningDone ? '리스닝 완료 · 리딩 남음'
+              : dash.hasArticle ? 'KBS·헤럴드 기사 대기' : '오늘 자료 없음'
+          }
           accent={categoryColors.english}
-          alert={!!dash?.newEpisode}
+          /* 이미 끝낸 날까지 점을 띄우면 점의 의미가 없어진다 */
+          alert={!!dash?.newEpisode && !listeningDone}
           onPress={() => go({ target: 'BBC' })}
         />
         <StatusTile
@@ -250,7 +265,7 @@ export default function ChecklistScreen() {
           value={dash ? `이번 주 ${dash.speakingWeek}회` : '—'}
           sub={dash ? (dash.speakingWeek >= 4 ? '목표 4회 달성' : `목표 4회까지 ${4 - dash.speakingWeek}회`) : ' '}
           accent={categoryColors.english}
-          alert={!!dash && dash.speakingWeek < 4}
+          alert={!!dash && dash.speakingWeek < 4 && !done.english_speaking}
           onPress={() => go({ target: 'Speaking' })}
         />
         <StatusTile
