@@ -286,11 +286,12 @@ export default function SpeakingScreen() {
           done: true, exchanges: userMsgCount, ts: Date.now(),
         }),
       ];
-      if (summary) {
-        tasks.push(dbSet(ref(db, `users/${user.uid}/speaking_history/${today}`), {
-          date: today, topic, summary, exchanges: userMsgCount, ts: Date.now(),
-        }));
-      }
+      // 요약이 비어 오면 대화 기록을 통째로 버리고 있었다(2026-09-18 실제로 발생:
+      // 교정 3건은 저장됐는데 그날 대화는 흔적도 남지 않음). 주제와 턴 수만으로도
+      // "언제 무슨 얘기를 했는지"는 남으니 요약 여부와 무관하게 기록한다.
+      tasks.push(dbSet(ref(db, `users/${user.uid}/speaking_history/${today}`), {
+        date: today, topic, summary: summary ?? '', exchanges: userMsgCount, ts: Date.now(),
+      }));
       if (corrections.length > 0) {
         tasks.push(dbSet(ref(db, `users/${user.uid}/speaking_corrections/${today}`), {
           date: today, topic, corrections, ts: Date.now(),
