@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'rea
 import { getDatabase, ref, get, query, orderByKey, startAt, endAt } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
 import { CHECKLIST_KEYS, isDone } from '../constants/studyKeys';
+import { getKSTNow } from '../utils/dateUtils';
 
 function calcPct(completion: Record<string, any>): number {
   const done = CHECKLIST_KEYS.filter(k => isDone(completion[k])).length;
@@ -19,12 +20,8 @@ function pctColor(pct: number): { bg: string; text: string } {
 
 const WEEK = ['일', '월', '화', '수', '목', '금', '토'];
 
-function kstNow() {
-  return new Date(Date.now() + 9 * 3600000);
-}
-
 export function ProgressCalendar() {
-  const now = kstNow();
+  const now = getKSTNow();
   const todayStr = now.toISOString().slice(0, 10);
   const maxYr = now.getUTCFullYear();
   const maxMo = now.getUTCMonth();

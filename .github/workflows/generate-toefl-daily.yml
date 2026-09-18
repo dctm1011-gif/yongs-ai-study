@@ -1,8 +1,11 @@
 name: Generate Daily TOEFL Content
 
 on:
-  schedule:
-    - cron: '30 6 * * *'  # 매일 06:30 UTC (15:30 KST) - english/investment push 충돌 방지
+  # 자동 실행 중단 (2026-09-18) — 만들어 둔 문제를 보던 toefl/index.html에
+  # 더 이상 들어가지 않는다. 읽는 데가 없어서 매일 토큰만 나가던 상태였다.
+  # 되살리려면 아래 schedule 주석을 풀 것. 수동 실행은 그대로 가능하다.
+  # schedule:
+  #   - cron: '30 6 * * *'  # 매일 06:30 UTC (15:30 KST)
   workflow_dispatch:     # 수동 실행 가능
 
 concurrency:
