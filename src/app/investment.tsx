@@ -2922,7 +2922,7 @@ const DongComplexTable: React.FC<{ dongName: string; complexes: JukjeonComplex[]
                           const annualInc = getMonthlyIncomeMAN(d.month) * 12;
                           return Math.round(d.median * 10000 / annualInc * 10) / 10;
                         })}
-                        activeColor="#f97316" inactiveColor="#fed7aa"
+                        activeColor="#f97316" inactiveColor="#fed7aa" fromMin
                       />
                       <Text style={{ fontSize: 9, color: '#f97316', marginTop: 1 }}>
                         {(Math.round(c.medianPrice * 10000 / (getMonthlyIncomeMAN(c.refMonth) * 12) * 10) / 10).toFixed(1)}배
@@ -3227,17 +3227,12 @@ export default function InvestmentScreen() {
             </AnimatedCard>
           )}
           {rateUpdateReminder?.active && (
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => {}}
-              style={{ marginHorizontal: 12, marginTop: 12, backgroundColor: '#eff6ff', borderRadius: 12, borderWidth: 1, borderColor: '#3b82f6', flexDirection: 'row', alignItems: 'center', paddingHorizontal: 14, paddingVertical: 10, gap: 10 }}
-            >
-              <MaterialIcons name="trending-up" size={18} color="#3b82f6" />
-              <View style={{ flex: 1 }}>
-                <Text style={{ fontSize: 13, fontWeight: '600', color: '#1e40af' }}>금리 데이터 업데이트 필요</Text>
-                <Text style={{ fontSize: 11, color: '#3b82f6', marginTop: 2 }}>{rateUpdateReminder.targetMonth} 기준 · fetch_interest_rates.py 실행</Text>
-              </View>
-            </TouchableOpacity>
+            <View style={{ marginHorizontal: 12, marginTop: 10, flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+              <MaterialIcons name="trending-up" size={13} color="#3b82f6" />
+              <Text style={{ flex: 1, fontSize: 11, color: '#3b82f6' }}>
+                금리가 {rateUpdateReminder.targetMonth} 기준이에요 · 당겨서 새로고침
+              </Text>
+            </View>
           )}
           {(rateCharts.length > 0 || supplyDemandIndex) && (
             <AnimatedCard delay={420}>
@@ -3260,9 +3255,10 @@ export default function InvestmentScreen() {
                               {chart.change < 0 ? '▼' : '▲'}{Math.abs(chart.change).toFixed(2)}
                             </Text>
                             <MiniSparkBars
-                              values={chart.monthlyData.slice(-8).map(d => d.value - Math.min(...chart.monthlyData.map(x => x.value)) + 0.01)}
+                              values={chart.monthlyData.slice(-8).map(d => d.value)}
                               activeColor="#1d4ed8"
                               inactiveColor="#bfdbfe"
+                              fromMin
                             />
                           </View>
                         );
