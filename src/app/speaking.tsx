@@ -289,8 +289,15 @@ export default function SpeakingScreen() {
       // 요약이 비어 오면 대화 기록을 통째로 버리고 있었다(2026-09-18 실제로 발생:
       // 교정 3건은 저장됐는데 그날 대화는 흔적도 남지 않음). 주제와 턴 수만으로도
       // "언제 무슨 얘기를 했는지"는 남으니 요약 여부와 무관하게 기록한다.
+      // 모델이 피드백을 대화 본문으로만 주고 summary 필드를 비워 보내는 일이 있다
+      // (2026-09-18이 그랬다). 그럴 땐 마지막 AI 메시지를 요약 자리에 남긴다.
+      const lastAssistant = [...messages].reverse().find(m => m.role === 'assistant')?.content ?? '';
       tasks.push(dbSet(ref(db, `users/${user.uid}/speaking_history/${today}`), {
-        date: today, topic, summary: summary ?? '', exchanges: userMsgCount, ts: Date.now(),
+        date: today,
+        topic,
+        summary: (summary && summary.trim()) ? summary : stripMarkdown(lastAssistant).slice(0, 600),
+        exchanges: userMsgCount,
+        ts: Date.now(),
       }));
       if (corrections.length > 0) {
         tasks.push(dbSet(ref(db, `users/${user.uid}/speaking_corrections/${today}`), {
