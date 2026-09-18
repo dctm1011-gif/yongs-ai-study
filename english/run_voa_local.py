@@ -8,6 +8,7 @@ import re, json, os, sys, gzip, io, urllib.request
 from datetime import date, timedelta
 from pathlib import Path
 import anthropic
+from audio_duration import mp3_duration_sec
 
 TODAY = date.today().isoformat()
 DB_URL = "https://yongstudy-1f242-default-rtdb.asia-southeast1.firebasedatabase.app"
@@ -301,7 +302,7 @@ def main():
         "source": "voa",
         "title": title,
         "audio_url": audio_url,
-        "duration_sec": 0,
+        "duration_sec": mp3_duration_sec(audio_url),
         "pub_date": article.get("lastmod", ""),
         "episode_url": article_url,
         "sentences": sentences,

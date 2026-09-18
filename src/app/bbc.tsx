@@ -27,6 +27,26 @@ function formatToday(iso: string): string {
 }
 
 /** RSS 원문("Mon, 14 Sep 2026 05:00:00 +0000")을 "9월 14일"로 */
+/**
+ * 문장별 대략 재생 위치.
+ *
+ * 수집된 문장에는 타임스탬프가 없다. 그래서 정확한 하이라이트는 만들 수 없고,
+ * 여기서는 전체 길이를 글자 수에 비례해 나눠 "대략 이쯤"을 잡는다.
+ * 인트로 음악과 아웃트로 때문에 앞뒤로 수십 초 어긋날 수 있어, 화면에서도
+ * 정확한 위치인 척하지 않고 건너뛰기 용도로만 쓴다.
+ */
+function estimateSentenceStarts(sentences: { en: string }[], durationSec: number): number[] {
+  if (!durationSec || sentences.length === 0) return [];
+  const lens = sentences.map(s => Math.max(s.en.length, 1));
+  const total = lens.reduce((a, b) => a + b, 0);
+  let acc = 0;
+  return lens.map(len => {
+    const start = (acc / total) * durationSec;
+    acc += len;
+    return Math.floor(start);
+  });
+}
+
 function formatPubDate(raw: string): string {
   if (!raw) return '';
   const t = Date.parse(raw);
@@ -71,11 +91,14 @@ const PODCAST_SOURCES = [
 ] as const;
 
 // ─── Podcast episode card ─────────────────────────────────────────────────
-function EpisodeCard({ ep, color, label, onComplete, isDone }: {
+function EpisodeCard({ ep, color, label, onComplete, isDone, srcKey, epDate }: {
   ep: PodcastEpisode; color: string; label: string;
   onComplete?: () => void; isDone?: boolean;
+  /** 재생하며 알게 된 실제 길이를 되쓰기 위한 위치 */
+  srcKey?: string; epDate?: string;
 }) {
   const soundRef = useRef<Audio.Sound | null>(null);
+  const durationPushed = useRef(false);
   const [playing, setPlaying] = useState(false);
   const [loading, setLoading] = useState(false);
   const [positionSec, setPositionSec] = useState(0);
@@ -104,7 +127,17 @@ function EpisodeCard({ ep, color, label, onComplete, isDone }: {
   const onStatus = useCallback((status: AVPlaybackStatus) => {
     if (!status.isLoaded) return;
     setPositionSec(Math.floor((status.positionMillis ?? 0) / 1000));
-    if (status.durationMillis) setDurationSec(Math.floor(status.durationMillis / 1000));
+    if (status.durationMillis) {
+      const secs = Math.floor(status.durationMillis / 1000);
+      setDurationSec(secs);
+      // 수집 스크립트가 길이를 못 구해 0으로 넣는다. 한 번 재생하면 진짜 길이를
+      // 알게 되므로 그때 채워 넣어, 다음부터는 재생 전에도 길이가 보이게 한다.
+      if (!ep.duration_sec && secs > 0 && srcKey && epDate && !durationPushed.current) {
+        durationPushed.current = true;
+        set(ref(getDatabase(getFirebaseApp()), `english/podcasts/${srcKey}/${epDate}/duration_sec`), secs)
+          .catch(() => {});
+      }
+    }
     if (status.didJustFinish) { setPlaying(false); setPositionSec(0); }
   }, []);
 
@@ -130,6 +163,20 @@ function EpisodeCard({ ep, color, label, onComplete, isDone }: {
     await soundRef.current?.stopAsync();
     await soundRef.current?.setPositionAsync(0);
     setPlaying(false); setPositionSec(0);
+  };
+
+  const starts = React.useMemo(
+    () => estimateSentenceStarts(ep.sentences ?? [], durationSec),
+    [ep.sentences, durationSec],
+  );
+
+  const handleSeekTo = async (sec: number) => {
+    if (!soundRef.current) {
+      await handlePlayPause();       // 아직 안 틀었으면 재생부터 시작
+      setTimeout(() => { soundRef.current?.setPositionAsync(sec * 1000).catch(() => {}); }, 400);
+      return;
+    }
+    await soundRef.current.setPositionAsync(sec * 1000);
   };
 
   const handleSeek = async (deltaSec: number) => {
@@ -216,7 +263,15 @@ function EpisodeCard({ ep, color, label, onComplete, isDone }: {
                     {showSpeaker && (
                       <Text style={[styles.speakerLabel, { color }]}>{s.speaker}</Text>
                     )}
-                    <Text style={styles.sentenceEn}>{s.en}</Text>
+                    <TouchableOpacity
+                      onPress={() => starts[i] !== undefined && handleSeekTo(starts[i])}
+                      activeOpacity={starts[i] !== undefined ? 0.6 : 1}
+                    >
+                      <Text style={styles.sentenceEn}>{s.en}</Text>
+                      {starts[i] !== undefined ? (
+                        <Text style={styles.seekHint}>▶ 약 {formatDuration(starts[i])}부터</Text>
+                      ) : null}
+                    </TouchableOpacity>
                     {s.ko ? (
                       shownKo.has(i) ? (
                         <Text style={styles.sentenceKo}>{s.ko}</Text>
@@ -553,6 +608,8 @@ export default function BBCScreen() {
             color={activeSrc.color}
             label={activeSrc.label}
             onComplete={() => markSourceDone(activeSrc.key)}
+            srcKey={activeSrc.key}
+            epDate={podcastDates[activeSrc.key]}
             isDone={sourceDone[activeSrc.key] ?? false}
           />
         ) : (
@@ -720,6 +777,7 @@ const styles = StyleSheet.create({
   sentenceRowBorder: { borderTopWidth: 1, borderTopColor: '#f0f0f0' },
   sentenceEn: { fontSize: 13.5, color: '#111827', lineHeight: 20 },
   sentenceKo: { fontSize: 13, color: '#6b7280', lineHeight: 20, marginTop: 4 },
+  seekHint: { fontSize: 10, color: '#9ca3af', marginTop: 3 },
   analysisToggle: { marginTop: 6 },
   analysisToggleText: { fontSize: 11, fontWeight: '700', letterSpacing: 0.3 },
   analysisBox: {

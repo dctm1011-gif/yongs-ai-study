@@ -43,6 +43,47 @@ function splitIntoSentences(text, max = 25) {
   return sents.filter(s => s.trim().length > 20).slice(0, max);
 }
 
+
+/**
+ * 오디오 길이 추정 — 파일 전체를 받지 않고 MP3 첫 프레임 헤더만 읽는다.
+ * 피드에 길이가 없어 duration_sec을 0으로 저장해 왔고, 그래서 앱에서는
+ * 얼마나 걸릴지 모른 채 재생을 시작해야 했다. CBR이면 오차는 보통 1~2초.
+ * 실패하면 0 — 앱이 재생 중 알게 된 실제 길이로 덮어쓴다.
+ */
+const BITRATES_V1_L3 = [0, 32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320, 0];
+const BITRATES_V2_L3 = [0, 8, 16, 24, 32, 40, 48, 56, 64, 80, 96, 112, 128, 144, 160, 0];
+
+async function mp3DurationSec(url) {
+  try {
+    const head = await fetch(url, { method: 'HEAD' });
+    const size = Number(head.headers.get('content-length') || 0);
+    if (!size) return 0;
+
+    const res = await fetch(url, { headers: { Range: 'bytes=0-8191' } });
+    const buf = new Uint8Array(await res.arrayBuffer());
+
+    // ID3v2 태그를 건너뛴다 (크기는 7비트씩 담는 synchsafe integer)
+    let offset = 0;
+    if (buf.length >= 10 && buf[0] === 0x49 && buf[1] === 0x44 && buf[2] === 0x33) {
+      offset = 10 + ((buf[6] & 0x7f) << 21 | (buf[7] & 0x7f) << 14 | (buf[8] & 0x7f) << 7 | (buf[9] & 0x7f));
+    }
+    for (let i = offset; i < buf.length - 4; i++) {
+      if (buf[i] !== 0xff || (buf[i + 1] & 0xe0) !== 0xe0) continue;
+      const version = (buf[i + 1] >> 3) & 0x3;   // 3=MPEG1
+      const layer = (buf[i + 1] >> 1) & 0x3;     // 1=Layer III
+      const bitrateIdx = (buf[i + 2] >> 4) & 0xf;
+      const rateIdx = (buf[i + 2] >> 2) & 0x3;
+      if (layer !== 1 || bitrateIdx === 0 || bitrateIdx === 15 || rateIdx === 3) continue;
+      const kbps = (version === 3 ? BITRATES_V1_L3 : BITRATES_V2_L3)[bitrateIdx];
+      if (!kbps) continue;
+      return Math.round((size - offset) * 8 / (kbps * 1000));
+    }
+    return 0;
+  } catch {
+    return 0;
+  }
+}
+
 async function fetchUrl(url, headers = {}) {
   try {
     const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0', ...headers }, signal: AbortSignal.timeout(15000) });
@@ -243,7 +284,7 @@ async function processSpotlight(db, today) {
     source: 'spotlight',
     title: episode.title,
     audio_url: episode.audio_url,
-    duration_sec: 0,
+    duration_sec: await mp3DurationSec(episode.audio_url),
     pub_date: episode.pub_date,
     episode_url: episode.link,
     sentences,

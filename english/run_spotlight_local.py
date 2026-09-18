@@ -8,6 +8,7 @@ import re, json, os, sys, urllib.request
 from datetime import date, timedelta
 from pathlib import Path
 import anthropic
+from audio_duration import mp3_duration_sec
 
 TODAY = date.today().isoformat()
 DB_URL = "https://yongstudy-1f242-default-rtdb.asia-southeast1.firebasedatabase.app"
@@ -114,20 +115,31 @@ def translate_and_analyze(client, sentences):
             "Return ONLY valid JSON array, no other text.\n\n"
             f"{json.dumps(batch, ensure_ascii=False)}"
         )
-        resp = client.messages.create(
-            model="claude-haiku-4-5-20251001",
-            max_tokens=8000,
-            messages=[{"role": "user", "content": prompt}]
-        )
-        txt = resp.content[0].text.strip()
-        m = re.search(r"\[[\s\S]*\]", txt)
-        if m:
-            parsed = json.loads(m.group(0))
+        parsed = None
+        for attempt in range(1, 4):
+            try:
+                resp = client.messages.create(
+                    model="claude-haiku-4-5-20251001",
+                    max_tokens=8000,
+                    messages=[{"role": "user", "content": prompt}]
+                )
+                txt = resp.content[0].text.strip()
+                m = re.search(r"\[[\s\S]*\]", txt)
+                if not m:
+                    print(f"  배치 {i}: JSON 없음 (시도 {attempt}/3)")
+                    continue
+                parsed = json.loads(m.group(0))
+                break
+            except Exception as e:
+                print(f"  배치 {i}: 파싱 실패 (시도 {attempt}/3): {e}")
+
+        if parsed is not None:
             results.extend(
                 {"ko": str(r.get("ko", "")), "analysis": str(r.get("analysis", ""))}
                 for r in parsed
             )
         else:
+            print(f"  배치 {i}: 3회 모두 실패, 빈 값으로 채움")
             results.extend({"ko": "", "analysis": ""} for _ in batch)
     return results
 
@@ -200,7 +212,7 @@ def main():
         "source": "spotlight",
         "title": episode["title"],
         "audio_url": episode["audio_url"],
-        "duration_sec": 0,
+        "duration_sec": mp3_duration_sec(audio_url),
         "pub_date": episode["pub_date"],
         "episode_url": episode["link"],
         "sentences": sentences,
