@@ -23,6 +23,7 @@ import { userRef } from '../utils/userDb';
 import { useAuth } from '../context/AuthContext';
 import { BookSection } from '../components/BookDiary';
 import { DiaryCalendarModal } from '../components/DiaryCalendar';
+import KoreanOXQuiz, { OXItem } from '../components/KoreanOXQuiz';
 import {
   getDayIndex,
   DiaryVocab,
@@ -60,7 +61,7 @@ async function openMillie() {
 export default function CultureScreen() {
   const { user } = useAuth();
   const uid = user?.uid ?? '';
-  const cards = useStaggerFade(2, 70);
+  const cards = useStaggerFade(3, 70);
   const today = getKSTDateString();
   const scrollViewRef = useRef<ScrollView>(null);
   const diaryInputRef = useRef<TextInput>(null);
@@ -80,6 +81,14 @@ export default function CultureScreen() {
   const vocabWords: DiaryVocab[] = [0, 1, 2].map(i => DIARY_VOCAB_LIST[_d + _section * i]);
   const [diaryText, setDiaryText] = useState('');
   const [recentDiaries, setRecentDiaries] = useState<{ date: string; text: string }[]>([]);
+  // korean-daily 함수가 매일 06:00에 만들어 두는데 앱에서 볼 길이 없었다
+  const [daily, setDaily] = useState<{
+    sajaseongeo?: { idiom: string; hanja: string; meaning: string; example: string };
+    sangshik?: { question: string; options: string[]; answer: number; explanation: string; category: string };
+    oxQuiz?: OXItem[];
+  } | null>(null);
+  const [sangshikPick, setSangshikPick] = useState<number | null>(null);
+  const [idiomOpen, setIdiomOpen] = useState(false);
   const [diaryDone, setDiaryDone] = useState(false);
   const [diarySaving, setDiarySaving] = useState(false);
 
@@ -109,6 +118,10 @@ export default function CultureScreen() {
         }
 
         // 일기 로드
+        get(ref(db, `korean/daily/${today}`))
+          .then(snap => { if (snap.exists()) setDaily(snap.val()); })
+          .catch(() => {});
+
         // 최근 일기 몇 개를 같이 읽어 카드 안에서 바로 보여준다
         get(ref(db, `users/${uid}/diary`)).then(all => {
           if (!all.exists()) return;
@@ -248,6 +261,74 @@ export default function CultureScreen() {
         )}
 
       </Animated.View>
+
+      {/* ── 오늘의 한국어 (사자성어 · 상식 · OX) ──────────────────
+          korean-daily 함수가 매일 만들던 내용인데 화면이 사라져 볼 수 없었다. */}
+      {daily && (
+        <Animated.View style={[s.card, { opacity: cards[2].opacity, transform: [{ translateY: cards[2].translateY }] }]}>
+          <View style={s.cardHeader}>
+            <MaterialIcons name="translate" size={24} color="#7c3aed" />
+            <Text style={s.cardTitle}>오늘의 한국어</Text>
+          </View>
+
+          {daily.sajaseongeo && (
+            <TouchableOpacity style={s.idiomBox} onPress={() => setIdiomOpen(v => !v)} activeOpacity={0.8}>
+              <View style={s.idiomTop}>
+                <Text style={s.idiomWord}>{daily.sajaseongeo.idiom}</Text>
+                <Text style={s.idiomHanja}>{daily.sajaseongeo.hanja}</Text>
+                <MaterialIcons
+                  name={idiomOpen ? 'expand-less' : 'expand-more'}
+                  size={18} color="#9ca3af" style={{ marginLeft: 'auto' }}
+                />
+              </View>
+              <Text style={s.idiomMeaning} numberOfLines={idiomOpen ? undefined : 2}>
+                {daily.sajaseongeo.meaning}
+              </Text>
+              {idiomOpen && (
+                <Text style={s.idiomExample}>예) {daily.sajaseongeo.example}</Text>
+              )}
+            </TouchableOpacity>
+          )}
+
+          {daily.sangshik && (
+            <View style={s.quizBox}>
+              <Text style={s.quizCategory}>{daily.sangshik.category}</Text>
+              <Text style={s.quizQuestion}>{daily.sangshik.question}</Text>
+              {daily.sangshik.options.map((opt, i) => {
+                const picked = sangshikPick === i;
+                const revealed = sangshikPick !== null;
+                const isAnswer = i === daily.sangshik!.answer;
+                return (
+                  <TouchableOpacity
+                    key={i}
+                    style={[
+                      s.quizOption,
+                      revealed && isAnswer && s.quizOptionRight,
+                      revealed && picked && !isAnswer && s.quizOptionWrong,
+                    ]}
+                    onPress={() => sangshikPick === null && setSangshikPick(i)}
+                    activeOpacity={revealed ? 1 : 0.7}
+                  >
+                    <Text style={[s.quizOptionText, revealed && isAnswer && { color: '#15803d', fontWeight: '700' }]}>
+                      {revealed && isAnswer ? '✓ ' : ''}{opt}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+              {sangshikPick !== null && (
+                <Text style={s.quizExplain}>{daily.sangshik.explanation}</Text>
+              )}
+            </View>
+          )}
+
+          {daily.oxQuiz && daily.oxQuiz.length > 0 && uid && (
+            <View style={{ marginTop: 14 }}>
+              <View style={s.divider} />
+              <KoreanOXQuiz items={daily.oxQuiz} uid={uid} />
+            </View>
+          )}
+        </Animated.View>
+      )}
 
       {/* ── 어휘 일기 카드 ──────────────────────────────────── */}
       <Animated.View style={[s.card, { opacity: cards[1].opacity, transform: [{ translateY: cards[1].translateY }] }]}>
@@ -402,6 +483,20 @@ const s = StyleSheet.create({
   millieBtnSub: { color: 'rgba(255,255,255,0.72)', fontSize: 11.5, fontWeight: '500' },
   // 어휘 일기
   diaryGuide: { fontSize: 13, color: '#6b7280', marginBottom: 12, lineHeight: 19 },
+  idiomBox: { backgroundColor: '#faf5ff', borderRadius: 12, borderWidth: 1, borderColor: '#e9d5ff', padding: 12 },
+  idiomTop: { flexDirection: 'row', alignItems: 'baseline', gap: 8 },
+  idiomWord: { fontSize: 17, fontWeight: '800', color: '#6b21a8' },
+  idiomHanja: { fontSize: 13, color: '#a78bfa', fontWeight: '600' },
+  idiomMeaning: { fontSize: 12.5, color: '#4b5563', lineHeight: 19, marginTop: 5 },
+  idiomExample: { fontSize: 12, color: '#6b7280', lineHeight: 19, marginTop: 8, fontStyle: 'italic' },
+  quizBox: { marginTop: 14 },
+  quizCategory: { fontSize: 10.5, fontWeight: '800', color: '#9ca3af', letterSpacing: 0.4, marginBottom: 4 },
+  quizQuestion: { fontSize: 14, fontWeight: '700', color: '#111827', lineHeight: 21, marginBottom: 9 },
+  quizOption: { borderWidth: 1, borderColor: '#e5e7eb', borderRadius: 10, paddingVertical: 10, paddingHorizontal: 12, marginBottom: 6 },
+  quizOptionRight: { borderColor: '#86efac', backgroundColor: '#f0fdf4' },
+  quizOptionWrong: { borderColor: '#fecaca', backgroundColor: '#fef2f2' },
+  quizOptionText: { fontSize: 12.5, color: '#374151', lineHeight: 18 },
+  quizExplain: { fontSize: 12, color: '#4b5563', lineHeight: 19, marginTop: 6, paddingHorizontal: 2 },
   pastDiaryBox: { backgroundColor: '#f8fafc', borderRadius: 10, padding: 8, marginBottom: 12, gap: 2 },
   pastDiaryRow: { flexDirection: 'row', alignItems: 'baseline', gap: 8, paddingVertical: 3 },
   pastDiaryDate: { fontSize: 10.5, fontWeight: '700', color: '#94a3b8', width: 34 },

@@ -7,6 +7,7 @@ import { Audio, AVPlaybackStatus } from 'expo-av';
 import { getDatabase, get, ref, set, query, orderByKey, limitToLast } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
 import { MaterialIcons } from '@expo/vector-icons';
+import TOEFLScreen from './toefl';
 import { useAuth } from '../context/AuthContext';
 
 function stripHtml(s: string): string {
@@ -409,7 +410,7 @@ function NewsCard({ article, sourceName, sourceColor }: {
 }
 
 // ─── Main screen ──────────────────────────────────────────────────────────
-type BBCView = 'home' | 'reading' | 'listening';
+type BBCView = 'home' | 'reading' | 'listening' | 'toefl';
 
 export default function BBCScreen() {
   const { user } = useAuth();
@@ -559,6 +560,18 @@ export default function BBCScreen() {
     );
   }
 
+  // ── TOEFL view ────────────────────────────────────────────────────────────
+  if (view === 'toefl') {
+    return (
+      <View style={styles.flex}>
+        <TouchableOpacity style={styles.backBar} onPress={() => setView('home')} activeOpacity={0.7}>
+          <Text style={styles.backText}>← English</Text>
+        </TouchableOpacity>
+        <TOEFLScreen />
+      </View>
+    );
+  }
+
   // ── Listening view ────────────────────────────────────────────────────────
   if (view === 'listening') {
     const activeSrc = PODCAST_SOURCES.find(s => s.key === selectedSource) ?? PODCAST_SOURCES[0];
@@ -652,6 +665,15 @@ export default function BBCScreen() {
           ) : (
             <Text style={styles.hubCardDesc}>오늘 기사 준비 중</Text>
           )}
+        </View>
+        <Text style={styles.hubArrow}>›</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.hubCard} onPress={() => setView('toefl')} activeOpacity={0.8}>
+        <MaterialIcons name="school" size={36} color="#0891b2" />
+        <View style={styles.hubCardBody}>
+          <Text style={styles.hubCardName}>토플</Text>
+          <Text style={styles.hubCardDesc}>리딩 · 리스닝 · 스피킹 · 라이팅</Text>
         </View>
         <Text style={styles.hubArrow}>›</Text>
       </TouchableOpacity>
