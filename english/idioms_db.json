@@ -421,5 +421,41 @@
     "tip": "유사 표현: examine, look at, investigate. checkout(계산)과는 다른 의미니까 주의!",
     "emoji": "🔍",
     "date": "2026-09-19"
+  },
+  {
+    "id": "get-in-touch",
+    "phrase": "get in touch",
+    "meaning_ko": "연락하다, 접촉하다",
+    "meaning_en": "to contact or communicate with someone",
+    "explanation": "누군가와 연락을 주고받을 때 쓰는 표현이에요! 일상 대화에서 정말 많이 나와요 📞",
+    "example_en": "I'll get in touch with you next week about the meeting.",
+    "example_ko": "회의 관련해서 다음 주에 연락할게요.",
+    "tip": "유사 표현: contact, reach out to. 'get back in touch'(다시 연락하다)도 자주 써요!",
+    "emoji": "📱",
+    "date": "2026-09-20"
+  },
+  {
+    "id": "go-through",
+    "phrase": "go through",
+    "meaning_ko": "검토하다, 거쳐나가다",
+    "meaning_en": "to examine or review something carefully",
+    "explanation": "문서를 꼼꼼히 살펴보거나 어려운 과정을 견뎌낼 때 쓰는 표현이에요! 학업이나 비즈니스에서 자주 나와 🔍",
+    "example_en": "Let me go through this proposal before the presentation.",
+    "example_ko": "발표 전에 이 제안서를 검토해야겠어.",
+    "tip": "go over와 거의 같은 의미! 'go through with'(~을 끝까지 밀어붙이다)도 있어요.",
+    "emoji": "📋",
+    "date": "2026-09-20"
+  },
+  {
+    "id": "stick-to",
+    "phrase": "stick to",
+    "meaning_ko": "고수하다, 지키다",
+    "meaning_en": "to continue with or maintain a commitment",
+    "explanation": "정한 계획이나 약속을 변하지 않고 지켜나갈 때 쓰는 표현이에요! 비즈니스나 학습 계획에서 딱이야 💪",
+    "example_en": "You should stick to your budget if you want to save money.",
+    "example_ko": "돈을 모으려면 예산을 지켜야 해.",
+    "tip": "유사 표현: adhere to, maintain. 'stick with'(계속 하다)와도 비슷해요!",
+    "emoji": "🎯",
+    "date": "2026-09-20"
   }
 ]

@@ -4160,5 +4160,65 @@
     "explanation": "자원이나 에너지, 저장량을 줄여서 거의 없게 만들다",
     "tip": "동의어: exhaust, drain, reduce / 반의어: replenish, restore / 환경/과학 출제영역",
     "emoji": ""
+  },
+  {
+    "id": "scrutinize",
+    "word": "scrutinize",
+    "pos": "verb",
+    "date": "2026-09-20",
+    "meaning": "자세히 조사하다, 면밀히 살펴보다",
+    "example_ko": "감사자는 예산을 승인하기 전에 모든 재정 기록을 자세히 검토할 것이다.",
+    "example_en": "The auditor will scrutinize every financial record before approving the budget.",
+    "explanation": "To examine something very carefully and thoroughly, often to find problems or check for accuracy. It involves detailed inspection and critical analysis.",
+    "tip": "동의어: examine, inspect, analyze | 반의어: overlook, ignore | 출제영역: 읽기, 쓰기",
+    "emoji": "🔍"
+  },
+  {
+    "id": "collaborate",
+    "word": "collaborate",
+    "pos": "verb",
+    "date": "2026-09-20",
+    "meaning": "협력하다, 함께 일하다",
+    "example_ko": "이 캠페인을 성공적으로 출시하기 위해 마케팅 팀과 협력해야 한다.",
+    "example_en": "We need to collaborate with the marketing team to launch this campaign successfully.",
+    "explanation": "To work together with others toward a common goal or project. It emphasizes teamwork and joint effort to achieve results.",
+    "tip": "동의어: cooperate, work together, partner | 반의어: compete, work independently | 출제영역: 직장, 학습",
+    "emoji": "🤝"
+  },
+  {
+    "id": "protocol",
+    "word": "protocol",
+    "pos": "noun",
+    "date": "2026-09-20",
+    "meaning": "절차, 프로토콜, 의례",
+    "example_ko": "실험실에 들어가기 전에 안전 절차를 따르는 것은 필수이다.",
+    "example_en": "Following the safety protocol is mandatory before entering the laboratory.",
+    "explanation": "A set of official rules or procedures that must be followed in a particular situation. Can refer to diplomatic customs, technical standards, or established procedures.",
+    "tip": "동의어: procedure, guideline, standard | 파생어: protocol-driven | 출제영역: 직장, 기술",
+    "emoji": "📋"
+  },
+  {
+    "id": "hassle",
+    "word": "hassle",
+    "pos": "noun/verb",
+    "date": "2026-09-20",
+    "meaning": "번거로움, 귀찮음, 괴롭히다",
+    "example_ko": "매일 아침 교통 체증을 다루는 것은 너무 번거로워서 재택근무를 고려 중이다.",
+    "example_en": "Dealing with traffic every morning is such a hassle that I'm considering remote work.",
+    "explanation": "Unnecessary difficulty, trouble, or annoyance. As a noun, it means inconvenience; as a verb, it means to bother or pester someone persistently.",
+    "tip": "동의어: bother, trouble, inconvenience | 반의어: ease, convenience | 출제영역: 일상 회화",
+    "emoji": "😤"
+  },
+  {
+    "id": "prevalent",
+    "word": "prevalent",
+    "pos": "adjective",
+    "date": "2026-09-20",
+    "meaning": "널리 퍼진, 흔한, 보편적인",
+    "example_ko": "정신 건강 인식이 현대 직장에서 점점 더 널리 퍼지고 있다.",
+    "example_en": "Mental health awareness is becoming increasingly prevalent in modern workplaces.",
+    "explanation": "Widely or commonly occurring, existing, or practiced. It describes something that is widespread and frequently seen in a particular place or time.",
+    "tip": "동의어: widespread, common, widespread | 반의어: rare, uncommon, scarce | 출제영역: 읽기, 듣기",
+    "emoji": "📊"
   }
 ]

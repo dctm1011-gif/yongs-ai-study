@@ -1,232 +1,228 @@
 {
-  "date": "2026-09-19",
+  "date": "2026-09-20",
   "words": [
     {
-      "word": "allegation",
-      "part_of_speech": "noun",
-      "meaning_ko": "주장, 혐의, 주장된 사실",
-      "explanation": "어떤 사실이라고 주장하는 것, 특히 증거 없이 또는 법적 맥락에서 누군가를 비난하는 것",
-      "example_from_convo": "The scandal began with allegations of financial misconduct by the company's CEO.",
-      "example_ko": "스캔들은 회사 CEO의 재정 부정행위 혐의로 시작되었다.",
-      "tip": "동의어: claim, accusation, assertion / 반의어: proof, evidence / 법률/뉴스 출제영역"
-    },
-    {
-      "word": "contingency",
-      "part_of_speech": "noun",
-      "meaning_ko": "불확실한 사건, 긴급 상황, 대비책",
-      "explanation": "미래에 일어날 수 있는 예상하지 못한 상황이나 그에 대한 대비 계획",
-      "example_from_convo": "The disaster relief team had a contingency plan in case the storm worsened.",
-      "example_ko": "재난 구호팀은 폭풍이 악화될 경우에 대비한 대비 계획을 세웠다.",
-      "tip": "동의어: emergency plan, backup plan / 반의어: certainty / 비즈니스/시험 출제영역"
-    },
-    {
-      "word": "incumbent",
-      "part_of_speech": "adjective/noun",
-      "meaning_ko": "현직의(형용사), 현직자(명사)",
-      "explanation": "현재 직책을 맡고 있는 사람 또는 그 사람의; 의무적인",
-      "example_from_convo": "The incumbent president faced strong opposition from the challenger in the election.",
-      "example_ko": "현직 대통령은 선거에서 도전자로부터 강한 반발에 직면했다.",
-      "tip": "동의어: current, sitting (형용사) / 반의어: former, previous / 정치/경영 출제영역"
-    },
-    {
-      "word": "metabolic",
-      "part_of_speech": "adjective",
-      "meaning_ko": "신진대사의, 대사 관련의",
-      "explanation": "신체가 음식을 에너지로 변환하는 과정과 관련된",
-      "example_from_convo": "Regular exercise improves metabolic rate and helps with weight management.",
-      "example_ko": "규칙적인 운동은 신진대사 속도를 개선하고 체중 관리에 도움이 된다.",
-      "tip": "동의어: digestive (유사), biochemical / 명사형: metabolism / 과학/의학 출제영역"
-    },
-    {
-      "word": "deplete",
+      "word": "scrutinize",
       "part_of_speech": "verb",
-      "meaning_ko": "고갈시키다, 소진하다",
-      "explanation": "자원이나 에너지, 저장량을 줄여서 거의 없게 만들다",
-      "example_from_convo": "Overuse of antibiotics can deplete the body's natural defenses against infection.",
-      "example_ko": "항생제의 과다 사용은 신체의 자연적인 감염 방어 능력을 고갈시킬 수 있다.",
-      "tip": "동의어: exhaust, drain, reduce / 반의어: replenish, restore / 환경/과학 출제영역"
+      "meaning_ko": "자세히 조사하다, 면밀히 살펴보다",
+      "explanation": "To examine something very carefully and thoroughly, often to find problems or check for accuracy. It involves detailed inspection and critical analysis.",
+      "example_from_convo": "The auditor will scrutinize every financial record before approving the budget.",
+      "example_ko": "감사자는 예산을 승인하기 전에 모든 재정 기록을 자세히 검토할 것이다.",
+      "tip": "동의어: examine, inspect, analyze | 반의어: overlook, ignore | 출제영역: 읽기, 쓰기",
+      "emoji": "🔍",
+      "synonyms": [],
+      "antonyms": []
+    },
+    {
+      "word": "collaborate",
+      "part_of_speech": "verb",
+      "meaning_ko": "협력하다, 함께 일하다",
+      "explanation": "To work together with others toward a common goal or project. It emphasizes teamwork and joint effort to achieve results.",
+      "example_from_convo": "We need to collaborate with the marketing team to launch this campaign successfully.",
+      "example_ko": "이 캠페인을 성공적으로 출시하기 위해 마케팅 팀과 협력해야 한다.",
+      "tip": "동의어: cooperate, work together, partner | 반의어: compete, work independently | 출제영역: 직장, 학습",
+      "emoji": "🤝",
+      "synonyms": [],
+      "antonyms": []
+    },
+    {
+      "word": "protocol",
+      "part_of_speech": "noun",
+      "meaning_ko": "절차, 프로토콜, 의례",
+      "explanation": "A set of official rules or procedures that must be followed in a particular situation. Can refer to diplomatic customs, technical standards, or established procedures.",
+      "example_from_convo": "Following the safety protocol is mandatory before entering the laboratory.",
+      "example_ko": "실험실에 들어가기 전에 안전 절차를 따르는 것은 필수이다.",
+      "tip": "동의어: procedure, guideline, standard | 파생어: protocol-driven | 출제영역: 직장, 기술",
+      "emoji": "📋",
+      "synonyms": [],
+      "antonyms": []
+    },
+    {
+      "word": "hassle",
+      "part_of_speech": "noun/verb",
+      "meaning_ko": "번거로움, 귀찮음, 괴롭히다",
+      "explanation": "Unnecessary difficulty, trouble, or annoyance. As a noun, it means inconvenience; as a verb, it means to bother or pester someone persistently.",
+      "example_from_convo": "Dealing with traffic every morning is such a hassle that I'm considering remote work.",
+      "example_ko": "매일 아침 교통 체증을 다루는 것은 너무 번거로워서 재택근무를 고려 중이다.",
+      "tip": "동의어: bother, trouble, inconvenience | 반의어: ease, convenience | 출제영역: 일상 회화",
+      "emoji": "😤",
+      "synonyms": [],
+      "antonyms": []
+    },
+    {
+      "word": "prevalent",
+      "part_of_speech": "adjective",
+      "meaning_ko": "널리 퍼진, 흔한, 보편적인",
+      "explanation": "Widely or commonly occurring, existing, or practiced. It describes something that is widespread and frequently seen in a particular place or time.",
+      "example_from_convo": "Mental health awareness is becoming increasingly prevalent in modern workplaces.",
+      "example_ko": "정신 건강 인식이 현대 직장에서 점점 더 널리 퍼지고 있다.",
+      "tip": "동의어: widespread, common, widespread | 반의어: rare, uncommon, scarce | 출제영역: 읽기, 듣기",
+      "emoji": "📊",
+      "synonyms": [],
+      "antonyms": []
     }
   ],
   "quiz": [
     {
       "type": "meaning",
-      "word": "allegation",
-      "question": "In a legal context, which statement best describes what an allegation is?",
+      "word": "scrutinize",
+      "question": "Which of the following best describes what it means to scrutinize a document?",
       "options": [
-        "A proven fact that has been verified in court",
-        "A claim or assertion that someone has done something wrong, without proof",
-        "A final verdict delivered by a judge",
-        "A witness testimony that is always accurate"
+        "To quickly glance at it without detail",
+        "To examine it carefully and thoroughly for any issues",
+        "To file it away for future reference",
+        "To translate it into another language"
       ],
       "answer": 1,
-      "explanation": "An allegation is a claim or assertion, typically without proof, that someone has committed wrongdoing. It is not yet proven.",
+      "explanation": "To scrutinize means to examine something in great detail with careful attention to find potential problems or verify accuracy.",
       "option_explanations": [
-        "This describes a verdict or established fact, not an allegation",
-        "Correct - allegations are claims without proven evidence",
-        "A verdict is the final decision, not an allegation",
-        "Witness testimony may or may not constitute proof"
+        "No - scrutinizing requires careful attention, not quick glancing",
+        "Correct - scrutinizing involves thorough and detailed examination",
+        "No - this doesn't involve the careful examination that scrutinizing requires",
+        "No - translation is unrelated to scrutinizing"
       ]
     },
     {
       "type": "meaning",
-      "word": "contingency",
-      "question": "Which of the following is MOST similar to contingency in business planning?",
+      "word": "collaborate",
+      "question": "In a business context, when management encourages employees to collaborate, they are asking them to:",
       "options": [
-        "A detailed budget already approved by investors",
-        "A backup plan prepared for unexpected situations",
-        "The main strategy that is always executed",
-        "A contract signed with suppliers"
+        "Work independently without interference",
+        "Share information and work together toward shared objectives",
+        "Complete tasks faster than usual",
+        "Compete with each other for recognition"
       ],
       "answer": 1,
-      "explanation": "A contingency plan is a backup or alternative plan prepared in advance for unexpected events or emergencies.",
+      "explanation": "Collaborating means working together with others, sharing efforts and ideas to achieve common goals and objectives.",
       "option_explanations": [
-        "An approved budget is a standard plan, not a contingency",
-        "Correct - contingency refers to backup plans for uncertainties",
-        "This is the primary plan, not a contingency",
-        "A supplier contract is a regular business agreement"
+        "No - collaboration requires working with others, not independently",
+        "Correct - collaboration is about teamwork and joint effort",
+        "No - collaboration focuses on quality of teamwork, not just speed",
+        "No - collaboration involves cooperation, not competition"
       ]
     },
     {
       "type": "meaning",
-      "word": "incumbent",
-      "question": "What does it mean when news reports say 'the incumbent faces re-election'?",
+      "word": "protocol",
+      "question": "Which scenario MOST clearly demonstrates following a protocol?",
       "options": [
-        "The person is running for office for the first time",
-        "The person is leaving politics",
-        "The person currently holds the position and must defend their seat",
-        "The person is a political newcomer"
+        "Employees deciding to change company rules whenever they prefer",
+        "Healthcare workers washing hands and sterilizing equipment before surgery according to established guidelines",
+        "A student choosing which school subjects to study based on personal preference",
+        "Friends deciding spontaneously where to eat dinner"
       ],
-      "answer": 2,
-      "explanation": "An incumbent is someone who currently holds an official position. In elections, the incumbent must defend their seat against challengers.",
+      "answer": 1,
+      "explanation": "A protocol is an established set of procedures that must be followed. Medical protocols are strict for safety and consistency.",
       "option_explanations": [
-        "New candidates, not incumbents, run for office for the first time",
-        "Incumbents may retire, but that's not what this phrase means",
-        "Correct - incumbents currently hold the position they are defending",
-        "Newcomers are non-incumbents"
+        "No - ignoring established rules is the opposite of following protocol",
+        "Correct - this shows adherence to established safety procedures and guidelines",
+        "No - this involves personal choice, not following set procedures",
+        "No - spontaneous decisions do not follow established protocols"
       ]
     },
     {
       "type": "fill_blank",
-      "word": "allegation",
-      "sentence": "The investigative journalist refused to publish the story until she could verify the ___ of bribery against the government official.",
-      "sentence_ko": "수사 기자는 정부 관리를 상대로 한 뇌물 혐의를 확인할 때까지 기사 게재를 거부했다.",
-      "answer": "allegation",
-      "hint": "noun meaning: claim or accusation without proof"
+      "word": "hassle",
+      "sentence": "Moving to a new apartment can be a real ___, but hiring professional movers makes the process much easier.",
+      "sentence_ko": "새 아파트로 이사하는 것은 정말 번거롭지만, 전문 이사업체를 고용하면 과정이 훨씬 쉬워진다.",
+      "answer": "hassle",
+      "hint": "A noun meaning inconvenience or trouble; often used in informal conversation"
     },
     {
       "type": "fill_blank",
-      "word": "metabolic",
-      "sentence": "The new fitness program claims to boost your ___ rate by 20%, helping you burn more calories throughout the day.",
-      "sentence_ko": "새로운 피트니스 프로그램은 신진대사 속도를 20% 높인다고 주장하여 하루 종일 더 많은 칼로리를 태운다.",
-      "answer": "metabolic",
-      "hint": "adjective related to digestion and energy production"
+      "word": "protocol",
+      "sentence": "All visitors must follow the ___ at the entrance, including signing in and wearing identification badges.",
+      "sentence_ko": "모든 방문객은 서명 및 신분증 착용을 포함하여 입구의 절차를 따라야 한다.",
+      "answer": "protocol",
+      "hint": "A noun meaning established procedures or rules that must be followed"
     },
     {
       "type": "fill_blank",
-      "word": "deplete",
-      "sentence": "Climate change and industrial fishing have begun to ___ fish populations in the world's oceans at an alarming rate.",
-      "sentence_ko": "기후 변화와 산업 어획은 세계 해양의 어류 개체군을 놀라운 속도로 고갈시키고 있다.",
-      "answer": "deplete",
-      "hint": "verb meaning: to use up or exhaust resources"
+      "word": "prevalent",
+      "sentence": "Cybersecurity threats have become increasingly ___ in recent years, forcing companies to invest more in data protection.",
+      "sentence_ko": "사이버 보안 위협은 최근 몇 년간 점점 더 널리 퍼져 기업들이 데이터 보호에 더 많이 투자하도록 강요하고 있다.",
+      "answer": "prevalent",
+      "hint": "An adjective meaning widespread or commonly occurring"
     },
     {
       "type": "situation",
-      "word": "contingency",
-      "question": "Your company is planning a major product launch next month, but your manager says, 'We need a strong contingency plan.' What is she asking for?",
+      "word": "scrutinize",
+      "question": "Your manager receives a report from your department with some unusual numbers. She says, 'I need to scrutinize these figures before we present them to the board.' What is she planning to do?",
       "options": [
-        "A celebration party if the launch succeeds",
-        "A backup plan in case something goes wrong with the launch",
-        "A detailed timeline of all marketing activities",
-        "Permission to cancel the launch if sales are low"
+        "Present the report immediately without review",
+        "Carefully examine and analyze the numbers in detail to verify their accuracy",
+        "File the report away and forget about it",
+        "Ask someone else to write a completely new report"
       ],
       "answer": 1,
-      "explanation": "A contingency plan is a backup strategy prepared for unexpected problems or emergencies. In this case, the manager wants alternative plans ready if issues arise during the launch.",
+      "explanation": "When someone needs to scrutinize data, they intend to examine it very carefully and thoroughly to check for accuracy and potential issues before taking action.",
       "option_explanations": [
-        "A celebration would come after success, not a contingency",
-        "Correct - contingency plans address potential problems",
-        "A timeline is a regular project plan, not a contingency",
-        "A contingency plan doesn't mean canceling; it means having alternatives ready"
+        "No - she's indicating she needs careful review first",
+        "Correct - scrutinizing means examining in detail to verify accuracy",
+        "No - scrutinizing requires active review, not ignoring",
+        "No - scrutinizing the current report comes before deciding if a new one is needed"
       ]
     },
     {
       "type": "situation",
-      "word": "deplete",
-      "question": "An environmental group is warning that overhunting could deplete tiger populations. What are they concerned about?",
+      "word": "collaborate",
+      "question": "Your project deadline is in two weeks, and you realize you need expertise from both the design and development teams. What should you do to ensure success?",
       "options": [
-        "Tigers will become stronger and more aggressive",
-        "The number of tigers will be drastically reduced or nearly eliminated",
-        "Tigers will migrate to other countries",
-        "Tiger hunting will become illegal"
+        "Have each team work separately on their part and combine results at the end",
+        "Establish a plan for the design and development teams to collaborate, sharing updates and coordinating their work",
+        "Complete all the design work first, then hand it over to development without communication",
+        "Assign all tasks to one person to maintain control"
       ],
       "answer": 1,
-      "explanation": "To deplete means to use up or reduce significantly. The group is warning that excessive hunting could drastically reduce tiger numbers in the wild.",
+      "explanation": "When teams need to work on interconnected tasks, they should collaborate actively, sharing information and coordinating efforts to ensure the final result is cohesive and successful.",
       "option_explanations": [
-        "Depletion means reduction, not increased strength",
-        "Correct - depleting populations means reducing their numbers severely",
-        "Depletion is about numbers, not migration patterns",
-        "This prediction is about what might happen if action isn't taken, not a legal change"
-      ]
-    },
-    {
-      "type": "situation",
-      "word": "incumbent",
-      "question": "A political commentator announces, 'The incumbent has decided to run for a third term.' What does this tell you?",
-      "options": [
-        "Someone who has never held office is running",
-        "The person who currently holds the office is seeking re-election",
-        "The previous leader is making a comeback attempt",
-        "A new candidate is competing for the position"
-      ],
-      "answer": 1,
-      "explanation": "The incumbent is the person currently holding the position. Running for a third term means they currently hold office and are seeking to be elected again.",
-      "option_explanations": [
-        "First-time candidates are not incumbents",
-        "Correct - the incumbent is the current office holder",
-        "Previous leaders are former incumbents, not current ones",
-        "Non-incumbents, not incumbents, are new candidates"
+        "No - separate work without communication often creates integration problems",
+        "Correct - collaboration with shared communication and coordination is essential for success",
+        "No - lack of communication between sequential teams creates problems and delays",
+        "No - assigning everything to one person defeats the purpose of having specialized teams"
       ]
     }
   ],
   "sentences": [
     {
-      "word": "allegation",
-      "sentence": "The allegations of corruption were taken seriously by the authorities and triggered a full investigation.",
-      "sentence_ko": "부패 혐의는 당국에서 심각하게 받아들여졌고 전면 수사를 촉발했다.",
-      "nuance": "공식적이고 법적인 맥락",
-      "context": "뉴스 또는 법적 절차",
-      "everyday_usage": "뉴스, 법정 기사, 비공식 뒷담화에서 사용"
+      "word": "scrutinize",
+      "sentence": "Journalists scrutinized the politician's financial disclosures to uncover any inconsistencies.",
+      "sentence_ko": "기자들은 정치인의 재정 공시를 자세히 검토하여 모든 불일치를 찾아냈다.",
+      "nuance": "Implies investigative thoroughness with critical intent",
+      "context": "News/Journalism",
+      "everyday_usage": "Commonly used in academic, professional, and investigative contexts"
     },
     {
-      "word": "contingency",
-      "sentence": "The airline maintains contingency plans for various emergency scenarios to ensure passenger safety.",
-      "sentence_ko": "항공사는 승객 안전을 보장하기 위해 다양한 긴급 상황에 대비한 대비 계획을 유지한다.",
-      "nuance": "미리 준비된 대체 계획",
-      "context": "비즈니스, 보안, 재해 관리",
-      "everyday_usage": "조직, 회사, 정부 기관의 안전 및 위험 관리 대화에서"
+      "word": "collaborate",
+      "sentence": "The three companies decided to collaborate on developing new sustainable technology rather than competing separately.",
+      "sentence_ko": "세 회사는 별도로 경쟁하기보다 새로운 지속 가능 기술 개발에 협력하기로 결정했다.",
+      "nuance": "Emphasizes mutual benefit and shared resources",
+      "context": "Business/Partnership",
+      "everyday_usage": "Frequently used in modern workplace contexts and project management"
     },
     {
-      "word": "incumbent",
-      "sentence": "The incumbent senator must defend her voting record as she seeks another term in office.",
-      "sentence_ko": "현직 상원의원은 또 다른 임기를 추구하면서 자신의 투표 기록을 옹호해야 한다.",
-      "nuance": "현재의 직책 보유자",
-      "context": "정치, 선거",
-      "everyday_usage": "선거 기간, 정치 뉴스, 조직 내 직책 논의"
+      "word": "protocol",
+      "sentence": "According to the company protocol, all employees must complete cybersecurity training annually.",
+      "sentence_ko": "회사 절차에 따르면 모든 직원은 매년 사이버 보안 교육을 이수해야 한다.",
+      "nuance": "Indicates mandatory, standardized procedures that must be followed",
+      "context": "Workplace/Compliance",
+      "everyday_usage": "Common in organizational, medical, and technical contexts"
     },
     {
-      "word": "metabolic",
-      "sentence": "Some people have a naturally faster metabolic rate, which means they burn calories more quickly than others.",
-      "sentence_ko": "어떤 사람들은 타고난 신진대사가 빠르기 때문에 다른 사람들보다 칼로리를 더 빨리 태운다.",
-      "nuance": "개인의 신체 특성",
-      "context": "건강, 피트니스, 의학",
-      "everyday_usage": "다이어트 대화, 운동 프로그램, 의학 상담"
+      "word": "hassle",
+      "sentence": "Getting a driver's license renewal used to be a major hassle, but now you can do most of it online.",
+      "sentence_ko": "운전면허 갱신은 예전에는 큰 번거로움이었지만 이제 대부분을 온라인으로 할 수 있다.",
+      "nuance": "Casual tone expressing frustration about unnecessary difficulty",
+      "context": "Everyday Life",
+      "everyday_usage": "Informal, commonly used in conversational English"
     },
     {
-      "word": "deplete",
-      "sentence": "Excessive mining operations have depleted the region's natural resources and damaged the local ecosystem.",
-      "sentence_ko": "과도한 채광 작업은 지역의 천연 자원을 고갈시키고 지역 생태계를 훼손했다.",
-      "nuance": "자원이나 에너지의 급격한 감소",
-      "context": "환경, 경제, 자원 관리",
-      "everyday_usage": "환경 토론, 에너지 정책, 자원 보존 이슈"
+      "word": "prevalent",
+      "sentence": "Smartphone usage among teenagers is so prevalent that most schools now have policies regulating their use in classrooms.",
+      "sentence_ko": "청소년들 사이에서 스마트폰 사용이 너무 널리 퍼져 대부분의 학교가 교실에서의 사용을 규제하는 정책을 수립했다.",
+      "nuance": "Describes widespread social phenomenon requiring adaptive responses",
+      "context": "Social Trends/Education",
+      "everyday_usage": "Used in academic, journalistic, and analytical discussions"
     }
   ]
 }
