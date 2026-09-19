@@ -1,109 +1,112 @@
 {
-  "date": "2026-09-19",
+  "date": "2026-09-20",
   "reading": {
-    "title": "The Impact of Renewable Energy on Urban Development",
-    "passage": "Renewable energy sources such as solar and wind power are transforming urban landscapes across the globe. Cities are increasingly installing solar panels on rooftops and constructing wind farms on their outskirts to meet growing energy demands sustainably. This shift not only reduces carbon emissions but also creates thousands of jobs in green technology sectors. Furthermore, renewable energy infrastructure encourages innovative urban planning that integrates technology with environmental consciousness. As cities continue to adopt these sustainable practices, they set examples for developing nations seeking to balance economic growth with environmental protection.",
+    "title": "The Impact of Remote Work on Urban Development",
+    "passage": "Remote work has fundamentally transformed urban development patterns over the past decade. As companies embrace flexible work arrangements, employees increasingly relocate away from expensive city centers to suburban and rural areas. This shift reduces demand for downtown office space, prompting real estate developers to convert commercial buildings into residential apartments. Consequently, housing prices in previously affordable regions have surged, creating new socioeconomic challenges. However, this decentralization also revitalizes smaller towns through increased local spending and infrastructure investment, suggesting that remote work's impact on urban landscapes is complex and multifaceted.",
     "questions": [
       {
-        "q": "According to the passage, what are two main benefits of renewable energy in cities?",
+        "q": "According to the passage, what is one consequence of remote work adoption?",
         "options": [
-          "A) Reducing costs and increasing tourism",
-          "B) Creating jobs and reducing carbon emissions",
-          "C) Improving transportation and housing",
-          "D) Attracting foreign investment and technology companies"
+          "Increased demand for downtown office space",
+          "Conversion of commercial buildings to residential use",
+          "Decreased housing prices in suburban areas",
+          "Reduced investment in infrastructure"
         ],
         "answer": 1,
-        "explanation": "본문에서 '일자리 창출(creates thousands of jobs)'과 '탄소 배출 감소(reduces carbon emissions)'가 명확히 언급되었습니다."
+        "explanation": "본문에서 '원격근무로 인해 도시 중심가 사무실 수요가 감소하고, 개발자들이 상업용 건물을 주거용 아파트로 전환한다'고 명시되어 있습니다."
       },
       {
-        "q": "What does the passage suggest about developing nations?",
+        "q": "What does the passage imply about smaller towns due to remote work?",
         "options": [
-          "A) They cannot afford renewable energy",
-          "B) They are already leaders in green technology",
-          "C) They can learn from cities adopting sustainable practices",
-          "D) They should focus on traditional energy sources"
+          "They experience only negative economic effects",
+          "They benefit from increased local spending",
+          "They lose population to city centers",
+          "They cannot attract businesses"
+        ],
+        "answer": 1,
+        "explanation": "본문의 마지막 부분에서 '이러한 분산화는 지역 지출 증가와 인프라 투자를 통해 작은 도시들을 활성화한다'고 설명합니다."
+      },
+      {
+        "q": "Which of the following best describes the author's view on remote work's impact?",
+        "options": [
+          "Entirely positive",
+          "Entirely negative",
+          "Complex with both benefits and challenges",
+          "Insignificant and negligible"
         ],
         "answer": 2,
-        "explanation": "마지막 문장에서 개발도상국들이 도시들의 지속 가능한 실천을 본보기로 삼을 수 있다고 제시합니다."
-      },
-      {
-        "q": "Which type of renewable energy is mentioned in the passage?",
-        "options": [
-          "A) Hydroelectric and geothermal power",
-          "B) Solar and wind power",
-          "C) Nuclear and biomass energy",
-          "D) Tidal and wave energy"
-        ],
-        "answer": 1,
-        "explanation": "첫 번째 문장에서 '태양열과 풍력(solar and wind power)'이 명시적으로 언급됩니다."
+        "explanation": "본문 마지막 문장에서 '원격근무의 도시에 대한 영향은 복잡하고 다면적이다'라고 표현하여 긍정적 측면과 부정적 측면을 모두 인정합니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Cities should prioritize renewable energy development over other urban infrastructure projects'?",
+    "prompt": "Do you agree or disagree with the statement: 'Remote work should be the primary work model for all companies in the future'? Provide specific reasons and examples to support your position.",
     "structure": {
-      "intro": "명확한 입장 제시: 동의 또는 비동의를 명확히 표현하고, 2-3개의 주요 이유를 미리 언급합니다.",
-      "body1": "첫 번째 주요 이유: 환경적 이점(탄소 감소, 기후 변화 완화) 또는 경제적 이점(장기적 비용 절감, 일자리 창출) 제시",
-      "body2": "두 번째 주요 이유: 사회적 이점(공중 보건, 에너지 독립성) 또는 다른 인프라와의 균형 논의",
-      "conclusion": "입장을 재확인하고, 도시 발전에 미치는 광범위한 영향을 요약합니다."
+      "intro": "명확한 입장 제시: 동의하는지 반대하는지를 직접 표현하고, 이유를 간단히 미리 제시하기",
+      "body1": "첫 번째 주요 근거 제시 (원격근무의 장점: 생산성, 비용 절감, 직원 만족도 등) 또는 (단점: 소통 부족, 팀 빌딩 어려움 등) 구체적 예시 포함",
+      "body2": "두 번째 주요 근거 제시 (산업별 차이, 직무 특성 고려 등) 반대 의견 인정하면서도 입장 강화",
+      "conclusion": "입장 재확인 및 전체 요점 요약, 미래 전망이나 제언으로 마무리"
     },
     "useful_phrases": [
-      "In my opinion, renewable energy should be prioritized because...",
-      "Furthermore, this approach would lead to...",
-      "For instance, cities like Copenhagen have demonstrated...",
-      "In conclusion, the long-term benefits outweigh the initial challenges.",
-      "On the other hand, some may argue that..."
+      "In my opinion, remote work should not be universally applied...",
+      "I strongly believe that companies should adopt hybrid models...",
+      "One significant advantage of remote work is...",
+      "However, it is important to acknowledge that...",
+      "Furthermore, different industries have different requirements...",
+      "In conclusion, a flexible and balanced approach is essential..."
     ]
   },
   "speaking": {
-    "prompt": "Some people believe cities should invest heavily in renewable energy infrastructure. Others think other urban projects like public transportation and affordable housing are more important. Which do you prefer and why?",
+    "prompt": "Some people believe that cities should invest heavily in public transportation. Others think that improving roads for personal vehicles is more important. Which position do you agree with more, and why?",
     "useful_expressions": [
-      "I believe that renewable energy is more important because...",
-      "One significant reason is that investing in clean energy creates...",
-      "For example, cities that have prioritized solar power have seen..."
+      "In my perspective, public transportation is more beneficial because...",
+      "One compelling reason is that public transit reduces traffic congestion...",
+      "Additionally, investing in public transportation is more environmentally friendly...",
+      "While some argue that road improvement benefits drivers, I believe...",
+      "To summarize my position, public transportation offers broader societal benefits..."
     ],
     "sample_points": [
-      "재생 에너지는 장기적으로 환경 문제를 해결하고 모든 사람에게 이익이 되는 반면, 대중교통은 단기적 편의만 제공합니다.",
-      "에너지 인프라 개선은 공공주택과 운송을 포함한 다른 모든 도시 프로젝트의 지속 가능성을 보장합니다."
+      "공공 교통 투자의 환경적 이점: 개인 차량 대비 탄소 배출량 감소, 도시 대기 오염 감소, 지속 가능한 발전 실현",
+      "경제적 효율성: 도로 확장보다 대중교통이 비용 효율적, 저소득층 시민의 이동성 개선, 장기적 도시 발전 촉진"
     ]
   },
   "listening": {
-    "title": "University Lecture: Sustainable City Planning",
-    "type": "lecture",
-    "script": "Professor: Good morning, everyone. Today we're discussing how cities worldwide are transforming through renewable energy adoption. Let me give you a specific example. Copenhagen, the capital of Denmark, has set an ambitious goal to become carbon-neutral by 2025. They've invested significantly in wind energy—in fact, about 45% of their electricity comes from wind turbines. Beyond wind, the city has also implemented an extensive district heating system powered by renewable sources. This integrated approach demonstrates that renewable energy isn't just about individual projects; it's about creating a comprehensive, sustainable ecosystem. Additionally, Copenhagen's commitment to green energy has attracted global companies in the clean tech industry, boosting their economy. The city also saw improved air quality, which reduced respiratory health issues among residents. What's particularly interesting is how this transition wasn't sudden. It took careful planning, government support, and community engagement over several decades. This case shows us that sustainable urban development requires patience, vision, and commitment from multiple stakeholders.",
+    "title": "University Advising Session",
+    "type": "conversation",
+    "script": "Advisor: Good morning! I see you're interested in changing your major from Business to Environmental Science. Tell me what motivated this decision. Student: Well, I took an environmental biology course last semester, and it really opened my eyes to climate change and sustainability issues. I feel like I want to make a real difference in addressing these problems. Advisor: That's great motivation. However, I need to mention that switching majors at this point might delay your graduation by a year or so. You'd need to complete additional science prerequisites and core environmental courses. Student: I understand, but I think it's worth it. I'm not just pursuing a degree for a job anymore; I want to work on something I'm passionate about. Advisor: That's a mature perspective. Let me show you the course requirements and help you plan a realistic timeline. We can also explore internship opportunities with environmental organizations to strengthen your portfolio. Sound good? Student: Absolutely. Thank you so much for being supportive about this.",
     "questions": [
       {
-        "q": "What is Copenhagen's primary renewable energy source according to the lecture?",
+        "q": "Why does the student want to change their major?",
         "options": [
-          "A) Solar power",
-          "B) Geothermal energy",
-          "C) Wind energy",
-          "D) Hydroelectric power"
-        ],
-        "answer": 2,
-        "explanation": "교수가 코펜하겐의 전기의 약 45%가 풍력 터빈에서 나온다고 명시적으로 언급했습니다."
-      },
-      {
-        "q": "What benefits of Copenhagen's renewable energy transition are mentioned?",
-        "options": [
-          "A) Only economic growth and job creation",
-          "B) Environmental improvement and company attraction",
-          "C) Cheaper energy and faster transportation",
-          "D) Better housing and reduced pollution alone"
+          "Business major is too difficult",
+          "They discovered a passion for environmental science through a course",
+          "They want to graduate faster",
+          "The advisor recommended the change"
         ],
         "answer": 1,
-        "explanation": "강의에서 공기질 개선(air quality improvement), 건강 문제 감소, 그리고 청정 기술 산업 회사 유치를 언급했습니다."
+        "explanation": "학생이 '지난 학기 환경생물학 과정을 들었는데 기후변화와 지속가능성 문제에 눈을 떴다'고 명시적으로 말합니다."
       },
       {
-        "q": "How long did it take Copenhagen to achieve their sustainable energy transition?",
+        "q": "What is a potential consequence of changing majors according to the advisor?",
         "options": [
-          "A) Less than 5 years",
-          "B) About 10 years",
-          "C) Several decades",
-          "D) The lecture doesn't specify"
+          "The student will fail some courses",
+          "Graduation may be delayed by approximately one year",
+          "The student won't be able to find employment",
+          "The university will charge additional fees"
         ],
-        "answer": 2,
-        "explanation": "교수가 '수십 년에 걸친 신중한 계획(careful planning over several decades)'이 필요했다고 명시했습니다."
+        "answer": 1,
+        "explanation": "어드바이저가 '이 시점에서 전공을 바꾸면 졸업이 약 1년 정도 늦어질 수 있다'고 명확히 설명합니다."
+      },
+      {
+        "q": "What does the advisor offer to help the student?",
+        "options": [
+          "A full refund of tuition",
+          "Course requirements planning and internship opportunities",
+          "A job guarantee in environmental companies",
+          "Exemption from prerequisite courses"
+        ],
+        "answer": 1,
+        "explanation": "어드바이저가 학생에게 '강좌 요구사항을 보여주고 현실적인 타임라인을 계획하며 환경 조직의 인턴십 기회를 탐색할 것'을 제안합니다."
       }
     ]
   }
