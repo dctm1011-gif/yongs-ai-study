@@ -457,5 +457,41 @@
     "tip": "유사 표현: adhere to, maintain. 'stick with'(계속 하다)와도 비슷해요!",
     "emoji": "🎯",
     "date": "2026-09-20"
+  },
+  {
+    "id": "take-after",
+    "phrase": "take after",
+    "meaning_ko": "~을 닮다, ~을 따르다",
+    "meaning_en": "to resemble or be similar to someone",
+    "explanation": "부모님이나 선배를 닮았을 때 쓰는 표현이에요! 외모뿐 아니라 성격이나 습관도 포함된답니다 😊",
+    "example_en": "My sister takes after our mom; they both love cooking.",
+    "example_ko": "우리 언니는 엄마를 많이 닮았어요. 둘 다 요리를 좋아하거든요.",
+    "tip": "look like(외모만)과 달리, take after는 성격·습관도 포함해요!",
+    "emoji": "👨‍👩‍👧",
+    "date": "2026-09-21"
+  },
+  {
+    "id": "brush-up-on",
+    "phrase": "brush up on",
+    "meaning_ko": "복습하다, 다시 배우다",
+    "meaning_en": "to review or refresh knowledge about something",
+    "explanation": "예전에 배웠던 거 다시 익혀야 할 때 쓰는 표현이에요! 시험 준비할 때 특히 자주 써요 📚",
+    "example_en": "I need to brush up on my Spanish before the trip.",
+    "example_ko": "여행 가기 전에 스페인어를 다시 복습해야 해요.",
+    "tip": "review와 비슷하지만, brush up은 '깜박한 것을 상기시키는' 느낌이 더 강해요!",
+    "emoji": "📖",
+    "date": "2026-09-21"
+  },
+  {
+    "id": "wrap-around",
+    "phrase": "wrap around",
+    "meaning_ko": "감싸다, 두르다",
+    "meaning_en": "to cover or encircle something completely",
+    "explanation": "무언가를 빙 둘러서 감싸는 모습을 나타내는 표현이에요! 물리적으로도, 비유적으로도 써요 🎁",
+    "example_en": "She wrapped a scarf around her neck to keep warm.",
+    "example_ko": "그녀는 따뜻하게 하려고 목에 스카프를 둘렀어요.",
+    "tip": "비즈니스에서 '~를 완성하다'(프로젝트를 마무리하다)라는 뜻도 있어요!",
+    "emoji": "🧣",
+    "date": "2026-09-21"
   }
 ]

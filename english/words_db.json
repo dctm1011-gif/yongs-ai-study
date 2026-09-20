@@ -4220,5 +4220,65 @@
     "explanation": "Widely or commonly occurring, existing, or practiced. It describes something that is widespread and frequently seen in a particular place or time.",
     "tip": "동의어: widespread, common, widespread | 반의어: rare, uncommon, scarce | 출제영역: 읽기, 듣기",
     "emoji": "📊"
+  },
+  {
+    "id": "credible",
+    "word": "credible",
+    "pos": "adjective",
+    "date": "2026-09-21",
+    "meaning": "신뢰할 수 있는, 믿을만한",
+    "example_ko": "그 뉴스 매체는 조사를 위한 신뢰할 수 있는 증거를 제시했다.",
+    "example_en": "The news source provided credible evidence for their investigation.",
+    "explanation": "정보나 사람이 믿을 만하고 신뢰성이 있다는 의미. 증거나 경험에 기반하여 타당해 보이는 상태를 나타낸다.",
+    "tip": "동의어: reliable, trustworthy / 반의어: dubious, questionable / 출제영역: 뉴스, 학문",
+    "emoji": "✅"
+  },
+  {
+    "id": "initiative",
+    "word": "initiative",
+    "pos": "noun",
+    "date": "2026-09-21",
+    "meaning": "주도권, 구상, 자발적 행동",
+    "example_ko": "그녀는 요청받지 않고도 팀 회의를 조직하기 위해 주도권을 잡았다.",
+    "example_en": "She took the initiative to organize the team meeting without being asked.",
+    "explanation": "스스로 먼저 행동을 시작하는 능력이나 새로운 계획을 주도적으로 제안하는 것. 또한 정책이나 프로젝트를 의미할 수도 있다.",
+    "tip": "동의어: enterprise, leadership / 반의어: passivity / 출제영역: 직장, 리더십",
+    "emoji": "🚀"
+  },
+  {
+    "id": "feasible",
+    "word": "feasible",
+    "pos": "adjective",
+    "date": "2026-09-21",
+    "meaning": "실현 가능한, 가능성 있는",
+    "example_ko": "프로젝트 매니저는 현재 팀으로 마감일이 실현 가능하다고 확인했다.",
+    "example_en": "The project manager confirmed that the deadline is feasible with the current team.",
+    "explanation": "어떤 계획이나 프로젝트가 실제로 가능하고 실행할 수 있다는 의미. 기술적, 경제적으로 실현 가능함을 나타낸다.",
+    "tip": "동의어: possible, viable, practical / 반의어: impractical, impossible / 출제영역: 비즈니스, 기술",
+    "emoji": "⚙️"
+  },
+  {
+    "id": "convenient",
+    "word": "convenient",
+    "pos": "adjective",
+    "date": "2026-09-21",
+    "meaning": "편리한, 편한",
+    "example_ko": "온라인 뱅킹은 바쁜 일정을 가진 고객들에게 매우 편리하다.",
+    "example_en": "Online banking is very convenient for customers who have busy schedules.",
+    "explanation": "사용하거나 접근하기 쉽고 시간이나 노력이 적게 드는 상태. 사람에게 적합하고 불편함이 없다는 의미.",
+    "tip": "동의어: handy, accessible / 반의어: inconvenient, cumbersome / 출제영역: 소비자, 기술",
+    "emoji": "🛒"
+  },
+  {
+    "id": "emission",
+    "word": "emission",
+    "pos": "noun",
+    "date": "2026-09-21",
+    "meaning": "배출, 방출, 배기",
+    "example_ko": "정부는 공장의 탄소 배출에 대한 더 엄격한 규제를 시행하고 있다.",
+    "example_en": "The government is implementing stricter regulations on carbon emission from factories.",
+    "explanation": "기계나 화학 반응에서 나오는 가스나 방사선 등을 배출하는 것. 특히 환경 문제에서 자동차나 공장의 오염 물질 배출을 의미한다.",
+    "tip": "동의어: discharge, release / 반의어: absorption / 출제영역: 환경, 정책",
+    "emoji": "💨"
   }
 ]
