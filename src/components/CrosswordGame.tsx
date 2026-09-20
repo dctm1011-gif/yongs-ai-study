@@ -230,7 +230,7 @@ export default function CrosswordGame() {
       }
 
       const db = getDatabase(getFirebaseApp());
-      const snapshot = await get(userRef(uid, 'english/reviewPool'));
+      const snapshot = await get(userRef(uid, 'voca/reviewPool'));
       if (!snapshot.exists()) { setGameState('empty'); return; }
 
       const pool = snapshot.val() as Record<string, any>;
@@ -350,7 +350,7 @@ export default function CrosswordGame() {
     setRevealedWordIds(prev => new Set([...prev, selectedWord.wordId]));
     try {
       const db = getDatabase(getFirebaseApp());
-      await dbSet(userRef(uid, `english/reviewPool/${selectedWord.wordId}/count`), 0);
+      await dbSet(userRef(uid, `voca/reviewPool/${selectedWord.wordId}/count`), 0);
     } catch (e) {
       console.warn('리뷰 카운트 초기화 실패:', e);
     }
@@ -411,7 +411,7 @@ export default function CrosswordGame() {
       await Promise.all(
         selfSolved.map(pw => {
           const next = Math.min((wordCountMap[pw.wordId] ?? 0) + 1, GRADUATE_AT);
-          return update(userRef(uid, `english/reviewPool/${pw.wordId}`), { count: next, lastReviewedDate: today });
+          return update(userRef(uid, `voca/reviewPool/${pw.wordId}`), { count: next, lastReviewedDate: today });
         })
       );
 

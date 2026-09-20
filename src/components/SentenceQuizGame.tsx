@@ -111,7 +111,7 @@ export default function SentenceQuizGame({ onComplete }: Props) {
 
     try {
       const db = getDatabase(getFirebaseApp());
-      const snap = await get(userRef(uid, 'english/reviewPool'));
+      const snap = await get(userRef(uid, 'voca/reviewPool'));
       if (!snap.exists()) { setGameState('empty'); return; }
 
       // 졸업한 단어라도 그 뒤에 틀린 적이 있으면 다시 출제 대상에 넣는다
@@ -185,11 +185,11 @@ export default function SentenceQuizGame({ onComplete }: Props) {
     if (correct) setScore(s => s + 1);
     const today = getKSTDateString();
     if (correct) {
-      update(userRef(uid, `english/reviewPool/${item.id}`), { count: increment(1), lastReviewedDate: today }).catch(() => {});
+      update(userRef(uid, `voca/reviewPool/${item.id}`), { count: increment(1), lastReviewedDate: today }).catch(() => {});
       clearWrongWords(uid, [item.id]);
     } else {
       // 오답은 복습으로 인정하지 않고 다른 게임과 동일하게 count를 0으로 되돌린다
-      dbSet(userRef(uid, `english/reviewPool/${item.id}/count`), 0).catch(() => {});
+      dbSet(userRef(uid, `voca/reviewPool/${item.id}/count`), 0).catch(() => {});
       recordWrongWords(uid, [{ wordId: item.id, word: item.word }]);
     }
   }, [answerState, items, current, uid]);

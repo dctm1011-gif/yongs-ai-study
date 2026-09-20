@@ -174,7 +174,7 @@ export default function AiChatScreen() {
     if (!user?.uid) return;
     const db = getDatabase(getFirebaseApp());
     Promise.all([
-      get(ref(db, `users/${user.uid}/english/reviewPool`)),
+      get(ref(db, `users/${user.uid}/voca/reviewPool`)),
       get(ref(db, `users/${user.uid}/wrongPool/english`)),
     ]).then(([poolSnap, wrongSnap]) => {
       if (!poolSnap.exists()) return;

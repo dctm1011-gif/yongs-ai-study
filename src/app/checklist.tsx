@@ -134,7 +134,7 @@ export default function ChecklistScreen() {
     const read = (path: string) => get(ref(db, path)).then(s => (s.exists() ? s.val() : null)).catch(() => null);
 
     Promise.all([
-      read(`users/${uid}/english/reviewPool`),
+      read(`users/${uid}/voca/reviewPool`),
       read(`users/${uid}/wrongPool/english`),
       read(`english/words/${today}`),
       read(`english/reading/korea_news/${today}`),

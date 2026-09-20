@@ -94,7 +94,7 @@ export default function WordMatchGame() {
 
     try {
       const db = getDatabase(getFirebaseApp());
-      const snapshot = await get(userRef(uid, 'english/reviewPool'));
+      const snapshot = await get(userRef(uid, 'voca/reviewPool'));
       if (!snapshot.exists()) {
         setGameState('empty');
         return;
@@ -168,7 +168,7 @@ export default function WordMatchGame() {
       const today = getKSTDateString();
       const meta = wordMeta[first.wordId];
       if (!practice && meta && meta.lastReviewedDate !== today) {
-        update(userRef(uid, `english/reviewPool/${first.wordId}`), {
+        update(userRef(uid, `voca/reviewPool/${first.wordId}`), {
           count: Math.min(meta.count + 1, GRADUATE_AT),
           lastReviewedDate: today,
         }).catch(error => console.warn('리뷰 카운트 반영 실패:', error));

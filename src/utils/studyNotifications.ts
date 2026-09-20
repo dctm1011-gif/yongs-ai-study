@@ -15,7 +15,7 @@ const BATTERY_ALERTED_KEY = 'notif_battery_alerted';
 import { getKSTDateString } from './dateUtils';
 
 /**
- * Firebase english/reviewPool에서 단어를 가져와 8~22시 매시간 알림 스케줄링.
+ * Firebase voca/reviewPool에서 단어를 가져와 8~22시 매시간 알림 스케줄링.
  * 복습 횟수(count)가 적은 단어를 우선 배치하고, 하루에 한 번만 갱신한다.
  */
 export async function refreshStudyNotifications(uid?: string): Promise<void> {
@@ -46,7 +46,7 @@ export async function refreshStudyNotifications(uid?: string): Promise<void> {
     const lastRefresh = await AsyncStorage.getItem(LAST_REFRESH_KEY);
     if (lastRefresh === today) return;
 
-    const snap = await get(userRef(uid, 'english/reviewPool'));
+    const snap = await get(userRef(uid, 'voca/reviewPool'));
     const raw = snap.exists() ? snap.val() : null;
     const poolList: any[] = raw ? Object.values(raw) : [];
 

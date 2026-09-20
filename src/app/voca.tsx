@@ -92,7 +92,7 @@ const ITEMS_PER_PAGE = 15; // Pagination size for FlatList
 
 async function fetchReadStatusFromFirebase(uid: string, today: string): Promise<Record<string, boolean>> {
   try {
-    const snapshot = await get(userRef(uid, `english/readStatus/${today}`));
+    const snapshot = await get(userRef(uid, `voca/readStatus/${today}`));
     return snapshot.exists() ? snapshot.val() : {};
   } catch (error) {
     console.warn('읽음 상태 Firebase 조회 실패:', error);
@@ -104,7 +104,7 @@ async function fetchQuizStatusFromFirebase(
   uid: string, today: string
 ): Promise<Record<string, { answered: boolean; correct_answer: boolean; selectedOption: string }>> {
   try {
-    const snapshot = await get(userRef(uid, `english/quizStatus/${today}`));
+    const snapshot = await get(userRef(uid, `voca/quizStatus/${today}`));
     return snapshot.exists() ? snapshot.val() : {};
   } catch (error) {
     console.warn('퀴즈 상태 Firebase 조회 실패:', error);
@@ -265,11 +265,11 @@ async function syncReadWordsToPool(uid: string, readWords: Word[]): Promise<void
   if (!uid || readWords.length === 0) return;
   const db = getDatabase(getFirebaseApp());
   // skipList 먼저 확인해서 skip된 단어는 reviewPool 등록 제외
-  const skipSnap = await get(ref(db, `users/${uid}/english/skipList`)).catch(() => null);
+  const skipSnap = await get(ref(db, `users/${uid}/voca/skipList`)).catch(() => null);
   const skipKeys = new Set(skipSnap?.exists() ? Object.keys(skipSnap.val()) : []);
   for (const w of readWords) {
     if (!w.id || skipKeys.has(w.id)) continue;
-    const poolRef = userRef(uid, `english/reviewPool/${w.id}`);
+    const poolRef = userRef(uid, `voca/reviewPool/${w.id}`);
     get(poolRef).then(snap => {
       if (!snap.exists()) {
         dbSet(poolRef, {
@@ -354,7 +354,7 @@ export default function VocaScreen() {
   useEffect(() => {
     if (!uid) return;
     const db = getDatabase(getFirebaseApp());
-    get(ref(db, `users/${uid}/english/skipList`)).then(snap => {
+    get(ref(db, `users/${uid}/voca/skipList`)).then(snap => {
       if (snap.exists()) setSkipSet(new Set(Object.keys(snap.val())));
     }).catch(() => {});
   }, [uid]);
@@ -430,8 +430,8 @@ export default function VocaScreen() {
       })
       .catch(() => {});
     Promise.all([
-      get(userRef(uid, `english/idiomReadStatus/${today}`)),
-      get(userRef(uid, 'english/idiomSkipList')),
+      get(userRef(uid, `voca/idiomReadStatus/${today}`)),
+      get(userRef(uid, 'voca/idiomSkipList')),
       get(ref(db, 'english/analysis/userRatings')),
     ]).then(([readSnap, skipSnap, ratingSnap]) => {
       if (readSnap.exists()) {
@@ -786,13 +786,13 @@ export default function VocaScreen() {
     if (toggled) {
       const db = getDatabase(getFirebaseApp());
       const today = getKSTDateString();
-      dbSet(userRef(uid, `english/readStatus/${today}/${wordId}`), toggled.isRead).catch(error =>
+      dbSet(userRef(uid, `voca/readStatus/${today}/${wordId}`), toggled.isRead).catch(error =>
         console.warn('읽음 상태 Firebase 저장 실패:', error)
       );
 
       // skip된 단어는 reviewPool 등록 안 함
       if (toggled.isRead && !skipSet.has(wordId)) {
-        const poolRef = userRef(uid, `english/reviewPool/${wordId}`);
+        const poolRef = userRef(uid, `voca/reviewPool/${wordId}`);
         get(poolRef).then(snapshot => {
           if (!snapshot.exists()) {
             dbSet(poolRef, {
@@ -819,9 +819,9 @@ export default function VocaScreen() {
       return next;
     });
     const today = getKSTDateString();
-    dbSet(userRef(uid, `english/idiomReadStatus/${today}/${idiomId}`), newRead).catch(() => {});
+    dbSet(userRef(uid, `voca/idiomReadStatus/${today}/${idiomId}`), newRead).catch(() => {});
     if (newRead && !idiomSkipSet.has(idiomId)) {
-      const poolRef = userRef(uid, `english/reviewPool/idiom_${idiomId}`);
+      const poolRef = userRef(uid, `voca/reviewPool/idiom_${idiomId}`);
       get(poolRef).then(snap => {
         if (!snap.exists()) {
           dbSet(poolRef, {
@@ -843,9 +843,9 @@ export default function VocaScreen() {
     setIdiomReadSet(prev => new Set([...prev, idiomId]));
     setIdiomSkipSet(prev => new Set([...prev, idiomId]));
     const today = getKSTDateString();
-    dbSet(userRef(uid, `english/idiomReadStatus/${today}/${idiomId}`), true).catch(() => {});
-    dbSet(userRef(uid, `english/idiomSkipList/${idiomId}`), { phrase: idiom.phrase, skippedAt: new Date().toISOString() }).catch(() => {});
-    remove(userRef(uid, `english/reviewPool/idiom_${idiomId}`)).catch(() => {});
+    dbSet(userRef(uid, `voca/idiomReadStatus/${today}/${idiomId}`), true).catch(() => {});
+    dbSet(userRef(uid, `voca/idiomSkipList/${idiomId}`), { phrase: idiom.phrase, skippedAt: new Date().toISOString() }).catch(() => {});
+    remove(userRef(uid, `voca/reviewPool/idiom_${idiomId}`)).catch(() => {});
   };
 
   const rateIdiom = useCallback((idiomId: string, rating: number) => {
@@ -876,13 +876,13 @@ export default function VocaScreen() {
     const skippedAt = new Date().toISOString();
 
     // readStatus 기록
-    dbSet(userRef(uid, `english/readStatus/${today}/${wordId}`), true).catch(() => {});
+    dbSet(userRef(uid, `voca/readStatus/${today}/${wordId}`), true).catch(() => {});
     // 유저별 skipList
-    dbSet(userRef(uid, `english/skipList/${wordId}`), { word: word.word, skippedAt }).catch(() => {});
+    dbSet(userRef(uid, `voca/skipList/${wordId}`), { word: word.word, skippedAt }).catch(() => {});
     // 단어 생성 스크립트가 읽는 글로벌 skipList
     dbSet(ref(db, `english/analysis/globalSkipList/${wordId}`), { word: word.word, skippedAt }).catch(() => {});
     // reviewPool에서 즉시 삭제 (통계에서도 사라짐, 복습 안 함)
-    remove(userRef(uid, `english/reviewPool/${wordId}`)).catch(() => {});
+    remove(userRef(uid, `voca/reviewPool/${wordId}`)).catch(() => {});
 
     setSkipSet(prev => new Set([...prev, wordId]));
   };
@@ -973,7 +973,7 @@ export default function VocaScreen() {
         if (q.id !== quizId) return q;
         const isCorrect = selectedOption === q.correct;
         if (uid) {
-          dbSet(userRef(uid, `english/quizStatus/${getKSTDateString()}/${quizId}`), {
+          dbSet(userRef(uid, `voca/quizStatus/${getKSTDateString()}/${quizId}`), {
             answered: true, correct_answer: isCorrect, selectedOption,
           }).catch(() => {});
         }
@@ -986,7 +986,7 @@ export default function VocaScreen() {
         const isCorrect = selectedOption === q.correct;
         if (uid) {
           const today = getKSTDateString();
-          dbSet(userRef(uid, `english/quizStatus/${today}/${quizId}`), {
+          dbSet(userRef(uid, `voca/quizStatus/${today}/${quizId}`), {
             answered: true,
             correct_answer: isCorrect,
             selectedOption,
@@ -1000,7 +1000,7 @@ export default function VocaScreen() {
             // 오답 풀이 있어야 실제로 우선 출제된다.
             recordWrongWords(uid, [{ wordId: q.wordId, word: word?.word }]);
             if (word) {
-              const poolRef = userRef(uid, `english/reviewPool/${q.wordId}`);
+              const poolRef = userRef(uid, `voca/reviewPool/${q.wordId}`);
               get(poolRef).then(snap => {
                 const entry = snap.exists() ? snap.val() : {};
                 dbSet(poolRef, {
@@ -1033,7 +1033,7 @@ export default function VocaScreen() {
 
       // 일간 리포트용 공개 요약 (인증 없이 Netlify 함수가 읽을 수 있는 경로)
       const db = getDatabase(getFirebaseApp());
-      get(ref(db, `users/${uid}/english/reviewPool`)).then(snap => {
+      get(ref(db, `users/${uid}/voca/reviewPool`)).then(snap => {
         const pool = snap.exists() ? Object.values(snap.val() as Record<string, any>) : [];
         const active = pool.filter((e: any) => (e.count ?? 0) < GRADUATE_AT).length;
         const graduated = pool.filter((e: any) => (e.count ?? 0) >= GRADUATE_AT).length;
@@ -1085,14 +1085,14 @@ export default function VocaScreen() {
       const today = getKSTDateString();
       // forceNew(새 스토리 버튼)이면 저장된 오늘 스토리를 무시하고 새로 생성한다.
       if (!forceNew) {
-        const snap = await get(userRef(uid, `english/reviewStory/${today}`));
+        const snap = await get(userRef(uid, `voca/reviewStory/${today}`));
         if (snap.exists()) {
           setReviewStory(snap.val());
           return;
         }
       }
       // 스토리 없으면 온디맨드 생성 — 오늘 읽은 단어 우선 + reviewPool에서 보충
-      const poolSnap = await get(userRef(uid, 'english/reviewPool')).catch(() => null);
+      const poolSnap = await get(userRef(uid, 'voca/reviewPool')).catch(() => null);
       const todayRead = words.filter(w => w.isRead).map(w => ({ word: w.word, meaning: w.meaning }));
       const todayWordSet = new Set(todayRead.map(w => w.word.toLowerCase()));
       let reviewWords: { word: string; meaning: string }[] = [...todayRead];
@@ -1154,7 +1154,7 @@ Return ONLY JSON (no markdown):
       if (story?.sentences?.length) {
         setReviewStory(story);
         const db = getDatabase(getFirebaseApp());
-        dbSet(ref(db, `users/${uid}/english/reviewStory/${today}`), story).catch(() => {});
+        dbSet(ref(db, `users/${uid}/voca/reviewStory/${today}`), story).catch(() => {});
       } else {
         setReviewStory(null);
       }
@@ -1179,7 +1179,7 @@ Return ONLY JSON (no markdown):
     try {
       const db = getDatabase(getFirebaseApp());
       const [poolSnap, playSnap] = await Promise.all([
-        get(userRef(uid, 'english/reviewPool')),
+        get(userRef(uid, 'voca/reviewPool')),
         get(userRef(uid, 'completion/english_word_match')),
       ]);
       const poolVals: any[] = poolSnap.exists() ? Object.values(poolSnap.val()) : [];
@@ -1395,7 +1395,7 @@ Return ONLY JSON (no markdown):
           const db = getDatabase(getFirebaseApp());
           const today = getKSTDateString();
           reviewWordIds.forEach(wordId => {
-            update(userRef(uid, `english/reviewPool/${wordId}`), {
+            update(userRef(uid, `voca/reviewPool/${wordId}`), {
               count: increment(1),
               lastReviewedDate: today,
             }).catch(() => {});
@@ -2253,7 +2253,7 @@ const ReviewPoolView = React.memo(({ uid }: { uid: string }) => {
 
       const db = getDatabase(getFirebaseApp());
       let firstLoad = isNewDay;
-      unsub = onValue(ref(db, `users/${uid}/english/reviewPool`), snap => {
+      unsub = onValue(ref(db, `users/${uid}/voca/reviewPool`), snap => {
         if (!snap.exists()) { setLoading(false); setRefreshing(false); return; }
         const vals: PoolWord[] = Object.entries(snap.val()).map(([id, v]: [string, any]) => ({
           id,

@@ -91,7 +91,7 @@ export default function ScrambleGame() {
         }
       }
 
-      const snap = await get(userRef(uid, 'english/reviewPool'));
+      const snap = await get(userRef(uid, 'voca/reviewPool'));
       if (!snap.exists()) { setGameState('empty'); return; }
 
       const pool = snap.val() as Record<string, any>;
@@ -219,7 +219,7 @@ export default function ScrambleGame() {
     const newRevealed = new Set([...revealedWordIds, currentWord.wordId]);
     setRevealedWordIds(newRevealed);
     try {
-      await dbSet(userRef(uid, `english/reviewPool/${currentWord.wordId}/count`), 0);
+      await dbSet(userRef(uid, `voca/reviewPool/${currentWord.wordId}/count`), 0);
     } catch (e) {
       console.warn('리뷰 카운트 초기화 실패:', e);
     }
@@ -240,11 +240,11 @@ export default function ScrambleGame() {
       await clearWrongWords(uid, cleanSolvedIds);
       await Promise.all([
         ...Array.from(penaltyIds).map(wordId =>
-          dbSet(userRef(uid, `english/reviewPool/${wordId}/count`), 0)
+          dbSet(userRef(uid, `voca/reviewPool/${wordId}/count`), 0)
         ),
         ...cleanSolvedIds.map(wordId => {
           const next = Math.min((wordCounts[wordId] ?? 0) + 1, GRADUATE_AT);
-          return update(userRef(uid, `english/reviewPool/${wordId}`), { count: next, lastReviewedDate: today });
+          return update(userRef(uid, `voca/reviewPool/${wordId}`), { count: next, lastReviewedDate: today });
         }),
       ]);
       await dbSet(userRef(uid, `completion/english_scramble/${today}`), true);
