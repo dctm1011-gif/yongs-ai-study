@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -6,14 +6,14 @@ import { View, ActivityIndicator, TouchableOpacity, Text, StyleSheet, Platform, 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Updates from 'expo-updates';
 import { useUpdates } from 'expo-updates';
-import { getDatabase, ref, set, onValue } from 'firebase/database';
+import { getDatabase, ref, set, get } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
 import VocaScreen from './voca';
 import InvestmentScreen from './investment';
 import CultureScreen from './culture';
 import ChecklistScreen from './checklist';
-import BBCScreen from './bbc';
-import SpeakingScreen from './speaking';
+import EnglishScreen from './english';
+import AiChatScreen from './aiChat';
 
 const APP_VARIANT = process.env.EXPO_PUBLIC_APP_VARIANT ?? 'full';
 import LoginScreen from './login';
@@ -86,11 +86,12 @@ function MainTabs() {
     if (user?.uid) refreshStudyNotifications(user.uid);
   }, [user?.uid]);
 
-  // 앱 시작 및 1시간마다 전체 학습 요약을 공개 경로에 기록 + 위젯 갱신
+  // 앱 시작 및 1시간마다 전체 학습 요약을 공개 경로에 기록 + 위젯 갱신 + 배지 갱신
   useEffect(() => {
     if (!user?.uid) return;
     const updateAll = async (uid: string) => {
       await writeDailySummary(uid).catch(() => {});
+      refreshBadge(uid);
       if (Platform.OS === 'android') {
         try {
           const { requestWidgetUpdate } = await import('react-native-android-widget');
@@ -114,7 +115,7 @@ function MainTabs() {
     backfillProgressHistory(user.uid).catch(() => {}); // 과거 completion → progress 1회 백필
     const interval = setInterval(() => updateAll(user.uid!), 60 * 60 * 1000);
     return () => clearInterval(interval);
-  }, [user?.uid]);
+  }, [user?.uid, refreshBadge]);
 
   // Expo push token 취득 → Firebase pushTokens/{uid} 저장
   useEffect(() => {
@@ -158,6 +159,7 @@ function MainTabs() {
         const db = getDatabase(getFirebaseApp());
         await Promise.all(keys.map((key: string) => set(ref(db, `users/${uid}/completion/${key}/${date}`), true)));
         await writeDailySummary(uid).catch(() => {});
+        refreshBadge(uid);
         navigationRef.current?.navigate('Checklist');
         Alert.alert('반영 완료', `보충학습 허브에서 완료한 ${keys.length}개 항목을 Today 탭에 반영했어요.`);
       } catch (e) {
@@ -170,18 +172,22 @@ function MainTabs() {
     return () => sub.remove();
   }, [user?.uid]);
 
-  // 탭바 배지용 — 오늘 남은 학습 개수 (다른 탭에 있어도 보이게)
+  // 탭바 배지용 — 오늘 남은 학습 개수 (초기 로드 시만, writeDailySummary 후 갱신)
   const [remaining, setRemaining] = useState<number | null>(null);
-  useEffect(() => {
-    if (!user?.uid) return;
+
+  const refreshBadge = useCallback((uid: string) => {
     const db = getDatabase(getFirebaseApp());
-    const unsub = onValue(ref(db, `users/${user.uid}/completion`), snap => {
+    get(ref(db, `users/${uid}/completion`)).then(snap => {
       const data = snap.val() ?? {};
       const today = getKSTDateString();
       setRemaining(CHECKLIST_KEYS.filter(k => !isDone(data[k]?.[today])).length);
-    });
-    return () => unsub();
-  }, [user?.uid]);
+    }).catch(err => console.warn('[tabBar badge] read failed:', err));
+  }, []);
+
+  useEffect(() => {
+    if (!user?.uid) return;
+    refreshBadge(user.uid);
+  }, [user?.uid, refreshBadge]);
 
   // 한참 떠나 있다 돌아오면 Today부터 다시 보여준다.
   // (탭을 오가는 짧은 이탈까지 되돌리면 하던 작업을 잃으므로 30분 기준을 둔다)
@@ -312,8 +318,8 @@ function MainTabs() {
           }}
         />
         <Tab.Screen
-          name="BBC"
-          component={BBCScreen}
+          name="English"
+          component={EnglishScreen}
           options={{
             title: 'English',
             tabBarIcon: ({ color }) => (
@@ -322,10 +328,10 @@ function MainTabs() {
           }}
         />
         <Tab.Screen
-          name="Speaking"
-          component={SpeakingScreen}
+          name="AiChat"
+          component={AiChatScreen}
           options={{
-            title: 'Talk',
+            title: 'AI Chat',
             tabBarIcon: ({ color }) => (
               <MaterialIcons name="record-voice-over" size={26} color={color} />
             ),

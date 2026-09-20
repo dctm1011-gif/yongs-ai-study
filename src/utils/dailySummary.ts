@@ -77,7 +77,7 @@ export async function writeDailySummary(uid: string): Promise<void> {
         get(ref(db, `users/${uid}/completion/${key}/${today}`)).catch(() => null)
       )
     ),
-    get(ref(db, `english/dailySummary/${today}`)).catch(() => null),
+    get(ref(db, `english/analysis/dailySummary/${today}`)).catch(() => null),
   ]);
 
   const completion: Record<string, any> = {};

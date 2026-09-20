@@ -1,0 +1,44 @@
+ANTHROPIC_API_KEY is set and takes precedence over the SDK's profile / federation auto-discovery; unset ANTHROPIC_API_KEY to use the auto-discovered credential.
+[*] Netlify API 실패: HTTP Error 404: Not Found
+[*] TOEFL 단어 없음 - 기본값으로 생성
+[*] 학술 어휘 생성 중 (도메인 방식)...
+[ratings] 평균 2.63 (n=134) → C1 수준 (사용자가 약간 쉽다고 평가함 — 한 단계 높게)
+[+] 선정: scrutinize, collaborate, protocol, hassle, prevalent
+[+] 콘텐츠 생성 완료: ['scrutinize', 'collaborate', 'protocol', 'hassle', 'prevalent']
+[*] Phase 1: Wikipedia 배경지식 추가 중...
+scrutinize has no Synonyms in the API
+scrutinize has no Antonyms in the API
+collaborate has no Synonyms in the API
+collaborate has no Antonyms in the API
+protocol has no Synonyms in the API
+protocol has no Antonyms in the API
+hassle has no Synonyms in the API
+hassle has no Antonyms in the API
+prevalent has no Synonyms in the API
+prevalent has no Antonyms in the API
+[*] Phase 2: 퀴즈 선택지 동의어 강화 중...
+scrutinize has no Synonyms in the API
+scrutinize has no Antonyms in the API
+collaborate has no Synonyms in the API
+collaborate has no Antonyms in the API
+protocol has no Synonyms in the API
+protocol has no Antonyms in the API
+[+] 단어 5개, 퀴즈 8개 추출 완료 (배경지식·동의어 추가됨)
+[+] HTML 저장: C:\Users\dctm1\YongStudyApp\english\index.html
+[+] daily.json 저장: C:\Users\dctm1\YongStudyApp\english\daily.json
+[+] words_db.json에 5개 단어 추가 (2026-09-20)
+[!] TOEFL 단어 fetch 실패: HTTP Error 404: Not Found
+[+] TOEFL 단어 0개 병합 완료, 총 356개 단어
+[*] TOEFL 콘텐츠 생성 중...
+[+] TOEFL HTML 저장: C:\Users\dctm1\YongStudyApp\toefl\index.html
+[+] TOEFL daily.json 저장: C:\Users\dctm1\YongStudyApp\toefl\daily.json
+[Idioms] Firebase PUT 200: 3개 구동사 저장 (2026-09-20)
+[Idioms] idioms_db.json에 3개 추가 (총 40개)
+[+] 구동사/숙어: ['get in touch', 'go through', 'stick to']
+[*] GitHub Pages 배포 중...
+[+] GitHub Pages 배포 완료
+[Discord] HTTP 401: {"message": "401: Unauthorized", "code": 0}
+[*] Netlify 직접 배포 중...
+[+] Netlify 배포 성공, Firebase 함수 트리거 중...
+[+] Firebase english/words/2026-09-20 업로드 완료 (status=200)
+[+] 함수 트리거 완료 (toefl-daily): {"success":true,"message":"TOEFL problems generated and saved","date":"2026-09-20"}

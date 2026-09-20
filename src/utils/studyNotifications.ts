@@ -12,10 +12,7 @@ const END_HOUR = 22;
 const LAST_REFRESH_KEY = 'notif_last_refresh_v3';
 const BATTERY_ALERTED_KEY = 'notif_battery_alerted';
 
-function getKSTDateString(): string {
-  const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
-  return kst.toISOString().split('T')[0];
-}
+import { getKSTDateString } from './dateUtils';
 
 /**
  * Firebase english/reviewPool에서 단어를 가져와 8~22시 매시간 알림 스케줄링.

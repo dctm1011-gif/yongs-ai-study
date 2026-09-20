@@ -20,3 +20,51 @@ The following packages should be updated for best compatibility with the install
 Your project may not work correctly until you install the expected versions of the packages.
 Waiting on http://localhost:8081
 Logs for your project will appear below.
+env: load .env
+env: export EXPO_PUBLIC_FIREBASE_API_KEY EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN EXPO_PUBLIC_FIREBASE_DATABASE_URL EXPO_PUBLIC_FIREBASE_PROJECT_ID EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID EXPO_PUBLIC_FIREBASE_APP_ID KOSIS_API_KEY ANTHROPIC_API_KEY FIREBASE_API_KEY FIREBASE_DATABASE_URL FIREBASE_DATABASE_SECRET FIREBASE_USER_UID GMAIL_USER GMAIL_APP_PASSWORD REPORT_TO_EMAIL EXPO_PUBLIC_ANTHROPIC_API_KEY
+Starting project at C:\Users\dctm1\YongStudyApp
+Using src/app as the root directory for Expo Router.
+Starting Metro Bundler
+The following packages should be updated for best compatibility with the installed expo version:
+  expo@54.0.36 - expected version: ~54.0.37
+  expo-file-system@19.0.23 - expected version: ~19.0.24
+  expo-updates@29.0.19 - expected version: ~29.0.20
+Your project may not work correctly until you install the expected versions of the packages.
+Waiting on http://localhost:8081
+Logs for your project will appear below.
+npm notice
+npm notice New major version of npm available! 11.13.0 -> 12.0.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+npm notice To update run: npm install -g npm@12.0.2
+npm notice
+env: load .env
+env: export EXPO_PUBLIC_FIREBASE_API_KEY EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN EXPO_PUBLIC_FIREBASE_DATABASE_URL EXPO_PUBLIC_FIREBASE_PROJECT_ID EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID EXPO_PUBLIC_FIREBASE_APP_ID KOSIS_API_KEY ANTHROPIC_API_KEY FIREBASE_API_KEY FIREBASE_DATABASE_URL FIREBASE_DATABASE_SECRET FIREBASE_USER_UID GMAIL_USER GMAIL_APP_PASSWORD REPORT_TO_EMAIL EXPO_PUBLIC_ANTHROPIC_API_KEY
+Starting project at C:\Users\dctm1\YongStudyApp
+Using src/app as the root directory for Expo Router.
+Starting Metro Bundler
+The following packages should be updated for best compatibility with the installed expo version:
+  expo@54.0.36 - expected version: ~54.0.37
+  expo-file-system@19.0.23 - expected version: ~19.0.24
+  expo-updates@29.0.19 - expected version: ~29.0.20
+Your project may not work correctly until you install the expected versions of the packages.
+Waiting on http://localhost:8081
+Logs for your project will appear below.
+
+<--- Last few GCs --->
+
+[17116:0000026CCF916000] 103745873 ms: Scavenge 4019.7 (4060.1) -> 4003.7 (4128.8) MB, pooled: 0 MB, 6.73 / 0.00 ms  (average mu = 0.383, current mu = 0.376) task; 
+[17116:0000026CCF916000] 103747043 ms: Mark-Compact (reduce) 4014.7 (4129.1) -> 3957.4 (3976.8) MB, pooled: 0 MB, 156.78 / 0.00 ms  (+ 871.4 ms in 176 steps since start of marking, biggest step 5.0 ms, walltime since start of marking 1170 ms) (average mu 
+FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+----- Native stack trace -----
+
+ 1: 00007FF7711A0E3F node::OnFatalError+1343
+ 2: 00007FF771DEF877 v8::Function::NewInstance+423
+ 3: 00007FF771BF02A7 v8::base::AddressSpaceReservation::AddressSpaceReservation+322071
+ 4: 00007FF771BF3FB4 v8::base::AddressSpaceReservation::AddressSpaceReservation+337700
+ 5: 00007FF771C02F0C v8::internal::StrongRootAllocatorBase::deallocate_impl+16604
+ 6: 00007FF771C0274B v8::internal::StrongRootAllocatorBase::deallocate_impl+14619
+ 7: 00007FF77308F9AD v8::base::UnsignedDivisionByConstant<unsigned __int64>+2794669
+ 8: 00007FF771BEDD70 v8::base::AddressSpaceReservation::AddressSpaceReservation+312544
+ 9: 00007FF771C71AA9 v8::Unlocker::~Unlocker+9273
+10: 00007FF7717E6438 v8::String::Value::~Value+143384
+11: 0000026C9FE775FA 

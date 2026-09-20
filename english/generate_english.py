@@ -2,6 +2,7 @@
 영어공부 Netlify 자동 업데이트
 TOEFL 빈출 어휘 생성 → english/index.html + daily.json → Netlify 배포
 매일 Task Scheduler로 자동 실행
+MCP 통합: Wikipedia(배경지식) + Thesaurus(동의어)
 """
 import json
 import sys
@@ -11,6 +12,21 @@ from pathlib import Path
 from datetime import date
 
 import anthropic
+
+try:
+    import wikipedia
+except ImportError:
+    wikipedia = None
+
+try:
+    from PyDictionary import PyDictionary
+except ImportError:
+    PyDictionary = None
+
+# 콘솔 코드페이지(cp949)가 —, 이모지 등 일부 UTF-8 문자를 못 받아서 print()가 죽는 문제 방지
+# (2026-09-17: chatlog_watcher.py에서 같은 문제로 워치독이 죽었던 것과 동일 원인)
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 ROOT = Path(__file__).parent.parent
 OUTPUT_HTML = ROOT / "english" / "index.html"
@@ -102,6 +118,56 @@ def load_skip_list() -> list:
     except Exception as e:
         print(f"[skip] globalSkipList 로드 실패 (무시): {e}")
         return []
+
+
+def fetch_word_background(word: str) -> dict:
+    """Phase 1: Wikipedia에서 단어 배경지식 검색"""
+    if not wikipedia:
+        return {}
+    try:
+        result = wikipedia.summary(word, sentences=2, auto_suggest=False)
+        return {"background": result, "source": "wikipedia"}
+    except Exception:
+        return {}
+
+
+def fetch_word_synonyms(word: str) -> dict:
+    """Phase 2: PyDictionary에서 동의어/반의어 검색"""
+    if not PyDictionary:
+        return {}
+    try:
+        result = PyDictionary.synonym(word)
+        antonym = PyDictionary.antonym(word)
+        return {
+            "synonyms": result.get(word, [])[:5] if result else [],
+            "antonyms": antonym.get(word, [])[:3] if antonym else []
+        }
+    except Exception:
+        return {}
+
+
+def enhance_quiz_options(quiz: dict, word: str) -> dict:
+    """Phase 2: 퀴즈 선택지를 동의어/반의어로 동적 강화"""
+    if quiz.get('type') != 'meaning':
+        return quiz
+
+    synonyms = fetch_word_synonyms(word)
+    syns = synonyms.get('synonyms', [])
+    if not syns or len(quiz.get('options', [])) < 4:
+        return quiz
+
+    # 선택지 중 하나를 동의어로 대체 (정답이 아닌 것만)
+    try:
+        options = list(quiz.get('options', []))
+        answer_idx = quiz.get('answer', 0)
+        for i, opt in enumerate(options):
+            if i != answer_idx and i < len(options) and syns:
+                options[i] = syns.pop(0)
+        quiz['options'] = options
+    except Exception:
+        pass
+
+    return quiz
 
 
 def fetch_user_ratings() -> dict:
@@ -2152,7 +2218,7 @@ def generate_idioms(client, target_date: date) -> list:
     """구동사·숙어 3개 생성 (Haiku)."""
     import re as _re
     used = load_used_idioms()
-    used_str = ", ".join(used[-30:]) if used else "없음"
+    used_str = ", ".join(used[-60:]) if used else "없음"
 
     prompt = (
         "초보~중급 영어 학습자를 위한 실용 영어 구동사(phrasal verb) 또는 숙어(idiom) 3개를 생성하세요.\n"
@@ -2162,9 +2228,11 @@ def generate_idioms(client, target_date: date) -> list:
         "- 동사+전치사/부사 조합(구동사) 또는 2-3개 단어 숙어만\n"
         "- 일상 대화·학술 글쓰기에서 실제로 자주 쓰이는 것\n"
         "- 3개는 서로 다른 맥락(일상/학업/비즈니스 등)에서 선정\n"
+        "- meaning_en은 영어로 짧게 (10단어 이내, 'to + verb' 형태 권장)\n"
         "- explanation은 한국어로, 애교있는 말투로 쉽게 설명\n\n"
         "JSON 배열만 반환 (다른 텍스트 없이):\n"
         '[{"id":"carry-out","phrase":"carry out","meaning_ko":"수행하다, 실행하다",'
+        '"meaning_en":"to perform or complete a planned task",'
         '"explanation":"계획이나 임무를 실제로 실행에 옮기는 거예요! 학술 글쓰기에서 특히 자주 보여요 🎯",'
         '"example_en":"Scientists carry out experiments to test their hypotheses.",'
         '"example_ko":"과학자들은 가설을 검증하기 위해 실험을 수행해요.",'
@@ -2273,9 +2341,29 @@ def main(target_date: date = None):
 
     data = generate_default_words(client, target_date, toefl_words)
 
+    # Phase 1, 2: 각 단어에 배경지식과 동의어 추가 + 퀴즈 선택지 강화
+    print("[*] Phase 1: Wikipedia 배경지식 추가 중...")
+    for word_obj in data.get('words', []):
+        word = word_obj.get('word', '')
+        if word:
+            bg = fetch_word_background(word)
+            if bg:
+                word_obj['background'] = bg.get('background', '')
+            syn = fetch_word_synonyms(word)
+            if syn:
+                word_obj['synonyms'] = syn.get('synonyms', [])
+                word_obj['antonyms'] = syn.get('antonyms', [])
+
+    # Phase 2: 퀴즈 선택지를 동의어로 동적 강화
+    print("[*] Phase 2: 퀴즈 선택지 동의어 강화 중...")
+    for quiz in data.get('quiz', []):
+        word = quiz.get('word', '')
+        if word:
+            quiz = enhance_quiz_options(quiz, word)
+
     word_count = len(data.get('words', []))
     quiz_count = len(data.get('quiz', []))
-    print(f"[+] 단어 {word_count}개, 퀴즈 {quiz_count}개 추출 완료")
+    print(f"[+] 단어 {word_count}개, 퀴즈 {quiz_count}개 추출 완료 (배경지식·동의어 추가됨)")
 
     html = generate_html(data)
     OUTPUT_HTML.parent.mkdir(exist_ok=True)

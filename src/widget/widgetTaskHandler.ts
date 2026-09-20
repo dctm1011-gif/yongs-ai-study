@@ -37,21 +37,17 @@ async function fetchMonthCalendar(yr: number, mo: number): Promise<Record<string
   }
 }
 
-function getKSTDateString(): string {
-  const now = new Date(Date.now() + 9 * 3600000);
-  return now.toISOString().slice(0, 10);
-}
+import { getKSTDateString } from '../utils/dateUtils';
 
 function getDisplayDate(): string {
-  const now = new Date(Date.now() + 9 * 3600000);
-  const m = now.getUTCMonth() + 1;
-  const d = now.getUTCDate();
-  return `${m}/${d}`;
+  const d = getKSTDateString(); // YYYY-MM-DD, 3AM boundary
+  const [, m, day] = d.split('-');
+  return `${Number(m)}/${Number(day)}`;
 }
 
 export async function fetchWidgetData(): Promise<WidgetData> {
   const date = getKSTDateString();
-  const now = new Date(Date.now() + 9 * 3600000);
+  const now = new Date(Date.now() + 6 * 3600000);
   const yr = now.getUTCFullYear();
   const mo = now.getUTCMonth();
 

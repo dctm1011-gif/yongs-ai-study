@@ -32,6 +32,9 @@ interface NetlifyWord {
   example_en: string;
   explanation: string;
   emoji: string;
+  background?: string;
+  synonyms?: string[];
+  antonyms?: string[];
 }
 
 interface Word extends NetlifyWord {
@@ -359,7 +362,7 @@ export default function VocaScreen() {
   // 난이도 평가 로드 (마운트 1회)
   useEffect(() => {
     const db = getDatabase(getFirebaseApp());
-    get(ref(db, 'english/userRatings')).then(snap => {
+    get(ref(db, 'english/analysis/userRatings')).then(snap => {
       if (!snap.exists()) return;
       const data = snap.val();
       const ratings: Record<string, number> = {};
@@ -429,7 +432,7 @@ export default function VocaScreen() {
     Promise.all([
       get(userRef(uid, `english/idiomReadStatus/${today}`)),
       get(userRef(uid, 'english/idiomSkipList')),
-      get(ref(db, 'english/userRatings')),
+      get(ref(db, 'english/analysis/userRatings')),
     ]).then(([readSnap, skipSnap, ratingSnap]) => {
       if (readSnap.exists()) {
         const d = readSnap.val();
@@ -848,13 +851,13 @@ export default function VocaScreen() {
   const rateIdiom = useCallback((idiomId: string, rating: number) => {
     setIdiomRatings(prev => ({ ...prev, [idiomId]: rating }));
     const db = getDatabase(getFirebaseApp());
-    dbSet(ref(db, `english/userRatings/idiom_${idiomId}`), { rating, ratedAt: new Date().toISOString() }).catch(() => {});
+    dbSet(ref(db, `english/analysis/userRatings/idiom_${idiomId}`), { rating, ratedAt: new Date().toISOString() }).catch(() => {});
   }, []);
 
   const rateWord = useCallback((wordId: string, rating: number) => {
     setWordRatings(prev => ({ ...prev, [wordId]: rating }));
     const db = getDatabase(getFirebaseApp());
-    dbSet(ref(db, `english/userRatings/${wordId}`), {
+    dbSet(ref(db, `english/analysis/userRatings/${wordId}`), {
       rating,
       ratedAt: new Date().toISOString(),
     }).catch(() => {});
@@ -877,7 +880,7 @@ export default function VocaScreen() {
     // 유저별 skipList
     dbSet(userRef(uid, `english/skipList/${wordId}`), { word: word.word, skippedAt }).catch(() => {});
     // 단어 생성 스크립트가 읽는 글로벌 skipList
-    dbSet(ref(db, `english/globalSkipList/${wordId}`), { word: word.word, skippedAt }).catch(() => {});
+    dbSet(ref(db, `english/analysis/globalSkipList/${wordId}`), { word: word.word, skippedAt }).catch(() => {});
     // reviewPool에서 즉시 삭제 (통계에서도 사라짐, 복습 안 함)
     remove(userRef(uid, `english/reviewPool/${wordId}`)).catch(() => {});
 
@@ -938,7 +941,7 @@ export default function VocaScreen() {
       try {
         const db = getDatabase(getFirebaseApp());
         const key = word.word.toLowerCase().replace(/\s+/g, '_').replace(/-/g, '_');
-        const snap = await get(ref(db, `english/sentences/${key}`));
+        const snap = await get(ref(db, `english/analysis/sentences/${key}`));
         if (snap.exists()) sd = { word: word.word, ...snap.val() };
       } catch {}
       if (_wcPlayId !== myId) break;
@@ -1034,7 +1037,7 @@ export default function VocaScreen() {
         const pool = snap.exists() ? Object.values(snap.val() as Record<string, any>) : [];
         const active = pool.filter((e: any) => (e.count ?? 0) < GRADUATE_AT).length;
         const graduated = pool.filter((e: any) => (e.count ?? 0) >= GRADUATE_AT).length;
-        return dbSet(ref(db, `english/dailySummary/${today}`), {
+        return dbSet(ref(db, `english/analysis/dailySummary/${today}`), {
           correct,
           total: activeQuizzes.length,
           quizDetails: activeQuizzes.map(q => ({
@@ -1184,29 +1187,11 @@ Return ONLY JSON (no markdown):
       const graduated = poolVals.filter(w => (w.count ?? 0) >= GRADUATE_AT).length;
       const playDays = playSnap.exists() ? Object.keys(playSnap.val()).length : 0;
       setDebugPoolStats({ total, graduated, playDays });
-
-      // 정리 스크립트용 임시 내보내기 (english/_tmp_pool_export)
-      const wordKeys = poolVals
-        .map((w: any) => (w.word || '').toLowerCase().replace(/[\s-]+/g, '_'))
-        .filter((k: string) => k.length > 0);
-      await dbSet(ref(db, 'english/_tmp_pool_export'), { words: wordKeys, count: wordKeys.length, ts: Date.now() });
     } catch {
       setDebugPoolStats(null);
     }
 
     setShowDebug(true);
-  };
-
-  const sendTestNotification = async () => {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: '🧪 테스트 알림',
-        body: '이 알림이 보이면 백그라운드 알림이 정상 동작합니다!',
-        sound: 'default',
-      },
-      trigger: { type: SchedulableTriggerInputTypes.TIME_INTERVAL, seconds: 5, repeats: false, channelId: 'study-reminder' },
-    });
-    Alert.alert('✅ 테스트 알림 예약', '5초 후 알림이 옵니다. 앱을 홈으로 내리고 기다려보세요.');
   };
 
   const clearDebugLog = async () => {
@@ -1483,9 +1468,6 @@ Return ONLY JSON (no markdown):
             </ScrollView>
 
             {/* 버튼 */}
-            <TouchableOpacity style={styles.debugTestBtn} onPress={sendTestNotification}>
-              <Text style={styles.debugTestBtnText}>🧪 5초 후 테스트 알림 발송</Text>
-            </TouchableOpacity>
             <TouchableOpacity style={styles.debugClearBtn} onPress={clearDebugLog}>
               <Text style={styles.debugClearBtnText}>🗑 수신 기록 초기화</Text>
             </TouchableOpacity>
@@ -1706,7 +1688,7 @@ const WordCard = React.memo(({ word, onToggleRead, onSkip, isSkipped, isPlayingA
     try {
       const db = getDatabase(getFirebaseApp());
       const key = word.word.toLowerCase().replace(/\s+/g, '_').replace(/-/g, '_');
-      const snap = await get(ref(db, `english/sentences/${key}`));
+      const snap = await get(ref(db, `english/analysis/sentences/${key}`));
       if (snap.exists()) {
         const data: ReviewSentence = { word: word.word, ...snap.val() };
         sentenceDataRef.current = data;
@@ -2003,7 +1985,7 @@ const QuizCard = React.memo(({ quiz, wordName, onAnswer }: { quiz: Quiz, wordNam
       return (
         <View style={styles.blankSentenceBox}>
           <Text style={styles.blankSentenceText}>
-            {parts[0] || ''}<Text style={styles.blankPlaceholder}>[______]</Text>{parts[1] || ''}
+            {parts[0] || ''}<Text style={styles.blankAnswerSlot}>[______]</Text>{parts[1] || ''}
           </Text>
         </View>
       );
@@ -2875,18 +2857,6 @@ const styles = StyleSheet.create({
     color: '#64748b',
     fontStyle: 'italic',
   },
-  debugTestBtn: {
-    marginTop: 14,
-    backgroundColor: '#2563eb',
-    borderRadius: 10,
-    paddingVertical: 12,
-    alignItems: 'center',
-  },
-  debugTestBtnText: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '700',
-  },
   debugClearBtn: {
     marginTop: 8,
     paddingVertical: 10,
@@ -2929,7 +2899,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     fontWeight: '500',
   },
-  blankPlaceholder: {
+  blankAnswerSlot: {
     color: '#8b5cf6',
     fontWeight: '800',
     textDecorationLine: 'underline',

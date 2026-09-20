@@ -79,7 +79,7 @@ interface HistoryEntry {
 
 interface TargetWord { word: string; meaning: string; }
 
-export default function SpeakingScreen() {
+export default function AiChatScreen() {
   const { user } = useAuth();
   const [viewState, setViewState] = useState<ViewState>('idle');
   const [messages, setMessages] = useState<Message[]>([]);

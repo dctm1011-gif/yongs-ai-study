@@ -1,21 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getDatabase, ref, onValue, get } from 'firebase/database';
+import { getDatabase, ref, get } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
 
-// Firebase Functions run in UTC; KST (UTC+9) doesn't roll to the next
-// calendar day until 09:00 UTC, so a plain UTC date lags KST by a day
-// for 9 hours each morning. Shift the clock forward before formatting,
-// matching the helper used in netlify/functions/*-daily.mjs.
-function getKSTDateString(): string {
-  const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
-  return kst.toISOString().split('T')[0];
-}
-
-function getKSTDateOffset(offsetDays: number): string {
-  const kst = new Date(Date.now() + 9 * 60 * 60 * 1000 + offsetDays * 86400000);
-  return kst.toISOString().split('T')[0];
-}
+import { getKSTDateString, getKSTDateOffset } from '../utils/dateUtils';
 
 export interface DailyTerm {
   term: string;
@@ -334,18 +322,16 @@ export function useInvestmentSync() {
     })();
   }, []);
 
-  // Subscribe to today's investment columns in Firebase
+  // Load today's investment columns once at startup (onValue → get for bandwidth savings)
   // (written daily at 06:00 KST by netlify/functions/investment-daily.mjs)
   useEffect(() => {
-    const db = getDatabase(getFirebaseApp());
-    const today = getKSTDateString();
-    const columnsRef = ref(db, `investment/columns/${today}`);
-
-    const unsubscribe = onValue(
-      columnsRef,
-      async snapshot => {
-        if (snapshot.exists()) {
-          const data = snapshot.val();
+    (async () => {
+      const db = getDatabase(getFirebaseApp());
+      const today = getKSTDateString();
+      try {
+        const snap = await get(ref(db, `investment/columns/${today}`));
+        if (snap.exists()) {
+          const data = snap.val();
           if (data.columns && Array.isArray(data.columns)) {
             const cols = injectRatioIntoColumns(data.columns);
             const term = data.termOfDay || null;
@@ -378,67 +364,50 @@ export function useInvestmentSync() {
           setColumns(getMockInvestmentColumns());
           setError('오늘자 데이터가 아직 없습니다 - 기본 데이터 표시');
         }
-        setLoading(false);
-        setSyncing(false);
-      },
-      err => {
-        console.error('[useInvestmentSync] Firebase subscription error:', err);
+      } catch (err) {
+        console.error('[useInvestmentSync] Load error:', err);
         setColumns(getMockInvestmentColumns());
         setError('Firebase 연결 실패 - 기본 데이터 표시');
+      } finally {
         setLoading(false);
         setSyncing(false);
       }
-    );
-
-    return () => unsubscribe();
+    })();
   }, []);
 
-  // 수지구 동별 단지 데이터는 별도 경로에서 독립적으로 읽음 (daily 갱신과 무관)
+  // Load investment data once at startup (onValue → get for bandwidth savings)
   useEffect(() => {
-    const db = getDatabase(getFirebaseApp());
-    const unsubSuji = onValue(
-      ref(db, 'investment/sujiComplexes'),
-      snapshot => {
-        if (snapshot.exists()) {
-          const data = snapshot.val();
+    (async () => {
+      const db = getDatabase(getFirebaseApp());
+      try {
+        const [sujiSnap, rateSnap, sdiSnap] = await Promise.all([
+          get(ref(db, 'investment/sujiComplexes')),
+          get(ref(db, 'investment/rateCharts')),
+          get(ref(db, 'investment/supplyDemandIndex')),
+        ]);
+
+        if (sujiSnap.exists()) {
+          const data = sujiSnap.val();
           if (data && typeof data === 'object') {
             setSujiComplexes(data);
             AsyncStorage.setItem(CACHE_SUJI, JSON.stringify({ data })).catch(() => {});
           }
         }
-      },
-      err => console.error('[useInvestmentSync] sujiComplexes error:', err)
-    );
-    const unsubReminder = onValue(
-      ref(db, 'investment/complexUpdateReminder'),
-      snapshot => {
-        setComplexUpdateReminder(snapshot.exists() ? snapshot.val() : null);
-      }
-    );
-    const unsubRateReminder = onValue(
-      ref(db, 'investment/rateUpdateReminder'),
-      snapshot => { setRateUpdateReminder(snapshot.exists() ? snapshot.val() : null); }
-    );
-    const unsubRates = onValue(
-      ref(db, 'investment/rateCharts'),
-      snapshot => {
-        if (snapshot.exists()) {
-          const val = snapshot.val();
+
+        if (rateSnap.exists()) {
+          const val = rateSnap.val();
           const rates = Array.isArray(val) ? val : Object.values(val);
           setRateCharts(rates as RateChart[]);
           AsyncStorage.setItem(CACHE_RATE, JSON.stringify({ data: rates })).catch(() => {});
         }
-      }
-    );
-    const unsubSDI = onValue(
-      ref(db, 'investment/supplyDemandIndex'),
-      snapshot => {
-        if (snapshot.exists()) {
-          setSupplyDemandIndex(snapshot.val() as SupplyDemandIndex);
+
+        if (sdiSnap.exists()) {
+          setSupplyDemandIndex(sdiSnap.val() as SupplyDemandIndex);
         }
+      } catch (err) {
+        console.error('[useInvestmentSync] Load error:', err);
       }
-    );
-    return () => { unsubSuji(); unsubReminder(); unsubRateReminder(); unsubRates(); unsubSDI(); };
+    })();
   }, []);
 
   const syncData = useCallback(async () => {

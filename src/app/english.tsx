@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   View, Text, ScrollView, TouchableOpacity, StyleSheet,
-  ActivityIndicator, Linking, Alert,
+  ActivityIndicator, Linking, Alert, Modal,
 } from 'react-native';
 import { Audio, AVPlaybackStatus } from 'expo-av';
-import { getDatabase, get, ref, set, query, orderByKey, limitToLast } from 'firebase/database';
+import { getDatabase, get, ref as dbRef, set, query, orderByKey, limitToLast } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useAuth } from '../context/AuthContext';
@@ -91,11 +91,11 @@ const PODCAST_SOURCES = [
 ] as const;
 
 // ─── Podcast episode card ─────────────────────────────────────────────────
-function EpisodeCard({ ep, color, label, onComplete, isDone, srcKey, epDate }: {
+function EpisodeCard({ ep, color, label, onComplete, isDone, srcKey, epDate, uid }: {
   ep: PodcastEpisode; color: string; label: string;
   onComplete?: () => void; isDone?: boolean;
   /** 재생하며 알게 된 실제 길이를 되쓰기 위한 위치 */
-  srcKey?: string; epDate?: string;
+  srcKey?: string; epDate?: string; uid?: string;
 }) {
   const soundRef = useRef<Audio.Sound | null>(null);
   const durationPushed = useRef(false);
@@ -105,13 +105,29 @@ function EpisodeCard({ ep, color, label, onComplete, isDone, srcKey, epDate }: {
   const [durationSec, setDurationSec] = useState(ep.duration_sec || 0);
   const [expandedSentence, setExpandedSentence] = useState<Set<number>>(new Set());
   const [showAll, setShowAll] = useState(false);
-  // 듣기 훈련인데 번역이 늘 보이면 먼저 읽게 된다. 기본은 접어둔다.
   const [shownKo, setShownKo] = useState<Set<number>>(new Set());
+  const [sentenceDifficulty, setSentenceDifficulty] = useState<Record<number, 'easy' | 'medium' | 'hard'>>({});
+  const [selectedDifficultyIdx, setSelectedDifficultyIdx] = useState<number | null>(null);
+
   const toggleKo = (i: number) => setShownKo(prev => {
     const next = new Set(prev);
     if (next.has(i)) next.delete(i); else next.add(i);
     return next;
   });
+
+  const saveSentenceDifficulty = async (sentenceIdx: number, diff: 'easy' | 'medium' | 'hard') => {
+    if (!uid || !srcKey) return;
+    try {
+      const db = getDatabase(getFirebaseApp());
+      const episodeId = ep.title.replace(/\s+/g, '_').slice(0, 50);
+      await set(dbRef(db, `users/${uid}/english/sentenceDifficulty/${srcKey}/${episodeId}/${sentenceIdx}`), {
+        difficulty: diff, ts: Date.now(),
+      });
+    } catch (e) {
+      console.warn('난이도 저장 실패:', e);
+    }
+    setSentenceDifficulty(prev => ({ ...prev, [sentenceIdx]: diff }));
+  };
 
   const toggleSentence = (i: number) => setExpandedSentence(prev => {
     const next = new Set(prev);
@@ -134,7 +150,7 @@ function EpisodeCard({ ep, color, label, onComplete, isDone, srcKey, epDate }: {
       // 알게 되므로 그때 채워 넣어, 다음부터는 재생 전에도 길이가 보이게 한다.
       if (!ep.duration_sec && secs > 0 && srcKey && epDate && !durationPushed.current) {
         durationPushed.current = true;
-        set(ref(getDatabase(getFirebaseApp()), `english/podcasts/${srcKey}/${epDate}/duration_sec`), secs)
+        set(dbRef(getDatabase(getFirebaseApp()), `english/listening/podcasts/${srcKey}/${epDate}/duration_sec`), secs)
           .catch(() => {});
       }
     }
@@ -295,6 +311,34 @@ function EpisodeCard({ ep, color, label, onComplete, isDone, srcKey, epDate }: {
                         )}
                       </>
                     ) : null}
+                    <TouchableOpacity
+                      onPress={() => setSelectedDifficultyIdx(selectedDifficultyIdx === i ? null : i)}
+                      activeOpacity={0.7}
+                      style={{ marginTop: 6 }}
+                    >
+                      <Text style={[styles.analysisToggleText, { color: sentenceDifficulty[i] ? color : '#d1d5db' }]}>
+                        {sentenceDifficulty[i] ? `난이도: ${sentenceDifficulty[i] === 'easy' ? '쉬움' : sentenceDifficulty[i] === 'medium' ? '보통' : '어려움'}` : '난이도 선택'}
+                      </Text>
+                    </TouchableOpacity>
+
+                    {selectedDifficultyIdx === i && (
+                      <View style={styles.difficultySelector}>
+                        {(['easy', 'medium', 'hard'] as const).map(level => (
+                          <TouchableOpacity
+                            key={level}
+                            style={[styles.difficultyOption, sentenceDifficulty[i] === level && styles.difficultyOptionSelected]}
+                            onPress={() => {
+                              saveSentenceDifficulty(i, level);
+                              setSelectedDifficultyIdx(null);
+                            }}
+                          >
+                            <Text style={[styles.difficultyOptionText, sentenceDifficulty[i] === level && styles.difficultyOptionTextSelected]}>
+                              {level === 'easy' ? '🟢 쉬움' : level === 'medium' ? '🟡 보통' : '🔴 어려움'}
+                            </Text>
+                          </TouchableOpacity>
+                        ))}
+                      </View>
+                    )}
                   </View>
                 );
               })}
@@ -326,17 +370,33 @@ function EpisodeCard({ ep, color, label, onComplete, isDone, srcKey, epDate }: {
 }
 
 // ─── News article card ─────────────────────────────────────────────────────
-function NewsCard({ article, sourceName, sourceColor }: {
-  article: KoreaNewsArticle; sourceName: string; sourceColor: string;
+function NewsCard({ article, sourceName, sourceColor, uid }: {
+  article: KoreaNewsArticle; sourceName: string; sourceColor: string; uid?: string;
 }) {
   const [expandedSet, setExpandedSet] = useState<Set<number>>(new Set());
-  // 번역이 늘 펼쳐져 있으면 영어를 읽기 전에 답이 먼저 보인다. 기본은 접어둔다.
   const [shownKo, setShownKo] = useState<Set<number>>(new Set());
+  const [sentenceDifficulty, setSentenceDifficulty] = useState<Record<number, 'easy' | 'medium' | 'hard'>>({});
+  const [selectedDifficultyIdx, setSelectedDifficultyIdx] = useState<number | null>(null);
+
   const toggleKo = (i: number) => setShownKo(prev => {
     const next = new Set(prev);
     if (next.has(i)) next.delete(i); else next.add(i);
     return next;
   });
+
+  const saveSentenceDifficulty = async (sentenceIdx: number, diff: 'easy' | 'medium' | 'hard') => {
+    if (!uid) return;
+    try {
+      const db = getDatabase(getFirebaseApp());
+      const articleId = article.title.replace(/\s+/g, '_').slice(0, 50);
+      await set(dbRef(db, `users/${uid}/english/sentenceDifficulty/${articleId}/${sentenceIdx}`), {
+        difficulty: diff, ts: Date.now(),
+      });
+    } catch (e) {
+      console.warn('난이도 저장 실패:', e);
+    }
+    setSentenceDifficulty(prev => ({ ...prev, [sentenceIdx]: diff }));
+  };
   const catColor = CATEGORY_COLORS[article.category] ?? '#6b7280';
   const hasSentences = article.sentences && article.sentences.length > 0;
 
@@ -374,7 +434,6 @@ function NewsCard({ article, sourceName, sourceColor }: {
                 <Text style={styles.sentenceEn}>{s.en}</Text>
                 {s.ko && shownKo.has(i) ? <Text style={styles.sentenceKo}>{s.ko}</Text> : null}
 
-                {/* 번역·분석 링크가 문장마다 한 줄씩 차지해 7문장이면 링크만 14줄이었다 */}
                 <View style={styles.sentenceActions}>
                   {s.ko ? (
                     <TouchableOpacity onPress={() => toggleKo(i)} activeOpacity={0.7}>
@@ -390,7 +449,34 @@ function NewsCard({ article, sourceName, sourceColor }: {
                       </Text>
                     </TouchableOpacity>
                   ) : null}
+                  <TouchableOpacity
+                    onPress={() => setSelectedDifficultyIdx(selectedDifficultyIdx === i ? null : i)}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={[styles.analysisToggleText, { color: sentenceDifficulty[i] ? sourceColor : '#d1d5db' }]}>
+                      {sentenceDifficulty[i] ? `난이도: ${sentenceDifficulty[i] === 'easy' ? '쉬움' : sentenceDifficulty[i] === 'medium' ? '보통' : '어려움'}` : '난이도 선택'}
+                    </Text>
+                  </TouchableOpacity>
                 </View>
+
+                {selectedDifficultyIdx === i && (
+                  <View style={styles.difficultySelector}>
+                    {(['easy', 'medium', 'hard'] as const).map(level => (
+                      <TouchableOpacity
+                        key={level}
+                        style={[styles.difficultyOption, sentenceDifficulty[i] === level && styles.difficultyOptionSelected]}
+                        onPress={() => {
+                          saveSentenceDifficulty(i, level);
+                          setSelectedDifficultyIdx(null);
+                        }}
+                      >
+                        <Text style={[styles.difficultyOptionText, sentenceDifficulty[i] === level && styles.difficultyOptionTextSelected]}>
+                          {level === 'easy' ? '🟢 쉬움' : level === 'medium' ? '🟡 보통' : '🔴 어려움'}
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                )}
 
                 {s.analysis && open ? (
                   <View style={[styles.analysisBox, { borderLeftColor: sourceColor }]}>
@@ -409,11 +495,11 @@ function NewsCard({ article, sourceName, sourceColor }: {
 }
 
 // ─── Main screen ──────────────────────────────────────────────────────────
-type BBCView = 'home' | 'reading' | 'listening';
+type EnglishView = 'hub' | 'reading' | 'listening' | 'speaking';
 
-export default function BBCScreen() {
+export default function EnglishScreen() {
   const { user } = useAuth();
-  const [view, setView] = useState<BBCView>('home');
+  const [view, setView] = useState<EnglishView>('hub');
   const [koreaNews, setKoreaNews] = useState<KoreaNewsArticle[]>([]);
   const [loadingKorea, setLoadingKorea] = useState(true);
   const [herald, setHerald] = useState<KoreaNewsArticle[]>([]);
@@ -425,31 +511,35 @@ export default function BBCScreen() {
   const [listeningDone, setListeningDone] = useState(false);
   const [sourceDone, setSourceDone] = useState<Record<string, boolean>>({});
   const [selectedSource, setSelectedSource] = useState<string>(PODCAST_SOURCES[0].key);
+  const [difficultyModal, setDifficultyModal] = useState<{ visible: boolean; key?: string; type?: 'reading' | 'listening' }>(
+    { visible: false }
+  );
+  const [selectedDifficulty, setSelectedDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium');
   const today = getKSTDateString();
 
-  const markDone = async (key: string, setDone: (v: boolean) => void) => {
+  const markDone = async (key: string, setDone: (v: boolean) => void, difficulty: 'easy' | 'medium' | 'hard' = 'medium') => {
     setDone(true);
     const uid = user?.uid;
     if (!uid) return;
     const db = getDatabase(getFirebaseApp());
-    await set(ref(db, `users/${uid}/completion/${key}/${today}`), true);
+    await set(dbRef(db, `users/${uid}/completion/${key}/${today}`), { done: true, difficulty, ts: Date.now() });
   };
 
-  const markSourceDone = async (sourceKey: string) => {
+  const markSourceDone = async (sourceKey: string, difficulty: 'easy' | 'medium' | 'hard' = 'medium') => {
     const newDone = { ...sourceDone, [sourceKey]: true };
     setSourceDone(newDone);
     const uid = user?.uid;
     if (!uid) return;
     const db = getDatabase(getFirebaseApp());
-    await set(ref(db, `users/${uid}/completion/english_listening_${sourceKey}/${today}`), true);
+    await set(dbRef(db, `users/${uid}/completion/english_listening_${sourceKey}/${today}`), { done: true, difficulty, ts: Date.now() });
     // 소스 하나라도 완료되면 Today탭 반영 (각 소스는 독립)
     setListeningDone(true);
-    await set(ref(db, `users/${uid}/completion/english_news_listening/${today}`), true);
+    await set(dbRef(db, `users/${uid}/completion/english_news_listening/${today}`), { done: true, difficulty, ts: Date.now() });
   };
 
   useEffect(() => {
     const db = getDatabase(getFirebaseApp());
-    get(ref(db, `english/korea_news/${today}`))
+    get(dbRef(db, `english/reading/korea_news/${today}`))
       .then(snap => {
         if (snap.exists()) {
           const val = snap.val();
@@ -462,7 +552,7 @@ export default function BBCScreen() {
 
   useEffect(() => {
     const db = getDatabase(getFirebaseApp());
-    get(ref(db, `english/korea_herald/${today}`))
+    get(dbRef(db, `english/reading/korea_herald/${today}`))
       .then(snap => {
         if (snap.exists()) {
           const val = snap.val();
@@ -478,7 +568,7 @@ export default function BBCScreen() {
     const uid = user?.uid;
     Promise.all([
       ...PODCAST_SOURCES.map(src =>
-        get(query(ref(db, `english/podcasts/${src.key}`), orderByKey(), limitToLast(1)))
+        get(query(dbRef(db, `english/listening/podcasts/${src.key}`), orderByKey(), limitToLast(1)))
           .then(snap => {
             if (!snap.exists()) return { key: src.key, ep: null, dateKey: '' };
             const entries = Object.entries(snap.val() as Record<string, PodcastEpisode>);
@@ -492,7 +582,7 @@ export default function BBCScreen() {
       ),
       // 소스별 완료 상태 로드
       ...(uid ? PODCAST_SOURCES.map(src =>
-        get(ref(db, `users/${uid}/completion/english_listening_${src.key}/${today}`))
+        get(dbRef(db, `users/${uid}/completion/english_listening_${src.key}/${today}`))
           .then(snap => ({ doneKey: src.key, done: snap.exists() && snap.val() === true }))
           .catch(() => ({ doneKey: src.key, done: false }))
       ) : []),
@@ -517,7 +607,7 @@ export default function BBCScreen() {
     const loading = loadingKorea || loadingHerald;
     return (
       <View style={styles.flex}>
-        <TouchableOpacity style={styles.backBar} onPress={() => setView('home')}>
+        <TouchableOpacity style={styles.backBar} onPress={() => setView('hub')}>
           <Text style={styles.backText}>← Reading</Text>
         </TouchableOpacity>
         <ScrollView contentContainerStyle={styles.detailContent}>
@@ -537,16 +627,16 @@ export default function BBCScreen() {
           ) : (
             <>
               {kbsArticle
-                ? <NewsCard article={kbsArticle} sourceName="KBS World" sourceColor="#dc5f00" />
+                ? <NewsCard article={kbsArticle} sourceName="KBS World" sourceColor="#dc5f00" uid={user?.uid} />
                 : <View style={styles.skeleton}><Text style={styles.skeletonText}>KBS World 기사 없음</Text></View>}
               {heraldArticle
-                ? <NewsCard article={heraldArticle} sourceName="Korea Herald" sourceColor="#1a3a5c" />
+                ? <NewsCard article={heraldArticle} sourceName="Korea Herald" sourceColor="#1a3a5c" uid={user?.uid} />
                 : <View style={styles.skeleton}><Text style={styles.skeletonText}>Korea Herald 기사 없음</Text></View>}
             </>
           )}
           <TouchableOpacity
             style={[styles.doneBtn, readingDone && styles.doneBtnDone]}
-            onPress={() => markDone('english_news_reading', setReadingDone)}
+            onPress={() => setDifficultyModal({ visible: true, key: 'english_news_reading', type: 'reading' })}
             disabled={readingDone}
             activeOpacity={0.8}
           >
@@ -565,7 +655,7 @@ export default function BBCScreen() {
     const activeEp = podcasts[activeSrc.key];
     return (
       <View style={styles.flex}>
-        <TouchableOpacity style={styles.backBar} onPress={() => setView('home')}>
+        <TouchableOpacity style={styles.backBar} onPress={() => setView('hub')}>
           <Text style={styles.backText}>← Listening</Text>
         </TouchableOpacity>
         {/* 소스 탭 */}
@@ -607,10 +697,11 @@ export default function BBCScreen() {
             ep={activeEp}
             color={activeSrc.color}
             label={activeSrc.label}
-            onComplete={() => markSourceDone(activeSrc.key)}
+            onComplete={() => setDifficultyModal({ visible: true, key: activeSrc.key, type: 'listening' })}
             srcKey={activeSrc.key}
             epDate={podcastDates[activeSrc.key]}
             isDone={sourceDone[activeSrc.key] ?? false}
+            uid={user?.uid}
           />
         ) : (
           <View style={[styles.skeleton, { margin: 20, borderLeftWidth: 3, borderLeftColor: activeSrc.color }]}>
@@ -624,7 +715,24 @@ export default function BBCScreen() {
     );
   }
 
-  // ── Home view ─────────────────────────────────────────────────────────────
+  // ── Speaking view ─────────────────────────────────────────────────────────
+  if (view === 'speaking') {
+    return (
+      <View style={styles.flex}>
+        <TouchableOpacity style={styles.backBar} onPress={() => setView('hub')}>
+          <Text style={styles.backText}>← Speaking</Text>
+        </TouchableOpacity>
+        <ScrollView contentContainerStyle={styles.detailContent}>
+          <Text style={styles.dateLabel}>{formatToday(today)}</Text>
+          <View style={styles.skeleton}>
+            <Text style={styles.skeletonText}>스피킹 기능 준비 중</Text>
+          </View>
+        </ScrollView>
+      </View>
+    );
+  }
+
+  // ── Hub view ──────────────────────────────────────────────────────────────
   // 출처 이름만 적혀 있어서 눌러보기 전엔 오늘 뭐가 왔는지 몰랐다.
   // 기사 제목과 새 회차 여부를 카드에 바로 보여준다.
   const readingTitle = koreaNews[0]?.title ?? herald[0]?.title ?? null;
@@ -686,6 +794,68 @@ export default function BBCScreen() {
         </View>
         <Text style={styles.hubArrow}>›</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity style={styles.hubCard} onPress={() => setView('speaking')} activeOpacity={0.8}>
+        <MaterialIcons name="mic" size={36} color="#db2777" />
+        <View style={styles.hubCardBody}>
+          <View style={styles.hubCardTop}>
+            <Text style={styles.hubCardName}>스피킹</Text>
+          </View>
+          <Text style={styles.hubPreview} numberOfLines={1}>AI와 영어 대화</Text>
+          <Text style={styles.hubCardDesc}>일상 주제로 실전 회화</Text>
+        </View>
+        <Text style={styles.hubArrow}>›</Text>
+      </TouchableOpacity>
+
+      <Modal visible={difficultyModal.visible} transparent animationType="fade">
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>난이도를 평가해주세요</Text>
+            <View style={styles.difficultyGrid}>
+              {(['easy', 'medium', 'hard'] as const).map(level => (
+                <TouchableOpacity
+                  key={level}
+                  style={[
+                    styles.difficultyBtn,
+                    selectedDifficulty === level && styles.difficultyBtnSelected,
+                  ]}
+                  onPress={() => setSelectedDifficulty(level)}
+                >
+                  <Text
+                    style={[
+                      styles.difficultyLabel,
+                      selectedDifficulty === level && styles.difficultyLabelSelected,
+                    ]}
+                  >
+                    {level === 'easy' ? '쉬움' : level === 'medium' ? '보통' : '어려움'}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+            <View style={styles.modalButtonRow}>
+              <TouchableOpacity
+                style={styles.modalBtn}
+                onPress={() => setDifficultyModal({ visible: false })}
+              >
+                <Text style={styles.modalBtnText}>취소</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.modalBtn, styles.modalBtnConfirm]}
+                onPress={async () => {
+                  if (difficultyModal.type === 'reading' && difficultyModal.key) {
+                    await markDone(difficultyModal.key, setReadingDone, selectedDifficulty);
+                  } else if (difficultyModal.type === 'listening' && difficultyModal.key) {
+                    await markSourceDone(difficultyModal.key, selectedDifficulty);
+                  }
+                  setDifficultyModal({ visible: false });
+                }}
+              >
+                <Text style={styles.modalBtnConfirmText}>완료</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -844,4 +1014,75 @@ const styles = StyleSheet.create({
   doneBtnDone: { backgroundColor: '#16a34a' },
   doneBtnText: { fontSize: 16, fontWeight: '700', color: '#fff' },
   doneBtnTextDone: { color: '#fff' },
+
+  // 난이도 선택 모달
+  modalOverlay: {
+    flex: 1, backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center', alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: '#fff', borderRadius: 12,
+    padding: 24, width: '85%', maxWidth: 360,
+    shadowColor: '#000', shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 2 }, shadowRadius: 8,
+    elevation: 5,
+  },
+  modalTitle: {
+    fontSize: 18, fontWeight: '700', color: '#1f2937',
+    marginBottom: 20, textAlign: 'center',
+  },
+  difficultyGrid: {
+    flexDirection: 'row', gap: 12, marginBottom: 24,
+  },
+  difficultyBtn: {
+    flex: 1, paddingVertical: 12, borderRadius: 8,
+    borderWidth: 2, borderColor: '#d1d5db',
+    backgroundColor: '#f9fafb', alignItems: 'center',
+  },
+  difficultyBtnSelected: {
+    borderColor: '#3b82f6', backgroundColor: '#eff6ff',
+  },
+  difficultyLabel: {
+    fontSize: 14, fontWeight: '600', color: '#6b7280',
+  },
+  difficultyLabelSelected: {
+    color: '#3b82f6',
+  },
+  modalButtonRow: {
+    flexDirection: 'row', gap: 12,
+  },
+  modalBtn: {
+    flex: 1, paddingVertical: 10, borderRadius: 6,
+    backgroundColor: '#e5e7eb', alignItems: 'center',
+  },
+  modalBtnConfirm: {
+    backgroundColor: '#3b82f6',
+  },
+  modalBtnText: {
+    fontSize: 14, fontWeight: '600', color: '#374151',
+  },
+  modalBtnConfirmText: {
+    fontSize: 14, fontWeight: '600', color: '#fff',
+  },
+
+  // 문장별 난이도 선택
+  difficultySelector: {
+    flexDirection: 'row', gap: 8, marginTop: 8, paddingTop: 8,
+    borderTopWidth: 1, borderTopColor: '#e5e7eb',
+  },
+  difficultyOption: {
+    flex: 1, paddingVertical: 6, paddingHorizontal: 8,
+    borderRadius: 4, backgroundColor: '#f3f4f6',
+    borderWidth: 1, borderColor: '#d1d5db',
+    alignItems: 'center',
+  },
+  difficultyOptionSelected: {
+    backgroundColor: '#dbeafe', borderColor: '#3b82f6',
+  },
+  difficultyOptionText: {
+    fontSize: 12, fontWeight: '500', color: '#6b7280',
+  },
+  difficultyOptionTextSelected: {
+    color: '#3b82f6',
+  },
 });

@@ -117,16 +117,22 @@ Create a review in two sections:
 Return ONLY JSON (no markdown):
 {{"sentences":[{{"en":"Story sentence with **vocab**.","ko":"한국어 번역."}}],"extra":[{{"en":"Standalone sentence with **word**.","ko":"한국어 번역."}}],"wordNuances":[{{"word":"word1","meaning":"뜻","nuance":"뉘앙스 1~2문장"}}]}}"""
 
-    print("[*] Claude 호출 중...")
-    try:
-        text = call_claude(prompt)
-        m = re.search(r"\{[\s\S]*\}", text)
-        if not m:
-            print(f"[!] JSON 파싱 실패. 응답:\n{text[:200]}")
-            return
-        story = json.loads(m.group())
-    except Exception as e:
-        print(f"[!] Claude 호출 실패: {e}")
+    story = None
+    for attempt in range(1, 4):
+        print(f"[*] Claude 호출 중... (시도 {attempt}/3)")
+        try:
+            text = call_claude(prompt)
+            m = re.search(r"\{[\s\S]*\}", text)
+            if not m:
+                print(f"[!] JSON 파싱 실패. 응답:\n{text[:200]}")
+                continue
+            story = json.loads(m.group())
+            break
+        except Exception as e:
+            print(f"[!] Claude 호출/파싱 실패 (시도 {attempt}/3): {e}")
+
+    if story is None:
+        print("[!] 3회 시도 모두 실패. 종료.")
         return
 
     print(f"[+] 스토리 생성 완료: {len(story.get('sentences', []))}문장")

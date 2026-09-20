@@ -25,9 +25,7 @@ import { useAuth } from '../context/AuthContext';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-function getKSTDateString(): string {
-  return new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 10);
-}
+import { getKSTDateString } from '../utils/dateUtils';
 
 function formatDate(dateStr: string): string {
   const [, m, d] = dateStr.split('-');
@@ -483,7 +481,7 @@ function BookDiaryModal({ book, onClose }: BookDiaryModalProps) {
               {coverData ? (
                 <Image source={{ uri: coverData }} style={d.headerCover} resizeMode="cover" />
               ) : (
-                <View style={[d.headerCover, d.headerCoverPlaceholder]}>
+                <View style={[d.headerCover, d.bookHeaderImageFallback]}>
                   <MaterialIcons name="add-photo-alternate" size={20} color="#9ca3af" />
                 </View>
               )}
@@ -784,7 +782,7 @@ function BookCard({ book, uid, onPress, refreshKey }: BookCardProps) {
       {coverData ? (
         <Image source={{ uri: coverData }} style={bs.cover} resizeMode="cover" />
       ) : (
-        <View style={[bs.cover, bs.coverPlaceholder]}>
+        <View style={[bs.cover, bs.bookCoverFallback]}>
           <MaterialIcons name="menu-book" size={24} color="#93c5fd" />
         </View>
       )}
@@ -843,7 +841,7 @@ const d = StyleSheet.create({
   },
   backBtn: { padding: 2 },
   headerCover: { width: 44, height: 66, borderRadius: 6 },
-  headerCoverPlaceholder: { backgroundColor: '#f3f4f6', alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: '#e5e7eb' },
+  bookHeaderImageFallback: { backgroundColor: '#f3f4f6', alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: '#e5e7eb' },
   headerCoverLoading: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, borderRadius: 6, backgroundColor: 'rgba(0,0,0,0.4)', alignItems: 'center', justifyContent: 'center' },
   headerInfo: { flex: 1 },
   headerTitle: { fontSize: 16, fontWeight: '700', color: '#111827', marginBottom: 2 },
@@ -927,7 +925,7 @@ const bs = StyleSheet.create({
   row: { paddingBottom: 4, gap: 10 },
   bookCard: { width: 96, alignItems: 'center' },
   cover: { width: 80, height: 110, borderRadius: 8, marginBottom: 6 },
-  coverPlaceholder: { backgroundColor: '#dbeafe', alignItems: 'center', justifyContent: 'center' },
+  bookCoverFallback: { backgroundColor: '#dbeafe', alignItems: 'center', justifyContent: 'center' },
   bookTitle: { fontSize: 11, fontWeight: '600', color: '#374151', textAlign: 'center', marginBottom: 4 },
   progressMini: { width: 80, height: 3, backgroundColor: '#e5e7eb', borderRadius: 2, marginBottom: 2 },
   progressMiniFill: { height: 3, backgroundColor: '#2563eb', borderRadius: 2, maxWidth: '100%' },

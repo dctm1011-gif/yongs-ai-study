@@ -16,7 +16,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 const WEEK = ['일', '월', '화', '수', '목', '금', '토'];
 
 function kstNow() {
-  return new Date(Date.now() + 9 * 3600000);
+  return new Date(Date.now() + 6 * 3600000);
 }
 
 interface Props {

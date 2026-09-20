@@ -1,6 +1,6 @@
 // 날짜 기반 인덱스 선택 유틸
 export function getDayIndex(listLength: number): number {
-  const kst = new Date(Date.now() + 9 * 3600000);
+  const kst = new Date(Date.now() + 6 * 3600000);
   const start = new Date(kst.getFullYear(), 0, 0);
   const dayOfYear = Math.floor((kst.getTime() - start.getTime()) / 86400000);
   return dayOfYear % listLength;

@@ -1,52 +1,52 @@
 [
   {
-    "date": "2026-08-30",
+    "date": "2026-09-09",
     "name": "삼성전자",
     "ticker": "005930.KS"
   },
   {
-    "date": "2026-08-31",
+    "date": "2026-09-10",
+    "name": "Qualcomm",
+    "ticker": "QCOM"
+  },
+  {
+    "date": "2026-09-11",
+    "name": "The Kroger Co.",
+    "ticker": "KR"
+  },
+  {
+    "date": "2026-09-12",
+    "name": "SK하이닉스",
+    "ticker": "SKHY"
+  },
+  {
+    "date": "2026-09-13",
     "name": "삼성전자",
     "ticker": "005930.KS"
   },
   {
-    "date": "2026-09-01",
-    "name": "Broadcom",
-    "ticker": "AVGO"
-  },
-  {
-    "date": "2026-09-02",
-    "name": "Chevron",
-    "ticker": "CVX"
-  },
-  {
-    "date": "2026-09-03",
-    "name": "Broadcom",
-    "ticker": "AVGO"
-  },
-  {
-    "date": "2026-09-04",
+    "date": "2026-09-14",
     "name": "삼성전자",
     "ticker": "005930.KS"
   },
   {
-    "date": "2026-09-05",
-    "name": "Dell Technologies",
-    "ticker": "DELL"
-  },
-  {
-    "date": "2026-09-06",
+    "date": "2026-09-15",
     "name": "Intel",
     "ticker": "INTC"
   },
   {
-    "date": "2026-09-07",
-    "name": "Tesla",
-    "ticker": "TSLA"
+    "date": "2026-09-18",
+    "name": "ASML",
+    "ticker": "ASML"
   },
   {
-    "date": "2026-09-08",
+    "date": "2026-09-19",
     "name": "삼성전자",
     "ticker": "005930.KS"
+  },
+  {
+    "date": "2026-09-20",
+    "name": "GS",
+    "ticker": "006360.KS"
   }
 ]
