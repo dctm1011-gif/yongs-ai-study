@@ -4280,5 +4280,65 @@
     "explanation": "기계나 화학 반응에서 나오는 가스나 방사선 등을 배출하는 것. 특히 환경 문제에서 자동차나 공장의 오염 물질 배출을 의미한다.",
     "tip": "동의어: discharge, release / 반의어: absorption / 출제영역: 환경, 정책",
     "emoji": "💨"
+  },
+  {
+    "id": "allegations",
+    "word": "allegations",
+    "pos": "noun",
+    "date": "2026-09-22",
+    "meaning": "혐의, 주장 (증거 없이 제기된)",
+    "example_ko": "그 회사는 사기 혐의를 부인했다.",
+    "example_en": "The company denied the allegations of fraud.",
+    "explanation": "누군가가 옳지 않다고 주장하는 내용, 특히 법적 또는 공식적 문맥에서 증거 없이 제기되는 주장",
+    "tip": "동의어: claims, accusations | 반의어: proof, evidence | 출제영역: 뉴스, 법률 문맥",
+    "emoji": "⚖️"
+  },
+  {
+    "id": "proficient",
+    "word": "proficient",
+    "pos": "adjective",
+    "date": "2026-09-22",
+    "meaning": "능숙한, 숙련된",
+    "example_ko": "그녀는 3개 언어에 능숙하다.",
+    "example_en": "She is proficient in three languages.",
+    "explanation": "특정 분야에서 높은 수준의 기술이나 능력을 갖추고 있는 상태",
+    "tip": "동의어: skilled, competent | 반의어: incompetent, unskilled | 출제영역: 직장, 교육",
+    "emoji": "🎯"
+  },
+  {
+    "id": "strategic",
+    "word": "strategic",
+    "pos": "adjective",
+    "date": "2026-09-22",
+    "meaning": "전략적인, 계획적인",
+    "example_ko": "그 회사는 해외 확장을 위한 전략적 결정을 내렸다.",
+    "example_en": "The company made a strategic decision to expand overseas.",
+    "explanation": "장기적인 목표 달성을 위해 신중하게 계획되고 배치된 방식",
+    "tip": "동의어: tactical, planned | 반의어: impulsive, random | 출제영역: 비즈니스, 정책",
+    "emoji": "🗺️"
+  },
+  {
+    "id": "accommodations",
+    "word": "accommodations",
+    "pos": "noun",
+    "date": "2026-09-22",
+    "meaning": "숙박시설, 편의시설 (또는 타협)",
+    "example_ko": "그 호텔은 장애인 손님을 위한 다양한 편의시설을 제공한다.",
+    "example_en": "The hotel offers various accommodations for disabled guests.",
+    "explanation": "여행이나 머물 때 필요한 숙박 공간, 또는 특별한 필요에 맞추기 위한 조정",
+    "tip": "동의어: lodging, housing, facilities | 반의어: N/A | 출제영역: 여행, 교육, 직장",
+    "emoji": "🏨"
+  },
+  {
+    "id": "vicinity",
+    "word": "vicinity",
+    "pos": "noun",
+    "date": "2026-09-22",
+    "meaning": "근처, 인근",
+    "example_ko": "그 호텔 근처에는 여러 식당이 있다.",
+    "example_en": "There are several restaurants in the vicinity of the hotel.",
+    "explanation": "특정 장소 주변의 넓지 않은 지역",
+    "tip": "동의어: neighborhood, surroundings | 반의어: distance, far away | 출제영역: 여행, 지역",
+    "emoji": "📍"
   }
 ]

@@ -493,5 +493,41 @@
     "tip": "비즈니스에서 '~를 완성하다'(프로젝트를 마무리하다)라는 뜻도 있어요!",
     "emoji": "🧣",
     "date": "2026-09-21"
+  },
+  {
+    "id": "pull-off",
+    "phrase": "pull off",
+    "meaning_ko": "해내다, 성공하다",
+    "meaning_en": "to succeed in accomplishing something difficult",
+    "explanation": "어려운 일을 멋지게 해내는 거예요! 마치 '이거 정말 힘든데... 오! 해냈다!'는 느낌이랄까요 😎",
+    "example_en": "She pulled off an amazing presentation despite being nervous.",
+    "example_ko": "그녀는 긴장했음에도 불구하고 멋진 발표를 해냈어요.",
+    "tip": "manage to + verb와 유사. '불가능해 보이던 일을 성공시키다'는 뉘앙스가 강해요!",
+    "emoji": "🎯",
+    "date": "2026-09-22"
+  },
+  {
+    "id": "put-forward",
+    "phrase": "put forward",
+    "meaning_ko": "제안하다, 제시하다",
+    "meaning_en": "to suggest or propose an idea or theory",
+    "explanation": "자신의 의견이나 아이디어를 앞으로 쭉 내밀어서 제안하는 거야요! 학술 토론에서 정말 유용해요 💡",
+    "example_en": "The professor put forward an interesting theory in yesterday's lecture.",
+    "example_ko": "교수님은 어제 강의에서 흥미로운 이론을 제시했어요.",
+    "tip": "propose, suggest와 비슷하지만 좀 더 formal하고 학구적이에요!",
+    "emoji": "📚",
+    "date": "2026-09-22"
+  },
+  {
+    "id": "call-in",
+    "phrase": "call in",
+    "meaning_ko": "전화로 연락하다, 요청하다",
+    "meaning_en": "to contact someone by phone or ask for assistance",
+    "explanation": "누군가에게 전화해서 필요한 것을 요청하거나, 전문가를 불러서 도움을 청하는 거예요! 비즈니스나 일상 상황에서 자주 써요 📞",
+    "example_en": "We had to call in a technician to fix the broken server.",
+    "example_ko": "우리는 고장난 서버를 수리하기 위해 기술자를 불러야 했어요.",
+    "tip": "call out(큰 목소리로 외치다)과는 다르니까 주의! call in sick(병가를 내다)라는 표현도 있어요.",
+    "emoji": "☎️",
+    "date": "2026-09-22"
   }
 ]
