@@ -1,115 +1,112 @@
 {
-  "date": "2026-09-21",
+  "date": "2026-09-22",
   "reading": {
-    "title": "Marine Biodiversity and Climate Change",
-    "passage": "Ocean ecosystems are experiencing unprecedented changes due to rising water temperatures and increased carbon dioxide levels. Coral reefs, which support approximately 25% of marine species despite covering less than 1% of the ocean floor, are particularly vulnerable. When water temperatures rise, corals expel their symbiotic algae, leading to bleaching and potential death. Scientists estimate that if current warming trends continue, 90% of coral reefs could disappear by 2050. This would devastate countless species dependent on these ecosystems and threaten the food security of over one billion people who rely on marine biodiversity.",
+    "title": "Bioluminescence in Deep Sea Creatures",
+    "passage": "Bioluminescence is the production of light by living organisms through chemical reactions. In the deep ocean where sunlight cannot penetrate, many creatures have evolved this remarkable ability. Fish, jellyfish, and other organisms use bioluminescence for various purposes: to attract prey, communicate with potential mates, or confuse predators. Scientists estimate that approximately 90% of deep-sea creatures produce some form of light, making bioluminescence one of the most common biological phenomena in the ocean.",
     "questions": [
       {
-        "q": "According to the passage, what percentage of marine species do coral reefs support?",
+        "q": "According to the passage, what is the primary reason deep-sea creatures evolved bioluminescence?",
         "options": [
-          "A) 10%",
-          "B) 25%",
-          "C) 50%",
-          "D) 75%"
+          "To survive in darkness where sunlight cannot reach",
+          "To attract sunlight from the surface",
+          "To communicate with surface animals",
+          "To create warmth in cold water"
         ],
-        "answer": 1,
-        "explanation": "본문에서 '산호초는 해양 면적의 1% 미만을 차지하지만 약 25%의 해양 생물종을 지원한다'고 명시되어 있습니다."
+        "answer": 0,
+        "explanation": "지문에서 '햇빛이 도달하지 못하는 심해에서 많은 생물들이 이 능력을 진화시켰다'고 명시되어 있습니다."
       },
       {
-        "q": "What causes coral bleaching according to the passage?",
+        "q": "Which of the following is NOT mentioned as a use of bioluminescence?",
         "options": [
-          "A) Low water temperatures",
-          "B) Rising water temperatures",
-          "C) Pollution only",
-          "D) Overfishing"
+          "Attracting prey",
+          "Communicating with mates",
+          "Confusing predators",
+          "Producing heat"
         ],
-        "answer": 1,
-        "explanation": "본문에서 수온 상승으로 인해 산호가 공생 조류를 방출하여 표백이 일어난다고 설명합니다."
+        "answer": 3,
+        "explanation": "지문에서 생물발광의 사용 목적으로 먹이 유인, 짝짓기 신호, 포식자 혼동만 언급되었으며, 열 생산은 언급되지 않았습니다."
       },
       {
-        "q": "How many people could be affected by coral reef disappearance?",
+        "q": "What does the statistic about 90% of deep-sea creatures suggest?",
         "options": [
-          "A) 100 million",
-          "B) 500 million",
-          "C) Over 1 billion",
-          "D) 2 billion"
+          "Bioluminescence is a rare adaptation",
+          "Bioluminescence is extremely common in the ocean",
+          "Most creatures prefer other survival methods",
+          "Deep-sea creatures are not well adapted"
         ],
-        "answer": 2,
-        "explanation": "마지막 문장에서 '10억 명이 넘는 사람들이 해양 생물 다양성에 의존한다'고 명시되어 있습니다."
+        "answer": 1,
+        "explanation": "심해 생물의 약 90%가 생물발광을 생산한다는 통계는 이것이 매우 흔한 적응 현상임을 보여줍니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Technology has made human relationships weaker'? Use specific reasons and examples to support your answer.",
+    "prompt": "Do you agree or disagree with the statement: 'Technology has made human relationships weaker rather than stronger'? Use specific examples to support your position.",
     "structure": {
-      "intro": "관점을 명확히 제시하고 주요 논거 2-3개를 간단히 소개합니다. 예: 'While some argue technology weakens relationships, I believe it has strengthened human connections through new communication possibilities.'",
-      "body1": "첫 번째 아이디어: 기술이 장거리 관계를 가능하게 하는 방식 설명. 구체적 예시 제시 (비디오 통화, SNS, 국제 연락 등)",
-      "body2": "두 번째 아이디어: 반대 관점 인정하면서 균형잡힌 주장 제시. 예: 대면 상호작용의 중요성은 인정하되, 기술은 보조 도구라는 점 강조",
-      "conclusion": "주요 관점을 재정리하고 기술 사용의 책임감 있는 활용을 강조하며 마무리합니다."
+      "intro": "Clear thesis statement 제시 (동의 또는 불동의 명확히 표현). 예: 'While technology has some drawbacks, I believe it has ultimately strengthened human relationships.'",
+      "body1": "첫 번째 주장: 구체적 예시 포함 (예: 소셜 미디어로 먼 거리의 친구와 연락 유지, 화상통화로 가족 연결). 2-3개 문장.",
+      "body2": "두 번째 주장: 반박적 관점 인정하면서도 본인의 입장 강화 (예: 면대면 만남의 중요성 인정하지만, 기술이 이를 보완함). 2-3개 문장.",
+      "conclusion": "핵심 아이디어 재강조 및 광범위한 함의 제시. 예: 'In conclusion, technology is a tool that can strengthen or weaken relationships depending on how we use it.'"
     },
     "useful_phrases": [
       "In my opinion,",
+      "I strongly agree/disagree that",
+      "To illustrate this point,",
       "Furthermore,",
-      "To illustrate,",
       "On the other hand,",
-      "I would argue that",
-      "In conclusion,",
       "This demonstrates that",
-      "It is worth noting that"
+      "In conclusion,"
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to live in big cities. Others prefer to live in small towns. Which do you prefer and why? Include specific reasons in your response.",
+    "prompt": "Some people prefer to work in a stable job with predictable income. Others prefer to take risks and start their own business. Which do you prefer and why?",
     "useful_expressions": [
-      "In my opinion, I prefer...",
+      "In my opinion, I prefer to...",
       "One reason is that...",
-      "Another advantage is...",
-      "For example,",
-      "I believe that",
-      "This is important because"
+      "Additionally, I believe that...",
+      "This is important because..."
     ],
     "sample_points": [
-      "도시의 장점: 더 나은 취업 기회, 문화시설(박물관, 극장), 다양한 사람들과의 만남, 교육 기관의 다양성",
-      "소도시의 장점: 느린 생활 속도, 더 강한 지역 공동체 의식, 낮은 생활비, 자연 환경 접근성, 범죄율 감소"
+      "안정적인 직업: 정기적인 급여, 건강보험 등의 이점이 있어 재정 계획이 용이하고 스트레스가 적음",
+      "자신의 사업: 창의성 발휘, 성공 시 높은 소득 가능, 자유도와 성취감이 큼"
     ]
   },
   "listening": {
-    "title": "Campus Library Services",
+    "title": "University Library Workshop on Research Methods",
     "type": "conversation",
-    "script": "Student: Hi, I'm looking for information about the library's research assistance program. Librarian: Oh sure! We offer several services for students conducting research. We have trained research librarians available by appointment who can help you find reliable sources for your papers. We also offer workshops every Tuesday and Thursday on topics like database searching, citation formats, and evaluating source credibility. Additionally, we have a new online chat service where you can ask questions 24/7. Many students find this particularly helpful when working on projects late at night. We also maintain a collection of over two million books and provide access to hundreds of academic databases. Student: That sounds really helpful. Are there any fees for these services? Librarian: No, all services are completely free for enrolled students. Your student ID is all you need. We want to make sure every student has equal access to quality research support, regardless of their financial situation.",
+    "script": "Professor: Good morning, everyone. I'm Dr. Chen, and today we're discussing effective research strategies for your thesis projects. Many students struggle with finding reliable sources online. The key is to use academic databases like JSTOR and Google Scholar rather than general search engines. These databases filter peer-reviewed articles, which means experts have already verified the information. Additionally, always check the author's credentials and publication date. Outdated information can mislead your research. I also recommend visiting our library's reference desk. Our librarians are experts at helping students find quality sources. Remember, quantity doesn't equal quality. Ten well-researched sources are better than fifty mediocre ones. Does anyone have questions about accessing these databases?",
     "questions": [
       {
-        "q": "What research services does the library offer? (Select all that apply)",
+        "q": "What is the main topic of this lecture?",
         "options": [
-          "A) Appointment-based research librarian help",
-          "B) Tuesday and Thursday workshops",
-          "C) 24/7 online chat service",
-          "D) All of the above"
-        ],
-        "answer": 3,
-        "explanation": "대화에서 도서관은 1) 예약을 통한 연구사서 상담, 2) 화요일과 목요일 워크숍, 3) 24시간 온라인 채팅 서비스를 모두 제공한다고 명시합니다."
-      },
-      {
-        "q": "How many books does the library have in its collection?",
-        "options": [
-          "A) Over one million",
-          "B) Over two million",
-          "C) Over three million",
-          "D) Over four million"
+          "How to write a thesis",
+          "Strategies for finding reliable research sources",
+          "The history of academic databases",
+          "How to become a librarian"
         ],
         "answer": 1,
-        "explanation": "사서가 'We maintain a collection of over two million books'라고 명확히 언급합니다."
+        "explanation": "교수는 학생들이 신뢰할 수 있는 자료를 찾기 위한 효과적인 연구 전략, 특히 학술 데이터베이스 사용과 정보 검증 방법에 대해 설명하고 있습니다."
       },
       {
-        "q": "What is the main purpose of the 24/7 online chat service?",
+        "q": "Why does Professor Chen recommend using academic databases instead of general search engines?",
         "options": [
-          "A) To schedule appointments",
-          "B) To help students who work late at night on projects",
-          "C) To replace in-person services",
-          "D) To collect feedback from students"
+          "They are faster and easier to use",
+          "They contain more information",
+          "They filter peer-reviewed articles verified by experts",
+          "They are cheaper than general search engines"
+        ],
+        "answer": 2,
+        "explanation": "교수는 'These databases filter peer-reviewed articles, which means experts have already verified the information'라고 명확히 설명했습니다."
+      },
+      {
+        "q": "According to the professor, what should students check when evaluating sources?",
+        "options": [
+          "The color and design of the webpage",
+          "The author's credentials and publication date",
+          "The number of advertisements on the page",
+          "The speed of loading"
         ],
         "answer": 1,
-        "explanation": "사서는 이 서비스가 '특히 밤늦게 프로젝트를 하는 학생들에게 유용하다'고 설명합니다."
+        "explanation": "교수는 '항상 저자의 자격과 출판 날짜를 확인하라'고 명시적으로 조언했습니다."
       }
     ]
   }
