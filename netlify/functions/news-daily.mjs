@@ -292,6 +292,83 @@ async function processSpotlight(db, today) {
   console.log(`✅ listening/podcasts/spotlight/${today} — ${sentences.length}문장`);
 }
 
+async function processVOA(db, today) {
+  const existing = await get(ref(db, `english/listening/podcasts/voa/${today}`));
+  if (existing.exists() && existing.val()?.audio_url) {
+    console.log(`✅ listening/podcasts/voa/${today} already complete`);
+    return;
+  }
+
+  const rss = await fetchUrl('https://learningenglish.voanews.com/feed/feed.xml');
+  if (!rss) { console.log('[VOA] RSS 실패'); return; }
+
+  function parseVoaRss(xml) {
+    const items = xml.match(/<item>([\s\S]*?)<\/item>/g) || [];
+    for (const item of items) {
+      const titleM = item.match(/<title>([\s\S]*?)<\/title>/);
+      const linkM = item.match(/<link>([\s\S]*?)<\/link>/);
+      const descM = item.match(/<description>([\s\S]*?)<\/description>/);
+      const pubM = item.match(/<pubDate>([\s\S]*?)<\/pubDate>/);
+
+      if (!linkM) continue;
+      const content = descM?.[1] || '';
+      const audioM = content.match(/href=["']([^"']*\.mp3[^"']*)['"]/);
+      if (!audioM) continue;
+
+      const title = stripHtml(titleM?.[1] || '');
+      const sentences = [];
+      const text = stripHtml(content);
+
+      // 문장 분할
+      const sents = splitIntoSentences(text, 30);
+      sents.forEach(s => sentences.push({ speaker: 'VOA', en: s }));
+
+      if (!sentences.length) continue;
+      return {
+        title,
+        link: linkM[1].trim(),
+        pub_date: pubM?.[1]?.trim() || '',
+        audio_url: audioM[1],
+        sentences,
+      };
+    }
+    return null;
+  }
+
+  const episode = parseVoaRss(rss);
+  if (!episode) { console.log('[VOA] 파싱 실패'); return; }
+
+  // 최근 7일 중복 에피소드 체크
+  for (let d = 1; d <= 7; d++) {
+    const past = new Date(Date.now() + 9*3600000 - d*86400000).toISOString().slice(0,10);
+    const pastSnap = await get(ref(db, `english/listening/podcasts/voa/${past}`)).catch(() => null);
+    if (pastSnap?.exists() && pastSnap.val()?.episode_url === episode.link) {
+      console.log('[VOA] 신규 에피소드 없음. 스킵.');
+      return;
+    }
+  }
+
+  console.log(`[VOA] 에피소드: ${episode.title.slice(0, 50)} (${episode.sentences.length}문장)`);
+  const analyzed = await translateAndAnalyze(episode.sentences.map(s => s.en));
+  const sentences = episode.sentences.map((s, i) => ({
+    speaker: s.speaker,
+    en: s.en,
+    ko: analyzed[i]?.ko || '',
+    analysis: analyzed[i]?.analysis || '',
+  }));
+
+  await set(ref(db, `english/listening/podcasts/voa/${today}`), {
+    source: 'voa',
+    title: episode.title,
+    audio_url: episode.audio_url,
+    duration_sec: await mp3DurationSec(episode.audio_url),
+    pub_date: episode.pub_date,
+    episode_url: episode.link,
+    sentences,
+  });
+  console.log(`✅ listening/podcasts/voa/${today} — ${sentences.length}문장`);
+}
+
 async function processHeraldNews(db, today) {
   const existing = await get(ref(db, `english/korea_herald/${today}`));
   if (existing.exists()) {
@@ -331,6 +408,7 @@ export default async (req, context) => {
   await processKbsNews(db, today);
   await processHeraldNews(db, today);
   await processSpotlight(db, today);
+  await processVOA(db, today);
 
   return new Response(JSON.stringify({ ok: true, date: today }), {
     status: 200,
