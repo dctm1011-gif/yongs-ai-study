@@ -1,112 +1,115 @@
 {
-  "date": "2026-09-22",
+  "date": "2026-09-23",
   "reading": {
-    "title": "Bioluminescence in Deep Sea Creatures",
-    "passage": "Bioluminescence is the production of light by living organisms through chemical reactions. In the deep ocean where sunlight cannot penetrate, many creatures have evolved this remarkable ability. Fish, jellyfish, and other organisms use bioluminescence for various purposes: to attract prey, communicate with potential mates, or confuse predators. Scientists estimate that approximately 90% of deep-sea creatures produce some form of light, making bioluminescence one of the most common biological phenomena in the ocean.",
+    "title": "The Impact of Renewable Energy on Modern Society",
+    "passage": "Renewable energy sources such as solar and wind power have become increasingly important in addressing climate change and reducing dependence on fossil fuels. Many countries have invested billions in developing renewable energy infrastructure. Solar panels have become more efficient and affordable, making them accessible to homeowners and businesses. Wind turbines generate electricity in coastal and rural areas. However, challenges remain, including energy storage and intermittency issues. Despite these obstacles, renewable energy is expected to comprise a significant portion of global electricity generation by 2050.",
     "questions": [
       {
-        "q": "According to the passage, what is the primary reason deep-sea creatures evolved bioluminescence?",
+        "q": "According to the passage, which of the following is mentioned as a challenge for renewable energy?",
         "options": [
-          "To survive in darkness where sunlight cannot reach",
-          "To attract sunlight from the surface",
-          "To communicate with surface animals",
-          "To create warmth in cold water"
-        ],
-        "answer": 0,
-        "explanation": "지문에서 '햇빛이 도달하지 못하는 심해에서 많은 생물들이 이 능력을 진화시켰다'고 명시되어 있습니다."
-      },
-      {
-        "q": "Which of the following is NOT mentioned as a use of bioluminescence?",
-        "options": [
-          "Attracting prey",
-          "Communicating with mates",
-          "Confusing predators",
-          "Producing heat"
-        ],
-        "answer": 3,
-        "explanation": "지문에서 생물발광의 사용 목적으로 먹이 유인, 짝짓기 신호, 포식자 혼동만 언급되었으며, 열 생산은 언급되지 않았습니다."
-      },
-      {
-        "q": "What does the statistic about 90% of deep-sea creatures suggest?",
-        "options": [
-          "Bioluminescence is a rare adaptation",
-          "Bioluminescence is extremely common in the ocean",
-          "Most creatures prefer other survival methods",
-          "Deep-sea creatures are not well adapted"
+          "High cost of installation",
+          "Energy storage and intermittency issues",
+          "Lack of government support",
+          "Environmental damage"
         ],
         "answer": 1,
-        "explanation": "심해 생물의 약 90%가 생물발광을 생산한다는 통계는 이것이 매우 흔한 적응 현상임을 보여줍니다."
+        "explanation": "본문에서 '도전 과제로 남아 있는 것은 에너지 저장과 간헐성 문제'라고 명시되어 있습니다."
+      },
+      {
+        "q": "What does the passage suggest about solar panels?",
+        "options": [
+          "They are only suitable for large businesses",
+          "They have become more efficient and affordable",
+          "They cannot generate enough electricity",
+          "They are no longer being developed"
+        ],
+        "answer": 1,
+        "explanation": "본문에서 '태양 전지판은 더 효율적이고 저렴해졌으며, 주택 소유자와 기업이 접근할 수 있게 되었다'고 설명합니다."
+      },
+      {
+        "q": "According to the passage, when is renewable energy expected to comprise a significant portion of global electricity?",
+        "options": [
+          "By 2030",
+          "By 2040",
+          "By 2050",
+          "By 2060"
+        ],
+        "answer": 2,
+        "explanation": "본문의 마지막 문장에서 '2050년까지 재생에너지가 전 지구적 전기 생산의 상당한 부분을 차지할 것으로 예상된다'고 명시되어 있습니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Technology has made human relationships weaker rather than stronger'? Use specific examples to support your position.",
+    "prompt": "Do you agree or disagree with the statement: 'Technology has improved the quality of human life more than it has harmed it.' Support your opinion with specific reasons and examples.",
     "structure": {
-      "intro": "Clear thesis statement 제시 (동의 또는 불동의 명확히 표현). 예: 'While technology has some drawbacks, I believe it has ultimately strengthened human relationships.'",
-      "body1": "첫 번째 주장: 구체적 예시 포함 (예: 소셜 미디어로 먼 거리의 친구와 연락 유지, 화상통화로 가족 연결). 2-3개 문장.",
-      "body2": "두 번째 주장: 반박적 관점 인정하면서도 본인의 입장 강화 (예: 면대면 만남의 중요성 인정하지만, 기술이 이를 보완함). 2-3개 문장.",
-      "conclusion": "핵심 아이디어 재강조 및 광범위한 함의 제시. 예: 'In conclusion, technology is a tool that can strengthen or weaken relationships depending on how we use it.'"
+      "intro": "주장을 명확히 제시합니다. '기술이 인류의 삶의 질을 해친 것보다 더 많이 개선했다는 것에 동의한다/동의하지 않는다'고 명확하게 시작하세요.",
+      "body1": "첫 번째 이유: 의료 기술의 발전으로 질병 치료와 평균 수명 증가. 구체적 예시: 항생제, 백신 개발",
+      "body2": "두 번째 이유: 통신 기술이 전 세계 사람들을 연결하고 정보 접근성 향상. 예시: 인터넷, 스마트폰의 교육 활용",
+      "conclusion": "앞서 제시한 이유들을 요약하고 기술의 긍정적 영향에 대한 최종 의견을 제시합니다."
     },
     "useful_phrases": [
       "In my opinion,",
       "I strongly agree/disagree that",
-      "To illustrate this point,",
       "Furthermore,",
-      "On the other hand,",
-      "This demonstrates that",
+      "For example,",
+      "To illustrate this point,",
+      "In addition,",
+      "As a result,",
       "In conclusion,"
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to work in a stable job with predictable income. Others prefer to take risks and start their own business. Which do you prefer and why?",
+    "prompt": "Some people prefer to work in large companies with many employees. Others prefer to work in small businesses or startups. Which do you prefer and why?",
     "useful_expressions": [
-      "In my opinion, I prefer to...",
+      "In my opinion, I prefer working in...",
       "One reason is that...",
-      "Additionally, I believe that...",
-      "This is important because..."
+      "Another advantage is...",
+      "For instance,",
+      "This is because...",
+      "Therefore,"
     ],
     "sample_points": [
-      "안정적인 직업: 정기적인 급여, 건강보험 등의 이점이 있어 재정 계획이 용이하고 스트레스가 적음",
-      "자신의 사업: 창의성 발휘, 성공 시 높은 소득 가능, 자유도와 성취감이 큼"
+      "첫 번째 포인트: 대기업은 안정적인 급여, 복리후생, 명확한 커리어 경로를 제공합니다. 예를 들어, 건강보험, 퇴직금, 체계적인 승진 제도 등이 있습니다.",
+      "두 번째 포인트: 스타트업은 창의성과 혁신의 기회를 제공합니다. 근로자들이 회사의 성장에 직접 영향을 미칠 수 있고, 다양한 업무 경험을 얻을 수 있습니다."
     ]
   },
   "listening": {
-    "title": "University Library Workshop on Research Methods",
+    "title": "University Library Research Support",
     "type": "conversation",
-    "script": "Professor: Good morning, everyone. I'm Dr. Chen, and today we're discussing effective research strategies for your thesis projects. Many students struggle with finding reliable sources online. The key is to use academic databases like JSTOR and Google Scholar rather than general search engines. These databases filter peer-reviewed articles, which means experts have already verified the information. Additionally, always check the author's credentials and publication date. Outdated information can mislead your research. I also recommend visiting our library's reference desk. Our librarians are experts at helping students find quality sources. Remember, quantity doesn't equal quality. Ten well-researched sources are better than fifty mediocre ones. Does anyone have questions about accessing these databases?",
+    "script": "Student: Excuse me, I'm working on my research paper about climate change, but I'm having trouble finding reliable sources. Librarian: I can definitely help you with that! First, I'd recommend using our academic database, which has peer-reviewed articles and scholarly journals. You can access it from our library website using your student ID. Student: That sounds helpful. What about books? Librarian: Great question! You can search our catalog for books on climate science. I'd also suggest checking out our 'Research Guide for Environmental Studies' which lists the best resources by topic. Additionally, we offer one-on-one research consultations if you'd like personalized guidance. Student: One-on-one help would be perfect! When can I schedule an appointment? Librarian: You can book a session online through our website, or you can visit the reference desk during our regular hours. Most consultations are 30 minutes to an hour. Student: Perfect, thank you so much! Librarian: You're welcome! Good luck with your research paper.",
     "questions": [
       {
-        "q": "What is the main topic of this lecture?",
+        "q": "What is the main purpose of this conversation?",
         "options": [
-          "How to write a thesis",
-          "Strategies for finding reliable research sources",
-          "The history of academic databases",
-          "How to become a librarian"
+          "To explain how to use the library's online catalog",
+          "To provide research support and guidance for a student's paper",
+          "To promote the library's new academic database",
+          "To discuss climate change research methods"
         ],
         "answer": 1,
-        "explanation": "교수는 학생들이 신뢰할 수 있는 자료를 찾기 위한 효과적인 연구 전략, 특히 학술 데이터베이스 사용과 정보 검증 방법에 대해 설명하고 있습니다."
+        "explanation": "도서관 사서가 학생의 연구 논문을 위해 신뢰할 수 있는 자료를 찾는 방법을 여러 가지 설명해주고 있습니다. 이것이 대화의 주요 목적입니다."
       },
       {
-        "q": "Why does Professor Chen recommend using academic databases instead of general search engines?",
+        "q": "According to the librarian, how can the student access the academic database?",
         "options": [
-          "They are faster and easier to use",
-          "They contain more information",
-          "They filter peer-reviewed articles verified by experts",
-          "They are cheaper than general search engines"
+          "By visiting the reference desk in person",
+          "By requesting help from a research consultant",
+          "By accessing it from the library website using their student ID",
+          "By searching the library's general catalog"
         ],
         "answer": 2,
-        "explanation": "교수는 'These databases filter peer-reviewed articles, which means experts have already verified the information'라고 명확히 설명했습니다."
+        "explanation": "사서가 '학생 ID를 사용하여 도서관 웹사이트에서 접근할 수 있다'고 명확히 설명했습니다."
       },
       {
-        "q": "According to the professor, what should students check when evaluating sources?",
+        "q": "What does the librarian suggest as an additional resource?",
         "options": [
-          "The color and design of the webpage",
-          "The author's credentials and publication date",
-          "The number of advertisements on the page",
-          "The speed of loading"
+          "A peer-reviewed journal on environmental studies",
+          "A Research Guide for Environmental Studies",
+          "A one-hour consultation session",
+          "A climate change textbook"
         ],
         "answer": 1,
-        "explanation": "교수는 '항상 저자의 자격과 출판 날짜를 확인하라'고 명시적으로 조언했습니다."
+        "explanation": "사서가 '환경 연구를 위한 연구 가이드를 확인하라'고 추천했으며, 이 자료가 주제별 최고의 자료 목록을 제공한다고 설명합니다."
       }
     ]
   }
