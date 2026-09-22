@@ -1,64 +1,66 @@
 {
-  "date": "2026-09-22",
+  "date": "2026-09-23",
   "words": [
     {
-      "word": "allegations",
-      "part_of_speech": "noun",
-      "meaning_ko": "혐의, 주장 (증거 없이 제기된)",
-      "explanation": "누군가가 옳지 않다고 주장하는 내용, 특히 법적 또는 공식적 문맥에서 증거 없이 제기되는 주장",
-      "example_from_convo": "The company denied the allegations of fraud.",
-      "example_ko": "그 회사는 사기 혐의를 부인했다.",
-      "tip": "동의어: claims, accusations | 반의어: proof, evidence | 출제영역: 뉴스, 법률 문맥",
-      "emoji": "⚖️",
+      "word": "broadcast",
+      "part_of_speech": "noun/verb",
+      "meaning_ko": "방송하다, 방송",
+      "explanation": "To transmit or send out a program, information, or signal to a wide audience through television, radio, or digital media; can also mean to spread information widely",
+      "example_from_convo": "Did you catch the live broadcast of the game last night?",
+      "example_ko": "어제 밤 경기의 생중계를 봤어?",
+      "tip": "동의어: air, transmit | 반의어: suppress, conceal | 출제영역: 뉴스, 미디어, 커뮤니케이션",
+      "emoji": "📺",
+      "background": "Broadcasting is the distribution of audio and audiovisual content to dispersed audiences via an electronic mass communications medium, typically using radio waves in a one-to-many model. Broadcasting began with AM radio, which became popular around 1920 with the spread of vacuum tube radio transmitters and receivers.",
       "synonyms": [],
       "antonyms": []
     },
     {
-      "word": "proficient",
+      "word": "deadline",
+      "part_of_speech": "noun",
+      "meaning_ko": "마감일, 제출 기한",
+      "explanation": "A fixed time or date by which something must be completed or submitted; a critical time limit for finishing work or projects",
+      "example_from_convo": "The project deadline is next Friday, so we need to finish by then.",
+      "example_ko": "프로젝트 마감일이 다음 주 금요일이므로 그때까지 완료해야 해.",
+      "tip": "동의어: due date, time limit | 반의어: extension | 출제영역: 직장, 학교, 프로젝트 관리",
+      "emoji": "⏰",
+      "synonyms": [],
+      "antonyms": []
+    },
+    {
+      "word": "feedback",
+      "part_of_speech": "noun",
+      "meaning_ko": "피드백, 의견, 반응",
+      "explanation": "Information or comments provided in response to something; constructive criticism or evaluation that helps improve quality or performance",
+      "example_from_convo": "I need your feedback on my presentation before the meeting.",
+      "example_ko": "회의 전에 내 프레젠테이션에 대한 피드백이 필요해.",
+      "tip": "동의어: response, input, criticism | 반의어: silence, no response | 출제영역: 직장, 교육, 평가",
+      "emoji": "💬",
+      "background": "Feedback occurs when outputs of a system are routed back as inputs as part of a chain of cause and effect that forms a circuit or loop. The system can then be said to feed back into itself.",
+      "synonyms": [],
+      "antonyms": []
+    },
+    {
+      "word": "renewable",
       "part_of_speech": "adjective",
-      "meaning_ko": "능숙한, 숙련된",
-      "explanation": "특정 분야에서 높은 수준의 기술이나 능력을 갖추고 있는 상태",
-      "example_from_convo": "She is proficient in three languages.",
-      "example_ko": "그녀는 3개 언어에 능숙하다.",
-      "tip": "동의어: skilled, competent | 반의어: incompetent, unskilled | 출제영역: 직장, 교육",
-      "emoji": "🎯",
+      "meaning_ko": "재생 가능한, 갱신 가능한",
+      "explanation": "Capable of being renewed or replenished; especially referring to natural resources like solar, wind, or water energy that can be naturally replenished and are sustainable",
+      "example_from_convo": "Many countries are investing in renewable energy sources to reduce carbon emissions.",
+      "example_ko": "많은 국가들이 탄소 배출을 줄이기 위해 재생 에너지에 투자하고 있어.",
+      "tip": "동의어: sustainable, replenishable | 반의어: non-renewable, finite | 출제영역: 환경, 에너지, 지속가능성",
+      "emoji": "♻️",
       "synonyms": [],
       "antonyms": []
     },
     {
-      "word": "strategic",
-      "part_of_speech": "adjective",
-      "meaning_ko": "전략적인, 계획적인",
-      "explanation": "장기적인 목표 달성을 위해 신중하게 계획되고 배치된 방식",
-      "example_from_convo": "The company made a strategic decision to expand overseas.",
-      "example_ko": "그 회사는 해외 확장을 위한 전략적 결정을 내렸다.",
-      "tip": "동의어: tactical, planned | 반의어: impulsive, random | 출제영역: 비즈니스, 정책",
-      "emoji": "🗺️",
-      "background": "Strategy (from Greek στρατηγία stratēgia, \"troop leadership; office of general, command, generalship\") is a general plan to achieve one or more long-term or overall goals under conditions of uncertainty. In the sense of the \"art of the general\", which included several subsets of skills including military tactics, siegecraft, logistics etc., the term came into use in the 6th century C.E. in Eastern Roman terminology, and was translated into Western vernacular languages only in the 18th century.",
-      "synonyms": [],
-      "antonyms": []
-    },
-    {
-      "word": "accommodations",
+      "word": "metabolism",
       "part_of_speech": "noun",
-      "meaning_ko": "숙박시설, 편의시설 (또는 타협)",
-      "explanation": "여행이나 머물 때 필요한 숙박 공간, 또는 특별한 필요에 맞추기 위한 조정",
-      "example_from_convo": "The hotel offers various accommodations for disabled guests.",
-      "example_ko": "그 호텔은 장애인 손님을 위한 다양한 편의시설을 제공한다.",
-      "tip": "동의어: lodging, housing, facilities | 반의어: N/A | 출제영역: 여행, 교육, 직장",
-      "emoji": "🏨",
-      "synonyms": [],
-      "antonyms": []
-    },
-    {
-      "word": "vicinity",
-      "part_of_speech": "noun",
-      "meaning_ko": "근처, 인근",
-      "explanation": "특정 장소 주변의 넓지 않은 지역",
-      "example_from_convo": "There are several restaurants in the vicinity of the hotel.",
-      "example_ko": "그 호텔 근처에는 여러 식당이 있다.",
-      "tip": "동의어: neighborhood, surroundings | 반의어: distance, far away | 출제영역: 여행, 지역",
-      "emoji": "📍",
+      "meaning_ko": "신진대사, 신진대사 과정",
+      "explanation": "The chemical processes occurring within a living organism that are necessary for maintaining life; includes the breakdown of food for energy and the building of body tissues",
+      "example_from_convo": "A faster metabolism helps you burn calories more efficiently.",
+      "example_ko": "더 빠른 신진대사는 칼로리를 더 효율적으로 소모하는 데 도움이 돼.",
+      "tip": "동의어: biochemical process | 관련어: metabolic rate | 출제영역: 과학, 건강, 의학",
+      "emoji": "🔬",
+      "background": "Metabolism (, from Greek  μεταβολή (metabolē) 'change') refers to the set of life-sustaining chemical reactions that occur within living organisms. The three main functions of metabolism are the conversion of energy in food into a usable form for cellular processes; the conversion of food to building blocks of macromolecules (biopolymers) such as proteins, lipids, nucleic acids, and some carbohydrates; and the excretion of metabolic wastes.",
       "synonyms": [],
       "antonyms": []
     }
@@ -66,259 +68,183 @@
   "quiz": [
     {
       "type": "meaning",
-      "word": "allegations",
-      "question": "In a legal context, what does 'allegations' most accurately refer to?",
+      "word": "broadcast",
+      "question": "In a media context, which statement BEST describes what 'broadcast' means?",
       "options": [
-        "Confirmed facts that have been proven in court",
-        "Claims or assertions made without necessarily having proof",
-        "Physical evidence collected at a crime scene",
-        "Witness testimonies recorded during a trial"
+        "To keep information secret from the public",
+        "To transmit a program or information to a wide audience through media channels",
+        "To discuss something in a small private group",
+        "To record video footage for personal use only"
       ],
       "answer": 1,
-      "explanation": "Allegations are claims or accusations made against someone, typically without concrete proof. They are assertions that need to be verified, not confirmed facts.",
+      "explanation": "'Broadcast' specifically refers to sending information or programs to a large, wide audience through television, radio, or digital platforms.",
       "option_explanations": [
-        "This describes proven facts, not allegations",
-        "Correct - allegations are unproven claims",
-        "This is evidence, not allegations",
-        "This is testimony, which differs from allegations"
+        "This is the opposite of broadcasting",
+        "Correct - this is the definition of broadcast",
+        "This would be a private discussion, not a broadcast",
+        "Recording is not the same as broadcasting to an audience"
       ]
     },
     {
       "type": "meaning",
-      "word": "proficient",
-      "question": "Which word is MOST similar in meaning to 'proficient'?",
+      "word": "feedback",
+      "question": "Which word is MOST similar to 'feedback' in a professional context?",
       "options": [
-        "Interested",
-        "Skilled and competent",
-        "Willing to learn",
-        "Supervised by others"
+        "Silence and no response",
+        "Constructive comments and evaluation to improve performance",
+        "A financial payment or bonus",
+        "A type of meeting agenda"
       ],
       "answer": 1,
-      "explanation": "Proficient means having a high degree of skill and competence in a particular area. It indicates mastery or expertise.",
+      "explanation": "Feedback means receiving comments or criticism that help you understand how to improve your work or performance.",
       "option_explanations": [
-        "Interest alone doesn't imply skill",
-        "Correct - proficient means skilled and competent",
-        "Being willing to learn doesn't mean currently skilled",
-        "Supervision is unrelated to proficiency"
+        "The opposite of feedback",
+        "Correct - feedback is constructive input and evaluation",
+        "Unrelated to the meaning of feedback",
+        "Feedback is about evaluation, not agenda items"
       ]
     },
     {
       "type": "meaning",
-      "word": "strategic",
-      "question": "In a business context, what does a 'strategic decision' mean?",
+      "word": "renewable",
+      "question": "When scientists talk about 'renewable energy,' what do they PRIMARILY mean?",
       "options": [
-        "A quick decision made on the spot",
-        "A decision based only on current profits",
-        "A carefully planned decision designed to achieve long-term goals",
-        "A decision made by the entire company collectively"
+        "Energy sources that are becoming more expensive",
+        "Energy that comes from natural sources that can be continuously replenished",
+        "Energy sources that have already been completely used up",
+        "Energy produced by burning fossil fuels efficiently"
       ],
-      "answer": 2,
-      "explanation": "Strategic decisions are made with long-term objectives in mind, involving careful planning and consideration of how the action fits into the overall business plan.",
+      "answer": 1,
+      "explanation": "Renewable energy refers to natural resources like solar, wind, and water that naturally replenish and don't deplete over time, unlike fossil fuels.",
       "option_explanations": [
-        "Strategic decisions are the opposite of spontaneous",
-        "Long-term strategy considers more than just immediate profit",
-        "Correct - strategic implies careful planning for long-term goals",
-        "Strategic can be made by leadership, not necessarily the whole company"
+        "Cost is not the primary characteristic",
+        "Correct - renewable means it can be naturally replenished",
+        "This describes non-renewable energy",
+        "Fossil fuels are non-renewable, not renewable"
       ]
     },
     {
       "type": "fill_blank",
-      "word": "vicinity",
-      "sentence": "The conference will be held downtown, and we recommend staying at a hotel in the ___ so you can walk to the venue.",
-      "sentence_ko": "그 컨퍼런스는 시내에서 열릴 것이며, 우리는 행사장까지 걸어갈 수 있도록 근처의 호텔에 머물기를 권장합니다.",
-      "answer": "vicinity",
-      "hint": "근처, 인근을 뜻하는 단어"
+      "word": "deadline",
+      "sentence": "Our team missed the project ___ by two days, which disappointed our manager.",
+      "sentence_ko": "우리 팀은 프로젝트 마감일을 2일 늦춰서 매니저를 실망시켰다.",
+      "answer": "deadline",
+      "hint": "A fixed time by which work must be completed (8 letters)"
     },
     {
       "type": "fill_blank",
-      "word": "accommodations",
-      "sentence": "The university provides special ___ for students with physical disabilities, including accessible dormitories and elevators.",
-      "sentence_ko": "그 대학은 장애가 있는 학생들을 위해 접근 가능한 기숙사와 엘리베이터를 포함한 특별한 편의시설을 제공합니다.",
-      "answer": "accommodations",
-      "hint": "편의시설, 특별한 조정을 의미하는 단어"
+      "word": "metabolism",
+      "sentence": "Regular exercise can increase your ___ and help you maintain a healthy weight.",
+      "sentence_ko": "정기적인 운동은 신진대사를 높이고 건강한 체중을 유지하는 데 도움이 될 수 있다.",
+      "answer": "metabolism",
+      "hint": "The biological process of breaking down food for energy (10 letters)"
     },
     {
       "type": "fill_blank",
-      "word": "allegations",
-      "sentence": "The journalist refused to publish the story until she could verify the ___ with reliable sources.",
-      "sentence_ko": "그 기자는 신뢰할 수 있는 출처로 그 혐의를 확인할 때까지 기사 발행을 거부했습니다.",
-      "answer": "allegations",
-      "hint": "증거 없이 제기되는 주장이나 혐의"
+      "word": "broadcast",
+      "sentence": "The network will ___ the championship game live on Sunday evening at 8 PM.",
+      "sentence_ko": "그 방송국은 일요일 저녁 8시에 챔피언십 경기를 생중계할 것이다.",
+      "answer": "broadcast",
+      "hint": "To transmit a program to a wide audience (9 letters)"
     },
     {
       "type": "situation",
-      "word": "proficient",
-      "question": "Your company is hiring a new software developer. The candidate says, 'I am proficient in Python, Java, and C++.' What does this tell you about their qualifications?",
+      "word": "deadline",
+      "question": "Your boss says 'This report needs to be on my desk by 5 PM tomorrow. That's your ___.' What is your boss emphasizing?",
       "options": [
-        "They are just beginning to learn these programming languages",
-        "They have basic knowledge but need significant training",
-        "They have strong skills and competence in these languages",
-        "They are interested in learning more programming languages"
-      ],
-      "answer": 2,
-      "explanation": "When someone claims to be proficient in specific skills, it means they have achieved a high level of competence and can work effectively with those tools or languages without extensive supervision.",
-      "option_explanations": [
-        "Proficient means advanced, not beginning level",
-        "If they only had basic knowledge, they would say 'familiar with' or 'learning'",
-        "Correct - proficient indicates strong, workable skills",
-        "Proficient describes current ability, not future interest"
-      ]
-    },
-    {
-      "type": "situation",
-      "word": "strategic",
-      "question": "Your marketing manager says: 'We need to make a strategic move before our competitors expand into Asia.' What is she suggesting?",
-      "options": [
-        "We should quickly copy whatever competitors are doing",
-        "We should plan a carefully considered action designed to achieve our long-term business goals in that market",
-        "We should wait and see what happens with competitors first",
-        "We should give up on the Asian market completely"
+        "The color of the report document",
+        "The time limit by which you must complete and submit the work",
+        "The location where you should send the file",
+        "The number of pages required"
       ],
       "answer": 1,
-      "explanation": "A strategic move involves deliberate planning with long-term objectives in mind. The manager is suggesting a carefully calculated action to position the company advantageously before competitors.",
+      "explanation": "Your boss is clearly stating the time limit (5 PM tomorrow) for finishing the report - this is the deadline. You must complete the task by that specific time.",
       "option_explanations": [
-        "Reactive copying isn't strategic planning",
-        "Correct - strategic implies planned action for long-term advantage",
-        "This is the opposite of being strategic",
-        "This doesn't address the goal of expansion"
+        "Not relevant to the context",
+        "Correct - the boss is setting a time limit for completion",
+        "The location is mentioned separately",
+        "This isn't about quantity"
       ]
     },
     {
       "type": "situation",
-      "word": "proficient",
-      "question": "During a job interview, the interviewer asks: 'How would you describe your proficiency with Microsoft Office?' What should a qualified candidate respond?",
+      "word": "feedback",
+      "question": "After your presentation at work, a colleague says 'I'd like to give you some feedback - the data was great, but the slides could be clearer.' What is she doing?",
       "options": [
-        "I have heard of Microsoft Office but never used it",
-        "I can use it a little bit if someone shows me",
-        "I can use Word, Excel, and PowerPoint competently and independently for work tasks",
-        "I use Microsoft Office sometimes when I have free time"
-      ],
-      "answer": 2,
-      "explanation": "Proficiency means having developed skill and the ability to work competently and independently. A proficient person can perform tasks without extensive guidance.",
-      "option_explanations": [
-        "This shows no experience, not proficiency",
-        "This suggests minimal capability, not proficiency",
-        "Correct - this demonstrates competent, independent ability",
-        "Casual use doesn't constitute proficiency for professional work"
-      ]
-    },
-    {
-      "type": "situation",
-      "word": "allegations",
-      "question": "A newspaper headline reads: 'Star Athlete Denies Allegations of Rule Violations.' What is most likely happening?",
-      "options": [
-        "The athlete has been proven guilty in court",
-        "Someone has made claims of wrongdoing against the athlete, which the athlete is rejecting",
-        "The athlete is confessing to breaking rules",
-        "The newspaper has collected all necessary evidence against the athlete"
+        "Rejecting your presentation completely",
+        "Providing constructive evaluation to help you improve your presentation quality",
+        "Scheduling a new meeting",
+        "Asking for permission to copy your slides"
       ],
       "answer": 1,
-      "explanation": "When allegations are made, they are unproven claims. By denying allegations, the athlete is rejecting accusations that haven't been proven and may not be true.",
+      "explanation": "Your colleague is offering feedback - she's giving you both praise (positive) and suggestions for improvement (constructive), which is exactly what feedback is meant to do.",
       "option_explanations": [
-        "Denying allegations means they weren't proven guilty",
-        "Correct - allegations are unproven claims that someone is rejecting",
-        "Denying means rejecting, not confessing",
-        "Allegations exist before evidence is fully collected"
+        "She appreciated the data, so it's not a complete rejection",
+        "Correct - she's giving constructive comments to help you improve",
+        "No new meeting is being scheduled",
+        "She's evaluating your work, not asking to copy it"
       ]
     },
     {
       "type": "situation",
-      "word": "accommodations",
-      "question": "A university website states: 'We provide accommodations for students with documented learning disabilities.' What does this mean?",
+      "word": "renewable",
+      "question": "A government official announces 'We're committing to ___ energy sources to reduce our country's carbon footprint.' Which type of energy would this initiative focus on?",
       "options": [
-        "Students with disabilities are not admitted to the university",
-        "The university will provide special arrangements like extended test time or note-taking assistance",
-        "All students receive the same resources regardless of their needs",
-        "Disabled students must pay extra tuition for these services"
+        "Coal and natural gas plants",
+        "Solar panels, wind turbines, and hydroelectric power stations",
+        "Nuclear weapons testing",
+        "Increased petroleum refining"
       ],
       "answer": 1,
-      "explanation": "Accommodations refer to special arrangements or adjustments made to help individuals with specific needs succeed. These are modifications to standard procedures to ensure equal access.",
+      "explanation": "Renewable energy sources like solar, wind, and water naturally replenish and don't deplete, making them sustainable for reducing carbon emissions long-term.",
       "option_explanations": [
-        "Modern universities actively include students with disabilities",
-        "Correct - accommodations are special arrangements to support specific needs",
-        "Accommodations are by definition different from standard treatment",
-        "In most cases, legal accommodations are provided without extra cost"
-      ]
-    },
-    {
-      "type": "situation",
-      "word": "vicinity",
-      "question": "A tourist asks a local: 'Are there any good restaurants in the vicinity of this train station?' What is the tourist asking?",
-      "options": [
-        "Are there restaurants in a different city?",
-        "Are there restaurants near this specific location?",
-        "Do you recommend expensive restaurants far away?",
-        "Are restaurants open at this time of day?"
-      ],
-      "answer": 1,
-      "explanation": "Vicinity means the area around a specific location. The tourist is asking about restaurants that are nearby or in the surrounding area of the train station.",
-      "option_explanations": [
-        "Vicinity is local, not distant",
-        "Correct - vicinity refers to the nearby area",
-        "Vicinity doesn't specify distance or price",
-        "Vicinity doesn't relate to operating hours"
-      ]
-    },
-    {
-      "type": "situation",
-      "word": "strategic",
-      "question": "A CEO announces: 'To improve our market position, we're making a strategic investment in renewable energy technology.' What does this reveal about the company's thinking?",
-      "options": [
-        "The company is spending money randomly without planning",
-        "The company has carefully considered how this move will help achieve long-term competitive advantages",
-        "The company only cares about short-term profits",
-        "The decision was made in a hurry without much thought"
-      ],
-      "answer": 1,
-      "explanation": "A strategic investment means the company has carefully analyzed how this investment aligns with long-term goals and will position them competitively in the future market.",
-      "option_explanations": [
-        "Strategic decisions are carefully planned, not random",
-        "Correct - strategic indicates planned action for long-term advantage",
-        "Strategic thinking involves both current and future profitability",
-        "Strategic requires deliberate planning, not hasty decisions"
+        "These are non-renewable fossil fuels",
+        "Correct - these are renewable sources that can be continuously replenished",
+        "Unrelated to energy policy or carbon reduction",
+        "This increases carbon emissions, not reduces them"
       ]
     }
   ],
   "sentences": [
     {
-      "word": "allegations",
-      "sentence": "The government dismissed the allegations of corruption as unfounded and baseless.",
-      "sentence_ko": "정부는 부패 혐의를 근거 없고 입증되지 않은 것으로 기각했다.",
-      "nuance": "공식적 거부 - 증거를 요구하는 톤",
-      "context": "정부 성명, 뉴스 기사",
-      "everyday_usage": "법적 또는 공식적 상황에서 주로 사용됨"
+      "word": "broadcast",
+      "sentence": "The breaking news will be broadcast across all major television networks within the hour.",
+      "sentence_ko": "속보는 1시간 이내에 모든 주요 텔레비전 방송사에서 방송될 것이다.",
+      "nuance": "Official, time-sensitive information",
+      "context": "News and media reporting",
+      "everyday_usage": "매일 뉴스나 스포츠 중계 상황에서 사용됨"
     },
     {
-      "word": "proficient",
-      "sentence": "After two years of practice, she became proficient enough to teach beginner students.",
-      "sentence_ko": "2년의 연습 후, 그녀는 초급 학생들을 가르칠 수 있을 정도로 능숙해졌다.",
-      "nuance": "목표 달성 - 진전과 성장",
-      "context": "교육, 기술 발전",
-      "everyday_usage": "학습이나 직무 능력 평가 시 사용"
+      "word": "deadline",
+      "sentence": "With only three days until the application deadline, many students are rushing to complete their forms.",
+      "sentence_ko": "지원 마감일까지 겨우 3일 남아 많은 학생들이 서류를 작성하느라 바쁘다.",
+      "nuance": "Time pressure and urgency",
+      "context": "Education and applications",
+      "everyday_usage": "학교, 회사, 지원서 등 마감 기한이 있는 상황에서 자주 사용됨"
     },
     {
-      "word": "strategic",
-      "sentence": "The company's strategic partnership with international firms opened new markets.",
-      "sentence_ko": "그 회사의 국제 기업과의 전략적 파트너십은 새로운 시장을 개척했다.",
-      "nuance": "계획된 협력 - 상호 이익",
-      "context": "비즈니스, 합병 및 인수",
-      "everyday_usage": "비즈니스 뉴스 및 기업 발표에서 자주 들음"
+      "word": "feedback",
+      "sentence": "The manager requested detailed feedback from team members about the new software implementation.",
+      "sentence_ko": "매니저는 새로운 소프트웨어 도입에 대해 팀원들로부터 상세한 피드백을 요청했다.",
+      "nuance": "Systematic evaluation and input gathering",
+      "context": "Corporate and workplace environments",
+      "everyday_usage": "직장에서 성과 평가, 개선 사항 논의할 때 일상적으로 사용됨"
     },
     {
-      "word": "accommodations",
-      "sentence": "The cruise ship offered luxurious accommodations with ocean views for all passengers.",
-      "sentence_ko": "그 크루즈선은 모든 승객을 위해 바다 경치가 보이는 럭셔리한 숙박시설을 제공했다.",
-      "nuance": "편의와 쾌적함 - 여행의 경험",
-      "context": "여행, 관광 산업",
-      "everyday_usage": "호텔, 리조트 예약 시 흔히 사용"
+      "word": "renewable",
+      "sentence": "The company invested billions in renewable infrastructure to power its manufacturing facilities sustainably.",
+      "sentence_ko": "그 회사는 제조 시설에 지속 가능한 전력을 공급하기 위해 재생 에너지 기반 시설에 수십억 달러를 투자했다.",
+      "nuance": "Long-term sustainability and environmental responsibility",
+      "context": "Business and environmental policy",
+      "everyday_usage": "에너지 정책, 환경 논의, 지속가능성 관련 뉴스에서 빈번하게 사용됨"
     },
     {
-      "word": "vicinity",
-      "sentence": "The neighborhood has improved significantly with new shops and parks opening in the vicinity.",
-      "sentence_ko": "근처에 새 가게와 공원들이 문을 열면서 그 지역은 크게 개선되었다.",
-      "nuance": "지역 발전 - 인근 지역의 변화",
-      "context": "부동산, 지역 개발",
-      "everyday_usage": "장소 설명이나 거주지 선택 시 사용"
+      "word": "metabolism",
+      "sentence": "As people age, their metabolism naturally slows down, making weight management more challenging.",
+      "sentence_ko": "나이가 들면서 사람들의 신진대사가 자연스럽게 느려져서 체중 관리가 더 어려워진다.",
+      "nuance": "Biological aging process and health implications",
+      "context": "Health, fitness, and medical discussions",
+      "everyday_usage": "다이어트, 운동, 건강 관리에 대해 이야기할 때 자주 사용됨"
     }
   ]
 }

@@ -4340,5 +4340,65 @@
     "explanation": "특정 장소 주변의 넓지 않은 지역",
     "tip": "동의어: neighborhood, surroundings | 반의어: distance, far away | 출제영역: 여행, 지역",
     "emoji": "📍"
+  },
+  {
+    "id": "broadcast",
+    "word": "broadcast",
+    "pos": "noun/verb",
+    "date": "2026-09-23",
+    "meaning": "방송하다, 방송",
+    "example_ko": "어제 밤 경기의 생중계를 봤어?",
+    "example_en": "Did you catch the live broadcast of the game last night?",
+    "explanation": "To transmit or send out a program, information, or signal to a wide audience through television, radio, or digital media; can also mean to spread information widely",
+    "tip": "동의어: air, transmit | 반의어: suppress, conceal | 출제영역: 뉴스, 미디어, 커뮤니케이션",
+    "emoji": "📺"
+  },
+  {
+    "id": "deadline",
+    "word": "deadline",
+    "pos": "noun",
+    "date": "2026-09-23",
+    "meaning": "마감일, 제출 기한",
+    "example_ko": "프로젝트 마감일이 다음 주 금요일이므로 그때까지 완료해야 해.",
+    "example_en": "The project deadline is next Friday, so we need to finish by then.",
+    "explanation": "A fixed time or date by which something must be completed or submitted; a critical time limit for finishing work or projects",
+    "tip": "동의어: due date, time limit | 반의어: extension | 출제영역: 직장, 학교, 프로젝트 관리",
+    "emoji": "⏰"
+  },
+  {
+    "id": "feedback",
+    "word": "feedback",
+    "pos": "noun",
+    "date": "2026-09-23",
+    "meaning": "피드백, 의견, 반응",
+    "example_ko": "회의 전에 내 프레젠테이션에 대한 피드백이 필요해.",
+    "example_en": "I need your feedback on my presentation before the meeting.",
+    "explanation": "Information or comments provided in response to something; constructive criticism or evaluation that helps improve quality or performance",
+    "tip": "동의어: response, input, criticism | 반의어: silence, no response | 출제영역: 직장, 교육, 평가",
+    "emoji": "💬"
+  },
+  {
+    "id": "renewable",
+    "word": "renewable",
+    "pos": "adjective",
+    "date": "2026-09-23",
+    "meaning": "재생 가능한, 갱신 가능한",
+    "example_ko": "많은 국가들이 탄소 배출을 줄이기 위해 재생 에너지에 투자하고 있어.",
+    "example_en": "Many countries are investing in renewable energy sources to reduce carbon emissions.",
+    "explanation": "Capable of being renewed or replenished; especially referring to natural resources like solar, wind, or water energy that can be naturally replenished and are sustainable",
+    "tip": "동의어: sustainable, replenishable | 반의어: non-renewable, finite | 출제영역: 환경, 에너지, 지속가능성",
+    "emoji": "♻️"
+  },
+  {
+    "id": "metabolism",
+    "word": "metabolism",
+    "pos": "noun",
+    "date": "2026-09-23",
+    "meaning": "신진대사, 신진대사 과정",
+    "example_ko": "더 빠른 신진대사는 칼로리를 더 효율적으로 소모하는 데 도움이 돼.",
+    "example_en": "A faster metabolism helps you burn calories more efficiently.",
+    "explanation": "The chemical processes occurring within a living organism that are necessary for maintaining life; includes the breakdown of food for energy and the building of body tissues",
+    "tip": "동의어: biochemical process | 관련어: metabolic rate | 출제영역: 과학, 건강, 의학",
+    "emoji": "🔬"
   }
 ]
