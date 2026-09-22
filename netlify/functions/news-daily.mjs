@@ -215,9 +215,9 @@ async function processKbsNews(db, today) {
 }
 
 async function processSpotlight(db, today) {
-  const existing = await get(ref(db, `english/podcasts/spotlight/${today}`));
+  const existing = await get(ref(db, `english/listening/podcasts/spotlight/${today}`));
   if (existing.exists() && existing.val()?.audio_url) {
-    console.log(`✅ podcasts/spotlight/${today} already complete`);
+    console.log(`✅ listening/podcasts/spotlight/${today} already complete`);
     return;
   }
 
@@ -264,7 +264,7 @@ async function processSpotlight(db, today) {
   // 최근 7일 중복 에피소드 체크
   for (let d = 1; d <= 7; d++) {
     const past = new Date(Date.now() + 9*3600000 - d*86400000).toISOString().slice(0,10);
-    const pastSnap = await get(ref(db, `english/podcasts/spotlight/${past}`)).catch(() => null);
+    const pastSnap = await get(ref(db, `english/listening/podcasts/spotlight/${past}`)).catch(() => null);
     if (pastSnap?.exists() && pastSnap.val()?.episode_url === episode.link) {
       console.log('[Spotlight] 신규 에피소드 없음. 스킵.');
       return;
@@ -280,7 +280,7 @@ async function processSpotlight(db, today) {
     analysis: analyzed[i]?.analysis || '',
   }));
 
-  await set(ref(db, `english/podcasts/spotlight/${today}`), {
+  await set(ref(db, `english/listening/podcasts/spotlight/${today}`), {
     source: 'spotlight',
     title: episode.title,
     audio_url: episode.audio_url,
@@ -289,7 +289,7 @@ async function processSpotlight(db, today) {
     episode_url: episode.link,
     sentences,
   });
-  console.log(`✅ podcasts/spotlight/${today} — ${sentences.length}문장`);
+  console.log(`✅ listening/podcasts/spotlight/${today} — ${sentences.length}문장`);
 }
 
 async function processHeraldNews(db, today) {
