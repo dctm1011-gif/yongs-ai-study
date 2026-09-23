@@ -4400,5 +4400,65 @@
     "explanation": "The chemical processes occurring within a living organism that are necessary for maintaining life; includes the breakdown of food for energy and the building of body tissues",
     "tip": "동의어: biochemical process | 관련어: metabolic rate | 출제영역: 과학, 건강, 의학",
     "emoji": "🔬"
+  },
+  {
+    "id": "competent",
+    "word": "competent",
+    "pos": "adjective",
+    "date": "2026-09-24",
+    "meaning": "능력 있는, 유능한",
+    "example_ko": "그녀는 위기를 효과적으로 처리한 유능한 매니저임을 증명했다.",
+    "example_en": "She proved to be a competent manager who handled the crisis effectively.",
+    "explanation": "어떤 일을 잘 수행할 수 있는 기술이나 지식을 가지고 있는 상태. 전문성과 신뢰성을 나타냄.",
+    "tip": "동의어: capable, skilled, proficient | 반의어: incompetent, incapable | 출제영역: 직무 평가, 인사 관리",
+    "emoji": ""
+  },
+  {
+    "id": "carbon",
+    "word": "carbon",
+    "pos": "noun",
+    "date": "2026-09-24",
+    "meaning": "탄소",
+    "example_ko": "그 회사는 2030년까지 탄소 발자국을 줄이기로 약속했다.",
+    "example_en": "The company is committed to reducing its carbon footprint by 2030.",
+    "explanation": "원자 번호 6인 화학 원소로, 모든 유기물의 기본 구성 요소. 환경 문제에서 탄소 배출이 주요 이슈.",
+    "tip": "관련어: carbon emissions, carbon neutral, carbon footprint | 출제영역: 환경, 과학, ESG",
+    "emoji": ""
+  },
+  {
+    "id": "coherence",
+    "word": "coherence",
+    "pos": "noun",
+    "date": "2026-09-24",
+    "meaning": "일관성, 통일성",
+    "example_ko": "그 에세이는 단락들이 논리적으로 흐르지 않아 일관성이 부족했다.",
+    "example_en": "The essay lacked coherence because the paragraphs didn't flow logically.",
+    "explanation": "여러 부분이나 요소들이 논리적으로 연결되어 있고 전체적으로 일관되게 이루어진 상태.",
+    "tip": "동의어: consistency, unity, cohesion | 반의어: incoherence, inconsistency | 출제영역: 작문, 커뮤니케이션",
+    "emoji": ""
+  },
+  {
+    "id": "rapport",
+    "word": "rapport",
+    "pos": "noun",
+    "date": "2026-09-24",
+    "meaning": "친밀감, 신뢰 관계",
+    "example_ko": "그 협상가는 상대팀과 빠르게 신뢰 관계를 구축했다.",
+    "example_en": "The negotiator quickly established rapport with the opposing team.",
+    "explanation": "두 사람 또는 그룹 간의 상호 이해와 신뢰에 기반한 좋은 관계. 대인관계에서 긍정적 상호작용을 의미.",
+    "tip": "동의어: connection, understanding, harmony | 관련표현: build rapport, establish rapport | 출제영역: HR, 협상, 리더십",
+    "emoji": ""
+  },
+  {
+    "id": "inflammatory",
+    "word": "inflammatory",
+    "pos": "adjective",
+    "date": "2026-09-24",
+    "meaning": "선동적인, 자극적인; 염증성의",
+    "example_ko": "그 정치인의 선동적인 발언은 전국적 시위를 촉발했다.",
+    "example_en": "The politician's inflammatory remarks sparked protests across the nation.",
+    "explanation": "감정을 자극하고 분노나 갈등을 유발하는 언론이나 발언. 의학에서는 염증과 관련된 의미도 있음.",
+    "tip": "동의어: provocative, incendiary, controversial | 반의어: calming, soothing | 출제영역: 뉴스, 미디어, 정치",
+    "emoji": ""
   }
 ]

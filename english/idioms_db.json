@@ -565,5 +565,29 @@
     "tip": "유사 표현: draft, compose, prepare. draw up은 좀 더 공식적이고 체계적인 느낌!",
     "emoji": "📋",
     "date": "2026-09-23"
+  },
+  {
+    "id": "take-over",
+    "phrase": "take over",
+    "meaning_ko": "인수하다, 맡다",
+    "meaning_en": "to assume control or responsibility of something",
+    "explanation": "누군가 하던 일을 내가 책임지고 맡는 거예요! 회사 인수부터 친구 숙제 도와주기까지 다양하게 쓰여요 💼",
+    "example_en": "My older brother will take over the family business next year.",
+    "example_ko": "내 형이 내년에 가족 사업을 인수할 거야.",
+    "tip": "take charge(담당하다)와 비슷하지만, take over는 '기존의 것을 넘겨받는' 뉘앙스가 더 강해요!",
+    "emoji": "🤝",
+    "date": "2026-09-24"
+  },
+  {
+    "id": "get-down-to",
+    "phrase": "get down to",
+    "meaning_ko": "본격적으로 시작하다, 핵심에 들어가다",
+    "meaning_en": "to begin focusing seriously on something important",
+    "explanation": "잡담은 이제 그만하고 진짜 일을 시작할 때! 회의나 일상에서 진지한 상황에서 자주 써요 🎯",
+    "example_en": "Let's get down to business and discuss the project details.",
+    "example_ko": "이제 본론으로 들어가서 프로젝트 세부사항을 논의하자.",
+    "tip": "'get down to + 명사' 형태로 쓰여요. get down to work, get down to the point 이런 식으로!",
+    "emoji": "🔥",
+    "date": "2026-09-24"
   }
 ]
