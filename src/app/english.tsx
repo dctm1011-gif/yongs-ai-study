@@ -649,8 +649,9 @@ export default function EnglishScreen() {
       // Reading sentences
       if (readSnap.exists()) {
         Object.entries(readSnap.val()).forEach(([articleId, difficulties]: [string, any]) => {
-          Object.entries(difficulties).forEach(([sentenceIdx, difficulty]: [string, any]) => {
-            if (difficulty === 'medium' || difficulty === 'hard') {
+          Object.entries(difficulties).forEach(([sentenceIdx, difficultyObj]: [string, any]) => {
+            const diffLevel = difficultyObj?.difficulty || difficultyObj;
+            if (diffLevel === 'medium' || diffLevel === 'hard') {
               sentences.push({
                 id: `reading-${articleId}-${sentenceIdx}`,
                 source: 'reading',
@@ -658,7 +659,7 @@ export default function EnglishScreen() {
                 sentenceIdx: parseInt(sentenceIdx),
                 en: '',
                 ko: '',
-                difficulty,
+                difficulty: diffLevel,
               });
             }
           });
@@ -668,8 +669,9 @@ export default function EnglishScreen() {
       // Listening sentences
       if (listenSnap.exists()) {
         Object.entries(listenSnap.val()).forEach(([articleId, difficulties]: [string, any]) => {
-          Object.entries(difficulties).forEach(([sentenceIdx, difficulty]: [string, any]) => {
-            if (difficulty === 'medium' || difficulty === 'hard') {
+          Object.entries(difficulties).forEach(([sentenceIdx, difficultyObj]: [string, any]) => {
+            const diffLevel = difficultyObj?.difficulty || difficultyObj;
+            if (diffLevel === 'medium' || diffLevel === 'hard') {
               sentences.push({
                 id: `listening-${articleId}-${sentenceIdx}`,
                 source: 'listening',
@@ -677,7 +679,7 @@ export default function EnglishScreen() {
                 sentenceIdx: parseInt(sentenceIdx),
                 en: '',
                 ko: '',
-                difficulty,
+                difficulty: diffLevel,
               });
             }
           });
