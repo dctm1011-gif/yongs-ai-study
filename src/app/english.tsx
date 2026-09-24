@@ -673,62 +673,81 @@ export default function EnglishScreen() {
     if (!user?.uid) return;
     const db = getDatabase(getFirebaseApp());
 
+    let readData: any = null;
+    let listenData: any = null;
+    let hasRead = false;
+    let hasListen = false;
+
+    const updateCollected = () => {
+      if (!hasRead || !hasListen) return;
+      const sentences: typeof collectedSentences = [];
+
+      // Reading sentences
+      if (readData) {
+        Object.entries(readData).forEach(([articleId, difficulties]: [string, any]) => {
+          Object.entries(difficulties).forEach(([sentenceIdx, difficultyObj]: [string, any]) => {
+            const diffLevel = difficultyObj?.difficulty || difficultyObj;
+            if (diffLevel === 'medium' || diffLevel === 'hard') {
+              sentences.push({
+                id: `reading-${articleId}-${sentenceIdx}`,
+                source: 'reading',
+                articleId,
+                sentenceIdx: parseInt(sentenceIdx),
+                en: difficultyObj?.en || '',
+                ko: difficultyObj?.ko || '',
+                difficulty: diffLevel,
+              });
+            }
+          });
+        });
+      }
+
+      // Listening sentences
+      if (listenData) {
+        Object.entries(listenData).forEach(([articleId, difficulties]: [string, any]) => {
+          Object.entries(difficulties).forEach(([sentenceIdx, difficultyObj]: [string, any]) => {
+            const diffLevel = difficultyObj?.difficulty || difficultyObj;
+            if (diffLevel === 'medium' || diffLevel === 'hard') {
+              sentences.push({
+                id: `listening-${articleId}-${sentenceIdx}`,
+                source: 'listening',
+                articleId,
+                sentenceIdx: parseInt(sentenceIdx),
+                en: difficultyObj?.en || '',
+                ko: difficultyObj?.ko || '',
+                difficulty: diffLevel,
+              });
+            }
+          });
+        });
+      }
+
+      setCollectedSentences(sentences);
+      setLoadingCollection(false);
+    };
+
     const unsubRead = onValue(
       dbRef(db, `users/${user.uid}/english/sentenceDifficulty/reading`),
-      (readSnap) => {
-        onValue(
-          dbRef(db, `users/${user.uid}/english/sentenceDifficulty/listening`),
-          (listenSnap) => {
-            const sentences: typeof collectedSentences = [];
-
-            // Reading sentences
-            if (readSnap.exists()) {
-              Object.entries(readSnap.val()).forEach(([articleId, difficulties]: [string, any]) => {
-                Object.entries(difficulties).forEach(([sentenceIdx, difficultyObj]: [string, any]) => {
-                  const diffLevel = difficultyObj?.difficulty || difficultyObj;
-                  if (diffLevel === 'medium' || diffLevel === 'hard') {
-                    sentences.push({
-                      id: `reading-${articleId}-${sentenceIdx}`,
-                      source: 'reading',
-                      articleId,
-                      sentenceIdx: parseInt(sentenceIdx),
-                      en: difficultyObj?.en || '',
-                      ko: difficultyObj?.ko || '',
-                      difficulty: diffLevel,
-                    });
-                  }
-                });
-              });
-            }
-
-            // Listening sentences
-            if (listenSnap.exists()) {
-              Object.entries(listenSnap.val()).forEach(([articleId, difficulties]: [string, any]) => {
-                Object.entries(difficulties).forEach(([sentenceIdx, difficultyObj]: [string, any]) => {
-                  const diffLevel = difficultyObj?.difficulty || difficultyObj;
-                  if (diffLevel === 'medium' || diffLevel === 'hard') {
-                    sentences.push({
-                      id: `listening-${articleId}-${sentenceIdx}`,
-                      source: 'listening',
-                      articleId,
-                      sentenceIdx: parseInt(sentenceIdx),
-                      en: difficultyObj?.en || '',
-                      ko: difficultyObj?.ko || '',
-                      difficulty: diffLevel,
-                    });
-                  }
-                });
-              });
-            }
-
-            setCollectedSentences(sentences);
-            setLoadingCollection(false);
-          }
-        );
+      (snap) => {
+        readData = snap.exists() ? snap.val() : null;
+        hasRead = true;
+        updateCollected();
       }
     );
 
-    return () => unsubRead();
+    const unsubListen = onValue(
+      dbRef(db, `users/${user.uid}/english/sentenceDifficulty/listening`),
+      (snap) => {
+        listenData = snap.exists() ? snap.val() : null;
+        hasListen = true;
+        updateCollected();
+      }
+    );
+
+    return () => {
+      unsubRead();
+      unsubListen();
+    };
   }, [user?.uid]);
 
   // ── Reading view ─────────────────────────────────────────────────────────
