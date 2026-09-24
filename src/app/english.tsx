@@ -120,9 +120,13 @@ function EpisodeCard({ ep, color, label, onComplete, isDone, srcKey, epDate, uid
     if (!uid || !srcKey) return;
     try {
       const db = getDatabase(getFirebaseApp());
-      const episodeId = ep.title.replace(/\s+/g, '_').slice(0, 50);
-      await set(dbRef(db, `users/${uid}/english/sentenceDifficulty/${srcKey}/${episodeId}/${sentenceIdx}`), {
-        difficulty: diff, ts: Date.now(),
+      const episodeId = `${srcKey}_${ep.title.replace(/\s+/g, '_').slice(0, 40)}`;
+      const sent = ep.sentences?.[sentenceIdx];
+      await set(dbRef(db, `users/${uid}/english/sentenceDifficulty/listening/${episodeId}/${sentenceIdx}`), {
+        difficulty: diff,
+        en: sent?.en || '',
+        ko: sent?.ko || '',
+        ts: Date.now(),
       });
     } catch (e) {
       console.warn('난이도 저장 실패:', e);
@@ -390,8 +394,12 @@ function NewsCard({ article, sourceName, sourceColor, uid }: {
     try {
       const db = getDatabase(getFirebaseApp());
       const articleId = article.title.replace(/\s+/g, '_').slice(0, 50);
+      const sent = article.sentences?.[sentenceIdx];
       await set(dbRef(db, `users/${uid}/english/sentenceDifficulty/reading/${articleId}/${sentenceIdx}`), {
-        difficulty: diff, ts: Date.now(),
+        difficulty: diff,
+        en: sent?.en || '',
+        ko: sent?.ko || '',
+        ts: Date.now(),
       });
     } catch (e) {
       console.warn('난이도 저장 실패:', e);
@@ -657,8 +665,8 @@ export default function EnglishScreen() {
                 source: 'reading',
                 articleId,
                 sentenceIdx: parseInt(sentenceIdx),
-                en: '',
-                ko: '',
+                en: difficultyObj?.en || '',
+                ko: difficultyObj?.ko || '',
                 difficulty: diffLevel,
               });
             }
@@ -677,8 +685,8 @@ export default function EnglishScreen() {
                 source: 'listening',
                 articleId,
                 sentenceIdx: parseInt(sentenceIdx),
-                en: '',
-                ko: '',
+                en: difficultyObj?.en || '',
+                ko: difficultyObj?.ko || '',
                 difficulty: diffLevel,
               });
             }
@@ -686,29 +694,8 @@ export default function EnglishScreen() {
         });
       }
 
-      // Load sentence content from reading/listening articles
-      const loadDetails = sentences.map(s => {
-        const path = s.source === 'reading'
-          ? `english/reading/${s.articleId}`
-          : `english/listening/podcasts/${s.articleId}`;
-
-        return get(dbRef(db, path)).then(snap => {
-          if (!snap.exists()) return s;
-          const data = snap.val();
-          const items = Array.isArray(data) ? data : [data];
-          const item = items[0];
-          if (item?.sentences?.[s.sentenceIdx]) {
-            const sent = item.sentences[s.sentenceIdx];
-            return { ...s, en: sent.en || '', ko: sent.ko || '' };
-          }
-          return s;
-        }).catch(() => s);
-      });
-
-      Promise.all(loadDetails).then(filled => {
-        setCollectedSentences(filled);
-        setLoadingCollection(false);
-      });
+      setCollectedSentences(sentences);
+      setLoadingCollection(false);
     }).catch(() => {
       setCollectedSentences([]);
       setLoadingCollection(false);
