@@ -214,6 +214,55 @@ async function fetchKoreaHerald(today) {
   console.warn('  Herald 기사 없음');
 }
 
+// ── Podcasts (VOA, Spotlight) ────────────────────────────────────────────
+
+const PODCAST_FEEDS = [
+  { key: 'voa', label: 'VOA Learning English', url: 'https://learningenglish.voanews.com/api/d64mhf23' },
+  { key: 'spotlight', label: 'Spotlight English', url: 'https://www.spotlightenglish.com/feed' },
+];
+
+async function fetchPodcasts(today) {
+  console.log('[Podcasts]');
+  const db = getDatabase(getFirebaseApp());
+
+  for (const feed of PODCAST_FEEDS) {
+    try {
+      const rssText = await fetchUrl(feed.url);
+      const items = [...rssText.matchAll(/<item>([\s\S]*?)<\/item>/g)];
+      if (items.length === 0) { console.warn(`  ${feed.label}: 에피소드 없음`); continue; }
+
+      const [, firstItem] = items[0];
+      const titleM = firstItem.match(/<title>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/title>/);
+      const descM = firstItem.match(/<description>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/description>/);
+      const linkM = firstItem.match(/<link>\s*(https?[^\s<]+)\s*<\/link>/);
+      const enclosureM = firstItem.match(/<enclosure[^>]*url="([^"]+)"[^>]*duration="(\d+)"/);
+
+      const title = titleM ? stripHtml(titleM[1]) : 'Unknown';
+      const desc = descM ? stripHtml(descM[1]).slice(0, 500) : '';
+      const episode_url = linkM ? linkM[1].trim() : '';
+      const audio_url = enclosureM ? enclosureM[1] : '';
+      const duration_sec = enclosureM ? parseInt(enclosureM[2]) : 0;
+
+      const sentences = desc.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 20).slice(0, 10).map(en => ({ en, ko: '', analysis: '' }));
+
+      const ep = {
+        source: feed.key,
+        title,
+        audio_url,
+        duration_sec,
+        pub_date: today,
+        episode_url,
+        sentences,
+      };
+
+      await set(dbRef(db, `english/listening/podcasts/${feed.key}/${today}`), ep);
+      console.log(`  ✓ ${feed.label}: ${title.slice(0, 50)}`);
+    } catch (e) {
+      console.warn(`  ${feed.label} 실패:`, e.message);
+    }
+  }
+}
+
 // ── Push 알림 ──────────────────────────────────────────────────────────────
 
 async function sendPushNotifications(title, body) {
@@ -246,6 +295,12 @@ export default async (req, context) => {
   console.log(`[podcast-daily] ${new Date().toISOString()} — ${today}`);
 
   try {
+    await fetchPodcasts(today);
+  } catch (e) {
+    console.error('[Podcasts] 실패:', e.message);
+  }
+
+  try {
     await fetchKbsNews(today);
   } catch (e) {
     console.error('[KBS] 실패:', e.message);
@@ -259,8 +314,8 @@ export default async (req, context) => {
 
   try {
     await sendPushNotifications(
-      '📰 오늘의 영어 뉴스 도착!',
-      'KBS뉴스 · Korea Herald 리딩이 업데이트됐어요 → English 탭에서 확인!'
+      '📻 팟캐스트 · 📰 뉴스 업데이트!',
+      'VOA · Spotlight · KBS · Herald이 준비됐어요 → English 탭에서 확인!'
     );
   } catch (e) {
     console.error('[push] 실패:', e.message);

@@ -3,6 +3,7 @@ import {
   View, Text, ScrollView, TouchableOpacity, StyleSheet,
   ActivityIndicator, Linking, Alert, Modal,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Audio, AVPlaybackStatus } from 'expo-av';
 import { getDatabase, get, ref as dbRef, set, query, orderByKey, limitToLast } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
@@ -568,15 +569,11 @@ export default function EnglishScreen() {
     const uid = user?.uid;
     Promise.all([
       ...PODCAST_SOURCES.map(src =>
-        get(query(dbRef(db, `english/listening/podcasts/${src.key}`), orderByKey(), limitToLast(1)))
+        get(dbRef(db, `english/listening/podcasts/${src.key}/${today}`))
           .then(snap => {
             if (!snap.exists()) return { key: src.key, ep: null, dateKey: '' };
-            const entries = Object.entries(snap.val() as Record<string, PodcastEpisode>);
-            const [dateKey, ep] = entries[0];
-            if (ep?.sentences && !Array.isArray(ep.sentences)) {
-              ep.sentences = Object.values(ep.sentences as any);
-            }
-            return { key: src.key, ep, dateKey };
+            const ep = snap.val() as PodcastEpisode;
+            return { key: src.key, ep, dateKey: today };
           })
           .catch(() => ({ key: src.key, ep: null, dateKey: '' }))
       ),
@@ -654,7 +651,7 @@ export default function EnglishScreen() {
     const activeSrc = PODCAST_SOURCES.find(s => s.key === selectedSource) ?? PODCAST_SOURCES[0];
     const activeEp = podcasts[activeSrc.key];
     return (
-      <View style={styles.flex}>
+      <SafeAreaView style={styles.flex}>
         <TouchableOpacity style={styles.backBar} onPress={() => setView('hub')}>
           <Text style={styles.backText}>← Listening</Text>
         </TouchableOpacity>
@@ -704,14 +701,17 @@ export default function EnglishScreen() {
             uid={user?.uid}
           />
         ) : (
-          <View style={[styles.skeleton, { margin: 20, borderLeftWidth: 3, borderLeftColor: activeSrc.color }]}>
-            <View style={[styles.badge, { backgroundColor: activeSrc.color }]}>
-              <Text style={styles.badgeText}>{activeSrc.label}</Text>
+          <ScrollView style={styles.flex}>
+            <View style={[styles.skeleton, { margin: 20, borderLeftWidth: 3, borderLeftColor: activeSrc.color }]}>
+              <View style={[styles.badge, { backgroundColor: activeSrc.color }]}>
+                <Text style={styles.badgeText}>{activeSrc.label}</Text>
+              </View>
+              <Text style={styles.skeletonText}>📻 준비 중...</Text>
+              <Text style={{ fontSize: 12, color: '#666', marginTop: 8 }}>오늘의 에피소드가 아직 준비되지 않았습니다.</Text>
             </View>
-            <Text style={styles.skeletonText}>오늘의 에피소드 준비 중</Text>
-          </View>
+          </ScrollView>
         )}
-      </View>
+      </SafeAreaView>
     );
   }
 
