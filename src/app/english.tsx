@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Audio, AVPlaybackStatus } from 'expo-av';
-import { getDatabase, get, ref as dbRef, set, query, orderByKey, limitToLast } from 'firebase/database';
+import { getDatabase, get, ref as dbRef, set, query, orderByKey, limitToLast, onValue } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useAuth } from '../context/AuthContext';
@@ -668,63 +668,67 @@ export default function EnglishScreen() {
     }).finally(() => setLoadingPodcasts(false));
   }, [today, user?.uid]);
 
-  // Load collected sentences
+  // Load collected sentences (real-time)
   useEffect(() => {
     if (!user?.uid) return;
     const db = getDatabase(getFirebaseApp());
 
-    Promise.all([
-      get(dbRef(db, `users/${user.uid}/english/sentenceDifficulty/reading`)),
-      get(dbRef(db, `users/${user.uid}/english/sentenceDifficulty/listening`)),
-    ]).then(([readSnap, listenSnap]) => {
-      const sentences: typeof collectedSentences = [];
+    const unsubRead = onValue(
+      dbRef(db, `users/${user.uid}/english/sentenceDifficulty/reading`),
+      (readSnap) => {
+        onValue(
+          dbRef(db, `users/${user.uid}/english/sentenceDifficulty/listening`),
+          (listenSnap) => {
+            const sentences: typeof collectedSentences = [];
 
-      // Reading sentences
-      if (readSnap.exists()) {
-        Object.entries(readSnap.val()).forEach(([articleId, difficulties]: [string, any]) => {
-          Object.entries(difficulties).forEach(([sentenceIdx, difficultyObj]: [string, any]) => {
-            const diffLevel = difficultyObj?.difficulty || difficultyObj;
-            if (diffLevel === 'medium' || diffLevel === 'hard') {
-              sentences.push({
-                id: `reading-${articleId}-${sentenceIdx}`,
-                source: 'reading',
-                articleId,
-                sentenceIdx: parseInt(sentenceIdx),
-                en: difficultyObj?.en || '',
-                ko: difficultyObj?.ko || '',
-                difficulty: diffLevel,
+            // Reading sentences
+            if (readSnap.exists()) {
+              Object.entries(readSnap.val()).forEach(([articleId, difficulties]: [string, any]) => {
+                Object.entries(difficulties).forEach(([sentenceIdx, difficultyObj]: [string, any]) => {
+                  const diffLevel = difficultyObj?.difficulty || difficultyObj;
+                  if (diffLevel === 'medium' || diffLevel === 'hard') {
+                    sentences.push({
+                      id: `reading-${articleId}-${sentenceIdx}`,
+                      source: 'reading',
+                      articleId,
+                      sentenceIdx: parseInt(sentenceIdx),
+                      en: difficultyObj?.en || '',
+                      ko: difficultyObj?.ko || '',
+                      difficulty: diffLevel,
+                    });
+                  }
+                });
               });
             }
-          });
-        });
-      }
 
-      // Listening sentences
-      if (listenSnap.exists()) {
-        Object.entries(listenSnap.val()).forEach(([articleId, difficulties]: [string, any]) => {
-          Object.entries(difficulties).forEach(([sentenceIdx, difficultyObj]: [string, any]) => {
-            const diffLevel = difficultyObj?.difficulty || difficultyObj;
-            if (diffLevel === 'medium' || diffLevel === 'hard') {
-              sentences.push({
-                id: `listening-${articleId}-${sentenceIdx}`,
-                source: 'listening',
-                articleId,
-                sentenceIdx: parseInt(sentenceIdx),
-                en: difficultyObj?.en || '',
-                ko: difficultyObj?.ko || '',
-                difficulty: diffLevel,
+            // Listening sentences
+            if (listenSnap.exists()) {
+              Object.entries(listenSnap.val()).forEach(([articleId, difficulties]: [string, any]) => {
+                Object.entries(difficulties).forEach(([sentenceIdx, difficultyObj]: [string, any]) => {
+                  const diffLevel = difficultyObj?.difficulty || difficultyObj;
+                  if (diffLevel === 'medium' || diffLevel === 'hard') {
+                    sentences.push({
+                      id: `listening-${articleId}-${sentenceIdx}`,
+                      source: 'listening',
+                      articleId,
+                      sentenceIdx: parseInt(sentenceIdx),
+                      en: difficultyObj?.en || '',
+                      ko: difficultyObj?.ko || '',
+                      difficulty: diffLevel,
+                    });
+                  }
+                });
               });
             }
-          });
-        });
-      }
 
-      setCollectedSentences(sentences);
-      setLoadingCollection(false);
-    }).catch(() => {
-      setCollectedSentences([]);
-      setLoadingCollection(false);
-    });
+            setCollectedSentences(sentences);
+            setLoadingCollection(false);
+          }
+        );
+      }
+    );
+
+    return () => unsubRead();
   }, [user?.uid]);
 
   // ── Reading view ─────────────────────────────────────────────────────────
