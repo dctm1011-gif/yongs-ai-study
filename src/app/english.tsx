@@ -390,7 +390,7 @@ function NewsCard({ article, sourceName, sourceColor, uid }: {
     try {
       const db = getDatabase(getFirebaseApp());
       const articleId = article.title.replace(/\s+/g, '_').slice(0, 50);
-      await set(dbRef(db, `users/${uid}/english/sentenceDifficulty/${articleId}/${sentenceIdx}`), {
+      await set(dbRef(db, `users/${uid}/english/sentenceDifficulty/reading/${articleId}/${sentenceIdx}`), {
         difficulty: diff, ts: Date.now(),
       });
     } catch (e) {
@@ -398,6 +398,34 @@ function NewsCard({ article, sourceName, sourceColor, uid }: {
     }
     setSentenceDifficulty(prev => ({ ...prev, [sentenceIdx]: diff }));
   };
+
+  useEffect(() => {
+    if (!uid) return;
+    const articleId = article.title.replace(/\s+/g, '_').slice(0, 50);
+    const migrateOldData = async () => {
+      try {
+        const db = getDatabase(getFirebaseApp());
+        const oldPath = dbRef(db, `users/${uid}/english/sentenceDifficulty/${articleId}`);
+        const snap = await get(oldPath);
+        if (snap.exists()) {
+          const oldData = snap.val();
+          const migrated: Record<number, 'easy' | 'medium' | 'hard'> = {};
+          for (const [key, val] of Object.entries(oldData)) {
+            const idx = parseInt(key);
+            if (!isNaN(idx) && val && typeof val === 'object' && 'difficulty' in val) {
+              migrated[idx] = (val as any).difficulty;
+              await set(dbRef(db, `users/${uid}/english/sentenceDifficulty/reading/${articleId}/${idx}`), val);
+            }
+          }
+          setSentenceDifficulty(migrated);
+        }
+      } catch (e) {
+        console.warn('난이도 마이그레이션 실패:', e);
+      }
+    };
+    migrateOldData();
+  }, [uid, article.title]);
+
   const catColor = CATEGORY_COLORS[article.category] ?? '#6b7280';
   const hasSentences = article.sentences && article.sentences.length > 0;
 
@@ -496,7 +524,7 @@ function NewsCard({ article, sourceName, sourceColor, uid }: {
 }
 
 // ─── Main screen ──────────────────────────────────────────────────────────
-type EnglishView = 'hub' | 'reading' | 'listening' | 'speaking';
+type EnglishView = 'hub' | 'reading' | 'listening' | 'speaking' | 'collection';
 
 export default function EnglishScreen() {
   const { user } = useAuth();
@@ -516,6 +544,16 @@ export default function EnglishScreen() {
     { visible: false }
   );
   const [selectedDifficulty, setSelectedDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium');
+  const [collectedSentences, setCollectedSentences] = useState<Array<{
+    id: string;
+    source: 'reading' | 'listening';
+    articleId: string;
+    sentenceIdx: number;
+    en: string;
+    ko: string;
+    difficulty: 'medium' | 'hard';
+  }>>([]);
+  const [loadingCollection, setLoadingCollection] = useState(true);
   const today = getKSTDateString();
 
   const markDone = async (key: string, setDone: (v: boolean) => void, difficulty: 'easy' | 'medium' | 'hard' = 'medium') => {
@@ -596,6 +634,84 @@ export default function EnglishScreen() {
       setSourceDone(doneMap);
     }).finally(() => setLoadingPodcasts(false));
   }, [today, user?.uid]);
+
+  // Load collected sentences
+  useEffect(() => {
+    if (!user?.uid) return;
+    const db = getDatabase(getFirebaseApp());
+
+    Promise.all([
+      get(dbRef(db, `users/${user.uid}/english/sentenceDifficulty/reading`)),
+      get(dbRef(db, `users/${user.uid}/english/sentenceDifficulty/listening`)),
+    ]).then(([readSnap, listenSnap]) => {
+      const sentences: typeof collectedSentences = [];
+
+      // Reading sentences
+      if (readSnap.exists()) {
+        Object.entries(readSnap.val()).forEach(([articleId, difficulties]: [string, any]) => {
+          Object.entries(difficulties).forEach(([sentenceIdx, difficulty]: [string, any]) => {
+            if (difficulty === 'medium' || difficulty === 'hard') {
+              sentences.push({
+                id: `reading-${articleId}-${sentenceIdx}`,
+                source: 'reading',
+                articleId,
+                sentenceIdx: parseInt(sentenceIdx),
+                en: '',
+                ko: '',
+                difficulty,
+              });
+            }
+          });
+        });
+      }
+
+      // Listening sentences
+      if (listenSnap.exists()) {
+        Object.entries(listenSnap.val()).forEach(([articleId, difficulties]: [string, any]) => {
+          Object.entries(difficulties).forEach(([sentenceIdx, difficulty]: [string, any]) => {
+            if (difficulty === 'medium' || difficulty === 'hard') {
+              sentences.push({
+                id: `listening-${articleId}-${sentenceIdx}`,
+                source: 'listening',
+                articleId,
+                sentenceIdx: parseInt(sentenceIdx),
+                en: '',
+                ko: '',
+                difficulty,
+              });
+            }
+          });
+        });
+      }
+
+      // Load sentence content from reading/listening articles
+      const loadDetails = sentences.map(s => {
+        const path = s.source === 'reading'
+          ? `english/reading/${s.articleId}`
+          : `english/listening/podcasts/${s.articleId}`;
+
+        return get(dbRef(db, path)).then(snap => {
+          if (!snap.exists()) return s;
+          const data = snap.val();
+          const items = Array.isArray(data) ? data : [data];
+          const item = items[0];
+          if (item?.sentences?.[s.sentenceIdx]) {
+            const sent = item.sentences[s.sentenceIdx];
+            return { ...s, en: sent.en || '', ko: sent.ko || '' };
+          }
+          return s;
+        }).catch(() => s);
+      });
+
+      Promise.all(loadDetails).then(filled => {
+        setCollectedSentences(filled);
+        setLoadingCollection(false);
+      });
+    }).catch(() => {
+      setCollectedSentences([]);
+      setLoadingCollection(false);
+    });
+  }, [user?.uid]);
 
   // ── Reading view ─────────────────────────────────────────────────────────
   if (view === 'reading') {
@@ -732,6 +848,56 @@ export default function EnglishScreen() {
     );
   }
 
+  // ── Collection view ────────────────────────────────────────────────────────
+  if (view === 'collection') {
+
+    return (
+      <View style={styles.flex}>
+        <TouchableOpacity style={styles.backBar} onPress={() => setView('hub')}>
+          <Text style={styles.backText}>← 수집 문장</Text>
+        </TouchableOpacity>
+        <ScrollView contentContainerStyle={styles.detailContent}>
+          <Text style={styles.dateLabel}>수집한 문장</Text>
+          {loadingCollection ? (
+            <View style={styles.skeleton}>
+              <ActivityIndicator size="small" color="#9ca3af" />
+              <Text style={styles.skeletonText}>문장 불러오는 중...</Text>
+            </View>
+          ) : collectedSentences.length === 0 ? (
+            <View style={styles.skeleton}>
+              <Text style={styles.skeletonText}>📝 수집한 문장이 없습니다</Text>
+            </View>
+          ) : (
+            collectedSentences.map(sent => (
+              <View key={sent.id} style={styles.collectionCard}>
+                <View style={styles.collectionMeta}>
+                  <View style={[
+                    styles.collectionBadge,
+                    { backgroundColor: sent.source === 'reading' ? '#1d4ed8' : '#7c3aed' }
+                  ]}>
+                    <Text style={styles.collectionBadgeText}>
+                      {sent.source === 'reading' ? '리딩' : '리스닝'}
+                    </Text>
+                  </View>
+                  <View style={[
+                    styles.collectionDifficultyBadge,
+                    { backgroundColor: sent.difficulty === 'medium' ? '#f59e0b' : '#ef4444' }
+                  ]}>
+                    <Text style={styles.collectionBadgeText}>
+                      {sent.difficulty === 'medium' ? '🟡 보통' : '🔴 어려움'}
+                    </Text>
+                  </View>
+                </View>
+                {sent.en && <Text style={styles.collectionSentenceEn}>{sent.en}</Text>}
+                {sent.ko && <Text style={styles.collectionSentenceKo}>{sent.ko}</Text>}
+              </View>
+            ))
+          )}
+        </ScrollView>
+      </View>
+    );
+  }
+
   // ── Hub view ──────────────────────────────────────────────────────────────
   // 출처 이름만 적혀 있어서 눌러보기 전엔 오늘 뭐가 왔는지 몰랐다.
   // 기사 제목과 새 회차 여부를 카드에 바로 보여준다.
@@ -803,6 +969,18 @@ export default function EnglishScreen() {
           </View>
           <Text style={styles.hubPreview} numberOfLines={1}>AI와 영어 대화</Text>
           <Text style={styles.hubCardDesc}>일상 주제로 실전 회화</Text>
+        </View>
+        <Text style={styles.hubArrow}>›</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.hubCard} onPress={() => setView('collection')} activeOpacity={0.8}>
+        <MaterialIcons name="bookmark" size={36} color="#f59e0b" />
+        <View style={styles.hubCardBody}>
+          <View style={styles.hubCardTop}>
+            <Text style={styles.hubCardName}>수집 문장</Text>
+          </View>
+          <Text style={styles.hubPreview} numberOfLines={1}>리딩 · 리스닝에서 마크</Text>
+          <Text style={styles.hubCardDesc}>보통, 어려움 난이도만 모음</Text>
         </View>
         <Text style={styles.hubArrow}>›</Text>
       </TouchableOpacity>
@@ -1084,5 +1262,29 @@ const styles = StyleSheet.create({
   },
   difficultyOptionTextSelected: {
     color: '#3b82f6',
+  },
+
+  // Collection view
+  collectionCard: {
+    backgroundColor: '#fafafa', borderRadius: 12, padding: 14,
+    marginBottom: 10, borderWidth: 1, borderColor: '#e5e7eb',
+  },
+  collectionMeta: {
+    flexDirection: 'row', gap: 6, marginBottom: 8,
+  },
+  collectionBadge: {
+    paddingHorizontal: 8, paddingVertical: 3, borderRadius: 4,
+  },
+  collectionDifficultyBadge: {
+    paddingHorizontal: 8, paddingVertical: 3, borderRadius: 4,
+  },
+  collectionBadgeText: {
+    fontSize: 10, fontWeight: '700', color: '#fff', letterSpacing: 0.3,
+  },
+  collectionSentenceEn: {
+    fontSize: 13.5, color: '#111827', lineHeight: 20, marginBottom: 4,
+  },
+  collectionSentenceKo: {
+    fontSize: 12, color: '#6b7280', lineHeight: 19,
   },
 });
