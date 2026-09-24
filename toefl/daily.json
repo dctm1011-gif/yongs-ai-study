@@ -1,113 +1,118 @@
 {
-  "date": "2026-09-24",
+  "date": "2026-09-25",
   "reading": {
-    "title": "Climate Change and Ocean Acidification",
-    "passage": "Ocean acidification is a critical consequence of climate change that threatens marine ecosystems worldwide. When atmospheric carbon dioxide increases, more CO2 dissolves into seawater, forming carbonic acid and lowering the ocean's pH level. This process weakens the shells of mollusks and corals, making it difficult for these organisms to survive. Pteropods, small marine snails, are particularly vulnerable because their shells dissolve in acidic water. Scientists warn that if current emission rates continue, ocean acidification could devastate fisheries and food chains that millions of people depend on for survival.",
+    "title": "Bioluminescence in Deep Sea Organisms",
+    "passage": "Bioluminescence is the production of light by living organisms through chemical reactions. Many deep-sea creatures use this ability to communicate, attract prey, and navigate in complete darkness. For example, the anglerfish uses a glowing lure to attract smaller fish, while certain jellyfish produce light to confuse predators. Scientists estimate that over 90% of deep-sea creatures possess some form of bioluminescence, making it one of nature's most remarkable adaptations to extreme environments.",
     "questions": [
       {
-        "q": "According to the passage, what is the primary cause of ocean acidification?",
+        "q": "According to the passage, what is the primary function of bioluminescence in anglerfish?",
         "options": [
-          "A) Increased water temperature",
-          "B) Atmospheric carbon dioxide dissolving in seawater",
-          "C) Industrial pollution from factories",
-          "D) Natural volcanic activity"
+          "To navigate in darkness",
+          "To attract smaller fish",
+          "To confuse predators",
+          "To communicate with other anglerfish"
         ],
         "answer": 1,
-        "explanation": "지문에서 'When atmospheric carbon dioxide increases, more CO2 dissolves into seawater'라고 명시되어 있습니다. 따라서 정답은 B입니다."
+        "explanation": "글에서 'the anglerfish uses a glowing lure to attract smaller fish'라고 명시되어 있습니다. 따라서 정답은 B입니다."
       },
       {
-        "q": "Which organisms are mentioned as being particularly vulnerable to ocean acidification?",
+        "q": "Which of the following is NOT mentioned as a function of bioluminescence?",
         "options": [
-          "A) Fish and sharks",
-          "B) Whales and dolphins",
-          "C) Mollusks and corals, especially pteropods",
-          "D) Seaweed and kelp"
+          "Communication",
+          "Attracting prey",
+          "Navigation",
+          "Producing heat"
+        ],
+        "answer": 3,
+        "explanation": "문장에서 bioluminescence의 기능으로 communicate, attract prey, navigate이 언급되지만, 열을 생산하는 것은 언급되지 않습니다. 정답은 D입니다."
+      },
+      {
+        "q": "What percentage of deep-sea creatures are estimated to have bioluminescence?",
+        "options": [
+          "50%",
+          "70%",
+          "Over 90%",
+          "100%"
         ],
         "answer": 2,
-        "explanation": "지문에서 'mollusks and corals'와 'Pteropods, small marine snails, are particularly vulnerable'라고 명시되어 있으므로 정답은 C입니다."
-      },
-      {
-        "q": "What does the passage suggest could happen if emission rates continue at current levels?",
-        "options": [
-          "A) Ocean temperatures will stabilize",
-          "B) Ocean acidification could devastate fisheries and food chains",
-          "C) Marine life will adapt quickly",
-          "D) Coral reefs will grow stronger"
-        ],
-        "answer": 1,
-        "explanation": "지문의 마지막 부분에서 'if current emission rates continue, ocean acidification could devastate fisheries and food chains'라고 명시되어 있습니다."
+        "explanation": "글의 마지막 문장에서 'over 90% of deep-sea creatures possess some form of bioluminescence'라고 명시되어 있습니다. 정답은 C입니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the following statement? Technology has made our lives more convenient but has also increased stress and anxiety in society. Use specific reasons and examples to support your position.",
+    "prompt": "Do you agree or disagree with the following statement: Technology has made human relationships weaker rather than stronger? Use specific reasons and examples to support your answer.",
     "structure": {
-      "intro": "명확한 입장 제시(agree 또는 disagree) + 주요 이유 2-3개 언급 (2-3문장)",
-      "body1": "첫 번째 주요 이유 전개 + 구체적 예시 제시 (5-7문장)",
-      "body2": "두 번째 주요 이유 전개 + 구체적 예시 제시 (5-7문장)",
-      "conclusion": "입장 재확인 + 전체 논의의 요약 + 광범위한 함의 제시 (2-3문장)"
+      "intro": "명확한 입장 표현 (동의 또는 불동의) + 주요 이유 2-3개 미리 언급. 예: 'I disagree with this statement because technology has actually strengthened human relationships through increased connectivity and accessibility.'",
+      "body1": "첫 번째 이유 전개: 소셜 미디어와 SNS가 먼 거리의 사람들을 연결하는 방식. 구체적 예시 제시 (예: 장거리 연애, 해외 가족과의 연락).",
+      "body2": "두 번째 이유 전개: 온라인 커뮤니티의 형성과 공통 관심사를 가진 사람들의 만남. 추가 예시 (예: 온라인 학습 그룹, 취미 커뮤니티).",
+      "conclusion": "주요 논점 재정리 + 반박 가능한 입장 인정 + 최종 의견 제시. 예: 'While face-to-face interaction remains important, technology has provided unprecedented opportunities to strengthen relationships.'"
     },
     "useful_phrases": [
-      "In my opinion, technology has both advantages and disadvantages.",
-      "Furthermore, constant connectivity creates pressure to respond immediately to messages.",
-      "For example, social media platforms can lead to feelings of inadequacy and comparison.",
-      "On the other hand, technology enables remote work and flexible schedules.",
-      "In conclusion, while technology offers convenience, we must address its negative psychological effects.",
-      "It is evident that managing technology use is essential for mental well-being."
+      "In my opinion,",
+      "I strongly agree/disagree because",
+      "To illustrate this point,",
+      "For example,",
+      "Furthermore,",
+      "In addition,",
+      "On the other hand,",
+      "This demonstrates that",
+      "In conclusion,",
+      "To summarize my thoughts,"
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to work for a large corporation with job security and structured career paths. Others prefer to work for a startup where they can take risks and have more creative freedom. Which do you prefer and why?",
+    "prompt": "Some people prefer to study alone in a quiet environment. Others prefer to study in groups with classmates. Which do you prefer and why?",
     "useful_expressions": [
-      "In my opinion, I prefer working for a startup because...",
-      "One reason is that startups offer more opportunities for innovation and personal growth.",
-      "Another advantage is that I would have more direct impact on the company's success.",
-      "Additionally, the dynamic environment keeps work interesting and challenging.",
-      "However, I understand that job security is important for people with families.",
-      "To sum up, the creative freedom and learning opportunities at startups appeal to me more."
+      "In my opinion, I prefer studying alone because...",
+      "One reason is that I can concentrate better without distractions.",
+      "Another advantage is that I can study at my own pace.",
+      "Furthermore, studying in groups helps with discussing difficult concepts.",
+      "However, some people might argue that...",
+      "To summarize, I believe that studying alone is more effective for me because..."
     ],
     "sample_points": [
-      "스타트업의 창의적 자유도: 새로운 아이디어를 즉시 구현할 수 있고, 다양한 업무를 경험하며 빠르게 성장할 수 있다는 점",
-      "개인의 영향력: 작은 팀에서 개인의 기여가 회사 전체에 미치는 영향이 크기 때문에 성취감과 동기부여가 높다는 점"
+      "집중력 향상: 혼자 공부할 때 방해 요소가 없어 더 집중할 수 있으며, 자신의 페이스에 맞춰 학습 가능",
+      "효율성: 원하는 시간에 원하는 과목을 공부할 수 있고, 모르는 부분을 깊이 있게 이해할 수 있음",
+      "대안적 관점: 그룹 스터디는 다양한 관점 공유와 어려운 개념 토론의 장점이 있지만, 시간 낭비 가능성 존재"
     ]
   },
   "listening": {
-    "title": "University Library Study Room Registration",
+    "title": "University Library Resources",
     "type": "conversation",
-    "script": "Student: Hi, I'd like to reserve a study room for tomorrow afternoon. Librarian: Sure! We have several options available. How many people will be using the room? Student: It'll be just three of us working on a group project. Librarian: Perfect. We have rooms that can accommodate up to six people. The afternoon slots are 1 PM to 3 PM or 3 PM to 5 PM. Student: The 1 PM slot works better for us. Also, do you have any rooms with computer access? Librarian: Yes, rooms 205, 210, and 215 all have desktop computers and high-speed internet. However, those rooms are an additional $5 per hour. Student: Oh, I see. What about the standard rooms without computers? Librarian: Those are free for all registered students. They have whiteboards and comfortable seating. Student: That sounds good. Let me take the standard room at 1 PM. Librarian: Excellent. I'll need your student ID and email to complete the registration.",
+    "script": "Student: Excuse me, I'm looking for information about research databases for my paper on climate change. Librarian: Of course! We have several excellent resources. Our main database is JSTOR, which contains thousands of peer-reviewed articles on environmental science. We also have access to Google Scholar, which is free and comprehensive. Additionally, we offer one-on-one research consultations if you need help navigating these resources. Student: That sounds helpful. How long do these consultations usually take? Librarian: Typically, they last about 30 minutes to an hour, depending on your needs. You can book an appointment online through our website, or you can visit our reference desk during business hours. We also have a chat service available in the evenings for quick questions. Many students find this very convenient. Student: I'll definitely check that out. Thank you so much for your help!",
     "questions": [
       {
-        "q": "How many people will be using the study room?",
+        "q": "What is the main topic of this conversation?",
         "options": [
-          "A) Two people",
-          "B) Three people",
-          "C) Four people",
-          "D) Six people"
+          "How to write research papers",
+          "Available library resources and research assistance",
+          "Climate change research methods",
+          "How to use Google Scholar"
         ],
         "answer": 1,
-        "explanation": "학생이 'It'll be just three of us working on a group project'라고 명확히 말했습니다. 따라서 정답은 B입니다."
+        "explanation": "대화의 중심은 학생이 도서관의 리서치 데이터베이스와 도움말 서비스에 대해 물어보는 것입니다. 따라서 정답은 B입니다."
       },
       {
-        "q": "What is the price difference between standard rooms and rooms with computer access?",
+        "q": "According to the librarian, how long do research consultations typically last?",
         "options": [
-          "A) $3 per hour",
-          "B) $5 per hour",
-          "C) $8 per hour",
-          "D) No difference"
+          "15 minutes",
+          "30 minutes to one hour",
+          "Up to 2 hours",
+          "As long as needed"
         ],
         "answer": 1,
-        "explanation": "사서가 'Those rooms are an additional $5 per hour'라고 명시했으므로 정답은 B입니다. 표준 방은 무료이고 컴퓨터 접근이 있는 방은 시간당 $5입니다."
+        "explanation": "사서가 'Typically, they last about 30 minutes to an hour, depending on your needs'라고 명확히 말했습니다. 정답은 B입니다."
       },
       {
-        "q": "Which time slot did the student choose for the study room?",
+        "q": "What are the ways students can access research consultations according to the conversation?",
         "options": [
-          "A) 11 AM to 1 PM",
-          "B) 1 PM to 3 PM",
-          "C) 3 PM to 5 PM",
-          "D) 5 PM to 7 PM"
+          "Only online booking",
+          "Online booking, reference desk, or chat service",
+          "Reference desk only",
+          "Phone consultation only"
         ],
         "answer": 1,
-        "explanation": "학생이 'The 1 PM slot works better for us'라고 명시적으로 말했으므로, 정답은 1 PM to 3 PM인 B입니다."
+        "explanation": "사서는 '온라인 예약, 레퍼런스 데스크 방문, 저녁의 채팅 서비스' 세 가지 방법을 제시했습니다. 정답은 B입니다."
       }
     ]
   }
