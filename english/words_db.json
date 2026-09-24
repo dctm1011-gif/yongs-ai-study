@@ -4460,5 +4460,65 @@
     "explanation": "감정을 자극하고 분노나 갈등을 유발하는 언론이나 발언. 의학에서는 염증과 관련된 의미도 있음.",
     "tip": "동의어: provocative, incendiary, controversial | 반의어: calming, soothing | 출제영역: 뉴스, 미디어, 정치",
     "emoji": ""
+  },
+  {
+    "id": "breach",
+    "word": "breach",
+    "pos": "noun, verb",
+    "date": "2026-09-25",
+    "meaning": "위반, 침해; (담장·벽 등의) 틈, 구멍",
+    "example_ko": "그 회사는 지난달 대규모 데이터 침해 사건을 겪었다.",
+    "example_en": "The company suffered a major data breach last month.",
+    "explanation": "A breach is a breaking of an agreement, law, or security system. It can refer to a violation of trust or a physical breaking through of a barrier. In cybersecurity, it means unauthorized access to data.",
+    "tip": "동의어: violation, infringement / 반의어: compliance, adherence / 출제영역: 보안, 법률, 계약 관련",
+    "emoji": "🔓"
+  },
+  {
+    "id": "alignment",
+    "word": "alignment",
+    "pos": "noun",
+    "date": "2026-09-25",
+    "meaning": "정렬, 정렬 상태; 일치, 조화; (정치적·이념적) 연대",
+    "example_ko": "우리 회사의 가치관과 채용 관행 사이에는 완벽한 일치가 있다.",
+    "example_en": "There's perfect alignment between our company values and our hiring practices.",
+    "explanation": "Alignment refers to the arrangement of things in a line or proper relative position. It can also mean agreement or harmony between different parties, goals, or values. In business, strategic alignment means all departments working toward the same objectives.",
+    "tip": "동의어: accordance, coordination / 반의어: misalignment, discord / 출제영역: 경영, 조직, 철학",
+    "emoji": "⚙️"
+  },
+  {
+    "id": "immunity",
+    "word": "immunity",
+    "pos": "noun",
+    "date": "2026-09-25",
+    "meaning": "면역, 면역력; 면책, 특권",
+    "example_ko": "백신 접종 후, 그 환자는 바이러스에 대한 면역력을 얻었다.",
+    "example_en": "After vaccination, the patient developed immunity to the virus.",
+    "explanation": "Immunity refers to the body's natural or acquired resistance to disease. In legal and political contexts, it means exemption from prosecution, punishment, or obligation. Diplomatic immunity protects officials from legal action.",
+    "tip": "동의어: resistance, exemption / 반의어: susceptibility, liability / 출제영역: 의학, 법률, 외교",
+    "emoji": "🛡️"
+  },
+  {
+    "id": "nutrient",
+    "word": "nutrient",
+    "pos": "noun",
+    "date": "2026-09-25",
+    "meaning": "영양분, 양분",
+    "example_ko": "잎이 많은 채소는 철분과 칼슘 같은 필수 영양분이 풍부하다.",
+    "example_en": "Leafy greens are rich in essential nutrients like iron and calcium.",
+    "explanation": "A nutrient is a substance that provides nourishment essential for growth and the maintenance of life. Nutrients include proteins, carbohydrates, fats, vitamins, and minerals. Plants absorb nutrients from soil.",
+    "tip": "동의어: nourishment, sustenance / 반의어: poison, toxin / 출제영역: 생물, 영양학, 의학",
+    "emoji": "🥗"
+  },
+  {
+    "id": "integration",
+    "word": "integration",
+    "pos": "noun",
+    "date": "2026-09-25",
+    "meaning": "통합, 융합; (인종·사회) 통합; (기술) 통합",
+    "example_ko": "두 회사의 성공적인 통합은 더 강한 시장 입지를 만들었다.",
+    "example_en": "The successful integration of the two companies created a stronger market presence.",
+    "explanation": "Integration is the process of combining separate elements into a unified whole. It can refer to social integration (bringing different groups together), system integration (connecting different technologies), or curriculum integration (combining different subjects).",
+    "tip": "동의어: unification, merger, consolidation / 반의어: segregation, separation / 출제영역: 사회학, 기술, 경영",
+    "emoji": "🔗"
   }
 ]

@@ -589,5 +589,41 @@
     "tip": "'get down to + 명사' 형태로 쓰여요. get down to work, get down to the point 이런 식으로!",
     "emoji": "🔥",
     "date": "2026-09-24"
+  },
+  {
+    "id": "put-together",
+    "phrase": "put together",
+    "meaning_ko": "조립하다, 구성하다",
+    "meaning_en": "to assemble or create something from parts",
+    "explanation": "여러 개의 것들을 모아서 하나로 만드는 거예요! 일상에서 정말 자주 써요 🔧",
+    "example_en": "I put together a presentation for the meeting.",
+    "example_ko": "나는 회의를 위해 프레젠테이션을 만들었어요.",
+    "tip": "assemble, create, build와 비슷하지만 '부분들을 모아서'라는 뉘앙스가 강해요!",
+    "emoji": "🧩",
+    "date": "2026-09-25"
+  },
+  {
+    "id": "work-out",
+    "phrase": "work out",
+    "meaning_ko": "해결하다, 운동하다",
+    "meaning_en": "to solve a problem or exercise physically",
+    "explanation": "문제를 해결하거나 신체 운동을 하는 두 가지 의미가 있어요. 맥락에 따라 달라진답니다! 💪",
+    "example_en": "Don't worry, we'll work out the details later.",
+    "example_ko": "걱정 마, 우리 나중에 세부사항을 정리하자.",
+    "tip": "동명사로도: working out = 운동, 해결 과정. 'Things will work out'(결국 잘될 거야)도 자주 써요!",
+    "emoji": "💪",
+    "date": "2026-09-25"
+  },
+  {
+    "id": "look-forward-to",
+    "phrase": "look forward to",
+    "meaning_ko": "기대하다, 손꼽아 기다리다",
+    "meaning_en": "to anticipate something with pleasure or interest",
+    "explanation": "뭔가 좋은 일이 올 거라고 설레며 기다리는 거예요! 편지나 이메일에서 정말 많이 봐요 🎉",
+    "example_en": "I'm looking forward to seeing you next week.",
+    "example_ko": "다음 주에 너 만날 생각에 설레!",
+    "tip": "to 뒤에는 반드시 동명사(~ing)가 와야 해요. 'looking forward to hearing from you'는 이메일 마무리 표현으로 최고야!",
+    "emoji": "🎉",
+    "date": "2026-09-25"
   }
 ]
