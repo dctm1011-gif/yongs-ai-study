@@ -434,6 +434,31 @@ function NewsCard({ article, sourceName, sourceColor, uid }: {
     migrateOldData();
   }, [uid, article.title]);
 
+  // Load current difficulty data
+  useEffect(() => {
+    if (!uid) return;
+    const articleId = article.title.replace(/\s+/g, '_').slice(0, 50);
+    const loadCurrentDifficulties = async () => {
+      try {
+        const db = getDatabase(getFirebaseApp());
+        const snap = await get(dbRef(db, `users/${uid}/english/sentenceDifficulty/reading/${articleId}`));
+        if (snap.exists()) {
+          const difficulties: Record<number, 'easy' | 'medium' | 'hard'> = {};
+          Object.entries(snap.val()).forEach(([sentenceIdx, data]: [string, any]) => {
+            const idx = parseInt(sentenceIdx);
+            if (!isNaN(idx) && data?.difficulty) {
+              difficulties[idx] = data.difficulty;
+            }
+          });
+          setSentenceDifficulty(difficulties);
+        }
+      } catch (e) {
+        console.warn('난이도 로드 실패:', e);
+      }
+    };
+    loadCurrentDifficulties();
+  }, [uid, article.title]);
+
   const catColor = CATEGORY_COLORS[article.category] ?? '#6b7280';
   const hasSentences = article.sentences && article.sentences.length > 0;
 
