@@ -20,22 +20,12 @@ function stripHtml(s: string): string {
 
 import { getKSTDateString } from '../utils/dateUtils';
 
-/** "2026-09-18" → "9월 18일 금요일" */
 function formatToday(iso: string): string {
   const [y, m, d] = iso.split('-').map(Number);
   const w = ['일', '월', '화', '수', '목', '금', '토'][new Date(y, m - 1, d).getDay()];
   return `${m}월 ${d}일 ${w}요일`;
 }
 
-/** RSS 원문("Mon, 14 Sep 2026 05:00:00 +0000")을 "9월 14일"로 */
-/**
- * 문장별 대략 재생 위치.
- *
- * 수집된 문장에는 타임스탬프가 없다. 그래서 정확한 하이라이트는 만들 수 없고,
- * 여기서는 전체 길이를 글자 수에 비례해 나눠 "대략 이쯤"을 잡는다.
- * 인트로 음악과 아웃트로 때문에 앞뒤로 수십 초 어긋날 수 있어, 화면에서도
- * 정확한 위치인 척하지 않고 건너뛰기 용도로만 쓴다.
- */
 function estimateSentenceStarts(sentences: { en: string }[], durationSec: number): number[] {
   if (!durationSec || sentences.length === 0) return [];
   const lens = sentences.map(s => Math.max(s.en.length, 1));
@@ -75,7 +65,6 @@ interface ArticleSentence { en: string; ko: string; analysis?: string; }
 interface KoreaNewsArticle {
   title: string; category: string; url: string;
   sentences?: ArticleSentence[];
-  summary?: string;  // fallback for old cached data
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -91,11 +80,9 @@ const PODCAST_SOURCES = [
   { key: 'voa', label: 'VOA Learning English', color: '#1d4ed8' },
 ] as const;
 
-// ─── Podcast episode card ─────────────────────────────────────────────────
 function EpisodeCard({ ep, color, label, onComplete, isDone, srcKey, epDate, uid }: {
   ep: PodcastEpisode; color: string; label: string;
   onComplete?: () => void; isDone?: boolean;
-  /** 재생하며 알게 된 실제 길이를 되쓰기 위한 위치 */
   srcKey?: string; epDate?: string; uid?: string;
 }) {
   const soundRef = useRef<Audio.Sound | null>(null);
@@ -638,16 +625,27 @@ export default function EnglishScreen() {
   useEffect(() => {
     const db = getDatabase(getFirebaseApp());
     const uid = user?.uid;
+
+    // 오늘 또는 어제 팟캐스트 시도
+    const tryGetPodcast = async (src: typeof PODCAST_SOURCES[0]) => {
+      const dates = [today];
+      const [y, m, d] = today.split('-').map(Number);
+      const yesterday = new Date(y, m - 1, d - 1);
+      dates.push(yesterday.toISOString().split('T')[0]);
+
+      for (const date of dates) {
+        try {
+          const snap = await get(dbRef(db, `english/listening/podcasts/${src.key}/${date}`));
+          if (snap.exists()) {
+            return { key: src.key, ep: snap.val() as PodcastEpisode, dateKey: date };
+          }
+        } catch { }
+      }
+      return { key: src.key, ep: null, dateKey: '' };
+    };
+
     Promise.all([
-      ...PODCAST_SOURCES.map(src =>
-        get(dbRef(db, `english/listening/podcasts/${src.key}/${today}`))
-          .then(snap => {
-            if (!snap.exists()) return { key: src.key, ep: null, dateKey: '' };
-            const ep = snap.val() as PodcastEpisode;
-            return { key: src.key, ep, dateKey: today };
-          })
-          .catch(() => ({ key: src.key, ep: null, dateKey: '' }))
-      ),
+      ...PODCAST_SOURCES.map(src => tryGetPodcast(src)),
       // 소스별 완료 상태 로드
       ...(uid ? PODCAST_SOURCES.map(src =>
         get(dbRef(db, `users/${uid}/completion/english_listening_${src.key}/${today}`))
@@ -870,6 +868,18 @@ export default function EnglishScreen() {
 
   // ── Speaking view ─────────────────────────────────────────────────────────
   if (view === 'speaking') {
+    const dailyTopics = [
+      { topic: '아침 인사', en: 'Good morning! Did you sleep well?', ko: '좋은 아침! 잘 잤어?' },
+      { topic: '회의 참석', en: 'Thank you for the presentation.', ko: '프레젠테이션 감사합니다.' },
+      { topic: '카페 주문', en: 'I\'ll have a medium coffee, please.', ko: '미디엄 커피 한 잔 주세요.' },
+      { topic: '길 묻기', en: 'Excuse me, where is the nearest station?', ko: '실례합니다, 가장 가까운 역이 어디예요?' },
+      { topic: '친구 만남', en: 'Great to see you! How have you been?', ko: '좋아! 요즘 어떻게 지냈어?' },
+      { topic: '전화 통화', en: 'Can you hear me clearly?', ko: '제 목소리가 잘 들려요?' },
+      { topic: '자기소개', en: 'My name is..., and I work in IT.', ko: '제 이름은 ...이고, IT에서 일합니다.' },
+      { topic: '취미 이야기', en: 'I enjoy reading books in my free time.', ko: '여유 시간에 책 읽는 걸 좋아해요.' },
+    ];
+    const topicIdx = new Date(today).getDate() % dailyTopics.length;
+    const topic = dailyTopics[topicIdx];
     return (
       <View style={styles.flex}>
         <TouchableOpacity style={styles.backBar} onPress={() => setView('hub')}>
@@ -877,8 +887,19 @@ export default function EnglishScreen() {
         </TouchableOpacity>
         <ScrollView contentContainerStyle={styles.detailContent}>
           <Text style={styles.dateLabel}>{formatToday(today)}</Text>
-          <View style={styles.skeleton}>
-            <Text style={styles.skeletonText}>스피킹 기능 준비 중</Text>
+          <View style={[styles.card, { borderLeftWidth: 4, borderLeftColor: '#3b82f6' }]}>
+            <Text style={[styles.badge, { backgroundColor: '#3b82f6' }]}>{topic.topic}</Text>
+            <Text style={{ fontSize: 16, fontWeight: '600', marginTop: 12, marginBottom: 8 }}>발음 연습</Text>
+            <View style={{ backgroundColor: '#f0f9ff', padding: 12, borderRadius: 8, marginBottom: 12 }}>
+              <Text style={{ fontSize: 14, color: '#0c4a6e', fontFamily: 'Courier New', fontWeight: '500' }}>
+                {topic.en}
+              </Text>
+            </View>
+            <Text style={{ fontSize: 13, color: '#666', marginBottom: 8 }}>한국어 뜻</Text>
+            <Text style={{ fontSize: 14, color: '#333', marginBottom: 16 }}>{topic.ko}</Text>
+            <Text style={{ fontSize: 12, color: '#999', fontStyle: 'italic' }}>
+              매일 다른 일상 주제로 발음 연습하세요. 천천히 따라 읽고 반복하면 자연스러운 발음을 익힐 수 있습니다.
+            </Text>
           </View>
         </ScrollView>
       </View>
@@ -905,30 +926,32 @@ export default function EnglishScreen() {
               <Text style={styles.skeletonText}>📝 수집한 문장이 없습니다</Text>
             </View>
           ) : (
-            collectedSentences.map(sent => (
-              <View key={sent.id} style={styles.collectionCard}>
-                <View style={styles.collectionMeta}>
-                  <View style={[
-                    styles.collectionBadge,
-                    { backgroundColor: sent.source === 'reading' ? '#1d4ed8' : '#7c3aed' }
-                  ]}>
-                    <Text style={styles.collectionBadgeText}>
-                      {sent.source === 'reading' ? '리딩' : '리스닝'}
-                    </Text>
+            collectedSentences
+              .filter(sent => sent.en?.trim() && sent.ko?.trim())
+              .map(sent => (
+                <View key={sent.id} style={styles.collectionCard}>
+                  <View style={styles.collectionMeta}>
+                    <View style={[
+                      styles.collectionBadge,
+                      { backgroundColor: sent.source === 'reading' ? '#1d4ed8' : '#7c3aed' }
+                    ]}>
+                      <Text style={styles.collectionBadgeText}>
+                        {sent.source === 'reading' ? '리딩' : '리스닝'}
+                      </Text>
+                    </View>
+                    <View style={[
+                      styles.collectionDifficultyBadge,
+                      { backgroundColor: sent.difficulty === 'medium' ? '#f59e0b' : '#ef4444' }
+                    ]}>
+                      <Text style={styles.collectionBadgeText}>
+                        {sent.difficulty === 'medium' ? '🟡 보통' : '🔴 어려움'}
+                      </Text>
+                    </View>
                   </View>
-                  <View style={[
-                    styles.collectionDifficultyBadge,
-                    { backgroundColor: sent.difficulty === 'medium' ? '#f59e0b' : '#ef4444' }
-                  ]}>
-                    <Text style={styles.collectionBadgeText}>
-                      {sent.difficulty === 'medium' ? '🟡 보통' : '🔴 어려움'}
-                    </Text>
-                  </View>
+                  {sent.en && <Text style={styles.collectionSentenceEn}>{sent.en.trim()}</Text>}
+                  {sent.ko && <Text style={styles.collectionSentenceKo}>{sent.ko.trim()}</Text>}
                 </View>
-                {sent.en && <Text style={styles.collectionSentenceEn}>{sent.en}</Text>}
-                {sent.ko && <Text style={styles.collectionSentenceKo}>{sent.ko}</Text>}
-              </View>
-            ))
+              ))
           )}
         </ScrollView>
       </View>

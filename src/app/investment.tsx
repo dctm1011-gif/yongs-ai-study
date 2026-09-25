@@ -1155,7 +1155,7 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
       if (user?.uid) {
         try {
           const db = getDatabase(getFirebaseApp());
-          const snap = await get(ref(db, `users/${user.uid}/regionBookmarks`));
+          const snap = await get(userRef(user.uid, 'regionBookmarks'));
           if (snap.exists()) {
             const val = snap.val();
             const arr: RegionBookmark[] = Array.isArray(val) ? val : Object.values(val);
@@ -1172,7 +1172,7 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
       // 로컬에 데이터 있으면 Firebase에 백업
       if (user?.uid && local.length > 0) {
         const db = getDatabase(getFirebaseApp());
-        dbSet(ref(db, `users/${user.uid}/regionBookmarks`), local).catch(() => {});
+        dbSet(userRef(user.uid, 'regionBookmarks'), local).catch(() => {});
       }
     };
     loadBookmarks();
@@ -1183,7 +1183,7 @@ const RegionBrowser: React.FC<{ regionCharts: RegionChartEntry[] }> = React.memo
     await AsyncStorage.setItem(REGION_BOOKMARKS_KEY, JSON.stringify(next));
     if (user?.uid) {
       const db = getDatabase(getFirebaseApp());
-      dbSet(ref(db, `users/${user.uid}/regionBookmarks`), next).catch(() => {});
+      dbSet(userRef(user.uid, 'regionBookmarks'), next).catch(() => {});
     }
   }, [user?.uid]);
 

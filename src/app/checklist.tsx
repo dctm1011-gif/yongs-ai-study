@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useAuth } from '../context/AuthContext';
 import { getFirebaseApp } from '../config/firebase';
+import { userRef } from '../utils/userDb';
 import { ProgressCalendar } from '../components/ProgressCalendar';
 import { colors, categoryColors, space, radius, fontSize, duration, shadow } from '../theme';
 import { GRADUATE_AT } from '../utils/reviewPool';
@@ -114,7 +115,7 @@ export default function ChecklistScreen() {
   useEffect(() => {
     if (!uid) return;
     const db = getDatabase(getFirebaseApp());
-    const completionRef = ref(db, `users/${uid}/completion`);
+    const completionRef = userRef(uid, 'completion');
     const unsub = onValue(completionRef, snap => {
       const data = snap.val() ?? {};
       const result: Record<string, boolean> = {};
@@ -134,14 +135,14 @@ export default function ChecklistScreen() {
     const read = (path: string) => get(ref(db, path)).then(s => (s.exists() ? s.val() : null)).catch(() => null);
 
     Promise.all([
-      read(`users/${uid}/voca/reviewPool`),
-      read(`users/${uid}/wrongPool/english`),
+      read('voca/reviewPool'),
+      read('wrongPool/english'),
       read(`english/words/${today}`),
       read(`english/reading/korea_news/${today}`),
       read('english/listening/podcasts/spotlight'),
       read('english/listening/podcasts/voa'),
-      read(`users/${uid}/completion/english_speaking`),
-      read(`users/${uid}/books`),
+      read('completion/english_speaking'),
+      read('books'),
     ]).then(([pool, wrong, words, news, spotlight, voa, speaking, books]) => {
       const poolVals: any[] = pool ? Object.values(pool) : [];
       const latestDate = (obj: any) => {

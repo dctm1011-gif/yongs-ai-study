@@ -9,6 +9,7 @@ import { getDatabase, ref, set as dbSet, get } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
 import { useAuth } from '../context/AuthContext';
 import { GRADUATE_AT } from '../utils/reviewPool';
+import { userRef } from '../utils/userDb';
 
 const CHAT_URL = 'https://illustrious-cuchufli-7c4e58.netlify.app/.netlify/functions/speaking-chat';
 const MIN_EXCHANGES = 8;
@@ -131,7 +132,7 @@ export default function AiChatScreen() {
   useEffect(() => {
     if (!user?.uid) return;
     const db = getDatabase(getFirebaseApp());
-    get(ref(db, `users/${user.uid}/speaking_history`)).then(snap => {
+    get(userRef(user.uid, 'speaking_history')).then(snap => {
       if (!snap.exists()) return;
       const all: HistoryEntry[] = Object.values(snap.val() as Record<string, HistoryEntry>);
       const recent = all
@@ -145,7 +146,7 @@ export default function AiChatScreen() {
   useEffect(() => {
     if (!user?.uid) return;
     const db = getDatabase(getFirebaseApp());
-    get(ref(db, `users/${user.uid}/completion/english_speaking/${today}`))
+    get(userRef(user.uid, `completion/english_speaking/${today}`))
       .then(snap => { if (snap.exists() && snap.val()?.done) setViewState('done'); })
       .catch(() => {});
   }, [user?.uid]);
@@ -154,7 +155,7 @@ export default function AiChatScreen() {
   useEffect(() => {
     if (!user?.uid) return;
     const db = getDatabase(getFirebaseApp());
-    get(ref(db, `users/${user.uid}/completion/english_speaking`)).then(snap => {
+    get(userRef(user.uid, 'completion/english_speaking')).then(snap => {
       if (!snap.exists()) return;
       const data = snap.val() as Record<string, any>;
       const [y, m, d] = today.split('-').map(Number);
@@ -174,8 +175,8 @@ export default function AiChatScreen() {
     if (!user?.uid) return;
     const db = getDatabase(getFirebaseApp());
     Promise.all([
-      get(ref(db, `users/${user.uid}/voca/reviewPool`)),
-      get(ref(db, `users/${user.uid}/wrongPool/english`)),
+      get(userRef(user.uid, 'voca/reviewPool')),
+      get(userRef(user.uid, 'wrongPool/english')),
     ]).then(([poolSnap, wrongSnap]) => {
       if (!poolSnap.exists()) return;
       const wrongIds = new Set(wrongSnap.exists() ? Object.keys(wrongSnap.val()) : []);
@@ -282,7 +283,7 @@ export default function AiChatScreen() {
     if (user?.uid) {
       const db = getDatabase(getFirebaseApp());
       const tasks: Promise<any>[] = [
-        dbSet(ref(db, `users/${user.uid}/completion/english_speaking/${today}`), {
+        dbSet(userRef(user.uid, `completion/english_speaking/${today}`), {
           done: true, exchanges: userMsgCount, ts: Date.now(),
         }),
       ];
@@ -292,7 +293,7 @@ export default function AiChatScreen() {
       // 모델이 피드백을 대화 본문으로만 주고 summary 필드를 비워 보내는 일이 있다
       // (2026-09-18이 그랬다). 그럴 땐 마지막 AI 메시지를 요약 자리에 남긴다.
       const lastAssistant = [...messages].reverse().find(m => m.role === 'assistant')?.content ?? '';
-      tasks.push(dbSet(ref(db, `users/${user.uid}/speaking_history/${today}`), {
+      tasks.push(dbSet(userRef(user.uid, `speaking_history/${today}`), {
         date: today,
         topic,
         summary: (summary && summary.trim()) ? summary : stripMarkdown(lastAssistant).slice(0, 600),
@@ -300,7 +301,7 @@ export default function AiChatScreen() {
         ts: Date.now(),
       }));
       if (corrections.length > 0) {
-        tasks.push(dbSet(ref(db, `users/${user.uid}/speaking_corrections/${today}`), {
+        tasks.push(dbSet(userRef(user.uid, `speaking_corrections/${today}`), {
           date: today, topic, corrections, ts: Date.now(),
         }));
       }

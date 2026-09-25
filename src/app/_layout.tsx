@@ -8,8 +8,8 @@ import * as Updates from 'expo-updates';
 import { useUpdates } from 'expo-updates';
 import { getDatabase, ref, set, get } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
+import { userRef } from '../utils/userDb';
 import VocaScreen from './voca';
-import InvestmentScreen from './investment';
 import CultureScreen from './culture';
 import ChecklistScreen from './checklist';
 import EnglishScreen from './english';
@@ -157,7 +157,7 @@ function MainTabs() {
       if (keys.length === 0) return;
       try {
         const db = getDatabase(getFirebaseApp());
-        await Promise.all(keys.map((key: string) => set(ref(db, `users/${uid}/completion/${key}/${date}`), true)));
+        await Promise.all(keys.map((key: string) => set(userRef(uid, `completion/${key}/${date}`), true)));
         await writeDailySummary(uid).catch(() => {});
         refreshBadge(uid);
         navigationRef.current?.navigate('Checklist');
@@ -177,7 +177,7 @@ function MainTabs() {
 
   const refreshBadge = useCallback((uid: string) => {
     const db = getDatabase(getFirebaseApp());
-    get(ref(db, `users/${uid}/completion`)).then(snap => {
+    get(userRef(uid, 'completion')).then(snap => {
       const data = snap.val() ?? {};
       const today = getKSTDateString();
       setRemaining(CHECKLIST_KEYS.filter(k => !isDone(data[k]?.[today])).length);
@@ -337,18 +337,6 @@ function MainTabs() {
             ),
           }}
         />
-        {APP_VARIANT === 'full' && (
-          <Tab.Screen
-            name="Investment"
-            component={InvestmentScreen}
-            options={{
-              title: 'Markets',
-              tabBarIcon: ({ color }) => (
-                <MaterialIcons name="bar-chart" size={26} color={color} />
-              ),
-            }}
-          />
-        )}
         <Tab.Screen
           name="Culture"
           component={CultureScreen}

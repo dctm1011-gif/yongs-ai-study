@@ -5,13 +5,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-  TextInput,
   Linking,
   Platform,
   Alert,
   ActivityIndicator,
   Animated,
-  ToastAndroid,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useStaggerFade } from '../hooks/useScreenFade';
@@ -22,12 +20,6 @@ import { getFirebaseApp } from '../config/firebase';
 import { userRef } from '../utils/userDb';
 import { useAuth } from '../context/AuthContext';
 import { BookSection } from '../components/BookDiary';
-import { DiaryCalendarModal } from '../components/DiaryCalendar';
-import {
-  getDayIndex,
-  DiaryVocab,
-  DIARY_VOCAB_LIST,
-} from '../data/koreanContent';
 
 import { getKSTDateString } from '../utils/dateUtils';
 
@@ -60,28 +52,14 @@ async function openMillie() {
 export default function CultureScreen() {
   const { user } = useAuth();
   const uid = user?.uid ?? '';
-  const cards = useStaggerFade(2, 70);
+  const cards = useStaggerFade(1, 70);
   const today = getKSTDateString();
   const scrollViewRef = useRef<ScrollView>(null);
-  const diaryInputRef = useRef<TextInput>(null);
-  const [diaryModalVisible, setDiaryModalVisible] = useState(false);
-
-  // ── 독서 ─────────────────────────────────────────────────────────
   const [readingDone, setReadingDone] = useState(false);
   const [synced, setSynced] = useState(false);
   const [streak, setStreak] = useState(0);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-
-  // ── 어휘 일기 ────────────────────────────────────────────────────
-  // 리스트를 3등분(사자성어/속담/고급어휘)하여 각 구간에서 1개씩 → 매일 다른 조합
-  const _section = Math.floor(DIARY_VOCAB_LIST.length / 3);
-  const _d = getDayIndex(_section);
-  const vocabWords: DiaryVocab[] = [0, 1, 2].map(i => DIARY_VOCAB_LIST[_d + _section * i]);
-  const [diaryText, setDiaryText] = useState('');
-  const [recentDiaries, setRecentDiaries] = useState<{ date: string; text: string }[]>([]);
-  const [diaryDone, setDiaryDone] = useState(false);
-  const [diarySaving, setDiarySaving] = useState(false);
 
   useEffect(() => {
     if (!uid) { setLoading(false); return; }
@@ -90,13 +68,13 @@ export default function CultureScreen() {
     const loadData = async () => {
       try {
         // 독서 완료 여부
-        const snap = await get(ref(db, `users/${uid}/completion/reading/${today}`));
+        const snap = await get(userRef(uid, `completion/reading/${today}`));
         const done = snap.val() === true;
         setReadingDone(done);
         setSynced(done);
 
         // 스트릭
-        const allSnap = await get(ref(db, `users/${uid}/completion/reading`));
+        const allSnap = await get(userRef(uid, 'completion/reading'));
         if (allSnap.exists()) {
           const data: Record<string, boolean> = allSnap.val();
           let count = 0;
@@ -108,26 +86,6 @@ export default function CultureScreen() {
           setStreak(count);
         }
 
-        // 일기 로드
-        // 최근 일기 몇 개를 같이 읽어 카드 안에서 바로 보여준다
-        get(ref(db, `users/${uid}/diary`)).then(all => {
-          if (!all.exists()) return;
-          const entries = Object.entries(all.val() as Record<string, string>)
-            .filter(([d, t]) => d < today && typeof t === 'string' && t.trim())
-            .sort((a, b) => b[0].localeCompare(a[0]))
-            .slice(0, 3)
-            .map(([date, text]) => ({ date, text }));
-          setRecentDiaries(entries);
-        }).catch(() => {});
-
-        const diarySnap = await get(ref(db, `users/${uid}/diary/${today}`));
-        if (diarySnap.exists()) {
-          const saved = diarySnap.val();
-          if (typeof saved === 'string' && saved.length > 0) {
-            setDiaryText(saved);
-            setDiaryDone(true);
-          }
-        }
       } catch (e) {
         console.warn('데이터 로드 실패:', e);
       } finally {
@@ -154,26 +112,6 @@ export default function CultureScreen() {
     }
   }, [synced, saving, uid, today]);
 
-  const handleDiarySave = useCallback(async () => {
-    if (diarySaving || diaryText.trim().length < 20) return;
-    setDiarySaving(true);
-    try {
-      if (uid) {
-        const db = getDatabase(getFirebaseApp());
-        await Promise.all([
-          dbSet(ref(db, `users/${uid}/diary/${today}`), diaryText.trim()),
-          dbSet(ref(db, `users/${uid}/completion/korean_diary/${today}`), true),
-        ]);
-      }
-      setDiaryDone(true);
-      ToastAndroid.show('✅ 일기가 저장됐어요!', ToastAndroid.SHORT);
-    } catch {
-      Alert.alert('오류', '저장에 실패했습니다. 다시 시도해주세요.');
-    } finally {
-      setDiarySaving(false);
-    }
-  }, [diarySaving, diaryText, uid, today]);
-
   if (loading) {
     return (
       <View style={s.centered}>
@@ -189,7 +127,6 @@ export default function CultureScreen() {
     <ScrollView ref={scrollViewRef} style={s.container} contentContainerStyle={s.content} keyboardShouldPersistTaps="handled">
       <Text style={s.screenTitle}>Korean</Text>
 
-      {/* ── 독서 카드 ─────────────────────────────────────────── */}
       <Animated.View style={[s.card, { opacity: cards[0].opacity, transform: [{ translateY: cards[0].translateY }] }]}>
         <View style={s.cardHeader}>
           <MaterialIcons name="menu-book" size={24} color="#0095f6" />
@@ -200,8 +137,6 @@ export default function CultureScreen() {
             </View>
           )}
         </View>
-
-        {/* 읽는 중인 책이 이 화면에서 가장 쓸모 있는 정보인데 스크롤 아래에 있었다 */}
         <BookSection uid={uid} />
         <View style={s.divider} />
 
@@ -249,107 +184,7 @@ export default function CultureScreen() {
 
       </Animated.View>
 
-      {/* ── 어휘 일기 카드 ──────────────────────────────────── */}
-      <Animated.View style={[s.card, { opacity: cards[1].opacity, transform: [{ translateY: cards[1].translateY }] }]}>
-        <View style={s.cardHeader}>
-          <MaterialIcons name="edit-note" size={24} color="#059669" />
-          <Text style={s.cardTitle}>오늘의 어휘 일기</Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-            {diaryDone && (
-              <View style={[s.streakBadge, { borderColor: '#bbf7d0', backgroundColor: '#f0fdf4' }]}>
-                <Text style={[s.streakText, { color: '#16a34a' }]}>✅ 완료</Text>
-              </View>
-            )}
-            <TouchableOpacity
-              onPress={() => setDiaryModalVisible(true)}
-              style={{ paddingHorizontal: 8, paddingVertical: 4, borderRadius: 8, backgroundColor: '#f0fdf4', borderWidth: 1, borderColor: '#bbf7d0' }}
-            >
-              <Text style={{ fontSize: 11, color: '#059669', fontWeight: '600' }}>📔 지난 일기</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        {recentDiaries.length > 0 && (
-          <View style={s.pastDiaryBox}>
-            {recentDiaries.map(d => (
-              <TouchableOpacity key={d.date} style={s.pastDiaryRow} onPress={() => setDiaryModalVisible(true)} activeOpacity={0.7}>
-                <Text style={s.pastDiaryDate}>{d.date.slice(5).replace('-', '/')}</Text>
-                <Text style={s.pastDiaryText} numberOfLines={1}>{d.text.trim()}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        )}
-
-        <View style={s.diaryGuideRow}>
-          <Text style={s.diaryGuide}>아래 어휘 3개를 모두 사용해서 오늘 일기를 써보세요</Text>
-          {/* 단어별 체크 표시는 이미 있었지만 몇 개를 썼는지는 세어주지 않았다 */}
-          <Text style={[s.diaryUsedCount, usedCount === vocabWords.length && s.diaryUsedCountDone]}>
-            {usedCount}/{vocabWords.length}
-          </Text>
-        </View>
-
-        <View style={s.vocabList}>
-          {vocabWords.map((v, i) => {
-            const used = diaryText.includes(v.word);
-            return (
-              <View key={i} style={[s.vocabChip, used && s.vocabChipUsed]}>
-                <View style={s.vocabChipTop}>
-                  <Text style={[s.vocabWord, used && s.vocabWordUsed]}>{v.word}</Text>
-                  {used && <MaterialIcons name="check-circle" size={16} color="#059669" />}
-                </View>
-                <Text style={[s.vocabMeaning, used && { color: '#059669' }]}>{v.meaning}</Text>
-              </View>
-            );
-          })}
-        </View>
-
-        {diaryDone ? (
-          <View style={s.diaryReadBox}>
-            <Text style={s.diaryReadText}>{diaryText}</Text>
-          </View>
-        ) : (
-          <>
-            <TextInput
-              ref={diaryInputRef}
-              style={s.diaryInput}
-              placeholder="오늘 하루를 자유롭게 적어보세요..."
-              placeholderTextColor="#adb5bd"
-              multiline
-              value={diaryText}
-              onChangeText={setDiaryText}
-              textAlignVertical="top"
-              onFocus={() => {
-                setTimeout(() => {
-                  scrollViewRef.current?.scrollToEnd({ animated: true });
-                }, 300);
-              }}
-            />
-            <Text style={s.diaryCharCount}>{diaryText.length}자</Text>
-            <TouchableOpacity
-              style={[s.completeBtn, { backgroundColor: '#059669' }, (diarySaving || diaryText.trim().length < 20) && s.btnDisabled]}
-              onPress={handleDiarySave}
-              disabled={diarySaving || diaryText.trim().length < 20}
-              activeOpacity={0.85}
-            >
-              {diarySaving ? (
-                <ActivityIndicator size="small" color="#fff" />
-              ) : (
-                <><MaterialIcons name="save" size={18} color="#fff" /><Text style={s.completeBtnText}>
-                  {usedCount >= vocabWords.length ? '일기 저장' : `일기 저장 · 어휘 ${vocabWords.length - usedCount}개 더`}
-                </Text></>
-              )}
-            </TouchableOpacity>
-          </>
-        )}
-      </Animated.View>
-
     </ScrollView>
-
-    <DiaryCalendarModal
-      uid={uid}
-      visible={diaryModalVisible}
-      onClose={() => setDiaryModalVisible(false)}
-    />
     </SafeAreaView>
   );
 }

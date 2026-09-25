@@ -265,7 +265,7 @@ async function syncReadWordsToPool(uid: string, readWords: Word[]): Promise<void
   if (!uid || readWords.length === 0) return;
   const db = getDatabase(getFirebaseApp());
   // skipList 먼저 확인해서 skip된 단어는 reviewPool 등록 제외
-  const skipSnap = await get(ref(db, `users/${uid}/voca/skipList`)).catch(() => null);
+  const skipSnap = await get(userRef(uid, 'voca/skipList')).catch(() => null);
   const skipKeys = new Set(skipSnap?.exists() ? Object.keys(skipSnap.val()) : []);
   for (const w of readWords) {
     if (!w.id || skipKeys.has(w.id)) continue;
@@ -301,6 +301,8 @@ export default function VocaScreen() {
   const [idiomReadSet, setIdiomReadSet] = useState<Set<string>>(new Set());
   const [idiomSkipSet, setIdiomSkipSet] = useState<Set<string>>(new Set());
   const [idiomRatings, setIdiomRatings] = useState<Record<string, number>>({});
+  const [levelInfo, setLevelInfo] = useState<{ hint: string; avg: number } | null>(null);
+  const [showLevelInfo, setShowLevelInfo] = useState(true);
   const [stats, setStats] = useState({ totalWords: 0, readWords: 0, quizzesCorrect: 0, quizzesTotal: 0 });
   const [completionToday, setCompletionToday] = useState<Record<string, boolean>>({});
   const [gameSeed, setGameSeed] = useState<{ game: GameMode; ts: number } | null>(null);
@@ -354,7 +356,7 @@ export default function VocaScreen() {
   useEffect(() => {
     if (!uid) return;
     const db = getDatabase(getFirebaseApp());
-    get(ref(db, `users/${uid}/voca/skipList`)).then(snap => {
+    get(userRef(uid, 'voca/skipList')).then(snap => {
       if (snap.exists()) setSkipSet(new Set(Object.keys(snap.val())));
     }).catch(() => {});
   }, [uid]);
@@ -378,7 +380,7 @@ export default function VocaScreen() {
     if (!uid) return;
     const today = getKSTDateString();
     const db = getDatabase(getFirebaseApp());
-    const unsub = onValue(ref(db, `users/${uid}/completion`), snap => {
+    const unsub = onValue(userRef(uid, 'completion'), snap => {
       const data = snap.val() ?? {};
       const result: Record<string, boolean> = {};
       for (const key of Object.keys(data)) {
@@ -449,6 +451,20 @@ export default function VocaScreen() {
       }
     }).catch(() => {});
   }, [uid]);
+
+  // 난이도 정보 로드
+  useEffect(() => {
+    const db = getDatabase(getFirebaseApp());
+    const today = getKSTDateString();
+    get(ref(db, `english/levelInfo/${today}`))
+      .then(snap => {
+        if (snap.exists()) {
+          const data = snap.val();
+          setLevelInfo({ hint: data.hint, avg: data.avg });
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     loadData();
@@ -1033,7 +1049,7 @@ export default function VocaScreen() {
 
       // 일간 리포트용 공개 요약 (인증 없이 Netlify 함수가 읽을 수 있는 경로)
       const db = getDatabase(getFirebaseApp());
-      get(ref(db, `users/${uid}/voca/reviewPool`)).then(snap => {
+      get(userRef(uid, 'voca/reviewPool')).then(snap => {
         const pool = snap.exists() ? Object.values(snap.val() as Record<string, any>) : [];
         const active = pool.filter((e: any) => (e.count ?? 0) < GRADUATE_AT).length;
         const graduated = pool.filter((e: any) => (e.count ?? 0) >= GRADUATE_AT).length;
@@ -1154,7 +1170,7 @@ Return ONLY JSON (no markdown):
       if (story?.sentences?.length) {
         setReviewStory(story);
         const db = getDatabase(getFirebaseApp());
-        dbSet(ref(db, `users/${uid}/voca/reviewStory/${today}`), story).catch(() => {});
+        dbSet(userRef(uid, `voca/reviewStory/${today}`), story).catch(() => {});
       } else {
         setReviewStory(null);
       }
@@ -1350,6 +1366,23 @@ Return ONLY JSON (no markdown):
       {/* Content */}
       {view === 'words' && (
         <View style={{ flex: 1 }}>
+          {levelInfo && (
+            <TouchableOpacity
+              style={styles.levelInfoBar}
+              onPress={() => setShowLevelInfo(!showLevelInfo)}
+              activeOpacity={0.7}
+            >
+              <View style={{ flex: 1 }}>
+                {showLevelInfo && (
+                  <>
+                    <Text style={styles.levelInfoText}>📈 {levelInfo.hint}</Text>
+                    <Text style={styles.levelInfoAvg}>평점: {levelInfo.avg.toFixed(2)}</Text>
+                  </>
+                )}
+              </View>
+              <Text style={styles.levelInfoToggle}>{showLevelInfo ? '▼' : '▶'}</Text>
+            </TouchableOpacity>
+          )}
           <View style={styles.filterBar}>
             <TouchableOpacity
               style={[styles.filterButton, hideReadWords && styles.filterButtonActive]}
@@ -2253,7 +2286,7 @@ const ReviewPoolView = React.memo(({ uid }: { uid: string }) => {
 
       const db = getDatabase(getFirebaseApp());
       let firstLoad = isNewDay;
-      unsub = onValue(ref(db, `users/${uid}/voca/reviewPool`), snap => {
+      unsub = onValue(userRef(uid, 'voca/reviewPool'), snap => {
         if (!snap.exists()) { setLoading(false); setRefreshing(false); return; }
         const vals: PoolWord[] = Object.entries(snap.val()).map(([id, v]: [string, any]) => ({
           id,
@@ -2506,6 +2539,37 @@ const styles = StyleSheet.create({
   },
   refreshIcon: {
     fontSize: 20,
+  },
+  levelInfoBar: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: '#f0f7ff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#cfe0ff',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  levelInfoText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#31558f',
+  },
+  levelInfoAvg: {
+    fontSize: 11,
+    fontWeight: '500',
+    color: '#666',
+    backgroundColor: '#fff',
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 4,
+    marginTop: 4,
+  },
+  levelInfoToggle: {
+    fontSize: 16,
+    color: '#31558f',
+    marginLeft: 12,
+    fontWeight: '500',
   },
   filterBar: {
     flexDirection: 'row',
