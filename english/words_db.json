@@ -4520,5 +4520,65 @@
     "explanation": "Integration is the process of combining separate elements into a unified whole. It can refer to social integration (bringing different groups together), system integration (connecting different technologies), or curriculum integration (combining different subjects).",
     "tip": "동의어: unification, merger, consolidation / 반의어: segregation, separation / 출제영역: 사회학, 기술, 경영",
     "emoji": "🔗"
+  },
+  {
+    "id": "contravene",
+    "word": "contravene",
+    "pos": "verb",
+    "date": "2026-09-26",
+    "meaning": "~에 위반하다, 어기다",
+    "example_ko": "그 새로운 정책은 국제 무역 협정에 위반된다.",
+    "example_en": "The new policy contravenes international trade agreements.",
+    "explanation": "규칙, 법률, 또는 합의된 사항에 반대되거나 위반하는 행동을 하다. 명시적으로 규칙을 어기는 것을 의미한다.",
+    "tip": "동의어: violate, breach | 반의어: comply with | 법률/정책 관련 출제 자주 등장",
+    "emoji": ""
+  },
+  {
+    "id": "traverse",
+    "word": "traverse",
+    "pos": "verb",
+    "date": "2026-09-26",
+    "meaning": "횡단하다, 가로질러 가다",
+    "example_ko": "그녀는 마을에 도달하기 위해 전체 산맥을 횡단해야 했다.",
+    "example_en": "She had to traverse the entire mountain range to reach the village.",
+    "explanation": "어떤 공간이나 거리를 한쪽에서 다른 쪽으로 가로질러 지나가거나 이동하다. 물리적 또는 비유적 의미로 사용 가능.",
+    "tip": "동의어: cross, travel across | 지리/여행 관련 뉘앙스 | 'traverse'는 좀 더 공식적/학술적 표현",
+    "emoji": ""
+  },
+  {
+    "id": "estrangement",
+    "word": "estrangement",
+    "pos": "noun",
+    "date": "2026-09-26",
+    "meaning": "소원해짐, 단절, 소격",
+    "example_ko": "두 형제 사이의 오랜 소원해짐은 그들이 화해하면서 마침내 끝났다.",
+    "example_en": "The long estrangement between the two brothers finally ended when they reconciled.",
+    "explanation": "사람들 사이의 친밀한 관계가 냉각되고 거리감이 생기는 상태. 감정적 또는 사회적 단절을 의미한다.",
+    "tip": "동의어: alienation, separation | 반의어: closeness, intimacy | 감정/관계 주제에서 출제 빈번",
+    "emoji": ""
+  },
+  {
+    "id": "propagate",
+    "word": "propagate",
+    "pos": "verb",
+    "date": "2026-09-26",
+    "meaning": "번식시키다, 전파하다, 퍼뜨리다",
+    "example_ko": "소셜 미디어는 캠페인 메시지를 수백만 명에게 전파하는 데 도움이 되었다.",
+    "example_en": "Social media helped propagate the campaign message to millions of people.",
+    "explanation": "생물이 번식하여 개체수를 늘리거나, 정보·사상·소문 등을 널리 퍼뜨리는 행위. 생물학, 홍보, 정보 확산 맥락에서 사용.",
+    "tip": "동의어: spread, disseminate, multiply | 뉘앙스: 의도적으로 퍼뜨리는 느낌 | 미디어/생물학 분야에서 등장",
+    "emoji": ""
+  },
+  {
+    "id": "augment",
+    "word": "augment",
+    "pos": "verb",
+    "date": "2026-09-26",
+    "meaning": "증가시키다, 증대하다, 보강하다",
+    "example_ko": "그 회사는 증가하는 수요를 충족하기 위해 직원을 증강하기로 결정했다.",
+    "example_en": "The company decided to augment its workforce to meet growing demand.",
+    "explanation": "어떤 것의 크기, 양, 가치, 또는 효과를 늘리거나 강화하는 행동. '증가'보다 능동적인 노력을 포함한다.",
+    "tip": "동의어: increase, enhance, expand | 반의어: diminish, reduce | 비즈니스/기술 분야에서 자주 출제",
+    "emoji": ""
   }
 ]

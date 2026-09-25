@@ -697,5 +697,41 @@
     "tip": "유사 표현: return to, contact again. 직장 이메일의 필수 표현!",
     "emoji": "📧",
     "date": "2026-09-25"
+  },
+  {
+    "id": "rule-out",
+    "phrase": "rule out",
+    "meaning_ko": "제외하다, 배제하다",
+    "meaning_en": "to eliminate something as a possibility",
+    "explanation": "어떤 선택지나 가능성을 없애버리는 거예요! 일상 대화에서 '그건 아니야' 할 때 쓰면 되는데, 영어권에서는 정말 자주 써요 💭",
+    "example_en": "We can rule out the Monday meeting because everyone is busy.",
+    "example_ko": "월요일 회의는 모두가 바빠서 제외할 수 있어요.",
+    "tip": "부정적인 뉘앙스! rule in(포함시키다)은 잘 안 씀. 대신 include를 써요.",
+    "emoji": "❌",
+    "date": "2026-09-26"
+  },
+  {
+    "id": "narrow-down",
+    "phrase": "narrow down",
+    "meaning_ko": "범위를 좁히다, 선택지를 줄이다",
+    "meaning_en": "to reduce options or possibilities to fewer choices",
+    "explanation": "수많은 선택지 중에서 점점 옵션을 줄여나가는 거래요! 쇼핑, 구직, 논문 주제 선정할 때 정말 유용해요 🎯",
+    "example_en": "After reviewing three apartments, we narrowed down our choices to two.",
+    "example_ko": "세 개의 아파트를 본 후 선택지를 두 개로 좁혔어요.",
+    "tip": "narrow는 '좁다'는 뜻. 보통 down과 함께 쓰여요. down을 빼먹으면 어색함!",
+    "emoji": "📍",
+    "date": "2026-09-26"
+  },
+  {
+    "id": "take-for-granted",
+    "phrase": "take for granted",
+    "meaning_ko": "당연하게 여기다, 감사하지 않다",
+    "meaning_en": "to assume something is true without appreciating it",
+    "explanation": "무언가를 너무 당연하게 생각해서 소중함을 모르는 거예요! 학문적 글쓰기나 깊이 있는 일상 대화에서 자주 나와요 🫶",
+    "example_en": "We often take our parents' support for granted until we live alone.",
+    "example_ko": "혼자 살 때까지 부모님의 지지를 당연하게 여기는 경우가 많아요.",
+    "tip": "3단어 숙어지만 'granted'는 과거분사 형태. 항상 이 형태로만 써요!",
+    "emoji": "🙏",
+    "date": "2026-09-26"
   }
 ]
