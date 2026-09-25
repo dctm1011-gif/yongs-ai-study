@@ -2,63 +2,62 @@
   "date": "2026-09-25",
   "words": [
     {
-      "word": "breach",
-      "part_of_speech": "noun, verb",
-      "meaning_ko": "위반, 침해; (담장·벽 등의) 틈, 구멍",
-      "explanation": "A breach is a breaking of an agreement, law, or security system. It can refer to a violation of trust or a physical breaking through of a barrier. In cybersecurity, it means unauthorized access to data.",
-      "example_from_convo": "The company suffered a major data breach last month.",
-      "example_ko": "그 회사는 지난달 대규모 데이터 침해 사건을 겪었다.",
-      "tip": "동의어: violation, infringement / 반의어: compliance, adherence / 출제영역: 보안, 법률, 계약 관련",
-      "emoji": "🔓",
+      "word": "concise",
+      "part_of_speech": "adjective",
+      "meaning_ko": "간결한, 명확한",
+      "explanation": "Using few words while expressing complete information clearly; avoiding unnecessary details or verbosity.",
+      "example_from_convo": "The report needs to be more concise—we don't have time to read lengthy explanations.",
+      "example_ko": "그 글은 간결하고 읽기 쉬웠다.",
+      "tip": "동의어: brief, succinct, compact | 반의어: verbose, wordy | 출제영역: 비즈니스 커뮤니케이션",
+      "emoji": "📝",
       "synonyms": [],
       "antonyms": []
     },
     {
-      "word": "alignment",
+      "word": "luggage",
       "part_of_speech": "noun",
-      "meaning_ko": "정렬, 정렬 상태; 일치, 조화; (정치적·이념적) 연대",
-      "explanation": "Alignment refers to the arrangement of things in a line or proper relative position. It can also mean agreement or harmony between different parties, goals, or values. In business, strategic alignment means all departments working toward the same objectives.",
-      "example_from_convo": "There's perfect alignment between our company values and our hiring practices.",
-      "example_ko": "우리 회사의 가치관과 채용 관행 사이에는 완벽한 일치가 있다.",
-      "tip": "동의어: accordance, coordination / 반의어: misalignment, discord / 출제영역: 경영, 조직, 철학",
-      "emoji": "⚙️",
+      "meaning_ko": "짐, 수하물",
+      "explanation": "Bags, suitcases, and other containers that hold personal belongings when traveling; also called baggage.",
+      "example_from_convo": "The airline charges extra for checked luggage over 50 pounds.",
+      "example_ko": "공항에서 짐을 잃어버렸다.",
+      "tip": "동의어: baggage, suitcase | 불가산명사로 쓰임 | 출제영역: 여행, 일상생활",
+      "emoji": "🧳",
       "synonyms": [],
       "antonyms": []
     },
     {
-      "word": "immunity",
-      "part_of_speech": "noun",
-      "meaning_ko": "면역, 면역력; 면책, 특권",
-      "explanation": "Immunity refers to the body's natural or acquired resistance to disease. In legal and political contexts, it means exemption from prosecution, punishment, or obligation. Diplomatic immunity protects officials from legal action.",
-      "example_from_convo": "After vaccination, the patient developed immunity to the virus.",
-      "example_ko": "백신 접종 후, 그 환자는 바이러스에 대한 면역력을 얻었다.",
-      "tip": "동의어: resistance, exemption / 반의어: susceptibility, liability / 출제영역: 의학, 법률, 외교",
-      "emoji": "🛡️",
+      "word": "carbon footprint",
+      "part_of_speech": "noun phrase",
+      "meaning_ko": "탄소 발자국, 탄소 배출량",
+      "explanation": "The total amount of greenhouse gases, particularly carbon dioxide, produced by human activities and their environmental impact.",
+      "example_from_convo": "Companies are trying to reduce their carbon footprint by switching to renewable energy sources.",
+      "example_ko": "우리 회사의 탄소 발자국을 줄이기 위해 재택근무를 확대했다.",
+      "tip": "동의어: carbon emissions | 환경/ESG 관련 주제 | 출제영역: 환경, 기업 정책",
+      "emoji": "🌍",
       "synonyms": [],
       "antonyms": []
     },
     {
-      "word": "nutrient",
+      "word": "pesticide",
       "part_of_speech": "noun",
-      "meaning_ko": "영양분, 양분",
-      "explanation": "A nutrient is a substance that provides nourishment essential for growth and the maintenance of life. Nutrients include proteins, carbohydrates, fats, vitamins, and minerals. Plants absorb nutrients from soil.",
-      "example_from_convo": "Leafy greens are rich in essential nutrients like iron and calcium.",
-      "example_ko": "잎이 많은 채소는 철분과 칼슘 같은 필수 영양분이 풍부하다.",
-      "tip": "동의어: nourishment, sustenance / 반의어: poison, toxin / 출제영역: 생물, 영양학, 의학",
-      "emoji": "🥗",
-      "background": "A nutrient is a substance used by an organism to survive, grow and reproduce. The requirement for dietary nutrient intake applies to animals, plants, fungi and protists.",
+      "meaning_ko": "살충제, 농약",
+      "explanation": "A chemical substance used to kill or control pests such as insects, rodents, or weeds that damage crops or spread disease.",
+      "example_from_convo": "Organic farming avoids synthetic pesticides to protect both consumers and the environment.",
+      "example_ko": "그 야채는 살충제를 사용하지 않고 재배되었다.",
+      "tip": "동의어: insecticide, herbicide | 반의어: organic | 출제영역: 농업, 식품 안전",
+      "emoji": "🚜",
       "synonyms": [],
       "antonyms": []
     },
     {
-      "word": "integration",
-      "part_of_speech": "noun",
-      "meaning_ko": "통합, 융합; (인종·사회) 통합; (기술) 통합",
-      "explanation": "Integration is the process of combining separate elements into a unified whole. It can refer to social integration (bringing different groups together), system integration (connecting different technologies), or curriculum integration (combining different subjects).",
-      "example_from_convo": "The successful integration of the two companies created a stronger market presence.",
-      "example_ko": "두 회사의 성공적인 통합은 더 강한 시장 입지를 만들었다.",
-      "tip": "동의어: unification, merger, consolidation / 반의어: segregation, separation / 출제영역: 사회학, 기술, 경영",
-      "emoji": "🔗",
+      "word": "adverse",
+      "part_of_speech": "adjective",
+      "meaning_ko": "부정적인, 해로운, 역효과의",
+      "explanation": "Harmful, unfavorable, or having a negative effect; opposing desired outcomes or creating difficulties.",
+      "example_from_convo": "The medication has some adverse side effects that patients should be aware of.",
+      "example_ko": "그 정책은 저소득층에 부정적인 영향을 미쳤다.",
+      "tip": "동의어: negative, harmful, unfavorable | 반의어: favorable, positive | 출제영역: 의료, 정책, 비즈니스",
+      "emoji": "⚠️",
       "synonyms": [],
       "antonyms": []
     }
@@ -66,154 +65,166 @@
   "quiz": [
     {
       "type": "meaning",
-      "word": "breach",
-      "question": "In a cybersecurity context, what does 'breach' most accurately refer to?",
+      "word": "concise",
+      "question": "In a business context, which situation BEST describes the need for concise writing?",
       "options": [
-        "A carefully planned security upgrade",
-        "Unauthorized access or violation of a system or agreement",
-        "A temporary network outage",
-        "A company's decision to update passwords"
+        "When you want to impress readers with complex vocabulary",
+        "When readers have limited time and need quick information",
+        "When formal tone is more important than clarity",
+        "When the topic requires detailed historical background"
       ],
       "answer": 1,
-      "explanation": "A breach refers to unauthorized access to data or violation of security, not an upgrade, outage, or routine password update.",
+      "explanation": "Concise writing prioritizes delivering necessary information efficiently, which is crucial in business where time is valuable.",
       "option_explanations": [
-        "Incorrect - this is a proactive security measure, not a breach",
-        "Correct - breach means unauthorized access or violation of a system or agreement",
-        "Incorrect - an outage is different from a breach",
-        "Incorrect - routine password updates are standard practice, not a breach"
+        "Complexity doesn't equal professionalism",
+        "Concise writing respects the reader's time",
+        "Tone and clarity should work together",
+        "Details can be provided through conciseness"
       ]
     },
     {
       "type": "meaning",
-      "word": "alignment",
-      "question": "Which word is MOST similar to 'alignment' when used in a business strategy context?",
+      "word": "carbon footprint",
+      "question": "Which of the following BEST represents a reduction in carbon footprint?",
       "options": [
-        "Competition",
-        "Coordination",
-        "Conflict",
-        "Separation"
+        "Using air conditioning more frequently",
+        "Switching from driving to public transportation",
+        "Increasing meat consumption",
+        "Purchasing more packaged goods"
       ],
       "answer": 1,
-      "explanation": "Alignment in business means having different parts work together toward the same goal, which is coordination. Competition, conflict, and separation all describe misalignment.",
+      "explanation": "Using public transportation produces fewer emissions per person than driving a car, directly reducing individual carbon footprint.",
       "option_explanations": [
-        "Incorrect - competition suggests opposing goals",
-        "Correct - coordination means working together in agreement, similar to alignment",
-        "Incorrect - conflict is the opposite of alignment",
-        "Incorrect - separation is the opposite of alignment"
+        "Increases energy consumption",
+        "Most efficient option",
+        "Livestock production has high emissions",
+        "Packaging creates waste and transportation emissions"
       ]
     },
     {
       "type": "meaning",
-      "word": "immunity",
-      "question": "What does 'immunity' mean in a legal and diplomatic context?",
+      "word": "adverse",
+      "question": "A news headline states: 'Study Links Social Media to Adverse Health Effects.' What does this mean?",
       "options": [
-        "A strong immune system",
-        "Exemption from legal prosecution or punishment",
-        "A medical vaccine",
-        "A type of insurance policy"
+        "Social media provides positive mental health benefits",
+        "Social media causes harmful or negative health consequences",
+        "Social media has no measurable impact on health",
+        "Social media can be beneficial if used moderately"
       ],
       "answer": 1,
-      "explanation": "In legal and diplomatic contexts, immunity refers to exemption from prosecution or legal action, such as diplomatic immunity that protects government officials.",
+      "explanation": "'Adverse effects' means negative, harmful consequences. The headline indicates social media is linked to health problems.",
       "option_explanations": [
-        "Incorrect - this refers to physical health, not legal status",
-        "Correct - immunity in legal/diplomatic contexts means exemption from prosecution",
-        "Incorrect - while vaccines build immunity to disease, this isn't the legal meaning",
-        "Incorrect - insurance is different from legal immunity"
+        "Contradicts the meaning of adverse",
+        "Correct interpretation of adverse",
+        "Contradicts finding of harmful effects",
+        "Doesn't match the definition provided"
       ]
     },
     {
       "type": "fill_blank",
-      "word": "breach",
-      "sentence": "After the security _____ was discovered, the company immediately notified all customers and offered free credit monitoring.",
-      "sentence_ko": "보안 침해가 발견된 후, 그 회사는 즉시 모든 고객에게 알리고 무료 신용 모니터링을 제공했다.",
-      "answer": "breach",
-      "hint": "A violation or unauthorized access to a system"
+      "word": "luggage",
+      "sentence": "When you arrive at the airport three hours early, you should head directly to the check-in counter with your ___.",
+      "sentence_ko": "공항에 3시간 일찍 도착했을 때, 당신은 당신의 ___을 가지고 직접 체크인 카운터로 가야 한다.",
+      "answer": "luggage",
+      "hint": "여행할 때 가지고 다니는 가방과 짐"
     },
     {
       "type": "fill_blank",
-      "word": "integration",
-      "sentence": "The new software's seamless _____ with our existing systems saved us months of transition time.",
-      "sentence_ko": "새 소프트웨어와 기존 시스템의 완벽한 통합으로 우리는 몇 개월의 전환 시간을 절약했다.",
-      "answer": "integration",
-      "hint": "The process of combining separate elements into a whole"
+      "word": "pesticide",
+      "sentence": "Many consumers prefer organic vegetables because they are grown without synthetic ___ residues.",
+      "sentence_ko": "많은 소비자들은 유기농 야채를 선호한다. 왜냐하면 그들은 합성 ___의 잔여물 없이 재배되기 때문이다.",
+      "answer": "pesticide",
+      "hint": "농작물을 보호하기 위해 사용하는 화학 물질"
     },
     {
       "type": "fill_blank",
-      "word": "nutrient",
-      "sentence": "The soil in this region lacks sufficient _____ content, which is why crops have been failing.",
-      "sentence_ko": "이 지역의 토양은 충분한 영양분 함량이 부족해서 작물 수확이 실패했다.",
-      "answer": "nutrient",
-      "hint": "Essential substances that provide nourishment"
+      "word": "concise",
+      "sentence": "The marketing team appreciated the ___ summary that conveyed all essential information in just two pages.",
+      "sentence_ko": "마케팅 팀은 모든 필수 정보를 단 2페이지에 전달하는 ___한 요약을 높이 평가했다.",
+      "answer": "concise",
+      "hint": "짧지만 명확한, 필요한 정보만 담은"
     },
     {
       "type": "situation",
-      "word": "alignment",
-      "question": "Your team has been working on a project for weeks, but you notice different departments have completely different goals and timelines. Your manager says, 'We need better _____ across departments.' What does she mean?",
+      "word": "concise",
+      "question": "Your supervisor returns your 15-page report with feedback: 'This is too wordy. I need concise writing that gets straight to the point.' What should you do?",
       "options": [
-        "We need to hire more employees",
-        "We need everyone working toward the same objectives and following the same timeline",
-        "We need to separate departments to reduce communication",
-        "We need to cancel the project immediately"
+        "Add more examples and case studies to support your points",
+        "Remove unnecessary details and reorganize to highlight key findings and recommendations only",
+        "Include an extended introduction explaining your research methodology",
+        "Keep the same content but use fancier vocabulary"
       ],
       "answer": 1,
-      "explanation": "The manager is pointing out a lack of alignment - different departments need to coordinate and work toward unified goals and timelines.",
-      "option_explanations": null
+      "explanation": "Your supervisor is asking you to eliminate unnecessary information and present only essential findings—this is what concise writing means.",
+      "option_explanations": [
+        "This would make it longer",
+        "Correct: this achieves conciseness",
+        "This adds length and elaboration",
+        "Vocabulary style doesn't address wordiness"
+      ]
     },
     {
       "type": "situation",
-      "word": "immunity",
-      "question": "A diplomat from a foreign country was involved in a traffic accident but the local police cannot arrest or prosecute him. A colleague explains, 'He has _____ in this country.' What protects him from legal action?",
+      "word": "adverse",
+      "question": "A pharmaceutical company discovers their new medication causes adverse reactions in 8% of test participants. As a manager, what is the MOST appropriate action?",
       "options": [
-        "A valid driver's license",
-        "Diplomatic immunity",
-        "Travel insurance",
-        "A letter from his employer"
+        "Release the medication immediately since only 8% are affected",
+        "Report findings to regulatory authorities and investigate the cause before market approval",
+        "Downplay the results in marketing materials",
+        "Continue testing without informing participants of the risks"
       ],
       "answer": 1,
-      "explanation": "Diplomatic immunity is a legal status that protects government officials and diplomats from prosecution in foreign countries.",
-      "option_explanations": null
+      "explanation": "Adverse reactions are harmful effects that must be reported to authorities. This is a legal and ethical responsibility before product release.",
+      "option_explanations": [
+        "Ignores potential patient harm",
+        "Responsible handling of adverse health effects",
+        "Unethical and illegal concealment",
+        "Violates research ethics and safety protocols"
+      ]
     }
   ],
   "sentences": [
     {
-      "word": "breach",
-      "sentence": "The data breach exposed millions of customers' personal information, leading to lawsuits and significant reputational damage.",
-      "sentence_ko": "그 데이터 침해로 수백만 명의 고객 개인정보가 노출되어 소송과 심각한 평판 손상을 초래했다.",
-      "nuance": "심각한 결과를 동반하는 보안 침해",
-      "context": "사이버 보안, 뉴스",
-      "everyday_usage": "회사나 기관이 보안 사건을 설명할 때 자주 사용"
+      "word": "concise",
+      "sentence": "The CEO requested a concise executive summary that could be read in five minutes.",
+      "sentence_ko": "CEO는 5분 안에 읽을 수 있는 간결한 경영진 요약을 요청했다.",
+      "nuance": "Business/Professional context emphasizing efficiency",
+      "context": "Corporate communication where time is limited",
+      "everyday_usage": "Often used in business emails, reports, and presentations"
     },
     {
-      "word": "alignment",
-      "sentence": "For the project to succeed, we need complete alignment on budget, timeline, and deliverables before we start.",
-      "sentence_ko": "프로젝트가 성공하려면 시작하기 전에 예산, 일정, 결과물에 대한 완벽한 일치가 필요하다.",
-      "nuance": "협력과 합의를 강조하는 표현",
-      "context": "프로젝트 관리, 직장",
-      "everyday_usage": "팀 미팅이나 계획 단계에서 자주 사용"
+      "word": "luggage",
+      "sentence": "She carefully packed her luggage to avoid exceeding the weight limit at the airport.",
+      "sentence_ko": "그녀는 공항에서 무게 제한을 초과하지 않도록 조심스럽게 짐을 꾸렸다.",
+      "nuance": "Travel context with practical concern about regulations",
+      "context": "Airport travel and baggage restrictions",
+      "everyday_usage": "Common when discussing travel preparation and airline policies"
     },
     {
-      "word": "immunity",
-      "sentence": "After receiving both vaccine doses, she had natural immunity to the disease for several years.",
-      "sentence_ko": "두 번의 백신 접종 후, 그녀는 수 년간 그 질병에 대한 자연 면역을 가지게 되었다.",
-      "nuance": "신체의 질병 저항력",
-      "context": "의학, 건강",
-      "everyday_usage": "예방접종이나 감염병 관련 대화에서 사용"
+      "word": "carbon footprint",
+      "sentence": "The startup aims to achieve a net-zero carbon footprint by transitioning to renewable energy sources.",
+      "sentence_ko": "그 스타트업은 재생 에너지로 전환하여 순탄소 발자국이 0이 되는 것을 목표로 한다.",
+      "nuance": "Environmental and corporate responsibility context",
+      "context": "Sustainability initiatives and climate goals",
+      "everyday_usage": "Frequently heard in ESG reports, climate discussions, and corporate policy statements"
     },
     {
-      "word": "nutrient",
-      "sentence": "Ocean water contains important nutrients like nitrogen and phosphorus that support marine plant growth.",
-      "sentence_ko": "바닷물에는 해양 식물 성장을 지원하는 질소와 인과 같은 중요한 영양분이 포함되어 있다.",
-      "nuance": "생물 성장과 발달을 위한 필수 물질",
-      "context": "생물학, 환경",
-      "everyday_usage": "농업, 영양학, 과학 설명에서 사용"
+      "word": "pesticide",
+      "sentence": "Farmers in the region reduced pesticide use by 40% after adopting integrated pest management techniques.",
+      "sentence_ko": "그 지역의 농민들은 통합 해충 관리 기법을 도입한 후 살충제 사용을 40% 줄였다.",
+      "nuance": "Agricultural improvement and environmental protection",
+      "context": "Sustainable farming practices and agricultural policy",
+      "everyday_usage": "Common in agricultural reports, food safety discussions, and environmental news"
     },
     {
-      "word": "integration",
-      "sentence": "The integration of traditional medicine with modern medical practices is becoming increasingly common in healthcare systems worldwide.",
-      "sentence_ko": "전통 의학과 현대 의료 관행의 통합이 전 세계 의료 시스템에서 점점 더 일반화되고 있다.",
-      "nuance": "서로 다른 두 가지 체계나 방식의 결합",
-      "context": "의료, 사회 정책",
-      "everyday_usage": "다양한 시스템이나 문화가 함께 작동할 때 사용"
+      "word": "adverse",
+      "sentence": "The court ruled that the company failed to disclose adverse effects of the product to consumers.",
+      "sentence_ko": "법원은 그 회사가 제품의 부정적인 영향을 소비자에게 공개하지 못했다고 판결했다.",
+      "nuance": "Legal and ethical accountability context",
+      "context": "Consumer protection, product liability, and regulatory compliance",
+      "everyday_usage": "Used in legal cases, medical disclosures, and consumer protection warnings"
     }
-  ]
+  ],
+  "cefr_hint": "B2~C1 수준 (평가 데이터 부족 — 기본값)",
+  "avg": 3.0
 }

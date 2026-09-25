@@ -625,5 +625,41 @@
     "tip": "to 뒤에는 반드시 동명사(~ing)가 와야 해요. 'looking forward to hearing from you'는 이메일 마무리 표현으로 최고야!",
     "emoji": "🎉",
     "date": "2026-09-25"
+  },
+  {
+    "id": "pass-down",
+    "phrase": "pass down",
+    "meaning_ko": "물려주다, 전승하다",
+    "meaning_en": "to give or teach something to the next generation",
+    "explanation": "할머니가 할머니의 요리법을 엄마에게, 엄마가 우리에게 물려주는 것처럼 세대를 거쳐 전해지는 거라고 생각하면 돼요! 아주 일상적이고 따뜻한 표현이에요 ❤️",
+    "example_en": "My grandmother passed down her secret recipe to my mother.",
+    "example_ko": "할머니께서 비장의 레시피를 엄마한테 물려주셨어.",
+    "tip": "hand down(물려주다)과 비슷해요. 문화, 전통, 물건, 지식 등 다양한 것을 물려줄 때 사용합니다!",
+    "emoji": "🎁",
+    "date": "2026-09-25"
+  },
+  {
+    "id": "come-across",
+    "phrase": "come across",
+    "meaning_ko": "~를 우연히 만나다, 발견하다",
+    "meaning_en": "to find or meet something by chance unexpectedly",
+    "explanation": "길을 가다가 우연히 좋아하던 친구를 만나거나, 책을 읽다가 재미있는 문구를 발견하는 것처럼 예상치 못한 만남이에요! 정말 유용한 표현이야요 ✨",
+    "example_en": "I came across an interesting article while browsing the internet yesterday.",
+    "example_ko": "어제 인터넷을 보다가 재미있는 기사를 우연히 발견했어.",
+    "tip": "run into(만나다), stumble upon(발견하다)과 유사해요. 의도하지 않은 '우연한' 발견이 핵심입니다!",
+    "emoji": "🔍",
+    "date": "2026-09-25"
+  },
+  {
+    "id": "follow-through",
+    "phrase": "follow through",
+    "meaning_ko": "마지막까지 완수하다, 끝까지 해내다",
+    "meaning_en": "to complete or finish something you promised or started",
+    "explanation": "계획을 세우고 시작했으면 끝까지 해내야 하는데, 그렇게 마지막까지 실행하는 것을 말해요! 비즈니스나 프로젝트에서 특히 중요한 표현이에요 💪",
+    "example_en": "The manager will follow through on the project deadline.",
+    "example_ko": "매니저가 프로젝트 마감일까지 끝까지 완수할 거야.",
+    "tip": "follow up(후속 조치하다)과 다릅니다! follow through는 시작한 것을 '끝까지' 완성하는 거고, follow up은 이후의 과정을 챙기는 거예요.",
+    "emoji": "🎯",
+    "date": "2026-09-25"
   }
 ]
