@@ -661,5 +661,41 @@
     "tip": "follow up(후속 조치하다)과 다릅니다! follow through는 시작한 것을 '끝까지' 완성하는 거고, follow up은 이후의 과정을 챙기는 거예요.",
     "emoji": "🎯",
     "date": "2026-09-25"
+  },
+  {
+    "id": "keep-track-of",
+    "phrase": "keep track of",
+    "meaning_ko": "~을 계속 파악하다, 관리하다",
+    "meaning_en": "to monitor or stay aware of something",
+    "explanation": "어떤 것의 진행 상황이나 변화를 계속 지켜보는 거예요. 일상에서 정말 자주 써요! 📍",
+    "example_en": "I keep track of my expenses using a budgeting app.",
+    "example_ko": "나는 예산 관리 앱으로 내 지출을 계속 파악해요.",
+    "tip": "유사 표현: monitor, manage, keep an eye on. lose track of(놓치다)의 반대 표현!",
+    "emoji": "👀",
+    "date": "2026-09-25"
+  },
+  {
+    "id": "take-into-account",
+    "phrase": "take into account",
+    "meaning_ko": "~을 고려하다, 감안하다",
+    "meaning_en": "to consider something when making decisions",
+    "explanation": "뭔가를 결정할 때 그걸 중요한 요소로 생각해주는 거예요. 학술 논문이나 비즈니스 보고서에서 자주 봐요! 🤔",
+    "example_en": "We should take into account the environmental impact before approving the project.",
+    "example_ko": "프로젝트를 승인하기 전에 환경 영향을 고려해야 해요.",
+    "tip": "유사 표현: consider, take into consideration. 더 formal한 표현이에요!",
+    "emoji": "⚖️",
+    "date": "2026-09-25"
+  },
+  {
+    "id": "get-back-to",
+    "phrase": "get back to",
+    "meaning_ko": "~으로 돌아가다, 연락을 다시 하다",
+    "meaning_en": "to return to something or contact someone later",
+    "explanation": "예전 상태로 돌아가거나, 나중에 다시 연락하겠다는 의미예요. 비즈니스 이메일에서 정~말 많이 써요! 💬",
+    "example_en": "I'll get back to you with the final report by Friday.",
+    "example_ko": "금요일까지 최종 보고서로 다시 연락드릴게요.",
+    "tip": "유사 표현: return to, contact again. 직장 이메일의 필수 표현!",
+    "emoji": "📧",
+    "date": "2026-09-25"
   }
 ]
