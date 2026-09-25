@@ -120,8 +120,6 @@ export default function CultureScreen() {
     );
   }
 
-  const usedCount = vocabWords.filter(v => diaryText.includes(v.word)).length;
-
   return (
     <SafeAreaView style={s.safeArea} edges={['top']}>
     <ScrollView ref={scrollViewRef} style={s.container} contentContainerStyle={s.content} keyboardShouldPersistTaps="handled">
