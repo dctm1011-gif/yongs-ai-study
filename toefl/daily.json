@@ -1,112 +1,114 @@
 {
-  "date": "2026-09-26",
+  "date": "2026-09-27",
   "reading": {
-    "title": "The Impact of Remote Work on Urban Development",
-    "passage": "Remote work has fundamentally transformed urban development patterns over the past decade. As companies embrace flexible work arrangements, fewer employees commute daily to city centers, reducing traffic congestion and environmental pollution. However, this shift has created challenges for urban economies that traditionally relied on office workers to support local businesses. Some cities have successfully adapted by converting office spaces into residential apartments and promoting mixed-use developments. Urban planners must now balance the benefits of reduced congestion with the need to maintain vibrant, economically sustainable city centers.",
+    "title": "Artificial Intelligence in Healthcare",
+    "passage": "Artificial intelligence is revolutionizing the healthcare industry by improving diagnostic accuracy and patient outcomes. AI algorithms can analyze medical images and detect diseases like cancer earlier than human radiologists. Machine learning models trained on vast datasets enable physicians to predict patient deterioration and intervene proactively. Furthermore, AI-powered chatbots provide patients with preliminary medical advice, reducing unnecessary hospital visits. However, concerns about data privacy and the need for regulatory frameworks remain significant challenges that must be addressed before widespread implementation.",
     "questions": [
       {
-        "q": "According to the passage, what is one benefit of remote work for cities?",
+        "q": "According to the passage, what is one advantage of using AI algorithms in healthcare?",
         "options": [
-          "Increased office space demand",
-          "Reduced traffic congestion",
-          "Higher commercial rents",
-          "More parking availability"
+          "They eliminate the need for human doctors",
+          "They can detect diseases like cancer earlier than human radiologists",
+          "They guarantee perfect medical diagnoses",
+          "They reduce healthcare costs by 100%"
         ],
         "answer": 1,
-        "explanation": "지문에서 'fewer employees commute daily to city centers, reducing traffic congestion and environmental pollution'이라고 명시되어 있습니다."
+        "explanation": "본문에서 'AI algorithms can analyze medical images and detect diseases like cancer earlier than human radiologists'라고 명시되어 있습니다. 다른 선택지들은 본문의 내용을 과장하거나 왜곡한 것입니다."
       },
       {
-        "q": "What challenge does the passage mention regarding remote work?",
+        "q": "What does the passage suggest about the challenges of implementing AI in healthcare?",
         "options": [
-          "Decreased employee productivity",
-          "Reduced support for local businesses",
-          "Increased pollution",
-          "More traffic in suburbs"
+          "There are no challenges to implementation",
+          "Data privacy and regulatory frameworks are significant concerns",
+          "AI is ready for immediate implementation everywhere",
+          "Patients refuse to use AI-powered systems"
         ],
         "answer": 1,
-        "explanation": "지문의 'this shift has created challenges for urban economies that traditionally relied on office workers to support local businesses'에서 답을 찾을 수 있습니다."
+        "explanation": "'However, concerns about data privacy and the need for regulatory frameworks remain significant challenges that must be addressed'라는 문장에서 직접적으로 설명하고 있습니다."
       },
       {
-        "q": "How have some cities adapted to these changes?",
+        "q": "How do AI-powered chatbots benefit patients according to the passage?",
         "options": [
-          "Banned remote work",
-          "Increased office construction",
-          "Converted offices to residential spaces",
-          "Reduced public transportation"
+          "They provide preliminary medical advice and reduce unnecessary hospital visits",
+          "They replace human doctors completely",
+          "They diagnose all diseases with 100% accuracy",
+          "They are free for all patients"
         ],
-        "answer": 2,
-        "explanation": "지문에서 'Some cities have successfully adapted by converting office spaces into residential apartments and promoting mixed-use developments'라고 설명하고 있습니다."
+        "answer": 0,
+        "explanation": "'AI-powered chatbots provide patients with preliminary medical advice, reducing unnecessary hospital visits'라는 문장에서 명확하게 설명되어 있습니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the following statement? Remote work is better for employees than working in a traditional office.",
+    "prompt": "Do you agree or disagree with the statement: 'Remote work is more productive than working in an office environment'? Provide specific reasons and examples to support your position.",
     "structure": {
-      "intro": "명확한 입장을 제시하세요. '~에 동의한다/하지 않는다'는 의견을 직접 표현하고, 2-3개의 주요 이유를 미리 언급하세요.",
-      "body1": "첫 번째 주요 이유를 전개하세요. 구체적인 예시나 데이터를 포함하여 주장을 뒷받침하세요. 원격 근무의 유연성, 출퇴근 시간 절약, 업무 집중도 등을 다룰 수 있습니다.",
-      "body2": "두 번째 주요 이유를 설명하세요. 첫 번째 단락과 달라야 하며, 일과 삶의 균형, 사회적 상호작용, 경력 발전 등의 관점에서 논할 수 있습니다.",
-      "conclusion": "주요 주장을 재정리하고 최종 의견을 강조하세요. 반론을 인정하면서도 당신의 입장이 더 타당함을 암시적으로 표현하세요."
+      "intro": "명확한 입장 표시 (동의 또는 반대)와 2-3개의 주요 이유를 미리 제시하기. 예: 'I strongly agree/disagree that remote work is more productive because...'",
+      "body1": "첫 번째 이유 전개: 직장 환경에서의 방해 요소 감소, 출퇴근 시간 절약으로 인한 생산성 증가 또는 대면 협업의 중요성 설명",
+      "body2": "두 번째 이유 전개: 업무 유형에 따른 차이 (창의적 업무 vs 협업 업무), 기술 발전으로 원격 협업 가능성 또는 팀 문화 구축의 어려움",
+      "conclusion": "입장 재확인 및 결론. 양쪽 관점을 인정하되 자신의 입장이 더 타당함을 강조"
     },
     "useful_phrases": [
-      "In my opinion, remote work offers significant advantages...",
-      "Furthermore, employees can achieve better work-life balance...",
-      "On the other hand, some argue that...",
-      "For instance, studies show that...",
-      "In conclusion, the benefits outweigh the drawbacks because...",
-      "This demonstrates that..."
+      "In my opinion,",
+      "I strongly agree/disagree that",
+      "Furthermore,",
+      "For example,",
+      "On the other hand,",
+      "This demonstrates that",
+      "In conclusion,",
+      "To sum up,"
     ]
   },
   "speaking": {
-    "prompt": "Some people believe that companies should require employees to work in offices. Others believe that remote work should be the default option. Which position do you prefer and why?",
+    "prompt": "Some people prefer studying alone, while others prefer studying in groups. Which do you prefer and why?",
     "useful_expressions": [
-      "In my perspective, I believe that remote work is more beneficial because...",
-      "One significant reason is that employees can have greater flexibility and focus...",
-      "Additionally, remote work reduces environmental impact through decreased commuting...",
-      "However, I acknowledge that in-office work has certain advantages...",
-      "Overall, I prefer remote work for the following reasons..."
+      "In my opinion, I prefer studying alone because...",
+      "One reason is that studying alone allows me to...",
+      "Another advantage is that I can focus better when...",
+      "I think this is important because...",
+      "For example, when I study with others..."
     ],
     "sample_points": [
-      "원격 근무는 직원들에게 유연성과 생산성 향상을 제공합니다. 통근 시간이 줄어들면서 업무에 더 많은 시간을 할애할 수 있고, 집중력 있는 환경에서 일할 수 있습니다.",
-      "원격 근무는 환경 보호와 비용 절감에 기여합니다. 탄소 배출이 감소하고, 회사는 사무실 운영 비용을 절감하여 직원 급여나 혜택 개선에 투자할 수 있습니다."
+      "혼자 공부할 때의 장점: 집중력 향상, 자신의 속도로 학습 진행 가능, 방해 요소 최소화, 복잡한 개념을 충분한 시간을 들여 이해할 수 있음",
+      "그룹 스터디의 장점 (반대 입장): 다양한 관점 공유, 동료에게서 배우기, 동기 부여 증대, 토론을 통한 이해 심화, 질문 기회 증가"
     ]
   },
   "listening": {
-    "title": "Professor discussing urban planning and remote work trends",
-    "type": "lecture",
-    "script": "Today, I want to discuss how remote work is reshaping our cities. Historically, urban development has centered around downtown business districts where thousands of office workers converged daily. However, the pandemic accelerated a trend that was already beginning: the rise of remote work. Companies discovered that many employees could work effectively from home, which fundamentally changed real estate demands. Now, we're seeing significant shifts in urban landscapes. Downtown office vacancies have increased in many cities, prompting developers to think creatively. Some are converting these older office buildings into luxury apartments or mixed-use spaces. Others are reimagining downtown areas with recreational facilities and cultural centers to attract residents and visitors. Meanwhile, suburban areas are experiencing unexpected growth as people relocate to quieter regions while maintaining remote positions. This creates interesting challenges for city planners. They must decide how to revitalize downtown areas while accommodating this shift. The future of urban development will depend on how effectively cities adapt to these changing work patterns.",
+    "title": "Academic Advising Session",
+    "type": "conversation",
+    "script": "Advisor: Good morning! I see you're interested in changing your major from engineering to environmental science. Can you tell me what sparked this interest? Student: Well, I've been taking some elective courses in environmental studies, and I really enjoyed learning about climate change and sustainability. I feel like engineering isn't quite the right path for me. Advisor: That's very common. Many students discover their true passion through electives. Now, changing majors will affect your graduation timeline. You'll need to complete additional coursework in biology, chemistry, and environmental policy. This might delay your graduation by a semester or two. Student: I understand. How many credits do I need? Advisor: For environmental science, you need 120 credits total, with 45 specifically in environmental courses. You've already completed about 60 credits in general education and engineering, which can count as electives. So you're looking at approximately 60 more credits. We should also discuss scholarships, as some of them are major-specific. Student: Will I lose my current engineering scholarship? Advisor: Possibly. Let me check our database. Many scholarships are flexible, but some are restricted to specific majors. I'll help you explore alternative funding options.",
     "questions": [
       {
-        "q": "What is the main topic of this lecture?",
+        "q": "What is the main purpose of this conversation?",
         "options": [
-          "The history of downtown office buildings",
-          "How remote work is changing urban development",
-          "The benefits of suburban living",
-          "Technology solutions for commuting"
+          "To discuss the student's scholarship options",
+          "To discuss the student's major change from engineering to environmental science",
+          "To explain the engineering program requirements",
+          "To register the student for next semester's courses"
         ],
         "answer": 1,
-        "explanation": "교수는 원격 근무가 도시 발전에 어떻게 영향을 미치는지에 대해 강의하고 있습니다. 주제는 'how remote work is reshaping our cities'입니다."
+        "explanation": "대화의 전체 내용이 학생의 전공 변경(engineering에서 environmental science로)에 관한 것입니다. Advisor는 이에 따른 학점 요구사항, 졸업 시간, 장학금 영향 등을 설명하고 있습니다."
       },
       {
-        "q": "According to the lecture, what are developers doing with vacant office buildings?",
+        "q": "According to the advisor, how many additional credits does the student need to complete for the new major?",
         "options": [
-          "Demolishing them for parking",
-          "Converting them to apartments or mixed-use spaces",
-          "Keeping them empty",
-          "Selling them to other countries"
+          "120 credits",
+          "60 credits",
+          "45 credits",
+          "90 credits"
         ],
         "answer": 1,
-        "explanation": "강의에서 'Some are converting these older office buildings into luxury apartments or mixed-use spaces'라고 명확히 설명합니다."
+        "explanation": "Advisor가 'For environmental science, you need 120 credits total... You've already completed about 60 credits... So you're looking at approximately 60 more credits'라고 명시했습니다."
       },
       {
-        "q": "What challenge do city planners face according to the professor?",
+        "q": "What concern does the student raise at the end of the conversation?",
         "options": [
-          "Finding new office workers",
-          "Deciding how to revitalize downtown while adapting to work pattern changes",
-          "Building more highways",
-          "Increasing office building construction"
+          "The student is worried about finding housing",
+          "The student is concerned about losing the current engineering scholarship",
+          "The student wants to know about campus facilities",
+          "The student asks about internship opportunities"
         ],
         "answer": 1,
-        "explanation": "교수는 'They must decide how to revitalize downtown areas while accommodating this shift'라고 도시 계획자들이 직면한 도전 과제를 설명합니다."
+        "explanation": "학생이 'Will I lose my current engineering scholarship?'라고 직접 묻고 있으며, Advisor가 일부 장학금은 제한될 수 있음을 설명합니다."
       }
     ]
   }
