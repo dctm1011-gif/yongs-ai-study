@@ -1,58 +1,64 @@
 {
-  "date": "2026-09-26",
+  "date": "2026-09-27",
   "words": [
     {
-      "word": "contravene",
-      "part_of_speech": "verb",
-      "meaning_ko": "~에 위반하다, 어기다",
-      "explanation": "규칙, 법률, 또는 합의된 사항에 반대되거나 위반하는 행동을 하다. 명시적으로 규칙을 어기는 것을 의미한다.",
-      "example_from_convo": "The new policy contravenes international trade agreements.",
-      "example_ko": "그 새로운 정책은 국제 무역 협정에 위반된다.",
-      "tip": "동의어: violate, breach | 반의어: comply with | 법률/정책 관련 출제 자주 등장",
+      "word": "acrimonious",
+      "part_of_speech": "adjective",
+      "meaning_ko": "신랄한, 쓸쓸한, 감정적으로 상한",
+      "explanation": "관계나 의견 불일치에서 분노와 쓸쓸함이 가득 찬 상태를 나타냄. 주로 논쟁, 이별, 법정 분쟁에서 사용됨.",
+      "example_from_convo": "Their acrimonious divorce lasted two years with constant legal battles.",
+      "example_ko": "그들의 신랄한 이혼은 끊임없는 법적 싸움으로 2년간 지속되었다.",
+      "tip": "동의어: bitter, caustic, hostile / 반의어: amicable, cordial / 출제영역: TOEFL, 신문사설",
+      "emoji": "😠",
+      "background": "",
       "synonyms": [],
       "antonyms": []
     },
     {
-      "word": "traverse",
-      "part_of_speech": "verb",
-      "meaning_ko": "횡단하다, 가로질러 가다",
-      "explanation": "어떤 공간이나 거리를 한쪽에서 다른 쪽으로 가로질러 지나가거나 이동하다. 물리적 또는 비유적 의미로 사용 가능.",
-      "example_from_convo": "She had to traverse the entire mountain range to reach the village.",
-      "example_ko": "그녀는 마을에 도달하기 위해 전체 산맥을 횡단해야 했다.",
-      "tip": "동의어: cross, travel across | 지리/여행 관련 뉘앙스 | 'traverse'는 좀 더 공식적/학술적 표현",
-      "synonyms": [],
-      "antonyms": []
-    },
-    {
-      "word": "estrangement",
+      "word": "peregrination",
       "part_of_speech": "noun",
-      "meaning_ko": "소원해짐, 단절, 소격",
-      "explanation": "사람들 사이의 친밀한 관계가 냉각되고 거리감이 생기는 상태. 감정적 또는 사회적 단절을 의미한다.",
-      "example_from_convo": "The long estrangement between the two brothers finally ended when they reconciled.",
-      "example_ko": "두 형제 사이의 오랜 소원해짐은 그들이 화해하면서 마침내 끝났다.",
-      "tip": "동의어: alienation, separation | 반의어: closeness, intimacy | 감정/관계 주제에서 출제 빈번",
+      "meaning_ko": "여행, 방랑, 순회",
+      "explanation": "한 장소에서 다른 장소로 장시간에 걸친 여행이나 방랑을 의미함. 종종 목적 없는 또는 탐험적인 여행을 암시.",
+      "example_from_convo": "After years of peregrination through Europe, she finally settled in Paris.",
+      "example_ko": "유럽을 통한 수년간의 방랑 끝에, 그녀는 마침내 파리에 정착했다.",
+      "tip": "동의어: wandering, journey, pilgrimage / 반의어: settlement, staying put / 출제영역: GRE, 문학",
+      "emoji": "🚶",
       "synonyms": [],
       "antonyms": []
     },
     {
-      "word": "propagate",
-      "part_of_speech": "verb",
-      "meaning_ko": "번식시키다, 전파하다, 퍼뜨리다",
-      "explanation": "생물이 번식하여 개체수를 늘리거나, 정보·사상·소문 등을 널리 퍼뜨리는 행위. 생물학, 홍보, 정보 확산 맥락에서 사용.",
-      "example_from_convo": "Social media helped propagate the campaign message to millions of people.",
-      "example_ko": "소셜 미디어는 캠페인 메시지를 수백만 명에게 전파하는 데 도움이 되었다.",
-      "tip": "동의어: spread, disseminate, multiply | 뉘앙스: 의도적으로 퍼뜨리는 느낌 | 미디어/생물학 분야에서 등장",
+      "word": "propinquity",
+      "part_of_speech": "noun",
+      "meaning_ko": "근접성, 친근성, 인척관계",
+      "explanation": "물리적 거리의 가까움 또는 혈연관계를 나타냄. 사회심리학에서 가까운 거리가 호감을 증가시킨다는 이론에도 사용됨.",
+      "example_from_convo": "The propinquity of their offices led to a budding romance at work.",
+      "example_ko": "그들 사무실의 근접성이 직장에서의 로맨스로 이어졌다.",
+      "tip": "동의어: proximity, closeness, kinship / 반의어: distance, remoteness / 출제영역: 심리학, TOEFL",
+      "emoji": "🤝",
       "synonyms": [],
       "antonyms": []
     },
     {
-      "word": "augment",
-      "part_of_speech": "verb",
-      "meaning_ko": "증가시키다, 증대하다, 보강하다",
-      "explanation": "어떤 것의 크기, 양, 가치, 또는 효과를 늘리거나 강화하는 행동. '증가'보다 능동적인 노력을 포함한다.",
-      "example_from_convo": "The company decided to augment its workforce to meet growing demand.",
-      "example_ko": "그 회사는 증가하는 수요를 충족하기 위해 직원을 증강하기로 결정했다.",
-      "tip": "동의어: increase, enhance, expand | 반의어: diminish, reduce | 비즈니스/기술 분야에서 자주 출제",
+      "word": "pathogenic",
+      "part_of_speech": "adjective",
+      "meaning_ko": "병원성의, 질병을 야기하는",
+      "explanation": "박테리아, 바이러스, 또는 물질이 질병을 일으킬 수 있는 성질을 가진 것을 나타냄. 의학 및 생물학 분야에서 자주 사용됨.",
+      "example_from_convo": "The pathogenic bacteria were identified as the source of the food poisoning outbreak.",
+      "example_ko": "병원성 박테리아가 식중독 발병의 원인으로 밝혀졌다.",
+      "tip": "동의어: disease-causing, virulent / 반의어: harmless, benign / 출제영역: 의학, 과학뉴스",
+      "emoji": "🦠",
+      "synonyms": [],
+      "antonyms": []
+    },
+    {
+      "word": "remediable",
+      "part_of_speech": "adjective",
+      "meaning_ko": "치료 가능한, 개선 가능한, 수정 가능한",
+      "explanation": "문제나 상황이 치료, 개선, 또는 해결될 수 있음을 의미함. 희망적인 뉘앙스를 가지고 있음.",
+      "example_from_convo": "Fortunately, the pollution problem in the river is remediable with proper environmental measures.",
+      "example_ko": "다행히 강의 오염 문제는 적절한 환경 조치로 개선 가능하다.",
+      "tip": "동의어: curable, fixable, resolvable / 반의어: irreversible, incurable / 출제영역: GMAT, 환경뉴스",
+      "emoji": "✅",
       "synonyms": [],
       "antonyms": []
     }
@@ -60,242 +66,166 @@
   "quiz": [
     {
       "type": "meaning",
-      "word": "contravene",
-      "question": "Which of the following best describes what it means to contravene a rule?",
+      "word": "acrimonious",
+      "question": "In a news report about international trade disputes, 'acrimonious' is MOST similar to which term?",
       "options": [
-        "To follow a rule strictly and obey it completely",
-        "To act in direct opposition or violation of a rule",
-        "To question the validity of a rule in court",
-        "To temporarily postpone implementing a rule"
+        "friendly and cooperative",
+        "bitter and hostile in tone",
+        "detailed and comprehensive",
+        "legally binding and formal"
       ],
       "answer": 1,
-      "explanation": "Contravene means to violate or act against an established rule, law, or agreement. Option B correctly captures this definition.",
+      "explanation": "Acrimonious describes communication or relationships filled with anger and bitterness, which matches 'bitter and hostile in tone' rather than the other options.",
       "option_explanations": [
-        "This describes compliance, the opposite of contravene",
-        "Correct - contravene means to violate or go against",
-        "This is a legal challenge, not contravening",
-        "This is a postponement, not a violation"
+        "Opposite meaning - acrimonious is not friendly",
+        "Correct - this captures the angry, resentful quality",
+        "Does not relate to the primary meaning of acrimonious",
+        "Acrimonious doesn't necessarily mean legally binding"
       ]
     },
     {
       "type": "meaning",
-      "word": "traverse",
-      "question": "In a geographical or travel context, traverse is MOST similar to which word?",
+      "word": "peregrination",
+      "question": "Which context best demonstrates the meaning of 'peregrination'?",
       "options": [
-        "To explore new territories with a guide",
-        "To journey across or through a specific area or distance",
-        "To climb to the summit of a mountain peak",
-        "To map out the terrain before traveling"
+        "A student attends the same university for four years",
+        "A merchant travels to multiple countries over decades selling goods",
+        "A worker stays in the same office position for ten years",
+        "A family visits one beach resort every summer"
       ],
       "answer": 1,
-      "explanation": "Traverse specifically means to cross or move through a space from one side to another. While exploration and climbing may be related activities, traversing fundamentally means crossing or going through.",
+      "explanation": "Peregrination implies extensive travel or wandering across multiple locations over time. Only the merchant's journey across multiple countries fits this definition.",
       "option_explanations": [
-        "Exploration is broader than traversing",
-        "Correct - traverse means to cross through or across",
-        "Climbing is different from traversing horizontally",
-        "Mapping precedes traversal but isn't the same action"
+        "Staying in one place contradicts peregrination",
+        "Correct - traveling to multiple countries over time is peregrination",
+        "Staying in one position is not peregrination",
+        "Visiting one location repeatedly is not peregrination"
       ]
     },
     {
       "type": "meaning",
-      "word": "propagate",
-      "question": "In a news or media context, propagate refers to...?",
+      "word": "pathogenic",
+      "question": "What does a scientist mean when describing an organism as 'pathogenic'?",
       "options": [
-        "To investigate the authenticity of a story",
-        "To spread or disseminate information widely to many people",
-        "To delay the release of breaking news",
-        "To criticize misinformation in public discourse"
+        "It is beneficial to human health",
+        "It has the ability to cause disease",
+        "It reproduces very rapidly",
+        "It thrives only in cold environments"
       ],
       "answer": 1,
-      "explanation": "In media and communication contexts, propagate means to spread or distribute information broadly. This can be neutral (spreading facts) or negative (spreading false information).",
+      "explanation": "Pathogenic specifically refers to organisms or agents capable of causing disease. This is the precise definition used in medical and scientific contexts.",
       "option_explanations": [
-        "Investigation is verification, not propagation",
-        "Correct - propagate means to spread widely",
-        "Delaying is the opposite of propagating",
-        "Criticism doesn't propagate; it opposes propagation"
+        "Pathogenic means the opposite",
+        "Correct - disease-causing is the core meaning of pathogenic",
+        "Speed of reproduction is unrelated to pathogenic nature",
+        "Environmental preference doesn't define pathogenicity"
       ]
     },
     {
       "type": "fill_blank",
-      "word": "contravene",
-      "sentence": "The decision to increase working hours without consulting employees ___ the company's own labor agreement.",
-      "sentence_ko": "직원 협의 없이 근무 시간을 늘리기로 한 결정은 회사 자신의 노동 협약을 ___했다.",
-      "answer": "contravened",
-      "hint": "A verb in past tense describing a violation of an existing agreement"
+      "word": "propinquity",
+      "sentence": "The students who sat in ___ to each other in the classroom developed stronger friendships than those seated far apart.",
+      "sentence_ko": "교실에서 서로 ___ 에 앉은 학생들이 멀리 앉은 학생들보다 더 강한 우정을 발전시켰다.",
+      "answer": "propinquity",
+      "hint": "A noun meaning physical closeness or nearness that can influence relationships"
     },
     {
       "type": "fill_blank",
-      "word": "augment",
-      "sentence": "To improve customer satisfaction, the hotel plans to ___ its staff by hiring 50 new employees next quarter.",
-      "sentence_ko": "고객 만족도를 높이기 위해 호텔은 다음 분기에 50명의 신입 직원을 채용하여 직원을 ___할 계획이다.",
-      "answer": "augment",
-      "hint": "A verb meaning to increase or strengthen the size of something"
+      "word": "remediable",
+      "sentence": "The environmental agency announced that the contaminated groundwater was ___ through a comprehensive cleanup initiative.",
+      "sentence_ko": "환경청은 오염된 지하수가 종합적인 정화 사업을 통해 ___ 라고 발표했다.",
+      "answer": "remediable",
+      "hint": "An adjective meaning capable of being fixed or improved"
     },
     {
       "type": "fill_blank",
-      "word": "traverse",
-      "sentence": "The hiking group spent two days to ___ the dense forest and reach the camping site on the other side.",
-      "sentence_ko": "등산 그룹은 빽빽한 숲을 ___하고 다른 쪽의 캠핑 장소에 도달하는 데 이틀이 걸렸다.",
-      "answer": "traverse",
-      "hint": "A verb meaning to cross through or travel across a distance or terrain"
+      "word": "acrimonious",
+      "sentence": "After the failed merger negotiations, relations between the two companies became increasingly ___ .",
+      "sentence_ko": "실패한 합병 협상 후, 두 회사 간의 관계는 점점 더 ___ 해졌다.",
+      "answer": "acrimonious",
+      "hint": "An adjective describing bitter, hostile, or resentful relations"
     },
     {
       "type": "situation",
-      "word": "estrangement",
-      "question": "Your close friend from college hasn't responded to your messages in two years. Recently, you learned she's going through a difficult period. When you finally connect and talk about what happened, she explains: 'I felt so hurt by what you said that I couldn't face you.' This situation describes...?",
+      "word": "peregrination",
+      "question": "Your colleague returns from a month-long sabbatical where she traveled through Southeast Asia, visiting Thailand, Vietnam, Cambodia, and Laos. When describing her trip to the team, you want to capture the extensive wandering she did. Which statement best describes her experience?",
       "options": [
-        "A temporary disagreement that will resolve itself naturally",
-        "An estrangement between two people who once shared closeness",
-        "A complete and permanent end to the friendship with no hope of repair",
-        "A misunderstanding caused solely by poor communication technology"
+        "She took a direct flight vacation to one destination",
+        "Her peregrination through Southeast Asia included stops in multiple countries",
+        "She conducted a stationary research project in Bangkok",
+        "She completed a business conference circuit in a single city"
       ],
       "answer": 1,
-      "explanation": "The scenario describes estrangement - a state where a previously close relationship has become distant and disconnected due to hurt feelings. There's emotional separation even though the relationship history remains.",
+      "explanation": "Peregrination perfectly describes extended travel through multiple locations, which matches her journey through four different Southeast Asian countries.",
       "option_explanations": [
-        "Two years of silence is more than temporary",
-        "Correct - this describes estrangement: emotional distance in a once-close relationship",
-        "Estrangement can potentially be repaired; the passage doesn't say it's permanent",
-        "While miscommunication played a role, the core issue is the emotional distance"
+        "Peregrination implies multiple stops, not a direct flight",
+        "Correct - traveling through multiple countries is the essence of peregrination",
+        "Stationary work is not peregrination",
+        "Staying in one city contradicts the nature of peregrination"
       ]
     },
     {
       "type": "situation",
-      "word": "propagate",
-      "question": "Your marketing director says, 'We need to propagate this new product launch across all our platforms immediately.' What exactly does she want your team to do?",
+      "word": "pathogenic",
+      "question": "Your medical team is reviewing laboratory results from a patient's blood sample. The report indicates the presence of 'pathogenic bacteria.' What action should your team prioritize?",
       "options": [
-        "Research whether the product will be profitable",
-        "Spread and distribute information about the product launch widely to reach as many people as possible",
-        "Delay the announcement until next month when we have more inventory",
-        "Create a detailed scientific report about the product's ingredients"
+        "Monitor but take no action since all bacteria are harmless",
+        "Initiate treatment to eliminate disease-causing organisms",
+        "Celebrate because the bacteria indicate good health",
+        "Wait until the bacteria mutate into a different form"
       ],
       "answer": 1,
-      "explanation": "When a director says to propagate a message or information, they're asking you to spread it widely across multiple channels and platforms to reach a large audience. This is standard marketing terminology.",
+      "explanation": "Pathogenic bacteria cause disease, so identifying them requires immediate medical intervention to treat the patient and prevent complications.",
       "option_explanations": [
-        "Profitability research is separate from propagation",
-        "Correct - propagate means to spread widely across channels",
-        "Propagating means immediate distribution, not delay",
-        "Scientific reports aren't what's meant by propagate in marketing"
-      ]
-    },
-    {
-      "type": "situation",
-      "word": "augment",
-      "question": "A software company's CEO announces that they will augment their research and development budget by 30% next year. What is the company planning to do?",
-      "options": [
-        "Reduce expenses to improve profitability",
-        "Decrease the number of R&D projects being pursued",
-        "Increase or strengthen the R&D budget to invest more resources",
-        "Move the R&D department to a different location"
-      ],
-      "answer": 2,
-      "explanation": "Augment means to increase or strengthen something. When a company augments its budget, it's increasing the allocated funds for that department or project.",
-      "option_explanations": [
-        "Augmenting means increasing, not reducing",
-        "Decreasing is the opposite of augmenting",
-        "Correct - augment means to increase or strengthen the budget allocation",
-        "Relocation has nothing to do with augmenting a budget"
-      ]
-    },
-    {
-      "type": "situation",
-      "word": "traverse",
-      "question": "An explorer tells her team, 'We'll need to traverse three different ecosystems before we reach the research station.' What does she mean they must do?",
-      "options": [
-        "Stay within one ecosystem and study it thoroughly",
-        "Cross through and travel across three different ecosystems to reach their destination",
-        "Avoid dangerous ecosystems by taking an alternate route",
-        "Map out each ecosystem without entering it"
-      ],
-      "answer": 1,
-      "explanation": "To traverse ecosystems means to travel through and cross them from one point to another. The explorer is indicating they will pass through three different environments to reach their goal.",
-      "option_explanations": [
-        "Staying in one place is opposite to traversing",
-        "Correct - traverse means to cross through and travel across",
-        "Avoiding is different from traversing",
-        "Mapping without entering is not traversing"
-      ]
-    },
-    {
-      "type": "situation",
-      "word": "contravene",
-      "question": "A legal team discovers that the company's new hiring practice contravenes federal employment law. What has happened?",
-      "options": [
-        "The new hiring practice complies perfectly with all federal regulations",
-        "The new hiring practice violates or goes against federal employment law requirements",
-        "The company is seeking legal clarification about the hiring practice",
-        "The federal government is investigating the company's practices"
-      ],
-      "answer": 1,
-      "explanation": "Contravene means to violate or act against something. If a practice contravenes a law, it means the practice breaks or violates that law.",
-      "option_explanations": [
-        "Compliance is the opposite of contravening",
-        "Correct - contravene means the practice violates the law",
-        "Seeking clarification doesn't involve contravening",
-        "Investigation might result from contravening, but contravene describes the violation itself"
-      ]
-    },
-    {
-      "type": "situation",
-      "word": "propagate",
-      "question": "A scientist studying bacteria is asked, 'How do these microorganisms propagate in a warm environment?' What is the scientist being asked to explain?",
-      "options": [
-        "How the bacteria defend themselves against antibiotics",
-        "How the bacteria spread, multiply, and reproduce in warm conditions",
-        "Why bacteria are harmful to human health",
-        "What temperature kills the bacteria most efficiently"
-      ],
-      "answer": 1,
-      "explanation": "In biological contexts, propagate means to reproduce and multiply. The scientist is being asked how the bacteria reproduce and spread in warm environments.",
-      "option_explanations": [
-        "Defense mechanisms aren't what propagate describes",
-        "Correct - propagate means to reproduce and multiply in biological context",
-        "Harmfulness isn't about propagation",
-        "Killing bacteria is opposite to propagation"
+        "Pathogenic bacteria are NOT harmless and require action",
+        "Correct - pathogenic means disease-causing, requiring treatment",
+        "Pathogenic bacteria indicate health problems, not good health",
+        "Waiting would be medically dangerous with pathogenic organisms"
       ]
     }
   ],
   "sentences": [
     {
-      "word": "contravene",
-      "sentence": "The government's decision to expand military spending contravenes the peace treaty signed five years ago.",
-      "sentence_ko": "정부의 군사 지출 확대 결정은 5년 전에 서명한 평화 조약에 위반된다.",
-      "nuance": "공식적이고 심각한 맥락에서 사용",
-      "context": "국제 정치, 법률, 공식 정책",
-      "everyday_usage": "일상에서는 덜 쓰임. 보통 'violate'나 'break'를 사용"
+      "word": "acrimonious",
+      "sentence": "The acrimonious debate between the two political candidates overshadowed the policy discussions during the election.",
+      "sentence_ko": "두 정치 후보자 간의 신랄한 논쟁이 선거 중 정책 논의를 가렸다.",
+      "nuance": "강한 감정적 대립과 적대감",
+      "context": "정치 뉴스, 공식 토론",
+      "everyday_usage": "직장 회의에서의 격렬한 의견 충돌, 이혼 소송"
     },
     {
-      "word": "traverse",
-      "sentence": "Tourists must traverse a narrow mountain pass to reach the ancient temple hidden in the valley.",
-      "sentence_ko": "관광객들은 계곡에 숨겨진 고대 사원에 도달하기 위해 좁은 산길을 횡단해야 한다.",
-      "nuance": "물리적 이동과 거리 극복의 느낌",
-      "context": "여행, 모험, 지리학적 설명",
-      "everyday_usage": "구체적인 지형을 통과할 때 사용"
+      "word": "peregrination",
+      "sentence": "The old explorer's peregrination across uncharted territories provided invaluable geographic knowledge to future generations.",
+      "sentence_ko": "노 탐험가의 미지의 영역에 대한 방랑은 미래 세대에 귀중한 지리학적 지식을 제공했다.",
+      "nuance": "광범위한 탐험과 긴 여행",
+      "context": "역사, 문학, 모험 이야기",
+      "everyday_usage": "은퇴 후 세계 여행, 업무 관련 출장 순회"
     },
     {
-      "word": "estrangement",
-      "sentence": "After years of estrangement, the father and son finally embraced at the airport when the son returned from abroad.",
-      "sentence_ko": "오랜 소원해짐 끝에 해외에서 돌아온 아들과 아버지는 공항에서 마침내 포옹했다.",
-      "nuance": "감정적 거리감과 단절의 슬픔",
-      "context": "가족 관계, 우정, 인간관계 드라마",
-      "everyday_usage": "관계의 냉각과 거리감을 표현할 때"
+      "word": "propinquity",
+      "sentence": "Research in social psychology shows that propinquity often leads to increased attraction between individuals.",
+      "sentence_ko": "사회 심리학 연구에 따르면 근접성은 개인 간의 호감을 증가시킨다.",
+      "nuance": "물리적 또는 사회적 거리의 가까움",
+      "context": "심리학, 사회학 연구",
+      "everyday_usage": "이웃과의 우정, 학교에서의 짝꿍 관계"
     },
     {
-      "word": "propagate",
-      "sentence": "Environmental activists use social media to propagate awareness about climate change and encourage policy reform.",
-      "sentence_ko": "환경 운동가들은 소셜 미디어를 사용하여 기후 변화에 대한 인식을 전파하고 정책 개혁을 장려한다.",
-      "nuance": "의도적이고 광범위한 확산",
-      "context": "미디어, 마케팅, 사회 운동, 교육",
-      "everyday_usage": "정보나 사상을 널리 퍼뜨릴 때 사용"
+      "word": "pathogenic",
+      "sentence": "The CDC identified the pathogenic strain of the virus as the cause of the recent respiratory illness outbreaks.",
+      "sentence_ko": "질병통제예방센터는 최근 호흡기질환 발병의 원인을 병원성 바이러스 변종으로 파악했다.",
+      "nuance": "질병을 일으킬 수 있는 성질",
+      "context": "의학 뉴스, 과학 보고서, 공중보건",
+      "everyday_usage": "감염증 진단, 식품 안전 검사"
     },
     {
-      "word": "augment",
-      "sentence": "The company augmented its production capacity by installing three new manufacturing plants across the region.",
-      "sentence_ko": "그 회사는 지역 전역에 3개의 새로운 제조 공장을 설치하여 생산 능력을 증강했다.",
-      "nuance": "조직적이고 의도적인 증강",
-      "context": "비즈니스, 기술, 조직 관리",
-      "everyday_usage": "능력, 재원, 직원 등을 늘릴 때 사용"
+      "word": "remediable",
+      "sentence": "Although the budget deficit was severe, financial experts believed the situation was remediable with fiscal reforms.",
+      "sentence_ko": "예산 적자가 심각했지만, 재정 전문가들은 재정 개혁으로 상황이 개선 가능하다고 생각했다.",
+      "nuance": "해결 가능한 희망적인 상황",
+      "context": "경제 뉴스, 비즈니스 분석",
+      "everyday_usage": "학생의 낮은 성적 개선, 환경 오염 정화"
     }
   ],
-  "cefr_hint": "C1~C2 수준 (사용자가 대부분 쉽다고 평가함 — 더 어렵게)",
-  "avg": 2.19
+  "cefr_hint": "C1 수준 (사용자가 약간 쉽다고 평가함 — 한 단계 높게)",
+  "avg": 2.31
 }

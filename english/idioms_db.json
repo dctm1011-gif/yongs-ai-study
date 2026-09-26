@@ -733,5 +733,29 @@
     "tip": "3단어 숙어지만 'granted'는 과거분사 형태. 항상 이 형태로만 써요!",
     "emoji": "🙏",
     "date": "2026-09-26"
+  },
+  {
+    "id": "gear-up",
+    "phrase": "gear up",
+    "meaning_ko": "준비하다, 착수하다",
+    "meaning_en": "to prepare or get ready for something important",
+    "explanation": "뭔가 큰 일을 앞두고 마음과 몸을 다잡는 거! 시험, 프로젝트 같은 중요한 일 앞에서 써요 💪",
+    "example_en": "The company is gearing up for the product launch next month.",
+    "example_ko": "그 회사는 다음 달 제품 출시를 위해 준비 중이에요.",
+    "tip": "유사 표현: prepare, get ready, ramp up. 비즈니스 문맥에서 자주 나와요!",
+    "emoji": "⚙️",
+    "date": "2026-09-27"
+  },
+  {
+    "id": "wear-off",
+    "phrase": "wear off",
+    "meaning_ko": "효과가 사라지다, 옅어지다",
+    "meaning_en": "to gradually lose effect or strength over time",
+    "explanation": "처음엔 강했던 효과나 느낌이 시간이 지나면서 사라지는 거예요. 약효, 흥분감, 신기로움 같은 거 말이에요! ⏰",
+    "example_en": "The pain relief from the medicine wears off after four hours.",
+    "example_ko": "그 약의 진통 효과는 4시간 후에 사라져요.",
+    "tip": "유사 표현: fade, diminish, disappear. 일상에서도 자주 쓰는 표현이에요!",
+    "emoji": "👋",
+    "date": "2026-09-27"
   }
 ]

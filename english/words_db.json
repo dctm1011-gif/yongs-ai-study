@@ -4580,5 +4580,65 @@
     "explanation": "어떤 것의 크기, 양, 가치, 또는 효과를 늘리거나 강화하는 행동. '증가'보다 능동적인 노력을 포함한다.",
     "tip": "동의어: increase, enhance, expand | 반의어: diminish, reduce | 비즈니스/기술 분야에서 자주 출제",
     "emoji": ""
+  },
+  {
+    "id": "acrimonious",
+    "word": "acrimonious",
+    "pos": "adjective",
+    "date": "2026-09-27",
+    "meaning": "신랄한, 쓸쓸한, 감정적으로 상한",
+    "example_ko": "그들의 신랄한 이혼은 끊임없는 법적 싸움으로 2년간 지속되었다.",
+    "example_en": "Their acrimonious divorce lasted two years with constant legal battles.",
+    "explanation": "관계나 의견 불일치에서 분노와 쓸쓸함이 가득 찬 상태를 나타냄. 주로 논쟁, 이별, 법정 분쟁에서 사용됨.",
+    "tip": "동의어: bitter, caustic, hostile / 반의어: amicable, cordial / 출제영역: TOEFL, 신문사설",
+    "emoji": "😠"
+  },
+  {
+    "id": "peregrination",
+    "word": "peregrination",
+    "pos": "noun",
+    "date": "2026-09-27",
+    "meaning": "여행, 방랑, 순회",
+    "example_ko": "유럽을 통한 수년간의 방랑 끝에, 그녀는 마침내 파리에 정착했다.",
+    "example_en": "After years of peregrination through Europe, she finally settled in Paris.",
+    "explanation": "한 장소에서 다른 장소로 장시간에 걸친 여행이나 방랑을 의미함. 종종 목적 없는 또는 탐험적인 여행을 암시.",
+    "tip": "동의어: wandering, journey, pilgrimage / 반의어: settlement, staying put / 출제영역: GRE, 문학",
+    "emoji": "🚶"
+  },
+  {
+    "id": "propinquity",
+    "word": "propinquity",
+    "pos": "noun",
+    "date": "2026-09-27",
+    "meaning": "근접성, 친근성, 인척관계",
+    "example_ko": "그들 사무실의 근접성이 직장에서의 로맨스로 이어졌다.",
+    "example_en": "The propinquity of their offices led to a budding romance at work.",
+    "explanation": "물리적 거리의 가까움 또는 혈연관계를 나타냄. 사회심리학에서 가까운 거리가 호감을 증가시킨다는 이론에도 사용됨.",
+    "tip": "동의어: proximity, closeness, kinship / 반의어: distance, remoteness / 출제영역: 심리학, TOEFL",
+    "emoji": "🤝"
+  },
+  {
+    "id": "pathogenic",
+    "word": "pathogenic",
+    "pos": "adjective",
+    "date": "2026-09-27",
+    "meaning": "병원성의, 질병을 야기하는",
+    "example_ko": "병원성 박테리아가 식중독 발병의 원인으로 밝혀졌다.",
+    "example_en": "The pathogenic bacteria were identified as the source of the food poisoning outbreak.",
+    "explanation": "박테리아, 바이러스, 또는 물질이 질병을 일으킬 수 있는 성질을 가진 것을 나타냄. 의학 및 생물학 분야에서 자주 사용됨.",
+    "tip": "동의어: disease-causing, virulent / 반의어: harmless, benign / 출제영역: 의학, 과학뉴스",
+    "emoji": "🦠"
+  },
+  {
+    "id": "remediable",
+    "word": "remediable",
+    "pos": "adjective",
+    "date": "2026-09-27",
+    "meaning": "치료 가능한, 개선 가능한, 수정 가능한",
+    "example_ko": "다행히 강의 오염 문제는 적절한 환경 조치로 개선 가능하다.",
+    "example_en": "Fortunately, the pollution problem in the river is remediable with proper environmental measures.",
+    "explanation": "문제나 상황이 치료, 개선, 또는 해결될 수 있음을 의미함. 희망적인 뉘앙스를 가지고 있음.",
+    "tip": "동의어: curable, fixable, resolvable / 반의어: irreversible, incurable / 출제영역: GMAT, 환경뉴스",
+    "emoji": "✅"
   }
 ]
