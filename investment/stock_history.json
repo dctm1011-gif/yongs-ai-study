@@ -1,35 +1,5 @@
 [
   {
-    "date": "2026-09-09",
-    "name": "삼성전자",
-    "ticker": "005930.KS"
-  },
-  {
-    "date": "2026-09-10",
-    "name": "Qualcomm",
-    "ticker": "QCOM"
-  },
-  {
-    "date": "2026-09-11",
-    "name": "The Kroger Co.",
-    "ticker": "KR"
-  },
-  {
-    "date": "2026-09-12",
-    "name": "SK하이닉스",
-    "ticker": "SKHY"
-  },
-  {
-    "date": "2026-09-13",
-    "name": "삼성전자",
-    "ticker": "005930.KS"
-  },
-  {
-    "date": "2026-09-14",
-    "name": "삼성전자",
-    "ticker": "005930.KS"
-  },
-  {
     "date": "2026-09-15",
     "name": "Intel",
     "ticker": "INTC"
@@ -48,5 +18,35 @@
     "date": "2026-09-20",
     "name": "GS",
     "ticker": "006360.KS"
+  },
+  {
+    "date": "2026-09-21",
+    "name": "삼성전자",
+    "ticker": "005930.KS"
+  },
+  {
+    "date": "2026-09-22",
+    "name": "Micron Technology",
+    "ticker": "MU"
+  },
+  {
+    "date": "2026-09-23",
+    "name": "LG전자",
+    "ticker": "066570.KS"
+  },
+  {
+    "date": "2026-09-24",
+    "name": "CrowdStrike",
+    "ticker": "CRWD"
+  },
+  {
+    "date": "2026-09-25",
+    "name": "Equinor",
+    "ticker": "EQNR"
+  },
+  {
+    "date": "2026-09-26",
+    "name": "SK Hynix",
+    "ticker": "SKHY"
   }
 ]

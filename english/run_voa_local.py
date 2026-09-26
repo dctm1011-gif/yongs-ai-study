@@ -2,7 +2,7 @@
 VOA Learning English 기사 → 문장별 번역+분석 → Firebase 저장
 - Words and Their Stories / Everyday Grammar / Science in the News 등 504개 학습 기사 순환
 - Task Scheduler: 매일 05:45 KST
-- Firebase: english/podcasts/voa/{YYYY-MM-DD}
+- Firebase: english/listening/podcasts/voa/{YYYY-MM-DD}
 """
 import re, json, os, sys, gzip, io, urllib.request
 from datetime import date, timedelta
@@ -112,7 +112,7 @@ def get_recently_used_urls(days=60):
     used = set()
     for i in range(days):
         d = (date.today() - timedelta(days=i)).isoformat()
-        data = firebase_get(f"english/podcasts/voa/{d}")
+        data = firebase_get(f"english/listening/podcasts/voa/{d}")
         if data and data.get("episode_url"):
             used.add(data["episode_url"])
     return used
@@ -243,14 +243,8 @@ def main():
     if not api_key:
         print("[!] ANTHROPIC_API_KEY 없음"); sys.exit(1)
 
-    # 어제 리스닝 미완료 시 오늘 업데이트 스킵
-    if not force and not check_yesterday_listening_done():
-        yesterday = str(date.today() - timedelta(days=1))
-        print(f"[VOA] 어제({yesterday}) 리스닝 미완료 → 오늘 업데이트 스킵")
-        return
-
     # 이미 오늘 데이터 있으면 스킵
-    existing = firebase_get(f"english/podcasts/voa/{TODAY}")
+    existing = firebase_get(f"english/listening/podcasts/voa/{TODAY}")
     if not force and existing and existing.get("sentences"):
         print(f"[VOA] 이미 완료됨: {existing.get('title', '')[:50]}")
         return
@@ -308,7 +302,7 @@ def main():
         "sentences": sentences,
     }
 
-    status = firebase_put(f"english/podcasts/voa/{TODAY}", data)
+    status = firebase_put(f"english/listening/podcasts/voa/{TODAY}", data)
     print(f"[VOA] Firebase PUT {status}: {len(sentences)}문장 저장")
 
 

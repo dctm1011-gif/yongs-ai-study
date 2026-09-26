@@ -47,18 +47,10 @@ const GROUPS: { title: string; color: string; items: CheckItem[] }[] = [
     ],
   },
   {
-    title: '투자',
-    color: categoryColors.investment,
-    items: [
-      { key: 'investment', label: '투자 학습', emoji: '📈', target: 'Investment' },
-    ],
-  },
-  {
     title: '한국어',
     color: categoryColors.korean,
     items: [
-      { key: 'reading',      label: '독서',      emoji: '📕', target: 'Culture' },
-      { key: 'korean_diary', label: '어휘 일기', emoji: '✏️', target: 'Culture' },
+      { key: 'reading', label: '독서', emoji: '📕', target: 'Culture' },
     ],
   },
 ];

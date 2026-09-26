@@ -1,13 +1,14 @@
 """
 Spotlight English RSS → 문장별 번역+분석 → Firebase 저장
 Task Scheduler: 매일 05:40 KST
-Firebase: english/podcasts/spotlight/{YYYY-MM-DD}
+Firebase: english/listening/podcasts/spotlight/{YYYY-MM-DD}
 sentences: [{speaker, en, ko, analysis}]
 """
 import re, json, os, sys, urllib.request
 from datetime import date, timedelta
 from pathlib import Path
 import anthropic
+sys.path.insert(0, str(Path(__file__).parent))
 from audio_duration import mp3_duration_sec
 
 TODAY = date.today().isoformat()
@@ -95,10 +96,12 @@ def parse_rss(xml):
 
 def translate_and_analyze(client, sentences):
     """문장 리스트 → [{ko, analysis}] 애교있는 말투로."""
+    print(f"[Spotlight] translate_and_analyze: {len(sentences)}개 문장", flush=True)
     BATCH = 8
     results = []
     texts = [s["en"] for s in sentences]
     for i in range(0, len(texts), BATCH):
+        print(f"[Spotlight] batch {i//BATCH + 1} 처리 중...", flush=True)
         batch = texts[i:i + BATCH]
         prompt = (
             "You are a cheerful 20-year-old Korean woman explaining English sentences to your boyfriend in Korean. "
@@ -163,36 +166,25 @@ def firebase_put(path, data):
 
 
 def main():
+    print("[Spotlight] START", flush=True)
     load_env()
+    print("[Spotlight] load_env done", flush=True)
     api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
         print("[!] ANTHROPIC_API_KEY 없음"); sys.exit(1)
 
-    existing = firebase_get(f"english/podcasts/spotlight/{TODAY}")
-    if existing and existing.get("audio_url"):
-        print(f"[Spotlight] 이미 완료됨: {existing.get('title', '')[:50]}")
-        return
-
-    print("[Spotlight] RSS 가져오는 중...")
+    print("[Spotlight] RSS 가져오는 중...", flush=True)
     xml = fetch(RSS_URL)
     if not xml:
         print("[Spotlight] RSS 실패"); return
 
+    print("[Spotlight] RSS 파싱 중...", flush=True)
     episode = parse_rss(xml)
     if not episode:
         print("[Spotlight] 파싱 가능한 에피소드 없음"); return
 
-    # 최근 7일과 동일 에피소드면 스킵
-    for days_ago in range(1, 8):
-        past = firebase_get(f"english/podcasts/spotlight/{(date.today() - timedelta(days=days_ago)).isoformat()}")
-        if past and past.get("episode_url"):
-            if past["episode_url"] == episode["link"]:
-                print(f"[Spotlight] 신규 에피소드 없음. 스킵.")
-                return
-            break
-
-    print(f"[Spotlight] 에피소드: {episode['title'][:60]}")
-    print(f"[Spotlight] 문장 수: {len(episode['raw_sentences'])}개")
+    print(f"[Spotlight] 에피소드: {episode['title'][:60]}", flush=True)
+    print(f"[Spotlight] 문장 수: {len(episode['raw_sentences'])}개", flush=True)
 
     client = anthropic.Anthropic(api_key=api_key)
     print("[Spotlight] 번역+분석 중...")
@@ -212,13 +204,13 @@ def main():
         "source": "spotlight",
         "title": episode["title"],
         "audio_url": episode["audio_url"],
-        "duration_sec": mp3_duration_sec(audio_url),
+        "duration_sec": mp3_duration_sec(episode["audio_url"]),
         "pub_date": episode["pub_date"],
         "episode_url": episode["link"],
         "sentences": sentences,
     }
 
-    status = firebase_put(f"english/podcasts/spotlight/{TODAY}", data)
+    status = firebase_put(f"english/listening/podcasts/spotlight/{TODAY}", data)
     print(f"[Spotlight] Firebase PUT {status}: {len(sentences)}문장 저장")
 
 

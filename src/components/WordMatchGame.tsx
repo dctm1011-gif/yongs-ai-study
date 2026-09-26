@@ -82,12 +82,19 @@ export default function WordMatchGame() {
         const saved = await AsyncStorage.getItem(DAILY_STATS_KEY);
         if (saved) {
           const { cards: savedCards, elapsed, mistakes: mis, synced: syn } = JSON.parse(saved);
-          setCards(savedCards);
-          setElapsedSeconds(elapsed);
-          setMistakes(mis);
-          setSynced(syn ?? false);
-          setGameState('complete');
-          return;
+          // text 필드가 없으면 손상된 데이터이므로 삭제
+          if (!savedCards.every((c: Card) => c.text)) {
+            console.warn('손상된 카드 데이터 삭제');
+            await AsyncStorage.removeItem(DAILY_PLAY_KEY);
+            await AsyncStorage.removeItem(DAILY_STATS_KEY);
+          } else {
+            setCards(savedCards);
+            setElapsedSeconds(elapsed);
+            setMistakes(mis);
+            setSynced(syn ?? false);
+            setGameState('complete');
+            return;
+          }
         }
       }
     } catch {}

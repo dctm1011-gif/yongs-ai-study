@@ -22,6 +22,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getDatabase, ref, set as dbSet, get, remove } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
 import { useAuth } from '../context/AuthContext';
+import { userRef } from '../utils/userDb';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -316,8 +317,8 @@ function BookDiaryModal({ book, onClose }: BookDiaryModalProps) {
     try {
       const db = getDatabase(getFirebaseApp());
       const [logsSnap, totalSnap] = await Promise.all([
-        get(ref(db, `users/${uid}/books/${book.id}/logs`)),
-        get(ref(db, `users/${uid}/books/${book.id}/info/totalPages`)),
+        get(userRef(uid, `books/${book.id}/logs`)),
+        get(userRef(uid, `books/${book.id}/info/totalPages`)),
       ]);
       // Firebase에서 최신 totalPages 로드 (부모 prop이 스테일일 수 있음)
       if (totalSnap.exists()) setTotalPages(totalSnap.val());

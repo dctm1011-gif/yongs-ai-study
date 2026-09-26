@@ -181,7 +181,7 @@ def fetch_user_ratings() -> dict:
     empty = {"avg": 3.0, "easy": 0, "medium": 0, "hard": 0, "total": 0}
     try:
         import urllib.request as ur
-        req = ur.Request(f"{db_url}/english/userRatings.json",
+        req = ur.Request(f"{db_url}/english/analysis/userRatings.json",
                          headers={"User-Agent": "Mozilla/5.0"})
         with ur.urlopen(req, timeout=8) as r:
             data = json.loads(r.read())
@@ -440,18 +440,28 @@ def generate_default_words(client: anthropic.Anthropic, target_date: date, toefl
         cefr_hint = "B2~C1 수준 (평가 데이터 부족 — 기본값)"
 
     # 1단계: 실생활 고빈도 어휘 선정 (최근 50개만 금지 — 짧아야 Haiku가 지킴)
+    # 난이도 설정: {cefr_hint}
+    # 난이도별 선정 가이드:
+    # - C1~C2: 학문·정책·고급 뉴스 용어. 일반인이 일상에서 자주 접하지 않는 고급 어휘 우선
+    #          (예: exacerbate, scrutinize, predominant, mitigate, juxtapose, constitute)
+    # - C1: BBC/Guardian 심화 기사, 학술적 토론, 고급 직장 커뮤니케이션의 핵심 어휘
+    # - B2~C1: 뉴스 기본 용어, 업무 중심 표현. 영어권 대학생/전문가 일상
+    # - B2: 중급 뉴스, 일반 직장 표현. 중급 학습자 목표 수준
+    # - B1~B2: 초급~중급. 쉬운 뉴스, 일상 회화 중심
     step1_prompt = (
         f"15개의 영어 단어를 선정하세요. 5개 영역에서 각 3개씩:\n"
         "1. 뉴스/미디어  2. 직장/비즈니스  3. 일상생활/여행  4. 건강/환경  5. 사회/관계\n\n"
         f"절대 금지: {recent_50}\n"
         "조건 (반드시 지킬 것):\n"
         f"- 난이도: {cefr_hint}\n"
-        "- BBC/CNN 뉴스, 직장 이메일, 일상 대화, 여행에서 실제로 자주 접하는 단어\n"
-        "  (예: resilient, scrutinize, prevalent, concise, collaborate, advocate, bias, initiative)\n"
+        "  → C1~C2면 어휘 수준을 매우 높여야 함. BBC/Guardian 고급 기사, 학술 문헌, 정책 문서에서 자주 나오는 단어\n"
+        "- 일반 뉴스/직장에서 실제로 사용되는 상위 10% 어휘\n"
+        "  (예시: resilient, exacerbate, scrutinize, unprecedented, mitigate, juxtapose, constitute, paramount)\n"
         "- 특정 전문 학문 분야에서만 쓰이는 단어 절대 금지\n"
         "  (hermeneutics, epistemology, ontology, semiotics, jurisprudence, etiopathogenesis 같은 단어들 금지)\n"
         "- 학문·분야 이름 자체도 금지 (-ology/-ics/-istry 계열 명사)\n"
-        "- 슬랭·구어 금지\n\n"
+        "- 슬랭·구어·매우 쉬운 일상 단어(like, think, good 같은) 금지\n"
+        "- 난이도 기준보다 낮은 수준의 단어는 절대 선택 금지\n\n"
         'JSON 배열만 반환:\n'
         '[{"word":"단어","domain":"도메인","pos":"품사","meaning_ko":"뜻"}]'
     )
@@ -538,6 +548,8 @@ def generate_default_words(client: anthropic.Anthropic, target_date: date, toefl
             continue
         if len(data.get("words",[])) >= 5 and len(data.get("quiz",[])) >= 8:
             print(f"[+] 콘텐츠 생성 완료: {[w['word'] for w in data['words']]}")
+            data["cefr_hint"] = cefr_hint
+            data["avg"] = avg
             return data
 
     print("[!] 콘텐츠 생성 실패, 기본값 사용")
@@ -2376,6 +2388,33 @@ def main(target_date: date = None):
         json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8"
     )
     print(f"[+] daily.json 저장: {english_daily_json}")
+
+    # 난이도 정보를 Firebase에 저장
+    if "cefr_hint" in data:
+        try:
+            db_url = os.environ.get(
+                "EXPO_PUBLIC_FIREBASE_DATABASE_URL",
+                "https://yongstudy-1f242-default-rtdb.asia-southeast1.firebasedatabase.app"
+            )
+            db_secret = os.environ.get("FIREBASE_DATABASE_SECRET")
+            if db_secret:
+                import urllib.request as ur
+                level_data = {
+                    "hint": data["cefr_hint"],
+                    "avg": data.get("avg", 3.0),
+                    "timestamp": __import__("datetime").datetime.utcnow().isoformat()
+                }
+                req = ur.Request(
+                    f"{db_url}/english/levelInfo/{str(target_date)}.json?auth={db_secret}",
+                    data=json.dumps(level_data, ensure_ascii=False).encode("utf-8"),
+                    headers={"Content-Type": "application/json"},
+                    method="PUT"
+                )
+                with ur.urlopen(req, timeout=5) as r:
+                    r.read()
+                print(f"[+] 난이도 정보 저장: {data['cefr_hint']}")
+        except Exception as e:
+            print(f"[!] 난이도 Firebase 저장 실패 (무시): {e}")
 
     update_words_db(data.get("words", []), target_date)
 

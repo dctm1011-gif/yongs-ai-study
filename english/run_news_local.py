@@ -120,7 +120,7 @@ def translate_and_analyze(client, sentences):
 
 def process_herald(client):
     # 이미 오늘 데이터 있으면 스킵
-    existing = firebase_get(f"english/korea_herald/{TODAY}")
+    existing = firebase_get(f"english/reading/korea_herald/{TODAY}")
     if existing and isinstance(existing, list) and existing[0].get("sentences"):
         print(f"[Herald] 이미 완료됨: {existing[0].get('title','')[:50]}")
         return
@@ -148,7 +148,7 @@ def process_herald(client):
     analyzed = translate_and_analyze(client, sents)
     article["sentences"] = [{"en": s, **analyzed[i]} for i, s in enumerate(sents)]
 
-    status = firebase_put(f"english/korea_herald/{TODAY}", [article])
+    status = firebase_put(f"english/reading/korea_herald/{TODAY}", [article])
     print(f"[Herald] Firebase PUT {status}: {article['title'][:50]}")
 
 
@@ -170,7 +170,7 @@ def scrape_kbs(html):
 
 
 def process_kbs(client):
-    existing = firebase_get(f"english/korea_news/{TODAY}")
+    existing = firebase_get(f"english/reading/korea_news/{TODAY}")
     if existing and isinstance(existing, list) and existing[0].get("sentences"):
         print(f"[KBS] 이미 완료됨: {existing[0].get('title', '')[:50]}")
         return
@@ -204,7 +204,7 @@ def process_kbs(client):
     analyzed = translate_and_analyze(client, sents)
     article["sentences"] = [{"en": s, **analyzed[i]} for i, s in enumerate(sents)]
 
-    status = firebase_put(f"english/korea_news/{TODAY}", [article])
+    status = firebase_put(f"english/reading/korea_news/{TODAY}", [article])
     print(f"[KBS] Firebase PUT {status}: {article['title'][:50]} ({len(sents)}문장)")
 
 

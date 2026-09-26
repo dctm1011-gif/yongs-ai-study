@@ -255,7 +255,7 @@ async function fetchPodcasts(today) {
         sentences,
       };
 
-      await set(dbRef(db, `english/listening/podcasts/${feed.key}/${today}`), ep);
+      await set(ref(db, `english/listening/podcasts/${feed.key}/${today}`), ep);
       console.log(`  ✓ ${feed.label}: ${title.slice(0, 50)}`);
     } catch (e) {
       console.warn(`  ${feed.label} 실패:`, e.message);

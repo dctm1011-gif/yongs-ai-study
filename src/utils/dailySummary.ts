@@ -2,6 +2,7 @@ import { getDatabase, ref, get, set } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CHECKLIST_KEYS, isDone } from '../constants/studyKeys';
+import { userRef } from './userDb';
 
 import { getKSTDateString } from './dateUtils';
 
@@ -32,7 +33,7 @@ export async function backfillProgressHistory(uid: string): Promise<void> {
   // key 별로 전체 날짜 데이터를 한 번에 읽기 (13 reads)
   const results = await Promise.allSettled(
     CHECKLIST_KEYS.map(key =>
-      get(ref(db, `users/${uid}/completion/${key}`))
+      get(userRef(uid, `completion/${key}`))
         .then(snap => ({ key, dates: (snap.val() ?? {}) as Record<string, any> }))
     )
   );
@@ -59,7 +60,7 @@ export async function backfillProgressHistory(uid: string): Promise<void> {
       };
       return Promise.allSettled([
         set(ref(db, `studySummary/${date}/progress`), progress),
-        set(ref(db, `users/${uid}/progressHistory/${date}`), progress),
+        set(userRef(uid, `progressHistory/${date}`), progress),
       ]);
     })
   );
@@ -74,7 +75,7 @@ export async function writeDailySummary(uid: string): Promise<void> {
   const [completionSnaps, englishSnap] = await Promise.all([
     Promise.all(
       ALL_COMPLETION_KEYS.map(key =>
-        get(ref(db, `users/${uid}/completion/${key}/${today}`)).catch(() => null)
+        get(userRef(uid, `completion/${key}/${today}`)).catch(() => null)
       )
     ),
     get(ref(db, `english/analysis/dailySummary/${today}`)).catch(() => null),
@@ -106,6 +107,6 @@ export async function writeDailySummary(uid: string): Promise<void> {
   await Promise.all([
     set(ref(db, `dailySummary/${today}`), summary),
     set(ref(db, `studySummary/${today}`), summary),
-    set(ref(db, `users/${uid}/progressHistory/${today}`), progress),
+    set(userRef(uid, `progressHistory/${today}`), progress),
   ]);
 }

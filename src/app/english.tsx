@@ -18,7 +18,7 @@ function stripHtml(s: string): string {
     .replace(/\s+/g, ' ').trim();
 }
 
-import { getKSTDateString } from '../utils/dateUtils';
+import { getKSTDateString, getKSTDateOffset } from '../utils/dateUtils';
 
 function formatToday(iso: string): string {
   const [y, m, d] = iso.split('-').map(Number);
@@ -131,6 +131,30 @@ function EpisodeCard({ ep, color, label, onComplete, isDone, srcKey, epDate, uid
     Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
     return () => { soundRef.current?.unloadAsync(); };
   }, []);
+
+  // Load saved difficulty for listening sentences
+  useEffect(() => {
+    if (!uid || !srcKey || !ep) return;
+    (async () => {
+      try {
+        const db = getDatabase(getFirebaseApp());
+        const episodeId = `${srcKey}_${ep.title.replace(/\s+/g, '_').slice(0, 40)}`;
+        const snap = await get(dbRef(db, `users/${uid}/english/sentenceDifficulty/listening/${episodeId}`));
+        if (snap.exists()) {
+          const data = snap.val();
+          const difficulties: Record<number, 'easy' | 'medium' | 'hard'> = {};
+          Object.entries(data).forEach(([idx, val]: [string, any]) => {
+            if (!isNaN(Number(idx)) && val?.difficulty) {
+              difficulties[Number(idx)] = val.difficulty;
+            }
+          });
+          setSentenceDifficulty(difficulties);
+        }
+      } catch (e) {
+        console.warn('Listening 난이도 로드 실패:', e);
+      }
+    })();
+  }, [uid, srcKey, ep]);
 
   const onStatus = useCallback((status: AVPlaybackStatus) => {
     if (!status.isLoaded) return;
@@ -578,22 +602,17 @@ export default function EnglishScreen() {
 
   const markDone = async (key: string, setDone: (v: boolean) => void, difficulty: 'easy' | 'medium' | 'hard' = 'medium') => {
     setDone(true);
-    const uid = user?.uid;
-    if (!uid) return;
     const db = getDatabase(getFirebaseApp());
-    await set(dbRef(db, `users/${uid}/completion/${key}/${today}`), { done: true, difficulty, ts: Date.now() });
+    await set(dbRef(db, `completion/${key}/${today}`), { done: true, difficulty, ts: Date.now() });
   };
 
   const markSourceDone = async (sourceKey: string, difficulty: 'easy' | 'medium' | 'hard' = 'medium') => {
     const newDone = { ...sourceDone, [sourceKey]: true };
     setSourceDone(newDone);
-    const uid = user?.uid;
-    if (!uid) return;
     const db = getDatabase(getFirebaseApp());
-    await set(dbRef(db, `users/${uid}/completion/english_listening_${sourceKey}/${today}`), { done: true, difficulty, ts: Date.now() });
-    // 소스 하나라도 완료되면 Today탭 반영 (각 소스는 독립)
+    await set(dbRef(db, `completion/english_listening_${sourceKey}/${today}`), { done: true, difficulty, ts: Date.now() });
     setListeningDone(true);
-    await set(dbRef(db, `users/${uid}/completion/english_news_listening/${today}`), { done: true, difficulty, ts: Date.now() });
+    await set(dbRef(db, `completion/english_news_listening/${today}`), { done: true, difficulty, ts: Date.now() });
   };
 
   useEffect(() => {
@@ -626,13 +645,8 @@ export default function EnglishScreen() {
     const db = getDatabase(getFirebaseApp());
     const uid = user?.uid;
 
-    // 오늘 또는 어제 팟캐스트 시도
     const tryGetPodcast = async (src: typeof PODCAST_SOURCES[0]) => {
-      const dates = [today];
-      const [y, m, d] = today.split('-').map(Number);
-      const yesterday = new Date(y, m - 1, d - 1);
-      dates.push(yesterday.toISOString().split('T')[0]);
-
+      const dates = [today, getKSTDateOffset(1)];
       for (const date of dates) {
         try {
           const snap = await get(dbRef(db, `english/listening/podcasts/${src.key}/${date}`));
@@ -648,9 +662,17 @@ export default function EnglishScreen() {
       ...PODCAST_SOURCES.map(src => tryGetPodcast(src)),
       // 소스별 완료 상태 로드
       ...(uid ? PODCAST_SOURCES.map(src =>
-        get(dbRef(db, `users/${uid}/completion/english_listening_${src.key}/${today}`))
-          .then(snap => ({ doneKey: src.key, done: snap.exists() && snap.val() === true }))
-          .catch(() => ({ doneKey: src.key, done: false }))
+        get(dbRef(db, `completion/english_listening_${src.key}/${today}`))
+          .then(snap => {
+            const val = snap.val();
+            const done = val && (val === true || val.done === true);
+            console.log(`[Listening] ${src.key} done=${done}, val=${JSON.stringify(val)}`);
+            return { doneKey: src.key, done };
+          })
+          .catch(e => {
+            console.log(`[Listening] ${src.key} error: ${e}`);
+            return { doneKey: src.key, done: false };
+          })
       ) : []),
     ]).then(results => {
       const epMap: Record<string, PodcastEpisode | null> = {};

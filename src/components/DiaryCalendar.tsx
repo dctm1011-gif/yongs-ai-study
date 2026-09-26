@@ -11,6 +11,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getDatabase, ref, get, query, orderByKey, startAt, endAt } from 'firebase/database';
 import { getFirebaseApp } from '../config/firebase';
+import { userRef } from '../utils/userDb';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const WEEK = ['일', '월', '화', '수', '목', '금', '토'];
@@ -47,7 +48,7 @@ export function DiaryCalendarModal({ uid, visible, onClose }: Props) {
     const mm = String(mo + 1).padStart(2, '0');
     get(
       query(
-        ref(db, `users/${uid}/diary`),
+        userRef(uid, 'diary'),
         orderByKey(),
         startAt(`${yr}-${mm}-01`),
         endAt(`${yr}-${mm}-31`),
