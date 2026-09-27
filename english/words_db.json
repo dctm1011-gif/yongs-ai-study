@@ -4640,5 +4640,65 @@
     "explanation": "문제나 상황이 치료, 개선, 또는 해결될 수 있음을 의미함. 희망적인 뉘앙스를 가지고 있음.",
     "tip": "동의어: curable, fixable, resolvable / 반의어: irreversible, incurable / 출제영역: GMAT, 환경뉴스",
     "emoji": "✅"
+  },
+  {
+    "id": "amelioration",
+    "word": "amelioration",
+    "pos": "noun",
+    "date": "2026-09-28",
+    "meaning": "개선, 개량",
+    "example_ko": "새로운 정책은 근무 조건의 개선을 가져왔다.",
+    "example_en": "The new policy led to an amelioration of working conditions.",
+    "explanation": "A condition or situation becoming better; improvement or enhancement of something previously problematic",
+    "tip": "동의어: improvement, enhancement | 반의어: deterioration, worsening | 출제영역: 어휘, 독해",
+    "emoji": "📈"
+  },
+  {
+    "id": "logistics",
+    "word": "logistics",
+    "pos": "noun",
+    "date": "2026-09-28",
+    "meaning": "물류, 후방 지원",
+    "example_ko": "회사는 더 빠른 배송을 위해 물류를 개선했다.",
+    "example_en": "The company improved its logistics to deliver products faster.",
+    "explanation": "The detailed coordination and implementation of a complex operation, especially the management of supplies, personnel, and equipment",
+    "tip": "동의어: supply chain, coordination | 반의어: chaos, disorder | 출제영역: 비즈니스, 독해",
+    "emoji": "📦"
+  },
+  {
+    "id": "pathogen",
+    "word": "pathogen",
+    "pos": "noun",
+    "date": "2026-09-28",
+    "meaning": "병원체, 병을 일으키는 미생물",
+    "example_ko": "과학자들은 발병을 일으킨 새로운 병원체를 확인했다.",
+    "example_en": "Scientists identified a new pathogen responsible for the outbreak.",
+    "explanation": "A microorganism (such as a virus or bacterium) that causes disease in humans, animals, or plants",
+    "tip": "동의어: disease-causing agent | 반의어: probiotic | 출제영역: 의학, 생물학",
+    "emoji": "🦠"
+  },
+  {
+    "id": "precipice",
+    "word": "precipice",
+    "pos": "noun",
+    "date": "2026-09-28",
+    "meaning": "절벽, 위기 상황",
+    "example_ko": "경제는 붕괴의 절벽에서 흔들리고 있었다.",
+    "example_en": "The economy teetered on the precipice of collapse.",
+    "explanation": "A very steep or overhanging cliff; also used figuratively to describe a dangerous or precarious situation",
+    "tip": "동의어: cliff, brink, edge | 반의어: safety, stability | 출제영역: 독해, 비유적 표현",
+    "emoji": "⛰️"
+  },
+  {
+    "id": "impede",
+    "word": "impede",
+    "pos": "verb",
+    "date": "2026-09-28",
+    "meaning": "방해하다, 저해하다",
+    "example_ko": "악천후가 우리의 여행 계획을 방해했다.",
+    "example_en": "Bad weather impeded our travel plans.",
+    "explanation": "To delay or prevent something from progressing; to hinder or obstruct a process or activity",
+    "tip": "동의어: hinder, obstruct, block | 반의어: facilitate, assist, promote | 출제영역: 어휘, 쓰기",
+    "emoji": "🚧"
   }
 ]

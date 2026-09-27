@@ -757,5 +757,29 @@
     "tip": "유사 표현: fade, diminish, disappear. 일상에서도 자주 쓰는 표현이에요!",
     "emoji": "👋",
     "date": "2026-09-27"
+  },
+  {
+    "id": "stand-out",
+    "phrase": "stand out",
+    "meaning_ko": "두드러지다, 눈에 띄다",
+    "meaning_en": "to be noticeably different or more impressive than others",
+    "explanation": "군중 속에서 확 튀어나오는 느낌이에요! 면접이나 발표에서 '인상 남기고 싶을 때' 자주 쓰는 표현이랍니다 ⭐",
+    "example_en": "Your unique ideas really stood out in the presentation.",
+    "example_ko": "당신의 독창적인 아이디어가 발표에서 정말 눈에 띄었어요.",
+    "tip": "stand out from(~과 비교해 두드러지다), stand out as(~로서 눈에 띄다) 형태로도 쓰여요!",
+    "emoji": "⭐",
+    "date": "2026-09-28"
+  },
+  {
+    "id": "get-down-to-business",
+    "phrase": "get down to business",
+    "meaning_ko": "본론으로 들어가다, 일을 시작하다",
+    "meaning_en": "to start dealing with the main topic or task",
+    "explanation": "인사말이나 잡담은 끝내고 '진짜 할 일'을 시작하는 거예요! 회의나 업무 상황에서 매우 실용적이에요 💼",
+    "example_en": "Let's get down to business and discuss the quarterly budget.",
+    "example_ko": "분기 예산에 대해 얘기하러 본론으로 들어가죠.",
+    "tip": "business를 다른 명사로 바꿀 수도 있어요! get down to work, get down to studying 등!",
+    "emoji": "💼",
+    "date": "2026-09-28"
   }
 ]
