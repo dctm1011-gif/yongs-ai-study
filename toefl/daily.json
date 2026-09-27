@@ -1,114 +1,110 @@
 {
-  "date": "2026-09-27",
+  "date": "2026-09-28",
   "reading": {
-    "title": "Artificial Intelligence in Healthcare",
-    "passage": "Artificial intelligence is revolutionizing the healthcare industry by improving diagnostic accuracy and patient outcomes. AI algorithms can analyze medical images and detect diseases like cancer earlier than human radiologists. Machine learning models trained on vast datasets enable physicians to predict patient deterioration and intervene proactively. Furthermore, AI-powered chatbots provide patients with preliminary medical advice, reducing unnecessary hospital visits. However, concerns about data privacy and the need for regulatory frameworks remain significant challenges that must be addressed before widespread implementation.",
+    "title": "Urban Green Spaces and Mental Health",
+    "passage": "Recent studies demonstrate that access to urban green spaces significantly improves mental health outcomes. Parks and gardens provide essential environments for stress reduction, physical activity, and social interaction. Cities with abundant green infrastructure report lower rates of anxiety and depression among residents. Environmental psychologists suggest that natural elements trigger relaxation responses in the human brain. Furthermore, green spaces enhance air quality and reduce urban temperatures, creating healthier living conditions overall.",
     "questions": [
       {
-        "q": "According to the passage, what is one advantage of using AI algorithms in healthcare?",
+        "q": "According to the passage, what is one benefit of urban green spaces?",
         "options": [
-          "They eliminate the need for human doctors",
-          "They can detect diseases like cancer earlier than human radiologists",
-          "They guarantee perfect medical diagnoses",
-          "They reduce healthcare costs by 100%"
+          "A) Increased traffic congestion",
+          "B) Stress reduction and improved mental health",
+          "C) Higher property taxes",
+          "D) Decreased social interaction"
         ],
         "answer": 1,
-        "explanation": "본문에서 'AI algorithms can analyze medical images and detect diseases like cancer earlier than human radiologists'라고 명시되어 있습니다. 다른 선택지들은 본문의 내용을 과장하거나 왜곡한 것입니다."
+        "explanation": "본문에서 '도시 공원과 정원은 스트레스 감소, 신체활동 및 사회적 상호작용을 위한 필수 환경'이라고 명시되어 있습니다."
       },
       {
-        "q": "What does the passage suggest about the challenges of implementing AI in healthcare?",
+        "q": "What do environmental psychologists claim about natural elements?",
         "options": [
-          "There are no challenges to implementation",
-          "Data privacy and regulatory frameworks are significant concerns",
-          "AI is ready for immediate implementation everywhere",
-          "Patients refuse to use AI-powered systems"
+          "A) They have no effect on human behavior",
+          "B) They increase stress levels",
+          "C) They trigger relaxation responses in the brain",
+          "D) They are expensive to maintain"
         ],
-        "answer": 1,
-        "explanation": "'However, concerns about data privacy and the need for regulatory frameworks remain significant challenges that must be addressed'라는 문장에서 직접적으로 설명하고 있습니다."
+        "answer": 2,
+        "explanation": "'자연 요소는 인간의 뇌에서 이완 반응을 유발한다'는 내용이 본문에 직접 나타나 있습니다."
       },
       {
-        "q": "How do AI-powered chatbots benefit patients according to the passage?",
+        "q": "Which of the following is NOT mentioned as a benefit of green spaces?",
         "options": [
-          "They provide preliminary medical advice and reduce unnecessary hospital visits",
-          "They replace human doctors completely",
-          "They diagnose all diseases with 100% accuracy",
-          "They are free for all patients"
+          "A) Air quality improvement",
+          "B) Temperature reduction",
+          "C) Economic growth",
+          "D) Social interaction opportunities"
         ],
-        "answer": 0,
-        "explanation": "'AI-powered chatbots provide patients with preliminary medical advice, reducing unnecessary hospital visits'라는 문장에서 명확하게 설명되어 있습니다."
+        "answer": 2,
+        "explanation": "본문에서는 공기질 개선, 온도 감소, 사회적 상호작용은 언급되지만, 경제 성장에 대한 언급은 없습니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Remote work is more productive than working in an office environment'? Provide specific reasons and examples to support your position.",
+    "prompt": "Do you agree or disagree with the statement: Remote work should become the standard employment model for all office jobs?",
     "structure": {
-      "intro": "명확한 입장 표시 (동의 또는 반대)와 2-3개의 주요 이유를 미리 제시하기. 예: 'I strongly agree/disagree that remote work is more productive because...'",
-      "body1": "첫 번째 이유 전개: 직장 환경에서의 방해 요소 감소, 출퇴근 시간 절약으로 인한 생산성 증가 또는 대면 협업의 중요성 설명",
-      "body2": "두 번째 이유 전개: 업무 유형에 따른 차이 (창의적 업무 vs 협업 업무), 기술 발전으로 원격 협업 가능성 또는 팀 문화 구축의 어려움",
-      "conclusion": "입장 재확인 및 결론. 양쪽 관점을 인정하되 자신의 입장이 더 타당함을 강조"
+      "intro": "명확한 입장을 제시하고 2-3개의 주요 이유를 간단히 언급하세요.",
+      "body1": "원격 근무의 첫 번째 이점(예: 유연성, 생산성, 통근 시간 절약)을 구체적인 예시와 함께 설명하세요.",
+      "body2": "원격 근무의 잠재적 단점(예: 팀 협업의 어려움, 회사 문화 약화)을 다루고 이를 어떻게 해결할 수 있는지 제시하세요.",
+      "conclusion": "입장을 재확인하고 더 균형 잡힌 접근 방식(하이브리드 모델)의 필요성을 언급하세요."
     },
     "useful_phrases": [
-      "In my opinion,",
-      "I strongly agree/disagree that",
-      "Furthermore,",
-      "For example,",
-      "On the other hand,",
-      "This demonstrates that",
-      "In conclusion,",
-      "To sum up,"
+      "In my opinion, remote work offers significant advantages...",
+      "One compelling reason is that...",
+      "However, it is important to acknowledge that...",
+      "Furthermore, companies can address these concerns by...",
+      "In conclusion, I believe a hybrid approach would be most beneficial..."
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer studying alone, while others prefer studying in groups. Which do you prefer and why?",
+    "prompt": "Some people prefer working in traditional office environments. Others prefer working from home. Which do you prefer and why?",
     "useful_expressions": [
-      "In my opinion, I prefer studying alone because...",
-      "One reason is that studying alone allows me to...",
-      "Another advantage is that I can focus better when...",
-      "I think this is important because...",
-      "For example, when I study with others..."
+      "In my view, I prefer working from home because...",
+      "One significant advantage is that I can avoid long commutes...",
+      "Another reason is that remote work allows for better work-life balance...",
+      "To illustrate this point, I can share an example of how..."
     ],
     "sample_points": [
-      "혼자 공부할 때의 장점: 집중력 향상, 자신의 속도로 학습 진행 가능, 방해 요소 최소화, 복잡한 개념을 충분한 시간을 들여 이해할 수 있음",
-      "그룹 스터디의 장점 (반대 입장): 다양한 관점 공유, 동료에게서 배우기, 동기 부여 증대, 토론을 통한 이해 심화, 질문 기회 증가"
+      "집중력 증대: 홈오피스에서는 방해 요소가 적어 깊은 집중력 발휘 가능, 특히 복잡한 업무 처리에 유리",
+      "유연성과 시간 절약: 통근 시간 제거로 개인 시간 확보 가능, 자녀 돌봄 등 개인 책임과 업무를 더 효과적으로 조화"
     ]
   },
   "listening": {
-    "title": "Academic Advising Session",
+    "title": "Campus Library Renovation Project",
     "type": "conversation",
-    "script": "Advisor: Good morning! I see you're interested in changing your major from engineering to environmental science. Can you tell me what sparked this interest? Student: Well, I've been taking some elective courses in environmental studies, and I really enjoyed learning about climate change and sustainability. I feel like engineering isn't quite the right path for me. Advisor: That's very common. Many students discover their true passion through electives. Now, changing majors will affect your graduation timeline. You'll need to complete additional coursework in biology, chemistry, and environmental policy. This might delay your graduation by a semester or two. Student: I understand. How many credits do I need? Advisor: For environmental science, you need 120 credits total, with 45 specifically in environmental courses. You've already completed about 60 credits in general education and engineering, which can count as electives. So you're looking at approximately 60 more credits. We should also discuss scholarships, as some of them are major-specific. Student: Will I lose my current engineering scholarship? Advisor: Possibly. Let me check our database. Many scholarships are flexible, but some are restricted to specific majors. I'll help you explore alternative funding options.",
+    "script": "Student: Excuse me, I heard the library is undergoing renovations. How long will it take? Librarian: Yes, we're updating our facility. The project will take about six months, divided into three phases. First, we'll renovate the study areas and computer lab on the first floor. Then we'll work on the reference section and meeting rooms upstairs. Finally, we'll update the technical infrastructure. Student: Will we have access to any services during the renovation? Librarian: Absolutely. We're maintaining a temporary circulation desk and keeping the book collection partially accessible. We've also created a digital collection that's available online 24/7. Many students are actually using our e-resources more than expected. Student: That's helpful. When does each phase start? Librarian: The first phase begins next month. We'll complete it by November, then move to phase two in December through February. Phase three finishes by spring. We'll notify everyone through email and our website about specific timelines and service adjustments.",
     "questions": [
       {
-        "q": "What is the main purpose of this conversation?",
+        "q": "What is the main topic of the conversation?",
         "options": [
-          "To discuss the student's scholarship options",
-          "To discuss the student's major change from engineering to environmental science",
-          "To explain the engineering program requirements",
-          "To register the student for next semester's courses"
+          "A) Library book collection expansion",
+          "B) Library renovation project and timeline",
+          "C) Student complaints about library services",
+          "D) New computer lab construction"
         ],
         "answer": 1,
-        "explanation": "대화의 전체 내용이 학생의 전공 변경(engineering에서 environmental science로)에 관한 것입니다. Advisor는 이에 따른 학점 요구사항, 졸업 시간, 장학금 영향 등을 설명하고 있습니다."
+        "explanation": "대화의 주요 내용은 도서관 개조 프로젝트의 일정과 3단계 계획을 설명하는 것입니다."
       },
       {
-        "q": "According to the advisor, how many additional credits does the student need to complete for the new major?",
+        "q": "How long will the entire renovation project take?",
         "options": [
-          "120 credits",
-          "60 credits",
-          "45 credits",
-          "90 credits"
+          "A) Two months",
+          "B) Three months",
+          "C) Six months",
+          "D) One year"
         ],
-        "answer": 1,
-        "explanation": "Advisor가 'For environmental science, you need 120 credits total... You've already completed about 60 credits... So you're looking at approximately 60 more credits'라고 명시했습니다."
+        "answer": 2,
+        "explanation": "사서가 '프로젝트는 약 6개월 걸릴 것'이라고 명시적으로 언급했습니다."
       },
       {
-        "q": "What concern does the student raise at the end of the conversation?",
+        "q": "What services will remain available during renovations?",
         "options": [
-          "The student is worried about finding housing",
-          "The student is concerned about losing the current engineering scholarship",
-          "The student wants to know about campus facilities",
-          "The student asks about internship opportunities"
+          "A) Only the physical book collection",
+          "B) Temporary circulation desk and digital collection",
+          "C) All services continue normally",
+          "D) No services will be available"
         ],
         "answer": 1,
-        "explanation": "학생이 'Will I lose my current engineering scholarship?'라고 직접 묻고 있으며, Advisor가 일부 장학금은 제한될 수 있음을 설명합니다."
+        "explanation": "사서는 '임시 대출 데스크를 유지하고 도서 수집을 부분적으로 접근 가능하게 하며, 온라인 전자 자료는 24/7 이용 가능'하다고 설명했습니다."
       }
     ]
   }
