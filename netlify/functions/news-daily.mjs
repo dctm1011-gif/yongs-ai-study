@@ -185,12 +185,12 @@ ${JSON.stringify(batch, null, 0)}`;
 }
 
 async function processKbsNews(db, today) {
-  const existing = await get(ref(db, `english/korea_news/${today}`));
+  const existing = await get(ref(db, `english/reading/korea_news/${today}`));
   if (existing.exists()) {
     const data = existing.val();
     const articles = Array.isArray(data) ? data : [data];
     if (articles[0]?.sentences?.[0]?.ko) {
-      console.log(`✅ korea_news/${today} already complete`);
+      console.log(`✅ reading/korea_news/${today} already complete`);
       return;
     }
   }
@@ -210,8 +210,8 @@ async function processKbsNews(db, today) {
   const analyzed = await translateAndAnalyze(sentsEn);
   article.sentences = sentsEn.map((en, i) => ({ en, ...analyzed[i] }));
 
-  await set(ref(db, `english/korea_news/${today}`), [article]);
-  console.log(`✅ korea_news/${today} — ${article.title.slice(0,40)} (${sentsEn.length}문장)`);
+  await set(ref(db, `english/reading/korea_news/${today}`), [article]);
+  console.log(`✅ reading/korea_news/${today} — ${article.title.slice(0,40)} (${sentsEn.length}문장)`);
 }
 
 async function processSpotlight(db, today) {
@@ -370,12 +370,12 @@ async function processVOA(db, today) {
 }
 
 async function processHeraldNews(db, today) {
-  const existing = await get(ref(db, `english/korea_herald/${today}`));
+  const existing = await get(ref(db, `english/reading/korea_herald/${today}`));
   if (existing.exists()) {
     const data = existing.val();
     const articles = Array.isArray(data) ? data : [data];
     if (articles[0]?.sentences?.[0]?.ko) {
-      console.log(`✅ korea_herald/${today} already complete`);
+      console.log(`✅ reading/korea_herald/${today} already complete`);
       return;
     }
   }
@@ -395,8 +395,8 @@ async function processHeraldNews(db, today) {
   const analyzed = await translateAndAnalyze(sentsEn);
   article.sentences = sentsEn.map((en, i) => ({ en, ...analyzed[i] }));
 
-  await set(ref(db, `english/korea_herald/${today}`), [article]);
-  console.log(`✅ korea_herald/${today} — ${article.title.slice(0,40)} (${sentsEn.length}문장)`);
+  await set(ref(db, `english/reading/korea_herald/${today}`), [article]);
+  console.log(`✅ reading/korea_herald/${today} — ${article.title.slice(0,40)} (${sentsEn.length}문장)`);
 }
 
 export default async (req, context) => {
