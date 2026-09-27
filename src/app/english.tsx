@@ -115,10 +115,10 @@ function EpisodeCard({ ep, color, label, onComplete, isDone, srcKey, epDate, uid
         ko: sent?.ko || '',
         ts: Date.now(),
       });
+      setSentenceDifficulty(prev => ({ ...prev, [sentenceIdx]: diff }));
     } catch (e) {
       console.warn('난이도 저장 실패:', e);
     }
-    setSentenceDifficulty(prev => ({ ...prev, [sentenceIdx]: diff }));
   };
 
   const toggleSentence = (i: number) => setExpandedSentence(prev => {
@@ -412,10 +412,10 @@ function NewsCard({ article, sourceName, sourceColor, uid }: {
         ko: sent?.ko || '',
         ts: Date.now(),
       });
+      setSentenceDifficulty(prev => ({ ...prev, [sentenceIdx]: diff }));
     } catch (e) {
       console.warn('난이도 저장 실패:', e);
     }
-    setSentenceDifficulty(prev => ({ ...prev, [sentenceIdx]: diff }));
   };
 
   useEffect(() => {
