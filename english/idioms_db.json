@@ -781,5 +781,29 @@
     "tip": "business를 다른 명사로 바꿀 수도 있어요! get down to work, get down to studying 등!",
     "emoji": "💼",
     "date": "2026-09-28"
+  },
+  {
+    "id": "cut-through",
+    "phrase": "cut through",
+    "meaning_ko": "요점을 명확히 하다, 복잡한 것을 간단히 하다",
+    "meaning_en": "to get to the main point by removing complexity",
+    "explanation": "복잡한 말들을 걷어내고 핵심만 쏙 집어내는 거예요! 비즈니스 미팅이나 발표에서 정말 유용한 표현이에요 💼",
+    "example_en": "Let me cut through the jargon and explain it simply.",
+    "example_ko": "전문용어를 빼고 간단하게 설명해 드릴게요.",
+    "tip": "유사 표현: get to the point, simplify. 직설적인 톤에서 자주 사용돼요!",
+    "emoji": "🎯",
+    "date": "2026-09-29"
+  },
+  {
+    "id": "settle-on",
+    "phrase": "settle on",
+    "meaning_ko": "결정하다, 확정하다",
+    "meaning_en": "to make a final decision or choice",
+    "explanation": "여러 선택지 중에서 하나를 정해서 결정하는 거예요! 고민 끝에 선택할 때 쓰면 딱이에요 🤔",
+    "example_en": "We settled on next Friday for the meeting.",
+    "example_ko": "우리는 회의 날짜를 다음 주 금요일로 확정했어요.",
+    "tip": "유사 표현: decide on, choose. settle down(정착하다)과는 다른 뜻이니 주의!",
+    "emoji": "✨",
+    "date": "2026-09-29"
   }
 ]

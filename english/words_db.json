@@ -4700,5 +4700,65 @@
     "explanation": "To delay or prevent something from progressing; to hinder or obstruct a process or activity",
     "tip": "동의어: hinder, obstruct, block | 반의어: facilitate, assist, promote | 출제영역: 어휘, 쓰기",
     "emoji": "🚧"
+  },
+  {
+    "id": "circumnavigate",
+    "word": "circumnavigate",
+    "pos": "verb",
+    "date": "2026-09-29",
+    "meaning": "(지구를) 일주하다, 빙 둘러가다",
+    "example_ko": "마젤란의 승무원들이 지구를 일주한 최초의 사람들이었다.",
+    "example_en": "Ferdinand Magellan's crew was the first to circumnavigate the globe.",
+    "explanation": "To travel completely around something, typically the earth or a large body of water; can also mean to avoid or go around something indirectly.",
+    "tip": "동의어: navigate around, traverse / 반의어: direct route / 출제영역: 독해, 어휘",
+    "emoji": "🌍"
+  },
+  {
+    "id": "decimate",
+    "word": "decimate",
+    "pos": "verb",
+    "date": "2026-09-29",
+    "meaning": "대부분을 파괴하다, 심각하게 손상시키다",
+    "example_ko": "팬데믹이 전국의 소규모 사업들을 대부분 파괴했다.",
+    "example_en": "The pandemic decimated small businesses across the country.",
+    "explanation": "To destroy or kill a large proportion of something; to severely damage or reduce in number. Originally meant to kill one in ten, but now refers to widespread destruction.",
+    "tip": "동의어: devastate, destroy, ravage / 반의어: preserve, restore / 출제영역: 어휘, 논술",
+    "emoji": "💥"
+  },
+  {
+    "id": "fracture",
+    "word": "fracture",
+    "pos": "verb/noun",
+    "date": "2026-09-29",
+    "meaning": "(뼈를) 부러뜨리다, 균열",
+    "example_ko": "그 정치 위기는 두 국가 간의 동맹에 균열을 야기했다.",
+    "example_en": "The political crisis caused a fracture in the alliance between the two nations.",
+    "explanation": "As a verb: to break or crack something, especially bone; As a noun: a break or crack in something. Metaphorically used to describe divisions or breaks in relationships or systems.",
+    "tip": "동의어: crack, break, rupture / 반의어: unite, join, heal / 출제영역: 의학용어, 비유적 표현",
+    "emoji": "💔"
+  },
+  {
+    "id": "rapprochement",
+    "word": "rapprochement",
+    "pos": "noun",
+    "date": "2026-09-29",
+    "meaning": "관계 개선, 화해, 접근",
+    "example_ko": "두 나라는 수십 년의 긴장 이후 관계 개선을 추구하고 있다.",
+    "example_en": "The two countries are seeking rapprochement after decades of tension.",
+    "explanation": "The establishment or resumption of friendly relations between countries or groups that were previously in conflict or estranged. A French term commonly used in diplomatic contexts.",
+    "tip": "동의어: reconciliation, thaw, détente / 반의어: estrangement, conflict / 출제영역: 정치/외교 어휘, TOEFL",
+    "emoji": "🤝"
+  },
+  {
+    "id": "recalibrate",
+    "word": "recalibrate",
+    "pos": "verb",
+    "date": "2026-09-29",
+    "meaning": "재조정하다, 다시 맞추다",
+    "example_ko": "데이터를 검토한 후 우리는 마케팅 전략을 재조정해야 한다.",
+    "example_en": "After reviewing the data, we need to recalibrate our marketing strategy.",
+    "explanation": "To adjust, reset, or fine-tune an instrument, system, or plan to achieve proper alignment or performance; metaphorically, to reassess and adjust one's approach or perspective.",
+    "tip": "동의어: adjust, reset, realign / 반의어: misalign / 출제영역: 비즈니스, 과학용어",
+    "emoji": "⚙️"
   }
 ]

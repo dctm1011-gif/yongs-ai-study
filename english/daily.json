@@ -1,65 +1,64 @@
 {
-  "date": "2026-09-28",
+  "date": "2026-09-29",
   "words": [
     {
-      "word": "amelioration",
-      "part_of_speech": "noun",
-      "meaning_ko": "개선, 개량",
-      "explanation": "A condition or situation becoming better; improvement or enhancement of something previously problematic",
-      "example_from_convo": "The new policy led to an amelioration of working conditions.",
-      "example_ko": "새로운 정책은 근무 조건의 개선을 가져왔다.",
-      "tip": "동의어: improvement, enhancement | 반의어: deterioration, worsening | 출제영역: 어휘, 독해",
-      "emoji": "📈",
-      "synonyms": [],
-      "antonyms": []
-    },
-    {
-      "word": "logistics",
-      "part_of_speech": "noun",
-      "meaning_ko": "물류, 후방 지원",
-      "explanation": "The detailed coordination and implementation of a complex operation, especially the management of supplies, personnel, and equipment",
-      "example_from_convo": "The company improved its logistics to deliver products faster.",
-      "example_ko": "회사는 더 빠른 배송을 위해 물류를 개선했다.",
-      "tip": "동의어: supply chain, coordination | 반의어: chaos, disorder | 출제영역: 비즈니스, 독해",
-      "emoji": "📦",
-      "synonyms": [],
-      "antonyms": []
-    },
-    {
-      "word": "pathogen",
-      "part_of_speech": "noun",
-      "meaning_ko": "병원체, 병을 일으키는 미생물",
-      "explanation": "A microorganism (such as a virus or bacterium) that causes disease in humans, animals, or plants",
-      "example_from_convo": "Scientists identified a new pathogen responsible for the outbreak.",
-      "example_ko": "과학자들은 발병을 일으킨 새로운 병원체를 확인했다.",
-      "tip": "동의어: disease-causing agent | 반의어: probiotic | 출제영역: 의학, 생물학",
-      "emoji": "🦠",
-      "background": "In biology, a pathogen (from Greek  πάθος (pathos) 'suffering, passion' and  -γενής (-genēs) 'producer of'), in the oldest and broadest sense, is any organism, agent or micro-organism that can produce disease. A pathogen may also be referred to as an infectious agent, or simply a germ.",
-      "synonyms": [],
-      "antonyms": []
-    },
-    {
-      "word": "precipice",
-      "part_of_speech": "noun",
-      "meaning_ko": "절벽, 위기 상황",
-      "explanation": "A very steep or overhanging cliff; also used figuratively to describe a dangerous or precarious situation",
-      "example_from_convo": "The economy teetered on the precipice of collapse.",
-      "example_ko": "경제는 붕괴의 절벽에서 흔들리고 있었다.",
-      "tip": "동의어: cliff, brink, edge | 반의어: safety, stability | 출제영역: 독해, 비유적 표현",
-      "emoji": "⛰️",
-      "background": "In geography and geology, a cliff or bluff or rock face is an area of rock which has a general angle defined by the vertical, or nearly vertical. Cliffs are formed by the processes of weathering and erosion, with the effect of gravity.",
-      "synonyms": [],
-      "antonyms": []
-    },
-    {
-      "word": "impede",
+      "word": "circumnavigate",
       "part_of_speech": "verb",
-      "meaning_ko": "방해하다, 저해하다",
-      "explanation": "To delay or prevent something from progressing; to hinder or obstruct a process or activity",
-      "example_from_convo": "Bad weather impeded our travel plans.",
-      "example_ko": "악천후가 우리의 여행 계획을 방해했다.",
-      "tip": "동의어: hinder, obstruct, block | 반의어: facilitate, assist, promote | 출제영역: 어휘, 쓰기",
-      "emoji": "🚧",
+      "meaning_ko": "(지구를) 일주하다, 빙 둘러가다",
+      "explanation": "To travel completely around something, typically the earth or a large body of water; can also mean to avoid or go around something indirectly.",
+      "example_from_convo": "Ferdinand Magellan's crew was the first to circumnavigate the globe.",
+      "example_ko": "마젤란의 승무원들이 지구를 일주한 최초의 사람들이었다.",
+      "tip": "동의어: navigate around, traverse / 반의어: direct route / 출제영역: 독해, 어휘",
+      "emoji": "🌍",
+      "background": "Circumnavigation is the complete navigation of a person around an entire island, continent, or astronomical body (e.g. a planet or moon).",
+      "synonyms": [],
+      "antonyms": []
+    },
+    {
+      "word": "decimate",
+      "part_of_speech": "verb",
+      "meaning_ko": "대부분을 파괴하다, 심각하게 손상시키다",
+      "explanation": "To destroy or kill a large proportion of something; to severely damage or reduce in number. Originally meant to kill one in ten, but now refers to widespread destruction.",
+      "example_from_convo": "The pandemic decimated small businesses across the country.",
+      "example_ko": "팬데믹이 전국의 소규모 사업들을 대부분 파괴했다.",
+      "tip": "동의어: devastate, destroy, ravage / 반의어: preserve, restore / 출제영역: 어휘, 논술",
+      "emoji": "💥",
+      "synonyms": [],
+      "antonyms": []
+    },
+    {
+      "word": "fracture",
+      "part_of_speech": "verb/noun",
+      "meaning_ko": "(뼈를) 부러뜨리다, 균열",
+      "explanation": "As a verb: to break or crack something, especially bone; As a noun: a break or crack in something. Metaphorically used to describe divisions or breaks in relationships or systems.",
+      "example_from_convo": "The political crisis caused a fracture in the alliance between the two nations.",
+      "example_ko": "그 정치 위기는 두 국가 간의 동맹에 균열을 야기했다.",
+      "tip": "동의어: crack, break, rupture / 반의어: unite, join, heal / 출제영역: 의학용어, 비유적 표현",
+      "emoji": "💔",
+      "synonyms": [],
+      "antonyms": []
+    },
+    {
+      "word": "rapprochement",
+      "part_of_speech": "noun",
+      "meaning_ko": "관계 개선, 화해, 접근",
+      "explanation": "The establishment or resumption of friendly relations between countries or groups that were previously in conflict or estranged. A French term commonly used in diplomatic contexts.",
+      "example_from_convo": "The two countries are seeking rapprochement after decades of tension.",
+      "example_ko": "두 나라는 수십 년의 긴장 이후 관계 개선을 추구하고 있다.",
+      "tip": "동의어: reconciliation, thaw, détente / 반의어: estrangement, conflict / 출제영역: 정치/외교 어휘, TOEFL",
+      "emoji": "🤝",
+      "synonyms": [],
+      "antonyms": []
+    },
+    {
+      "word": "recalibrate",
+      "part_of_speech": "verb",
+      "meaning_ko": "재조정하다, 다시 맞추다",
+      "explanation": "To adjust, reset, or fine-tune an instrument, system, or plan to achieve proper alignment or performance; metaphorically, to reassess and adjust one's approach or perspective.",
+      "example_from_convo": "After reviewing the data, we need to recalibrate our marketing strategy.",
+      "example_ko": "데이터를 검토한 후 우리는 마케팅 전략을 재조정해야 한다.",
+      "tip": "동의어: adjust, reset, realign / 반의어: misalign / 출제영역: 비즈니스, 과학용어",
+      "emoji": "⚙️",
       "synonyms": [],
       "antonyms": []
     }
@@ -67,166 +66,186 @@
   "quiz": [
     {
       "type": "meaning",
-      "word": "amelioration",
-      "question": "Which of the following best describes amelioration in a business context?",
+      "word": "circumnavigate",
+      "question": "In a geography context, which statement best describes what 'circumnavigate' means?",
       "options": [
-        "A decline in product quality",
-        "An improvement or enhancement of conditions",
-        "A temporary delay in production",
-        "A complete shutdown of operations"
+        "To travel in a straight line across continents",
+        "To travel completely around something, typically by sea or air",
+        "To map the boundaries of a territory",
+        "To navigate through difficult terrain"
       ],
       "answer": 1,
-      "explanation": "Amelioration specifically refers to the process of making something better or improving it. In business, this could mean improving work conditions, efficiency, or customer satisfaction.",
+      "explanation": "Circumnavigate means to travel completely around something, most commonly used in the context of traveling around the earth or large bodies of water.",
       "option_explanations": [
-        "This describes deterioration, the opposite",
-        "Correct - amelioration means improvement",
-        "This is a delay, not an improvement",
-        "This is a shutdown, not an improvement"
+        null,
+        "This is correct - circumnavigate specifically refers to complete travel around something",
+        "Navigation doesn't require going around",
+        "Difficult terrain is not the primary meaning"
       ]
     },
     {
       "type": "meaning",
-      "word": "pathogen",
-      "question": "In a medical laboratory report, a pathogen most likely refers to what?",
+      "word": "decimate",
+      "question": "How is 'decimate' MOST commonly used in modern English?",
       "options": [
-        "A beneficial nutrient for the body",
-        "A microorganism that causes disease",
-        "A type of medication",
-        "A vitamin supplement"
-      ],
-      "answer": 1,
-      "explanation": "A pathogen is any microorganism such as bacteria, virus, or fungus that causes disease. Medical labs identify pathogens to diagnose and treat infections.",
-      "option_explanations": [
-        "This would be beneficial, not harmful",
-        "Correct - pathogens cause disease",
-        "Medications treat diseases, not cause them",
-        "Supplements are beneficial"
-      ]
-    },
-    {
-      "type": "meaning",
-      "word": "precipice",
-      "question": "Which word is MOST similar to precipice when used to describe a dangerous situation?",
-      "options": [
-        "Safety",
-        "Brink",
-        "Foundation",
-        "Opportunity"
-      ],
-      "answer": 1,
-      "explanation": "Both 'precipice' and 'brink' describe being on the edge of a dangerous or critical situation. When we say 'on the precipice of war,' we mean on the brink of it.",
-      "option_explanations": [
-        "Safety is the opposite",
-        "Correct - brink means the edge of danger",
-        "Foundation suggests stability",
-        "Opportunity is positive"
-      ]
-    },
-    {
-      "type": "fill_blank",
-      "word": "impede",
-      "sentence": "The construction project will ___ our ability to reach the downtown area during rush hour.",
-      "sentence_ko": "건설 프로젝트는 러시아워 동안 우리가 도심 지역에 도달하는 능력을 방해할 것이다.",
-      "answer": "impede",
-      "hint": "verb meaning 'to hinder or block'"
-    },
-    {
-      "type": "fill_blank",
-      "word": "logistics",
-      "sentence": "The supply chain manager coordinated all ___ for the international conference, including transportation and accommodation.",
-      "sentence_ko": "공급망 관리자는 운송과 숙박을 포함한 국제 회의의 모든 물류를 조정했다.",
-      "answer": "logistics",
-      "hint": "noun referring to coordination of supplies and operations"
-    },
-    {
-      "type": "fill_blank",
-      "word": "amelioration",
-      "sentence": "The government announced new social programs aimed at ___ of healthcare services for rural communities.",
-      "sentence_ko": "정부는 시골 지역의 의료 서비스 개선을 목표로 하는 새로운 사회 프로그램을 발표했다.",
-      "answer": "amelioration",
-      "hint": "noun meaning 'improvement'"
-    },
-    {
-      "type": "situation",
-      "word": "logistics",
-      "question": "Your startup is struggling because packages arrive late and in the wrong locations. Your investor says, 'You need to fix your logistics.' What does she mean?",
-      "options": [
-        "Hire more customer service representatives",
-        "Improve your supply chain management and delivery coordination",
-        "Invest more money in advertising",
-        "Change your product design"
-      ],
-      "answer": 1,
-      "explanation": "When someone criticizes logistics, they're pointing out problems with how goods are managed, transported, and delivered. Fixing logistics means organizing the supply chain better.",
-      "option_explanations": [
-        "This addresses customer service, not logistics",
-        "Correct - logistics is about supply chain and delivery coordination",
-        "Advertising doesn't fix operational problems",
-        "Product design isn't related to logistics issues"
-      ]
-    },
-    {
-      "type": "situation",
-      "word": "precipice",
-      "question": "A financial analyst tells a newspaper, 'This company is on the precipice of bankruptcy.' What is the journalist most likely to report?",
-      "options": [
-        "The company just won a major contract and is expanding",
-        "The company is in a stable financial position",
-        "The company is in danger of failing if conditions don't improve immediately",
-        "The company is planning to open new offices"
+        "To reduce by exactly ten percent",
+        "To increase significantly in number",
+        "To destroy or severely reduce a large proportion of something",
+        "To separate items into groups"
       ],
       "answer": 2,
-      "explanation": "The precipice is a dangerous edge. When someone says a company is on the precipice of bankruptcy, they mean it's about to fail unless something changes dramatically.",
+      "explanation": "While originally meaning to kill one in ten, 'decimate' now broadly means to destroy or severely damage a large portion of something, as seen in contexts like disease or war impacts.",
       "option_explanations": [
-        "Winning contracts means stability, not danger",
-        "Stable position contradicts precipice",
-        "Correct - on the precipice means in immediate danger of collapse",
-        "Expansion suggests growth, not danger"
+        null,
+        null,
+        "Correct - this is the modern usage",
+        "This is not related to the word's meaning"
+      ]
+    },
+    {
+      "type": "meaning",
+      "word": "rapprochement",
+      "question": "In a news article about international relations, 'rapprochement' refers to what?",
+      "options": [
+        "A military conflict between neighboring states",
+        "The establishment of friendly relations after previous estrangement",
+        "A trade agreement that benefits both parties equally",
+        "A formal declaration of war"
+      ],
+      "answer": 1,
+      "explanation": "Rapprochement is a diplomatic term meaning the resumption or establishment of friendly relations between previously hostile or estranged parties.",
+      "option_explanations": [
+        null,
+        "This is correct - rapprochement describes reconciliation between estranged parties",
+        "Trade agreements don't necessarily involve reconciliation",
+        "This contradicts the term's meaning"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "word": "decimate",
+      "sentence": "The unexpected frost ___ the spring crops, forcing farmers to replant their fields.",
+      "sentence_ko": "뜻밖의 서리가 봄 작물을 대부분 파괴했고, 농부들은 밭을 다시 심어야 했다.",
+      "answer": "decimated",
+      "hint": "This word means to destroy or severely damage a large portion of something"
+    },
+    {
+      "type": "fill_blank",
+      "word": "recalibrate",
+      "sentence": "After the pilot program showed mixed results, the company decided to ___ its approach before expanding nationwide.",
+      "sentence_ko": "파일럿 프로그램이 엇갈린 결과를 보인 후, 회사는 전국으로 확대하기 전에 접근 방식을 재조정하기로 결정했다.",
+      "answer": "recalibrate",
+      "hint": "This word means to adjust or reset something to achieve better alignment or performance"
+    },
+    {
+      "type": "fill_blank",
+      "word": "fracture",
+      "sentence": "The scandal threatened to ___ the unity of the political party, dividing members into opposing factions.",
+      "sentence_ko": "그 스캔들은 정당의 단합을 위협하여 회원들을 대립하는 파벌로 나누려고 했다.",
+      "answer": "fracture",
+      "hint": "This word can mean to cause a break or division in something"
+    },
+    {
+      "type": "situation",
+      "word": "circumnavigate",
+      "question": "Your geography teacher assigns a research project about early exploration. She asks, 'Who was the first expedition to circumnavigate the globe?' What does she want you to find?",
+      "options": [
+        "Explorers who mapped the shortest route to Asia",
+        "Explorers who traveled all the way around the entire earth",
+        "Explorers who discovered the most new territories",
+        "Explorers who stayed closest to established trade routes"
+      ],
+      "answer": 1,
+      "explanation": "When asking about circumnavigation, the teacher wants to know about the expedition that traveled completely around the entire planet, not just explored or mapped regions.",
+      "option_explanations": [
+        null,
+        "This is the correct interpretation - circumnavigation means traveling completely around",
+        "Mapping new territories isn't the same as going all the way around",
+        "Staying on trade routes contradicts the concept of circumnavigation"
+      ]
+    },
+    {
+      "type": "situation",
+      "word": "rapprochement",
+      "question": "Your company's CEO announces in a meeting: 'We're pleased to announce rapprochement with our former competitor.' What is most likely happening?",
+      "options": [
+        "The company is preparing for a hostile takeover of the competitor",
+        "The two companies are ending their conflict and restoring friendly business relations",
+        "The company is launching an aggressive advertising campaign against the competitor",
+        "The company is filing a legal lawsuit against the competitor"
+      ],
+      "answer": 1,
+      "explanation": "Rapprochement indicates a positive development where previously hostile parties are establishing or resuming friendly relations, so this would mean the competitor conflict is being resolved.",
+      "option_explanations": [
+        null,
+        "This is correct - rapprochement means restoring friendly relations after conflict",
+        "Rapprochement is positive, not hostile",
+        "This contradicts the meaning of rapprochement",
+        "Legal action contradicts the idea of reconciliation"
+      ]
+    },
+    {
+      "type": "situation",
+      "word": "fracture",
+      "question": "During a team meeting, a manager says, 'If we don't address this issue, we risk a fracture in our team's unity.' What is the manager concerned about?",
+      "options": [
+        "Physical injuries among team members",
+        "A complete reorganization of the department",
+        "The formation of divisions or breaks in team cohesion and solidarity",
+        "The installation of new office infrastructure"
+      ],
+      "answer": 2,
+      "explanation": "Used metaphorically, 'fracture' in this context refers to potential breaks or divisions in team unity and solidarity, not physical damage.",
+      "option_explanations": [
+        null,
+        null,
+        "This is correct - a fracture in unity means potential divisions and breaks in cohesion",
+        "Fracture in this context is metaphorical, not literal"
       ]
     }
   ],
   "sentences": [
     {
-      "word": "amelioration",
-      "sentence": "The team's hard work resulted in a gradual amelioration of the product's performance issues.",
-      "sentence_ko": "팀의 열심히는 제품의 성능 문제의 점진적인 개선을 가져왔다.",
-      "nuance": "Positive change over time",
-      "context": "Product development/quality improvement",
-      "everyday_usage": "Used in professional and academic settings when discussing improvements"
+      "word": "circumnavigate",
+      "sentence": "The explorer's ship took three years to circumnavigate the African continent.",
+      "sentence_ko": "그 탐험가의 배는 아프리카 대륙을 일주하는 데 3년이 걸렸다.",
+      "nuance": "Travel around a large geographical area",
+      "context": "Historical exploration or geography discussion",
+      "everyday_usage": "Can be used literally (travel around) or figuratively (avoid something by going around it)"
     },
     {
-      "word": "logistics",
-      "sentence": "Coordinating logistics for the music festival required weeks of planning to manage thousands of attendees.",
-      "sentence_ko": "음악 축제의 물류 조정은 수천 명의 참석자를 관리하기 위해 몇 주의 계획이 필요했다.",
-      "nuance": "Complex coordination of multiple moving parts",
-      "context": "Event management",
-      "everyday_usage": "Common in business, supply chain, and operations discussions"
+      "word": "decimate",
+      "sentence": "The economic recession decimated the tech industry, with thousands of startups closing within a year.",
+      "sentence_ko": "경제 침체가 기술 산업을 황폐화했고, 수천 개의 스타트업이 1년 내에 문을 닫았다.",
+      "nuance": "Severe widespread destruction or loss",
+      "context": "Business news, economic reports, or crisis discussions",
+      "everyday_usage": "Often used in media to describe significant impacts on industries, populations, or systems"
     },
     {
-      "word": "pathogen",
-      "sentence": "The CDC identified the pathogen responsible for the illness and began developing a vaccine.",
-      "sentence_ko": "CDC는 질병을 일으킨 병원체를 확인했고 백신 개발을 시작했다.",
-      "nuance": "Scientific identification and response",
-      "context": "Public health/medical research",
-      "everyday_usage": "Used in medical, scientific, and news contexts"
+      "word": "fracture",
+      "sentence": "The leaked emails caused a fracture in the relationship between the two business partners.",
+      "sentence_ko": "유출된 이메일이 두 사업 파트너 간의 관계에 균열을 야기했다.",
+      "nuance": "Metaphorical break or division in relationships",
+      "context": "Interpersonal or business conflict situations",
+      "everyday_usage": "Commonly used to describe emotional, social, or professional breaks, not just physical breaks"
     },
     {
-      "word": "precipice",
-      "sentence": "After years of poor decisions, the company found itself on the precipice of total collapse.",
-      "sentence_ko": "몇 년간의 나쁜 결정 후, 회사는 완전한 붕괴의 절벽에 처하게 되었다.",
-      "nuance": "Metaphorical danger, critical situation",
-      "context": "Business crisis",
-      "everyday_usage": "Used figuratively to describe critical moments or dangerous situations"
+      "word": "rapprochement",
+      "sentence": "After the summit, diplomats announced a rapprochement between the two neighboring countries, ending years of diplomatic tensions.",
+      "sentence_ko": "정상회담 후 외교관들은 두 인접 국가 간의 관계 개선을 발표하며 수년간의 외교 긴장을 종료했다.",
+      "nuance": "Formal reconciliation and restoration of friendly relations",
+      "context": "International relations, diplomatic news, political discussions",
+      "everyday_usage": "Primarily used in diplomatic and formal contexts, less common in everyday casual conversation"
     },
     {
-      "word": "impede",
-      "sentence": "Heavy traffic will impede our progress toward the airport, so we should leave earlier.",
-      "sentence_ko": "심한 교통 체증이 우리의 공항 이동을 방해할 것이므로, 더 일찍 출발해야 한다.",
-      "nuance": "Practical obstacle or delay",
-      "context": "Daily planning/logistics",
-      "everyday_usage": "Common in conversations about scheduling, travel, and project planning"
+      "word": "recalibrate",
+      "sentence": "The fitness trainer asked her client to recalibrate her workout intensity after noticing she was overtraining.",
+      "sentence_ko": "그 피트니스 트레이너는 클라이언트가 과도하게 훈련하고 있음을 알아차린 후 운동 강도를 재조정할 것을 요청했다.",
+      "nuance": "Adjustment or realignment to achieve proper balance or performance",
+      "context": "Fitness, work strategy, business planning, or personal development",
+      "everyday_usage": "Used in professional and personal contexts when adjusting approaches, methods, or goals"
     }
   ],
   "cefr_hint": "C1 수준 (사용자가 약간 쉽다고 평가함 — 한 단계 높게)",
-  "avg": 2.47
+  "avg": 2.54
 }
