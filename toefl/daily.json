@@ -1,110 +1,111 @@
 {
-  "date": "2026-09-28",
+  "date": "2026-09-29",
   "reading": {
-    "title": "Urban Green Spaces and Mental Health",
-    "passage": "Recent studies demonstrate that access to urban green spaces significantly improves mental health outcomes. Parks and gardens provide essential environments for stress reduction, physical activity, and social interaction. Cities with abundant green infrastructure report lower rates of anxiety and depression among residents. Environmental psychologists suggest that natural elements trigger relaxation responses in the human brain. Furthermore, green spaces enhance air quality and reduce urban temperatures, creating healthier living conditions overall.",
+    "title": "The Impact of Remote Work on Urban Development",
+    "passage": "Remote work has fundamentally transformed urban landscapes over the past decade. As companies embrace flexible working arrangements, fewer employees commute to city centers daily, reducing traffic congestion and pollution. This shift has prompted a reevaluation of commercial real estate, with many downtown office buildings being converted into residential apartments or mixed-use developments. Consequently, some cities have experienced revitalization in previously neglected areas, while others face economic challenges as tax revenue from commercial properties declines. Urban planners now must balance sustainability benefits with the need to maintain vibrant city economies.",
     "questions": [
       {
-        "q": "According to the passage, what is one benefit of urban green spaces?",
+        "q": "According to the passage, what is one consequence of remote work adoption?",
         "options": [
-          "A) Increased traffic congestion",
-          "B) Stress reduction and improved mental health",
-          "C) Higher property taxes",
-          "D) Decreased social interaction"
+          "Increased traffic in city centers",
+          "Conversion of office buildings to residential spaces",
+          "Higher commercial property tax revenue",
+          "Reduced need for urban planning"
         ],
         "answer": 1,
-        "explanation": "본문에서 '도시 공원과 정원은 스트레스 감소, 신체활동 및 사회적 상호작용을 위한 필수 환경'이라고 명시되어 있습니다."
+        "explanation": "본문에서 '많은 다운타운 사무실 건물이 주거용 아파트나 복합용도 개발로 전환되고 있다'고 명시되어 있습니다."
       },
       {
-        "q": "What do environmental psychologists claim about natural elements?",
+        "q": "What is the main idea of the passage?",
         "options": [
-          "A) They have no effect on human behavior",
-          "B) They increase stress levels",
-          "C) They trigger relaxation responses in the brain",
-          "D) They are expensive to maintain"
+          "Remote work eliminates all urban problems",
+          "Remote work has both positive and negative effects on city development",
+          "Cities should ban remote work",
+          "Commercial real estate is becoming obsolete"
         ],
-        "answer": 2,
-        "explanation": "'자연 요소는 인간의 뇌에서 이완 반응을 유발한다'는 내용이 본문에 직접 나타나 있습니다."
+        "answer": 1,
+        "explanation": "본문은 원격근무의 긍정적 영향(교통 감소, 오염 감소)과 부정적 영향(세수 감소, 경제적 어려움)을 모두 언급하므로 균형잡힌 관점을 제시합니다."
       },
       {
-        "q": "Which of the following is NOT mentioned as a benefit of green spaces?",
+        "q": "Based on the passage, urban planners face which challenge?",
         "options": [
-          "A) Air quality improvement",
-          "B) Temperature reduction",
-          "C) Economic growth",
-          "D) Social interaction opportunities"
+          "Eliminating all remote work",
+          "Balancing sustainability benefits with economic concerns",
+          "Preventing residential development",
+          "Increasing office building construction"
         ],
-        "answer": 2,
-        "explanation": "본문에서는 공기질 개선, 온도 감소, 사회적 상호작용은 언급되지만, 경제 성장에 대한 언급은 없습니다."
+        "answer": 1,
+        "explanation": "마지막 문장에서 '도시 계획가들은 지속가능성 이점과 활발한 도시 경제 유지의 필요성을 균형잡아야 한다'고 명시되어 있습니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: Remote work should become the standard employment model for all office jobs?",
+    "prompt": "Do you agree or disagree with the statement that remote work has improved the quality of life for most workers?",
     "structure": {
-      "intro": "명확한 입장을 제시하고 2-3개의 주요 이유를 간단히 언급하세요.",
-      "body1": "원격 근무의 첫 번째 이점(예: 유연성, 생산성, 통근 시간 절약)을 구체적인 예시와 함께 설명하세요.",
-      "body2": "원격 근무의 잠재적 단점(예: 팀 협업의 어려움, 회사 문화 약화)을 다루고 이를 어떻게 해결할 수 있는지 제시하세요.",
-      "conclusion": "입장을 재확인하고 더 균형 잡힌 접근 방식(하이브리드 모델)의 필요성을 언급하세요."
+      "intro": "명확한 입장 표명으로 시작하세요. 'I agree/disagree that...'로 시작하여 당신의 주요 주장을 간단히 소개합니다.",
+      "body1": "원격근무의 주요 이점(또는 단점)을 구체적인 예시와 함께 설명합니다. 예: 시간 절약, 유연성, 스트레스 감소 등",
+      "body2": "두 번째 관점을 추가하거나 반대 주장에 대한 반박을 제시합니다. 예: 사회적 고립, 일과 삶의 경계 모호함 등",
+      "conclusion": "주요 주장을 요약하고 최종 입장을 재확인합니다. 더 넓은 함의나 미래 전망으로 마무리합니다."
     },
     "useful_phrases": [
-      "In my opinion, remote work offers significant advantages...",
-      "One compelling reason is that...",
-      "However, it is important to acknowledge that...",
-      "Furthermore, companies can address these concerns by...",
-      "In conclusion, I believe a hybrid approach would be most beneficial..."
+      "In my opinion, remote work has significantly improved...",
+      "Moreover, employees can now manage their time more efficiently...",
+      "However, some argue that remote work leads to...",
+      "To conclude, the benefits of remote work outweigh its drawbacks...",
+      "Furthermore, companies have reported increased productivity..."
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer working in traditional office environments. Others prefer working from home. Which do you prefer and why?",
+    "prompt": "Some people prefer working in traditional office environments. Others prefer remote work arrangements. Which do you prefer and why?",
     "useful_expressions": [
-      "In my view, I prefer working from home because...",
-      "One significant advantage is that I can avoid long commutes...",
-      "Another reason is that remote work allows for better work-life balance...",
-      "To illustrate this point, I can share an example of how..."
+      "In my opinion, I prefer remote work because...",
+      "One reason is that I can save time on commuting...",
+      "Another important advantage is that I have better work-life balance...",
+      "I believe remote work allows me to...",
+      "From my perspective, the flexibility of remote work..."
     ],
     "sample_points": [
-      "집중력 증대: 홈오피스에서는 방해 요소가 적어 깊은 집중력 발휘 가능, 특히 복잡한 업무 처리에 유리",
-      "유연성과 시간 절약: 통근 시간 제거로 개인 시간 확보 가능, 자녀 돌봄 등 개인 책임과 업무를 더 효과적으로 조화"
+      "통근 시간 절약과 더 많은 개인 시간 확보로 인한 삶의 질 향상",
+      "자신의 페이스대로 작업할 수 있고 방해 요소가 적어 생산성 증대"
     ]
   },
   "listening": {
-    "title": "Campus Library Renovation Project",
+    "title": "Career Counseling Session",
     "type": "conversation",
-    "script": "Student: Excuse me, I heard the library is undergoing renovations. How long will it take? Librarian: Yes, we're updating our facility. The project will take about six months, divided into three phases. First, we'll renovate the study areas and computer lab on the first floor. Then we'll work on the reference section and meeting rooms upstairs. Finally, we'll update the technical infrastructure. Student: Will we have access to any services during the renovation? Librarian: Absolutely. We're maintaining a temporary circulation desk and keeping the book collection partially accessible. We've also created a digital collection that's available online 24/7. Many students are actually using our e-resources more than expected. Student: That's helpful. When does each phase start? Librarian: The first phase begins next month. We'll complete it by November, then move to phase two in December through February. Phase three finishes by spring. We'll notify everyone through email and our website about specific timelines and service adjustments.",
+    "script": "Student: Professor Chen, I'm considering whether to pursue a career in environmental science or computer engineering. Both fields interest me, but I'm worried about job prospects. Professor: That's a thoughtful concern. Both fields have excellent opportunities, but in different ways. Environmental science is growing as companies focus on sustainability, but positions can be competitive. Computer engineering offers more immediate job availability and higher starting salaries. However, the field requires continuous learning to stay current. Student: What about personal fulfillment? Professor: Excellent question. Environmental science offers direct impact on planetary health, which many find deeply fulfilling. Computer engineering offers problem-solving challenges and innovation. I'd suggest interning in both fields to experience them firsthand. Your passion matters as much as job prospects. Student: That's really helpful advice. Thank you.",
     "questions": [
       {
-        "q": "What is the main topic of the conversation?",
+        "q": "What is the student's primary concern?",
         "options": [
-          "A) Library book collection expansion",
-          "B) Library renovation project and timeline",
-          "C) Student complaints about library services",
-          "D) New computer lab construction"
+          "Finding a part-time job",
+          "Choosing between two career paths and considering job prospects",
+          "Learning computer programming",
+          "Understanding environmental regulations"
         ],
         "answer": 1,
-        "explanation": "대화의 주요 내용은 도서관 개조 프로젝트의 일정과 3단계 계획을 설명하는 것입니다."
+        "explanation": "학생이 환경과학과 컴퓨터공학 중 선택하면서 '취업 전망'을 걱정한다고 명시적으로 언급합니다."
       },
       {
-        "q": "How long will the entire renovation project take?",
+        "q": "According to the professor, what advantage does computer engineering have over environmental science?",
         "options": [
-          "A) Two months",
-          "B) Three months",
-          "C) Six months",
-          "D) One year"
-        ],
-        "answer": 2,
-        "explanation": "사서가 '프로젝트는 약 6개월 걸릴 것'이라고 명시적으로 언급했습니다."
-      },
-      {
-        "q": "What services will remain available during renovations?",
-        "options": [
-          "A) Only the physical book collection",
-          "B) Temporary circulation desk and digital collection",
-          "C) All services continue normally",
-          "D) No services will be available"
+          "More fulfilling work",
+          "More immediate job availability and higher starting salaries",
+          "Better environmental impact",
+          "Easier to learn"
         ],
         "answer": 1,
-        "explanation": "사서는 '임시 대출 데스크를 유지하고 도서 수집을 부분적으로 접근 가능하게 하며, 온라인 전자 자료는 24/7 이용 가능'하다고 설명했습니다."
+        "explanation": "교수는 컴퓨터공학이 '더 많은 즉시적인 일자리 기회와 더 높은 초봉'을 제공한다고 명시합니다."
+      },
+      {
+        "q": "What does the professor recommend the student do?",
+        "options": [
+          "Choose computer engineering immediately",
+          "Intern in both fields to experience them firsthand",
+          "Ignore job prospects and follow passion",
+          "Continue studying without working"
+        ],
+        "answer": 1,
+        "explanation": "교수는 학생이 두 분야 모두에서 인턴십을 통해 직접 경험하기를 제안합니다."
       }
     ]
   }
