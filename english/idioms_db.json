@@ -805,5 +805,29 @@
     "tip": "유사 표현: decide on, choose. settle down(정착하다)과는 다른 뜻이니 주의!",
     "emoji": "✨",
     "date": "2026-09-29"
+  },
+  {
+    "id": "cut-corners",
+    "phrase": "cut corners",
+    "meaning_ko": "지름길을 가다, 편법을 쓰다",
+    "meaning_en": "to do something poorly to save time or money",
+    "explanation": "비용이나 시간을 아끼려고 품질을 낮추는 거예요. 보통 좋지 않은 의미로 쓰인답니다! 😅",
+    "example_en": "Don't cut corners on the project quality just to meet the deadline.",
+    "example_ko": "마감을 맞추려고 프로젝트 품질을 떨어뜨리지 마세요.",
+    "tip": "비즈니스나 학술 맥락에서 자주 등장. 부정적 뉘앙스가 강해요!",
+    "emoji": "⚠️",
+    "date": "2026-09-30"
+  },
+  {
+    "id": "hit-off",
+    "phrase": "hit it off",
+    "meaning_ko": "잘 맞다, 친하게 지내다",
+    "meaning_en": "to have a good relationship with someone immediately",
+    "explanation": "처음 만난 사람과 금방 친해지거나 잘 맞는 경우를 말해요. 정말 케미가 있을 때 쓰는 표현이에요! 👫",
+    "example_en": "My new coworker and I hit it off on the first day.",
+    "example_ko": "새로운 동료와 첫 날부터 잘 맞았어요.",
+    "tip": "긍정적인 감정을 나타내요. 'We hit it off right away'처럼 자주 써요!",
+    "emoji": "💫",
+    "date": "2026-09-30"
   }
 ]

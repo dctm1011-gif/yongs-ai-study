@@ -4760,5 +4760,65 @@
     "explanation": "To adjust, reset, or fine-tune an instrument, system, or plan to achieve proper alignment or performance; metaphorically, to reassess and adjust one's approach or perspective.",
     "tip": "동의어: adjust, reset, realign / 반의어: misalign / 출제영역: 비즈니스, 과학용어",
     "emoji": "⚙️"
+  },
+  {
+    "id": "ascertain",
+    "word": "ascertain",
+    "pos": "verb",
+    "date": "2026-09-30",
+    "meaning": "확인하다, 알아내다",
+    "example_ko": "그 탐정은 그 사건의 진실을 확인하기 위해 노력했다.",
+    "example_en": "The detective worked to ascertain the truth behind the accident.",
+    "explanation": "To find out or determine something with certainty; to discover the facts about something through investigation or inquiry",
+    "tip": "동의어: determine, verify, establish / 반의어: doubt, question / 출제영역: 비즈니스, 학술 글쓰기",
+    "emoji": "🔍"
+  },
+  {
+    "id": "inconvenient",
+    "word": "inconvenient",
+    "pos": "adjective",
+    "date": "2026-09-30",
+    "meaning": "불편한, 귀찮은",
+    "example_ko": "그 회의 시간은 팀원 대부분에게 불편했다.",
+    "example_en": "The meeting time was inconvenient for most of the team members.",
+    "explanation": "Causing difficulty, trouble, or discomfort; not suited to one's needs or circumstances; poorly timed",
+    "tip": "동의어: troublesome, awkward, untimely / 반의어: convenient, suitable, timely / 출제영역: 일상 표현, TOEIC",
+    "emoji": "⏰"
+  },
+  {
+    "id": "pollutant",
+    "word": "pollutant",
+    "pos": "noun",
+    "date": "2026-09-30",
+    "meaning": "오염 물질",
+    "example_ko": "산업 오염 물질은 수십 년 동안 강의 생태계를 손상시켰다.",
+    "example_en": "Industrial pollutants have damaged the river's ecosystem for decades.",
+    "explanation": "A substance or agent that contaminates air, water, or soil; any harmful material released into the environment that degrades quality of life",
+    "tip": "동의어: contaminant, impurity / 관련어: pollution, pollute / 출제영역: 환경 이슈, 뉴스 리딩",
+    "emoji": "🌍"
+  },
+  {
+    "id": "commensurate",
+    "word": "commensurate",
+    "pos": "adjective",
+    "date": "2026-09-30",
+    "meaning": "상응하는, 적절한",
+    "example_ko": "그녀의 급여는 그녀의 경력 년수와 자격에 맞았다.",
+    "example_en": "Her salary was commensurate with her years of experience and qualifications.",
+    "explanation": "Corresponding in size, degree, or extent; proportionate to something else; appropriate and suitable in relation to",
+    "tip": "동의어: proportionate, equivalent, appropriate / 반의어: disproportionate, inadequate / 출제영역: 채용, 비즈니스 글쓰기",
+    "emoji": "⚖️"
+  },
+  {
+    "id": "expediency",
+    "word": "expediency",
+    "pos": "noun",
+    "date": "2026-09-30",
+    "meaning": "편의성, 이익, 권리",
+    "example_ko": "정부는 그 논쟁의 여지가 있는 결정을 할 때 도덕성보다 편의성을 선택했다.",
+    "example_en": "The government chose expediency over integrity when making that controversial decision.",
+    "explanation": "The quality of being convenient and practical, especially when done for self-interest rather than moral principles; speed and efficiency achieved by abandoning standards",
+    "tip": "동의어: convenience, practicality / 반의어: principle, integrity / 출제영역: 정치, 철학, 고급 에세이",
+    "emoji": "⚡"
   }
 ]

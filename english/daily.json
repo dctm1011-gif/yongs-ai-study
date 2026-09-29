@@ -1,64 +1,64 @@
 {
-  "date": "2026-09-29",
+  "date": "2026-09-30",
   "words": [
     {
-      "word": "circumnavigate",
+      "word": "ascertain",
       "part_of_speech": "verb",
-      "meaning_ko": "(지구를) 일주하다, 빙 둘러가다",
-      "explanation": "To travel completely around something, typically the earth or a large body of water; can also mean to avoid or go around something indirectly.",
-      "example_from_convo": "Ferdinand Magellan's crew was the first to circumnavigate the globe.",
-      "example_ko": "마젤란의 승무원들이 지구를 일주한 최초의 사람들이었다.",
-      "tip": "동의어: navigate around, traverse / 반의어: direct route / 출제영역: 독해, 어휘",
-      "emoji": "🌍",
-      "background": "Circumnavigation is the complete navigation of a person around an entire island, continent, or astronomical body (e.g. a planet or moon).",
+      "meaning_ko": "확인하다, 알아내다",
+      "explanation": "To find out or determine something with certainty; to discover the facts about something through investigation or inquiry",
+      "example_from_convo": "The detective worked to ascertain the truth behind the accident.",
+      "example_ko": "그 탐정은 그 사건의 진실을 확인하기 위해 노력했다.",
+      "tip": "동의어: determine, verify, establish / 반의어: doubt, question / 출제영역: 비즈니스, 학술 글쓰기",
+      "emoji": "🔍",
       "synonyms": [],
       "antonyms": []
     },
     {
-      "word": "decimate",
-      "part_of_speech": "verb",
-      "meaning_ko": "대부분을 파괴하다, 심각하게 손상시키다",
-      "explanation": "To destroy or kill a large proportion of something; to severely damage or reduce in number. Originally meant to kill one in ten, but now refers to widespread destruction.",
-      "example_from_convo": "The pandemic decimated small businesses across the country.",
-      "example_ko": "팬데믹이 전국의 소규모 사업들을 대부분 파괴했다.",
-      "tip": "동의어: devastate, destroy, ravage / 반의어: preserve, restore / 출제영역: 어휘, 논술",
-      "emoji": "💥",
+      "word": "inconvenient",
+      "part_of_speech": "adjective",
+      "meaning_ko": "불편한, 귀찮은",
+      "explanation": "Causing difficulty, trouble, or discomfort; not suited to one's needs or circumstances; poorly timed",
+      "example_from_convo": "The meeting time was inconvenient for most of the team members.",
+      "example_ko": "그 회의 시간은 팀원 대부분에게 불편했다.",
+      "tip": "동의어: troublesome, awkward, untimely / 반의어: convenient, suitable, timely / 출제영역: 일상 표현, TOEIC",
+      "emoji": "⏰",
       "synonyms": [],
       "antonyms": []
     },
     {
-      "word": "fracture",
-      "part_of_speech": "verb/noun",
-      "meaning_ko": "(뼈를) 부러뜨리다, 균열",
-      "explanation": "As a verb: to break or crack something, especially bone; As a noun: a break or crack in something. Metaphorically used to describe divisions or breaks in relationships or systems.",
-      "example_from_convo": "The political crisis caused a fracture in the alliance between the two nations.",
-      "example_ko": "그 정치 위기는 두 국가 간의 동맹에 균열을 야기했다.",
-      "tip": "동의어: crack, break, rupture / 반의어: unite, join, heal / 출제영역: 의학용어, 비유적 표현",
-      "emoji": "💔",
-      "synonyms": [],
-      "antonyms": []
-    },
-    {
-      "word": "rapprochement",
+      "word": "pollutant",
       "part_of_speech": "noun",
-      "meaning_ko": "관계 개선, 화해, 접근",
-      "explanation": "The establishment or resumption of friendly relations between countries or groups that were previously in conflict or estranged. A French term commonly used in diplomatic contexts.",
-      "example_from_convo": "The two countries are seeking rapprochement after decades of tension.",
-      "example_ko": "두 나라는 수십 년의 긴장 이후 관계 개선을 추구하고 있다.",
-      "tip": "동의어: reconciliation, thaw, détente / 반의어: estrangement, conflict / 출제영역: 정치/외교 어휘, TOEFL",
-      "emoji": "🤝",
+      "meaning_ko": "오염 물질",
+      "explanation": "A substance or agent that contaminates air, water, or soil; any harmful material released into the environment that degrades quality of life",
+      "example_from_convo": "Industrial pollutants have damaged the river's ecosystem for decades.",
+      "example_ko": "산업 오염 물질은 수십 년 동안 강의 생태계를 손상시켰다.",
+      "tip": "동의어: contaminant, impurity / 관련어: pollution, pollute / 출제영역: 환경 이슈, 뉴스 리딩",
+      "emoji": "🌍",
       "synonyms": [],
       "antonyms": []
     },
     {
-      "word": "recalibrate",
-      "part_of_speech": "verb",
-      "meaning_ko": "재조정하다, 다시 맞추다",
-      "explanation": "To adjust, reset, or fine-tune an instrument, system, or plan to achieve proper alignment or performance; metaphorically, to reassess and adjust one's approach or perspective.",
-      "example_from_convo": "After reviewing the data, we need to recalibrate our marketing strategy.",
-      "example_ko": "데이터를 검토한 후 우리는 마케팅 전략을 재조정해야 한다.",
-      "tip": "동의어: adjust, reset, realign / 반의어: misalign / 출제영역: 비즈니스, 과학용어",
-      "emoji": "⚙️",
+      "word": "commensurate",
+      "part_of_speech": "adjective",
+      "meaning_ko": "상응하는, 적절한",
+      "explanation": "Corresponding in size, degree, or extent; proportionate to something else; appropriate and suitable in relation to",
+      "example_from_convo": "Her salary was commensurate with her years of experience and qualifications.",
+      "example_ko": "그녀의 급여는 그녀의 경력 년수와 자격에 맞았다.",
+      "tip": "동의어: proportionate, equivalent, appropriate / 반의어: disproportionate, inadequate / 출제영역: 채용, 비즈니스 글쓰기",
+      "emoji": "⚖️",
+      "synonyms": [],
+      "antonyms": []
+    },
+    {
+      "word": "expediency",
+      "part_of_speech": "noun",
+      "meaning_ko": "편의성, 이익, 권리",
+      "explanation": "The quality of being convenient and practical, especially when done for self-interest rather than moral principles; speed and efficiency achieved by abandoning standards",
+      "example_from_convo": "The government chose expediency over integrity when making that controversial decision.",
+      "example_ko": "정부는 그 논쟁의 여지가 있는 결정을 할 때 도덕성보다 편의성을 선택했다.",
+      "tip": "동의어: convenience, practicality / 반의어: principle, integrity / 출제영역: 정치, 철학, 고급 에세이",
+      "emoji": "⚡",
+      "background": "",
       "synonyms": [],
       "antonyms": []
     }
@@ -66,186 +66,141 @@
   "quiz": [
     {
       "type": "meaning",
-      "word": "circumnavigate",
-      "question": "In a geography context, which statement best describes what 'circumnavigate' means?",
+      "word": "ascertain",
+      "question": "In an investigative journalism context, 'ascertain' is MOST similar to which of the following?",
       "options": [
-        "To travel in a straight line across continents",
-        "To travel completely around something, typically by sea or air",
-        "To map the boundaries of a territory",
-        "To navigate through difficult terrain"
+        "To publish information quickly",
+        "To discover facts through careful investigation",
+        "To question someone's credibility",
+        "To summarize existing knowledge"
       ],
       "answer": 1,
-      "explanation": "Circumnavigate means to travel completely around something, most commonly used in the context of traveling around the earth or large bodies of water.",
-      "option_explanations": [
-        null,
-        "This is correct - circumnavigate specifically refers to complete travel around something",
-        "Navigation doesn't require going around",
-        "Difficult terrain is not the primary meaning"
-      ]
+      "explanation": "Ascertain means to determine or find out something with certainty, which aligns with the investigative process of discovering facts.",
+      "option_explanations": null
     },
     {
       "type": "meaning",
-      "word": "decimate",
-      "question": "How is 'decimate' MOST commonly used in modern English?",
+      "word": "pollutant",
+      "question": "Which word best describes a pollutant in environmental science?",
       "options": [
-        "To reduce by exactly ten percent",
-        "To increase significantly in number",
-        "To destroy or severely reduce a large proportion of something",
-        "To separate items into groups"
+        "A natural element found in ecosystems",
+        "A harmful substance that contaminates the environment",
+        "A chemical used in manufacturing",
+        "A weather phenomenon"
       ],
-      "answer": 2,
-      "explanation": "While originally meaning to kill one in ten, 'decimate' now broadly means to destroy or severely damage a large portion of something, as seen in contexts like disease or war impacts.",
-      "option_explanations": [
-        null,
-        null,
-        "Correct - this is the modern usage",
-        "This is not related to the word's meaning"
-      ]
+      "answer": 1,
+      "explanation": "A pollutant is specifically a substance or agent that contaminates and degrades environmental quality.",
+      "option_explanations": null
     },
     {
       "type": "meaning",
-      "word": "rapprochement",
-      "question": "In a news article about international relations, 'rapprochement' refers to what?",
+      "word": "commensurate",
+      "question": "If a reward is 'commensurate with' someone's effort, what does this mean?",
       "options": [
-        "A military conflict between neighboring states",
-        "The establishment of friendly relations after previous estrangement",
-        "A trade agreement that benefits both parties equally",
-        "A formal declaration of war"
+        "The reward is unexpected and surprising",
+        "The reward is proportionate to the level of effort",
+        "The reward is given reluctantly",
+        "The reward is less than deserved"
       ],
       "answer": 1,
-      "explanation": "Rapprochement is a diplomatic term meaning the resumption or establishment of friendly relations between previously hostile or estranged parties.",
-      "option_explanations": [
-        null,
-        "This is correct - rapprochement describes reconciliation between estranged parties",
-        "Trade agreements don't necessarily involve reconciliation",
-        "This contradicts the term's meaning"
-      ]
+      "explanation": "Commensurate means corresponding in size or degree; a commensurate reward matches the effort expended.",
+      "option_explanations": null
     },
     {
       "type": "fill_blank",
-      "word": "decimate",
-      "sentence": "The unexpected frost ___ the spring crops, forcing farmers to replant their fields.",
-      "sentence_ko": "뜻밖의 서리가 봄 작물을 대부분 파괴했고, 농부들은 밭을 다시 심어야 했다.",
-      "answer": "decimated",
-      "hint": "This word means to destroy or severely damage a large portion of something"
+      "word": "inconvenient",
+      "sentence": "Although the software update was ___, it introduced several important security features that protected user data.",
+      "sentence_ko": "비록 소프트웨어 업데이트가 불편했지만, 사용자 데이터를 보호하는 몇 가지 중요한 보안 기능을 도입했다.",
+      "answer": "inconvenient",
+      "hint": "An adjective describing something that causes difficulty or disruption, often used with 'though' or 'although'"
     },
     {
       "type": "fill_blank",
-      "word": "recalibrate",
-      "sentence": "After the pilot program showed mixed results, the company decided to ___ its approach before expanding nationwide.",
-      "sentence_ko": "파일럿 프로그램이 엇갈린 결과를 보인 후, 회사는 전국으로 확대하기 전에 접근 방식을 재조정하기로 결정했다.",
-      "answer": "recalibrate",
-      "hint": "This word means to adjust or reset something to achieve better alignment or performance"
+      "word": "expediency",
+      "sentence": "The company prioritized ___ over long-term sustainability, resulting in environmental damage and public backlash.",
+      "sentence_ko": "회사는 장기적 지속 가능성보다 편의성을 우선시했고, 이는 환경 피해와 여론의 역풍을 초래했다.",
+      "answer": "expediency",
+      "hint": "A noun referring to convenience or self-interest pursued at the expense of principles"
     },
     {
       "type": "fill_blank",
-      "word": "fracture",
-      "sentence": "The scandal threatened to ___ the unity of the political party, dividing members into opposing factions.",
-      "sentence_ko": "그 스캔들은 정당의 단합을 위협하여 회원들을 대립하는 파벌로 나누려고 했다.",
-      "answer": "fracture",
-      "hint": "This word can mean to cause a break or division in something"
+      "word": "ascertain",
+      "sentence": "Before implementing the new policy, the management team needed to ___ whether employees understood the changes.",
+      "sentence_ko": "새로운 정책을 시행하기 전에 경영진은 직원들이 변화를 이해했는지 확인해야 했다.",
+      "answer": "ascertain",
+      "hint": "A verb meaning to find out or determine something with certainty"
     },
     {
       "type": "situation",
-      "word": "circumnavigate",
-      "question": "Your geography teacher assigns a research project about early exploration. She asks, 'Who was the first expedition to circumnavigate the globe?' What does she want you to find?",
+      "word": "ascertain",
+      "question": "Your client insists the data in your report is incorrect, but you've verified it multiple times. What do you do next to properly ascertain the facts?",
       "options": [
-        "Explorers who mapped the shortest route to Asia",
-        "Explorers who traveled all the way around the entire earth",
-        "Explorers who discovered the most new territories",
-        "Explorers who stayed closest to established trade routes"
+        "Apologize and revise the report without checking again",
+        "Review the original source documents and ask your client for specific examples of errors",
+        "Ignore the client's concerns since you've already checked once",
+        "Tell the client they're mistaken and refuse further discussion"
       ],
       "answer": 1,
-      "explanation": "When asking about circumnavigation, the teacher wants to know about the expedition that traveled completely around the entire planet, not just explored or mapped regions.",
-      "option_explanations": [
-        null,
-        "This is the correct interpretation - circumnavigation means traveling completely around",
-        "Mapping new territories isn't the same as going all the way around",
-        "Staying on trade routes contradicts the concept of circumnavigation"
-      ]
+      "explanation": "To ascertain means to determine facts with certainty. The professional approach is to review sources again and get specific feedback to ensure accuracy.",
+      "option_explanations": null
     },
     {
       "type": "situation",
-      "word": "rapprochement",
-      "question": "Your company's CEO announces in a meeting: 'We're pleased to announce rapprochement with our former competitor.' What is most likely happening?",
+      "word": "pollutant",
+      "question": "Your city's water quality report shows high levels of industrial pollutants in the local river. As a concerned resident, what action aligns with addressing this pollutant issue?",
       "options": [
-        "The company is preparing for a hostile takeover of the competitor",
-        "The two companies are ending their conflict and restoring friendly business relations",
-        "The company is launching an aggressive advertising campaign against the competitor",
-        "The company is filing a legal lawsuit against the competitor"
+        "Continue using the river for recreational activities without concern",
+        "Report the findings to environmental protection agencies and support cleanup initiatives",
+        "Assume the pollutants will naturally disappear over time",
+        "Keep the information private to avoid causing panic"
       ],
       "answer": 1,
-      "explanation": "Rapprochement indicates a positive development where previously hostile parties are establishing or resuming friendly relations, so this would mean the competitor conflict is being resolved.",
-      "option_explanations": [
-        null,
-        "This is correct - rapprochement means restoring friendly relations after conflict",
-        "Rapprochement is positive, not hostile",
-        "This contradicts the meaning of rapprochement",
-        "Legal action contradicts the idea of reconciliation"
-      ]
-    },
-    {
-      "type": "situation",
-      "word": "fracture",
-      "question": "During a team meeting, a manager says, 'If we don't address this issue, we risk a fracture in our team's unity.' What is the manager concerned about?",
-      "options": [
-        "Physical injuries among team members",
-        "A complete reorganization of the department",
-        "The formation of divisions or breaks in team cohesion and solidarity",
-        "The installation of new office infrastructure"
-      ],
-      "answer": 2,
-      "explanation": "Used metaphorically, 'fracture' in this context refers to potential breaks or divisions in team unity and solidarity, not physical damage.",
-      "option_explanations": [
-        null,
-        null,
-        "This is correct - a fracture in unity means potential divisions and breaks in cohesion",
-        "Fracture in this context is metaphorical, not literal"
-      ]
+      "explanation": "Addressing pollutants requires identifying the harmful substances and taking action through proper environmental channels to remediate contamination.",
+      "option_explanations": null
     }
   ],
   "sentences": [
     {
-      "word": "circumnavigate",
-      "sentence": "The explorer's ship took three years to circumnavigate the African continent.",
-      "sentence_ko": "그 탐험가의 배는 아프리카 대륙을 일주하는 데 3년이 걸렸다.",
-      "nuance": "Travel around a large geographical area",
-      "context": "Historical exploration or geography discussion",
-      "everyday_usage": "Can be used literally (travel around) or figuratively (avoid something by going around it)"
+      "word": "ascertain",
+      "sentence": "The auditors spent weeks examining financial records to ascertain whether the company had committed fraud.",
+      "sentence_ko": "감사자들은 회사가 사기를 저질렀는지 확인하기 위해 수주간 재무 기록을 검토했다.",
+      "nuance": "Official, investigative context",
+      "context": "Legal/financial investigation",
+      "everyday_usage": "Used in formal settings when verifying important facts"
     },
     {
-      "word": "decimate",
-      "sentence": "The economic recession decimated the tech industry, with thousands of startups closing within a year.",
-      "sentence_ko": "경제 침체가 기술 산업을 황폐화했고, 수천 개의 스타트업이 1년 내에 문을 닫았다.",
-      "nuance": "Severe widespread destruction or loss",
-      "context": "Business news, economic reports, or crisis discussions",
-      "everyday_usage": "Often used in media to describe significant impacts on industries, populations, or systems"
+      "word": "inconvenient",
+      "sentence": "The bus strike created an inconvenient situation for thousands of commuters who had to find alternative transportation.",
+      "sentence_ko": "버스 파업은 대체 교통을 찾아야 하는 수천 명의 통근자들에게 불편한 상황을 야기했다.",
+      "nuance": "Neutral, matter-of-fact description",
+      "context": "Public transportation disruption",
+      "everyday_usage": "Common in news reports and everyday complaints"
     },
     {
-      "word": "fracture",
-      "sentence": "The leaked emails caused a fracture in the relationship between the two business partners.",
-      "sentence_ko": "유출된 이메일이 두 사업 파트너 간의 관계에 균열을 야기했다.",
-      "nuance": "Metaphorical break or division in relationships",
-      "context": "Interpersonal or business conflict situations",
-      "everyday_usage": "Commonly used to describe emotional, social, or professional breaks, not just physical breaks"
+      "word": "pollutant",
+      "sentence": "Plastic microbeads in cosmetics are recognized as a dangerous pollutant that harms marine life and enters the food chain.",
+      "sentence_ko": "화장품의 플라스틱 미세 구슬은 해양 생물에 해를 끼치고 식물 연쇄에 들어가는 위험한 오염 물질로 인식된다.",
+      "nuance": "Scientific, warning tone",
+      "context": "Environmental/health concern",
+      "everyday_usage": "Frequently used in environmental reports and scientific discussions"
     },
     {
-      "word": "rapprochement",
-      "sentence": "After the summit, diplomats announced a rapprochement between the two neighboring countries, ending years of diplomatic tensions.",
-      "sentence_ko": "정상회담 후 외교관들은 두 인접 국가 간의 관계 개선을 발표하며 수년간의 외교 긴장을 종료했다.",
-      "nuance": "Formal reconciliation and restoration of friendly relations",
-      "context": "International relations, diplomatic news, political discussions",
-      "everyday_usage": "Primarily used in diplomatic and formal contexts, less common in everyday casual conversation"
+      "word": "commensurate",
+      "sentence": "Entry-level positions should offer salaries commensurate with employees' education levels and market rates.",
+      "sentence_ko": "초급 직책은 직원들의 교육 수준과 시장 요금에 맞는 급여를 제공해야 한다.",
+      "nuance": "Professional, fair-dealing tone",
+      "context": "Employment and compensation",
+      "everyday_usage": "Common in HR discussions and employment negotiations"
     },
     {
-      "word": "recalibrate",
-      "sentence": "The fitness trainer asked her client to recalibrate her workout intensity after noticing she was overtraining.",
-      "sentence_ko": "그 피트니스 트레이너는 클라이언트가 과도하게 훈련하고 있음을 알아차린 후 운동 강도를 재조정할 것을 요청했다.",
-      "nuance": "Adjustment or realignment to achieve proper balance or performance",
-      "context": "Fitness, work strategy, business planning, or personal development",
-      "everyday_usage": "Used in professional and personal contexts when adjusting approaches, methods, or goals"
+      "word": "expediency",
+      "sentence": "Cutting corners for expediency might save time initially, but it often creates greater problems and costs down the road.",
+      "sentence_ko": "편의성 때문에 지름길을 갈 수도 있지만, 결국 나중에 더 큰 문제와 비용을 초래하는 경우가 많다.",
+      "nuance": "Cautionary, reflective",
+      "context": "Business decision-making and ethics",
+      "everyday_usage": "Used when discussing trade-offs between quick solutions and sustainable practices"
     }
   ],
   "cefr_hint": "C1 수준 (사용자가 약간 쉽다고 평가함 — 한 단계 높게)",
-  "avg": 2.54
+  "avg": 2.59
 }
