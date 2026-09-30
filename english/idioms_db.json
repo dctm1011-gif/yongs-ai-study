@@ -829,5 +829,29 @@
     "tip": "긍정적인 감정을 나타내요. 'We hit it off right away'처럼 자주 써요!",
     "emoji": "💫",
     "date": "2026-09-30"
+  },
+  {
+    "id": "run-by",
+    "phrase": "run by",
+    "meaning_ko": "~에게 의견을 묻다, 검토받다",
+    "meaning_en": "to present an idea or plan to someone for feedback",
+    "explanation": "어떤 아이디어나 계획을 누군가에게 빠르게 검토받거나 동의를 구하는 거예요. 비즈니스에서 정말 실용적인 표현이랍니다! 💼",
+    "example_en": "Let me run this proposal by the manager before we proceed.",
+    "example_ko": "진행하기 전에 이 제안을 매니저에게 검토받게 해요.",
+    "tip": "run it by me(내게 한 번 말해봐)는 비즈니스 미팅에서 자주 나오는 표현이에요!",
+    "emoji": "💬",
+    "date": "2026-10-01"
+  },
+  {
+    "id": "wind-down",
+    "phrase": "wind down",
+    "meaning_ko": "진정되다, 마무리하다",
+    "meaning_en": "to relax after work or to gradually conclude an activity",
+    "explanation": "하루를 마치면서 긴장을 풀고 편안해지는 거예요. 일상생활에서 스트레스를 날려버릴 때 쓰면 정말 좋아요! 🧘",
+    "example_en": "I like to wind down by reading a book before bed.",
+    "example_ko": "저는 잠들기 전에 책을 읽으며 진정하는 걸 좋아해요.",
+    "tip": "wind up(감아올리다, 마무리하다)와는 반대 의미예요. wind down은 편안해지는 뉘앙스, wind up은 정리하는 느낌이에요!",
+    "emoji": "😌",
+    "date": "2026-10-01"
   }
 ]

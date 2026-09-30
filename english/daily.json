@@ -1,64 +1,65 @@
 {
-  "date": "2026-09-30",
+  "date": "2026-10-01",
   "words": [
     {
-      "word": "ascertain",
-      "part_of_speech": "verb",
-      "meaning_ko": "확인하다, 알아내다",
-      "explanation": "To find out or determine something with certainty; to discover the facts about something through investigation or inquiry",
-      "example_from_convo": "The detective worked to ascertain the truth behind the accident.",
-      "example_ko": "그 탐정은 그 사건의 진실을 확인하기 위해 노력했다.",
-      "tip": "동의어: determine, verify, establish / 반의어: doubt, question / 출제영역: 비즈니스, 학술 글쓰기",
-      "emoji": "🔍",
-      "synonyms": [],
-      "antonyms": []
-    },
-    {
-      "word": "inconvenient",
+      "word": "disparate",
       "part_of_speech": "adjective",
-      "meaning_ko": "불편한, 귀찮은",
-      "explanation": "Causing difficulty, trouble, or discomfort; not suited to one's needs or circumstances; poorly timed",
-      "example_from_convo": "The meeting time was inconvenient for most of the team members.",
-      "example_ko": "그 회의 시간은 팀원 대부분에게 불편했다.",
-      "tip": "동의어: troublesome, awkward, untimely / 반의어: convenient, suitable, timely / 출제영역: 일상 표현, TOEIC",
-      "emoji": "⏰",
+      "meaning_ko": "서로 다른, 이질적인",
+      "explanation": "Fundamentally different in kind; not able to be compared. Often used to describe things that are so different they cannot be easily compared or united.",
+      "example_from_convo": "The research team combined disparate sources of data from different countries.",
+      "example_ko": "그 연구팀은 서로 다른 국가의 이질적인 데이터 출처들을 결합했다.",
+      "tip": "동의어: diverse, heterogeneous | 반의어: homogeneous, similar | 출제영역: 학술/비즈니스 문맥",
+      "emoji": "🔀",
       "synonyms": [],
       "antonyms": []
     },
     {
-      "word": "pollutant",
-      "part_of_speech": "noun",
-      "meaning_ko": "오염 물질",
-      "explanation": "A substance or agent that contaminates air, water, or soil; any harmful material released into the environment that degrades quality of life",
-      "example_from_convo": "Industrial pollutants have damaged the river's ecosystem for decades.",
-      "example_ko": "산업 오염 물질은 수십 년 동안 강의 생태계를 손상시켰다.",
-      "tip": "동의어: contaminant, impurity / 관련어: pollution, pollute / 출제영역: 환경 이슈, 뉴스 리딩",
-      "emoji": "🌍",
-      "synonyms": [],
-      "antonyms": []
-    },
-    {
-      "word": "commensurate",
+      "word": "egregious",
       "part_of_speech": "adjective",
-      "meaning_ko": "상응하는, 적절한",
-      "explanation": "Corresponding in size, degree, or extent; proportionate to something else; appropriate and suitable in relation to",
-      "example_from_convo": "Her salary was commensurate with her years of experience and qualifications.",
-      "example_ko": "그녀의 급여는 그녀의 경력 년수와 자격에 맞았다.",
-      "tip": "동의어: proportionate, equivalent, appropriate / 반의어: disproportionate, inadequate / 출제영역: 채용, 비즈니스 글쓰기",
-      "emoji": "⚖️",
-      "synonyms": [],
-      "antonyms": []
-    },
-    {
-      "word": "expediency",
-      "part_of_speech": "noun",
-      "meaning_ko": "편의성, 이익, 권리",
-      "explanation": "The quality of being convenient and practical, especially when done for self-interest rather than moral principles; speed and efficiency achieved by abandoning standards",
-      "example_from_convo": "The government chose expediency over integrity when making that controversial decision.",
-      "example_ko": "정부는 그 논쟁의 여지가 있는 결정을 할 때 도덕성보다 편의성을 선택했다.",
-      "tip": "동의어: convenience, practicality / 반의어: principle, integrity / 출제영역: 정치, 철학, 고급 에세이",
-      "emoji": "⚡",
+      "meaning_ko": "심각한, 터무니없는",
+      "explanation": "Outstandingly bad; shocking or appalling in nature. Usually used for negative things that are extremely obvious and offensive.",
+      "example_from_convo": "The company's egregious violations of safety regulations led to criminal charges.",
+      "example_ko": "그 회사의 터무니없는 안전 규정 위반은 형사 고소로 이어졌다.",
+      "tip": "동의어: outrageous, flagrant | 반의어: minor, trivial | 출제영역: 뉴스/법률 맥락",
+      "emoji": "⚠️",
       "background": "",
+      "synonyms": [],
+      "antonyms": []
+    },
+    {
+      "word": "acclimatize",
+      "part_of_speech": "verb",
+      "meaning_ko": "적응하다, 순응하다",
+      "explanation": "To become accustomed to a new climate, environment, or situation. Can take time and involves gradual adjustment.",
+      "example_from_convo": "New employees need a month to acclimatize to our company culture.",
+      "example_ko": "새 직원들은 우리 회사 문화에 적응하는 데 한 달이 필요하다.",
+      "tip": "동의어: adapt, adjust | 반의어: resist, reject | 출제영역: 직장/학교 맥락",
+      "emoji": "🌍",
+      "background": "Acclimatization or acclimatisation (also called acclimation or acclimatation) is the process in which an individual organism adjusts to a change in its environment (such as a change in altitude, temperature, humidity, photoperiod, or pH), allowing it to maintain fitness across a range of environmental conditions. Acclimatization occurs in a short period of time (hours to weeks), and within the organism's lifetime (compared to adaptation, which is evolution, taking place over many generations).",
+      "synonyms": [],
+      "antonyms": []
+    },
+    {
+      "word": "convivial",
+      "part_of_speech": "adjective",
+      "meaning_ko": "친근한, 즐거운 분위기의",
+      "explanation": "Friendly, cheerful, and lively; relating to or promoting friendly social interaction and good company.",
+      "example_from_convo": "The office party had a convivial atmosphere with people laughing and mingling.",
+      "example_ko": "그 사무실 파티는 사람들이 웃고 어울리는 즐거운 분위기였다.",
+      "tip": "동의어: jovial, cordial, sociable | 반의어: hostile, unfriendly | 출제영역: 사교/문화 맥락",
+      "emoji": "🎉",
+      "synonyms": [],
+      "antonyms": []
+    },
+    {
+      "word": "sojourn",
+      "part_of_speech": "noun/verb",
+      "meaning_ko": "일시적 체류, 묵다",
+      "explanation": "A temporary stay in a place. As a noun, it refers to the period of time spent; as a verb, it means to stay temporarily.",
+      "example_from_convo": "During her sojourn in Paris, she discovered her passion for art.",
+      "example_ko": "파리에서의 일시적 체류 동안 그녀는 미술에 대한 열정을 발견했다.",
+      "tip": "동의어: stay, visit | 반의어: permanent residence | 출제영역: 여행/문학 맥락",
+      "emoji": "✈️",
       "synonyms": [],
       "antonyms": []
     }
@@ -66,141 +67,156 @@
   "quiz": [
     {
       "type": "meaning",
-      "word": "ascertain",
-      "question": "In an investigative journalism context, 'ascertain' is MOST similar to which of the following?",
+      "word": "disparate",
+      "question": "In a research context, which of the following best describes what 'disparate' sources mean?",
       "options": [
-        "To publish information quickly",
-        "To discover facts through careful investigation",
-        "To question someone's credibility",
-        "To summarize existing knowledge"
+        "Sources that come from similar methodologies",
+        "Sources that are fundamentally different in nature and hard to compare",
+        "Sources that are geographically close together",
+        "Sources that were published in the same year"
       ],
       "answer": 1,
-      "explanation": "Ascertain means to determine or find out something with certainty, which aligns with the investigative process of discovering facts.",
-      "option_explanations": null
+      "explanation": "Disparate sources are those that are fundamentally different in kind and cannot be easily compared.",
+      "option_explanations": [
+        "Incorrect - similar methodologies would make them comparable, not disparate",
+        "Correct - disparate means fundamentally different in kind",
+        "Incorrect - geographic location doesn't define disparateness",
+        "Incorrect - publication date doesn't relate to disparate nature"
+      ]
     },
     {
       "type": "meaning",
-      "word": "pollutant",
-      "question": "Which word best describes a pollutant in environmental science?",
+      "word": "egregious",
+      "question": "Which situation would MOST likely be described as 'egregious'?",
       "options": [
-        "A natural element found in ecosystems",
-        "A harmful substance that contaminates the environment",
-        "A chemical used in manufacturing",
-        "A weather phenomenon"
+        "An employee arriving 5 minutes late to a meeting",
+        "A company deliberately hiding safety violations for years",
+        "A team member using the wrong file format",
+        "A manager forgetting to send one email"
       ],
       "answer": 1,
-      "explanation": "A pollutant is specifically a substance or agent that contaminates and degrades environmental quality.",
-      "option_explanations": null
+      "explanation": "Egregious refers to something outstandingly bad or shocking, like deliberately hiding serious violations over a long period.",
+      "option_explanations": [
+        "Incorrect - minor tardiness is not egregious",
+        "Correct - deliberate long-term deception about safety is egregious",
+        "Incorrect - a formatting error is minor",
+        "Incorrect - forgetting one email is trivial"
+      ]
     },
     {
       "type": "meaning",
-      "word": "commensurate",
-      "question": "If a reward is 'commensurate with' someone's effort, what does this mean?",
+      "word": "convivial",
+      "question": "A newspaper describes a community gathering as having a 'convivial spirit.' This most closely means the atmosphere was:",
       "options": [
-        "The reward is unexpected and surprising",
-        "The reward is proportionate to the level of effort",
-        "The reward is given reluctantly",
-        "The reward is less than deserved"
+        "Formal and strictly organized",
+        "Tense and argumentative",
+        "Friendly, warm, and filled with good social interaction",
+        "Quiet and isolating"
       ],
-      "answer": 1,
-      "explanation": "Commensurate means corresponding in size or degree; a commensurate reward matches the effort expended.",
-      "option_explanations": null
+      "answer": 2,
+      "explanation": "Convivial describes a friendly, cheerful atmosphere that promotes social interaction and good company.",
+      "option_explanations": [
+        "Incorrect - convivial is warm, not formal",
+        "Incorrect - convivial is the opposite of tense",
+        "Correct - convivial means friendly and promoting good social interaction",
+        "Incorrect - convivial implies togetherness, not isolation"
+      ]
     },
     {
       "type": "fill_blank",
-      "word": "inconvenient",
-      "sentence": "Although the software update was ___, it introduced several important security features that protected user data.",
-      "sentence_ko": "비록 소프트웨어 업데이트가 불편했지만, 사용자 데이터를 보호하는 몇 가지 중요한 보안 기능을 도입했다.",
-      "answer": "inconvenient",
-      "hint": "An adjective describing something that causes difficulty or disruption, often used with 'though' or 'although'"
+      "word": "disparate",
+      "sentence": "The marketing team struggled to combine ___ approaches from their traditional and digital divisions into one coherent strategy.",
+      "sentence_ko": "마케팅 팀은 전통 부서와 디지털 부서의 ___ 접근 방식들을 하나의 일관된 전략으로 통합하는 데 어려움을 겪었다.",
+      "answer": "disparate",
+      "hint": "Meaning: fundamentally different in kind"
     },
     {
       "type": "fill_blank",
-      "word": "expediency",
-      "sentence": "The company prioritized ___ over long-term sustainability, resulting in environmental damage and public backlash.",
-      "sentence_ko": "회사는 장기적 지속 가능성보다 편의성을 우선시했고, 이는 환경 피해와 여론의 역풍을 초래했다.",
-      "answer": "expediency",
-      "hint": "A noun referring to convenience or self-interest pursued at the expense of principles"
+      "word": "egregious",
+      "sentence": "The food safety inspector noted an ___ lack of hygiene in the restaurant's kitchen and immediately closed it down.",
+      "sentence_ko": "식품 안전 검사관은 그 음식점 주방의 ___ 위생 부족을 지적했고 즉시 폐쇄했다.",
+      "answer": "egregious",
+      "hint": "Meaning: outstandingly bad or shocking"
     },
     {
       "type": "fill_blank",
-      "word": "ascertain",
-      "sentence": "Before implementing the new policy, the management team needed to ___ whether employees understood the changes.",
-      "sentence_ko": "새로운 정책을 시행하기 전에 경영진은 직원들이 변화를 이해했는지 확인해야 했다.",
-      "answer": "ascertain",
-      "hint": "A verb meaning to find out or determine something with certainty"
+      "word": "acclimatize",
+      "sentence": "It took the mountaineers three weeks to ___ to the high altitude before attempting the summit.",
+      "sentence_ko": "산악인들이 정상 공략을 시도하기 전에 높은 고도에 ___ 하는 데 3주가 걸렸다.",
+      "answer": "acclimatize",
+      "hint": "Meaning: to become accustomed to a new environment"
     },
     {
       "type": "situation",
-      "word": "ascertain",
-      "question": "Your client insists the data in your report is incorrect, but you've verified it multiple times. What do you do next to properly ascertain the facts?",
+      "word": "sojourn",
+      "question": "Your friend is planning a three-month stay in Barcelona to study Spanish and experience the culture. What would you call this trip?",
       "options": [
-        "Apologize and revise the report without checking again",
-        "Review the original source documents and ask your client for specific examples of errors",
-        "Ignore the client's concerns since you've already checked once",
-        "Tell the client they're mistaken and refuse further discussion"
+        "A permanent relocation that she's not planning to reverse",
+        "A sojourn—a temporary stay with the intention of returning home",
+        "A business trip that will last exactly one day",
+        "A vacation that cannot exceed two weeks"
       ],
       "answer": 1,
-      "explanation": "To ascertain means to determine facts with certainty. The professional approach is to review sources again and get specific feedback to ensure accuracy.",
+      "explanation": "A sojourn perfectly describes a planned temporary stay in a place, as opposed to permanent relocation.",
       "option_explanations": null
     },
     {
       "type": "situation",
-      "word": "pollutant",
-      "question": "Your city's water quality report shows high levels of industrial pollutants in the local river. As a concerned resident, what action aligns with addressing this pollutant issue?",
+      "word": "acclimatize",
+      "question": "Your manager tells you that a new team member seems disoriented on their first week. You reassure the manager by saying: 'They just need time to ___.' What word completes this naturally?",
       "options": [
-        "Continue using the river for recreational activities without concern",
-        "Report the findings to environmental protection agencies and support cleanup initiatives",
-        "Assume the pollutants will naturally disappear over time",
-        "Keep the information private to avoid causing panic"
+        "graduate from the company",
+        "acclimatize to our work environment and culture",
+        "leave for another job",
+        "memorize every company policy"
       ],
       "answer": 1,
-      "explanation": "Addressing pollutants requires identifying the harmful substances and taking action through proper environmental channels to remediate contamination.",
+      "explanation": "To acclimatize means to become accustomed to a new environment, which is exactly what a new employee needs time to do.",
       "option_explanations": null
     }
   ],
   "sentences": [
     {
-      "word": "ascertain",
-      "sentence": "The auditors spent weeks examining financial records to ascertain whether the company had committed fraud.",
-      "sentence_ko": "감사자들은 회사가 사기를 저질렀는지 확인하기 위해 수주간 재무 기록을 검토했다.",
-      "nuance": "Official, investigative context",
-      "context": "Legal/financial investigation",
-      "everyday_usage": "Used in formal settings when verifying important facts"
+      "word": "disparate",
+      "sentence": "The organization brings together disparate groups with different backgrounds to foster innovation.",
+      "sentence_ko": "그 조직은 혁신을 촉진하기 위해 서로 다른 배경의 이질적인 그룹들을 함께 모은다.",
+      "nuance": "Emphasizes diversity and difference coming together",
+      "context": "Organizational/educational setting",
+      "everyday_usage": "Used in business and academic contexts to describe combining diverse elements"
     },
     {
-      "word": "inconvenient",
-      "sentence": "The bus strike created an inconvenient situation for thousands of commuters who had to find alternative transportation.",
-      "sentence_ko": "버스 파업은 대체 교통을 찾아야 하는 수천 명의 통근자들에게 불편한 상황을 야기했다.",
-      "nuance": "Neutral, matter-of-fact description",
-      "context": "Public transportation disruption",
-      "everyday_usage": "Common in news reports and everyday complaints"
+      "word": "egregious",
+      "sentence": "The social media company faced lawsuits over its egregious mishandling of user data.",
+      "sentence_ko": "그 소셜 미디어 회사는 사용자 데이터의 터무니없는 오취급으로 소송에 직면했다.",
+      "nuance": "Suggests not just bad, but shockingly and inexcusably bad",
+      "context": "News/legal context",
+      "everyday_usage": "Often used in journalism and formal complaints about serious wrongdoing"
     },
     {
-      "word": "pollutant",
-      "sentence": "Plastic microbeads in cosmetics are recognized as a dangerous pollutant that harms marine life and enters the food chain.",
-      "sentence_ko": "화장품의 플라스틱 미세 구슬은 해양 생물에 해를 끼치고 식물 연쇄에 들어가는 위험한 오염 물질로 인식된다.",
-      "nuance": "Scientific, warning tone",
-      "context": "Environmental/health concern",
-      "everyday_usage": "Frequently used in environmental reports and scientific discussions"
+      "word": "convivial",
+      "sentence": "The dinner party had such a convivial mood that guests didn't want to leave.",
+      "sentence_ko": "그 저녁 파티는 너무나 즐거운 분위기여서 손님들이 떠나고 싶지 않았다.",
+      "nuance": "Creates an inviting, warm social environment",
+      "context": "Social gatherings and casual settings",
+      "everyday_usage": "Describes pleasant social situations where people enjoy each other's company"
     },
     {
-      "word": "commensurate",
-      "sentence": "Entry-level positions should offer salaries commensurate with employees' education levels and market rates.",
-      "sentence_ko": "초급 직책은 직원들의 교육 수준과 시장 요금에 맞는 급여를 제공해야 한다.",
-      "nuance": "Professional, fair-dealing tone",
-      "context": "Employment and compensation",
-      "everyday_usage": "Common in HR discussions and employment negotiations"
+      "word": "acclimatize",
+      "sentence": "Plants need time to acclimatize before they can thrive in a different climate zone.",
+      "sentence_ko": "식물들이 다른 기후대에서 번성하기 전에 적응할 시간이 필요하다.",
+      "nuance": "Suggests gradual adjustment process rather than instant adaptation",
+      "context": "Environmental/botanical context",
+      "everyday_usage": "Used in gardening, biology, and whenever discussing adjustment to new conditions"
     },
     {
-      "word": "expediency",
-      "sentence": "Cutting corners for expediency might save time initially, but it often creates greater problems and costs down the road.",
-      "sentence_ko": "편의성 때문에 지름길을 갈 수도 있지만, 결국 나중에 더 큰 문제와 비용을 초래하는 경우가 많다.",
-      "nuance": "Cautionary, reflective",
-      "context": "Business decision-making and ethics",
-      "everyday_usage": "Used when discussing trade-offs between quick solutions and sustainable practices"
+      "word": "sojourn",
+      "sentence": "During her sojourn in Japan, she learned traditional calligraphy and made lifelong friends.",
+      "sentence_ko": "일본에서의 일시적 체류 동안 그녀는 전통 서예를 배우고 평생의 친구들을 사귀었다.",
+      "nuance": "Implies a meaningful, enriching temporary experience rather than just passing through",
+      "context": "Travel/personal development narrative",
+      "everyday_usage": "Often used in travel blogs, literature, and personal stories about temporary relocations"
     }
   ],
   "cefr_hint": "C1 수준 (사용자가 약간 쉽다고 평가함 — 한 단계 높게)",
-  "avg": 2.59
+  "avg": 2.6
 }

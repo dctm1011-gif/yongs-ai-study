@@ -4820,5 +4820,65 @@
     "explanation": "The quality of being convenient and practical, especially when done for self-interest rather than moral principles; speed and efficiency achieved by abandoning standards",
     "tip": "동의어: convenience, practicality / 반의어: principle, integrity / 출제영역: 정치, 철학, 고급 에세이",
     "emoji": "⚡"
+  },
+  {
+    "id": "disparate",
+    "word": "disparate",
+    "pos": "adjective",
+    "date": "2026-10-01",
+    "meaning": "서로 다른, 이질적인",
+    "example_ko": "그 연구팀은 서로 다른 국가의 이질적인 데이터 출처들을 결합했다.",
+    "example_en": "The research team combined disparate sources of data from different countries.",
+    "explanation": "Fundamentally different in kind; not able to be compared. Often used to describe things that are so different they cannot be easily compared or united.",
+    "tip": "동의어: diverse, heterogeneous | 반의어: homogeneous, similar | 출제영역: 학술/비즈니스 문맥",
+    "emoji": "🔀"
+  },
+  {
+    "id": "egregious",
+    "word": "egregious",
+    "pos": "adjective",
+    "date": "2026-10-01",
+    "meaning": "심각한, 터무니없는",
+    "example_ko": "그 회사의 터무니없는 안전 규정 위반은 형사 고소로 이어졌다.",
+    "example_en": "The company's egregious violations of safety regulations led to criminal charges.",
+    "explanation": "Outstandingly bad; shocking or appalling in nature. Usually used for negative things that are extremely obvious and offensive.",
+    "tip": "동의어: outrageous, flagrant | 반의어: minor, trivial | 출제영역: 뉴스/법률 맥락",
+    "emoji": "⚠️"
+  },
+  {
+    "id": "acclimatize",
+    "word": "acclimatize",
+    "pos": "verb",
+    "date": "2026-10-01",
+    "meaning": "적응하다, 순응하다",
+    "example_ko": "새 직원들은 우리 회사 문화에 적응하는 데 한 달이 필요하다.",
+    "example_en": "New employees need a month to acclimatize to our company culture.",
+    "explanation": "To become accustomed to a new climate, environment, or situation. Can take time and involves gradual adjustment.",
+    "tip": "동의어: adapt, adjust | 반의어: resist, reject | 출제영역: 직장/학교 맥락",
+    "emoji": "🌍"
+  },
+  {
+    "id": "convivial",
+    "word": "convivial",
+    "pos": "adjective",
+    "date": "2026-10-01",
+    "meaning": "친근한, 즐거운 분위기의",
+    "example_ko": "그 사무실 파티는 사람들이 웃고 어울리는 즐거운 분위기였다.",
+    "example_en": "The office party had a convivial atmosphere with people laughing and mingling.",
+    "explanation": "Friendly, cheerful, and lively; relating to or promoting friendly social interaction and good company.",
+    "tip": "동의어: jovial, cordial, sociable | 반의어: hostile, unfriendly | 출제영역: 사교/문화 맥락",
+    "emoji": "🎉"
+  },
+  {
+    "id": "sojourn",
+    "word": "sojourn",
+    "pos": "noun/verb",
+    "date": "2026-10-01",
+    "meaning": "일시적 체류, 묵다",
+    "example_ko": "파리에서의 일시적 체류 동안 그녀는 미술에 대한 열정을 발견했다.",
+    "example_en": "During her sojourn in Paris, she discovered her passion for art.",
+    "explanation": "A temporary stay in a place. As a noun, it refers to the period of time spent; as a verb, it means to stay temporarily.",
+    "tip": "동의어: stay, visit | 반의어: permanent residence | 출제영역: 여행/문학 맥락",
+    "emoji": "✈️"
   }
 ]
