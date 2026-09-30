@@ -1,111 +1,111 @@
 {
-  "date": "2026-09-30",
+  "date": "2026-10-01",
   "reading": {
-    "title": "The Impact of Remote Work on Urban Development",
-    "passage": "Remote work has fundamentally transformed urban landscapes in recent years. With more employees working from home, cities have experienced decreased demand for commercial office space, leading to the conversion of downtown buildings into residential apartments and mixed-use developments. This shift has reduced traffic congestion and pollution in major metropolitan areas. However, it has also impacted local businesses that depended on office workers for daily revenue, such as restaurants and retail shops. Urban planners are now adapting city infrastructure to accommodate this new reality, focusing on creating vibrant neighborhoods that attract residents beyond traditional business districts.",
+    "title": "The Impact of Renewable Energy on Global Economy",
+    "passage": "Renewable energy sources, including solar and wind power, have become increasingly cost-effective over the past decade. According to recent studies, the global renewable energy market is expected to grow significantly, creating millions of jobs worldwide. Countries investing heavily in clean energy infrastructure are experiencing economic benefits while reducing carbon emissions. This transition not only addresses climate change but also promotes sustainable development and energy independence for nations seeking to reduce reliance on fossil fuels.",
     "questions": [
       {
-        "q": "According to the passage, what is one consequence of increased remote work in cities?",
+        "q": "According to the passage, what is one economic benefit of renewable energy investment?",
         "options": [
-          "Increased commercial office space demand",
-          "Decreased traffic congestion",
-          "More retail shop profitability",
-          "Higher urban pollution levels"
+          "A. It decreases the number of available jobs",
+          "B. It creates millions of jobs worldwide",
+          "C. It increases reliance on fossil fuels",
+          "D. It reduces government spending on infrastructure"
         ],
         "answer": 1,
-        "explanation": "원문에서 'This shift has reduced traffic congestion and pollution in major metropolitan areas'라고 명시되어 있습니다. 원격 근무로 인해 교통 혼잡이 감소했다는 것이 정답입니다."
+        "explanation": "패시지에서 재생에너지 시장이 전 세계적으로 수백만 개의 일자리를 창출할 것으로 예상된다고 명시되어 있습니다. 따라서 정답은 B번입니다."
       },
       {
-        "q": "What has happened to downtown buildings due to remote work?",
+        "q": "What does the passage suggest about the cost of renewable energy?",
         "options": [
-          "They have been demolished",
-          "They are converted into residential and mixed-use developments",
-          "They remain empty",
-          "They have increased in commercial value"
-        ],
-        "answer": 1,
-        "explanation": "'conversion of downtown buildings into residential apartments and mixed-use developments'라는 문구에서 도심 건물들이 주거용과 복합용도 건물로 전환되었음을 알 수 있습니다."
-      },
-      {
-        "q": "Which businesses have been negatively affected by remote work according to the passage?",
-        "options": [
-          "Technology companies",
-          "Real estate developers",
-          "Restaurants and retail shops",
-          "Construction firms"
+          "A. It has become more expensive",
+          "B. It remains extremely costly and impractical",
+          "C. It has become increasingly cost-effective",
+          "D. The passage does not discuss cost"
         ],
         "answer": 2,
-        "explanation": "원문의 'local businesses that depended on office workers for daily revenue, such as restaurants and retail shops'에서 음식점과 소매점이 부정적 영향을 받았다고 언급되어 있습니다."
+        "explanation": "패시지의 첫 번째 문장에서 '지난 10년간 태양광과 풍력을 포함한 재생에너지원이 점점 더 비용 효율적이 되었다'고 언급되어 있습니다."
+      },
+      {
+        "q": "Which of the following is NOT mentioned as a benefit of renewable energy?",
+        "options": [
+          "A. Reducing carbon emissions",
+          "B. Promoting sustainable development",
+          "C. Ensuring energy independence",
+          "D. Increasing fossil fuel production"
+        ],
+        "answer": 3,
+        "explanation": "패시지는 화석 연료에 대한 의존도 감소를 언급하므로, 화석 연료 생산 증가는 재생에너지의 장점이 아닙니다. 정답은 D번입니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Do you agree or disagree with the statement: 'Remote work is better for employees than working in an office environment.' Provide specific reasons and examples to support your position.",
+    "prompt": "Some people believe that technology has improved human life significantly. Others argue that it has created more problems than solutions. Which perspective do you agree with?",
     "structure": {
-      "intro": "명확한 입장 표현 (agree/disagree)과 함께 2-3개의 주요 이유를 미리 제시하기",
-      "body1": "첫 번째 이유 상세 설명 - 구체적인 예시나 증거 포함 (예: 시간 절약, 생산성 향상, 유연성)",
-      "body2": "두 번째 이유 상세 설명 - 반대 관점도 간단히 인정 후 본인의 입장 강화",
-      "conclusion": "앞서 언급한 주요 포인트를 요약하고 전체적인 입장을 재확인하기"
+      "intro": "Opening sentence에서 당신의 입장을 명확히 표현하세요. 예: 'Technology has undoubtedly improved human life in numerous ways, despite some challenges it presents.'",
+      "body1": "첫 번째 이점: 의료, 통신, 교육 등 구체적인 분야에서의 기술 발전을 예시로 들어 설명하세요.",
+      "body2": "두 번째 이점 또는 반박: 일부 부정적 영향을 인정하면서도 그 이점이 더 크다는 점을 강조하세요. 예: 개인정보 문제 vs. 연결성 개선",
+      "conclusion": "본론에서 제시한 주요 아이디어를 다시 정리하고, 기술의 긍정적 역할을 재강조하며 에세이를 마무리하세요."
     },
     "useful_phrases": [
-      "In my opinion, remote work offers several advantages...",
-      "One significant benefit is that...",
-      "Furthermore, employees can save time...",
-      "Although some argue that..., I believe...",
-      "In conclusion, the benefits of remote work outweigh the drawbacks because...",
-      "For example, studies have shown that..."
+      "In my opinion, technology has significantly improved human life.",
+      "Furthermore, technology has revolutionized the way we communicate and access information.",
+      "For example, medical technology has extended life expectancy and improved quality of life.",
+      "Although some argue that technology creates problems, the benefits clearly outweigh the drawbacks.",
+      "In conclusion, the positive impact of technology on society is undeniable."
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to work in a traditional office environment. Others prefer to work remotely from home. Which do you prefer and why? Include specific reasons for your preference.",
+    "prompt": "Some people prefer to work in traditional office environments. Others prefer remote work arrangements. Which do you prefer and why?",
     "useful_expressions": [
-      "In my opinion, I prefer remote work because...",
-      "One reason is that remote work allows me to...",
-      "Additionally, I find that working from home helps me...",
-      "Another advantage is that..."
+      "In my opinion, I prefer remote work because it offers greater flexibility and saves commuting time.",
+      "One reason is that remote work allows me to maintain a better work-life balance.",
+      "Another advantage is that I can work in a comfortable environment of my own choosing.",
+      "However, some people might argue that office environments promote better collaboration.",
+      "To summarize, I believe remote work is more beneficial for productivity and personal well-being."
     ],
     "sample_points": [
-      "유연성과 시간 절약 - 출퇴근 시간 제거로 더 많은 개인 시간 확보 가능, 가족과의 시간 증가, 자신의 페이스대로 업무 수행",
-      "생산성 및 집중력 향상 - 조용한 환경에서 방해 없이 일할 수 있음, 중요한 회의와 소통은 온라인 도구로 효율적 진행 가능, 스트레스 감소"
+      "원격 근무의 장점: 유연한 시간 관리, 출퇴근 시간 절약, 개인적인 환경에서의 편안함, 일과 삶의 균형 유지 가능",
+      "전통 사무실 근무와의 비교: 협업의 어려움을 언급하면서도 기술을 통한 해결 방안 제시 가능. 예: 비디오 회의, 협업 도구 등이 이러한 문제를 해결할 수 있다고 주장"
     ]
   },
   "listening": {
-    "title": "Career Counseling Session",
+    "title": "Campus Sustainability Initiative",
     "type": "conversation",
-    "script": "Student: I'm not sure if I should accept the job offer. It's a great position, but it requires me to relocate to another city. Counselor: That's a significant decision. What are your concerns about moving? Student: Well, I'd have to leave my family and friends behind. Also, the cost of living there is much higher. Counselor: Those are valid concerns. However, have you considered the career growth opportunities? This company is well-known for developing young talent. Student: That's true. I've heard great things about their training programs. Counselor: Also, many young professionals find that relocating helps them develop independence and build new networks. Plus, you can always visit home during holidays. Student: I hadn't thought about it that way. Maybe the benefits do outweigh the drawbacks. Counselor: Take your time deciding, but remember that career growth is important at your stage.",
+    "script": "Professor: Good morning, Sarah. I wanted to discuss our campus sustainability project. Have you had a chance to review the proposal?\nStudent: Yes, Professor. I'm really interested in the renewable energy component. Can you tell me more about the solar panel installation?\nProfessor: Of course. We're planning to install 500 solar panels on the roof of the science building. This would generate approximately 30% of the building's energy needs. We estimate it will reduce our carbon footprint by 200 tons annually.\nStudent: That's impressive. What about the timeline and budget?\nProfessor: We're looking at an 18-month installation period with a budget of $2 million. However, we expect to recover the investment through energy savings within 10 years. Additionally, we've received a grant that covers 40% of the costs.\nStudent: That sounds like a solid plan. Are there other initiatives included?\nProfessor: Yes. We're also implementing a campus-wide recycling program and installing LED lighting throughout the buildings. These measures combined should significantly reduce our environmental impact.",
     "questions": [
       {
-        "q": "What is the main reason the student is hesitant about the job offer?",
+        "q": "What is the main purpose of the conversation?",
         "options": [
-          "The salary is too low",
-          "The job is too difficult",
-          "It requires relocating away from family and friends",
-          "The company is not well-known"
+          "A. To discuss the history of renewable energy on campus",
+          "B. To explain a campus sustainability initiative involving solar panels and other green measures",
+          "C. To review student complaints about energy consumption",
+          "D. To plan a fundraising event for the science building"
         ],
-        "answer": 2,
-        "explanation": "학생은 'It requires me to relocate to another city'라고 했으며, '가족과 친구들을 떠나야 한다'는 점을 주요 우려사항으로 언급했습니다."
+        "answer": 1,
+        "explanation": "교수와 학생이 캠퍼스 지속 가능성 프로젝트, 특히 태양광 패널 설치 및 기타 환경 보호 조치에 대해 논의하고 있습니다."
       },
       {
-        "q": "According to the counselor, what is an advantage of relocating for this job?",
+        "q": "According to the professor, how much of the science building's energy needs would be met by the solar panels?",
         "options": [
-          "Lower cost of living",
-          "Better weather in the new city",
-          "Career growth opportunities and developing independence",
-          "More time to spend with family"
+          "A. 20%",
+          "B. 30%",
+          "C. 40%",
+          "D. 50%"
         ],
-        "answer": 2,
-        "explanation": "상담사는 'This company is well-known for developing young talent'과 'relocating helps them develop independence and build new networks'라고 강조했습니다."
+        "answer": 1,
+        "explanation": "교수는 500개의 태양광 패널이 건물의 에너지 필요의 약 30%를 생산할 것이라고 명시했습니다."
       },
       {
-        "q": "What is the counselor's overall recommendation?",
+        "q": "How long is the expected payback period for the solar panel investment?",
         "options": [
-          "Definitely reject the offer",
-          "Accept the offer immediately",
-          "Take time to decide but remember career growth is important",
-          "Ask for a remote work option"
+          "A. 5 years",
+          "B. 8 years",
+          "C. 10 years",
+          "D. 15 years"
         ],
         "answer": 2,
-        "explanation": "상담사는 'Take your time deciding, but remember that career growth is important at your stage'라고 말했으며, 학생이 충분히 고려한 후 결정하도록 조언했습니다."
+        "explanation": "교수는 에너지 절감을 통해 10년 내에 투자 비용을 회수할 수 있을 것으로 예상한다고 말했습니다."
       }
     ]
   }
