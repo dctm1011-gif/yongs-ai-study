@@ -853,5 +853,17 @@
     "tip": "wind up(감아올리다, 마무리하다)와는 반대 의미예요. wind down은 편안해지는 뉘앙스, wind up은 정리하는 느낌이에요!",
     "emoji": "😌",
     "date": "2026-10-01"
+  },
+  {
+    "id": "turn-down",
+    "phrase": "turn down",
+    "meaning_ko": "거절하다, 제안을 받아들이지 않다",
+    "meaning_en": "to reject or refuse an offer or invitation",
+    "explanation": "제안이나 초대를 정중하게 거절하는 표현이에요! 일상 대화에서 자주 나와요 😌",
+    "example_en": "She turned down the job offer because the salary was too low.",
+    "example_ko": "그녀는 급여가 너무 낮아서 그 직업 제의를 거절했어요.",
+    "tip": "유사 표현: refuse, reject, decline. turn up(수락하다)와 반대예요!",
+    "emoji": "🙅",
+    "date": "2026-10-02"
   }
 ]

@@ -4880,5 +4880,65 @@
     "explanation": "A temporary stay in a place. As a noun, it refers to the period of time spent; as a verb, it means to stay temporarily.",
     "tip": "동의어: stay, visit | 반의어: permanent residence | 출제영역: 여행/문학 맥락",
     "emoji": "✈️"
+  },
+  {
+    "id": "credibility",
+    "word": "credibility",
+    "pos": "noun",
+    "date": "2026-10-02",
+    "meaning": "신뢰성, 믿을 수 있음",
+    "example_ko": "그 기자는 거짓 정보를 발표한 후 모든 신뢰성을 잃었다.",
+    "example_en": "The journalist lost all credibility after publishing false information.",
+    "explanation": "A person's or organization's ability to be believed or trusted based on their track record and integrity. It's the quality that makes people have confidence in what you say or do.",
+    "tip": "동의어: trustworthiness, reliability / 반의어: incredibility / 출제영역: 경제신문, 비즈니스 회화",
+    "emoji": "🏆"
+  },
+  {
+    "id": "deterioration",
+    "word": "deterioration",
+    "pos": "noun",
+    "date": "2026-10-02",
+    "meaning": "악화, 퇴보, 악화 과정",
+    "example_ko": "건물 구조의 악화로 인해 즉각적인 수리가 필요했다.",
+    "example_en": "The deterioration of the building's structure required immediate repairs.",
+    "explanation": "The process of becoming progressively worse in quality, condition, or function. It describes decline over time, whether physical, social, or situational.",
+    "tip": "동의어: decline, degradation / 반의어: improvement, enhancement / 출제영역: 환경과학, 시사문제",
+    "emoji": "📉"
+  },
+  {
+    "id": "reconciliation",
+    "word": "reconciliation",
+    "pos": "noun",
+    "date": "2026-10-02",
+    "meaning": "화해, 조정, 재정산",
+    "example_ko": "수년간의 긴장 이후, 두 국가는 외교 담판을 통해 마침내 화해를 이루었다.",
+    "example_en": "After years of tension, the two countries finally achieved reconciliation through diplomatic talks.",
+    "explanation": "The process of restoring friendly relations between people or groups after a conflict, or resolving differences in accounts or records. It involves bringing conflicting parties back together.",
+    "tip": "동의어: peace-making, settlement / 반의어: conflict, discord / 출제영역: 국제관계, 인문과학",
+    "emoji": "🕊️"
+  },
+  {
+    "id": "altruism",
+    "word": "altruism",
+    "pos": "noun",
+    "date": "2026-10-02",
+    "meaning": "이타주의, 이웃 사랑, 무아의 정신",
+    "example_ko": "그녀의 이타주의는 많은 자원봉사자들이 자선 단체에 참여하도록 영감을 주었다.",
+    "example_en": "Her altruism inspired many volunteers to join the charity organization.",
+    "explanation": "The practice of showing concern for others' welfare without regard for one's own interests. It's acting selflessly for the benefit of others, often at a cost to yourself.",
+    "tip": "동의어: selflessness, generosity / 반의어: selfishness, egoism / 출제영역: 철학, 윤리학",
+    "emoji": "❤️"
+  },
+  {
+    "id": "encumber",
+    "word": "encumber",
+    "pos": "verb",
+    "date": "2026-10-02",
+    "meaning": "방해하다, 짐이 되다, 부담을 주다",
+    "example_ko": "과도한 규정들이 소규모 사업의 성장 능력을 방해한다.",
+    "example_en": "Excessive regulations encumber small businesses' ability to grow quickly.",
+    "explanation": "To burden or hamper someone with something that makes progress difficult; to weigh down or restrict movement, action, or progress. Often used when obstacles prevent free movement or decision-making.",
+    "tip": "동의어: burden, hamper, impede / 반의어: facilitate, aid / 출제영역: 비즈니스 영어, 법률용어",
+    "emoji": "⛓️"
   }
 ]
