@@ -1,111 +1,113 @@
 {
-  "date": "2026-10-01",
+  "date": "2026-10-02",
   "reading": {
-    "title": "The Impact of Renewable Energy on Global Economy",
-    "passage": "Renewable energy sources, including solar and wind power, have become increasingly cost-effective over the past decade. According to recent studies, the global renewable energy market is expected to grow significantly, creating millions of jobs worldwide. Countries investing heavily in clean energy infrastructure are experiencing economic benefits while reducing carbon emissions. This transition not only addresses climate change but also promotes sustainable development and energy independence for nations seeking to reduce reliance on fossil fuels.",
+    "title": "The Impact of Artificial Intelligence on Education",
+    "passage": "Artificial intelligence is transforming the education sector by personalizing learning experiences and automating administrative tasks. AI-powered platforms can analyze student performance data and adapt content to individual learning styles, helping learners progress at their own pace. Furthermore, intelligent tutoring systems provide immediate feedback and support, reducing the burden on teachers. However, concerns about data privacy and the digital divide remain significant challenges that educators must address when implementing AI technologies in classrooms.",
     "questions": [
       {
-        "q": "According to the passage, what is one economic benefit of renewable energy investment?",
+        "q": "According to the passage, how does AI help students?",
         "options": [
-          "A. It decreases the number of available jobs",
-          "B. It creates millions of jobs worldwide",
-          "C. It increases reliance on fossil fuels",
-          "D. It reduces government spending on infrastructure"
+          "By replacing teachers in classrooms",
+          "By personalizing learning and providing immediate feedback",
+          "By eliminating the need for administrative staff",
+          "By reducing the cost of textbooks"
         ],
         "answer": 1,
-        "explanation": "패시지에서 재생에너지 시장이 전 세계적으로 수백만 개의 일자리를 창출할 것으로 예상된다고 명시되어 있습니다. 따라서 정답은 B번입니다."
+        "explanation": "지문에서 AI가 학생의 학습 스타일에 맞춰 콘텐츠를 조정하고 즉시 피드백을 제공한다고 명시되어 있습니다."
       },
       {
-        "q": "What does the passage suggest about the cost of renewable energy?",
+        "q": "What challenges are mentioned regarding AI in education?",
         "options": [
-          "A. It has become more expensive",
-          "B. It remains extremely costly and impractical",
-          "C. It has become increasingly cost-effective",
-          "D. The passage does not discuss cost"
+          "Lack of qualified AI engineers",
+          "Data privacy and digital divide",
+          "High cost of AI software",
+          "Student resistance to technology"
         ],
-        "answer": 2,
-        "explanation": "패시지의 첫 번째 문장에서 '지난 10년간 태양광과 풍력을 포함한 재생에너지원이 점점 더 비용 효율적이 되었다'고 언급되어 있습니다."
+        "answer": 1,
+        "explanation": "지문의 마지막 문장에서 데이터 개인정보 보호와 디지털 격차가 AI 도입 시 해결해야 할 과제라고 명시되어 있습니다."
       },
       {
-        "q": "Which of the following is NOT mentioned as a benefit of renewable energy?",
+        "q": "What do intelligent tutoring systems do?",
         "options": [
-          "A. Reducing carbon emissions",
-          "B. Promoting sustainable development",
-          "C. Ensuring energy independence",
-          "D. Increasing fossil fuel production"
+          "Replace human teachers completely",
+          "Provide immediate feedback and support to students",
+          "Develop new curriculum standards",
+          "Collect student personal information"
         ],
-        "answer": 3,
-        "explanation": "패시지는 화석 연료에 대한 의존도 감소를 언급하므로, 화석 연료 생산 증가는 재생에너지의 장점이 아닙니다. 정답은 D번입니다."
+        "answer": 1,
+        "explanation": "지문에서 지능형 튜터링 시스템이 즉시 피드백과 지원을 제공한다고 설명되어 있습니다."
       }
     ]
   },
   "writing": {
-    "prompt": "Some people believe that technology has improved human life significantly. Others argue that it has created more problems than solutions. Which perspective do you agree with?",
+    "prompt": "Do you agree or disagree with the statement: 'Technology has made communication easier but reduced the quality of human relationships'? Provide reasons and examples.",
     "structure": {
-      "intro": "Opening sentence에서 당신의 입장을 명확히 표현하세요. 예: 'Technology has undoubtedly improved human life in numerous ways, despite some challenges it presents.'",
-      "body1": "첫 번째 이점: 의료, 통신, 교육 등 구체적인 분야에서의 기술 발전을 예시로 들어 설명하세요.",
-      "body2": "두 번째 이점 또는 반박: 일부 부정적 영향을 인정하면서도 그 이점이 더 크다는 점을 강조하세요. 예: 개인정보 문제 vs. 연결성 개선",
-      "conclusion": "본론에서 제시한 주요 아이디어를 다시 정리하고, 기술의 긍정적 역할을 재강조하며 에세이를 마무리하세요."
+      "intro": "도입부: 찬성/반대 입장을 명확히 표현하고 주요 논거를 간단히 제시하기 (2-3문장)",
+      "body1": "본론1: 첫 번째 주장 제시 및 구체적 사례/근거 제공 (3-4문장)",
+      "body2": "본론2: 두 번째 주장 제시 및 반론에 대한 반박 또는 추가 근거 (3-4문장)",
+      "conclusion": "결론: 주장을 재강조하고 광범위한 의미 제시 (2-3문장)"
     },
     "useful_phrases": [
-      "In my opinion, technology has significantly improved human life.",
-      "Furthermore, technology has revolutionized the way we communicate and access information.",
-      "For example, medical technology has extended life expectancy and improved quality of life.",
-      "Although some argue that technology creates problems, the benefits clearly outweigh the drawbacks.",
-      "In conclusion, the positive impact of technology on society is undeniable."
+      "In my opinion, technology has...",
+      "One significant reason is that...",
+      "For example, social media platforms...",
+      "Furthermore, face-to-face interactions...",
+      "In conclusion, while technology offers conveniences...",
+      "Some might argue that..., but I believe..."
     ]
   },
   "speaking": {
-    "prompt": "Some people prefer to work in traditional office environments. Others prefer remote work arrangements. Which do you prefer and why?",
+    "prompt": "Some people believe that remote work is more productive than office work. Others disagree. Which perspective do you agree with? Explain your choice with reasons and examples.",
     "useful_expressions": [
-      "In my opinion, I prefer remote work because it offers greater flexibility and saves commuting time.",
-      "One reason is that remote work allows me to maintain a better work-life balance.",
-      "Another advantage is that I can work in a comfortable environment of my own choosing.",
-      "However, some people might argue that office environments promote better collaboration.",
-      "To summarize, I believe remote work is more beneficial for productivity and personal well-being."
+      "In my opinion, I believe that remote work...",
+      "One reason is that remote workers can...",
+      "Another important point is that...",
+      "For example, many employees have found...",
+      "However, some people argue that..., yet I think...",
+      "In summary, I prefer [remote/office work] because..."
     ],
     "sample_points": [
-      "원격 근무의 장점: 유연한 시간 관리, 출퇴근 시간 절약, 개인적인 환경에서의 편안함, 일과 삶의 균형 유지 가능",
-      "전통 사무실 근무와의 비교: 협업의 어려움을 언급하면서도 기술을 통한 해결 방안 제시 가능. 예: 비디오 회의, 협업 도구 등이 이러한 문제를 해결할 수 있다고 주장"
+      "원격근무의 이점: 통근 시간 절감으로 생산성 향상, 방해 요소 감소, 업무 유연성 증대. 예를 들어, 많은 직원이 집에서 더 집중력 있게 일할 수 있다고 보고함",
+      "사무실 근무의 이점: 팀 협업 강화, 즉각적인 소통 가능, 회사 문화 형성. 예를 들어, 복잡한 프로젝트는 대면 회의에서 더 효과적으로 진행됨"
     ]
   },
   "listening": {
-    "title": "Campus Sustainability Initiative",
-    "type": "conversation",
-    "script": "Professor: Good morning, Sarah. I wanted to discuss our campus sustainability project. Have you had a chance to review the proposal?\nStudent: Yes, Professor. I'm really interested in the renewable energy component. Can you tell me more about the solar panel installation?\nProfessor: Of course. We're planning to install 500 solar panels on the roof of the science building. This would generate approximately 30% of the building's energy needs. We estimate it will reduce our carbon footprint by 200 tons annually.\nStudent: That's impressive. What about the timeline and budget?\nProfessor: We're looking at an 18-month installation period with a budget of $2 million. However, we expect to recover the investment through energy savings within 10 years. Additionally, we've received a grant that covers 40% of the costs.\nStudent: That sounds like a solid plan. Are there other initiatives included?\nProfessor: Yes. We're also implementing a campus-wide recycling program and installing LED lighting throughout the buildings. These measures combined should significantly reduce our environmental impact.",
+    "title": "Professor's Lecture on Climate Change and Agriculture",
+    "type": "lecture",
+    "script": "Good morning, everyone. Today I want to discuss how climate change is affecting global agriculture. As temperatures rise and weather patterns become more unpredictable, farmers around the world face significant challenges. For instance, droughts in Africa are reducing crop yields dramatically, while flooding in Southeast Asia destroys entire plantations. Additionally, changing seasons affect the timing of planting and harvesting, which has been traditionally guided by seasonal patterns. Many agricultural experts now recommend adopting drought-resistant crop varieties and implementing advanced irrigation systems. Furthermore, governments and international organizations are investing in research to develop crops that can withstand extreme weather conditions. It's crucial that we take action soon, as agriculture feeds billions of people worldwide. Without these adaptations, food security will become an even greater global concern in the coming decades.",
     "questions": [
       {
-        "q": "What is the main purpose of the conversation?",
+        "q": "What is the main topic of the lecture?",
         "options": [
-          "A. To discuss the history of renewable energy on campus",
-          "B. To explain a campus sustainability initiative involving solar panels and other green measures",
-          "C. To review student complaints about energy consumption",
-          "D. To plan a fundraising event for the science building"
+          "The history of farming techniques",
+          "How climate change impacts agriculture",
+          "New farming technologies only",
+          "Government agricultural policies"
         ],
         "answer": 1,
-        "explanation": "교수와 학생이 캠퍼스 지속 가능성 프로젝트, 특히 태양광 패널 설치 및 기타 환경 보호 조치에 대해 논의하고 있습니다."
+        "explanation": "강의자가 기후 변화가 전 세계 농업에 미치는 영향에 대해 설명하고 있으므로, 이것이 주요 주제입니다."
       },
       {
-        "q": "According to the professor, how much of the science building's energy needs would be met by the solar panels?",
+        "q": "According to the professor, what are two specific problems caused by climate change?",
         "options": [
-          "A. 20%",
-          "B. 30%",
-          "C. 40%",
-          "D. 50%"
+          "Rising costs and labor shortage",
+          "Droughts in Africa and flooding in Southeast Asia",
+          "Soil erosion and water pollution",
+          "Insect infestations and diseases"
         ],
         "answer": 1,
-        "explanation": "교수는 500개의 태양광 패널이 건물의 에너지 필요의 약 30%를 생산할 것이라고 명시했습니다."
+        "explanation": "교수는 아프리카의 가뭄과 동남아시아의 홍수를 기후 변화로 인한 구체적인 문제로 언급했습니다."
       },
       {
-        "q": "How long is the expected payback period for the solar panel investment?",
+        "q": "What solutions does the professor suggest?",
         "options": [
-          "A. 5 years",
-          "B. 8 years",
-          "C. 10 years",
-          "D. 15 years"
+          "Stop farming temporarily",
+          "Drought-resistant crops and advanced irrigation systems",
+          "Move all farms to developed countries",
+          "Use only traditional farming methods"
         ],
-        "answer": 2,
-        "explanation": "교수는 에너지 절감을 통해 10년 내에 투자 비용을 회수할 수 있을 것으로 예상한다고 말했습니다."
+        "answer": 1,
+        "explanation": "교수는 가뭄에 견디는 작물 품종 채택과 고급 관개 시스템 도입을 권장 해결책으로 제시했습니다."
       }
     ]
   }
